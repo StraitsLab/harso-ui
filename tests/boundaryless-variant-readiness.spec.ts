@@ -121,7 +121,7 @@ for (const variant of ["grid", "inline", "list"] as const) {
     } else if (variant === "inline") {
       await expect(collection).toHaveCSS("display", "flex");
       await expect(items.first()).toHaveCSS("border-radius", "999px");
-      await expect(items.first().locator(".hk-attachment-info")).toHaveCSS("display", "block");
+      await expect(items.first().locator(".hk-attachment-info")).toHaveCSS("display", "flex");
       expect(preview.height).toBe(34);
       expect(second.x).toBeGreaterThan(first.x + first.width);
     } else {
