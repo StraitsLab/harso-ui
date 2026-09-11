@@ -1,0 +1,23 @@
+import { useState } from "react";
+import { CodeIcon, InfoIcon } from "@phosphor-icons/react";
+import { Select, Button, Checkbox, EmptyState, FileTree, FileTreeActions, FileTreeFile, FileTreeFolder, FileTreeIcon, FileTreeName, IconButton } from "@harso/ui";
+import type { ExampleState } from "./examples";
+
+export const fileTreeExports = ["FileTree"] as const;
+export type FileTreeExport = typeof fileTreeExports[number];
+export const fileTreeNotes = { FileTree: { behavior: "An original hierarchy on the continuous canvas. Native lists and buttons support Tab, Enter and Space; this is not an ARIA tree widget with arrow-key navigation. The host can refuse expansion or selection. File and folder actions are separate from their row controls. Names and paths are supplied data, never filesystem access. Key the root by conversation/project identity to reset local selection.", example: '<FileTree expanded={expanded} onExpandedChange={setExpanded} selectedPath={selected} onSelect={setSelected}><FileTreeFolder path="src" name="src"><FileTreeFile path="src/app.tsx" name="app.tsx" actions={<FileTreeActions><Button onClick={inspect}>Inspect</Button></FileTreeActions>} /></FileTreeFolder></FileTree>' } };
+
+export function FileTreeExample({ state }: { state: ExampleState }) {
+  const [expanded, setExpanded] = useState(new Set(["src"]));
+  const [selected, setSelected] = useState<string | null>(null);
+  const [hold, setHold] = useState(false);
+  const [sample, setSample] = useState(state === "error" ? "error" : "ready");
+  const empty = sample === "empty";
+  const [request, setRequest] = useState("Synthetic file names only. Nothing is read or opened.");
+  const long = state === "long-content";
+  const inspect = (name: string) => <FileTreeActions><IconButton label={`Inspect ${name}`} onClick={() => setRequest(`Inspect requested: ${name}. No file opened.`)}><InfoIcon size={18} /></IconButton></FileTreeActions>;
+  return <div className="hkl-example-stack"><div className="hk-data-toolbar"><Checkbox label="Hold hierarchy updates" checked={hold} onChange={event => setHold(event.target.checked)} /><Checkbox label="Empty hierarchy" checked={empty} onChange={event => { setSample(event.target.checked ? "empty" : "ready"); setSelected(null); }} /><label>Hierarchy sample<Select value={sample} onChange={event => { setSample(event.target.value); setSelected(null); setExpanded(new Set(["src"])); }}>{["ready", "empty", "loading", "error", "replacement", "disabled"].map(value => <option key={value}>{value}</option>)}</Select></label><Button size="small" onClick={() => { setExpanded(new Set()); setSelected(null); setRequest("Hierarchy reset."); }}>Reset hierarchy</Button></div><FileTree aria-busy={sample === "loading"} aria-label="Example project files" expanded={expanded} onExpandedChange={paths => { if (!hold) setExpanded(paths); }} selectedPath={selected} onSelect={path => { if (!hold) setSelected(path); setRequest(`Selection requested: ${path}${hold ? ". Host declined." : ". No file opened."}`); }} disabled={state === "disabled" || sample === "disabled"}>
+    {sample === "replacement" && <FileTreeFile path="replacement.md" name="replacement.md" />}
+    {(sample === "ready" || sample === "disabled") && <><FileTreeFolder path="src" name="src" actions={inspect("src")}><FileTreeFile path="src/conversation.tsx" name={long ? "conversation-with-a-complete-and-unabridged-accessible-history-of-the-project.tsx" : "conversation.tsx"} actions={inspect("conversation.tsx")}><FileTreeIcon><CodeIcon size={18} /></FileTreeIcon><FileTreeName>{long ? "conversation-with-a-complete-and-unabridged-accessible-history-of-the-project.tsx" : "conversation.tsx"}</FileTreeName></FileTreeFile><FileTreeFolder path="src/components" name="components"><FileTreeFolder path="src/components/work" name="work"><FileTreeFile path="src/components/work/progress.tsx" name={long ? "progress-with-nested-real-time-observations-and-explicit-human-decisions.tsx" : "progress.tsx"} /></FileTreeFolder></FileTreeFolder><FileTreeFolder path="src/empty" name="empty" /></FileTreeFolder><FileTreeFile path="README.md" name="README.md" actions={inspect("README.md")} /><FileTreeFile path="unavailable.txt" name="Unavailable example" disabled /></>}
+  </FileTree><p role={sample === "error" ? "alert" : "status"}>Hierarchy sample: {sample}. {sample === "loading" ? "Waiting for host hierarchy." : sample === "error" ? "Host could not supply files." : ""}</p>{empty && <EmptyState title="No files supplied." description="The host has not provided a hierarchy for this example." />}<output aria-label="Hierarchy request">{request}</output></div>;
+}

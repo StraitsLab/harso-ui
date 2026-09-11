@@ -1,0 +1,14 @@
+.hk-sandbox { min-width: 0; border-block: 1px solid var(--hk-line); color: var(--hk-ink); }
+.hk-sandbox-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 8px 0; cursor: pointer; list-style: none; }
+.hk-sandbox-header::-webkit-details-marker { display: none; }
+.hk-sandbox-header::before { content: "⌄"; color: var(--hk-secondary); transition: transform var(--hk-fast) var(--hk-ease); }
+.hk-sandbox[open] .hk-sandbox-header::before { transform: rotate(180deg); }
+.hk-sandbox-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 520; }
+.hk-sandbox-content { padding: 0 0 14px 22px; min-width: 0; }
+.hk-sandbox-tabs { min-width: 0; }
+.hk-sandbox-tabs-bar { display: flex; align-items: center; min-height: 38px; border-bottom: 1px solid var(--hk-line); }
+.hk-sandbox-tabs-list { display: flex; gap: 4px; }
+.hk-sandbox-tabs-trigger { min-height: 34px; padding: 5px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--hk-secondary); cursor: pointer; font: inherit; font-size: 13px; }
+.hk-sandbox-tabs-trigger:hover, .hk-sandbox-tabs-trigger:focus-visible { background: var(--hk-hover); color: var(--hk-ink); }
+.hk-sandbox-tab-content { min-width: 0; padding-top: 14px; }
+@media (forced-colors: active) { .hk-sandbox { border-color: CanvasText; } .hk-sandbox-tabs-trigger:focus-visible { outline: 2px solid Highlight; } }

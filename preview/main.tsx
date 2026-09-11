@@ -1,0 +1,7 @@
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { Library } from "./Library";
+import "@harso/ui/styles.css";
+import "./library.css";
+
+createRoot(document.getElementById("root")!).render(<StrictMode><Library /></StrictMode>);

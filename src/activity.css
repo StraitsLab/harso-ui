@@ -1,0 +1,26 @@
+.hk-tool, .hk-agent, .hk-artifact, .hk-sources { min-width: 0; }
+.hk-tool-heading { margin: 0; font: inherit; }
+.hk-activity-name { color: var(--hk-ink); font-weight: 520; }
+.hk-activity-section { margin-block: 20px; min-width: 0; font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
+.hk-activity-section h4 { margin: 0 0 8px; font-size: 11px; font-weight: 550; letter-spacing: .05em; text-transform: uppercase; color: var(--hk-secondary); }
+.hk-activity-section[data-error] { color: var(--hk-negative); }
+.hk-activity-code { margin: 0; font: 12px/1.8 var(--hk-mono); white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2; }
+.hk-agent-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+.hk-agent-header h3, .hk-artifact-title { margin: 0; font-size: 22px; line-height: 1.4; font-weight: 500; letter-spacing: -.025em; overflow-wrap: anywhere; }
+.hk-agent-header > span { font: 12px/1.7 var(--hk-mono); color: var(--hk-secondary); overflow-wrap: anywhere; }
+.hk-agent-content { margin-top: 24px; }
+.hk-agent-tool-description { color: var(--hk-secondary); font-size: 13px; }
+.hk-agent-tools { display: grid; gap: 4px; }
+.hk-artifact-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 4px 20px; }
+.hk-artifact-title, .hk-artifact-description { grid-column: 1; }
+.hk-artifact-description { margin: 0; color: var(--hk-secondary); font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+.hk-artifact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; grid-column: 2; grid-row: 1 / 3; }
+.hk-artifact-content { margin-top: 28px; min-width: 0; overflow-wrap: anywhere; }
+.hk-sources-content { display: grid; gap: 8px; }
+.hk-source { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; min-height: 42px; padding-block: 10px; box-sizing: border-box; color: var(--hk-ink); font-size: 14px; line-height: 1.6; text-decoration: none; }
+.hk-source > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.hk-source > span:last-child { flex-shrink: 0; color: var(--hk-secondary); }
+.hk-source:hover[href] > span:first-child { text-decoration: underline; text-underline-offset: 4px; }
+.hk-source[aria-disabled] { color: var(--hk-secondary); }
+@media (max-width: 620px) { .hk-artifact-header { grid-template-columns: minmax(0, 1fr); } .hk-artifact-actions { grid-column: 1; grid-row: auto; margin-top: 12px; } .hk-agent-header h3, .hk-artifact-title { font-size: 20px; } }
+@media (forced-colors: active) { .hk-source[href] { color: LinkText; } .hk-activity-section[data-error] { color: CanvasText; } .hk-source[aria-disabled] { color: GrayText; } }

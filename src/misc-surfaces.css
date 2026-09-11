@@ -1,0 +1,90 @@
+@import "./persona.css";
+.hk-color { display: inline-flex; align-items: center; gap: 7px; color: var(--hk-ink); font-size: 13px; }
+.hk-color-swatch { width: 16px; height: 16px; border: 1px solid var(--hk-line); border-radius: 50%; }
+.hk-color-preview { min-width: 0; padding: 16px; display: grid; gap: 16px; }
+.hk-color-controls, .hk-color-roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); gap: 12px; }
+.hk-color-controls label { display: grid; gap: 6px; font-size: 12px; }
+.hk-color-roles fieldset { min-width: 0; display: grid; gap: 8px; border: 1px solid var(--hk-line); }
+.hk-color-roles .hk-color { overflow-wrap: anywhere; }
+.hk-social-button--full { width: 100%; }
+.hk-social-button--colorful { --hk-social-bg: color-mix(in srgb, var(--hk-accent) 8%, var(--hk-surface)); --hk-social-fg: var(--hk-accent); }
+.hk-social-button--black { --hk-social-bg: #171a20; --hk-social-fg: #fff; }
+.hk-social-button--white { --hk-social-bg: #fff; --hk-social-fg: #171a20; }
+.hk-button.hk-social-button { background: var(--hk-social-bg); color: var(--hk-social-fg); transition: transform var(--hk-fast) var(--hk-ease); }
+.hk-button.hk-social-button:hover:not(:disabled) { background: color-mix(in srgb, var(--hk-social-bg) 94%, var(--hk-social-fg)); }
+.hk-social-button[aria-disabled="true"] { opacity: .5; cursor: default; }
+.hk-social-button { text-decoration: none; }
+.hk-typography--display { font-size: clamp(32px, 5vw, 64px); line-height: 1; letter-spacing: -.06em; }
+.hk-typography--title { font-size: 24px; line-height: 1.2; letter-spacing: -.03em; }
+.hk-typography--body { font-size: 15px; line-height: 1.65; }
+.hk-typography--caption { color: var(--hk-secondary); font-size: 12px; }
+.hk-typography { min-width: 0; overflow-wrap: anywhere; }
+.hk-typography--large-title { font-size: 34px; line-height: 1.2; letter-spacing: -.03em; }
+.hk-typography--display-1 { font-size: 64px; line-height: 1.1; letter-spacing: -.05em; }
+.hk-typography--display-2 { font-size: 56px; line-height: 1.1; letter-spacing: -.05em; }
+.hk-typography--display-3 { font-size: 48px; line-height: 1.1; letter-spacing: -.04em; }
+.hk-typography--display-4 { font-size: 40px; line-height: 1.1; letter-spacing: -.04em; }
+.hk-typography--title-1 { font-size: 28px; line-height: 1.2; letter-spacing: -.03em; }
+.hk-typography--title-2 { font-size: 22px; line-height: 1.2; letter-spacing: -.02em; }
+.hk-typography--title-3 { font-size: 20px; line-height: 1.3; letter-spacing: -.02em; }
+.hk-typography--headline { font-size: 17px; line-height: 1.4; }
+.hk-typography--body-2 { font-size: 14px; line-height: 1.6; }
+.hk-typography--caption-1 { font-size: 12px; line-height: 1.5; color: var(--hk-secondary); }
+.hk-typography--caption-2 { font-size: 11px; line-height: 1.5; color: var(--hk-secondary); }
+.hk-typography[data-weight="regular"] { font-weight: 400; }
+.hk-typography[data-weight="medium"] { font-weight: 500; }
+.hk-typography[data-weight="semibold"] { font-weight: 600; }
+.hk-typography[data-weight="bold"] { font-weight: 700; }
+.hk-auth-card { color: var(--hk-ink); border: 1px solid var(--hk-line); border-radius: 18px; background: var(--hk-surface); box-shadow: 0 20px 50px color-mix(in srgb, var(--hk-ink) 12%, transparent); }
+.hk-settings-portal { position: relative; z-index: 100; }
+.hk-settings-overlay { position: fixed; inset: 0; background: color-mix(in srgb, var(--hk-ink) 15%, transparent); backdrop-filter: blur(6px); }
+.hk-settings-modal { position: fixed; inset: 50% auto auto 50%; transform: translate(-50%, -50%); width: min(760px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); margin: 0; overflow: auto; padding: 28px; border: 0; border-radius: 20px; background: var(--hk-canvas); color: var(--hk-ink); box-shadow: var(--hk-shadow); }
+.hk-settings-layout { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 32px; margin-top: 24px; min-height: 280px; }
+.hk-settings-layout nav { display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
+.hk-settings-layout nav button { text-align: start; justify-content: start; }
+.hk-settings-layout nav [aria-current="page"] { background: var(--hk-hover); font-weight: 600; }
+.hk-settings-page { min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.hk-settings-page h3 { font-size: 18px; }
+.hk-settings-page h4 { font-size: 14px; font-weight: 550; margin: 12px 0 0; }
+.hk-settings-empty { color: var(--hk-secondary); font-size: 13px; }
+.hk-settings-plan-art { height: 110px; overflow: hidden; border-radius: 12px; }
+.hk-settings-plan-art img { width: 100%; height: 100%; object-fit: cover; }
+.hk-settings-plan-art [data-artwork="native"] { position: relative; height: 100%; overflow: hidden; background: var(--hk-hover); }
+.hk-settings-plan-art span { position: absolute; inset: -50% 20%; border: 1px solid var(--hk-control-line); border-radius: 50%; transform: rotate(-35deg); animation: hk-settings-art 14s ease-in-out infinite alternate; }
+.hk-settings-plan-art span:nth-child(2) { inset-inline: 30% 10%; animation-delay: -5s; }
+.hk-settings-plan-art span:nth-child(3) { inset-inline: 10% 30%; animation-delay: -9s; }
+@keyframes hk-settings-art { to { transform: rotate(35deg) scale(1.15); } }
+@media (max-width: 600px) { .hk-settings-modal { padding: 20px; }.hk-settings-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }.hk-settings-layout nav { flex-direction: row; flex-wrap: wrap; }.hk-settings-layout nav button { flex: 1; }.hk-settings-page { min-height: 260px; } }
+.hk-settings-modal header, .hk-auth-card header { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+.hk-settings-modal h2, .hk-auth-card h2 { margin: 0; font-size: 18px; font-weight: 560; }
+.hk-auth-card { display: grid; gap: 18px; padding: 22px; max-width: 420px; }
+.hk-auth-content, .hk-auth-content form, .hk-auth-content fieldset { display: grid; gap: 18px; min-width: 0; }
+.hk-auth-content fieldset { border: 0; padding: 0; margin: 0; }
+.hk-auth-content label { display: grid; gap: 6px; font-size: 13px; }
+.hk-auth-content header { display: grid; gap: 6px; }
+.hk-auth-card[data-layout="split"] { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 860px; }
+.hk-auth-card[data-layout="centered"] { margin-inline: auto; }
+.hk-auth-artwork { min-width: 0; overflow: hidden; align-content: center; }
+.hk-auth-artwork img, .hk-auth-logo img { max-width: 100%; height: auto; }
+.hk-auth-content footer { color: var(--hk-secondary); font-size: 12px; overflow-wrap: anywhere; }
+.hk-auth-providers { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.hk-auth-providers[data-layout="inline"] { flex-direction: row; flex-wrap: wrap; }
+.hk-auth-providers[data-layout="grid"] { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); }
+@media (max-width: 600px) { .hk-auth-card[data-layout="split"] { grid-template-columns: minmax(0, 1fr); } }
+.hk-auth-card p { margin: 5px 0 0; color: var(--hk-secondary); font-size: 13px; }
+.hk-auth-media-carousel { display: grid; gap: 12px; outline: none; }
+.hk-auth-media-carousel:focus-visible { border-radius: 12px; box-shadow: 0 0 0 3px color-mix(in srgb, var(--hk-accent) 28%, transparent); }
+.hk-auth-media-carousel__viewport { min-height: 72px; }
+.hk-auth-media-carousel__slide { min-width: 0; }
+.hk-auth-media-carousel__controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.hk-auth-media-carousel__indicators { display: flex; align-items: center; justify-content: center; gap: 2px; }
+.hk-auth-media-carousel__indicator { display: grid; place-items: center; flex: 0 0 28px; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 999px; background: transparent; cursor: pointer; }
+.hk-auth-media-carousel__indicator::before { content: ""; width: 7px; height: 7px; border-radius: inherit; background: var(--hk-line); }
+.hk-auth-media-carousel__indicator[aria-current="true"]::before { background: var(--hk-accent); transform: scale(1.25); }
+.hk-auth-media-carousel__indicator:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+@media (forced-colors: active) { .hk-settings-modal, .hk-auth-card { border-color: CanvasText; box-shadow: none; } }
+@media (forced-colors: active) {
+  .hk-auth-media-carousel:focus-visible, .hk-auth-media-carousel__indicator:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; box-shadow: none; }
+  .hk-auth-media-carousel__indicator::before { background: CanvasText; }
+  .hk-auth-media-carousel__indicator[aria-current="true"] { outline: 1px solid Highlight; }
+}

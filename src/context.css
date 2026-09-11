@@ -1,0 +1,15 @@
+.hk-context { position: relative; display: inline-flex; flex-direction: column; min-width: 0; }
+.hk-context-trigger { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 5px 10px; border: 0; border-radius: 999px; background: transparent; color: var(--hk-secondary); cursor: pointer; font: inherit; font-size: 12px; }
+.hk-context-trigger:hover { background: var(--hk-hover); color: var(--hk-ink); }
+.hk-context-ring { width: 17px; height: 17px; border: 2px solid var(--hk-line); border-top-color: var(--hk-ink); border-radius: 50%; transform: rotate(calc(var(--hk-context-progress) * 3.6deg)); }
+.hk-context-content { position: absolute; z-index: 2; top: calc(100% + 8px); right: 0; width: min(300px, calc(100vw - 24px)); padding: 14px; border: 1px solid var(--hk-line); border-radius: 16px; background: var(--hk-surface); color: var(--hk-ink); box-shadow: var(--hk-shadow); }
+.hk-context-header { display: grid; gap: 10px; }
+.hk-context-header > div:first-child { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; }
+.hk-context-header span, .hk-context-footer { color: var(--hk-secondary); }
+.hk-context-bar { height: 5px; overflow: hidden; border-radius: 999px; background: var(--hk-hover); }
+.hk-context-bar span { display: block; height: 100%; border-radius: inherit; background: var(--hk-ink); }
+.hk-context-body { display: grid; gap: 8px; margin-top: 14px; }
+.hk-context-usage { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; }
+.hk-context-usage > span:last-child { color: var(--hk-secondary); text-align: right; }
+.hk-context-footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--hk-line); font-size: 11px; }
+@media (forced-colors: active) { .hk-context-content { border-color: CanvasText; } .hk-context-bar span { background: Highlight; } }

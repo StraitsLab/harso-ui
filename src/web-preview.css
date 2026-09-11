@@ -1,0 +1,9 @@
+.hk-web-preview { display: grid; gap: 8px; min-width: 0; }
+.hk-web-preview-navigation { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.hk-web-preview-button { min-height: 34px; padding: 5px 10px; border: 0; border-radius: 999px; background: var(--hk-hover); color: var(--hk-ink); cursor: pointer; font: inherit; font-size: 12px; }
+.hk-web-preview-button:hover { background: var(--hk-line); }
+.hk-web-preview-url { min-width: 0; flex: 1; min-height: 34px; padding: 6px 10px; border: 1px solid var(--hk-control-line); border-radius: 999px; background: var(--hk-surface); color: var(--hk-ink); }
+.hk-web-preview-frame { position: relative; min-height: 260px; overflow: hidden; border: 1px solid var(--hk-line); border-radius: 16px; background: var(--hk-surface); }
+.hk-web-preview-body { display: block; width: 100%; min-height: 260px; border: 0; background: white; }
+.hk-web-preview-console { max-height: 160px; overflow: auto; margin: 0; padding: 10px; border-radius: 10px; background: var(--hk-hover); color: var(--hk-secondary); font: 12px/1.5 var(--hk-mono); white-space: pre-wrap; }
+@media (forced-colors: active) { .hk-web-preview-frame { border-color: CanvasText; } .hk-web-preview-button, .hk-web-preview-url { border: 1px solid ButtonBorder; } }

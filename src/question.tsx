@@ -1,0 +1,20 @@
+import { createContext, useContext, useState, type ComponentPropsWithRef, type ReactNode } from "react";
+import { Button, type ButtonProps } from "./primitives";
+export type QuestionValue = { selectedValues: readonly string[]; text: string };
+type QuestionState = { value: QuestionValue; setValue: (value: QuestionValue) => void; selectionMode: "single" | "multiple"; disabled: boolean; submit: () => void };
+const QuestionValueContext = createContext<QuestionState | null>(null);
+function useQuestion() { const value = useContext(QuestionValueContext); if (!value) throw new Error("Question parts require Question."); return value; }
+export function Question({ value, defaultValue = { selectedValues: [], text: "" }, selectionMode = "single", disabled = false, onValueChange, onSubmit, children, ...props }: Omit<ComponentPropsWithRef<"form">, "onSubmit" | "value" | "defaultValue"> & { value?: QuestionValue; defaultValue?: QuestionValue; selectionMode?: "single" | "multiple"; disabled?: boolean; onValueChange?: (value: QuestionValue) => void; onSubmit?: (response: QuestionValue) => void | Promise<void> }) {
+  const [local, setLocal] = useState<QuestionValue>(defaultValue);
+  const current = value ?? local;
+  const setValue = (next: QuestionValue) => { if (disabled) return; if (value === undefined) setLocal(next); onValueChange?.(next); };
+  const submit = () => { if (!disabled && (current.selectedValues.length || current.text.trim())) void onSubmit?.({ selectedValues: current.selectedValues, text: current.text.trim() }); };
+  return <QuestionValueContext value={{ value: current, setValue, selectionMode, disabled, submit }}><form {...props} onSubmit={event => { if (event.defaultPrevented) return; event.preventDefault(); submit(); }} aria-disabled={disabled || undefined}>{children}</form></QuestionValueContext>;
+}
+export function QuestionPrompt({ className = "", ...props }: ComponentPropsWithRef<"p">) { return <p {...props} className={`hk-question-prompt ${className}`} />; }
+export function QuestionDescription({ className = "", ...props }: ComponentPropsWithRef<"p">) { return <p {...props} className={`hk-question-description ${className}`} />; }
+export function QuestionOptions({ className = "", ...props }: ComponentPropsWithRef<"div">) { return <div {...props} className={`hk-question-options ${className}`} />; }
+export function QuestionOption({ value, className = "", children, ...props }: ButtonProps & { value: string }) { const question = useQuestion(); const selected = question.value.selectedValues.includes(value); return <Button {...props} type="button" className={`hk-question-option ${selected ? "hk-question-option--selected" : ""} ${className}`} aria-pressed={selected} disabled={question.disabled || props.disabled} onClick={event => { props.onClick?.(event); if (event.defaultPrevented || props.disabled || props.pending) return; const next = question.selectionMode === "single" ? [value] : selected ? question.value.selectedValues.filter(item => item !== value) : [...question.value.selectedValues, value]; question.setValue({ ...question.value, selectedValues: next }); }}>{children}</Button>; }
+export function QuestionInput({ className = "", ...props }: ComponentPropsWithRef<"textarea">) { const question = useQuestion(); return <textarea {...props} value={props.value ?? question.value.text} disabled={question.disabled || props.disabled} onChange={event => { props.onChange?.(event); if (!event.defaultPrevented && !props.disabled) question.setValue({ ...question.value, text: event.target.value }); }} className={`hk-question-input ${className}`} />; }
+export function QuestionActions({ className = "", ...props }: ComponentPropsWithRef<"div">) { return <div {...props} className={`hk-question-actions ${className}`} />; }
+export function QuestionSubmit({ children = "Submit", className = "", ...props }: ButtonProps) { const question = useQuestion(); const empty = !question.value.selectedValues.length && !question.value.text.trim(); return <Button {...props} type="submit" className={`hk-question-submit ${className}`} disabled={question.disabled || empty || props.disabled}>{children}</Button>; }

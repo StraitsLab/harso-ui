@@ -1,0 +1,39 @@
+.hk-dropdown-popover { display: none; position: fixed; inset: 0; margin: auto; width: max-content; min-width: min(240px, calc(100vw - 24px)); max-width: min(360px, calc(100vw - 24px)); max-height: min(460px, calc(100dvh - 24px)); overflow: auto; padding: 8px; border: 1px solid var(--hk-line); border-radius: 18px; color: var(--hk-ink); background: var(--hk-surface); box-shadow: 0 18px 70px rgb(0 0 0 / .12); font: inherit; }
+.hk-dropdown-popover:popover-open { display: block; }
+@supports (anchor-name: --anchor) { .hk-dropdown-popover { inset: auto; margin: 8px 0; min-height: min(64px, calc(100dvh - 24px)); max-height: stretch; position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline; } }
+.hk-dropdown-group { padding-block: 4px; }
+.hk-dropdown-heading { display: block; color: var(--hk-secondary); font-size: 12px; padding: 8px 12px; }
+.hk-dropdown-item { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 10px 12px; border: 0; border-radius: 11px; background: transparent; text-align: start; color: var(--hk-ink); font: inherit; font-size: 14px; cursor: pointer; }
+.hk-dropdown-item:hover:not(:disabled), .hk-dropdown-item:focus-visible { background: var(--hk-hover); }
+.hk-dropdown-item:disabled { color: var(--hk-secondary); cursor: not-allowed; }
+.hk-dropdown-copy { display: grid; gap: 3px; flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.hk-dropdown-description, .hk-dropdown-shortcut { font-size: 12px; color: var(--hk-secondary); }
+.hk-dropdown-icon { display: flex; align-items: center; }
+.hk-dropdown-popover > .hk-separator { margin-block: 7px; }
+.hk-dropdown-popover > button[role="menuitem"] { width: 100%; justify-content: flex-start; }
+.hk-sidebar { display: flex; flex-direction: column; gap: 18px; padding: 16px 12px; inline-size: 256px; max-inline-size: 100%; min-inline-size: 0; }
+.hk-sidebar[data-collapsed] { inline-size: 68px; padding-inline: 12px; }
+.hk-sidebar-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.hk-sidebar-title { font-size: 14px; font-weight: 550; padding-inline-start: 10px; overflow-wrap: anywhere; }
+.hk-sidebar[data-collapsed] .hk-sidebar-title { display: none; }
+.hk-sidebar[data-collapsed] nav > .hk-disclosure { display: none; }
+.hk-sidebar nav { display: grid; gap: 4px; min-width: 0; }
+.hk-sidebar-footer { margin-block-start: auto; }
+.hk-sidebar-header[hidden], .hk-sidebar-footer[hidden] { display: none; }
+.hk-sidebar-item { display: flex; align-items: center; gap: 12px; min-height: 44px; min-width: 0; padding: 10px 12px; color: var(--hk-secondary); text-decoration: none; background: transparent; border: 0; border-radius: 12px; text-align: start; font: inherit; font-size: 14px; cursor: pointer; }
+.hk-sidebar-item:hover:not(:disabled):not([aria-disabled]), .hk-sidebar-item[aria-current] { color: var(--hk-ink); background: var(--hk-hover); }
+.hk-sidebar-icon { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; }
+.hk-sidebar-item-label { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.hk-sidebar-badge { font-size: 12px; font-variant-numeric: tabular-nums; }
+.hk-sidebar-item:disabled, .hk-sidebar-item[aria-disabled] { cursor: not-allowed; color: var(--hk-secondary); opacity: .7; }
+.hk-sidebar:dir(rtl) .hk-sidebar-top button span, .hk-carousel:dir(rtl) .hk-carousel-controls > button span { transform: scaleX(-1); }
+.hk-carousel { min-width: 0; }
+.hk-carousel-track { display: flex; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: inline mandatory; scrollbar-width: thin; padding-block: 6px 12px; min-width: 0; }
+.hk-carousel-item { flex-grow: 0; flex-shrink: 0; min-width: 0; max-width: 100%; scroll-snap-align: var(--hk-carousel-align, start); }
+.hk-carousel-controls { display: flex; justify-content: center; align-items: center; gap: 12px; padding-block-start: 8px; }
+.hk-carousel-dots { display: flex; flex-wrap: wrap; justify-content: center; }
+.hk-carousel-dots button { display: grid; place-items: center; width: 32px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; border-radius: 12px; }
+.hk-carousel-dots button span { width: 5px; height: 5px; border-radius: 50%; background: var(--hk-secondary); }
+.hk-carousel-dots button[aria-current] span { width: 18px; border-radius: 4px; background: var(--hk-ink); }
+@media (pointer: coarse) { .hk-carousel-dots button { width: 44px; } }
+@media (forced-colors: active) { .hk-dropdown-popover { border-color: CanvasText; } .hk-dropdown-item:focus-visible, .hk-sidebar-item[aria-current] { outline: 2px solid Highlight; } .hk-carousel-dots button span { background: ButtonText; } .hk-carousel-dots button[aria-current] { outline: 1px solid Highlight; } }

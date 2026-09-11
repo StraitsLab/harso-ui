@@ -1,0 +1,103 @@
+.hk-dashboard { display: grid; gap: 18px; min-width: 0; padding: 20px; border: 1px solid var(--hk-line); border-radius: 20px; background: var(--hk-surface); color: var(--hk-ink); }
+.hk-dashboard > header h2, .hk-contributions-card h3 { margin: 0; font-size: 18px; font-weight: 560; letter-spacing: -.02em; }
+.hk-contributions-card { display: grid; gap: 14px; min-width: 0; padding: 16px; border: 1px solid var(--hk-line); border-radius: 16px; background: var(--hk-surface); color: var(--hk-ink); }
+.hk-contributions-card > div { display: grid; gap: 10px; }
+.hk-contribution { display: grid; grid-template-columns: 90px minmax(40px, 1fr) auto; align-items: center; gap: 10px; color: var(--hk-secondary); font-size: 12px; }
+.hk-contribution > meter { width: 100%; min-width: 0; accent-color: var(--hk-accent); }
+.hk-contributions-card > label { display: grid; gap: 6px; font-size: 12px; }
+.hk-contributions-card select { color: inherit; background: var(--hk-surface); font: inherit; padding: 6px; }
+.hk-contributions-card select:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.hk-contributions-theme { min-width: 0; background: transparent; }
+.hk-contribution > button { appearance: none; border: 1px solid transparent; background: transparent; color: inherit; font: inherit; min-height: 44px; padding: 4px; overflow-wrap: anywhere; text-align: start; cursor: pointer; }
+.hk-contribution > button[aria-pressed="true"] { border-color: var(--hk-accent); }
+.hk-contribution > button:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.hk-contribution > button:disabled { opacity: .5; cursor: default; }
+.hk-contributions-activity[data-view="cells"] { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(80px, 100%), 1fr)); gap: 8px; }
+.hk-contributions-activity[data-view="cells"] .hk-contribution { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+.hk-contributions-activity[data-view="cells"] button { background: var(--hk-hover); text-align: center; }
+.hk-contributions-activity[data-view="cells"] b { text-align: center; }
+.hk-contribution b { color: var(--hk-ink); font: 11px var(--hk-mono); }
+.hk-dashboard-table { min-width: 0; overflow: auto; }
+.hk-home-workspace .hk-ai-workspace-thread { display: grid; gap: 28px; }
+.hk-home-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.hk-home-toolbar label { display: grid; gap: 6px; font-size: 12px; }
+.hk-home-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.hk-home-charts > section[aria-label="Contributions"] { grid-column: 1 / -1; }
+.hk-home-workspace[data-compact="true"] .hk-home-charts { grid-template-columns: minmax(0, 1fr); }
+.hk-home-charts > section { min-width: 0; }
+.hk-home-hires { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.hk-home-hires p { margin: 4px 0; color: var(--hk-secondary); font-size: 12px; }
+.hk-home-navigation, .hk-home-ticket { display: grid; gap: 12px; }
+.hk-home-series { overflow: auto; max-width: 100%; }
+.hk-home-series .hk-chart-bars { min-width: 260px; }
+.hk-home-series .hk-chart-bar-column > .hk-chart-bar { position: static; align-self: end; }
+.hk-marketing-workspace .hk-ai-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.hk-medical-workspace .hk-ai-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.hkl-live-example > .hk-medical-example { max-width: none; }
+.hk-medical-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.hk-medical-charts > section { min-width: 0; }
+.hk-medical-charts .hk-chart-card { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.hk-medical-workspace[data-compact="true"] .hk-medical-charts { grid-template-columns: minmax(0, 1fr); }
+.hk-medical-editor, .hk-medical-sleep { display: grid; gap: 14px; }
+.hk-medical-identity { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; }
+.hk-medical-identity dl { display: flex; flex-wrap: wrap; gap: 22px; }
+.hk-medical-identity dt { font-size: 12px; color: var(--hk-secondary); }
+.hk-medical-identity dd { margin: 5px 0 0; font-size: 14px; }
+.hk-medical-plot { width: 100%; height: auto; display: block; color: var(--hk-secondary); }
+.hk-medical-plot text { fill: currentColor; font: 10px var(--hk-font); }
+.hk-medical-sleep > div { display: grid; gap: 8px; }
+.hk-medical-sleep progress { width: 100%; accent-color: var(--hk-accent); }
+.hk-medical-values { display: grid; gap: 8px; padding: 0; list-style: none; font-size: 12px; }
+.hk-medical-values li { display: flex; gap: 12px; justify-content: space-between; flex-wrap: wrap; }
+.hk-medical-values .hk-button { white-space: normal; text-align: left; }
+.hk-medical-alerts { display: grid; gap: 18px; padding: 0; list-style: none; }
+.hk-medical-alerts article { display: grid; gap: 10px; }
+.hk-medical-alerts .hk-notification { padding: 12px 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.hkl-live-example > .hk-marketing-example { max-width: none; }
+.hk-marketing-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.hk-marketing-charts > section { min-width: 0; }
+.hk-marketing-charts .hk-chart-card { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.hk-marketing-editor, .hk-marketing-funnel { display: grid; gap: 14px; }
+.hk-marketing-funnel > div { display: grid; gap: 6px; }
+.hk-marketing-funnel progress { width: 100%; height: 10px; accent-color: var(--hk-accent); }
+.hk-marketing-tabs { min-width: 0; margin: 0; padding: 0; border: 0; }
+.hk-marketing-tabs legend { margin-bottom: 12px; font-weight: 550; }
+.hk-marketing-plot { display: block; width: 100%; height: auto; color: var(--hk-secondary); }
+.hk-marketing-plot text { fill: currentColor; font: 10px var(--hk-font); }
+.hk-marketing-values { display: grid; gap: 8px; padding: 0; list-style: none; font-size: 12px; }
+.hk-marketing-values li { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.hk-marketing-values .hk-button { white-space: normal; text-align: left; }
+.hk-marketing-charts > section[aria-label="Traffic sources"] { grid-column: 1 / -1; }
+.hk-marketing-workspace[data-compact="true"] .hk-marketing-charts { grid-template-columns: minmax(0, 1fr); }
+.hk-hr-workspace .hk-ai-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.hk-hr-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.hk-hr-charts > section { min-width: 0; }
+.hk-hr-charts > section[aria-label="Workforce movement"] { grid-column: 1 / -1; }
+.hk-hr-workspace[data-compact="true"] .hk-hr-charts { grid-template-columns: minmax(0, 1fr); }
+.hk-hr-hires { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 16px; padding: 0; list-style: none; }
+.hk-hr-hires p { margin: 5px 0; color: var(--hk-secondary); font-size: 12px; }
+.hk-hr-pipeline { display: grid; gap: 14px; }
+.hk-hr-pipeline label { display: grid; gap: 7px; font-size: 12px; }
+.hk-hr-pipeline progress { width: 100%; height: 9px; accent-color: var(--hk-accent); }
+.hk-hr-chart { display: block; width: 100%; height: auto; color: var(--hk-secondary); }
+.hk-hr-chart text { fill: currentColor; font: 10px var(--hk-font); }
+.hk-hr-editor { display: grid; gap: 14px; }
+.hk-hr-breakdown { display: grid; gap: 10px; padding: 0; list-style: none; }
+.hk-hr-team { min-width: 0; margin: 0; padding: 0; border: 0; }
+.hk-hr-breakdown li { display: flex; justify-content: space-between; gap: 16px; }
+.hk-finance { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; min-width: 0; color: var(--hk-ink); }
+.hk-finance:not(:has(> nav)) { grid-template-columns: minmax(0, 1fr); }
+.hk-finance-navigation { display: flex; flex-direction: column; align-items: stretch; gap: 8px; padding-block: 8px; }
+.hk-finance-main { display: grid; gap: 28px; min-width: 0; }
+.hk-finance-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.hk-finance-header h2 { margin: 0; font-size: clamp(22px, 3vw, 32px); font-weight: 550; letter-spacing: -.035em; }
+.hk-finance-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.hk-finance-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.hk-finance-grid > section, .hk-finance-transactions { min-width: 0; }
+.hk-finance-grid .hk-chart-card { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+@media (max-width: 760px) {
+  .hk-finance { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .hk-finance-navigation { flex-direction: row; flex-wrap: wrap; }
+  .hk-finance-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (forced-colors: active) { .hk-dashboard, .hk-contributions-card { border-color: CanvasText; } }

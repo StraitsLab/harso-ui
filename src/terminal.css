@@ -1,0 +1,13 @@
+.hk-terminal { min-width: 0; overflow: hidden; border: 1px solid var(--hk-line); border-radius: 16px; background: var(--hk-surface); color: var(--hk-ink); }
+.hk-terminal-header { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 8px 12px; border-bottom: 1px solid var(--hk-line); }
+.hk-terminal-title { font-weight: 600; }
+.hk-terminal-status { color: var(--hk-secondary); font-size: 12px; }
+.hk-terminal-actions { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; }
+.hk-terminal-content { max-height: 360px; overflow: auto; padding: 14px; background: var(--hk-terminal-bg, #151515); color: var(--hk-terminal-fg, #f2f2f2); font: 13px/1.6 var(--hk-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.hk-terminal-cursor { color: var(--hk-terminal-c2); animation: hk-terminal-blink 1s steps(2, start) infinite; }
+.hk-terminal-copy { border: 0; }
+.hk-terminal-c0 { color: #f87171; } .hk-terminal-c1 { color: #fb923c; } .hk-terminal-c2 { color: #4ade80; } .hk-terminal-c3 { color: #facc15; } .hk-terminal-c4 { color: #60a5fa; } .hk-terminal-c5 { color: #c084fc; } .hk-terminal-c6 { color: #2dd4bf; } .hk-terminal-c7 { color: #f8fafc; }
+.hk-terminal-b0 { color: #fca5a5; } .hk-terminal-b1 { color: #fdba74; } .hk-terminal-b2 { color: #86efac; } .hk-terminal-b3 { color: #fde047; } .hk-terminal-b4 { color: #93c5fd; } .hk-terminal-b5 { color: #d8b4fe; } .hk-terminal-b6 { color: #5eead4; } .hk-terminal-b7 { color: #fff; }
+@keyframes hk-terminal-blink { 50% { opacity: .2; } }
+@media (prefers-reduced-motion: reduce) { .hk-terminal-cursor { animation: none; } }
+@media (forced-colors: active) { .hk-terminal, .hk-terminal-header { border-color: CanvasText; } .hk-terminal-content { background: Canvas; color: CanvasText; } }

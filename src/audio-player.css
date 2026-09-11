@@ -1,0 +1,9 @@
+.hk-audio-player { display: grid; gap: 8px; min-width: 0; }
+.hk-audio-player > [role="alert"] { overflow-wrap: anywhere; }
+.hk-audio-control-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.hk-audio-button { min-height: 34px; padding: 5px 10px; border: 0; border-radius: 999px; background: var(--hk-hover); color: var(--hk-ink); cursor: pointer; font: inherit; font-size: 12px; }
+.hk-audio-button:hover { background: var(--hk-line); }
+.hk-audio-time { color: var(--hk-secondary); font-variant-numeric: tabular-nums; font-size: 12px; }
+.hk-audio-range { flex: 1 1 140px; min-width: 100px; accent-color: var(--hk-ink); }
+.hk-audio-volume { width: 90px; accent-color: var(--hk-ink); }
+@media (forced-colors: active) { .hk-audio-button { border: 1px solid ButtonBorder; background: ButtonFace; color: ButtonText; } }

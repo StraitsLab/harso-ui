@@ -1,0 +1,121 @@
+import { expect, test } from "@playwright/test";
+
+test.beforeEach(async ({ page }) => {
+  await page.goto("/#boardui:chat-starter");
+});
+
+test("manual local chunks stay in the running conversation and stop is terminal", async ({ page }) => {
+  const draft = page.getByRole("textbox", { name: "Starter message", exact: true });
+  const log = page.getByRole("log", { name: "Conversation messages" });
+  const advance = page.getByRole("button", { name: "Advance local chunk (synthetic)", exact: true });
+  await draft.fill("Plan locally");
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await advance.click();
+  await expect(log.locator('[data-streaming="true"]')).toHaveText("Partial synthetic response: Local chunk.");
+  await expect(page.getByRole("button", { name: "Stop", exact: true })).toBeVisible();
+  await draft.fill("Next welcome draft");
+  await page.getByRole("button", { name: "Personal ideas Unread", exact: true }).click();
+  await expect(advance).toHaveCount(0);
+  await expect(log).not.toContainText("Partial synthetic response");
+  await draft.fill("Ideas request");
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await advance.click();
+  await page.getByRole("button", { name: "Personal welcome", exact: true }).click();
+  await expect(draft).toHaveValue("Next welcome draft");
+  await advance.click();
+  await expect(log.locator('[data-streaming="true"]')).toHaveText("Partial synthetic response: Local chunk. Local chunk.");
+  await page.getByRole("button", { name: "Stop", exact: true }).click();
+  await expect(advance).toHaveCount(0);
+  await expect(log.locator('[data-streaming="true"]')).toHaveCount(0);
+  const stopped = await log.innerText();
+  await page.getByRole("button", { name: "Personal ideas", exact: true }).click();
+  await expect(log.locator('[data-streaming="true"]')).toHaveText("Partial synthetic response: Local chunk.");
+  await advance.click();
+  await page.getByRole("button", { name: "Advance synthetic update", exact: true }).click();
+  await expect(advance).toHaveCount(0);
+  await expect(log).toContainText("Synthetic result: ready for your review. No provider was called.");
+  await page.getByRole("button", { name: "Personal welcome", exact: true }).click();
+  await expect(log).toHaveText(stopped, { useInnerText: true });
+  await expect(draft).toHaveValue("Next welcome draft");
+});
+
+test("team round trips preserve drafts and isolate running replies with colliding chat IDs", async ({ page }) => {
+  const draft = page.getByRole("textbox", { name: "Starter message", exact: true });
+  const advance = page.getByRole("button", { name: "Advance local chunk (synthetic)", exact: true });
+  await draft.fill("Personal request");
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await advance.click();
+  await draft.fill("Personal draft");
+  await page.getByRole("button", { name: "Personal team", exact: true }).click();
+  await page.getByRole("menuitemradio", { name: "Studio", exact: true }).click();
+  await expect(draft).toHaveValue("");
+  await expect(advance).toHaveCount(0);
+  await expect(page.getByRole("log")).not.toContainText("Personal request");
+  await draft.fill("Studio draft");
+  await page.getByRole("button", { name: "Studio team", exact: true }).click();
+  await page.getByRole("menuitemradio", { name: "Personal", exact: true }).click();
+  await expect(draft).toHaveValue("Personal draft");
+  await expect(page.getByRole("log")).toContainText("Partial synthetic response: Local chunk.");
+  await advance.click();
+  await page.getByRole("button", { name: "Stop", exact: true }).click();
+  await page.getByRole("button", { name: "Personal team", exact: true }).click();
+  await page.getByRole("menuitemradio", { name: "Studio", exact: true }).click();
+  await expect(draft).toHaveValue("Studio draft");
+  await expect(page.getByRole("log")).not.toContainText("Local chunk");
+});
+
+test("host refusal and disabled state retain draft, running content and identity", async ({ page }) => {
+  const draft = page.getByRole("textbox", { name: "Starter message", exact: true });
+  const log = page.getByRole("log");
+  const advance = page.getByRole("button", { name: "Advance local chunk (synthetic)", exact: true });
+  await draft.fill("Local request");
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await advance.click();
+  await draft.fill("Retained draft");
+  const content = await log.innerText();
+  await page.getByLabel("Hold host state", { exact: true }).check();
+  await advance.click();
+  await page.getByRole("button", { name: "Stop", exact: true }).click();
+  await page.getByRole("button", { name: "Advance synthetic update", exact: true }).click();
+  await draft.fill("Rejected draft");
+  await expect(draft).toHaveValue("Retained draft");
+  await page.getByRole("button", { name: "Personal ideas Unread", exact: true }).click();
+  await page.getByRole("button", { name: "Personal team", exact: true }).click();
+  await page.getByRole("menuitemradio", { name: "Studio", exact: true }).click();
+  await expect(log).toHaveText(content, { useInnerText: true });
+  await expect(page.getByRole("button", { name: "Personal team", exact: true })).toBeVisible();
+  await page.getByLabel("Hold host state", { exact: true }).uncheck();
+  await page.getByLabel("Starter state", { exact: true }).selectOption("disabled");
+  await expect(advance).toBeDisabled();
+  await expect(draft).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Stop", exact: true })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Personal team", exact: true })).toBeDisabled();
+  await page.getByLabel("Starter state", { exact: true }).selectOption("ready");
+  await expect(log).toHaveText(content, { useInnerText: true });
+  await expect(draft).toHaveValue("Retained draft");
+  await advance.click();
+  await expect(log).toContainText("Partial synthetic response: Local chunk. Local chunk.");
+});
+
+test("assistant copy uses clipboard primitive and refusal prevents writes", async ({ page }) => {
+  const writes: string[] = [];
+  await page.exposeFunction("recordStarterCopy", (text: string) => writes.push(text));
+  await page.evaluate(() => Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText: async (text: string) => {
+    await (window as unknown as { recordStarterCopy: (text: string) => Promise<void> }).recordStarterCopy(text);
+  } } }));
+  const copy = page.getByRole("button", { name: "Copy assistant message", exact: true });
+  await copy.click();
+  await expect(page.getByRole("status").filter({ hasText: /^Copied$/ })).toBeVisible();
+  expect(writes).toEqual(["This is the isolated Personal example. What would you like to explore?"]);
+  await page.getByLabel("Hold host state", { exact: true }).check();
+  await copy.click();
+  expect(writes).toHaveLength(1);
+  await page.getByLabel("Hold host state", { exact: true }).uncheck();
+  await page.getByLabel("Starter state", { exact: true }).selectOption("disabled");
+  await expect(copy).toBeDisabled();
+  await page.getByLabel("Starter state", { exact: true }).selectOption("ready");
+  await page.evaluate(() => Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText: async () => { throw new Error("Denied"); } } }));
+  await copy.click();
+  await expect(page.getByRole("status").filter({ hasText: /^Copy failed$/ })).toBeVisible();
+  expect(writes).toHaveLength(1);
+});

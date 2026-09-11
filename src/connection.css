@@ -1,0 +1,6 @@
+.hk-connection { display: block; overflow: visible; width: 100%; height: 100%; color: var(--hk-secondary); pointer-events: none; }
+.hk-connection-line { stroke-width: 1.5; }
+.hk-connection-line--animated { stroke-dasharray: 5 5; animation: hk-connection-flow 1.4s linear infinite; }
+@keyframes hk-connection-flow { to { stroke-dashoffset: -10; } }
+@media (prefers-reduced-motion: reduce) { .hk-connection-line--animated { animation: none; } }
+@media (forced-colors: active) { .hk-connection { color: CanvasText; } }

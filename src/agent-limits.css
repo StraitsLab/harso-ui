@@ -1,0 +1,25 @@
+.hk-agent-limits-card { min-width: 0; padding: 16px; color: var(--hk-ink); background: transparent; border: 0; border-radius: 0; box-shadow: none; font-size: 13px; overflow-wrap: anywhere; }
+.hk-agent-limits-card h3 { margin: 0; font-size: 14px; font-weight: 600; }
+.hk-agent-limits-heading, .hk-agent-limits-card li, .hk-agent-limits-limit > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.hk-agent-limits-heading > span, .hk-agent-limits-card li > span:last-child { font-variant-numeric: tabular-nums; color: var(--hk-secondary); }
+.hk-agent-limits-heading .hk-button { padding: 4px 0; gap: 12px; text-align: start; white-space: normal; }
+.hk-agent-limits-card :is(button, a, summary):focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 3px; }
+.hk-agent-limits-meter { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.hk-agent-limits-segments { display: flex; overflow: hidden; height: 8px; border-radius: 4px; background: var(--hk-line); margin: 12px 0; }
+.hk-agent-limits-segments > span { flex-shrink: 0; min-width: 0; border-inline-end: 1px solid var(--hk-surface); box-sizing: border-box; }
+.hk-agent-limits-card ul { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 10px; }
+.hk-agent-limits-breakdown > li:last-child { border-top: 1px solid var(--hk-line); padding-top: 10px; }
+.hk-agent-limits-group { border-top: 1px solid var(--hk-line); padding: 10px 0; }
+.hk-agent-limits-group summary { display: flex; align-items: center; min-height: 44px; gap: 8px; cursor: pointer; }
+.hk-agent-limits-group summary::before { content: "▸"; }
+.hk-agent-limits-group[open] summary::before { content: "▾"; }
+.hk-agent-limits-group summary > span:last-child { color: var(--hk-secondary); font-size: 12px; }
+.hk-agent-limits-group summary[aria-disabled="true"] { cursor: default; opacity: .6; }
+.hk-agent-limits-group ul { padding-inline-start: 16px; }
+.hk-agent-limits-plan { border-top: 1px solid var(--hk-line); margin-top: 14px; padding-top: 14px; }
+.hk-agent-limits-plan a { color: inherit; text-underline-offset: 3px; }
+.hk-agent-limits-limit { margin-top: 16px; }
+.hk-agent-limits-limit p { color: var(--hk-secondary); font-size: 12px; margin: 4px 0 8px; }
+.hk-agent-limits-limit progress { display: block; width: 100%; height: 6px; accent-color: var(--hk-accent); }
+.hk-agent-limits-card [role="alert"] { color: var(--hk-negative); }
+@media (forced-colors: active) { .hk-agent-limits-segments > span { background: Highlight !important; border-color: Canvas; } .hk-agent-limits-segments { outline: 1px solid CanvasText; } }

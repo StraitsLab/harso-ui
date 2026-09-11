@@ -1,0 +1,153 @@
+@import "./theme.css";
+@import "./developer-content.css";
+@import "./activity.css";
+@import "./data.css";
+@import "./work.css";
+@import "./conversation.css";
+@import "./dates.css";
+@import "./navigation.css";
+@import "./controls.css";
+@import "./navigation-surfaces.css";
+@import "./file-tree.css";
+@import "./commit.css";
+@import "./stack-trace.css";
+@import "./test-results.css";
+@import "./terminal.css";
+@import "./code-block.css";
+@import "./chain-of-thought.css";
+@import "./attachments.css";
+@import "./context.css";
+@import "./audio-player.css";
+@import "./connection.css";
+@import "./web-preview.css";
+@import "./confirmation.css";
+@import "./canvas.css";
+@import "./node.css";
+@import "./edge.css";
+@import "./panel.css";
+@import "./toolbar.css";
+@import "./prompt-input.css";
+@import "./selectors.css";
+@import "./image.css";
+@import "./transcription.css";
+@import "./question.css";
+@import "./questionnaire.css";
+@import "./queue.css";
+@import "./speech-input.css";
+@import "./flow-controls.css";
+@import "./jsx-preview.css";
+@import "./inline-citation.css";
+@import "./confirmation.css";
+@import "./notification.css";
+@import "./sandbox.css";
+@import "./schema-display.css";
+@import "./open-in-chat.css";
+@import "./chart-cards.css";
+@import "./agent-surfaces.css";
+@import "./misc-surfaces.css";
+@import "./dashboard-surfaces.css";
+@import "./composer.css";
+
+.hk-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 42px; padding: 8px 17px; border: 1px solid transparent; border-radius: 24px;
+  background: transparent; color: var(--hk-ink); cursor: pointer; white-space: nowrap;
+  font-weight: 520; font-size: 14px; line-height: 1.4;
+  transition: background var(--hk-fast) var(--hk-ease), transform var(--hk-fast) var(--hk-ease);
+}
+.hk-button:hover:not(:disabled) { background: var(--hk-hover); }
+.hk-button:active:not(:disabled) { transform: translateY(1px); }
+.hk-button--primary { background: var(--hk-ink); color: var(--hk-inverse); }
+.hk-button--primary:hover:not(:disabled) { background: color-mix(in srgb, var(--hk-ink) 84%, var(--hk-canvas)); }
+.hk-button--outline { border-color: var(--hk-control-line); }
+.hk-button--secondary { background: var(--hk-hover); }
+.hk-button--ghost { background: transparent; }
+.hk-button--xs { min-height: 28px; padding: 3px 8px; font-size: 12px; }
+.hk-link { display: inline-flex; align-items: center; gap: 6px; }
+.hk-link.hk-link--secondary { color: var(--hk-secondary); }
+.hk-link--small { font-size: 13px; }
+.hk-link--xs { font-size: 12px; }
+.hk-button--danger { color: var(--hk-negative); }
+.hk-button:disabled { color: var(--hk-secondary); background: var(--hk-hover); border-color: transparent; }
+.hk-button--small { min-height: 34px; padding: 5px 12px; font-size: 13px; }
+.hk-icon-button { width: 42px; height: 42px; padding: 8px; flex-shrink: 0; }
+.hk-icon-button svg { width: 20px; height: 20px; }
+.hk-link { color: var(--hk-accent); text-underline-offset: 4px; }
+.hk-link:hover { text-decoration-thickness: 2px; }
+.hk-button--link { padding-inline: 0; border-color: transparent; background: transparent; color: var(--hk-accent); text-decoration: underline; text-underline-offset: 4px; }
+.hk-input {
+  display: block; width: 100%; min-width: 0; min-height: 44px; border: 1px solid var(--hk-control-line);
+  border-radius: 10px; background: var(--hk-surface); color: var(--hk-ink); padding: 10px 13px;
+  transition: border-color var(--hk-fast) var(--hk-ease);
+}
+.hk-input::placeholder { color: var(--hk-secondary); opacity: 1; }
+.hk-input[aria-invalid="true"] { border-color: var(--hk-negative); }
+.hk-input:disabled { color: var(--hk-secondary); background: var(--hk-hover); }
+.hk-textarea { resize: vertical; min-height: 112px; }
+.hk-select { padding-inline-end: 30px; }
+@supports (appearance: base-select) {
+  .hk-select--customizable, .hk-select--customizable::picker(select) { appearance: base-select; }
+  .hk-select--customizable { display: flex; align-items: center; padding-inline-end: 13px; }
+  .hk-select--customizable > button { flex: 1; min-width: 0; text-align: start; color: inherit; }
+  .hk-select--customizable selectedcontent .hk-select-item-detail { display: none; }
+  .hk-select--customizable::picker(select) { color: var(--hk-ink); background: var(--hk-surface); border: 1px solid var(--hk-control-line); border-radius: 12px; padding: 5px; max-height: min(360px, 60dvh); max-width: calc(100vw - 24px); overflow: auto; }
+  .hk-select--customizable option { min-height: 44px; padding: 8px 12px; border-radius: 8px; gap: 10px; overflow-wrap: anywhere; }
+  .hk-select--customizable option:checked, .hk-select--customizable option:hover { background: var(--hk-hover); }
+  .hk-select--customizable option:disabled { color: var(--hk-secondary); }
+  .hk-select-item-label { flex: 1; }
+  .hk-select-item-detail { display: inline-flex; align-items: center; gap: 8px; color: var(--hk-secondary); font-size: 13px; }
+}
+.hk-field { display: grid; gap: 8px; min-width: 0; }
+.hk-field > label { font-weight: 520; font-size: 14px; }
+.hk-field-hint, .hk-field-error { font-size: 13px; overflow-wrap: anywhere; }
+.hk-field-hint { color: var(--hk-secondary); }
+.hk-field-error { color: var(--hk-negative); }
+.hk-choice { display: flex; align-items: center; gap: 12px; min-height: 44px; font-size: 14px; cursor: pointer; }
+.hk-choice:has(input:disabled) { cursor: not-allowed; color: var(--hk-secondary); }
+.hk-choice input { width: 18px; height: 18px; margin: 0; flex-shrink: 0; accent-color: var(--hk-ink); }
+.hk-choice-description { display: block; font-size: 13px; color: var(--hk-secondary); margin-top: 2px; }
+.hk-switch input {
+  appearance: none; position: relative; width: 38px; height: 24px; border: 1px solid var(--hk-control-line);
+  border-radius: 20px; background: var(--hk-hover); transition: background var(--hk-fast) var(--hk-ease);
+}
+.hk-switch input::before { content: ""; position: absolute; width: 16px; height: 16px; top: 3px; left: 3px; border-radius: 50%; background: var(--hk-secondary); transition: transform var(--hk-fast) var(--hk-ease); }
+.hk-switch input:checked { background: var(--hk-ink); border-color: var(--hk-ink); }
+.hk-switch input:checked::before { background: var(--hk-inverse); transform: translateX(14px); }
+.hk-switch input:disabled { opacity: .55; }
+.hk-radio-group { min-width: 0; border: 0; margin: 0; padding: 0; }
+.hk-radio-group legend { padding: 0 0 10px; font-weight: 520; font-size: 14px; }
+.hk-slider { display: block; min-height: 44px; width: 100%; accent-color: var(--hk-ink); }
+.hk-progress { appearance: auto; display: block; width: 100%; height: 6px; accent-color: var(--hk-accent); }
+.hk-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 520; color: var(--hk-secondary); }
+.hk-badge--positive { color: var(--hk-positive); }
+.hk-badge--attention { color: var(--hk-attention); }
+.hk-badge--negative { color: var(--hk-negative); }
+.hk-badge--active { color: var(--hk-accent); }
+.hk-badge--primary { color: var(--hk-accent); }
+.hk-avatar { width: var(--hk-avatar-size); height: var(--hk-avatar-size); display: inline-grid; place-items: center; border-radius: 50%; background: var(--hk-hover); color: var(--hk-ink); font-size: 12px; font-weight: 540; flex-shrink: 0; overflow: hidden; }
+.hk-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.hk-avatar--blue { background: color-mix(in srgb, var(--hk-accent) 12%, var(--hk-canvas)); color: var(--hk-accent); }
+.hk-skeleton { display: block; width: 100%; min-height: 16px; border-radius: 4px; background: var(--hk-hover); animation: hk-breathe 1.8s ease-in-out infinite alternate; }
+.hk-spinner { display: inline-block; width: 14px; height: 14px; border: 1.5px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: hk-turn .9s linear infinite; }
+.hk-separator { height: 1px; width: 100%; background: var(--hk-line); }
+.hk-separator[aria-orientation="vertical"] { width: 1px; height: 24px; }
+.hk-separator[data-treatment="double"] { height: 4px; border-block: 1px solid var(--hk-line); background: transparent; }
+.hk-separator[data-treatment="fill"] { height: 6px; }
+.hk-separator--content { display: flex; align-items: center; gap: 12px; }
+.hk-separator--content, .hk-separator--content[data-treatment] { height: auto; background: transparent; border: 0; }
+.hk-separator--content::before, .hk-separator--content::after { content: ""; flex: 1; border-top: 1px solid var(--hk-line); }
+.hk-separator--content[data-treatment="double"]::before, .hk-separator--content[data-treatment="double"]::after { height: 4px; border-block: 1px solid var(--hk-line); }
+.hk-separator--content[data-treatment="fill"]::before, .hk-separator--content[data-treatment="fill"]::after { height: 6px; background: var(--hk-line); border: 0; }
+.hk-separator--content[data-align="start"]::before, .hk-separator--content[data-align="end"]::after { flex: 0; }
+.hk-empty { padding: 48px 16px; text-align: center; }
+.hk-empty h3 { font-size: 22px; }
+.hk-empty p { color: var(--hk-secondary); margin: 12px auto 20px; max-width: 44ch; }
+.hk-disclosure > summary { min-height: 44px; padding: 10px 0; cursor: pointer; font-size: 14px; }
+.hk-disclosure-body { padding: 10px 0 18px; color: var(--hk-secondary); }
+@keyframes hk-turn { to { transform: rotate(360deg); } }
+@keyframes hk-breathe { to { opacity: .55; } }
+@media (pointer: coarse) { .hk-button, .hk-button--small, .hk-icon-button { min-height: 44px; } .hk-icon-button { min-width: 44px; } }
+@media (forced-colors: active) { .hk-switch input:checked { background: Highlight; } .hk-switch input:checked::before { background: HighlightText; } .hk-button { border-color: ButtonBorder; } }
+.hk-slider-field { position: relative; display: inline-grid; width: 100%; min-width: 0; }
+.hk-slider-value { position: absolute; inset: auto 0 100% auto; padding: 4px 8px; border-radius: 8px; background: var(--hk-ink); color: var(--hk-inverse); font: 12px var(--hk-mono); pointer-events: none; opacity: 0; }
+.hk-slider-field:hover .hk-slider-value, .hk-slider-field:focus-within .hk-slider-value { opacity: 1; }

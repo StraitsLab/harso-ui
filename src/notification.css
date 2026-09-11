@@ -1,0 +1,44 @@
+.hk-notification-viewport { position: fixed; z-index: 20; display: grid; gap: 10px; width: min(380px, calc(100vw - 32px)); pointer-events: none; }
+.hk-notification-viewport > * { pointer-events: auto; }
+.hk-notification { opacity: 1; transition: opacity 180ms ease, display 180ms allow-discrete; }
+.hk-notification[hidden] { display: none; opacity: 0; pointer-events: none; }
+@starting-style { .hk-notification { opacity: 0; } }
+.hk-notification-viewport--top-left { inset: 20px auto auto 20px; }
+.hk-notification-viewport--top-center { inset: 20px 50% auto auto; transform: translateX(50%); }
+.hk-notification-viewport--top-right { inset: 20px 20px auto auto; }
+.hk-notification-viewport--bottom-left { inset: auto auto 20px 20px; }
+.hk-notification-viewport--bottom-center { inset: auto 50% 20px auto; transform: translateX(50%); }
+.hk-notification-viewport--bottom-right { inset: auto 20px 20px auto; }
+.hk-notification { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: 10px; padding: 12px 14px; border: 1px solid var(--hk-line); border-radius: 16px; background: color-mix(in srgb, var(--hk-surface) 92%, var(--hk-canvas)); box-shadow: 0 16px 40px color-mix(in srgb, var(--hk-ink) 12%, transparent); color: var(--hk-ink); }
+.hk-notification-visual { color: var(--hk-accent); padding-top: 5px; }
+.hk-notification--success .hk-notification-visual { color: var(--hk-positive); }
+.hk-notification--error .hk-notification-visual { color: var(--hk-negative); }
+.hk-notification-dot { display: block; width: 8px; height: 8px; margin: 4px; border-radius: 50%; background: currentColor; }
+.hk-notification-body { min-width: 0; font-size: 13px; line-height: 1.5; }
+.hk-notification-body h3 { margin: 0; font-size: 14px; font-weight: 560; }
+.hk-notification-description { color: var(--hk-secondary); overflow-wrap: anywhere; }
+.hk-notification-presence { color: var(--hk-secondary); font-size: 12px; }
+.hk-notification-presence[data-presence="online"] { color: var(--hk-positive); }
+.hk-notification-presence[data-presence="busy"] { color: var(--hk-attention); }
+.hk-notification-dismiss { align-self: start; }
+.hk-notification-center { display: grid; gap: 12px; min-width: 0; padding: 16px; border: 1px solid var(--hk-line); border-radius: 18px; background: var(--hk-surface); }
+.hk-notification-center-header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.hk-notification-center-header h2 { margin: 0; font-size: 16px; font-weight: 560; }
+.hk-notification-center-header span { color: var(--hk-secondary); font: 12px var(--hk-mono); }
+.hk-notification-center-list { display: grid; gap: 2px; }
+.hk-notification-center-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.hk-notification-center-row > .hk-notification-center-item { min-width: 0; }
+.hk-notification-center-header { flex-wrap: wrap; }
+.hk-notification-center-item:disabled { cursor: default; }
+.hk-notification-center-item--success .hk-notification-dot { color: var(--hk-positive); }
+.hk-notification-center-item--error .hk-notification-dot { color: var(--hk-negative); }
+.hk-notification-center-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: 10px; width: 100%; padding: 10px 8px; border: 0; border-radius: 10px; background: transparent; color: var(--hk-ink); text-align: left; cursor: pointer; }
+.hk-notification-center-item:hover, .hk-notification-center-item:focus-visible { background: var(--hk-hover); }
+.hk-notification-center-item strong, .hk-notification-center-item small { display: block; }
+.hk-notification-center-item small { margin-top: 2px; color: var(--hk-secondary); font-size: 12px; line-height: 1.45; }
+.hk-notification-center-item[data-read] { opacity: .68; }
+.hk-notification-unread { width: 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: var(--hk-accent); }
+.hk-notification-empty { margin: 10px 0; color: var(--hk-secondary); font-size: 13px; }
+@media (max-width: 520px) { .hk-notification-viewport { width: calc(100vw - 20px); } .hk-notification-viewport--top-left, .hk-notification-viewport--top-center, .hk-notification-viewport--top-right { inset: 10px 10px auto; transform: none; } .hk-notification-viewport--bottom-left, .hk-notification-viewport--bottom-center, .hk-notification-viewport--bottom-right { inset: auto 10px 10px; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .hk-notification, .hk-notification-center-item { transition: none; } }
+@media (forced-colors: active) { .hk-notification, .hk-notification-center { border-color: CanvasText; box-shadow: none; } .hk-notification-center-item:focus-visible { outline: 2px solid Highlight; } }

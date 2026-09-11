@@ -1,0 +1,44 @@
+.hk-agent-thinking.hk-thinking { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-width: 0; color: var(--hk-secondary); font-size: 13px; }
+.hk-thinking .hk-thinking-indicator { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; position: relative; width: 24px; height: 24px; flex: none; color: var(--hk-accent); }
+.hk-thinking[data-tone="subtle"] .hk-thinking-indicator { color: var(--hk-secondary); }
+.hk-thinking-dot { border-radius: 50%; background: currentColor; opacity: .55; }
+.hk-thinking-dot:nth-child(2), .hk-thinking-dot:nth-child(4) { --hk-thinking-delay: 120ms; }
+.hk-thinking-dot:nth-child(3), .hk-thinking-dot:nth-child(5), .hk-thinking-dot:nth-child(7) { --hk-thinking-delay: 240ms; }
+.hk-thinking-dot:nth-child(6), .hk-thinking-dot:nth-child(8) { --hk-thinking-delay: 360ms; }
+.hk-thinking-dot:nth-child(9) { --hk-thinking-delay: 480ms; }
+.hk-thinking[data-variant="spin"] .hk-thinking-dot:nth-child(3) { --hk-thinking-delay: 240ms; }
+.hk-thinking[data-variant="spin"] .hk-thinking-dot:nth-child(6) { --hk-thinking-delay: 360ms; }
+.hk-thinking[data-variant="spin"] .hk-thinking-dot:nth-child(9) { --hk-thinking-delay: 480ms; }
+.hk-thinking[data-variant="spin"] .hk-thinking-dot:nth-child(8) { --hk-thinking-delay: 600ms; }
+.hk-thinking[data-variant="spin"] .hk-thinking-dot:nth-child(7) { --hk-thinking-delay: 720ms; }
+.hk-thinking[data-variant="spin"] .hk-thinking-dot:nth-child(4) { --hk-thinking-delay: 840ms; }
+.hk-thinking-star { position: absolute; width: 9px; height: 9px; background: currentColor; clip-path: polygon(50% 0, 64% 36%, 100% 50%, 64% 64%, 50% 100%, 36% 64%, 0 50%, 36% 36%); opacity: .7; }
+.hk-thinking-star:nth-child(1) { left: 8px; top: 1px; }
+.hk-thinking-star:nth-child(2) { left: 0; top: 10px; --hk-thinking-delay: 220ms; }
+.hk-thinking-star:nth-child(3) { right: 0; top: 9px; --hk-thinking-delay: 440ms; }
+.hk-thinking-star:nth-child(4) { left: 7px; bottom: 0; --hk-thinking-delay: 660ms; }
+.hk-thinking-star:nth-child(5) { right: 0; top: 0; width: 5px; height: 5px; --hk-thinking-delay: 880ms; }
+.hk-thinking[data-variant="infinity"] .hk-thinking-indicator { display: block; width: 32px; }
+.hk-thinking-indicator svg { width: 100%; height: 100%; overflow: visible; }
+.hk-thinking-indicator path { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.hk-thinking-track { opacity: .3; }
+.hk-thinking-comet { stroke-dasharray: 24 76; }
+.hk-thinking-status { display: contents; }
+.hk-thinking-label { min-width: 0; overflow-wrap: anywhere; }
+.hk-thinking time { font: 11px var(--hk-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+@keyframes hk-thinking-wave { 0%, 70%, 100% { opacity: .35; transform: scale(.8); } 30% { opacity: 1; transform: scale(1); } }
+@keyframes hk-thinking-orbit { 0%, 15% { opacity: 1; } 65%, 100% { opacity: .3; } }
+@keyframes hk-thinking-twinkle { 0%, 100% { opacity: .35; transform: scale(.7); } 50% { opacity: 1; transform: scale(1); } }
+@keyframes hk-thinking-lap { to { stroke-dashoffset: -100; } }
+@keyframes hk-thinking-shimmer { to { background-position: -200% 0; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hk-thinking[data-active="true"][data-variant="wave"] .hk-thinking-dot { animation: hk-thinking-wave 1.4s ease-in-out var(--hk-thinking-delay, 0ms) infinite; }
+  .hk-thinking[data-active="true"][data-variant="spin"] .hk-thinking-dot:not(:nth-child(5)) { animation: hk-thinking-orbit .96s linear var(--hk-thinking-delay, 0ms) infinite; }
+  .hk-thinking[data-active="true"] .hk-thinking-star { animation: hk-thinking-twinkle 1.6s ease-in-out var(--hk-thinking-delay, 0ms) infinite; }
+  .hk-thinking[data-active="true"] .hk-thinking-comet { animation: hk-thinking-lap 1.8s linear infinite; }
+  @media (forced-colors: none) {
+    .hk-thinking[data-active="true"][data-shimmer="true"] .hk-thinking-label { background: linear-gradient(100deg, var(--hk-secondary) 35%, var(--hk-ink) 50%, var(--hk-secondary) 65%); background-size: 200% 100%; background-clip: text; color: transparent; animation: hk-thinking-shimmer 2.4s linear infinite; }
+  }
+}

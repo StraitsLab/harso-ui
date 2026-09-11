@@ -1,0 +1,43 @@
+.hk-attachments { min-width: 0; }
+.hk-attachments-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.hk-attachments-inline { display: flex; flex-wrap: wrap; gap: 6px; }
+.hk-attachments-list { display: grid; gap: 4px; }
+.hk-attachment { position: relative; display: flex; align-items: center; gap: 10px; min-width: 0; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); color: var(--hk-ink); }
+.hk-attachments-grid .hk-attachment { display: grid; align-content: start; overflow: hidden; }
+.hk-attachments-inline .hk-attachment { padding: 5px 8px; border-radius: 999px; }
+.hk-attachments-list .hk-attachment { padding: 8px 10px; }
+.hk-attachment-preview { display: grid; place-items: center; flex: 0 0 34px; width: 34px; height: 34px; overflow: hidden; border-radius: 8px; background: var(--hk-hover); color: var(--hk-secondary); }
+.hk-attachments-grid .hk-attachment-preview { width: 100%; height: 100px; border-radius: 0; }
+.hk-attachment-preview img, .hk-attachment-preview video { width: 100%; height: 100%; object-fit: cover; }
+.hk-attachment-preview audio { width: 100%; height: 30px; }
+.hk-attachment-info { display: grid; min-width: 0; gap: 2px; padding: 8px; }
+.hk-attachments-inline .hk-attachment-info { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; padding: 0; }
+.hk-attachments-inline .hk-attachment-name { max-width: 100%; }
+.hk-attachment-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+.hk-attachment-type, .hk-attachment-size { color: var(--hk-secondary); font-size: 11px; }
+.hk-attachment-remove { flex: 0 0 auto; min-width: 30px; min-height: 30px; margin-left: auto; border-radius: 999px; }
+.hk-attachment-hover-card { position: relative; }
+.hk-attachment-hover-trigger { font: inherit; color: inherit; background: transparent; border: 0; cursor: pointer; }
+.hk-attachment-hover-trigger:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 3px; }
+.hk-attachment-hover-content { position: absolute; top: calc(100% + 4px); z-index: 5; width: min(320px, calc(100vw - 24px)); }
+.hk-attachment-hover-content[hidden] { display: none; }
+.hk-attachment-hover-content[data-align="end"] { right: 0; }
+.hk-attachment-hover-content[data-align="center"] { left: 50%; transform: translateX(-50%); }
+@supports (anchor-name: --anchor) {
+  @position-try --hk-hover-below { position-area: none; inset: 12px; top: max(12px, anchor(bottom)); height: fit-content; margin: 8px auto; margin-bottom: auto; }
+  @position-try --hk-hover-above { position-area: none; inset: 12px; bottom: max(12px, anchor(top)); height: fit-content; margin: 8px auto; margin-top: auto; }
+  @position-try --hk-hover-center { position-area: none; inset: 12px; margin: auto; height: fit-content; }
+  .hk-attachment-hover-content[data-align] { position: fixed; inset: auto; margin: 8px; transform: none; position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline, --hk-hover-below, --hk-hover-above, --hk-hover-center; max-height: calc(100dvh - 24px); overflow: auto; }
+  .hk-attachment-hover-content[data-align="center"] { position-area: block-end; }
+  .hk-attachment-hover-content[data-align="end"] { position-area: block-end span-inline-start; }
+}
+.hk-attachment-hover-content { padding: 8px; border: 1px solid var(--hk-line); border-radius: 10px; background: var(--hk-surface); box-shadow: var(--hk-shadow); }
+.hk-attachment-empty { padding: 20px; color: var(--hk-secondary); text-align: center; }
+@media (max-width: 420px) { .hk-attachments-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (forced-colors: active) { .hk-attachment, .hk-attachment-hover-content { border-color: CanvasText; } .hk-attachment-preview { background: Canvas; color: CanvasText; } }
+.hk-attachment-uploading, .hk-attachment-queued { opacity: .86; }
+.hk-attachment-error { color: var(--hk-negative); font-size: 11px; }
+.hk-attachment-progress { grid-column: 1 / -1; height: 3px; overflow: hidden; background: var(--hk-hover); }
+.hk-attachment-progress span { display: block; height: 100%; background: var(--hk-accent); transition: width 160ms ease; }
+.hk-attachment-retry { min-height: 30px; margin-left: auto; }
+@media (prefers-reduced-motion: reduce) { .hk-attachment-progress span { transition: none; } }

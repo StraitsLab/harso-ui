@@ -1,0 +1,93 @@
+import { Children, createContext, isValidElement, useContext, useEffect, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type ReactElement, type ReactNode } from "react";
+import { Button, type ButtonProps } from "./primitives";
+
+import { Dropdown, DropdownTrigger, DropdownPopover, DropdownItem } from "./navigation-surfaces";
+import { Tabs, Tooltip } from "./navigation";
+import { AttachmentHoverCard, AttachmentHoverCardTrigger, AttachmentHoverCardContent, type AttachmentData } from "./attachments";
+
+export type PromptInputFile = { id: string; type: "file"; url: string; filename: string; mediaType: string };
+export type PromptInputMessage = { text: string; files: PromptInputFile[] };
+function usePromptDraft(initialInput: string) {
+  const [value, setInput] = useState(initialInput);
+  const [files, setFiles] = useState<PromptInputFile[]>([]);
+  const [sources, setSources] = useState<AttachmentData[]>([]);
+  const urls = useRef(new Map<string, string>());
+  const fileInput = useRef<HTMLInputElement>(null);
+  useEffect(() => () => { urls.current.forEach(url => URL.revokeObjectURL(url)); urls.current.clear(); }, []);
+  const attachments = {
+    files,
+    add: (incoming: File[] | FileList) => {
+      const added = Array.from(incoming).map(file => { const id = crypto.randomUUID(); const url = URL.createObjectURL(file); urls.current.set(id, url); return { id, type: "file" as const, url, filename: file.name, mediaType: file.type }; });
+      setFiles(previous => [...previous, ...added]);
+    },
+    remove: (id: string) => { const url = urls.current.get(id); if (url) URL.revokeObjectURL(url); urls.current.delete(id); setFiles(previous => previous.filter(file => file.id !== id)); },
+    clear: () => { urls.current.forEach(url => URL.revokeObjectURL(url)); urls.current.clear(); setFiles([]); },
+    openFileDialog: () => fileInput.current?.click(),
+  };
+  return { textInput: { value, setInput, clear: () => setInput("") }, attachments, fileInput, referencedSources: { sources, add: (incoming: AttachmentData | AttachmentData[]) => setSources(previous => [...new Map([...previous, ...(Array.isArray(incoming) ? incoming : [incoming])].map(source => [source.id, source])).values()]), remove: (id: string) => setSources(previous => previous.filter(source => source.id !== id)), clear: () => setSources([]) } };
+}
+type PromptDraft = ReturnType<typeof usePromptDraft>;
+const ProviderValue = createContext<PromptDraft | null>(null);
+export function usePromptInputController() { const provider = useContext(ProviderValue); if (!provider) throw new Error("usePromptInputController requires PromptInputProvider."); return provider; }
+export function useProviderAttachments() { return usePromptInputController().attachments; }
+export function usePromptInputAttachments() { return usePrompt().draft.attachments; }
+export function usePromptInputReferencedSources() { return usePrompt().draft.referencedSources; }
+
+type PromptState = { value: string; setValue: (value: string) => void; submit: () => void; canSubmit: boolean; acceptsAttachments: boolean; draft: PromptDraft };
+const PromptValue = createContext<PromptState | null>(null);
+function usePrompt() { const value = useContext(PromptValue); if (!value) throw new Error("PromptInput parts require PromptInput."); return value; }
+type SlotProps = ComponentPropsWithRef<"div">;
+
+export type PromptInputProps = Omit<SlotProps, "onSubmit"> & { value?: string; defaultValue?: string; onValueChange?: (value: string) => void; onSubmit?: (value: string) => void; onSubmitMessage?: (message: PromptInputMessage) => void };
+export function PromptInput({ value, defaultValue = "", onValueChange, onSubmit, onSubmitMessage, children, className = "", ...props }: PromptInputProps) {
+  const provider = useContext(ProviderValue);
+  const local = usePromptDraft(defaultValue);
+  const draft = provider ?? local;
+  const current = value ?? draft.textInput.value;
+  const canSubmit = !!(onSubmit || onSubmitMessage) && (!!current.trim() || (!!onSubmitMessage && draft.attachments.files.length > 0));
+  const setValue = (next: string) => { if (value === undefined) draft.textInput.setInput(next); onValueChange?.(next); };
+  return <PromptValue value={{ value: current, setValue, draft, canSubmit, acceptsAttachments: !!onSubmitMessage, submit: () => { if (canSubmit) { if (onSubmitMessage) onSubmitMessage({ text: current, files: draft.attachments.files }); else onSubmit?.(current); } } }}><div {...props} className={`hk-prompt-input ${className}`}><input ref={draft.fileInput} type="file" multiple hidden disabled={!onSubmitMessage} onChange={event => { if (onSubmitMessage && event.currentTarget.files) draft.attachments.add(event.currentTarget.files); event.currentTarget.value = ""; }} />{children}</div></PromptValue>;
+}
+export function PromptInputProvider({ initialInput = "", children }: { initialInput?: string; children: ReactNode }) { const draft = usePromptDraft(initialInput); return <ProviderValue value={draft}>{children}</ProviderValue>; }
+export function PromptInputTextarea({ className = "", ...props }: ComponentPropsWithRef<"textarea">) { const prompt = usePrompt(); return <textarea {...props} value={props.value ?? prompt.value} onChange={event => { props.onChange?.(event); if (!event.defaultPrevented) prompt.setValue(event.target.value); }} onKeyDown={event => { props.onKeyDown?.(event); if (!event.defaultPrevented && !event.nativeEvent.isComposing && !props.disabled && !props.readOnly && event.key === "Enter" && !event.shiftKey) { event.preventDefault(); prompt.submit(); } }} className={`hk-prompt-textarea ${className}`} />; }
+export function PromptInputFooter({ className = "", ...props }: SlotProps) { return <div {...props} className={`hk-prompt-footer ${className}`} />; }
+export function PromptInputTools({ className = "", ...props }: SlotProps) { return <div {...props} className={`hk-prompt-tools ${className}`} />; }
+export function PromptInputButton({ tooltip, className = "", ...props }: ButtonProps & { tooltip?: ReactNode }) { const button = <Button {...props} size="small" className={`hk-prompt-button ${className}`} />; return tooltip ? <Tooltip content={tooltip}>{button}</Tooltip> : button; }
+export function PromptInputSubmit({ className = "", children = "Send", ...props }: ButtonProps) { const prompt = usePrompt(); return <Button {...props} type="button" size="small" disabled={props.disabled || !prompt.canSubmit} className={`hk-prompt-submit ${className}`} onClick={event => { props.onClick?.(event); if (!event.defaultPrevented) prompt.submit(); }}>{children}</Button>; }
+export function PromptInputBody({ className = "", ...props }: SlotProps) { return <div {...props} className={`hk-prompt-body ${className}`} />; }
+export function PromptInputHeader({ className = "", ...props }: SlotProps) { return <div {...props} className={`hk-prompt-header ${className}`} />; }
+const SelectValue = createContext<{ value: string; select: (value: string) => void } | null>(null);
+export function PromptInputSelect({ value, defaultValue = "", onValueChange, children, className = "", label = "Prompt selection", open, defaultOpen, onOpenChange, disabled, ...props }: Omit<SlotProps, "defaultValue"> & { value?: string; defaultValue?: string; onValueChange?: (value: string) => void; label?: string; open?: boolean; defaultOpen?: boolean; onOpenChange?: (open: boolean) => void; disabled?: boolean }) { const [local, setLocal] = useState(defaultValue); const current = value ?? local; return <SelectValue value={{ value: current, select: next => { if (value === undefined) setLocal(next); onValueChange?.(next); } }}><div {...props} className={`hk-prompt-select ${className}`}><Dropdown label={label} open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} disabled={disabled}>{children}</Dropdown></div></SelectValue>; }
+export function PromptInputSelectTrigger({ className = "", ...props }: ButtonProps) { return <DropdownTrigger {...props} className={`hk-prompt-select-trigger ${className}`} />; }
+export function PromptInputSelectContent({ className = "", ...props }: ComponentPropsWithRef<typeof DropdownPopover>) { return <DropdownPopover {...props} className={`hk-prompt-select-content ${className}`} />; }
+export function PromptInputSelectItem({ value, children, className = "", ...props }: Omit<ComponentPropsWithRef<typeof DropdownItem>, "label" | "selected"> & { value: string; children?: ReactNode }) { const select = useContext(SelectValue); return <DropdownItem {...props} label={typeof children === "string" ? children : value} selected={select?.value === value} className={`hk-prompt-select-item ${className}`} onSelect={event => { props.onSelect?.(event); if (!event.defaultPrevented) select?.select(value); }} />; }
+export function PromptInputSelectValue({ children, placeholder = "Choose", ...props }: ComponentPropsWithRef<"span"> & { placeholder?: string }) { const select = useContext(SelectValue); return <span {...props}>{children ?? (select?.value || placeholder)}</span>; }
+export function PromptInputActionMenu({ className = "", label = "Prompt actions", children, open, defaultOpen, onOpenChange, disabled, ...props }: SlotProps & { label?: string; open?: boolean; defaultOpen?: boolean; onOpenChange?: (open: boolean) => void; disabled?: boolean }) { return <div {...props} className={`hk-prompt-action-menu ${className}`}><Dropdown label={label} open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} disabled={disabled}>{children}</Dropdown></div>; }
+export function PromptInputActionMenuTrigger({ className = "", ...props }: ButtonProps) { return <DropdownTrigger {...props} className={`hk-prompt-action-trigger ${className}`} />; }
+export function PromptInputActionMenuContent({ className = "", ...props }: ComponentPropsWithRef<typeof DropdownPopover>) { return <DropdownPopover {...props} className={`hk-prompt-action-content ${className}`} />; }
+export function PromptInputActionMenuItem({ className = "", children, label, ...props }: Omit<ComponentPropsWithRef<typeof DropdownItem>, "label"> & { label?: string; children?: ReactNode }) { return <DropdownItem {...props} label={label ?? (typeof children === "string" ? children : "Action")} className={`hk-prompt-action-item ${className}`} />; }
+export function PromptInputActionAddAttachments({ onFiles, ...props }: ButtonProps & { onFiles?: (files: FileList | null) => void }) { const input = useRef<HTMLInputElement>(null); const prompt = useContext(PromptValue); return <><input ref={input} type="file" multiple hidden disabled={props.disabled || (!onFiles && !prompt?.acceptsAttachments)} onChange={event => { if (props.disabled) return; if (onFiles) onFiles(event.currentTarget.files); else if (prompt?.acceptsAttachments && event.currentTarget.files) prompt.draft.attachments.add(event.currentTarget.files); event.currentTarget.value = ""; }} /><Button {...props} size="small" type="button" disabled={props.disabled || (!onFiles && !prompt?.acceptsAttachments)} onClick={event => { props.onClick?.(event); if (!event.defaultPrevented) input.current?.click(); }}>Attach</Button></>; }
+export function PromptInputActionAddScreenshot({ onScreenshot, ...props }: ButtonProps & { onScreenshot?: () => void }) { return <Button {...props} size="small" type="button" disabled={props.disabled || !onScreenshot} onClick={event => { props.onClick?.(event); if (!event.defaultPrevented) onScreenshot?.(); }}>Screenshot</Button>; }
+export function PromptInputHoverCard({ className = "", ...props }: ComponentPropsWithRef<typeof AttachmentHoverCard>) { return <AttachmentHoverCard {...props} className={`hk-prompt-hover-card ${className}`} />; }
+export function PromptInputHoverCardTrigger({ className = "", ...props }: ComponentPropsWithRef<typeof AttachmentHoverCardTrigger>) { return <AttachmentHoverCardTrigger {...props} className={`hk-prompt-hover-trigger ${className}`} />; }
+export function PromptInputHoverCardContent({ className = "", ...props }: ComponentPropsWithRef<typeof AttachmentHoverCardContent>) { return <AttachmentHoverCardContent {...props} className={`hk-prompt-hover-content ${className}`} />; }
+export function PromptInputTabsList({ className = "", children, value, defaultValue, onValueChange, ...props }: Omit<SlotProps, "defaultValue"> & { value?: string; defaultValue?: string; onValueChange?: (value: string) => void }) { const items = Children.toArray(children).filter(isValidElement).map((child, index) => { const item = (child as ReactElement<ComponentPropsWithRef<typeof PromptInputTab>>).props; return { value: item.value ?? String(index), label: item.label ?? item.value ?? String(index + 1), content: item.children, disabled: item.disabled }; }); return <div {...props} className={`hk-prompt-tabs-list ${className}`}><Tabs label={props["aria-label"] ?? "Prompt modes"} items={items} value={value} defaultValue={defaultValue} onValueChange={onValueChange} /></div>; }
+export function PromptInputTab({ value, label, disabled, className = "", ...props }: SlotProps & { value?: string; label?: ReactNode; disabled?: boolean }) { return <div {...props} className={`hk-prompt-tab ${className}`} />; }
+export function PromptInputTabLabel({ className = "", ...props }: ComponentPropsWithRef<"span">) { return <span {...props} className={`hk-prompt-tab-label ${className}`} />; }
+export function PromptInputTabBody({ className = "", ...props }: SlotProps) { return <div {...props} className={`hk-prompt-tab-body ${className}`} />; }
+export function PromptInputTabItem({ className = "", ...props }: SlotProps) { return <div {...props} className={`hk-prompt-tab-item ${className}`} />; }
+type CommandState = { query: string; setQuery: (query: string) => void; identity: string; root: React.RefObject<HTMLDivElement | null>; active: string | undefined; setActive: (id: string | undefined) => void; empty: boolean };
+const CommandValue = createContext<CommandState | null>(null);
+function useCommand() { const command = useContext(CommandValue); if (!command) throw new Error("Command parts require PromptInputCommand."); return command; }
+function commandOptions(root: HTMLElement | null) { return Array.from(root?.querySelectorAll<HTMLButtonElement>('[role="option"]:not([hidden]):not(:disabled)') ?? []).filter(option => !option.closest("[hidden], [inert], [aria-hidden=\"true\"]")); }
+export function PromptInputCommand({ className = "", children, ...props }: SlotProps) {
+  const identity = useId(); const root = useRef<HTMLDivElement>(null); const [query, setQuery] = useState(""); const [active, setActive] = useState<string>(); const [empty, setEmpty] = useState(false);
+  useLayoutEffect(() => { const options = commandOptions(root.current); setEmpty(!options.length); if (!options.some(option => option.id === active)) setActive(undefined); });
+  return <CommandValue value={{ query, setQuery, identity, root, active, setActive, empty }}><div {...props} ref={root} className={`hk-prompt-command ${className}`}>{children}</div></CommandValue>;
+}
+export function PromptInputCommandInput({ className = "", ...props }: ComponentPropsWithRef<"input">) { const command = useCommand(); return <input {...props} role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls={command.identity} aria-activedescendant={command.active} value={command.query} className={`hk-prompt-command-input ${className}`} onChange={event => { props.onChange?.(event); if (!event.defaultPrevented) command.setQuery(event.currentTarget.value); }} onKeyDown={event => { props.onKeyDown?.(event); if (event.defaultPrevented || event.nativeEvent.isComposing) return; const options = commandOptions(command.root.current); const index = options.findIndex(option => option.id === command.active); if (event.key === "Enter") { event.preventDefault(); options.find(option => option.id === command.active)?.click(); } else if (event.key === "Escape") { event.preventDefault(); command.setQuery(""); command.setActive(undefined); } else if (["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) { event.preventDefault(); const next = event.key === "Home" ? 0 : event.key === "End" ? options.length - 1 : event.key === "ArrowDown" ? (index + 1) % options.length : (index < 0 ? options.length - 1 : (index - 1 + options.length) % options.length); command.setActive(options[next]?.id); } }} />; }
+export function PromptInputCommandList({ className = "", ...props }: SlotProps) { const command = useCommand(); return <div {...props} id={command.identity} role="listbox" aria-label={props["aria-label"] ?? "Matching actions"} className={`hk-prompt-command-list ${className}`} />; }
+export function PromptInputCommandEmpty({ children = "No results", className = "", ...props }: SlotProps) { const command = useCommand(); return <div {...props} role="status" hidden={!command.empty} className={`hk-prompt-command-empty ${className}`}>{children}</div>; }
+export function PromptInputCommandGroup({ className = "", ...props }: SlotProps) { return <div {...props} className={`hk-prompt-command-group ${className}`} />; }
+export function PromptInputCommandItem({ value, keywords = [], onSelect, className = "", children, ...props }: Omit<ComponentPropsWithRef<"button">, "onSelect" | "value"> & { value: string; keywords?: string[]; onSelect?: (value: string) => void }) { const command = useCommand(); const identity = useId(); const hidden = ![value, typeof children === "string" ? children : "", ...keywords].join(" ").toLocaleLowerCase().includes(command.query.trim().toLocaleLowerCase()); return <button {...props} id={identity} type="button" role="option" aria-selected={command.active === identity} hidden={hidden || props.hidden} tabIndex={-1} className={`hk-prompt-command-item ${className}`} onClick={event => { props.onClick?.(event); if (!event.defaultPrevented) { command.setActive(identity); onSelect?.(value); } }}>{children}</button>; }
+export function PromptInputCommandSeparator({ className = "", ...props }: ComponentPropsWithRef<"hr">) { return <hr {...props} className={`hk-prompt-command-separator ${className}`} />; }

@@ -1,0 +1,6 @@
+.hk-transcription { display: flex; flex-wrap: wrap; gap: 3px; min-width: 0; line-height: 1.6; }
+.hk-transcription-segment { padding: 1px 3px; border: 0; border-radius: 4px; background: transparent; color: var(--hk-secondary); cursor: pointer; font: inherit; text-align: left; }
+.hk-transcription-segment:hover, .hk-transcription-segment--active { background: var(--hk-hover); color: var(--hk-ink); }
+.hk-transcription-segment--active { box-shadow: inset 0 -2px var(--hk-accent); }
+.hk-transcription-segment--past { color: var(--hk-ink); }
+@media (forced-colors: active) { .hk-transcription-segment--active { outline: 1px solid Highlight; } }

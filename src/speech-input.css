@@ -1,0 +1,3 @@
+.hk-button.hk-speech-input--listening[aria-pressed="true"]:not(:disabled) { background: var(--hk-accent); color: var(--hk-inverse); animation: hk-speech-pulse 1.4s ease-in-out infinite; }
+@keyframes hk-speech-pulse { 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--hk-accent) 22%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .hk-button.hk-speech-input--listening[aria-pressed="true"]:not(:disabled) { animation: none; } }

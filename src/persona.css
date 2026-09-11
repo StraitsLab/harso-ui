@@ -1,0 +1,38 @@
+.hk-persona { display: grid; place-items: center; max-width: 100%; aspect-ratio: 1; color: var(--hk-accent); isolation: isolate; }
+.hk-persona-example { display: grid; gap: 24px; min-width: 0; }
+.hk-persona-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.hk-persona-controls label { display: flex; align-items: center; gap: 8px; }
+.hk-persona-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 20px; }
+.hk-persona-gallery figure { margin: 0; display: grid; justify-items: center; gap: 12px; }
+.hk-persona-gallery figcaption { color: var(--hk-secondary); font-size: 12px; text-transform: capitalize; }
+.hk-persona-motion { position: relative; display: block; width: 78%; height: 78%; animation: hk-persona-idle 5s ease-in-out infinite; }
+.hk-persona-layer { position: absolute; inset: 0; display: block; border-radius: 50%; }
+.hk-persona--obsidian .hk-persona-layer:first-child { background: radial-gradient(ellipse at 28% 22%, var(--hk-secondary), var(--hk-ink) 65%); box-shadow: inset -3px -5px 12px color-mix(in srgb, var(--hk-canvas) 20%, transparent); }
+.hk-persona--obsidian .hk-persona-layer:nth-child(2) { inset: 8% 22% 52% 13%; background: var(--hk-canvas); filter: blur(8px); opacity: .35; transform: rotate(-30deg); }
+.hk-persona--obsidian .hk-persona-layer:nth-child(3) { inset: 15%; border: 1px solid color-mix(in srgb, var(--hk-canvas) 28%, transparent); transform: rotate(-30deg) scaleX(.75); }
+.hk-persona--mana .hk-persona-layer { inset: 13% 4%; border-radius: 65% 35% 62% 38%; background: color-mix(in srgb, var(--hk-accent) 35%, transparent); transform: rotate(-35deg); }
+.hk-persona--mana .hk-persona-layer:nth-child(2) { transform: rotate(40deg) scale(.86); background: color-mix(in srgb, var(--hk-accent) 55%, transparent); }
+.hk-persona--mana .hk-persona-layer:nth-child(3) { transform: rotate(110deg) scale(.6); background: var(--hk-accent); }
+.hk-persona--opal .hk-persona-layer { background: radial-gradient(circle at 30% 25%, var(--hk-canvas), color-mix(in srgb, var(--hk-accent) 22%, var(--hk-surface)) 62%, var(--hk-secondary)); box-shadow: inset 0 0 12px color-mix(in srgb, var(--hk-accent) 24%, transparent); }
+.hk-persona--opal .hk-persona-layer:nth-child(2) { inset: 14% 28% 15% 8%; border: 1px solid color-mix(in srgb, var(--hk-ink) 18%, transparent); background: transparent; transform: rotate(40deg); }
+.hk-persona--opal .hk-persona-layer:nth-child(3) { inset: 25% 10% 5% 26%; background: color-mix(in srgb, var(--hk-canvas) 45%, transparent); filter: blur(5px); }
+.hk-persona--halo .hk-persona-layer { border: 1px solid var(--hk-accent); opacity: .4; }
+.hk-persona--halo .hk-persona-layer:nth-child(2) { inset: 15%; opacity: .7; }
+.hk-persona--halo .hk-persona-layer:nth-child(3) { inset: 33%; background: var(--hk-accent); opacity: .85; box-shadow: 0 0 16px color-mix(in srgb, var(--hk-accent) 20%, transparent); }
+.hk-persona--glint .hk-persona-layer { inset: 4% 44%; background: var(--hk-accent); border-radius: 50%; }
+.hk-persona--glint .hk-persona-layer:nth-child(2) { transform: rotate(90deg); }
+.hk-persona--glint .hk-persona-layer:nth-child(3) { inset: 28%; background: color-mix(in srgb, var(--hk-accent) 30%, transparent); filter: blur(7px); }
+.hk-persona--command .hk-persona-layer { inset: 28% 70% 28% 15%; background: var(--hk-accent); border-radius: 999px; }
+.hk-persona--command .hk-persona-layer:nth-child(2) { inset: 9% 43%; }
+.hk-persona--command .hk-persona-layer:nth-child(3) { inset: 20% 15% 20% 70%; }
+.hk-persona[data-state="listening"] .hk-persona-motion { animation: hk-persona-listening 2.8s ease-in-out infinite; }
+.hk-persona[data-state="thinking"] .hk-persona-motion { animation: hk-persona-thinking 8s linear infinite; }
+.hk-persona[data-state="speaking"] .hk-persona-motion { animation: hk-persona-speaking .9s ease-in-out infinite; }
+.hk-persona[data-playback="paused"] .hk-persona-motion { animation-play-state: paused; }
+.hk-persona[data-playback="stopped"] .hk-persona-motion { animation: none; transform: scale(.8); opacity: .4; }
+@keyframes hk-persona-idle { 50% { transform: scale(.96); } }
+@keyframes hk-persona-listening { 50% { transform: scale(.88); } }
+@keyframes hk-persona-thinking { to { transform: rotate(360deg); } }
+@keyframes hk-persona-speaking { 35% { transform: scale(.92, 1.08); } 70% { transform: scale(1.04, .95); } }
+@media (prefers-reduced-motion: reduce) { .hk-persona .hk-persona-motion { animation: none; } }
+@media (forced-colors: active) { .hk-persona-layer { forced-color-adjust: none; background: CanvasText !important; border-color: CanvasText !important; box-shadow: none !important; filter: none !important; }.hk-persona--halo .hk-persona-layer:not(:last-child) { background: transparent !important; } }

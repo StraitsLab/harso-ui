@@ -1,0 +1,17 @@
+import { createContext, useContext, useId, useState, type ComponentPropsWithRef } from "react";
+import { Badge } from "./primitives";
+
+type DivProps = ComponentPropsWithRef<"div">;
+type ThoughtState = { open: boolean; setOpen: (open: boolean) => void; identity: string };
+const ThoughtContext = createContext<ThoughtState | null>(null);
+function useThought() { const state = useContext(ThoughtContext); if (!state) throw new Error("ChainOfThought parts require ChainOfThought."); return state; }
+
+export type ChainOfThoughtProps = DivProps & { open?: boolean; defaultOpen?: boolean; onOpenChange?: (open: boolean) => void };
+export function ChainOfThought({ open, defaultOpen = false, onOpenChange, children, className = "", ...props }: ChainOfThoughtProps) { const identity = useId(); const [localOpen, setLocalOpen] = useState(defaultOpen); const current = open ?? localOpen; const setOpen = (next: boolean) => { if (open === undefined) setLocalOpen(next); onOpenChange?.(next); }; return <ThoughtContext value={{ open: current, setOpen, identity }}><div {...props} className={`hk-chain-thought ${className}`} data-open={current || undefined}>{children}</div></ThoughtContext>; }
+export function ChainOfThoughtHeader({ children = "Chain of Thought", className = "", ...props }: ComponentPropsWithRef<"button">) { const thought = useThought(); return <button {...props} type="button" aria-expanded={thought.open} aria-controls={thought.identity} className={`hk-chain-header ${className}`} onClick={event => { props.onClick?.(event); if (!event.defaultPrevented) thought.setOpen(!thought.open); }}><span>{children}</span><span aria-hidden="true">{thought.open ? "⌃" : "⌄"}</span></button>; }
+export function ChainOfThoughtContent({ className = "", ...props }: DivProps) { const thought = useThought(); return <div {...props} id={thought.identity} hidden={!thought.open} className={`hk-chain-content ${className}`} />; }
+export type ChainOfThoughtStepProps = DivProps & { label: string; description?: string; status?: "complete" | "active" | "pending"; icon?: React.ReactNode };
+export function ChainOfThoughtStep({ label, description, status = "pending", icon, children, className = "", ...props }: ChainOfThoughtStepProps) { return <div {...props} className={`hk-chain-step hk-chain-step-${status} ${className}`} data-status={status}><span className="hk-chain-step-icon" aria-hidden="true">{icon ?? (status === "complete" ? "✓" : status === "active" ? "•" : "○")}</span><div className="hk-chain-step-body"><div className="hk-chain-step-label">{label}</div>{description && <div className="hk-chain-step-description">{description}</div>}{children}</div><span className="hk-chain-step-status">{status}</span></div>; }
+export function ChainOfThoughtSearchResults({ className = "", ...props }: DivProps) { return <div {...props} className={`hk-chain-search-results ${className}`} />; }
+export function ChainOfThoughtSearchResult({ className = "", ...props }: ComponentPropsWithRef<typeof Badge>) { return <Badge {...props} className={`hk-chain-search-result ${className}`} />; }
+export function ChainOfThoughtImage({ caption, alt = caption ?? "Reasoning reference", src, children, className = "", ...props }: DivProps & { src?: string; alt?: string; caption?: string }) { return <figure {...props} className={`hk-chain-image ${className}`}>{src ? <img src={src} alt={alt} /> : children}{caption && <figcaption>{caption}</figcaption>}</figure>; }

@@ -1,0 +1,2 @@
+.hk-jsx-preview { min-width: 0; overflow: auto; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); color: var(--hk-ink); }.hk-jsx-preview pre { margin: 0; padding: 12px; overflow: auto; font: 12px/1.5 var(--hk-mono); white-space: pre-wrap; }.hk-jsx-preview[data-streaming="true"] { border-color: var(--hk-accent); }.hk-jsx-preview-content { min-height: 40px; padding: 12px; }.hk-jsx-preview-error { padding: 10px; color: var(--hk-negative); font-size: 13px; }
+@media (forced-colors: active) { .hk-jsx-preview { border-color: CanvasText; } }

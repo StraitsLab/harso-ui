@@ -1,0 +1,31 @@
+.hk-commit { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; min-width: 0; }
+.hk-commit-author { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.hk-commit-avatar { --hk-avatar-size: 32px; flex-shrink: 0; overflow: hidden; }
+.hk-commit-info { min-width: 0; }
+.hk-commit-message { color: var(--hk-ink); font-size: 15px; line-height: 1.6; font-weight: 550; overflow-wrap: anywhere; }
+.hk-commit-metadata { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; color: var(--hk-secondary); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.hk-commit-hash, .hk-commit-file-path, .hk-commit-file-changes { font-family: var(--hk-mono); }
+.hk-commit-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 4px; min-width: 0; }
+.hk-snippet.hk-commit-copy { padding: 0; border: 0; }
+.hk-button.hk-commit-header { grid-column: 1 / -1; justify-self: start; width: auto; max-width: 100%; min-height: 42px; font-size: 12px; color: var(--hk-secondary); }
+.hk-commit-content.hk-work-content { grid-column: 1 / -1; margin: 0; }
+.hk-commit-files { display: grid; gap: 2px; }
+.hk-commit-file { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; padding: 7px 0; min-width: 0; font-size: 12px; }
+.hk-commit-file-info { display: flex; flex: 1 1 180px; align-items: baseline; flex-wrap: wrap; gap: 6px 8px; min-width: 0; }
+.hk-commit-file-info > svg { flex-shrink: 0; align-self: center; }
+.hk-commit-file-path { flex: 1 1 100px; min-width: 0; overflow-wrap: anywhere; color: var(--hk-ink); }
+.hk-commit-file-status { color: var(--hk-secondary); font-size: 11px; }
+.hk-commit-file-status[data-status="added"], .hk-commit-additions { color: var(--hk-positive); }
+.hk-commit-file-status[data-status="deleted"], .hk-commit-deletions { color: var(--hk-negative); }
+.hk-commit-file-changes { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+@media (max-width: 420px) {
+  .hk-commit { grid-template-columns: minmax(0, 1fr); }
+  .hk-commit-actions { justify-content: flex-start; }
+  .hk-commit-file { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; gap: 4px 8px; }
+  .hk-commit-file-info { display: contents; }
+  .hk-commit-file-info > svg { grid-column: 1; grid-row: 1; align-self: start; }
+  .hk-commit-file-path { grid-column: 2 / -1; grid-row: 1; }
+  .hk-commit-file-status { grid-column: 2; grid-row: 2; }
+  .hk-commit-file-changes { grid-column: 3; grid-row: 2; }
+}
+@media (forced-colors: active) { .hk-commit-file-status, .hk-commit-additions, .hk-commit-deletions { color: CanvasText; } }
