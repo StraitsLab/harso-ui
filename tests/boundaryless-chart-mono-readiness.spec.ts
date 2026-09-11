@@ -5,11 +5,11 @@ for (const component of ["BarListCard", "FunnelChartCard", "StageBarsCard"]) for
     await page.setViewportSize({ width: 390, height: 1000 });
     await page.emulateMedia({ colorScheme: "light", reducedMotion: "reduce" });
     await page.goto("/#boardui:bar-list-card");
-    const entry = await (await page.request.get("/src/boundaryless/main.tsx")).text();
-    const example = await (await page.request.get("/src/boundaryless/shared-chart-example.tsx")).text();
+    const entry = await (await page.request.get("/preview/main.tsx")).text();
+    const example = await (await page.request.get("/preview/shared-chart-example.tsx")).text();
     const reactUrl = entry.match(/from "([^"]*\/deps\/react\.js[^"]*)"/)?.[1];
     const domUrl = entry.match(/from "([^"]*\/deps\/react-dom_client\.js[^"]*)"/)?.[1];
-    const producerUrl = example.match(/from "([^"]*\/boundaryless\/index\.ts[^"]*)"/)?.[1];
+    const producerUrl = example.match(/from "([^"]*\/src\/index\.ts[^"]*)"/)?.[1];
     if (!reactUrl || !domUrl || !producerUrl) throw new Error("Coordinated Vite consumer imports were not found");
     await page.evaluate(async ({ reactUrl, domUrl, producerUrl, component, palette }) => {
       const React = (await import(reactUrl)).default;

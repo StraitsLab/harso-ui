@@ -50,10 +50,10 @@ test("revealed citation fits the actual narrow gallery and survives resize", asy
 test("shared hover placement handles edges, alignments and controlled refusal", async ({ page }, info) => {
   await page.setViewportSize({ width: 390, height: 640 });
   await page.goto("/#vercel:inline-citation");
-  const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const source = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)![1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)![1];
-  const producerUrl = source.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^"]*)?"/)![1];
+  const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)![1];
   await page.evaluate(async ({ reactUrl, domUrl, producerUrl }) => {
     const React = (await import(reactUrl)).default;
     const { createRoot } = (await import(domUrl)).default;

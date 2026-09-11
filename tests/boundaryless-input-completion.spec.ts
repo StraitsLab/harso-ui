@@ -2,7 +2,7 @@ import { test, expect, type Page, type Locator } from "@playwright/test";
 
 async function mountExample(page: Page, component: string) {
   await page.goto("/#boardui:input");
-  const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const source = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   expect(reactUrl).toBeTruthy(); expect(domUrl).toBeTruthy();
@@ -11,7 +11,7 @@ async function mountExample(page: Page, component: string) {
     const { createRoot } = (await import(domUrl!)).default;
     const element = React.createElement;
     const exampleFile = component === "Questionnaire" ? "questionnaire-example" : ["Calendar", "DatePicker"].includes(component) ? "dates-examples" : "controls-examples";
-    const exports = await import(`/src/boundaryless/${exampleFile}.tsx`);
+    const exports = await import(`/preview/${exampleFile}.tsx`);
     const Example = exports.QuestionnaireExample ?? exports.DatesExample ?? exports.ControlsExample;
     function Consumer() {
       const [state, setState] = React.useState("default");
@@ -250,10 +250,10 @@ test("CALENDAR mounted empty/disabled recovers events, inbox and actions", async
 
 async function mountControlled(page: Page, component: "FileUpload" | "Calendar" | "MeetingScheduler" | "MonthPanel") {
   await page.goto("/#boardui:calendar");
-  const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const source = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
-  const producerUrl = source.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
+  const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
   expect(reactUrl).toBeTruthy(); expect(domUrl).toBeTruthy(); expect(producerUrl).toBeTruthy();
   await page.evaluate(async ({ reactUrl, domUrl, producerUrl, component }) => {
     const React = (await import(reactUrl!)).default;

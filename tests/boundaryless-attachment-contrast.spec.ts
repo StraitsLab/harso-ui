@@ -4,7 +4,7 @@ async function attachmentConsumer(page: Page, appearance: string, palette: strin
   await page.goto("/#vercel:attachments");
   await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
   await page.getByLabel("Palette", { exact: true }).selectOption(palette);
-  const entry = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const entry = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = entry.match(/from "([^"]+\/react\.js\?[^\"]+)"/)?.[1];
   const domUrl = entry.match(/from "([^"]+\/react-dom_client\.js\?[^\"]+)"/)?.[1];
   expect(reactUrl).toBeTruthy();
@@ -12,7 +12,7 @@ async function attachmentConsumer(page: Page, appearance: string, palette: strin
   await page.evaluate(async ({ reactUrl, domUrl, longName }) => {
     const React = (await import(reactUrl!)).default;
     const { createRoot } = (await import(domUrl!)).default;
-    const galleryUrl = "/src/boundaryless/attachments-examples.tsx";
+    const galleryUrl = "/preview/attachments-examples.tsx";
     const { AttachmentsExample } = await import(galleryUrl);
     const example = document.querySelector<HTMLElement>('[data-testid="live-example"]')!;
     for (const child of Array.from(example.children)) (child as HTMLElement).style.display = "none";
@@ -24,7 +24,7 @@ async function attachmentConsumer(page: Page, appearance: string, palette: strin
     const content = [element(AttachmentsExample, { key: "gallery", component: "Attachments", state: "error" })];
     if (longName) {
       const source = await (await fetch(galleryUrl)).text();
-      const producerUrl = source.match(/from "([^"]+\/packages\/ui\/src\/boundaryless\/index\.ts[^\"]*)"/)?.[1];
+      const producerUrl = source.match(/from "([^"]*\/src\/index\.ts[^\"]*)"/)?.[1];
       if (!producerUrl) throw new Error("Actual attachment producer import not found");
       const { Attachments, Attachment, AttachmentPreview, AttachmentInfo, AttachmentRemove } = await import(producerUrl);
       content.push(element(Attachments, { key: "long", variant: "inline", "aria-label": "Long filename attachment" }, element(Attachment, { data: { id: "long", name: "design-review-evidence-".repeat(12) + ".png", mediaType: "image/png", size: 2048 }, onRemove: () => {} }, element(AttachmentPreview), element(AttachmentInfo, { showMediaType: true }), element(AttachmentRemove))));

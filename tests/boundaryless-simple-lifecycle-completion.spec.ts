@@ -2,10 +2,10 @@ import { expect, test, type Page } from "@playwright/test";
 
 async function mountProducer(page: Page, component: string, variant = "plain") {
   await page.goto("/#vercel:persona");
-  const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const source = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
-  const producerUrl = source.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
+  const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
   expect(reactUrl).toBeTruthy(); expect(domUrl).toBeTruthy(); expect(producerUrl).toBeTruthy();
   await page.evaluate(async ({ reactUrl, domUrl, producerUrl, component, variant }) => {
     const React = (await import(reactUrl!)).default;

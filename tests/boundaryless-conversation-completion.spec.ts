@@ -2,7 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 
 async function mountExample(page: Page, component: "Conversation" | "Message") {
   await page.goto("/#vercel:conversation");
-  const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const source = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   expect(reactUrl).toBeTruthy(); expect(domUrl).toBeTruthy();
@@ -21,7 +21,7 @@ async function mountExample(page: Page, component: "Conversation" | "Message") {
     const root = document.createElement("div");
     document.querySelector(".harso-kit")!.prepend(root);
     createRoot(root).render(element(Consumer));
-  }, { reactUrl, domUrl, component, exampleUrl: "/src/boundaryless/conversation-examples.tsx" });
+  }, { reactUrl, domUrl, component, exampleUrl: "/preview/conversation-examples.tsx" });
   return page.getByRole("region", { name: "Conversation completion consumer" });
 }
 

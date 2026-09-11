@@ -2,10 +2,10 @@ import { expect, test } from "@playwright/test";
 
 test("actual PromptInput parts compose native selection, action menu, tooltip and submission", async ({ page, request }) => {
   await page.goto("/#vercel:prompt-input");
-  const entry = await (await request.get("/src/boundaryless/main.tsx")).text();
+  const entry = await (await request.get("/preview/main.tsx")).text();
   const reactUrl = entry.match(/from "([^"]+\/react\.js\?[^\"]+)"/)?.[1];
   const domUrl = entry.match(/from "([^"]+\/react-dom_client\.js\?[^\"]+)"/)?.[1];
-  const producerUrl = entry.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
+  const producerUrl = entry.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
   expect(reactUrl).toBeTruthy(); expect(domUrl).toBeTruthy(); expect(producerUrl).toBeTruthy();
   await page.evaluate(async ({ reactUrl, domUrl, producerUrl }) => {
     const React = (await import(reactUrl!)).default;

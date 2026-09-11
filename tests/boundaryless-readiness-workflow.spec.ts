@@ -3,11 +3,11 @@ import { createHash } from "node:crypto";
 import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
-const root = resolve(import.meta.dirname, "../../..");
+const root = resolve(import.meta.dirname, "..");
 function sourceBinding() {
-  const files = ["packages/ui/src/boundaryless", "apps/ui-preview/src/boundaryless"].flatMap(directory =>
+  const files = ["src", "preview"].flatMap(directory =>
     readdirSync(resolve(root, directory), { recursive: true, withFileTypes: true }).filter(entry => entry.isFile()).map(entry => resolve(entry.parentPath, entry.name))
-  ).concat([resolve(root, "apps/ui-preview/vite.config.ts"), resolve(root, "apps/ui-preview/package-lock.json"), resolve(root, "packages/ui/package-lock.json"), import.meta.filename]).sort();
+  ).concat([resolve(root, "vite.config.ts"), resolve(root, "package-lock.json"), import.meta.filename]).sort();
   const hashes = Object.fromEntries(files.map(path => [path.slice(root.length + 1), createHash("sha256").update(readFileSync(path)).digest("hex")]));
   return { sha256: createHash("sha256").update(JSON.stringify(hashes)).digest("hex"), hashes };
 }

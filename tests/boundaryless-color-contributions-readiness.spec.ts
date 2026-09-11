@@ -13,10 +13,10 @@ async function mount(page: Page, family: "color" | "contributions-card", scene: 
   await page.goto(`/#boardui:${family}`);
   await page.getByLabel("Appearance", { exact: true }).selectOption(scene.appearance);
   await page.getByLabel("Palette", { exact: true }).selectOption(scene.palette);
-  const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const source = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
-  const producerUrl = source.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
+  const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
   expect(reactUrl).toBeTruthy();
   expect(domUrl).toBeTruthy();
   expect(producerUrl).toBeTruthy();

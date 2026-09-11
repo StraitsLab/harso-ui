@@ -31,17 +31,17 @@ for (const [familyId, file, exported, component] of families) {
       await page.goto(`/#${familyId}`);
       await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
       await page.getByLabel("Palette", { exact: true }).selectOption(palette);
-      const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+      const source = await (await page.request.get("/preview/main.tsx")).text();
       const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
       const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
-      const producerUrl = source.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
+      const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
       expect(reactUrl).toBeTruthy();
       expect(domUrl).toBeTruthy();
       expect(producerUrl).toBeTruthy();
       await page.evaluate(async ({ reactUrl, domUrl, producerUrl, file, exported, component, palette }) => {
         const React = (await import(reactUrl!)).default;
         const { createRoot } = (await import(domUrl!)).default;
-        const Example = (await import(`/src/boundaryless/${file}.tsx`))[exported];
+        const Example = (await import(`/preview/${file}.tsx`))[exported];
         const { RadioDot } = await import(`${producerUrl}controls.tsx`);
         function Consumer() {
           const [state, setState] = React.useState("default");

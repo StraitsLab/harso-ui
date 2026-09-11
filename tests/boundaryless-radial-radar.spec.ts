@@ -15,14 +15,14 @@ async function openGallery(page: Page, component: string, appearance = "light", 
 async function mountExample(page: Page, component: string, state: ExampleState) {
   const appearance = "light", palette = "clean";
   await page.goto(`/?radialRadar=${component}-${appearance}-${palette}`);
-  const entry = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const entry = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = entry.match(/from "([^"]*\/deps\/react\.js[^"]*)"/)?.[1];
   const domUrl = entry.match(/from "([^"]*\/deps\/react-dom_client\.js[^"]*)"/)?.[1];
   if (!reactUrl || !domUrl) throw new Error("This isolated consumer test requires the coordinated Vite dev server.");
   await page.evaluate(async ({ component, state, appearance, palette, reactUrl, domUrl }) => {
     const React = (await import(reactUrl)).default;
     const { createRoot } = (await import(domUrl)).default;
-    const moduleUrl = "/src/boundaryless/radial-radar-example.tsx";
+    const moduleUrl = "/preview/radial-radar-example.tsx";
     const { RadialRadarExample } = await import(moduleUrl);
     const gallery = document.getElementById("root");
     if (gallery) gallery.hidden = true;

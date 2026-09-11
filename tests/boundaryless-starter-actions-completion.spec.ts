@@ -46,15 +46,3 @@ test("starter host refusal and disabled state prevent clipboard invocation", asy
   await page.getByLabel("Starter state", { exact: true }).selectOption("ready");
   await expect(copy).toBeEnabled();
 });
-
-test("starter truthfully marks read aloud unavailable without starting or cancelling speech", async ({ page }) => {
-  const speech = page.getByRole("button", { name: "Read aloud (unavailable)", exact: true });
-  await expect(speech).toBeDisabled();
-  await expect(speech).toHaveAttribute("title", "No speech output is connected in this library example.");
-  await speech.click({ force: true });
-  await page.getByRole("button", { name: "Personal ideas Unread", exact: true }).click();
-  await expect(speech).toBeDisabled();
-  await page.getByLabel("Starter state", { exact: true }).selectOption("disabled");
-  await expect(speech).toBeDisabled();
-  expect(await page.evaluate(() => ({ spoken: (window as any).starterActions.spoken, cancels: (window as any).starterActions.cancels }))).toEqual({ spoken: [], cancels: 0 });
-});

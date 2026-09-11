@@ -9,10 +9,10 @@ async function rectangle(locator: Locator) {
 
 async function consumer(page: Page, kind: "radio" | "input" | "attachments") {
   await page.goto(`/#${kind === "attachments" ? "vercel" : "boardui"}:${kind}`);
-  const entry = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const entry = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = entry.match(/from "([^"]+\/react\.js\?[^\"]+)"/)?.[1];
   const domUrl = entry.match(/from "([^"]+\/react-dom_client\.js\?[^\"]+)"/)?.[1];
-  const producerUrl = entry.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
+  const producerUrl = entry.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
   expect(reactUrl).toBeTruthy();
   expect(domUrl).toBeTruthy();
   expect(producerUrl).toBeTruthy();
@@ -21,7 +21,7 @@ async function consumer(page: Page, kind: "radio" | "input" | "attachments") {
     const { createRoot } = (await import(domUrl!)).default;
     const { Input, Field } = await import(`${producerUrl}primitives.tsx`);
     const { RadioDot } = await import(`${producerUrl}controls.tsx`);
-    const galleryUrl = "/src/boundaryless/attachments-examples.tsx";
+    const galleryUrl = "/preview/attachments-examples.tsx";
     const AttachmentsExample = kind === "attachments" ? (await import(galleryUrl)).AttachmentsExample : null;
     const element = React.createElement;
     function Consumer() {

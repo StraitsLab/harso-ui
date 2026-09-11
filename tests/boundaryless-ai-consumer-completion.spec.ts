@@ -3,8 +3,8 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const sourceFiles = ["apps/ui-preview/src/boundaryless/ai-chat-example.tsx", "apps/ui-preview/src/boundaryless/composer-example.tsx", "apps/ui-preview/src/boundaryless/consumer-readiness-examples.tsx", "packages/ui/src/boundaryless/agent-surfaces.tsx", "packages/ui/src/boundaryless/composer.tsx", "packages/ui/src/boundaryless/prompt-input.tsx", "packages/ui/src/boundaryless/question.tsx", "packages/ui/src/boundaryless/misc-surfaces.tsx", "apps/ui-preview/tests/boundaryless-ai-consumer-completion.spec.ts"];
-const hashes = () => Object.fromEntries(sourceFiles.map(file => [file, createHash("sha256").update(readFileSync(resolve(import.meta.dirname, "../../..", file))).digest("hex")]));
+const sourceFiles = ["preview/ai-chat-example.tsx", "preview/composer-example.tsx", "preview/consumer-readiness-examples.tsx", "src/agent-surfaces.tsx", "src/composer.tsx", "src/prompt-input.tsx", "src/question.tsx", "src/misc-surfaces.tsx", "tests/boundaryless-ai-consumer-completion.spec.ts"];
+const hashes = () => Object.fromEntries(sourceFiles.map(file => [file, createHash("sha256").update(readFileSync(resolve(import.meta.dirname, "..", file))).digest("hex")]));
 let before: ReturnType<typeof hashes>;
 test.beforeAll(async ({ browser }) => {
   before = hashes();
@@ -170,10 +170,10 @@ test("AI CONSUMER PromptInput mounted empty loading error disabled recovery and 
 
 test("AI CONSUMER Question native disabled option emits no callback and recovers without remount", async ({ page }) => {
   await page.goto("/#vercel:question");
-  const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const source = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^\"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^\"]+)"/)?.[1];
-  const producerUrl = source.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^\"]*)?"/)?.[1];
+  const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^\"]*)?"/)?.[1];
   expect(reactUrl).toBeTruthy(); expect(domUrl).toBeTruthy(); expect(producerUrl).toBeTruthy();
   await page.evaluate(async ({ reactUrl, domUrl, producerUrl }) => {
     const React = (await import(reactUrl!)).default;
@@ -224,7 +224,7 @@ test("AI CONSUMER Question native disabled option emits no callback and recovers
 for (const provider of ["Microsoft", "Bitbucket", "Auth0", "Okta"]) {
   test(`AI CONSUMER SocialButton ${provider} uses its supplied mark or labelled initial`, async ({ page }) => {
     const requests: string[] = [];
-    page.on("request", request => { if (request.method() !== "GET" || new URL(request.url()).origin !== "http://127.0.0.1:4194") requests.push(request.url()); });
+    page.on("request", request => { if (request.method() !== "GET" || new URL(request.url()).origin !== new URL(test.info().project.use.baseURL!).origin) requests.push(request.url()); });
     await page.goto("/#boardui:social-button");
     const example = page.getByTestId("live-example");
     await example.getByLabel("Social provider", { exact: true }).selectOption(provider);
@@ -257,7 +257,7 @@ for (const provider of ["Microsoft", "Bitbucket", "Auth0", "Okta"]) {
       await expect(social).toBeEnabled();
     }
     await social.click();
-    expect(page.url()).toBe("http://127.0.0.1:4194/#boardui:social-button");
+    expect(new URL(page.url()).hash).toBe("#boardui:social-button");
     expect(requests).toEqual([]);
   });
 }

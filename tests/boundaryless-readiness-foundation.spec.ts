@@ -4,22 +4,22 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const sourcePaths = [
-  "apps/ui-preview/src/boundaryless/Library.tsx",
-  "apps/ui-preview/src/boundaryless/examples.tsx",
-  "apps/ui-preview/src/boundaryless/controls-examples.tsx",
-  "apps/ui-preview/src/boundaryless/navigation-examples.tsx",
-  "apps/ui-preview/src/boundaryless/catalogue-examples.tsx",
-  "apps/ui-preview/src/boundaryless/dates-examples.tsx",
-  "packages/ui/src/boundaryless/primitives.tsx",
-  "packages/ui/src/boundaryless/primitives.css",
-  "packages/ui/src/boundaryless/controls.tsx",
-  "packages/ui/src/boundaryless/controls.css",
-  "packages/ui/src/boundaryless/navigation.tsx",
-  "packages/ui/src/boundaryless/navigation.css",
-  "packages/ui/src/boundaryless/misc-surfaces.tsx",
-  "packages/ui/src/boundaryless/misc-surfaces.css",
-  "packages/ui/src/boundaryless/theme.css",
-  "packages/ui/src/boundaryless/dates.tsx",
+  "preview/Library.tsx",
+  "preview/examples.tsx",
+  "preview/controls-examples.tsx",
+  "preview/navigation-examples.tsx",
+  "preview/catalogue-examples.tsx",
+  "preview/dates-examples.tsx",
+  "src/primitives.tsx",
+  "src/primitives.css",
+  "src/controls.tsx",
+  "src/controls.css",
+  "src/navigation.tsx",
+  "src/navigation.css",
+  "src/misc-surfaces.tsx",
+  "src/misc-surfaces.css",
+  "src/theme.css",
+  "src/dates.tsx",
 ];
 
 async function record(label: string, value: unknown) {
@@ -34,7 +34,7 @@ async function bounds(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  const root = resolve(test.info().file, "../../../..");
+  const root = resolve(test.info().file, "../..");
   await record("source-sha256", Object.fromEntries(sourcePaths.map(path => [path, createHash("sha256").update(readFileSync(resolve(root, path))).digest("hex")])));
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.emulateMedia({ colorScheme: "light", reducedMotion: "reduce" });

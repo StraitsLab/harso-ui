@@ -2,16 +2,16 @@ import { expect, test, type Page } from "@playwright/test";
 
 async function mountExample(page: Page, component: "Attachments" | "Commit" | "CommitCopy") {
   await page.goto("/#vercel:commit");
-  const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const source = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
-  const producerUrl = source.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
+  const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
   expect(reactUrl).toBeTruthy(); expect(domUrl).toBeTruthy(); expect(producerUrl).toBeTruthy();
   await page.evaluate(async ({ reactUrl, domUrl, producerUrl, component }) => {
     const React = (await import(reactUrl!)).default;
     const { createRoot } = (await import(domUrl!)).default;
     const element = React.createElement;
-    const exports = component === "CommitCopy" ? await import(`${producerUrl}commit.tsx`) : await import(`/src/boundaryless/${component === "Commit" ? "commit" : "attachments"}-examples.tsx`);
+    const exports = component === "CommitCopy" ? await import(`${producerUrl}commit.tsx`) : await import(`/preview/${component === "Commit" ? "commit" : "attachments"}-examples.tsx`);
     function Consumer() {
       const [state, setState] = React.useState("default");
       const [hash, setHash] = React.useState("");

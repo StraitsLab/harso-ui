@@ -9,6 +9,6 @@ export default defineConfig({
   timeout: 120_000,
   reporter: "list",
   snapshotPathTemplate: "{testDir}/snapshots/{platform}/{arg}{ext}",
-  use: { ...devices["Desktop Chrome"], baseURL: `http://127.0.0.1:${port}`, viewport: { width: 1512, height: 1040 }, trace: "retain-on-failure" },
+  use: { ...devices["Desktop Chrome"], channel: process.env.HARSO_UI_BROWSER === "chromium" ? undefined : "chrome", baseURL: `http://127.0.0.1:${port}`, viewport: { width: 1512, height: 1040 }, trace: "retain-on-failure" },
   webServer: { command: `./node_modules/.bin/vite --host 127.0.0.1 --port ${port} --strictPort`, url: `http://127.0.0.1:${port}/`, reuseExistingServer: true }
 });

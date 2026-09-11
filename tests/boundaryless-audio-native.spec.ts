@@ -24,11 +24,11 @@ async function mountAudio(page: Page, source: "speech" | "remote" | "invalid", a
     return route.fulfill({ status: range ? 206 : 200, contentType: "audio/wav", body: wave.subarray(start, end + 1), headers: { "Accept-Ranges": "bytes", ...(range ? { "Content-Range": `bytes ${start}-${end}/${wave.length}` } : {}) } });
   });
   await page.goto("/#vercel:audio-player");
-  const entry = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const entry = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = entry.match(/from "([^"]*\/deps\/react\.js[^"]*)"/)?.[1];
   const domUrl = entry.match(/from "([^"]*\/deps\/react-dom_client\.js[^"]*)"/)?.[1];
   if (!reactUrl || !domUrl) throw new Error("The native audio proof requires the coordinated Vite dev server.");
-  const moduleUrl = `/@fs/${resolve(import.meta.dirname, "../../../packages/ui/src/boundaryless/audio-player.tsx")}`;
+  const moduleUrl = `/@fs/${resolve(import.meta.dirname, "../src/audio-player.tsx")}`;
   await page.evaluate(async ({ reactUrl, domUrl, moduleUrl, source, base64, appearance, palette }) => {
     const React = (await import(reactUrl)).default;
     const { createRoot } = (await import(domUrl)).default;

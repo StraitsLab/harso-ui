@@ -3,8 +3,8 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const sourceFiles = ["packages/ui/src/boundaryless/work.tsx", "packages/ui/src/boundaryless/work.css", "apps/ui-preview/src/boundaryless/work-examples.tsx", "apps/ui-preview/tests/boundaryless-work-completion.spec.ts"];
-const hashes = () => Object.fromEntries(sourceFiles.map(file => [file, createHash("sha256").update(readFileSync(resolve(import.meta.dirname, "../../..", file))).digest("hex")]));
+const sourceFiles = ["src/work.tsx", "src/work.css", "preview/work-examples.tsx", "tests/boundaryless-work-completion.spec.ts"];
+const hashes = () => Object.fromEntries(sourceFiles.map(file => [file, createHash("sha256").update(readFileSync(resolve(import.meta.dirname, "..", file))).digest("hex")]));
 let before: ReturnType<typeof hashes>;
 test.beforeAll(async ({ browser }) => {
   before = hashes();
@@ -155,7 +155,7 @@ test("WORK FOLLOWUP Task completed preference survives absent records without st
 for (const mode of ["Manual", "Automatic", "Branching"]) {
   test(`WORK COMPLETION checkpoint ${mode} local applicability and refusal only`, async ({ page }) => {
     const requests: string[] = [];
-    page.on("request", request => { if (request.method() !== "GET" || new URL(request.url()).origin !== "http://127.0.0.1:4194") requests.push(request.url()); });
+    page.on("request", request => { if (request.method() !== "GET" || new URL(request.url()).origin !== new URL(test.info().project.use.baseURL!).origin) requests.push(request.url()); });
     await page.goto("/#vercel:checkpoint");
     const example = page.getByRole("region", { name: "Local checkpoint modes", exact: true });
     await example.getByRole("button", { name: mode, exact: true }).click();

@@ -29,10 +29,10 @@ async function localSpeechEvents(page: Page) {
 }
 
 async function mountSpeechStates(page: Page) {
-  const source = await (await page.request.get("/src/boundaryless/main.tsx")).text();
+  const source = await (await page.request.get("/preview/main.tsx")).text();
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
-  const producerUrl = source.match(/import "([^"]+\/packages\/ui\/src\/boundaryless\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
+  const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
   expect(reactUrl).toBeTruthy(); expect(domUrl).toBeTruthy(); expect(producerUrl).toBeTruthy();
   await page.evaluate(async ({ reactUrl, domUrl, producerUrl }) => {
     const React = (await import(reactUrl!)).default;
@@ -69,7 +69,7 @@ for (const appearance of ["light", "dark"] as const) for (const palette of ["cle
     await page.setViewportSize({ width, height: 1050 });
     await page.emulateMedia({ reducedMotion: "no-preference", colorScheme: appearance });
     const externalRequests: string[] = [];
-    page.on("request", request => { if (!request.url().startsWith("http://127.0.0.1:4194/") && !request.url().startsWith("data:")) externalRequests.push(request.url()); });
+    page.on("request", request => { if (new URL(request.url()).origin !== new URL(test.info().project.use.baseURL!).origin && !request.url().startsWith("data:")) externalRequests.push(request.url()); });
     await page.goto("/#vercel:prompt-input");
     await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
     await page.getByLabel("Palette", { exact: true }).selectOption(palette);
