@@ -1,21 +1,42 @@
 .harso-kit {
   color-scheme: light;
-  --hk-canvas: #fafbfd;
+  /* Boundaryless tokens — derived from the approved concept rendering
+     (codex generated_images/01a06fa5…/call_PHmmdfdu3TmtaQuMw1I0ySuK.png). */
+  --hk-canvas: #fafafb;
+  --hk-canvas-deep: #f2f4f8;
   --hk-surface: #ffffff;
-  --hk-hover: #eef1f5;
-  --hk-ink: #20242a;
-  --hk-secondary: #596271;
-  --hk-line: color-mix(in srgb, var(--hk-ink) 11%, transparent);
-  --hk-control-line: color-mix(in srgb, var(--hk-ink) 42%, transparent);
-  --hk-accent: #145cba;
-  --hk-positive: #287346;
-  --hk-attention: #885000;
-  --hk-negative: #b3313b;
+  --hk-hover: #eef0f3;
+  --hk-ink: #1f2226;
+  --hk-dark: var(--hk-ink);
+  --hk-secondary: #5b6067;
+  --hk-tertiary: #646a73;
+  --hk-faint: #a9aeb5;
+  --hk-line: #e4e6ea;
+  --hk-control-line: color-mix(in srgb, var(--hk-ink) 32%, transparent);
+  --hk-accent: #1d63c8;
+  --hk-accent-mark: #3d8bf5;
+  --hk-accent-soft: #dce8fb;
+  --hk-positive: #26733f;
+  --hk-positive-mark: #3f9a5c;
+  --hk-attention: #9a5b00;
+  --hk-attention-mark: #f0a23a;
+  --hk-negative: #b93427;
+  --hk-negative-mark: #d4483f;
   --hk-inverse: #ffffff;
-  --hk-glass: rgb(255 255 255 / .84);
-  --hk-shadow: 0 16px 44px rgb(35 50 70 / .06), 0 2px 8px rgb(35 50 70 / .025);
-  --hk-font: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --hk-mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --hk-glass: rgb(255 255 255 / .92);
+  --hk-shadow: 0 14px 40px rgb(20 24 32 / .07), 0 1px 2px rgb(20 24 32 / .04);
+  --hk-font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  --hk-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  /* Type scale (px): 12 13 14 15 16 17 19 21 32 */
+  --hk-text-xs: 12px;
+  --hk-text-sm: 13px;
+  --hk-text-label: 14px;
+  --hk-text-base: 15px;
+  --hk-text-md: 16px;
+  --hk-text-input: 17px;
+  --hk-text-body: 19px;
+  --hk-text-user: 21px;
+  --hk-text-display: 32px;
   --hk-space-1: 4px;
   --hk-space-2: 8px;
   --hk-space-3: 12px;
@@ -24,58 +45,79 @@
   --hk-space-8: 32px;
   --hk-space-12: 48px;
   --hk-space-16: 64px;
+  --hk-radius-pill: 999px;
+  --hk-radius-card: 18px;
   --hk-fast: 120ms;
   --hk-reveal: 240ms;
   --hk-ease: cubic-bezier(.2, .7, .2, 1);
   background: var(--hk-canvas);
   color: var(--hk-ink);
   font-family: var(--hk-font);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: var(--hk-text-base);
+  line-height: 1.5;
+  letter-spacing: -.005em;
   accent-color: var(--hk-accent);
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .harso-kit[data-palette="cozy"] {
-  --hk-canvas: #fbf8f2;
-  --hk-surface: #fffdf9;
-  --hk-hover: #eee8df;
-  --hk-ink: #302b25;
-  --hk-secondary: #686057;
-  --hk-line: color-mix(in srgb, var(--hk-ink) 12%, transparent);
-  --hk-control-line: color-mix(in srgb, var(--hk-ink) 42%, transparent);
-  --hk-accent: #396957;
-  --hk-glass: rgb(255 253 249 / .86);
+  --hk-canvas: #fbf9f5;
+  --hk-canvas-deep: #f4f0e8;
+  --hk-surface: #fffefb;
+  --hk-hover: #efebe4;
+  --hk-ink: #2a2622;
+  --hk-secondary: #66605a;
+  --hk-tertiary: #68625b;
+  --hk-faint: #b3aca3;
+  --hk-line: #e7e2da;
+  --hk-accent: #2f6e53;
+  --hk-accent-mark: #3f8a6a;
+  --hk-accent-soft: #dcefe5;
+  --hk-glass: rgb(255 254 251 / .92);
 }
 
 .harso-kit[data-mode="dark"] {
   color-scheme: dark;
-  --hk-canvas: #171a20;
-  --hk-surface: #1e222a;
-  --hk-hover: #2b303a;
-  --hk-ink: #eef0f5;
-  --hk-secondary: #a6afbe;
-  --hk-line: color-mix(in srgb, var(--hk-ink) 18%, transparent);
-  --hk-control-line: color-mix(in srgb, var(--hk-ink) 48%, transparent);
-  --hk-accent: #91bdff;
-  --hk-positive: #93d4a5;
-  --hk-attention: #f1c47d;
-  --hk-negative: #ff9ca4;
-  --hk-inverse: #171a20;
-  --hk-glass: rgb(35 40 49 / .88);
-  --hk-shadow: 0 12px 40px rgb(0 0 0 / .2);
+  --hk-canvas: #131518;
+  --hk-canvas-deep: #0e1013;
+  --hk-surface: #1c1f24;
+  --hk-hover: #262a31;
+  --hk-ink: #f2f3f5;
+  --hk-secondary: #a5aab3;
+  --hk-tertiary: #8b919b;
+  --hk-faint: #666c76;
+  --hk-line: #2a2e35;
+  --hk-control-line: color-mix(in srgb, var(--hk-ink) 40%, transparent);
+  --hk-accent: #6ea8ff;
+  --hk-accent-mark: #6ea8ff;
+  --hk-accent-soft: #1f2f47;
+  --hk-positive: #6cc78a;
+  --hk-positive-mark: #6cc78a;
+  --hk-attention: #f4b95f;
+  --hk-attention-mark: #f4b95f;
+  --hk-negative: #ff7b73;
+  --hk-negative-mark: #ff7b73;
+  --hk-inverse: #131518;
+  --hk-glass: rgb(28 31 36 / .92);
+  --hk-shadow: 0 14px 40px rgb(0 0 0 / .35), 0 1px 2px rgb(0 0 0 / .3);
 }
 
 .harso-kit[data-mode="dark"][data-palette="cozy"] {
-  --hk-canvas: #201e1b;
-  --hk-surface: #28251f;
-  --hk-hover: #353027;
-  --hk-ink: #f4eee4;
-  --hk-secondary: #b9af9f;
-  --hk-line: color-mix(in srgb, var(--hk-ink) 20%, transparent);
-  --hk-control-line: color-mix(in srgb, var(--hk-ink) 48%, transparent);
-  --hk-accent: #a4ceb6;
-  --hk-glass: rgb(44 39 32 / .9);
+  --hk-canvas: #1a1815;
+  --hk-canvas-deep: #141210;
+  --hk-surface: #232019;
+  --hk-hover: #2e2a23;
+  --hk-ink: #f3ede3;
+  --hk-secondary: #b3aa9c;
+  --hk-tertiary: #978e81;
+  --hk-faint: #6f675c;
+  --hk-line: #322d26;
+  --hk-accent: #8fcbaf;
+  --hk-accent-mark: #8fcbaf;
+  --hk-accent-soft: #223a30;
+  --hk-inverse: #1a1815;
+  --hk-glass: rgb(35 32 25 / .92);
 }
 
 .harso-kit :where(*, *::before, *::after) { box-sizing: border-box; }
@@ -83,7 +125,7 @@
 .harso-kit :where(button, a, input, textarea, select, summary, [tabindex]):focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 4px; }
 .harso-kit :where(button, input, textarea, select):disabled { cursor: not-allowed; }
 .harso-kit :where(h1, h2, h3, p) { margin: 0; }
-.harso-kit :where(h1, h2, h3) { font-weight: 540; letter-spacing: -.025em; line-height: 1.2; }
+.harso-kit :where(h1, h2, h3) { font-weight: 400; letter-spacing: -.01em; line-height: 1.3; }
 .harso-kit :where(button, a) { -webkit-tap-highlight-color: transparent; }
 .hk-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0; }
 
@@ -93,5 +135,5 @@
 }
 
 @media (forced-colors: active) {
-  .harso-kit { --hk-canvas: Canvas; --hk-surface: Canvas; --hk-ink: CanvasText; --hk-secondary: CanvasText; --hk-line: ButtonBorder; --hk-control-line: ButtonBorder; --hk-accent: Highlight; --hk-inverse: HighlightText; --hk-glass: Canvas; }
+  .harso-kit { --hk-canvas: Canvas; --hk-canvas-deep: Canvas; --hk-surface: Canvas; --hk-ink: CanvasText; --hk-secondary: CanvasText; --hk-tertiary: CanvasText; --hk-faint: GrayText; --hk-line: ButtonBorder; --hk-control-line: ButtonBorder; --hk-dark: ButtonText; --hk-accent: Highlight; --hk-accent-mark: Highlight; --hk-positive-mark: CanvasText; --hk-attention-mark: CanvasText; --hk-negative-mark: CanvasText; --hk-accent-soft: Canvas; --hk-inverse: HighlightText; --hk-glass: Canvas; }
 }

@@ -3,10 +3,10 @@ import AxeBuilder from "@axe-core/playwright";
 import catalogue from "../src/catalog.json" with { type: "json" };
 
 const paints = {
-  "light/clean": { backgroundColor: "rgb(250, 251, 253)", color: "rgb(32, 36, 42)" },
-  "light/cozy": { backgroundColor: "rgb(251, 248, 242)", color: "rgb(48, 43, 37)" },
-  "dark/clean": { backgroundColor: "rgb(23, 26, 32)", color: "rgb(238, 240, 245)" },
-  "dark/cozy": { backgroundColor: "rgb(32, 30, 27)", color: "rgb(244, 238, 228)" },
+  "light/clean": { backgroundColor: "rgb(250, 250, 251)", color: "rgb(31, 34, 38)" },
+  "light/cozy": { backgroundColor: "rgb(251, 249, 245)", color: "rgb(42, 38, 34)" },
+  "dark/clean": { backgroundColor: "rgb(19, 21, 24)", color: "rgb(242, 243, 245)" },
+  "dark/cozy": { backgroundColor: "rgb(26, 24, 21)", color: "rgb(243, 237, 227)" },
 };
 
 const filename = (value: string) => value.replace(/[^a-zA-Z0-9_-]+/g, "-").slice(0, 100);

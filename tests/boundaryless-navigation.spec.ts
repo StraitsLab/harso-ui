@@ -102,8 +102,8 @@ test("tooltips inherit the theme, dismiss with Escape and do not steal focus", a
     await expect(page.getByRole("tooltip")).toContainText("Copy a link to this sample brief");
     await expect(trigger).toBeFocused();
     const visibleHint = page.locator(".hk-tooltip");
-    await expect(visibleHint).toHaveCSS("color", "rgb(23, 26, 32)");
-    await expect(visibleHint).toHaveCSS("background-color", "rgb(238, 240, 245)");
+    await expect(visibleHint).toHaveCSS("color", "rgb(19, 21, 24)");
+    await expect(visibleHint).toHaveCSS("background-color", "rgb(242, 243, 245)");
     await page.keyboard.press("Escape");
     await expect(page.getByRole("tooltip")).toBeHidden();
   }
@@ -150,7 +150,7 @@ test("tooltips escape a clipped local container without leaving their theme", as
   await example.getByRole("button", { name: "Copy link" }).focus();
   const hint = page.locator(".hk-tooltip");
   await expect(hint).toBeVisible();
-  await expect(hint).toHaveCSS("background-color", "rgb(244, 238, 228)");
+  await expect(hint).toHaveCSS("background-color", "rgb(243, 237, 227)");
   await expect.poll(() => hint.evaluate(element => { const bounds = element.getBoundingClientRect(); return element.contains(document.elementFromPoint(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2)); })).toBe(true);
   await page.keyboard.press("Escape");
   await expect(hint).toBeHidden();

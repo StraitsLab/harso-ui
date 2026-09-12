@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>harso — Boundaryless</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#fafafb; --canvas-2:#f2f4f8;
+  --ink:#1f2226; --ink-2:#5b6067; --ink-3:#8b9098; --ink-4:#a9aeb5;
+  --hair:#e4e6ea; --pill:#eef0f3; --dark:#202327;
+  --blue:#3d8bf5; --blue-soft:#dce8fb; --amber:#f0a23a; --red:#d4483f; --green:#3f9a5c;
+  --sh:0 14px 40px rgba(20,24,32,.07),0 1px 2px rgba(20,24,32,.04);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:15px/1.5 Inter,system-ui,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--canvas) 0%,var(--canvas-2) 100%);-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.app{display:grid;grid-template-rows:102px 1fr;grid-template-columns:106px 1fr 412px;height:100vh;overflow:hidden}
+/* top bar */
+.top{grid-column:1/-1;display:flex;align-items:center;padding:0 26px;gap:0}
+.top .mark{font-size:20px;font-weight:600;letter-spacing:-.02em;width:194px}
+.crumb{display:flex;align-items:center;gap:10px;color:var(--ink-2);font-size:15px}
+.crumb svg{width:12px;height:12px;color:var(--ink-4)}
+.crumb b{font-weight:400;color:var(--ink)}
+.top .r{margin-left:auto;display:flex;align-items:center;gap:22px}
+.avatar{width:46px;height:46px;border-radius:50%;background:#fff;border:1px solid var(--hair);display:grid;place-items:center;font-size:15px;font-weight:500}
+.more{display:flex;gap:3px}.more i{width:3px;height:3px;border-radius:50%;background:var(--ink-2)}
+/* rail */
+.rail{display:flex;flex-direction:column;align-items:center;padding-top:38px;gap:67px}
+.rail button{width:24px;height:24px;color:#3a3f46;position:relative}
+.rail button[aria-current]{color:var(--ink)}
+.rail button:hover{color:var(--ink)}
+/* transcript */
+.main{position:relative;min-width:0;min-height:0;display:flex;flex-direction:column}
+.thread{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none}
+.col{width:min(100% - 80px,600px);margin-left:191px;padding:44px 0 40px;display:flex;flex-direction:column}
+@media (max-width:1280px){.col{margin-left:60px}}
+.label{font-size:14px;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.label svg{width:16px;height:16px;margin-left:-24px;margin-right:0;color:var(--blue);opacity:.75}
+.you{margin-top:42px;font-size:21px;line-height:32px}
+.ai-lead{margin-top:34px;font-size:32px;line-height:42px;letter-spacing:-.01em;font-weight:400}
+.ai-lead + .body{margin-top:24px}
+.body{font-size:19px;line-height:30px;color:#2e3238}
+.body p{margin:0 0 20px}
+.body p:last-child{margin-bottom:0}
+.body ul{margin:0 0 20px;padding-left:22px}
+.body li{margin:4px 0}
+.body a{color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--ink-4)}
+.body code{font:15px JetBrains Mono,monospace;background:var(--pill);padding:2px 7px;border-radius:6px;color:var(--ink)}
+.body .code{margin:8px 0 24px;background:#fff;border-radius:18px;box-shadow:var(--sh);overflow:hidden}
+.body .code header{display:flex;align-items:center;padding:12px 20px 0;font-size:13px;color:var(--ink-3)}
+.body .code header button{margin-left:auto;font-size:13px;color:var(--ink-2)}
+.body .code header button:hover{color:var(--ink)}
+.body pre{padding:12px 20px 18px;font:14.5px/1.65 JetBrains Mono,monospace;color:var(--ink);overflow:auto}
+.body pre .k{color:var(--blue)}.body pre .s{color:var(--ink-2)}
+.body blockquote{margin:0 0 20px;padding-left:18px;border-left:2px solid var(--hair);color:var(--ink-2)}
+.turn + .turn{margin-top:100px}
+.turn.user + .turn.ai{margin-top:76px}
+.turn.ai + .turn.user{margin-top:100px}
+/* task row (in transcript) */
+.task{margin-top:44px;display:grid;grid-template-columns:34px 1fr 24px;gap:18px;align-items:center;width:100%;text-align:left;padding:6px 0;border-radius:12px}
+.task:hover .open{color:var(--ink)}
+.ring{width:34px;height:34px;border-radius:50%;border:2px solid var(--blue-soft);border-top-color:var(--blue);animation:spin 1.1s linear infinite}
+.ring.done{border-color:var(--green);animation:none;display:grid;place-items:center;color:var(--green)}
+.ring.done svg{width:16px;height:16px;stroke-width:2}
+.ring.bad{border-color:var(--red);animation:none;display:grid;place-items:center;color:var(--red)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.task b{display:block;font-size:16px;font-weight:500}
+.task small{display:block;font-size:13px;color:var(--ink-3);margin-top:3px}
+.task .open{color:#3a3f46;width:20px;height:20px}
+/* tools (expanded) */
+.tools{margin-top:22px;display:flex;flex-direction:column;gap:14px;padding-left:52px}
+.tools[hidden]{display:none}
+.tool{display:grid;grid-template-columns:16px 1fr auto;gap:16px;align-items:baseline;font-size:15px}
+.tool .dot{width:8px;height:8px;border-radius:50%;justify-self:center;align-self:center}
+.dot.ok{background:var(--green)}.dot.run{background:var(--blue);box-shadow:0 0 0 4px var(--blue-soft)}.dot.bad{background:var(--red)}
+.tool code{font:14px JetBrains Mono,monospace;color:var(--ink)}
+.tool span{font-size:13px;color:var(--ink-3)}
+.tool span.bad{color:var(--red)}
+/* actions */
+.actions{display:flex;gap:18px;margin-top:20px;opacity:0;transition:opacity .15s}
+.turn:hover .actions{opacity:1}
+.actions button{font-size:13px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.actions button svg{width:15px;height:15px}
+.actions button:hover{color:var(--ink)}
+/* composer */
+.dock{padding:24px 0 70px 191px;display:flex;justify-content:flex-start;background:linear-gradient(to top,var(--canvas-2) 40%,transparent)}
+.composer{width:656px;max-width:calc(100% - 48px);margin-left:-30px;min-height:78px;border-radius:39px;background:#fff;box-shadow:var(--sh);display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:18px;padding:0 15px 0 30px}
+.composer:focus-within{box-shadow:0 14px 40px rgba(20,24,32,.1),0 1px 2px rgba(20,24,32,.06)}
+.composer .ic{width:24px;height:24px;color:var(--ink-2)}
+.composer .ic:hover{color:var(--ink)}
+.composer textarea{border:0;outline:0;resize:none;background:transparent;font:17px/1.4 Inter,sans-serif;padding:26px 0;max-height:180px;field-sizing:content;color:var(--ink)}
+.composer textarea::placeholder{color:var(--ink-3)}
+.mic{position:relative;width:24px;height:24px;color:#3a3f46}
+.mic::after{content:"";position:absolute;left:50%;bottom:-8px;width:5px;height:5px;border-radius:50%;background:var(--blue);transform:translateX(-50%)}
+.send{width:48px;height:48px;border-radius:50%;background:var(--dark);color:#fff;display:grid;place-items:center;transition:transform .12s,opacity .12s}
+.send svg{width:18px;height:18px;stroke-width:1.75}
+.send:hover{transform:translateY(-1px)}
+.send:disabled{opacity:.9;cursor:default;transform:none}
+/* right pane */
+.pane{padding:36px 44px 0 27px;overflow-y:auto;min-height:0;scrollbar-width:none;display:flex;flex-direction:column}
+.pane .hd{display:flex;align-items:center;font-size:18px;font-weight:500}
+.pane .hd button{margin-left:auto;color:#3a3f46;width:18px;height:18px}
+.pane .hd button svg{width:18px;height:18px}
+.choice{margin-top:52px}
+.kicker{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-2)}
+.kicker i{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.q{margin-top:18px;font-size:20px;line-height:1.35}
+.pills{display:flex;gap:15px;margin-top:18px;flex-wrap:wrap}
+.pill{height:40px;padding:0 22px;border-radius:20px;background:var(--pill);font-size:16px;display:inline-flex;align-items:center;transition:background .12s,color .12s}
+.pill:hover{background:#e4e7ec}
+.pill[aria-checked=true]{background:var(--dark);color:#fff;font-weight:500}
+.note{margin-top:20px;font-size:15px;color:var(--ink-2)}
+.sec{margin-top:70px}
+.sec h6{font-size:14px;font-weight:400;color:var(--ink-3)}
+.act{display:grid;grid-template-columns:16px 1fr;gap:17px;align-items:start;margin-top:26px}
+.act svg{width:16px;height:16px;margin-top:2px}
+.act.blue svg{color:var(--blue);fill:var(--blue);stroke:none}
+.act.grey svg{color:var(--ink-3)}
+.act b{display:block;font-size:15px;font-weight:400}
+.act small{display:block;font-size:13px;color:var(--ink-3);margin-top:4px}
+.act.grey b{color:var(--ink-2);font-size:14px}
+.doc{margin-top:56px;display:grid;grid-template-columns:22px 1fr;gap:17px;align-items:start}
+.doc svg{width:22px;height:28px;color:#3a3f46}
+.doc b{display:block;font-size:16px;font-weight:500}
+.doc small{display:block;font-size:13px;color:var(--ink-3);margin-top:4px}
+.excerpt{margin-top:32px;font-size:16px;line-height:31px}
+.link{margin-top:18px;font-size:15px;font-weight:500;display:inline-flex;align-items:center;gap:6px;color:var(--ink);text-decoration:none;align-self:flex-start}
+.link svg{width:16px;height:16px}
+.link:hover{text-decoration:underline;text-underline-offset:4px}
+.foot{margin-top:auto;padding:28px 0 24px;text-align:right;font-size:12px;color:var(--ink-3)}
+.toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:var(--dark);color:#fff;font-size:13px;padding:8px 14px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="mark">harso</div>
+    <div class="crumb">Harso launch<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg><b>Launch research</b></div>
+    <div class="r"><div class="avatar">AS</div><div class="more"><i></i><i></i><i></i></div></div>
+  </header>
+
+  <nav class="rail">
+    <button aria-current="true" title="Conversations" onclick="toast('Conversations')"><svg viewBox="0 0 24 24"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/></svg></button>
+    <button title="Search" onclick="toast('Search')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+    <button title="New" onclick="toast('New conversation')"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+  </nav>
+
+  <main class="main">
+    <section class="thread" id="thread">
+      <div class="col" id="col">
+        <div class="turn user">
+          <div class="label">You</div>
+          <div class="you">Find the strongest direction for the launch.<br>Shape it into something I can act on.</div>
+        </div>
+        <div class="turn ai">
+          <div class="label"><svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z"/></svg>Harso</div>
+          <div class="ai-lead">Start smaller.<br>Make the first experience exceptional.</div>
+          <div class="body"><p>The research points to a focused launch. I'm turning the evidence into a brief, with a clear first step.</p></div>
+          <button class="task" onclick="toggleTools(this)">
+            <div class="ring"></div>
+            <div><b>Shaping your launch brief</b><small>2 working · 1 choice for you</small></div>
+            <svg class="open" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </button>
+          <div class="tools" hidden>
+            <div class="tool"><i class="dot ok"></i><code>search_sources("launch positioning")</code><span>6 reviewed</span></div>
+            <div class="tool"><i class="dot run"></i><code>write_brief("launch-brief.md")</code><span>Writing</span></div>
+            <div class="tool"><i class="dot bad"></i><code>fetch("competitor-pricing")</code><span class="bad">Couldn't reach · retrying</span></div>
+          </div>
+          <div class="actions"><button onclick="toast('Copied')"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button><button onclick="toast('Thanks')">Helpful</button><button onclick="toast('Noted')">Not quite</button></div>
+        </div>
+
+        <div class="turn user">
+          <div class="label">You</div>
+          <div class="you">What did the evidence actually say?</div>
+        </div>
+        <div class="turn ai">
+          <div class="label"><svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z"/></svg>Harso</div>
+          <div class="body" style="margin-top:28px">
+            <p>Three of six sources agree: teams that launched to one audience saw <a href="#">2.4× higher activation</a> in the first month. The other three were inconclusive.</p>
+            <ul><li>Narrow the first release to internal teams</li><li>Ship one workflow end to end, not four half-done</li><li>Measure activation, not signups</li></ul>
+            <div class="code"><header>launch-brief.md<button onclick="toast('Copied')">Copy</button></header><pre><span class="k">## First step</span>
+Ship the review workflow to <span class="s">our team</span> only.
+Success = 8 of 10 reviewers finish a cycle
+without asking for help.</pre></div>
+            <blockquote>I'll keep the wider launch as a second phase once activation holds.</blockquote>
+          </div>
+          <div class="actions"><button onclick="toast('Copied')"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button><button onclick="toast('Thanks')">Helpful</button><button onclick="toast('Noted')">Not quite</button></div>
+        </div>
+      </div>
+    </section>
+    <div class="dock">
+      <div class="composer">
+        <button class="ic" title="Attach" onclick="toast('Attach')"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+        <textarea id="draft" rows="1" placeholder="What's next?" oninput="send.disabled=!this.value.trim()" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submit()}"></textarea>
+        <button class="mic" title="Voice" onclick="toast('Listening…')"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+        <button class="send" id="send" disabled onclick="submit()"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+      </div>
+    </div>
+  </main>
+
+  <aside class="pane">
+    <div class="hd">Launch brief<button title="Close" onclick="toast('Close')"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="choice" id="choice">
+      <div class="kicker"><i></i>A quick choice</div>
+      <div class="q">Who are we speaking to?</div>
+      <div class="pills" role="radiogroup">
+        <button class="pill" role="radio" aria-checked="true" onclick="pick(this)">Our team</button>
+        <button class="pill" role="radio" aria-checked="false" onclick="pick(this)">Everyone</button>
+      </div>
+      <div class="note">I'll keep working while you decide.</div>
+    </div>
+    <div class="sec"><h6>Happening now</h6>
+      <div class="act blue"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z"/></svg><div><b>Shaping the recommendation</b><small>Writing agent</small></div></div>
+      <div class="act blue"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z"/></svg><div><b>Checking the evidence</b><small>Research agent</small></div></div>
+      <div class="act grey"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><div><b>6 sources reviewed</b></div></div>
+    </div>
+    <div class="doc"><svg viewBox="0 0 22 28"><path d="M3 1h10l6 6v19a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM13 1v6h6"/></svg><div><b>Launch brief</b><small>Draft</small></div></div>
+    <div class="excerpt">A focused launch.<br>One audience. One excellent workflow.</div>
+    <a class="link" href="#" onclick="toast('Opening draft');return false">Open draft<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <div class="foot">Concept · sample data</div>
+  </aside>
+</div>
+<div class="toast" id="toastEl"></div>
+<script>
+const toastEl=document.getElementById('toastEl');let t;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(t);t=setTimeout(()=>toastEl.classList.remove('on'),1400)}
+function pick(b){[...b.parentElement.children].forEach(x=>x.setAttribute('aria-checked',x===b));document.querySelector('#choice .note').textContent=`Got it — ${b.textContent.trim().toLowerCase()}. Folding that into the brief.`}
+function toggleTools(b){const t=b.nextElementSibling;t.hidden=!t.hidden;b.querySelector('.open').style.transform=t.hidden?'':'rotate(45deg)'}
+function submit(){const d=document.getElementById('draft');const v=d.value.trim();if(!v)return;const col=document.getElementById('col');col.insertAdjacentHTML('beforeend',`<div class="turn user"><div class="label">You</div><div class="you">${v.replace(/</g,'&lt;')}</div></div><div class="turn ai"><div class="label"><svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z"/></svg>Harso</div><div class="task" style="margin-top:28px"><div class="ring"></div><div><b>Thinking</b><small>1 working</small></div><span></span></div></div>`);d.value='';send.disabled=true;thread.scrollTop=thread.scrollHeight}
+</script>
+</body>
+</html>

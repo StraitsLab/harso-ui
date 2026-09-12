@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harso — Precision instrument</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#08090a; --panel:#0f1011; --surface:#151617; --raised:#1b1c1e; --hover:rgba(255,255,255,.04);
+  --ink:#f7f8f8; --ink-2:#c9ced6; --ink-3:#8a8f98; --ink-4:#6e737b;
+  --line:rgba(255,255,255,.06); --line-2:rgba(255,255,255,.1);
+  --accent:#7170ff; --accent-2:#8f8dff; --accent-bg:#5e6ad2; --accent-wash:rgba(113,112,255,.14);
+  --ok:#27a644; --warn:#d29922; --bad:#e5484d;
+  --r-s:5px; --r:8px; --r-l:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:13px/1.5 Inter,system-ui,sans-serif;font-feature-settings:"cv01","ss03";font-weight:400;color:var(--ink-2);background:var(--canvas);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.app{display:grid;grid-template-columns:240px 1fr 300px;height:100vh}
+/* sidebar */
+.side{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.side .top{height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;border-bottom:1px solid var(--line)}
+.ws{display:flex;align-items:center;gap:8px;height:28px;padding:0 8px;border-radius:var(--r-s);font-weight:510;color:var(--ink)}
+.ws:hover{background:var(--hover)}
+.ws i{width:18px;height:18px;border-radius:5px;background:var(--accent-bg);font-style:normal;font-size:10px;color:#fff;display:grid;place-items:center;font-weight:600}
+.search{margin:10px 12px 4px;height:30px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;border:1px solid var(--line-2);background:rgba(255,255,255,.02);color:var(--ink-3);font-size:12px}
+.search kbd{margin-left:auto;font:10px JetBrains Mono,monospace;padding:1px 5px;border:1px solid var(--line-2);border-radius:4px;color:var(--ink-4)}
+.nav{padding:8px;display:flex;flex-direction:column;gap:1px;overflow:auto}
+.nav h6{font-size:11px;font-weight:510;color:var(--ink-4);padding:12px 8px 4px;letter-spacing:.02em}
+.row{display:flex;align-items:center;gap:8px;height:28px;padding:0 8px;border-radius:var(--r-s);color:var(--ink-2);font-weight:510;text-align:left;width:100%;white-space:nowrap;overflow:hidden}
+.row span{overflow:hidden;text-overflow:ellipsis;font-weight:400}
+.row:hover{background:var(--hover);color:var(--ink)}
+.row[aria-current]{background:rgba(255,255,255,.06);color:var(--ink)}
+.row .ic{color:var(--ink-3);flex:none}
+.row .k{margin-left:auto;font:10px JetBrains Mono,monospace;color:var(--ink-4)}
+.row .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none;margin-left:auto}
+/* main */
+.main{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;background:var(--canvas)}
+.head{height:44px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--line)}
+.head .path{display:flex;align-items:center;gap:6px;font-weight:510;color:var(--ink);min-width:0}
+.head .path span{color:var(--ink-4);font-weight:400}
+.head .path b{font-weight:510;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pill{height:22px;padding:0 8px;border-radius:999px;border:1px solid var(--line-2);font-size:11px;font-weight:510;color:var(--ink-3);display:inline-flex;align-items:center;gap:5px}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.head .r{margin-left:auto;display:flex;gap:4px}
+.ib{height:28px;min-width:28px;padding:0 8px;border-radius:var(--r-s);display:inline-flex;align-items:center;gap:6px;color:var(--ink-3);font-weight:510;font-size:12px}
+.ib:hover{background:var(--hover);color:var(--ink)}
+.ib kbd{font:10px JetBrains Mono,monospace;color:var(--ink-4)}
+/* thread */
+.thread{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#2a2c30 transparent}
+.col{width:min(100% - 40px,720px);margin:0 auto;padding:24px 0 32px;display:flex;flex-direction:column;gap:6px}
+.turn{display:grid;grid-template-columns:24px 1fr;gap:12px;padding:12px 0}
+.turn .av{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:10px;font-weight:600}
+.turn.user .av{background:var(--raised);color:var(--ink-2);border:1px solid var(--line-2)}
+.turn.ai .av{background:var(--accent-bg);color:#fff}
+.turn .meta{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.turn .meta b{font-weight:510;color:var(--ink);font-size:13px}
+.turn .meta time{font-size:11px;color:var(--ink-4);font-variant-numeric:tabular-nums}
+.turn .body{font-size:14px;line-height:1.6;color:var(--ink-2)}
+.turn.user .body{color:var(--ink)}
+.body h2{font-size:15px;font-weight:590;color:var(--ink);letter-spacing:-.01em;margin:14px 0 6px}
+.body h2:first-child{margin-top:0}
+.body p{margin:0 0 10px}
+.body ul{margin:0 0 10px;padding-left:18px}
+.body li{margin:2px 0}
+.body code{font:12.5px JetBrains Mono,monospace;background:rgba(255,255,255,.06);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.body pre{margin:0 0 12px;padding:12px 14px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);font:12.5px/1.6 JetBrains Mono,monospace;color:var(--ink-2);overflow:auto}
+.body table{border-collapse:separate;border-spacing:0;margin:0 0 12px;font-size:13px;border:1px solid var(--line);border-radius:6px;overflow:hidden;width:100%;background:rgba(255,255,255,.02)}
+.body th{text-align:left;font-weight:510;color:var(--ink-3);font-size:11px;padding:6px 12px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--line)}
+.body td{padding:7px 12px;border-bottom:1px solid var(--line)}
+.body tr:last-child td{border-bottom:0}
+.body blockquote{margin:0 0 12px;padding:8px 12px;border-left:2px solid var(--accent);background:var(--accent-wash);border-radius:0 6px 6px 0;color:var(--ink-2)}
+.body a{color:var(--accent-2);text-decoration:none}
+.body a:hover{text-decoration:underline}
+.actions{display:flex;gap:2px;margin-top:6px;opacity:0;transition:opacity .1s}
+.turn:hover .actions{opacity:1}
+.actions button{height:24px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:510;color:var(--ink-3);display:inline-flex;align-items:center;gap:5px}
+.actions button:hover{background:var(--hover);color:var(--ink)}
+/* tool */
+.tools{border:1px solid var(--line);border-radius:var(--r);background:rgba(255,255,255,.02);margin:6px 0 10px;overflow:hidden}
+.tools summary{list-style:none;display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:12px;font-weight:510;color:var(--ink-2);cursor:pointer;user-select:none}
+.tools summary::-webkit-details-marker{display:none}
+.tools summary .chev{transition:transform .12s;color:var(--ink-4)}
+.tools[open] summary .chev{transform:rotate(90deg)}
+.thread{min-height:0}
+.tools summary .n{margin-left:auto;color:var(--ink-4);font-weight:400;font-variant-numeric:tabular-nums}
+.tool{display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:center;padding:7px 12px;border-top:1px solid var(--line);font:12px JetBrains Mono,monospace;color:var(--ink-2)}
+.tool .dot{width:6px;height:6px;border-radius:50%;justify-self:center}
+.dot.ok{background:var(--ok)}.dot.run{background:var(--warn);animation:pulse 1.2s infinite}.dot.bad{background:var(--bad)}
+@keyframes pulse{50%{opacity:.4}}
+.tool .st{font:11px Inter,sans-serif;font-weight:510;color:var(--ink-4)}
+.tool .st.bad{color:var(--bad)}
+/* clarification */
+.ask{border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);padding:12px 14px;margin-top:4px}
+.ask .q{font-weight:510;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.ask .q .pill{margin-left:auto;border-color:rgba(210,153,34,.4);color:var(--warn)}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opt{height:28px;padding:0 10px;border-radius:6px;border:1px solid var(--line-2);background:rgba(255,255,255,.02);font-weight:510;color:var(--ink-2);display:inline-flex;align-items:center;gap:8px}
+.opt:hover{background:var(--hover);color:var(--ink)}
+.opt[aria-checked=true]{border-color:var(--accent);background:var(--accent-wash);color:var(--ink)}
+.opt kbd{font:10px JetBrains Mono,monospace;color:var(--ink-4);padding:0 4px;border:1px solid var(--line-2);border-radius:3px}
+.ask .foot{display:flex;gap:6px;margin-top:10px}
+.btn{height:28px;padding:0 10px;border-radius:6px;font-size:12px;font-weight:510;display:inline-flex;align-items:center;gap:6px}
+.btn.primary{background:var(--accent-bg);color:#fff}
+.btn.primary:hover{background:var(--accent-2)}
+.btn.primary:disabled{background:rgba(255,255,255,.05);color:var(--ink-4);cursor:not-allowed}
+.btn.ghost{border:1px solid var(--line-2);background:rgba(255,255,255,.02);color:var(--ink-2)}
+.btn.ghost:hover{background:var(--hover)}
+/* composer */
+.dock{position:sticky;bottom:0;padding:20px 0 16px;background:linear-gradient(to top,var(--canvas) 60%,transparent)}
+.composer{width:min(100% - 40px,720px);margin:0 auto;border-radius:var(--r-l);background:var(--panel);border:1px solid var(--line-2);box-shadow:0 0 0 1px rgba(0,0,0,.4),0 12px 32px -12px rgba(0,0,0,.6);display:grid}
+.composer:focus-within{border-color:rgba(113,112,255,.5);box-shadow:0 0 0 3px var(--accent-wash)}
+.composer textarea{border:0;outline:0;resize:none;font:14px/1.5 Inter,sans-serif;background:transparent;color:var(--ink);min-height:44px;max-height:180px;field-sizing:content;padding:12px 14px 4px}
+.composer textarea::placeholder{color:var(--ink-4)}
+.bar{display:flex;align-items:center;gap:4px;padding:6px 8px 8px}
+.chip{height:26px;padding:0 8px;border-radius:5px;font-size:12px;font-weight:510;color:var(--ink-3);display:inline-flex;align-items:center;gap:5px}
+.chip:hover{background:var(--hover);color:var(--ink)}
+.chip .mono{font:11px JetBrains Mono,monospace}
+.send{margin-left:auto;height:26px;padding:0 10px;border-radius:5px;background:var(--accent-bg);color:#fff;font-weight:510;font-size:12px;display:inline-flex;align-items:center;gap:6px}
+.send:hover{background:var(--accent-2)}
+.send:disabled{background:rgba(255,255,255,.05);color:var(--ink-4)}
+.send kbd{font:10px JetBrains Mono,monospace;opacity:.7}
+/* inspector */
+.insp{background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.insp .top{height:44px;display:flex;align-items:center;gap:8px;padding:0 14px;border-bottom:1px solid var(--line);font-weight:510;color:var(--ink)}
+.insp .top .ib{margin-left:auto}
+.insp .b{padding:14px;display:flex;flex-direction:column;gap:14px;overflow:auto;font-size:12px}
+.kv{display:grid;grid-template-columns:88px 1fr;gap:6px 10px}
+.kv dt{color:var(--ink-4);font-weight:510}
+.kv dd{color:var(--ink-2)}
+.insp h6{font-size:11px;font-weight:510;color:var(--ink-4);letter-spacing:.02em;margin-bottom:6px}
+.step{display:flex;align-items:center;gap:8px;height:26px;color:var(--ink-3)}
+.step .dot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line-2);display:grid;place-items:center;font-size:9px}
+.step.done{color:var(--ink-2)}.step.done .dot{background:var(--ok);border-color:var(--ok);color:#fff}
+.step.cur{color:var(--ink)}.step.cur .dot{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-wash)}
+.diff{border:1px solid var(--line);border-radius:6px;overflow:hidden;font:11.5px JetBrains Mono,monospace}
+.diff .f{padding:6px 10px;background:rgba(255,255,255,.03);color:var(--ink-3);border-bottom:1px solid var(--line);display:flex;gap:8px}
+.diff .f b{color:var(--ink-2);font-weight:500}
+.diff .f .a{color:var(--ok)}.diff .f .d{color:var(--bad)}
+.diff pre{padding:8px 14px 8px 10px;line-height:1.55;color:var(--ink-3);overflow-x:auto;white-space:pre}
+.diff .plus{color:#7ee2a8;background:rgba(39,166,68,.12);display:block;margin:0 -14px 0 -10px;padding:0 14px 0 10px;white-space:pre-wrap;word-break:break-all}
+.diff .minus{color:#ff8f93;background:rgba(229,72,77,.12);display:block;margin:0 -10px;padding:0 10px}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--raised);border:1px solid var(--line-2);color:var(--ink);font-size:12px;font-weight:510;padding:6px 12px;border-radius:6px;opacity:0;transition:opacity .15s;pointer-events:none}
+.toast.on{opacity:1}
+svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="top"><button class="ws"><i>H</i>Harso · Personal<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button></div>
+    <div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Search or jump to…<kbd>⌘K</kbd></div>
+    <nav class="nav">
+      <button class="row" onclick="toast('New conversation')"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>New conversation</span><span class="k">N</span></button>
+      <h6>Repository</h6>
+      <button class="row"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>studio</span></button>
+      <button class="row" style="padding-left:28px"><span>Welcome.tsx</span><span class="k" style="color:var(--warn)">M</span></button>
+      <button class="row" style="padding-left:28px"><span>styles.css</span></button>
+      <h6>Conversations</h6>
+      <button class="row" aria-current="true"><span>Studio landing page</span><i class="dot"></i></button>
+      <button class="row"><span>Pricing table copy</span></button>
+      <button class="row"><span>Migrate to native dialog</span></button>
+      <button class="row"><span>Voice enrolment flow</span></button>
+    </nav>
+  </aside>
+  <main class="main">
+    <header class="head">
+      <div class="path"><span>studio</span><span>/</span><b>Studio landing page</b></div>
+      <span class="pill"><i class="dot"></i>Live</span>
+      <div class="r">
+        <div class="tabs" role="tablist" style="display:flex;gap:2px;padding:2px;background:rgba(255,255,255,.04);border-radius:6px"><button class="ib" role="tab" aria-selected="true" style="background:var(--raised);color:var(--ink)" onclick="tab(this)">Chat</button><button class="ib" role="tab" onclick="tab(this)">Changes <kbd>2</kbd></button>
+        <button class="ib" role="tab" onclick="tab(this)">Browser</button></div>
+        <button class="ib" onclick="document.querySelector('.app').style.gridTemplateColumns=document.querySelector('.app').style.gridTemplateColumns?'':'240px 1fr 0px';toast('Inspector')" title="Toggle inspector"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg></button>
+      </div>
+    </header>
+    <section class="thread" id="thread">
+      <div class="col" id="col">
+        <div class="turn user"><div class="av">AB</div><div><div class="meta"><b>Abhi</b><time>14:02</time></div><div class="body">Create a calm landing page for our studio. Keep it typographic; no hero image.</div></div></div>
+        <div class="turn ai"><div class="av">H</div><div><div class="meta"><b>Harso</b><time>14:02</time></div>
+          <div class="body">
+            <h2>A minimal page, three sections</h2>
+            <p>I've written <code>Welcome.tsx</code> with a masthead, a short statement, and a contact line. Typography carries the page; there's no imagery to load.</p>
+            <ul><li>Masthead: studio name, one-line positioning</li><li>Statement: 60 words, 22px, generous measure</li><li>Contact: email and location, small caps</li></ul>
+            <pre>export function Welcome() {
+  return &lt;main className="welcome"&gt;
+    &lt;h1&gt;Studio Ardent&lt;/h1&gt;
+    &lt;p&gt;We design quiet software.&lt;/p&gt;
+  &lt;/main&gt;;
+}</pre>
+            <table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody><tr><td>typecheck</td><td>clean</td></tr><tr><td>Lighthouse</td><td>100 / 100</td></tr></tbody></table>
+            <blockquote>Open <a href="#">Changes</a> to review the diff, or <a href="#">Browser</a> to see it rendered.</blockquote>
+          </div>
+          <div class="actions"><button onclick="toast('Copied')"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button><button onclick="toast('Retry')">Retry</button><button onclick="toast('👍')">Helpful</button></div>
+        </div></div>
+        <div class="turn user"><div class="av">AB</div><div><div class="meta"><b>Abhi</b><time>14:05</time></div><div class="body">And check what tools ran.</div></div></div>
+        <div class="turn ai"><div class="av">H</div><div><div class="meta"><b>Harso</b><time>14:05</time></div>
+          <details class="tools" open>
+            <summary><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>Tool activity<span class="n">3 calls · 1.8 s</span></summary>
+            <div class="tool"><i class="dot ok"></i>search_files("**/*.tsx")<span class="st">Completed</span></div>
+            <div class="tool"><i class="dot run"></i>read_file("Welcome.tsx")<span class="st">Running</span></div>
+            <div class="tool"><i class="dot bad"></i>terminal("npm test")<span class="st bad">Exit 1</span></div>
+          </details>
+          <div class="ask" id="ask">
+            <div class="q">Which repo should I check first?<span class="pill">Needs you</span></div>
+            <div class="opts">
+              <button class="opt" role="radio" aria-checked="false" onclick="pick(this)"><kbd>1</kbd>harso-ui</button>
+              <button class="opt" role="radio" aria-checked="false" onclick="pick(this)"><kbd>2</kbd>weave-cloud</button>
+            </div>
+            <div class="foot"><button class="btn primary" id="answer" disabled onclick="answer()">Answer<kbd style="font:10px JetBrains Mono,monospace;opacity:.7">↵</kbd></button><button class="btn ghost" onclick="toast('Skipped')">Skip</button></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="dock">
+        <div class="composer">
+          <textarea id="draft" placeholder="Message Harso… (⌘K for commands)" oninput="send.disabled=!this.value.trim()" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submit()}"></textarea>
+          <div class="bar">
+            <button class="chip" onclick="toast('Attach')"><svg viewBox="0 0 24 24"><path d="M21 12l-8.5 8.5a5 5 0 0 1-7-7L14 5a3 3 0 0 1 4.5 4.5L10 18a1 1 0 0 1-1.5-1.5L16 9"/></svg></button>
+            <button class="chip" onclick="toast('Model')"><span class="mono">opus-4.8</span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+            <button class="chip" onclick="toast('Effort')">Medium</button>
+            <button class="chip" onclick="toast('Permissions')">Ask before edits</button>
+            <button class="send" id="send" disabled onclick="submit()">Send<kbd>↵</kbd></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <aside class="insp">
+    <div class="top">Work<button class="ib" onclick="toast('Close')"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="b">
+      <div><span class="pill" style="border-color:rgba(113,112,255,.4);color:var(--accent-2)"><i class="dot" style="background:var(--accent)"></i>Running</span><div style="font-weight:510;color:var(--ink);font-size:14px;margin-top:8px">Build landing page</div><div style="color:var(--ink-4);margin-top:2px">Started 3 min ago · Workspace sprite</div></div>
+      <div><h6>Steps</h6>
+        <div class="step done"><i class="dot">✓</i>Read repository</div>
+        <div class="step done"><i class="dot">✓</i>Write Welcome.tsx</div>
+        <div class="step cur"><i class="dot"></i>Run checks</div>
+        <div class="step"><i class="dot"></i>Open pull request</div>
+      </div>
+      <div><h6>Details</h6><dl class="kv"><dt>Model</dt><dd>claude-opus-4.8</dd><dt>Effort</dt><dd>Medium</dd><dt>Tokens</dt><dd>18.4k in · 2.1k out</dd><dt>Cost</dt><dd>$0.31</dd></dl></div>
+      <div><h6>Changes</h6>
+        <div class="diff"><div class="f"><b>Welcome.tsx</b><span class="a">+24</span><span class="d">−0</span></div><pre><span class="plus">+ export function Welcome() {</span><span class="plus">+   return &lt;main className="welcome"&gt;</span><span class="plus">+     &lt;h1&gt;Studio Ardent&lt;/h1&gt;</span>  …</pre></div>
+      </div>
+      <div style="display:flex;gap:6px"><button class="btn ghost" onclick="toast('Steer')">Steer</button><button class="btn ghost" onclick="toast('Cancel')">Cancel</button></div>
+    </div>
+  </aside>
+</div>
+<div class="toast" id="toastEl"></div>
+<script>
+const toastEl=document.getElementById('toastEl');let t;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(t);t=setTimeout(()=>toastEl.classList.remove('on'),1400)}
+function tab(b){[...b.parentElement.children].forEach(x=>{x.setAttribute("aria-selected",x===b);x.style.background=x===b?"var(--raised)":"";x.style.color=x===b?"var(--ink)":""});toast(b.textContent.trim())}
+function pick(b){[...b.parentElement.querySelectorAll('.opt')].forEach(x=>x.setAttribute('aria-checked',x===b));answer.disabled=false}
+function answer(){const c=document.querySelector('.opt[aria-checked=true]').textContent.trim().slice(1);document.getElementById('ask').innerHTML=`<div class="q" style="color:var(--ink-3);font-weight:400">Answered <b style="color:var(--ink);font-weight:510;margin-left:4px">${c}</b></div>`}
+function submit(){const d=document.getElementById('draft');const v=d.value.trim();if(!v)return;document.getElementById('col').insertAdjacentHTML('beforeend',`<div class="turn user"><div class="av">AB</div><div><div class="meta"><b>Abhi</b><time>now</time></div><div class="body">${v.replace(/</g,'&lt;')}</div></div></div><div class="turn ai"><div class="av">H</div><div><div class="meta"><b>Harso</b><time>now</time></div><div class="body" style="color:var(--ink-4)">Thinking…</div></div></div>`);d.value='';send.disabled=true;thread.scrollTop=thread.scrollHeight}
+document.addEventListener('keydown',e=>{if(e.key==='1'||e.key==='2'){const o=document.querySelectorAll('.opt')[+e.key-1];if(o&&document.activeElement.tagName!=='TEXTAREA')pick(o)}});
+</script>
+</body>
+</html>

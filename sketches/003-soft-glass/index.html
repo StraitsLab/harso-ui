@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harso — Soft glass</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0f1115; --ink-2:#4b5160; --ink-3:#8b91a0; --ink-4:#b8bcc7;
+  --line:rgba(15,17,21,.07); --line-2:rgba(15,17,21,.12);
+  --glass:rgba(255,255,255,.62); --glass-2:rgba(255,255,255,.8); --card:#fff;
+  --accent:#2563eb; --accent-2:#1d4ed8; --accent-wash:rgba(37,99,235,.09);
+  --ok:#16a34a; --warn:#d97706; --bad:#dc2626;
+  --r:12px; --r-l:18px; --r-xl:24px;
+  --sh:0 1px 2px rgba(15,17,21,.04),0 10px 30px -12px rgba(15,17,21,.18);
+  --sh-l:0 2px 4px rgba(15,17,21,.04),0 24px 60px -20px rgba(15,17,21,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:14.5px/1.55 Inter,system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;background:#eef0f4;
+  background-image:radial-gradient(1100px 600px at 8% -10%,rgba(147,197,253,.55),transparent 60%),radial-gradient(900px 500px at 100% 110%,rgba(196,181,253,.45),transparent 60%),radial-gradient(700px 400px at 60% 40%,rgba(253,224,171,.35),transparent 60%);background-attachment:fixed}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.app{display:grid;grid-template-columns:272px 1fr;height:100vh;gap:14px;padding:14px}
+.pane{background:var(--glass);backdrop-filter:blur(30px) saturate(1.4);-webkit-backdrop-filter:blur(30px) saturate(1.4);border:1px solid rgba(255,255,255,.7);border-radius:var(--r-xl);box-shadow:var(--sh-l);min-width:0}
+/* sidebar */
+.side{display:flex;flex-direction:column;padding:16px 12px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.brand i{width:26px;height:26px;border-radius:9px;background:linear-gradient(135deg,#60a5fa,#a78bfa);display:grid;place-items:center;color:#fff;font-size:12px;font-style:normal;box-shadow:0 2px 6px rgba(99,102,241,.35)}
+.new{display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:var(--r);background:var(--ink);color:#fff;font-weight:500;box-shadow:0 6px 18px -8px rgba(15,17,21,.6)}
+.new:hover{background:#1c1f26}
+.new kbd{margin-left:auto;font:11px JetBrains Mono,monospace;opacity:.6}
+.sec{display:flex;flex-direction:column;gap:2px}
+.sec h6{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);padding:0 10px;margin:0 0 6px}
+.row{display:flex;align-items:center;gap:10px;height:36px;padding:0 10px;border-radius:10px;color:var(--ink-2);text-align:left;width:100%;white-space:nowrap;overflow:hidden;font-weight:500}
+.row:hover{background:rgba(255,255,255,.6);color:var(--ink)}
+.row[aria-current]{background:#fff;color:var(--ink);box-shadow:var(--sh)}
+.row span{overflow:hidden;text-overflow:ellipsis}
+.row .ic{width:18px;height:18px;flex:none;color:var(--ink-3)}
+.row[aria-current] .ic{color:var(--accent)}
+.row.sub{padding-left:38px;font-weight:400;font-size:13.5px;height:32px}
+.side .foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.5)}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f472b6);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}
+.foot b{font-weight:600;font-size:13px;display:block}
+.foot small{color:var(--ink-3);font-size:12px}
+/* main */
+.main{display:flex;flex-direction:column;overflow:hidden}
+.head{height:60px;display:flex;align-items:center;gap:14px;padding:0 20px;border-bottom:1px solid var(--line);position:relative;z-index:2;background:var(--glass-2)}
+.head h1{font-size:16px;font-weight:600;letter-spacing:-.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb{color:var(--ink-3);font-size:13px;white-space:nowrap}
+.seg{margin-left:auto;display:flex;gap:2px;padding:3px;background:rgba(15,17,21,.06);border-radius:11px}
+.seg button{height:30px;padding:0 14px;border-radius:9px;font-size:13px;font-weight:500;color:var(--ink-2)}
+.seg button[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(15,17,21,.1)}
+.seg button b{font-weight:600;color:var(--accent);margin-left:5px}
+.iconbtn{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--ink-3)}
+.iconbtn:hover{background:rgba(15,17,21,.06);color:var(--ink)}
+/* thread */
+.thread{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(15,17,21,.15) transparent}
+.col{width:min(100% - 56px,780px);margin:0 auto;padding:32px 0 40px;display:flex;flex-direction:column;gap:28px}
+.turn{display:flex;flex-direction:column;gap:8px}
+.turn .who{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.turn .who i{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-size:9px;font-style:normal;color:#fff}
+.turn.user .who i{background:linear-gradient(135deg,#fbbf24,#f472b6)}
+.turn.ai .who i{background:linear-gradient(135deg,#60a5fa,#a78bfa)}
+.turn.user{align-items:flex-end}
+.turn.user .bubble{max-width:76%;padding:13px 18px;border-radius:20px 20px 6px 20px;background:var(--accent);color:#fff;box-shadow:0 8px 24px -10px rgba(37,99,235,.55);font-size:15px}
+.turn.ai .body{background:var(--card);border-radius:var(--r-l);padding:20px 24px;box-shadow:var(--sh);border:1px solid rgba(255,255,255,.8);font-size:15px;line-height:1.7;max-width:100%}
+.body h2{font-size:20px;font-weight:600;letter-spacing:-.02em;margin:18px 0 8px;line-height:1.3}
+.body h2:first-child{margin-top:0}
+.body p{margin:0 0 12px}
+.body ul{margin:0 0 12px;padding-left:22px}
+.body li{margin:3px 0}
+.body code{font:13px JetBrains Mono,monospace;background:rgba(37,99,235,.08);color:var(--accent-2);padding:2px 6px;border-radius:6px}
+.body .code{margin:0 0 14px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.body .code header{display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(15,17,21,.04);font:12px JetBrains Mono,monospace;color:var(--ink-3)}
+.body .code header button{margin-left:auto;font:12px Inter,sans-serif;font-weight:500;color:var(--ink-2)}
+.body pre{margin:0;padding:14px 16px;background:#1a1d24;color:#e6e8ee;font:13px/1.6 JetBrains Mono,monospace;overflow:auto}
+.body pre .k{color:#c4b5fd}.body pre .t{color:#93c5fd}.body pre .s{color:#fcd34d}
+.body table{border-collapse:separate;border-spacing:0;margin:0 0 14px;font-size:14px;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:100%}
+.body th{text-align:left;font-weight:600;color:var(--ink-2);font-size:12px;padding:8px 14px;background:rgba(15,17,21,.03);border-bottom:1px solid var(--line)}
+.body td{padding:9px 14px;border-bottom:1px solid var(--line)}
+.body tr:last-child td{border-bottom:0}
+.body blockquote{margin:0 0 14px;padding:12px 16px;border-radius:12px;background:var(--accent-wash);color:var(--ink-2);border-left:3px solid var(--accent)}
+.body a{color:var(--accent);font-weight:500;text-decoration:none}
+.body a:hover{text-decoration:underline}
+.actions{display:flex;gap:4px;margin-top:8px;padding-left:4px}
+.actions button{height:30px;padding:0 10px;border-radius:9px;font-size:12.5px;font-weight:500;color:var(--ink-3);display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.5)}
+.actions button:hover{background:#fff;color:var(--ink);box-shadow:var(--sh)}
+/* tool */
+.tools{background:var(--card);border-radius:var(--r-l);box-shadow:var(--sh);border:1px solid rgba(255,255,255,.8);overflow:hidden}
+.tools header{display:flex;align-items:center;gap:10px;padding:14px 18px;font-weight:600;font-size:13.5px;border-bottom:1px solid var(--line)}
+.tools header .n{margin-left:auto;font-weight:500;color:var(--ink-3);font-size:12.5px}
+.tool{display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line)}
+.tool:last-child{border-bottom:0}
+.tool .ic{width:28px;height:28px;border-radius:8px;display:grid;place-items:center}
+.tool .ic.ok{background:rgba(22,163,74,.12);color:var(--ok)}.tool .ic.run{background:rgba(217,119,6,.12);color:var(--warn)}.tool .ic.bad{background:rgba(220,38,38,.12);color:var(--bad)}
+.tool .nm{font:13px JetBrains Mono,monospace;color:var(--ink)}
+.tool .nm small{display:block;font:12px Inter,sans-serif;color:var(--ink-3);margin-top:2px}
+.badge{height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.badge.ok{background:rgba(22,163,74,.12);color:#15803d}.badge.run{background:rgba(217,119,6,.12);color:#b45309}.badge.bad{background:rgba(220,38,38,.12);color:#b91c1c}
+.badge.run::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.3}}
+/* clarification */
+.ask{background:var(--card);border-radius:var(--r-l);box-shadow:var(--sh-l);border:1px solid rgba(255,255,255,.8);padding:20px 22px;margin-top:14px;position:relative;overflow:hidden}
+.ask::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6)}
+.ask .q{font-weight:600;font-size:15px;margin-bottom:4px}
+.ask .d{color:var(--ink-3);font-size:13px;margin-bottom:14px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line-2);background:#fff;text-align:left;font-weight:500;transition:all .12s}
+.opt:hover{border-color:var(--ink-4);transform:translateY(-1px);box-shadow:var(--sh)}
+.opt[aria-checked=true]{border-color:var(--accent);background:var(--accent-wash);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.opt i{width:18px;height:18px;border-radius:50%;border:2px solid var(--ink-4);display:grid;place-items:center;flex:none}
+.opt[aria-checked=true] i{border-color:var(--accent);background:var(--accent)}
+.opt[aria-checked=true] i::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+.opt small{display:block;color:var(--ink-3);font-weight:400;font-size:12px}
+.ask .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.btn{height:38px;padding:0 16px;border-radius:11px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:all .12s}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 6px 16px -6px rgba(37,99,235,.6)}
+.btn.primary:hover{background:var(--accent-2);transform:translateY(-1px)}
+.btn.primary:disabled{background:rgba(15,17,21,.08);color:var(--ink-3);box-shadow:none;cursor:not-allowed;transform:none}
+.btn.quiet{background:rgba(15,17,21,.05);color:var(--ink-2)}
+.btn.quiet:hover{background:rgba(15,17,21,.09)}
+/* composer */
+.dock{position:sticky;bottom:0;padding:24px 0 18px;background:linear-gradient(to top,#eef0f4 55%,transparent)}
+.composer{width:min(100% - 56px,780px);margin:0 auto;border-radius:var(--r-xl);background:var(--glass-2);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.9);box-shadow:var(--sh-l);padding:16px 16px 12px;display:grid;gap:12px;transition:box-shadow .15s}
+.composer:focus-within{box-shadow:var(--sh-l),0 0 0 4px rgba(37,99,235,.14)}
+.composer textarea{border:0;outline:0;resize:none;font:15.5px/1.5 Inter,sans-serif;background:transparent;min-height:52px;max-height:200px;field-sizing:content;padding:2px 4px}
+.composer textarea::placeholder{color:var(--ink-3)}
+.bar{display:flex;align-items:center;gap:8px}
+.chip{height:34px;padding:0 12px;border-radius:10px;background:rgba(15,17,21,.05);font-size:13px;font-weight:500;color:var(--ink-2);display:inline-flex;align-items:center;gap:6px}
+.chip:hover{background:rgba(15,17,21,.09);color:var(--ink)}
+.send{margin-left:auto;width:40px;height:40px;border-radius:13px;background:var(--accent);color:#fff;display:grid;place-items:center;box-shadow:0 6px 16px -6px rgba(37,99,235,.6);transition:all .12s}
+.send:hover{background:var(--accent-2);transform:translateY(-1px)}
+.send:disabled{background:rgba(15,17,21,.08);color:var(--ink-3);box-shadow:none;transform:none}
+.toast{position:fixed;left:50%;bottom:130px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;font-weight:500;padding:9px 16px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none;box-shadow:var(--sh-l)}
+.toast.on{opacity:1}
+svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="pane side">
+    <div class="brand"><i>✦</i>Harso</div>
+    <button class="new" onclick="toast('New conversation')"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New conversation<kbd>⌘N</kbd></button>
+    <div class="sec"><h6>Repository</h6>
+      <button class="row"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>studio</span></button>
+      <button class="row sub"><span>Welcome.tsx</span></button>
+      <button class="row sub"><span>styles.css</span></button>
+    </div>
+    <div class="sec"><h6>Recent</h6>
+      <button class="row" aria-current="true"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-5.2A8 8 0 1 1 21 12z"/></svg><span>Studio landing page</span></button>
+      <button class="row"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-5.2A8 8 0 1 1 21 12z"/></svg><span>Pricing table copy</span></button>
+      <button class="row"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-5.2A8 8 0 1 1 21 12z"/></svg><span>Migrate to native dialog</span></button>
+    </div>
+    <div class="foot"><div class="avatar">AB</div><div><b>Abhi</b><small>Personal · Pro</small></div></div>
+  </aside>
+  <main class="pane main">
+    <header class="head">
+      <span class="crumb">studio /</span><h1>Studio landing page</h1>
+      <div class="seg" role="tablist">
+        <button role="tab" aria-selected="true" onclick="tab(this)">Conversation</button>
+        <button role="tab" onclick="tab(this)">Changes<b>2</b></button>
+        <button role="tab" onclick="tab(this)">Browser</button>
+      </div>
+      <button class="iconbtn" title="Details"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M15 4v16"/></svg></button>
+    </header>
+    <section class="thread" id="thread">
+      <div class="col" id="col">
+        <div class="turn user"><span class="who"><i>AB</i>You</span><div class="bubble">Create a calm landing page for our studio. Keep it typographic; no hero image.</div></div>
+        <div class="turn ai"><span class="who"><i>✦</i>Harso</span>
+          <div class="body">
+            <h2>A minimal page, three sections</h2>
+            <p>I've written <code>Welcome.tsx</code> with a masthead, a short statement, and a contact line. Typography carries the page; there's no imagery to load.</p>
+            <ul><li>Masthead: studio name, one-line positioning</li><li>Statement: 60 words, 22px, generous measure</li><li>Contact: email and location, small caps</li></ul>
+            <div class="code"><header>Welcome.tsx<button onclick="toast('Copied')">Copy</button></header><pre><span class="k">export function</span> Welcome() {
+  <span class="k">return</span> &lt;<span class="t">main</span> className=<span class="s">"welcome"</span>&gt;
+    &lt;<span class="t">h1</span>&gt;Studio Ardent&lt;/<span class="t">h1</span>&gt;
+    &lt;<span class="t">p</span>&gt;We design quiet software.&lt;/<span class="t">p</span>&gt;
+  &lt;/<span class="t">main</span>&gt;;
+}</pre></div>
+            <table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody><tr><td>typecheck</td><td>clean</td></tr><tr><td>Lighthouse</td><td>100 / 100</td></tr></tbody></table>
+            <blockquote>Open <a href="#">Changes</a> to review the diff, or <a href="#">Browser</a> to see it rendered.</blockquote>
+          </div>
+          <div class="actions"><button onclick="toast('Copied')"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button><button onclick="toast('Thanks')"><svg viewBox="0 0 24 24"><path d="M7 10v11H4V10zM7 10l4-7a2 2 0 0 1 2 2v5h6a2 2 0 0 1 2 2l-1.5 7a2 2 0 0 1-2 2H7"/></svg>Helpful</button><button onclick="toast('Noted')"><svg viewBox="0 0 24 24"><path d="M17 14V3h3v11zM17 14l-4 7a2 2 0 0 1-2-2v-5H5a2 2 0 0 1-2-2l1.5-7a2 2 0 0 1 2-2H17"/></svg></button></div>
+        </div>
+        <div class="turn user"><span class="who"><i>AB</i>You</span><div class="bubble">And check what tools ran.</div></div>
+        <div class="turn ai"><span class="who"><i>✦</i>Harso</span>
+          <div class="tools">
+            <header><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg>Tool activity<span class="n">3 calls · 1.8s</span></header>
+            <div class="tool"><i class="ic ok"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></i><div class="nm">search_files<small>Searched 42 files for *.tsx</small></div><span class="badge ok">Completed</span></div>
+            <div class="tool"><i class="ic run"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><div class="nm">read_file<small>Reading Welcome.tsx</small></div><span class="badge run">Running</span></div>
+            <div class="tool"><i class="ic bad"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></i><div class="nm">terminal<small>npm test exited with code 1</small></div><span class="badge bad">Failed</span></div>
+          </div>
+          <div class="ask" id="ask">
+            <div class="q">Which repo should I check first?</div>
+            <div class="d">I'll start there and report back before touching the other.</div>
+            <div class="opts">
+              <button class="opt" role="radio" aria-checked="false" onclick="pick(this)"><i></i><div>harso-ui<small>Component library</small></div></button>
+              <button class="opt" role="radio" aria-checked="false" onclick="pick(this)"><i></i><div>weave-cloud<small>Product monorepo</small></div></button>
+            </div>
+            <div class="foot"><button class="btn quiet" onclick="toast('Skipped')">Skip</button><button class="btn primary" id="answer" disabled onclick="answer()">Answer</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="dock">
+        <div class="composer">
+          <textarea id="draft" placeholder="Message Harso…" oninput="send.disabled=!this.value.trim()" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submit()}"></textarea>
+          <div class="bar">
+            <button class="chip" onclick="toast('Attach')"><svg viewBox="0 0 24 24"><path d="M21 12l-8.5 8.5a5 5 0 0 1-7-7L14 5a3 3 0 0 1 4.5 4.5L10 18a1 1 0 0 1-1.5-1.5L16 9"/></svg>Attach</button>
+            <button class="chip" onclick="toast('Model')">✦ Opus 4.8<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+            <button class="chip" onclick="toast('Voice')"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+            <button class="send" id="send" disabled onclick="submit()"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toastEl"></div>
+<script>
+const toastEl=document.getElementById('toastEl');let t;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(t);t=setTimeout(()=>toastEl.classList.remove('on'),1400)}
+function tab(b){[...b.parentElement.children].forEach(x=>x.setAttribute('aria-selected',x===b));toast(b.textContent.trim())}
+function pick(b){[...b.parentElement.querySelectorAll('.opt')].forEach(x=>x.setAttribute('aria-checked',x===b));answer.disabled=false}
+function answer(){const c=document.querySelector('.opt[aria-checked=true] div').firstChild.textContent.trim();document.getElementById('ask').innerHTML=`<div class="q" style="color:var(--ink-3);font-weight:500">Answered: <b style="color:var(--ink)">${c}</b></div>`}
+function submit(){const d=document.getElementById('draft');const v=d.value.trim();if(!v)return;document.getElementById('col').insertAdjacentHTML('beforeend',`<div class="turn user"><span class="who"><i>AB</i>You</span><div class="bubble">${v.replace(/</g,'&lt;')}</div></div><div class="turn ai"><span class="who"><i>✦</i>Harso</span><div class="body"><p style="color:var(--ink-3);margin:0">Thinking…</p></div></div>`);d.value='';send.disabled=true;thread.scrollTop=thread.scrollHeight}
+</script>
+</body>
+</html>

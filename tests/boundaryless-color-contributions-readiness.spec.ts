@@ -84,7 +84,7 @@ for (const scene of scenes) {
       expect(paints).toHaveLength(8);
       for (const paint of paints) expect(paint.actual, paint.token).toBe(paint.expected);
       const mode = await preview.getAttribute("data-mode");
-      const foreground = mode === "dark" ? scene.palette === "cozy" ? "rgb(244, 238, 228)" : "rgb(238, 240, 245)" : scene.palette === "cozy" ? "rgb(48, 43, 37)" : "rgb(32, 36, 42)";
+      const foreground = mode === "dark" ? scene.palette === "cozy" ? "rgb(243, 237, 227)" : "rgb(242, 243, 245)" : scene.palette === "cozy" ? "rgb(42, 38, 34)" : "rgb(31, 34, 38)";
       expect(paints.find(paint => paint.token === "--hk-ink")?.actual).toBe(foreground);
       evidence.push({ accent, appearance: await preview.getAttribute("data-mode"), palette: await preview.getAttribute("data-palette"), paints });
     };

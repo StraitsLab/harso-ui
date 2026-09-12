@@ -63,12 +63,12 @@ test("System updates live, explicit overrides stay stable and Cozy remains indep
   await expect(page).toHaveScreenshot("foundations-dark.png", { animations: "disabled" });
   await page.getByLabel("Appearance", { exact: true }).selectOption("light");
   await expect(page.locator(".harso-kit")).toHaveAttribute("data-mode", "light");
-  await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(250, 251, 253)");
+  await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(250, 250, 251)");
   await page.getByLabel("Palette", { exact: true }).selectOption("cozy");
-  await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(251, 248, 242)");
+  await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(251, 249, 245)");
   await expect(page).toHaveScreenshot("foundations-cozy-light.png", { animations: "disabled" });
   await page.getByLabel("Appearance", { exact: true }).selectOption("dark");
-  await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(32, 30, 27)");
+  await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(26, 24, 21)");
   const audit = await new AxeBuilder({ page }).include(".harso-kit").analyze();
   expect(audit.violations).toEqual([]);
   await expect(page).toHaveScreenshot("foundations-cozy-dark.png", { animations: "disabled" });

@@ -78,12 +78,12 @@ test("developer content is quiet, readable and keyboard accessible in every pale
     for (const family of ["snippet", "package-info", "environment-variables"]) {
       await page.goto(`/#vercel:${family}`);
       await page.getByLabel("Palette", { exact: true }).selectOption("clean");
-      await expect(page.locator(".harso-kit")).toHaveCSS("background-color", scheme === "light" ? "rgb(250, 251, 253)" : "rgb(23, 26, 32)");
+      await expect(page.locator(".harso-kit")).toHaveCSS("background-color", scheme === "light" ? "rgb(250, 250, 251)" : "rgb(19, 21, 24)");
       expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
       await page.bringToFront();
       await expect(page.getByTestId("live-example")).toHaveScreenshot(`developer-${family}-${scheme}.png`, { animations: "disabled" });
       await page.getByLabel("Palette", { exact: true }).selectOption("cozy");
-      await expect(page.locator(".harso-kit")).toHaveCSS("background-color", scheme === "light" ? "rgb(251, 248, 242)" : "rgb(32, 30, 27)");
+      await expect(page.locator(".harso-kit")).toHaveCSS("background-color", scheme === "light" ? "rgb(251, 249, 245)" : "rgb(26, 24, 21)");
       expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
       await page.bringToFront();
       await expect(page.getByTestId("live-example")).toHaveScreenshot(`developer-${family}-cozy-${scheme}.png`, { animations: "disabled" });
@@ -93,7 +93,7 @@ test("developer content is quiet, readable and keyboard accessible in every pale
   for (const family of ["snippet", "package-info", "environment-variables"]) {
     await page.goto(`/#vercel:${family}`); await page.getByLabel("Example state").selectOption("long-content");
     await page.getByLabel("Palette", { exact: true }).selectOption("clean");
-    await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(23, 26, 32)");
+    await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(19, 21, 24)");
     if (family === "environment-variables") await page.getByRole("switch").click();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);

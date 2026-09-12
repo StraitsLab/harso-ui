@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harso — Quiet editorial</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#f6f5f2; --surface:#fcfbf9; --raised:#ffffff; --sunken:#efede8;
+  --ink:#1c1b19; --ink-2:#5b5955; --ink-3:#8d8a84; --line:rgba(28,27,25,.08); --line-2:rgba(28,27,25,.14);
+  --accent:#c2410c; --accent-ink:#9a3412; --accent-wash:rgba(194,65,12,.08);
+  --ok:#2f7d4f; --warn:#a16207; --bad:#b42323;
+  --r-s:6px; --r:10px; --r-l:16px;
+  --sh:0 1px 2px rgba(28,27,25,.05), 0 8px 24px -12px rgba(28,27,25,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:15px/1.55 Inter,system-ui,sans-serif;font-feature-settings:"cv11","ss01";color:var(--ink);background:var(--canvas);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.app{display:grid;grid-template-columns:264px 1fr;height:100vh}
+/* sidebar */
+.side{background:var(--sunken);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:16px 12px;gap:18px;min-width:0}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px;font-weight:600;letter-spacing:-.01em}
+.brand i{width:22px;height:22px;border-radius:7px;background:var(--ink);display:grid;place-items:center;color:#fff;font-size:12px;font-style:normal}
+.new{display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:var(--r);background:var(--raised);border:1px solid var(--line-2);box-shadow:0 1px 1px rgba(0,0,0,.03);font-weight:500;font-size:14px}
+.new:hover{border-color:var(--ink-3)}
+.new kbd{margin-left:auto;font:11px/1 JetBrains Mono,monospace;color:var(--ink-3);padding:2px 5px;border:1px solid var(--line-2);border-radius:4px}
+.sec{display:flex;flex-direction:column;gap:2px}
+.sec h6{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding:0 8px;margin:0 0 6px}
+.row{display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border-radius:var(--r-s);font-size:14px;color:var(--ink-2);text-align:left;width:100%;white-space:nowrap;overflow:hidden}
+.row:hover{background:rgba(28,27,25,.05);color:var(--ink)}
+.row[aria-current]{background:var(--raised);color:var(--ink);box-shadow:0 1px 1px rgba(0,0,0,.04),inset 0 0 0 1px var(--line)}
+.row span{overflow:hidden;text-overflow:ellipsis}
+.row .ic{width:16px;height:16px;flex:none;color:var(--ink-3)}
+.row.sub{padding-left:28px;font-size:13px}
+.side .foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding:8px}
+.avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#d8b4a6,#9a3412);color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center}
+.foot b{font-weight:500;font-size:13px;display:block}
+.foot small{color:var(--ink-3);font-size:12px}
+/* main */
+.main{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.head{height:56px;display:flex;align-items:center;gap:16px;padding:0 24px;border-bottom:1px solid var(--line);background:var(--canvas)}
+.head h1{font-size:15px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb{color:var(--ink-3);font-size:13px;white-space:nowrap}
+.tabs{margin-left:auto;display:flex;gap:2px;padding:3px;background:var(--sunken);border-radius:8px}
+.tabs button{height:28px;padding:0 12px;border-radius:6px;font-size:13px;font-weight:500;color:var(--ink-2)}
+.tabs button[aria-selected=true]{background:var(--raised);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.iconbtn{width:32px;height:32px;border-radius:var(--r-s);display:grid;place-items:center;color:var(--ink-3)}
+.iconbtn:hover{background:rgba(28,27,25,.05);color:var(--ink)}
+/* thread */
+.thread{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin}
+.col{width:min(100% - 48px,760px);margin:0 auto;padding:36px 0 40px;display:flex;flex-direction:column;gap:36px}
+.turn{display:flex;flex-direction:column;gap:8px}
+.turn .who{font-size:12px;font-weight:500;color:var(--ink-3);letter-spacing:.02em}
+.turn.user{align-items:flex-end}
+.turn.user .bubble{max-width:78%;padding:12px 16px;border-radius:18px 18px 4px 18px;background:var(--raised);border:1px solid var(--line);box-shadow:var(--sh);font-size:15px}
+.turn.ai .body{font-size:16px;line-height:1.7}
+.body h2{font-size:22px;font-weight:600;letter-spacing:-.02em;margin:22px 0 10px;line-height:1.25}
+.body h2:first-child{margin-top:0}
+.body p{margin:0 0 14px}
+.body ul{margin:0 0 14px;padding-left:22px}
+.body li{margin:3px 0}
+.body code{font:13.5px JetBrains Mono,monospace;background:var(--sunken);padding:2px 6px;border-radius:5px}
+.body .code{margin:0 0 16px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line-2);background:var(--raised)}
+.body .code header{display:flex;align-items:center;padding:8px 14px;border-bottom:1px solid var(--line);font:12px JetBrains Mono,monospace;color:var(--ink-3)}
+.body .code header button{margin-left:auto;font:12px Inter,sans-serif;font-weight:500;color:var(--ink-2)}
+.body pre{margin:0;padding:14px 16px;background:var(--surface);color:var(--ink);font:13px/1.6 JetBrains Mono,monospace;overflow:auto}
+.body pre .k{color:var(--accent-ink)}.body pre .t{color:#1d4ed8}.body pre .s{color:#15803d}
+.body table{border-collapse:collapse;margin:0 0 16px;font-size:14px;width:100%}
+.body th{text-align:left;font-weight:500;color:var(--ink-3);font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:0 24px 8px 0;border-bottom:1px solid var(--line-2)}
+.body td{padding:9px 24px 9px 0;border-bottom:1px solid var(--line)}
+.body blockquote{margin:0 0 16px;padding:10px 16px;border-radius:var(--r);background:var(--sunken);color:var(--ink-2)}
+.body a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(154,52,18,.35)}
+.actions{display:flex;gap:2px;margin-top:6px;opacity:0;transition:opacity .12s}
+.turn:hover .actions{opacity:1}
+.actions button{height:28px;padding:0 8px;border-radius:6px;font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.actions button:hover{background:rgba(28,27,25,.05);color:var(--ink)}
+/* tool card */
+.card{border:1px solid var(--line);border-radius:var(--r-l);background:var(--surface);box-shadow:var(--sh);overflow:hidden;max-width:560px}
+.card header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:13px;font-weight:500}
+.card header .count{margin-left:auto;color:var(--ink-3);font-weight:400}
+.tool{display:grid;grid-template-columns:20px 1fr auto;gap:12px;align-items:center;padding:10px 16px;font:13px JetBrains Mono,monospace;border-bottom:1px solid var(--line)}
+.tool:last-child{border-bottom:0}
+.tool .dot{width:8px;height:8px;border-radius:50%;justify-self:center}
+.tool .dot.ok{background:var(--ok)}.tool .dot.run{background:var(--warn);box-shadow:0 0 0 3px rgba(161,98,7,.18)}.tool .dot.bad{background:var(--bad)}
+.tool .st{font:12px Inter,sans-serif;color:var(--ink-3)}
+/* clarification */
+.ask{border:1px solid var(--line-2);border-radius:var(--r-l);background:var(--raised);box-shadow:var(--sh);padding:18px 20px;max-width:560px}
+.ask p{font-weight:500;margin-bottom:12px}
+.opt{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:var(--r);border:1px solid var(--line);margin-bottom:6px;font-size:14px;width:100%;text-align:left}
+.opt:hover{background:var(--sunken)}
+.opt[aria-checked=true]{border-color:var(--accent);background:var(--accent-wash)}
+.opt i{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--ink-3);display:grid;place-items:center}
+.opt[aria-checked=true] i{border-color:var(--accent)}
+.opt[aria-checked=true] i::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.ask .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.btn{height:34px;padding:0 14px;border-radius:8px;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.btn.primary{background:var(--ink);color:#fff}
+.btn.primary:disabled{background:var(--sunken);color:var(--ink-3);cursor:not-allowed}
+.btn.quiet{border:1px solid var(--line-2);background:var(--raised)}
+.btn.quiet:hover{border-color:var(--ink-3)}
+/* composer */
+.dock{position:sticky;bottom:0;padding:28px 0 22px;background:linear-gradient(to top,var(--canvas) 70%,transparent)}
+.composer{width:min(100% - 48px,760px);margin:0 auto;border-radius:var(--r-l);background:var(--raised);border:1px solid var(--line-2);box-shadow:0 2px 6px rgba(28,27,25,.05),0 18px 40px -20px rgba(28,27,25,.25);padding:14px 14px 10px;display:grid;gap:10px}
+.composer:focus-within{border-color:var(--ink-3)}
+.composer textarea{border:0;outline:0;resize:none;font:15px/1.5 Inter,sans-serif;background:transparent;min-height:48px;max-height:200px;field-sizing:content;padding:2px 4px}
+.composer textarea::placeholder{color:var(--ink-3)}
+.bar{display:flex;align-items:center;gap:6px}
+.chip{height:30px;padding:0 10px;border-radius:8px;border:1px solid var(--line);font-size:13px;color:var(--ink-2);display:inline-flex;align-items:center;gap:6px}
+.chip:hover{background:var(--sunken)}
+.send{margin-left:auto;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center}
+.send:disabled{background:var(--sunken);color:var(--ink-3)}
+.hint{text-align:center;font-size:12px;color:var(--ink-3);margin-top:10px}
+/* toast */
+.toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;padding:8px 14px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><i>h</i>Harso</div>
+    <button class="new" onclick="toast('New conversation')"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New conversation<kbd>⌘N</kbd></button>
+    <div class="sec"><h6>Repository</h6>
+      <button class="row"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>studio</span></button>
+      <button class="row sub"><svg class="ic" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg><span>Welcome.tsx</span></button>
+      <button class="row sub"><svg class="ic" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg><span>styles.css</span></button>
+    </div>
+    <div class="sec"><h6>Recent</h6>
+      <button class="row" aria-current="true"><span>Studio landing page</span></button>
+      <button class="row"><span>Pricing table copy</span></button>
+      <button class="row"><span>Migrate to native dialog</span></button>
+    </div>
+    <div class="foot"><div class="avatar">AB</div><div><b>Abhi</b><small>Personal · Pro</small></div></div>
+  </aside>
+  <main class="main">
+    <header class="head">
+      <span class="crumb">studio /</span><h1>Studio landing page</h1>
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" onclick="tab(this)">Conversation</button>
+        <button role="tab" onclick="tab(this)">Changes <span style="display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--accent-wash);color:var(--accent-ink);font-size:11px;margin-left:4px">2</span></button>
+        <button role="tab" onclick="tab(this)">Browser</button>
+      </div>
+      <button class="iconbtn" title="Details"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg></button>
+    </header>
+    <section class="thread" id="thread">
+      <div class="col" id="col">
+        <div class="turn user"><span class="who">You</span><div class="bubble">Create a calm landing page for our studio. Keep it typographic; no hero image.</div></div>
+        <div class="turn ai"><span class="who">Harso</span>
+          <div class="body">
+            <h2>A minimal page, three sections</h2>
+            <p>I've written <code>Welcome.tsx</code> with a masthead, a short statement, and a contact line. Typography carries the page; there's no imagery to load.</p>
+            <ul><li>Masthead: studio name, one-line positioning</li><li>Statement: 60 words, 22px, generous measure</li><li>Contact: email and location, small caps</li></ul>
+            <div class="code"><header>Welcome.tsx<button onclick="toast('Copied')">Copy</button></header><pre><span class="k">export function</span> Welcome() {
+  <span class="k">return</span> &lt;<span class="t">main</span> className=<span class="s">"welcome"</span>&gt;
+    &lt;<span class="t">h1</span>&gt;Studio Ardent&lt;/<span class="t">h1</span>&gt;
+    &lt;<span class="t">p</span>&gt;We design quiet software.&lt;/<span class="t">p</span>&gt;
+  &lt;/<span class="t">main</span>&gt;;
+}</pre></div>
+            <table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody><tr><td>typecheck</td><td>clean</td></tr><tr><td>Lighthouse</td><td>100 / 100</td></tr></tbody></table>
+            <blockquote>Open <a href="#">Changes</a> to review the diff, or <a href="#">Browser</a> to see it rendered.</blockquote>
+          </div>
+          <div class="actions"><button onclick="toast('Copied')"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button><button onclick="toast('Thanks')">Helpful</button><button onclick="toast('Noted')">Not helpful</button></div>
+        </div>
+        <div class="turn user"><span class="who">You</span><div class="bubble">And check what tools ran.</div></div>
+        <div class="turn ai"><span class="who">Harso</span>
+          <div class="card">
+            <header><svg viewBox="0 0 24 24"><path d="M14 7l-5 5 5 5"/></svg>Tool activity<span class="count">3 calls · 1.8s</span></header>
+            <div class="tool"><i class="dot ok"></i>search_files<span class="st">Completed</span></div>
+            <div class="tool"><i class="dot run"></i>read_file<span class="st">Running…</span></div>
+            <div class="tool"><i class="dot bad"></i>terminal<span class="st">Failed · exit 1</span></div>
+          </div>
+          <div class="ask" style="margin-top:14px" id="ask">
+            <p>Which repo should I check first?</p>
+            <button class="opt" role="radio" aria-checked="false" onclick="pick(this)"><i></i>harso-ui</button>
+            <button class="opt" role="radio" aria-checked="false" onclick="pick(this)"><i></i>weave-cloud</button>
+            <div class="foot"><button class="btn quiet" onclick="toast('Skipped')">Skip</button><button class="btn primary" id="answer" disabled onclick="answer()">Answer</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="dock">
+        <div class="composer">
+          <textarea id="draft" placeholder="Message Harso…" oninput="send.disabled=!this.value.trim()" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submit()}"></textarea>
+          <div class="bar">
+            <button class="chip" onclick="toast('Attach')"><svg viewBox="0 0 24 24"><path d="M21 12l-8.5 8.5a5 5 0 0 1-7-7L14 5a3 3 0 0 1 4.5 4.5L10 18a1 1 0 0 1-1.5-1.5L16 9"/></svg>Attach</button>
+            <button class="chip" onclick="toast('Model')">Claude Opus 4.8<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+            <button class="chip" onclick="toast('Effort')">Medium effort</button>
+            <button class="send" id="send" disabled onclick="submit()"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+          </div>
+        </div>
+        <div class="hint">Enter to send · Shift+Enter for a new line</div>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toastEl"></div>
+<script>
+const toastEl=document.getElementById('toastEl');let t;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(t);t=setTimeout(()=>toastEl.classList.remove('on'),1400)}
+function tab(b){[...b.parentElement.children].forEach(x=>x.setAttribute('aria-selected',x===b));toast(b.textContent.trim())}
+function pick(b){[...b.parentElement.querySelectorAll('.opt')].forEach(x=>x.setAttribute('aria-checked',x===b));answer.disabled=false}
+function answer(){const c=document.querySelector('.opt[aria-checked=true]').textContent.trim();document.getElementById('ask').innerHTML=`<p style="color:var(--ink-3);font-weight:400">Answered: <b style="color:var(--ink)">${c}</b></p>`}
+function submit(){const d=document.getElementById('draft');const v=d.value.trim();if(!v)return;const col=document.getElementById('col');col.insertAdjacentHTML('beforeend',`<div class="turn user"><span class="who">You</span><div class="bubble">${v.replace(/</g,'&lt;')}</div></div><div class="turn ai"><span class="who">Harso</span><div class="body"><p style="color:var(--ink-3)">Thinking…</p></div></div>`);d.value='';send.disabled=true;thread.scrollTop=thread.scrollHeight}
+</script>
+</body>
+</html>

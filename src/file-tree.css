@@ -1,10 +1,10 @@
 .hk-file-tree, .hk-file-tree-children { list-style: none; margin: 0; padding: 0; min-width: 0; max-width: 100%; }
-.hk-file-tree { font-size: 14px; }
+.hk-file-tree { font-size: var(--hk-text-base); }
 .hk-file-tree-children { padding-inline-start: clamp(8px, 2vw, 20px); }
 .hk-file-tree-row { display: flex; align-items: center; flex-wrap: wrap; min-width: 0; column-gap: 8px; }
-.hk-button.hk-file-tree-select { flex: 1 1 120px; width: auto; min-width: 0; max-width: 100%; justify-content: flex-start; min-height: 42px; padding: 8px 4px; gap: 10px; border-radius: 8px; font-weight: 450; white-space: normal; text-align: start; color: var(--hk-secondary); }
+.hk-button.hk-file-tree-select { flex: 1 1 120px; width: auto; min-width: 0; max-width: 100%; justify-content: flex-start; min-height: 42px; padding: 8px 12px; gap: 10px; border-radius: 12px; font-weight: 400; white-space: normal; text-align: start; color: var(--hk-secondary); background: transparent; }
 .hk-button.hk-file-tree-select:hover:not(:disabled) { background: var(--hk-hover); color: var(--hk-ink); }
-.hk-file-tree-select[aria-current="true"] { color: var(--hk-ink); font-weight: 600; }
+.hk-file-tree-select[aria-current="true"] { color: var(--hk-ink); font-weight: 500; background: var(--hk-hover); }
 .hk-file-tree-select .hk-work-trigger-label { flex: 1; flex-wrap: nowrap; }
 .hk-file-tree-icon, .hk-file-tree-selected { display: inline-flex; align-items: center; flex: 0 0 auto; }
 .hk-file-tree-name { min-width: 0; overflow-wrap: anywhere; }

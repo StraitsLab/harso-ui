@@ -117,7 +117,7 @@ for (const treatment of ["pill", "accent"]) {
     const selected = await overview.evaluate(element => ({ color: getComputedStyle(element).color, background: getComputedStyle(element).backgroundColor, radius: getComputedStyle(element).borderRadius }));
     expect(selected.background).not.toBe("rgba(0, 0, 0, 0)");
     expect(selected.radius).toBe("26px");
-    expect(selected.color).toBe(treatment === "accent" ? "rgb(20, 92, 186)" : "rgb(32, 36, 42)");
+    expect(selected.color).toBe(treatment === "accent" ? "rgb(29, 99, 200)" : "rgb(31, 34, 38)");
     await sources.click();
     await page.mouse.move(0, 0);
     await expect(sources).toHaveAttribute("aria-selected", "true");

@@ -14,10 +14,10 @@ const families = [
 ] as const;
 
 const paints = {
-  "light/clean": ["rgb(250, 251, 253)", "rgb(32, 36, 42)"],
-  "light/cozy": ["rgb(251, 248, 242)", "rgb(48, 43, 37)"],
-  "dark/clean": ["rgb(23, 26, 32)", "rgb(238, 240, 245)"],
-  "dark/cozy": ["rgb(32, 30, 27)", "rgb(244, 238, 228)"],
+  "light/clean": ["rgb(250, 250, 251)", "rgb(31, 34, 38)"],
+  "light/cozy": ["rgb(251, 249, 245)", "rgb(42, 38, 34)"],
+  "dark/clean": ["rgb(19, 21, 24)", "rgb(242, 243, 245)"],
+  "dark/cozy": ["rgb(26, 24, 21)", "rgb(243, 237, 227)"],
 };
 
 for (const [familyId, file, exported, component] of families) {
