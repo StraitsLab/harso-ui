@@ -4,6 +4,7 @@
      (codex generated_images/01a06fa5…/call_PHmmdfdu3TmtaQuMw1I0ySuK.png). */
   --hk-canvas: #fafafb;
   --hk-canvas-deep: #f2f4f8;
+  --hk-panel: #f4f5f7;
   --hk-surface: #ffffff;
   --hk-hover: #eef0f3;
   --hk-ink: #1f2226;
@@ -11,7 +12,8 @@
   --hk-secondary: #5b6067;
   --hk-tertiary: #646a73;
   --hk-faint: #a9aeb5;
-  --hk-line: #e4e6ea;
+  --hk-line: #e6e8ec;
+  --hk-line-strong: #d6d9df;
   --hk-control-line: color-mix(in srgb, var(--hk-ink) 32%, transparent);
   --hk-accent: #1d63c8;
   --hk-accent-mark: #3d8bf5;
@@ -27,15 +29,17 @@
   --hk-shadow: 0 14px 40px rgb(20 24 32 / .07), 0 1px 2px rgb(20 24 32 / .04);
   --hk-font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
   --hk-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
-  /* Type scale (px): 12 13 14 15 16 17 19 21 32 */
+  /* Type scale (px): 12 13 14 15 16 20 24 (+32 display, opt-in) */
   --hk-text-xs: 12px;
   --hk-text-sm: 13px;
-  --hk-text-label: 14px;
-  --hk-text-base: 15px;
-  --hk-text-md: 16px;
-  --hk-text-input: 17px;
-  --hk-text-body: 19px;
-  --hk-text-user: 21px;
+  --hk-text-label: 13px;
+  --hk-text-base: 14px;
+  --hk-text-md: 15px;
+  --hk-text-input: 15px;
+  --hk-text-body: 15px;
+  --hk-text-user: 16px;
+  --hk-text-title: 20px;
+  --hk-text-heading: 24px;
   --hk-text-display: 32px;
   --hk-space-1: 4px;
   --hk-space-2: 8px;
@@ -55,7 +59,7 @@
   font-family: var(--hk-font);
   font-size: var(--hk-text-base);
   line-height: 1.5;
-  letter-spacing: -.005em;
+  letter-spacing: -.003em;
   accent-color: var(--hk-accent);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -64,13 +68,15 @@
 .harso-kit[data-palette="cozy"] {
   --hk-canvas: #fbf9f5;
   --hk-canvas-deep: #f4f0e8;
+  --hk-panel: #f5f2ec;
   --hk-surface: #fffefb;
   --hk-hover: #efebe4;
   --hk-ink: #2a2622;
   --hk-secondary: #66605a;
   --hk-tertiary: #68625b;
   --hk-faint: #b3aca3;
-  --hk-line: #e7e2da;
+  --hk-line: #e8e3db;
+  --hk-line-strong: #d9d3c9;
   --hk-accent: #2f6e53;
   --hk-accent-mark: #3f8a6a;
   --hk-accent-soft: #dcefe5;
@@ -81,13 +87,15 @@
   color-scheme: dark;
   --hk-canvas: #131518;
   --hk-canvas-deep: #0e1013;
+  --hk-panel: #17191d;
   --hk-surface: #1c1f24;
   --hk-hover: #262a31;
   --hk-ink: #f2f3f5;
   --hk-secondary: #a5aab3;
   --hk-tertiary: #8b919b;
   --hk-faint: #666c76;
-  --hk-line: #2a2e35;
+  --hk-line: #262a30;
+  --hk-line-strong: #343941;
   --hk-control-line: color-mix(in srgb, var(--hk-ink) 40%, transparent);
   --hk-accent: #6ea8ff;
   --hk-accent-mark: #6ea8ff;
@@ -106,13 +114,15 @@
 .harso-kit[data-mode="dark"][data-palette="cozy"] {
   --hk-canvas: #1a1815;
   --hk-canvas-deep: #141210;
+  --hk-panel: #1e1c18;
   --hk-surface: #232019;
   --hk-hover: #2e2a23;
   --hk-ink: #f3ede3;
   --hk-secondary: #b3aa9c;
   --hk-tertiary: #a2998c;
   --hk-faint: #6f675c;
-  --hk-line: #322d26;
+  --hk-line: #2e2a24;
+  --hk-line-strong: #3b362e;
   --hk-accent: #8fcbaf;
   --hk-accent-mark: #8fcbaf;
   --hk-accent-soft: #223a30;
@@ -125,7 +135,7 @@
 .harso-kit :where(button, a, input, textarea, select, summary, [tabindex]):focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 4px; }
 .harso-kit :where(button, input, textarea, select):disabled { cursor: not-allowed; }
 .harso-kit :where(h1, h2, h3, p) { margin: 0; }
-.harso-kit :where(h1, h2, h3) { font-weight: 400; letter-spacing: -.01em; line-height: 1.3; }
+.harso-kit :where(h1, h2, h3) { font-weight: 500; letter-spacing: -.015em; line-height: 1.3; }
 .harso-kit :where(button, a) { -webkit-tap-highlight-color: transparent; }
 .hk-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0; }
 
@@ -135,5 +145,5 @@
 }
 
 @media (forced-colors: active) {
-  .harso-kit { --hk-canvas: Canvas; --hk-canvas-deep: Canvas; --hk-surface: Canvas; --hk-ink: CanvasText; --hk-secondary: CanvasText; --hk-tertiary: CanvasText; --hk-faint: GrayText; --hk-line: ButtonBorder; --hk-control-line: ButtonBorder; --hk-dark: ButtonText; --hk-accent: Highlight; --hk-accent-mark: Highlight; --hk-positive-mark: CanvasText; --hk-attention-mark: CanvasText; --hk-negative-mark: CanvasText; --hk-accent-soft: Canvas; --hk-inverse: HighlightText; --hk-glass: Canvas; }
+  .harso-kit { --hk-canvas: Canvas; --hk-canvas-deep: Canvas; --hk-panel: Canvas; --hk-surface: Canvas; --hk-ink: CanvasText; --hk-secondary: CanvasText; --hk-tertiary: CanvasText; --hk-faint: GrayText; --hk-line: ButtonBorder; --hk-line-strong: ButtonBorder; --hk-control-line: ButtonBorder; --hk-dark: ButtonText; --hk-accent: Highlight; --hk-accent-mark: Highlight; --hk-positive-mark: CanvasText; --hk-attention-mark: CanvasText; --hk-negative-mark: CanvasText; --hk-accent-soft: Canvas; --hk-inverse: HighlightText; --hk-glass: Canvas; }
 }
