@@ -14,7 +14,7 @@
 .hk-commit-file-info { display: flex; flex: 1 1 180px; align-items: baseline; flex-wrap: wrap; gap: 6px 8px; min-width: 0; }
 .hk-commit-file-info > svg { flex-shrink: 0; align-self: center; }
 .hk-commit-file-path { flex: 1 1 100px; min-width: 0; overflow-wrap: anywhere; color: var(--hk-ink); }
-.hk-commit-file-status { color: var(--hk-secondary); font-size: 11px; }
+.hk-commit-file-status { color: var(--hk-secondary); font-size: 12px; }
 .hk-commit-file-status[data-status="added"], .hk-commit-additions { color: var(--hk-positive); }
 .hk-commit-file-status[data-status="deleted"], .hk-commit-deletions { color: var(--hk-negative); }
 .hk-commit-file-changes { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }

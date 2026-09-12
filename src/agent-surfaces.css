@@ -72,7 +72,7 @@
 .hk-ai-workspace-navigation > button[aria-current] { color: var(--hk-ink); background: var(--hk-hover); }
 .hk-ai-workspace-navigation > button:first-child { color: var(--hk-ink); }
 .hk-ai-workspace-conversation { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
-.hk-ai-workspace-conversation .hk-conversation { height: auto; flex: 1; min-height: 320px; max-height: 70vh; }
+.hk-ai-workspace-conversation .hk-conversation { height: auto; flex: 1; max-height: 70vh; }
 .hk-ai-workspace-thread { flex: 1; min-height: 200px; min-width: 0; }
 .hk-ai-workspace-composer { min-width: 0; padding: 0 0 12px; }
 .hk-ai-workspace-composer .hk-prompt-input { width: 100%; max-width: 760px; }

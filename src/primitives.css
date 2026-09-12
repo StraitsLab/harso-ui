@@ -79,7 +79,7 @@
 .hk-icon-button:disabled { background: transparent; }
 .hk-icon-button svg { width: 20px; height: 20px; stroke-width: 1.5; }
 .hk-link { color: var(--hk-ink); text-underline-offset: 4px; text-decoration-color: var(--hk-faint); font-weight: 500; }
-.hk-link:hover { text-decoration-color: var(--hk-ink); }
+.hk-link:hover { text-decoration-color: var(--hk-ink); text-decoration-thickness: 2px; }
 .hk-button--link { padding-inline: 0; border-color: transparent; background: transparent; color: var(--hk-ink); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hk-faint); }
 .hk-input {
   display: block; width: 100%; min-width: 0; min-height: 44px; border: 1px solid var(--hk-line);

@@ -39,7 +39,7 @@ for (const component of ["BarListCard", "FunnelChartCard", "StageBarsCard"]) for
     await expect.poll(paint).toEqual(["rgb(179, 49, 59)", "rgb(40, 115, 70)"]);
     const coloredGeometry = await shapes.evaluateAll(elements => elements.map(element => ({ width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height })));
     await fixture.getByRole("checkbox", { name: "Monochrome" }).check();
-    const accent = palette === "clean" ? "rgb(20, 92, 186)" : "rgb(57, 105, 87)";
+    const accent = palette === "clean" ? "rgb(29, 99, 200)" : "rgb(47, 110, 83)";
     await expect.poll(paint).toEqual([accent, accent]);
     expect(await shapes.evaluateAll(elements => elements.map(element => ({ width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height })))).toEqual(coloredGeometry);
     await expect(chart.locator(".hk-chart-number")).toHaveText(["80", "40"]);
