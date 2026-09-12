@@ -56,31 +56,33 @@
 @keyframes hk-trail-shimmer { 50% { opacity: .65; } }
 @media (prefers-reduced-motion: reduce) { .hk-agent-trail *, .hk-agent-trail *::before { animation: none !important; transition: none !important; } }
 .hk-ai-workspace { position: relative; container-type: inline-size; padding: 0; border: 0; border-radius: 0; background: transparent; }
-.hk-ai-workspace > .hk-ai-workspace-header { align-items: center; flex-wrap: wrap; padding: 16px 0 24px; }
-.hk-ai-workspace-header h2 { font-size: var(--hk-text-md); font-weight: 500; }
-.hk-ai-workspace-header .hk-ai-example-status { color: var(--hk-tertiary); font-size: var(--hk-text-sm); }
-.hk-ai-workspace-header > div { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; min-width: 0; }
-.hk-ai-workspace-header h2 { overflow-wrap: anywhere; }
-.hk-ai-workspace-body { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); min-height: 500px; gap: 40px; }
-.hk-ai-workspace[data-compact="false"][data-navigation="true"] .hk-ai-workspace-body { grid-template-columns: 232px minmax(0, 1fr); }
-.hk-ai-workspace[data-compact="false"][data-panel="true"] .hk-ai-workspace-body { grid-template-columns: minmax(0, 1fr) minmax(260px, 35%); }
-.hk-ai-workspace[data-compact="false"][data-navigation="true"][data-panel="true"] .hk-ai-workspace-body { grid-template-columns: 232px minmax(0, 1fr) minmax(300px, 35%); }
-.hk-ai-workspace-navigation { min-width: 0; padding-block: 12px; }
+.hk-ai-workspace > .hk-ai-workspace-header { align-items: center; flex-wrap: wrap; min-height: 44px; box-sizing: border-box; padding: 5px 12px 6px; border-bottom: 1px solid var(--hk-line); background: var(--hk-canvas); }
+.hk-ai-workspace .hk-ai-workspace-header h2 { margin: 0; font-size: var(--hk-text-md); font-weight: 500; }
+.hk-ai-workspace-header .hk-ai-example-status { color: var(--hk-tertiary); font-size: var(--hk-text-xs); }
+.hk-ai-workspace-header > div { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-width: 0; }
+.hk-ai-workspace .hk-ai-workspace-header h2 { overflow-wrap: anywhere; }
+.hk-ai-workspace-header .hk-button { min-height: 32px; min-width: 32px; padding: 4px 8px; border: 0; border-radius: 6px; background: transparent; color: var(--hk-secondary); font-size: var(--hk-text-sm); }
+.hk-ai-workspace-header .hk-button:hover:not(:disabled) { background: var(--hk-hover); color: var(--hk-ink); }
+.hk-ai-workspace-body { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); min-height: 420px; gap: 0; background: var(--hk-canvas); }
+.hk-ai-workspace[data-compact="false"][data-navigation="true"] .hk-ai-workspace-body { grid-template-columns: 240px minmax(0, 1fr); }
+.hk-ai-workspace[data-compact="false"][data-panel="true"] .hk-ai-workspace-body { grid-template-columns: minmax(0, 1fr) 320px; }
+.hk-ai-workspace[data-compact="false"][data-navigation="true"][data-panel="true"] .hk-ai-workspace-body { grid-template-columns: 240px minmax(0, 1fr) 320px; }
+.hk-ai-workspace-navigation { min-width: 0; padding: 12px; background: var(--hk-panel); border-inline-end: 1px solid var(--hk-line); }
 .hk-ai-workspace-navigation[hidden] { display: none; }
-.hk-ai-workspace-navigation h3 { font-size: var(--hk-text-label); font-weight: 400; color: var(--hk-tertiary); margin: 32px 0 10px; }
-.hk-ai-workspace-navigation > button { display: block; width: 100%; text-align: start; justify-content: flex-start; padding-inline: 12px; font-size: var(--hk-text-base); color: var(--hk-secondary); }
-.hk-ai-workspace-navigation > button[aria-current] { color: var(--hk-ink); background: var(--hk-hover); }
+.hk-ai-workspace-navigation h3 { font-size: var(--hk-text-xs); font-weight: 500; color: var(--hk-tertiary); margin: 20px 0 8px; text-transform: uppercase; letter-spacing: .04em; }
+.hk-ai-workspace-navigation > button { display: block; width: 100%; text-align: start; justify-content: flex-start; min-height: 32px; padding: 4px 8px; border-radius: 6px; font-size: var(--hk-text-base); font-weight: 400; color: var(--hk-secondary); background: transparent; }
+.hk-ai-workspace-navigation > button[aria-current] { color: var(--hk-ink); background: var(--hk-hover); font-weight: 500; }
 .hk-ai-workspace-navigation > button:first-child { color: var(--hk-ink); }
-.hk-ai-workspace-conversation { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.hk-ai-workspace-conversation { display: flex; flex-direction: column; gap: 24px; min-width: 0; padding: 12px 16px; background: var(--hk-canvas); }
 .hk-ai-workspace-conversation .hk-conversation { height: auto; flex: 1; max-height: 70vh; }
 .hk-ai-workspace-thread { flex: 1; min-height: 200px; min-width: 0; }
 .hk-ai-workspace-composer { min-width: 0; padding: 0 0 12px; }
 .hk-ai-workspace-composer .hk-prompt-input { width: 100%; max-width: 760px; }
-.hk-ai-workspace-panel { position: static; width: auto; max-width: none; max-height: none; margin: 0; min-width: 0; padding: 12px 0 0 4px; border: 0; background: transparent; color: var(--hk-ink); outline: none; animation: hk-ai-panel-enter 150ms ease-out; }
+.hk-ai-workspace-panel { position: static; align-self: stretch; height: auto; box-sizing: border-box; width: auto; max-width: none; max-height: none; margin: 0; min-width: 0; padding: 12px; border: 0; border-inline-start: 1px solid var(--hk-line); background: var(--hk-panel); color: var(--hk-ink); outline: none; animation: hk-ai-panel-enter 150ms ease-out; }
 .hk-ai-workspace-panel-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.hk-ai-workspace-panel-header h2 { font-size: 18px; font-weight: 500; margin: 0; }
+.hk-ai-workspace .hk-ai-workspace-panel-header h2 { font-size: var(--hk-text-md); font-weight: 500; margin: 0; }
 .hk-ai-workspace-panel-content { min-width: 0; margin-top: 20px; overflow-wrap: anywhere; }
-.hk-ai-workspace[data-compact="true"] .hk-ai-workspace-panel { position: fixed; inset: 0 0 0 auto; width: min(90vw, 440px); height: 100dvh; box-sizing: border-box; overflow: auto; padding: 24px; background: var(--hk-canvas); box-shadow: -12px 0 32px #0001; }
+.hk-ai-workspace[data-compact="true"] .hk-ai-workspace-panel { position: fixed; inset: 0 0 0 auto; width: min(90vw, 440px); height: 100dvh; box-sizing: border-box; overflow: auto; padding: 24px; background: var(--hk-panel); box-shadow: none; }
 .hk-ai-workspace-panel::backdrop { background: transparent; }
 .hk-starter-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
 .hk-starter-history { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin-block: 16px; }

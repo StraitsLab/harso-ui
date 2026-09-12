@@ -1,11 +1,26 @@
-.hk-prompt-input { display: grid; gap: 4px; min-width: 0; padding: 12px 14px 12px 24px; border: 0; border-radius: 34px; background: var(--hk-surface); box-shadow: var(--hk-shadow); transition: box-shadow var(--hk-fast) var(--hk-ease); }
-.hk-prompt-input:focus-within { box-shadow: 0 14px 40px rgb(20 24 32 / .11), 0 1px 2px rgb(20 24 32 / .06); }
-.hk-prompt-body { display: grid; gap: 6px; }.hk-prompt-textarea { width: 100%; min-height: 40px; resize: none; border: 0; outline: 0; background: transparent; color: var(--hk-ink); font: inherit; font-size: var(--hk-text-input); line-height: 1.45; padding: 6px 0; field-sizing: content; max-height: 12lh; }.hk-prompt-textarea::placeholder { color: var(--hk-secondary); }
-.hk-prompt-footer, .hk-prompt-tools, .hk-prompt-header { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }.hk-prompt-footer { justify-content: space-between; }
-.hk-prompt-button, .hk-prompt-submit, .hk-prompt-select-trigger, .hk-prompt-action-trigger, .hk-prompt-action-item, .hk-prompt-select-item, .hk-prompt-tab, .hk-prompt-command-item { min-height: 34px; padding: 5px 10px; border: 0; border-radius: 999px; background: var(--hk-hover); color: var(--hk-ink); cursor: pointer; font: inherit; font-size: 12px; }.hk-prompt-submit { background: var(--hk-dark); color: var(--hk-inverse); width: 48px; height: 48px; min-height: 48px; padding: 0; border-radius: 50%; }
-.hk-prompt-input .hk-prompt-submit:disabled, .hk-composer .hk-prompt-submit:disabled { background: var(--hk-dark); color: var(--hk-inverse); opacity: .85; }
-.hk-prompt-submit svg { width: 18px; height: 18px; stroke-width: 1.75; }
-.hk-prompt-select, .hk-prompt-action-menu, .hk-prompt-hover-card { position: relative; }.hk-prompt-select-content, .hk-prompt-action-content, .hk-prompt-hover-content { gap: 4px; min-width: 160px; padding: 6px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); box-shadow: var(--hk-shadow); }.hk-prompt-select-content:popover-open, .hk-prompt-action-content:popover-open { display: grid; }.hk-prompt-hover-content { position: absolute; z-index: 4; display: grid; }
-.hk-prompt-tabs-list { display: flex; gap: 4px; border-bottom: 1px solid var(--hk-line); }.hk-prompt-tab { border-radius: 8px 8px 0 0; background: transparent; }.hk-prompt-tab[aria-selected="true"] { background: var(--hk-hover); }.hk-prompt-tab-body, .hk-prompt-tab-item { min-width: 0; }
-.hk-prompt-command { display: grid; gap: 6px; padding: 6px; border: 1px solid var(--hk-line); border-radius: 12px; }.hk-prompt-command-input { min-height: 34px; border: 1px solid var(--hk-control-line); border-radius: 8px; padding: 6px 8px; background: var(--hk-surface); color: var(--hk-ink); }.hk-prompt-command-list, .hk-prompt-command-group { display: grid; gap: 3px; }.hk-prompt-command-empty { padding: 12px; color: var(--hk-secondary); text-align: center; }.hk-prompt-command-separator { width: 100%; border: 0; border-top: 1px solid var(--hk-line); }
+.hk-prompt-input { display: grid; gap: 4px; min-width: 0; padding: 10px 12px 8px; border: 1px solid var(--hk-line-strong); border-radius: var(--hk-space-4); background: var(--hk-surface); box-shadow: var(--hk-shadow); transition: border-color var(--hk-fast) var(--hk-ease), box-shadow var(--hk-fast) var(--hk-ease); }
+.hk-prompt-input:focus-within { border-color: var(--hk-accent); box-shadow: var(--hk-shadow), 0 0 0 3px var(--hk-accent-soft); }
+.hk-prompt-body { display: grid; gap: 6px; }
+.hk-prompt-textarea { box-sizing: border-box; width: 100%; min-height: var(--hk-space-6); resize: none; border: 0; outline: 0; background: transparent; color: var(--hk-ink); font: inherit; font-size: var(--hk-text-input); line-height: 1.5; padding: 4px 4px 8px; field-sizing: content; max-height: 10lh; overflow-y: auto; }
+.hk-prompt-textarea::placeholder { color: var(--hk-secondary); }
+.hk-prompt-footer, .hk-prompt-tools, .hk-prompt-header { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: var(--hk-text-sm); }
+.hk-prompt-footer { justify-content: space-between; }
+.hk-prompt-button, .hk-prompt-submit, .hk-prompt-select-trigger, .hk-prompt-action-trigger, .hk-prompt-action-item, .hk-prompt-select-item, .hk-prompt-tab, .hk-prompt-command-item { box-sizing: border-box; min-height: var(--hk-space-8); padding: 4px 8px; border: 0; border-radius: 8px; background: transparent; color: var(--hk-ink); cursor: pointer; font: inherit; font-size: var(--hk-text-sm); line-height: 1.5; }
+:is(.hk-prompt-button, .hk-prompt-select-trigger, .hk-prompt-action-trigger, .hk-prompt-action-item, .hk-prompt-select-item, .hk-prompt-tab, .hk-prompt-command-item):hover:not(:disabled) { background: var(--hk-hover); }
+.hk-button.hk-prompt-submit { display: inline-flex; align-items: center; justify-content: center; flex: none; background: var(--hk-dark); color: var(--hk-inverse); width: var(--hk-space-8); height: var(--hk-space-8); min-height: var(--hk-space-8); padding: 0; border-radius: 50%; }
+.hk-prompt-submit:disabled, .hk-prompt-input .hk-prompt-submit:disabled, .hk-composer .hk-prompt-submit:disabled { background-color: color-mix(in srgb, var(--hk-dark) 32%, var(--hk-canvas)); color: var(--hk-inverse); opacity: 1; cursor: not-allowed; }
+.hk-prompt-submit svg { width: var(--hk-space-4); height: var(--hk-space-4); stroke-width: 1.75; }
+.hk-prompt-select, .hk-prompt-action-menu, .hk-prompt-hover-card { position: relative; }
+.hk-prompt-select-content, .hk-prompt-action-content, .hk-prompt-hover-content { gap: 4px; min-width: 160px; padding: 6px; border: 1px solid var(--hk-line); border-radius: 8px; background: var(--hk-surface); box-shadow: var(--hk-shadow); font-size: var(--hk-text-sm); }
+.hk-prompt-select-content:popover-open, .hk-prompt-action-content:popover-open { display: grid; }
+.hk-prompt-hover-content { position: absolute; z-index: 4; display: grid; }
+.hk-prompt-tabs-list { display: flex; gap: 4px; border-bottom: 1px solid var(--hk-line); }
+.hk-prompt-tab { border: 1px solid var(--hk-line); background: transparent; }
+.hk-prompt-tab[aria-selected="true"] { background: var(--hk-hover); }
+.hk-prompt-tab-body, .hk-prompt-tab-item { min-width: 0; }
+.hk-prompt-command { display: grid; gap: 6px; padding: 6px; border: 1px solid var(--hk-line); border-radius: 8px; font-size: var(--hk-text-sm); }
+.hk-prompt-command-input { min-height: var(--hk-space-8); border: 1px solid var(--hk-line); border-radius: 8px; padding: 4px 8px; background: var(--hk-surface); color: var(--hk-ink); font: inherit; }
+.hk-prompt-command-list, .hk-prompt-command-group { display: grid; gap: 3px; }
+.hk-prompt-command-empty { padding: 12px; color: var(--hk-secondary); text-align: center; }
+.hk-prompt-command-separator { width: 100%; border: 0; border-top: 1px solid var(--hk-line); }
 @media (forced-colors: active) { .hk-prompt-input, .hk-prompt-command, .hk-prompt-select-content, .hk-prompt-action-content, .hk-prompt-hover-content { border-color: CanvasText; } }
