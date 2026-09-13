@@ -190,7 +190,7 @@ for (const family of ["home-dashboard", "hr-management", "marketing-dashboard", 
     await page.setViewportSize({ width: 1512, height: 1040 });
     await page.goto(`/#boardui:${family}`);
     const workspace = page.getByTestId("live-example").locator(".hk-dashboard-workspace");
-    const navigation = workspace.getByRole("navigation", { name: "Chat workspace", exact: true });
+    const navigation = workspace.getByRole("navigation", { name: "Dashboard workspace", exact: true });
     const toggle = workspace.getByRole("button", { name: "Toggle workspace navigation", exact: true });
     const target = { "home-dashboard": "Customers", "hr-management": "Employees", "marketing-dashboard": "Campaigns", "medical-profile": "Patients" }[family]!;
     for (const width of [1512, 390]) {
