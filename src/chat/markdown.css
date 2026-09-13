@@ -4,7 +4,13 @@
   font-size: var(--hk-text-body);
   line-height: 1.6;
   overflow-wrap: anywhere;
+  /* The plain-text renderer keeps author newlines (pre-wrap); rendered Markdown must not, or the newlines between
+     block elements become blank lines and lists triple their leading. */
+  white-space: normal;
 }
+.harso-kit .hkc-markdown > :first-child { margin-top: 0; }
+.harso-kit .hkc-markdown > :last-child { margin-bottom: 0; }
+.harso-kit .hkc-markdown li > p { margin: 0; }
 .harso-kit .hkc-markdown p,
 .harso-kit .hkc-markdown ul,
 .harso-kit .hkc-markdown ol,

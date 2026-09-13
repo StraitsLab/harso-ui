@@ -28,6 +28,19 @@ test("renders GFM tables, lists, task lists, inline code, and fenced code", () =
   expect(screen.getByRole("button", { name: "Copy code" })).toBeVisible();
 });
 
+test("rendered Markdown collapses source newlines instead of inheriting the plain-text pre-wrap", () => {
+  // .hkc-message-text is pre-wrap for streaming plain text; a Markdown container carrying that class would render the
+  // newline between </li> and <li> as a blank line and triple the list leading.
+  function Harness() {
+    const runtime = useLocalRuntime({ async *run() {} }, { initialMessages: [{ role: "assistant", content: "- one\n- two\n\nafter" }] });
+    return <AssistantRuntimeProvider runtime={runtime}><div className="harso-kit"><ThreadPrimitive.Messages components={{ Message }} /></div></AssistantRuntimeProvider>;
+  }
+  render(<Harness />);
+  const markdown = screen.getByTestId("hkc-markdown");
+  expect(markdown).toHaveClass("hkc-message-text");
+  expect(getComputedStyle(markdown).whiteSpace).toBe("normal");
+});
+
 test("opens safe links in a new tab and removes executable URLs", () => {
   function Harness() {
     const runtime = useLocalRuntime({ async *run() {} }, { initialMessages: [{ role: "assistant", content: "[Example](https://example.com) and [unsafe](javascript:alert%281%29)" }] });
