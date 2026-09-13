@@ -18,7 +18,13 @@ const routes: Record<ChatRouteId, ComponentType> = {
 };
 
 export function chatRouteFromHash(): ChatRouteId | undefined {
-  const hash = decodeURIComponent(window.location.hash.slice(1).split("?")[0]);
+  let hash: string;
+  try {
+    hash = decodeURIComponent(window.location.hash.slice(1).split("?")[0]);
+  } catch {
+    // Invalid deep links belong to the library fallback, not a failed App mount.
+    return undefined;
+  }
   return chatCatalog.some(entry => entry.id === hash) ? (hash as ChatRouteId) : undefined;
 }
 

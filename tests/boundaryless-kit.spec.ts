@@ -53,6 +53,7 @@ test("native foundations and media examples remain interactive and accessible", 
   await expect(page.getByText("AudioPlayerVolumeRange", { exact: true }).first()).toBeVisible();
 });
 
+// Theme baselines reflect the intentionally widened gallery column from the responsive production pass.
 test("System updates live, explicit overrides stay stable and Cozy remains independent", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light", reducedMotion: "reduce" });
   await page.goto("/#boardui:button");
