@@ -1,7 +1,7 @@
 {
   "name": "@harso/ui",
   "version": "0.1.0",
-  "description": "Harso Boundaryless UI — original React component library (126 families) mapped against the public BoardUI and Vercel AI Elements inventories.",
+  "description": "Harso Boundaryless UI \u2014 original React component library (126 families) mapped against the public BoardUI and Vercel AI Elements inventories.",
   "license": "UNLICENSED",
   "private": true,
   "type": "module",
@@ -16,7 +16,8 @@
   },
   "files": [
     "src",
-    "README.md"
+    "README.md",
+    "docs/chat"
   ],
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 4194 --strictPort",

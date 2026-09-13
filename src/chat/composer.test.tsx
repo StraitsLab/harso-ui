@@ -51,7 +51,10 @@ describe("HarsoComposer", () => {
     const harness = setup(true);
     await act(async () => { harness.runtime().thread.composer.setText("Retained"); });
     expect(screen.getByRole("textbox")).toBeDisabled();
-    for (const button of screen.getAllByRole("button")) expect(button).toBeDisabled();
+    // Runtime-owned actions are gated; host slots (Live controls, pickers) stay operable while typing is unavailable.
+    expect(screen.getByRole("button", { name: "Send" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Add attachment" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Options" })).toBeEnabled();
     expect(screen.getByRole("alert")).toHaveTextContent("Unavailable");
     fireEvent.submit(screen.getByRole("form", { name: "Message composer" }));
     expect(harness.run).not.toHaveBeenCalled();
