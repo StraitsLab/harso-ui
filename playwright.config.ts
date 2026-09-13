@@ -4,7 +4,7 @@ const port = Number(process.env.HARSO_UI_PORT ?? 4192);
 
 export default defineConfig({
   testDir: "./tests",
-  testMatch: ["boundaryless-*.spec.ts"],
+  testMatch: ["boundaryless-*.spec.ts", "harso-*.spec.ts"],
   workers: 4,
   timeout: process.env.CI ? 180_000 : 120_000,
   reporter: "list",

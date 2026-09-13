@@ -1,0 +1,13 @@
+.harso-kit .hkc-reasoning { container-type: inline-size; color: var(--hk-secondary); margin-block: var(--hk-space-3); font-size: var(--hk-text-base); }
+.harso-kit .hkc-reasoning summary { display: flex; align-items: center; gap: var(--hk-space-2); min-height: 32px; cursor: pointer; list-style: none; }
+.harso-kit .hkc-reasoning summary::-webkit-details-marker { display: none; }
+.harso-kit .hkc-reasoning[open] summary > svg { transform: rotate(90deg); }
+.harso-kit .hkc-reasoning summary:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.harso-kit .hkc-reasoning > div { padding: var(--hk-space-2) 0; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; }
+.harso-kit .hkc-reasoning[data-streaming="true"] summary > span { background: linear-gradient(100deg, var(--hk-secondary) 30%, var(--hk-faint) 50%, var(--hk-secondary) 70%); background-size: 200% 100%; background-clip: text; color: transparent; animation: hkc-reasoning-shimmer 2s linear infinite; }
+@keyframes hkc-reasoning-shimmer { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .harso-kit .hkc-reasoning[data-streaming="true"] summary > span { animation: none; background: none; color: var(--hk-secondary); } }
+@container (max-width: 640px) { .harso-kit .hkc-reasoning summary { min-height: 44px; } }
+
+.harso-kit .hkc-reasoning-preview { flex: 1 1 0; color: var(--hk-tertiary); margin-inline-start: var(--hk-space-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; font-weight: 400; }
+.harso-kit .hkc-reasoning[open] .hkc-reasoning-preview { display: none; }

@@ -49,3 +49,4 @@ export * from "./misc-surfaces";
 export * from "./dashboard-surfaces";
 export * from "./composer";
 export * from "./questionnaire";
+export * from "./chat";
