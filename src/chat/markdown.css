@@ -24,7 +24,7 @@
 .harso-kit .hkc-markdown > :first-child { margin-top: 0; }
 .harso-kit .hkc-markdown > :last-child { margin-bottom: 0; }
 .harso-kit .hkc-markdown ul,
-.harso-kit .hkc-markdown ol { padding-left: calc(var(--hk-space-4) + var(--hk-space-1)); }
+.harso-kit .hkc-markdown ol { padding-left: var(--hk-space-6); } /* a real gutter: markers hang clear of the paragraph edge */
 .harso-kit .hkc-markdown ul { list-style: disc; }
 .harso-kit .hkc-markdown ol { list-style: decimal; }
 .harso-kit .hkc-markdown li + li { margin-top: var(--hk-space-1); }
