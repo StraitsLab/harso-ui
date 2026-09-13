@@ -1,9 +1,34 @@
+import { createRef } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { expect, test, vi } from "vitest";
+import { afterAll, beforeAll, expect, test, vi } from "vitest";
 import { ContributionsCard, FinanceDashboard, HomeDashboard, HrManagement, MarketingDashboard, MedicalProfile } from "./dashboard-surfaces";
 import chartStyles from "./chart-cards.css?raw";
 import dashboardStyles from "./dashboard-surfaces.css?raw";
 import { KitProvider } from "./theme";
+
+beforeAll(() => {
+  Object.defineProperties(HTMLDialogElement.prototype, {
+    show: { configurable: true, value() { this.open = true; } },
+    showModal: { configurable: true, value() { this.open = true; } },
+    close: { configurable: true, value() { this.open = false; } },
+  });
+});
+afterAll(() => { for (const method of ["show", "showModal", "close"]) Reflect.deleteProperty(HTMLDialogElement.prototype, method); });
+
+test.each([HomeDashboard, HrManagement, MarketingDashboard, MedicalProfile])("dashboard section ref, editor and panel remain host controlled", Dashboard => {
+  const ref = createRef<HTMLElement>(); const close = vi.fn();
+  const fixture = (title: string, open = true) => <Dashboard ref={ref} title={title} panel={open ? { title: "Edit dashboard", content: <input aria-label="Editor draft" />, onClose: close } : null}><p>Host records</p></Dashboard>;
+  const view = render(fixture("Initial"));
+  const section = ref.current; const editor = screen.getByRole("textbox", { name: "Editor draft" });
+  expect(section?.tagName).toBe("SECTION"); expect(section).toHaveClass("hk-dashboard-workspace");
+  fireEvent.change(editor, { target: { value: "Keep edits" } });
+  fireEvent.click(screen.getByRole("button", { name: "Close context panel" }));
+  expect(close).toHaveBeenCalledOnce(); expect(screen.getByRole("dialog")).toBeVisible();
+  view.rerender(fixture("Updated"));
+  expect(ref.current).toBe(section); expect(screen.getByRole("textbox")).toBe(editor); expect(editor).toHaveValue("Keep edits");
+  view.rerender(fixture("Updated", false)); expect(screen.queryByRole("dialog")).toBeNull();
+  expect(screen.getByText("Host records")).toBeVisible();
+});
 
 test("contribution cells support inspection and approved palette control without overriding host state", () => {
   const inspect = vi.fn(); const palette = vi.fn();

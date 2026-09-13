@@ -1,3 +1,13 @@
+> **Phase D — 2026-09-14 current support:** 114 active reference families
+> (69 BoardUI + 45 Vercel), 359 part records (328 Vercel), 15 helpers.
+> Twelve reference families are retired. `src/chat` is the sole product conversation;
+> MessageResponse/Shimmer moved to runtime-free `src/text-effects` with root names intact.
+> Agent/trails, Queue, Image, Question and all dashboards remain. The private
+> DashboardWorkspace is not a public chat alias. See [Phase D migration](chat/migration.md).
+> Original capture counts, hashes, paths, tests and acceptance claims below are a
+> **historical pre-retirement snapshot**, not active support or a fresh run.
+> External desktop pin/usage migration is NOT verified by kit tests; audit before release.
+
 # Boundaryless candidate verification
 
 ## WEV-1502 — terminal speech callback isolation
@@ -595,3 +605,13 @@ Independent review rejected Table rows 20/24 N/A; both remain unverified.
 Overlapping packet placeholders do not override positive exact evidence for
 Agent 8, AgentThinking 28, Announcement 14, ComposerLoader 24/28; Carousel 25
 retains the reviewed native-scroll applicability decision. No duplicates counted.
+
+## Phase D Lane C execution receipt (2026-09-14)
+
+- Targeted command: `vitest run src/catalog.test.ts src/readiness-ai.test.tsx src/verification-ai-developer.test.tsx src/verification-foundation.test.tsx src/verification-prior.test.tsx src/chat/composer.test.tsx src/chat/message.test.tsx src/chat/thread.test.tsx`.
+- Actual result: **8 files passed, 220 tests passed**, exit 0, 7.21s. Log: `/tmp/harso-d/lane-c-vitest.log`.
+- `HARSO_UI_PORT=4203 playwright test --list`: **1003 tests in 92 files**, exit 0. Log: `/tmp/harso-d/lane-c-playwright-list.log`. Port 4203 had no listener; no process killed or service started.
+- No browser suites executed by Lane C; screenshots, scrolling/anchoring/focus and integrated active-suite acceptance remain lead-owned gates, not passed claims.
+- Additional `tsc --noEmit -p .` failed on out-of-lane `src/verification-charts-templates.test.tsx` imports of three deleted preview modules (ai-chat-example, ai-profile-example, image-generation-example). Log: `/tmp/harso-d/lane-c-tsc.log`. Join owner must reconcile that unlisted mixed suite without deleting retained chart/template tests.
+- All 10 whole-subject specs retired; all 19 mixed specs retained and rewritten/narrowly trimmed. Exact file disposition and fixture/semantic assumptions: `/tmp/harso-d/LANE-C-ASSUMPTIONS.md`.
+- Full library/preview typechecks, full Vitest, targeted browser suite, full browser suite, screenshot review and external desktop pin audit remain integration/publication gates.

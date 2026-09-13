@@ -38,4 +38,25 @@ describe("HarsoThread", () => {
     render(<Example messages={[{ role: "user", content: "Hello" }]} components={{ UserMessage: () => <article>Custom user</article> }} />);
     expect(screen.getByRole("article")).toHaveTextContent("Custom user");
   });
+  test("keeps host header/footer inside the scroll viewport and composer outside", () => {
+    const { container } = render(<Example header={<button>Earlier history</button>} footer={<aside>Host notice</aside>} empty="No messages" />);
+    const viewport = container.querySelector(".hkc-thread-viewport")!;
+    expect(viewport).toContainElement(screen.getByRole("button", { name: "Earlier history" }));
+    expect(viewport).toContainElement(screen.getByText("Host notice"));
+    expect(viewport).not.toContainElement(screen.getByRole("textbox"));
+    expect(screen.getByRole("log")).toHaveTextContent("No messages");
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  });
+
+  test("runtime error is distinct from an empty conversation and keeps host slots", async () => {
+    render(<Example empty="No messages" header="History controls" footer="Host notice" />);
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "error" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("Simulated adapter error");
+    expect(screen.queryByText("No messages")).not.toBeInTheDocument();
+    expect(screen.getByRole("log")).toHaveTextContent("History controls");
+    expect(screen.getByRole("log")).toHaveTextContent("Host notice");
+    expect(screen.queryByRole("status", { name: "Streaming" })).not.toBeInTheDocument();
+  });
+
 });

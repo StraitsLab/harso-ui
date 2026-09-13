@@ -89,7 +89,7 @@ for (const width of [1512, 390]) for (const mode of ["light", "dark"] as const) 
     await expect(workspace).toHaveAttribute("data-compact", width === 390 ? "true" : "false");
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    expect(await workspace.evaluate(element => element.querySelector(".hk-medical-charts")!.getBoundingClientRect().width <= element.querySelector(".hk-ai-workspace-thread")!.clientWidth)).toBe(true);
+    expect(await workspace.evaluate(element => element.querySelector(".hk-medical-charts")!.getBoundingClientRect().width <= element.querySelector(".hk-dashboard-workspace-thread")!.clientWidth)).toBe(true);
     await workspace.screenshot({ path: test.info().outputPath("medical.png") });
     await workspace.getByRole("button", { name: "Navigate", exact: true }).click();
     const panel = workspace.getByRole("dialog", { name: "Health navigation" });

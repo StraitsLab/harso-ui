@@ -18,7 +18,7 @@
 .hk-contributions-activity[data-view="cells"] b { text-align: center; }
 .hk-contribution b { color: var(--hk-ink); font: 11px var(--hk-mono); }
 .hk-dashboard-table { min-width: 0; overflow: auto; }
-.hk-home-workspace .hk-ai-workspace-thread { display: grid; gap: 28px; }
+.hk-home-workspace .hk-dashboard-workspace-thread { display: grid; gap: 28px; }
 .hk-home-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
 .hk-home-toolbar label { display: grid; gap: 6px; font-size: 12px; }
 .hk-home-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
@@ -31,8 +31,8 @@
 .hk-home-series { overflow: auto; max-width: 100%; }
 .hk-home-series .hk-chart-bars { min-width: 260px; }
 .hk-home-series .hk-chart-bar-column > .hk-chart-bar { position: static; align-self: end; }
-.hk-marketing-workspace .hk-ai-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
-.hk-medical-workspace .hk-ai-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.hk-marketing-workspace .hk-dashboard-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.hk-medical-workspace .hk-dashboard-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .hkl-live-example > .hk-medical-example { max-width: none; }
 .hk-medical-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
 .hk-medical-charts > section { min-width: 0; }
@@ -69,7 +69,7 @@
 .hk-marketing-values .hk-button { white-space: normal; text-align: left; }
 .hk-marketing-charts > section[aria-label="Traffic sources"] { grid-column: 1 / -1; }
 .hk-marketing-workspace[data-compact="true"] .hk-marketing-charts { grid-template-columns: minmax(0, 1fr); }
-.hk-hr-workspace .hk-ai-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.hk-hr-workspace .hk-dashboard-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .hk-hr-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .hk-hr-charts > section { min-width: 0; }
 .hk-hr-charts > section[aria-label="Workforce movement"] { grid-column: 1 / -1; }

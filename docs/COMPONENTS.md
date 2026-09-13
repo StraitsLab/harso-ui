@@ -1,3 +1,132 @@
+> **Phase D — 2026-09-14 current support:** 114 active reference families
+> (69 BoardUI + 45 Vercel), 359 part records (328 Vercel), 15 helpers.
+> Twelve reference families are retired. `src/chat` is the sole product conversation;
+> MessageResponse/Shimmer moved to runtime-free `src/text-effects` with root names intact.
+> Agent/trails, Queue, Image, Question and all dashboards remain. The private
+> DashboardWorkspace is not a public chat alias. See [Phase D migration](chat/migration.md).
+> Original capture counts, hashes, paths, tests and acceptance claims below are a
+> **historical pre-retirement snapshot**, not active support or a fresh run.
+> External desktop pin/usage migration is NOT verified by kit tests; audit before release.
+
+## Active reference component list
+
+- `boardui:questionnaire` — `Questionnaire`
+- `boardui:activity-rings-card` — `ActivityRingsCard`
+- `vercel:agent` — `Agent`
+- `boardui:agent-limits-card` — `AgentLimitsCard`
+- `boardui:agent-progress` — `AgentProgress`
+- `boardui:agent-thinking` — `AgentThinking`
+- `boardui:announcement` — `Announcement`
+- `boardui:area-chart-card` — `AreaChartCard`
+- `vercel:artifact` — `Artifact`
+- `vercel:attachments` — `Attachments`
+- `vercel:audio-player` — `AudioPlayer`
+- `boardui:auth-card` — `AuthCard`
+- `boardui:avatar` — `Avatar`
+- `boardui:badge` — `Badge`
+- `boardui:bar-list-card` — `BarListCard`
+- `boardui:breadcrumb` — `Breadcrumb`
+- `boardui:button` — `Button`
+- `boardui:button-group` — `ButtonGroup`
+- `boardui:calendar` — `Calendar`
+- `vercel:canvas` — `Canvas`
+- `boardui:carousel` — `Carousel`
+- `vercel:chain-of-thought` — `ChainOfThought`
+- `boardui:checkbox` — `Checkbox`
+- `vercel:checkpoint` — `Checkpoint`
+- `boardui:chip` — `Chip`
+- `boardui:close-button` — `CloseButton`
+- `vercel:code-block` — `CodeBlock`
+- `boardui:color` — `Color`
+- `boardui:combo-chart-card` — `ComboChartCard`
+- `vercel:commit` — `Commit`
+- `vercel:confirmation` — `Confirmation`
+- `vercel:connection` — `Connection`
+- `vercel:context` — `Context`
+- `boardui:contributions-card` — `ContributionsCard`
+- `vercel:controls` — `Controls`
+- `boardui:data-table` — `DataTable`
+- `boardui:date-picker` — `DatePicker`
+- `boardui:divider` — `Separator`
+- `boardui:dropdown` — `Dropdown`
+- `boardui:earnings-chart-card` — `EarningsChartCard`
+- `vercel:edge` — `Edge`
+- `vercel:environment-variables` — `EnvironmentVariables`
+- `vercel:file-tree` — `FileTree`
+- `boardui:file-upload` — `FileUpload`
+- `boardui:finance-dashboard` — `FinanceDashboard`
+- `boardui:funnel-chart-card` — `FunnelChartCard`
+- `boardui:heatmap-chart-card` — `HeatmapChartCard`
+- `boardui:home-dashboard` — `HomeDashboard`
+- `boardui:hr-management` — `HrManagement`
+- `boardui:icon-button` — `IconButton`
+- `vercel:image` — `Image`
+- `vercel:inline-citation` — `InlineCitation`
+- `boardui:input` — `Input`
+- `boardui:input-otp` — `InputOtp`
+- `vercel:jsx-preview` — `JsxPreview`
+- `boardui:line-chart-card` — `LineChartCard`
+- `boardui:link-button` — `Link`
+- `boardui:marketing-dashboard` — `MarketingDashboard`
+- `boardui:medical-profile` — `MedicalProfile`
+- `vercel:mic-selector` — `MicSelector`
+- `vercel:model-selector` — `ModelSelector`
+- `boardui:most-active-days-card` — `MostActiveDaysCard`
+- `vercel:node` — `Node`
+- `boardui:notification` — `Notification`
+- `boardui:notification-center` — `NotificationCenter`
+- `vercel:open-in-chat` — `OpenInChat`
+- `boardui:orders-chart-card` — `OrdersChartCard`
+- `vercel:package-info` — `PackageInfo`
+- `boardui:pagination` — `Pagination`
+- `vercel:panel` — `Panel`
+- `vercel:persona` — `Persona`
+- `vercel:plan` — `Plan`
+- `vercel:question` — `Question`
+- `vercel:queue` — `Queue`
+- `boardui:radar-chart-card` — `RadarChartCard`
+- `boardui:radial-chart-card` — `RadialChartCard`
+- `boardui:radio` — `RadioGroup`
+- `vercel:reasoning` — `Reasoning`
+- `boardui:revenue-chart-card` — `RevenueChartCard`
+- `vercel:sandbox` — `Sandbox`
+- `boardui:sankey-chart-card` — `SankeyChartCard`
+- `boardui:scatter-chart-card` — `ScatterChartCard`
+- `vercel:schema-display` — `SchemaDisplay`
+- `boardui:segmented-control` — `SegmentedControl`
+- `boardui:select` — `Select`
+- `boardui:settings-modal` — `SettingsModal`
+- `vercel:shimmer` — `Shimmer`
+- `boardui:sidebar` — `Sidebar`
+- `boardui:sleep-score-card` — `SleepScoreCard`
+- `boardui:slider` — `Slider`
+- `vercel:snippet` — `Snippet`
+- `boardui:social-button` — `SocialButton`
+- `vercel:sources` — `Sources`
+- `vercel:speech-input` — `SpeechInput`
+- `vercel:stack-trace` — `StackTrace`
+- `boardui:stage-bars-card` — `StageBarsCard`
+- `boardui:stat-cards` — `StatCards`
+- `boardui:steps-card` — `StepsCard`
+- `boardui:switch` — `Switch`
+- `boardui:table` — `Table`
+- `boardui:tabs` — `Tabs`
+- `vercel:task` — `Task`
+- `boardui:task-list` — `TaskList`
+- `vercel:terminal` — `Terminal`
+- `vercel:test-results` — `TestResults`
+- `boardui:theme-toggle` — `ThemeToggle`
+- `vercel:tool` — `Tool`
+- `vercel:toolbar` — `Toolbar`
+- `boardui:tooltip` — `Tooltip`
+- `vercel:transcription` — `Transcription`
+- `boardui:typography` — `Typography`
+- `vercel:voice-selector` — `VoiceSelector`
+- `vercel:web-preview` — `WebPreview`
+- `boardui:web-search` — `WebSearch`
+
+## Historical contracts (not the active export list)
+
 # Harso boundaryless UI
 
 ## Library candidate — verification in progress

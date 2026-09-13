@@ -2,7 +2,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createRef } from "react";
 import { describe, expect, test, vi } from "vitest";
-import { AiChatComposerPreview, Announcement, Avatar, Badge, Breadcrumb, BreadcrumbItem, Button, ButtonGroup, Checkbox, CheckboxCard, Chip, CloseButton, Composer, ComposerLoader, DataTable, Field, GlassComposer, IconButton, Input, InputOtp, Kbd, Link, Notification, NotificationAction, NotificationCenter, NotificationViewport, PromptInputFooter, PromptInputSubmit, PromptInputTextarea, RadioCard, Separator, Sidebar, SidebarItem, StatCards, StatusBar, StatusDot, Switch, SwitchCard, Tabs } from "./index";
+import { Announcement, Avatar, Badge, Breadcrumb, BreadcrumbItem, Button, ButtonGroup, Checkbox, CheckboxCard, Chip, CloseButton, DataTable, Field, IconButton, Input, InputOtp, Kbd, Link, Notification, NotificationAction, NotificationCenter, NotificationViewport, RadioCard, Separator, Sidebar, SidebarItem, StatCards, StatusDot, Switch, SwitchCard, Tabs } from "./index";
 
 const avatarCases = ([["xs", 24], ["sm", 28], ["md", 36], ["lg", 48]] as const).flatMap(([size, pixels]) =>
   (["neutral", "blue"] as const).map(tone => ({ size, pixels, tone })));
@@ -402,37 +402,8 @@ describe("WEV-1492 foundation second packet", () => {
     expect(screen.queryByRole("tooltip")).toBeNull();
   });
 
-  test.each([
-    { label: "ordinary", colors: ["red", "blue"], arc: 180, speed: 2, bloom: true, strength: 0.5, expected: ["red", "blue", "180deg", "2s", "4px"] },
-    { label: "single color", colors: ["green"], arc: 360, speed: 1, bloom: false, strength: 1, expected: ["green", "green", "360deg", "1s", "0px"] },
-    { label: "upper bounds", colors: ["red", "blue"], arc: 900, speed: 90, bloom: true, strength: 4, expected: ["red", "blue", "360deg", "60s", "8px"] },
-    { label: "lower bounds", colors: ["red", "blue"], arc: -1, speed: 0.01, bloom: true, strength: -1, expected: ["red", "blue", "0deg", "0.1s", "0px"] },
-    { label: "nonfinite", colors: ["red", "blue"], arc: Infinity, speed: NaN, bloom: true, strength: NaN, expected: ["red", "blue", "270deg", "0.9s", "4px"] },
-  ])("FND2-LOADER $label maps configuration safely and respects active state", ({ colors, arc, speed, bloom, strength, expected }) => {
-    const { rerender } = render(<ComposerLoader label="Waiting for host" colors={colors} arc={arc} speed={speed} bloom={bloom} bloomStrength={strength} />);
-    const loader = screen.getByRole("status");
-    expect(loader).toHaveTextContent("Waiting for host");
-    expect(["start", "end", "arc", "speed", "bloom"].map(key => loader.style.getPropertyValue(`--hk-loader-${key}`))).toEqual(expected);
-    expect(loader.querySelector(".hk-composer-orbit")).toHaveAttribute("aria-hidden", "true");
-    rerender(<ComposerLoader active={false} label="Waiting for host" />);
-    expect(loader).toHaveAttribute("hidden");
-    expect(loader).toHaveAttribute("inert");
-    expect(screen.queryByRole("status")).toBeNull();
-    rerender(<ComposerLoader label="Host resumed" />);
-    expect(screen.getByRole("status")).toBe(loader);
-    expect(loader).toHaveTextContent("Host resumed");
-  });
-
-  test.each(["conversation", "composer"] as const)("FND2-LOADER-CONTEXT %s retains the host composition when waiting toggles", context => {
-    const loader = <ComposerLoader active={false} label="Waiting" />;
-    const { rerender } = render(context === "conversation" ? <section role="log">Existing message{loader}</section> : <Composer value="Draft"><Input aria-label="Retained field" defaultValue="Draft" />{loader}</Composer>);
-    const inactive = screen.getByRole("status", { hidden: true });
-    rerender(context === "conversation" ? <section role="log">Existing message<ComposerLoader label="Waiting" /></section> : <Composer value="Draft"><Input aria-label="Retained field" defaultValue="Draft" /><ComposerLoader label="Waiting" /></Composer>);
-    expect(screen.getByRole("status")).toBe(inactive);
-    if (context === "conversation") expect(screen.getByRole("log")).toHaveTextContent("Existing messageWaiting");
-    else expect(screen.getByRole("textbox", { name: "Retained field" })).toHaveValue("Draft");
-  });
-
+// Phase D: legacy loader/composition retired; runtime submit/disabled parity lives in chat/composer.test.tsx.
+// Phase D: legacy loader/composition retired; runtime submit/disabled parity lives in chat/composer.test.tsx.
   test.each(["underline", "pill"] as const)("FND2-TABS %s keeps icon/count label slots and host selection", async variant => {
     const user = userEvent.setup();
     const select = vi.fn();
@@ -530,17 +501,5 @@ describe("WEV-1492 foundation second packet", () => {
     expect(screen.queryByRole("button")).toBeNull();
   });
 
-  test.each([false, true])("FND2-COMPOSER preview=%s retains idle parts and callback-only submission", async preview => {
-    const user = userEvent.setup();
-    const send = vi.fn(() => false);
-    const composition = <Composer value="Host draft" onSubmit={send}><GlassComposer><PromptInputTextarea aria-label="Draft" /><PromptInputFooter><PromptInputSubmit /></PromptInputFooter></GlassComposer><StatusBar>Ready</StatusBar><ComposerLoader active={false} /></Composer>;
-    const { container } = render(preview ? <AiChatComposerPreview>{composition}</AiChatComposerPreview> : composition);
-    expect(container.querySelector(".hk-ai-chat-composer-preview") !== null).toBe(preview);
-    expect(container.querySelector(".hk-glass-composer")).toContainElement(screen.getByRole("textbox", { name: "Draft" }));
-    expect(container.querySelector(".hk-status-bar")).toHaveTextContent("Ready");
-    expect(screen.queryByRole("status")).toBeNull();
-    await user.click(screen.getByRole("button", { name: "Send" }));
-    expect(send).toHaveBeenCalledExactlyOnceWith("Host draft");
-    expect(screen.getByRole("textbox", { name: "Draft" })).toHaveValue("Host draft");
-  });
+// Phase D: legacy loader/composition retired; runtime submit/disabled parity lives in chat/composer.test.tsx.
 });

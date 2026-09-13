@@ -8,7 +8,7 @@ const families = [
   ["boardui:segmented-control", "navigation-examples", "NavigationExample", "SegmentedControl"],
   ["vercel:snippet", "developer-content-examples", "DeveloperContentExample", "Snippet"],
   ["vercel:package-info", "developer-content-examples", "DeveloperContentExample", "PackageInfo"],
-  ["vercel:shimmer", "conversation-examples", "ConversationExample", "Shimmer"],
+  ["vercel:shimmer", "text-effects-examples", "TextEffectsExample", "Shimmer"],
   ["vercel:terminal", "terminal-examples", "TerminalExample", "Terminal"],
   ["vercel:toolbar", "consumer-readiness-examples", "ToolbarExample", "Toolbar"],
 ] as const;

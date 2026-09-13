@@ -1,8 +1,27 @@
+import { createRef } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import { Agent, AgentContent, AgentHeader, AgentInstructions, AgentOutput, AgentTool, AgentTools, Artifact, ArtifactAction, ArtifactActions, ArtifactClose, ArtifactContent, ArtifactDescription, ArtifactHeader, ArtifactTitle, Source, Sources, SourcesContent, SourcesTrigger, Tool, ToolContent, ToolHeader, ToolInput, ToolOutput, getStatusBadge, type ToolState } from "./activity";
 
 describe("boundaryless activity presentation", () => {
+  test("artifact actions preserve native refs, icon/children, disabled state and optional tooltip", async () => {
+    const ref = createRef<HTMLButtonElement>(); const click = vi.fn(); const submit = vi.fn();
+    const view = render(<form onSubmit={submit}><ArtifactAction ref={ref} label="Inspect" tooltip="Inspect artifact" icon={<svg data-testid="action-icon" />} type="submit" onClick={click} /></form>);
+    const button = screen.getByRole("button", { name: "Inspect" });
+    expect(ref.current).toBe(button); expect(button).toHaveAttribute("type", "button");
+    expect(screen.getByTestId("action-icon").parentElement).toHaveAttribute("aria-hidden", "true");
+    fireEvent.focus(button); expect(await screen.findByRole("tooltip")).toHaveTextContent("Inspect artifact");
+    fireEvent.click(button); expect(click).toHaveBeenCalledOnce(); expect(submit).not.toHaveBeenCalled();
+    view.rerender(<ArtifactAction label="Inspect" ref={ref} disabled onClick={click}>Child glyph</ArtifactAction>);
+    expect(ref.current).toHaveTextContent("Child glyph"); expect(ref.current).toBeDisabled();
+    fireEvent.click(ref.current!); expect(click).toHaveBeenCalledOnce();
+  });
+  test("instructions render runtime-free GFM and reject unsafe URLs", () => {
+    const view = render(<AgentInstructions>{"## Instructions\n\n- [x] Verified\n\n[bad](javascript:alert%281%29) ![private](https://example.com/pixel)"}</AgentInstructions>);
+    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent("Instructions");
+    expect(screen.getByRole("checkbox")).toBeChecked(); expect(screen.getByRole("checkbox")).toBeDisabled();
+    expect(view.container.querySelector("img,script,a")).toBeNull();
+  });
   test("tool status updates never open details or replace a draft; decisions stay visible", () => {
     const fixture = (state: ToolState) => <Tool><ToolHeader type="dynamic-tool" toolName="Search evidence" state={state} /><ToolContent><input aria-label="Notes" /></ToolContent></Tool>;
     const view = render(fixture("input-streaming"));

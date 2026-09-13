@@ -169,7 +169,7 @@ test("wide medical calendar and alert acknowledgement refuse and recover", async
   await page.setViewportSize({ width: 1800, height: 1040 });
   await page.goto("/#boardui:medical-profile");
   const host = page.getByTestId("live-example");
-  await expect(host.locator(".hk-ai-workspace")).toHaveAttribute("data-compact", "false");
+  await expect(host.locator(".hk-dashboard-workspace")).toHaveAttribute("data-compact", "false");
   await host.getByLabel("Hold medical requests").check();
   await host.locator('button[data-date="2026-09-03"]').click();
   await expect(host.locator('button[data-date="2026-09-07"]')).toHaveAttribute("aria-pressed", "true");
@@ -198,7 +198,7 @@ test("wide open home and HR editors receive disabled updates without remounting 
   ]) {
     await page.goto(`/#boardui:${editor.id}`);
     const host = page.getByTestId("live-example");
-    await expect(host.locator(".hk-ai-workspace")).toHaveAttribute("data-compact", "false");
+    await expect(host.locator(".hk-dashboard-workspace")).toHaveAttribute("data-compact", "false");
     await host.getByRole("button", { name: editor.open, exact: true }).click();
     const panel = host.getByRole("dialog", { name: editor.open, exact: true });
     const field = panel.getByRole("textbox", { name: editor.field, exact: true });

@@ -4,6 +4,16 @@ import { describe, expect, test, vi } from "vitest";
 import { Checkpoint, CheckpointIcon, CheckpointTrigger, Plan, PlanAction, PlanContent, PlanDescription, PlanFooter, PlanHeader, PlanTitle, PlanTrigger, Reasoning, ReasoningContent, ReasoningTrigger, Task, TaskContent, TaskItem, TaskItemFile, TaskTrigger, useReasoning } from "./work";
 
 describe("boundaryless work presentation", () => {
+  test("runtime-free work preserves Markdown and shimmer changes on the same mounted nodes", () => {
+    const fixture = (streaming: boolean) => <Reasoning defaultOpen isStreaming={streaming}><ReasoningTrigger /><ReasoningContent>{"## Public evidence\n\n**Verified**"}</ReasoningContent></Reasoning>;
+    const view = render(fixture(true));
+    const markdown = view.container.querySelector(".hk-message-response"); const shimmer = view.container.querySelector(".hk-shimmer");
+    expect(screen.getByRole("heading", { name: "Public evidence" })).toBeVisible();
+    expect(markdown).toHaveAttribute("data-streaming", "true"); expect(shimmer).toHaveAttribute("data-active");
+    view.rerender(fixture(false));
+    expect(view.container.querySelector(".hk-message-response")).toBe(markdown);
+    expect(markdown).not.toHaveAttribute("data-streaming"); expect(shimmer).not.toHaveAttribute("data-active");
+  });
   test("disclosures retain drafts, refuse controlled requests and keep footer decisions visible", () => {
     const request = vi.fn();
     const view = render(<Plan open={false} onOpenChange={request}><PlanHeader><PlanTitle>A smaller launch</PlanTitle><PlanDescription>Three considered steps.</PlanDescription><PlanAction>Ready for review</PlanAction><PlanTrigger /></PlanHeader><PlanContent><input aria-label="Plan notes" /></PlanContent><PlanFooter><button>Review decision</button></PlanFooter></Plan>);
