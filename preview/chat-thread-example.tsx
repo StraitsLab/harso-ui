@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AssistantRuntimeProvider, useLocalRuntime, WebSpeechSynthesisAdapter, type ToolCallMessagePartComponent, type ToolCallMessagePartProps } from "@assistant-ui/react";
 import { HarsoThread } from "../src/chat/thread";
 import { HarsoComposer } from "../src/chat/composer";
@@ -14,6 +14,8 @@ export const chatThreadRoute = "harso:chat-thread";
 export function ChatThreadExample() {
   const [adapter] = useState(() => createScriptedAdapter());
   const [Tool] = useState<ToolCallMessagePartComponent>(() => (props: ToolCallMessagePartProps) => <HarsoToolCall {...props} onDecide={adapter.decide} />);
-  const runtime = useLocalRuntime(adapter, { initialMessages, adapters: { attachments, speech: new WebSpeechSynthesisAdapter(), feedback: { submit() {} } } });
+  const seeded = useRef(false);
+  const initial = seeded.current ? [] : (seeded.current = true, initialMessages);
+  const runtime = useLocalRuntime(adapter, { initialMessages: initial, adapters: { attachments, speech: new WebSpeechSynthesisAdapter(), feedback: { submit() {} } } });
   return <AssistantRuntimeProvider runtime={runtime}><HarsoThread reasoning={HarsoReasoning} attachment={HarsoMessageAttachment} toolUI={{ Fallback: Tool }} composer={<HarsoComposer leading="Scripted · local only" />} /></AssistantRuntimeProvider>;
 }

@@ -17,6 +17,7 @@ const components: ComponentProps<typeof MarkdownTextPrimitive>["components"] = {
   code: ({ node: _node, ...props }) => <code {...props} />,
   a: ({ node: _node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" />,
   blockquote: ({ node: _node, ...props }) => <blockquote {...props} />,
+  input: ({ node: _node, ...props }) => props.type === "checkbox" ? <input {...props} aria-label={props.checked ? "Completed task" : "Open task"} /> : <input {...props} />,
   table: ({ node: _node, ...props }) => <div className="hkc-markdown-table" role="region" aria-label="Table" tabIndex={0}><table {...props} /></div>,
   hr: ({ node: _node, ...props }) => <hr {...props} />,
   CodeHeader: () => null,
@@ -24,5 +25,5 @@ const components: ComponentProps<typeof MarkdownTextPrimitive>["components"] = {
 };
 
 export function HarsoMarkdownText(_props: Partial<TextMessagePartProps>) {
-  return <MarkdownTextPrimitive className="hkc-markdown" containerProps={{ "data-testid": "hkc-markdown" } as ComponentProps<typeof MarkdownTextPrimitive>["containerProps"]} remarkPlugins={[remarkGfm]} smooth components={components} />;
+  return <MarkdownTextPrimitive className="hkc-markdown hkc-message-text" containerProps={{ "data-testid": "hkc-markdown" } as ComponentProps<typeof MarkdownTextPrimitive>["containerProps"]} remarkPlugins={[remarkGfm]} smooth components={components} />;
 }

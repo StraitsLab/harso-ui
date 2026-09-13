@@ -24,9 +24,9 @@
 .harso-kit .hkc-markdown li + li { margin-top: var(--hk-space-1); }
 .harso-kit .hkc-markdown input[type="checkbox"] { accent-color: var(--hk-accent); }
 .harso-kit .hkc-markdown :not(pre) > code { padding: 1px 3px; margin: 0; border-radius: 4px; background: var(--hk-panel); font-family: var(--hk-mono); font-size: var(--hk-text-sm); }
-.harso-kit .hkc-markdown a { color: var(--hk-accent); text-decoration: none; text-underline-offset: 3px; }
+.harso-kit .hkc-markdown a { color: var(--hk-accent); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--hk-accent) 45%, transparent); text-underline-offset: 3px; }
 .harso-kit .hkc-markdown a:hover,
-.harso-kit .hkc-markdown a:focus-visible { text-decoration: underline; }
+.harso-kit .hkc-markdown a:focus-visible { text-decoration-color: currentColor; }
 .harso-kit .hkc-markdown a:focus-visible,
 .harso-kit .hkc-markdown-table:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
 .harso-kit .hkc-markdown blockquote { padding-left: var(--hk-space-4); border-left: 2px solid var(--hk-line-strong); color: var(--hk-secondary); }

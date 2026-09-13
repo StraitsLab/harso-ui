@@ -30,3 +30,8 @@
   .harso-kit .hkc-thread-list button { min-height: 44px; }
   .harso-kit .hkc-thread-row-actions button { min-width: 44px; }
 }
+/* The phone drawer renders the list inside a <dialog> outside the shell's container; mirror the coarse targets by layout attribute. */
+.harso-kit [data-layout="phone"] .hkc-thread-list button, .harso-kit .hkc-shell-sheet .hkc-thread-list button { min-height: 44px; height: auto; }
+.harso-kit [data-layout="phone"] .hkc-thread-trigger, .harso-kit .hkc-shell-sheet .hkc-thread-trigger { height: 44px; }
+.harso-kit [data-layout="phone"] .hkc-thread-row-actions button, .harso-kit .hkc-shell-sheet .hkc-thread-row-actions button { min-width: 44px; height: 44px; }
+

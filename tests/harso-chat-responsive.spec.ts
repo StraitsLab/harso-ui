@@ -14,13 +14,13 @@ for (const width of [390, 1024, 1440]) for (const appearance of ["light", "dark"
     const edges = await transcript.evaluate(element => {
       const bounds = element.getBoundingClientRect();
       const style = getComputedStyle(element);
-      return { left: bounds.left + parseFloat(style.paddingLeft), right: bounds.right };
+      return { left: bounds.left + parseFloat(style.paddingLeft), right: bounds.right - parseFloat(style.paddingRight) };
     });
     const user = await example.locator(".hkc-message-bubble").first().boundingBox();
     const assistant = await example.locator(".hkc-message--assistant .hkc-message-text").first().boundingBox();
     expect(user).not.toBeNull();
     expect(assistant).not.toBeNull();
-    expect(Math.abs(user!.x + user!.width - edges.right)).toBeLessThanOrEqual(24);
+    expect(Math.abs(user!.x + user!.width - edges.right)).toBeLessThanOrEqual(2);
     expect(Math.abs(assistant!.x - edges.left)).toBeLessThanOrEqual(2);
   });
 }

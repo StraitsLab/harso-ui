@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { attachFile, openChat, sendMessage } from "./helpers/harso-chat";
+import { attachFile, openChat, sendMessage, settleRun } from "./helpers/harso-chat";
 
 test("streaming grows, announces status, and Stop cancels", async ({ page }) => {
   const example = await openChat(page, "chat-thread");
@@ -11,10 +11,10 @@ test("streaming grows, announces status, and Stop cancels", async ({ page }) => 
   await expect.poll(async () => (await text.innerText()).length).toBeGreaterThan(initialLength);
   await example.getByRole("button", { name: "Stop", exact: true }).click();
   await expect(response.getByRole("status")).toHaveText("Stopped by you.");
-  await expect(response.getByRole("status", { name: "Streaming" })).toHaveCount(0);
+  await settleRun(example);
   const stoppedText = await text.innerText();
   await page.waitForTimeout(350);
-  await expect(text).toHaveText(stoppedText);
+  await expect(text).toHaveText(stoppedText, { useInnerText: true });
 });
 
 test("editing preserves the original and navigates both user branches", async ({ page }) => {
@@ -27,7 +27,7 @@ test("editing preserves the original and navigates both user branches", async ({
   await example.getByRole("button", { name: "Save & send", exact: true }).click();
   await expect(user.locator(".hkc-message-branches")).toHaveText("2 of 2");
   await expect(example.getByRole("status", { name: "Streaming" })).toBeVisible();
-  await expect(example.getByRole("status", { name: "Streaming" })).toHaveCount(0);
+  await settleRun(example);
   await user.hover();
   await user.getByRole("button", { name: "Previous branch" }).click();
   await expect(user.locator(".hkc-message-text")).toHaveText(original);
@@ -56,7 +56,7 @@ test("regenerate creates a second assistant branch", async ({ page }) => {
   await assistant.getByRole("button", { name: "Regenerate response" }).click();
   await expect(assistant.locator(".hkc-message-branches")).toHaveText("2 of 2");
   await expect(assistant.getByRole("status", { name: "Streaming" })).toBeVisible();
-  await expect(assistant.getByRole("status", { name: "Streaming" })).toHaveCount(0);
+  await settleRun(example);
   await assistant.hover();
   await assistant.getByRole("button", { name: "Previous branch" }).click();
   await expect(assistant.locator(".hkc-message-text")).toHaveText(original);
@@ -84,9 +84,9 @@ test("adapter error can be retried successfully", async ({ page }) => {
   await expect(response.getByRole("alert")).toContainText("Simulated adapter error");
   await response.getByRole("button", { name: "Retry", exact: true }).click();
   await expect(response.getByRole("status", { name: "Streaming" })).toBeVisible();
-  await expect(response.getByRole("status", { name: "Streaming" })).toHaveCount(0);
+  await settleRun(example);
   await expect(response.getByRole("alert")).toHaveCount(0);
-  await expect(response.locator(".hkc-message-text")).toContainText("no command runs without a decision");
+  await expect(response.locator(".hkc-message-text").first()).toContainText("no command runs without a decision");
 });
 
 test("attachments add, remove, and render on the sent message", async ({ page }) => {
@@ -113,13 +113,18 @@ test("thread list renames, deletes, and starts a new conversation", async ({ pag
   const example = await openChat(page, "chat-shell");
   const open = example.getByRole("button", { name: "Open conversations", exact: true });
   if (await open.isVisible()) await open.click();
-  const row = example.locator(".hkc-thread-row").first();
-  await expect(row).toBeVisible();
-  const originalTitle = await row.locator(".hkc-thread-trigger").innerText();
+  const firstRow = example.locator(".hkc-thread-row").first();
+  await expect(firstRow).toBeVisible();
+  const originalTitle = (await firstRow.locator(".hkc-thread-trigger").innerText()).trim();
   await example.getByRole("button", { name: "New conversation", exact: true }).click();
   await expect(example.locator(".hkc-thread-empty")).toHaveText("Start a conversation.");
-  await row.getByRole("button", { name: originalTitle.trim(), exact: true }).click();
+  // The new thread is inserted first; find the original by its title rather than by position.
+  const trigger = page.getByRole("button", { name: originalTitle, exact: true });
+  await trigger.click();
   await expect(example.locator(".hkc-message--user")).not.toHaveCount(0);
+  // Pin the row by its data attribute so it survives the rename form replacing the trigger.
+  const rowIndex = await example.locator(".hkc-thread-row").evaluateAll((rows, title) => rows.findIndex(row => row.textContent?.includes(title)), originalTitle);
+  const row = example.locator(".hkc-thread-row").nth(rowIndex);
   await row.getByRole("button", { name: /^Rename / }).click();
   await row.getByRole("textbox", { name: "Conversation title" }).fill("Lane 7 review");
   await row.getByRole("button", { name: "Save", exact: true }).click();

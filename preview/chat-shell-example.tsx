@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AssistantRuntimeProvider, WebSpeechSynthesisAdapter, useAuiState, useLocalRuntime, type ToolCallMessagePartComponent, type ToolCallMessagePartProps } from "@assistant-ui/react";
 import { Cpu, Export, FolderSimple, GitBranch, Lightning, Play, Wrench } from "@phosphor-icons/react";
 import { HarsoChatShell, HarsoThreadList, HarsoThread, HarsoComposer, HarsoMessageAttachment, HarsoReasoning, HarsoToolCall, HarsoMarkdownText } from "../src/chat";
@@ -48,7 +48,9 @@ function ContextPanel() {
 export function ChatShellExample() {
   const [adapter] = useState(() => createScriptedAdapter());
   const Tool = useMemo<ToolCallMessagePartComponent>(() => (props: ToolCallMessagePartProps) => <HarsoToolCall {...props} onDecide={adapter.decide} />, [adapter]);
-  const runtime = useLocalRuntime(adapter, { initialMessages: seed, adapters: { attachments, speech: new WebSpeechSynthesisAdapter(), feedback: { submit() {} } } });
+  const seeded = useRef(false);
+  const initial = seeded.current ? [] : (seeded.current = true, seed);
+  const runtime = useLocalRuntime(adapter, { initialMessages: initial, adapters: { attachments, speech: new WebSpeechSynthesisAdapter(), feedback: { submit() {} } } });
   useEffect(() => {
     const item = runtime.threads.mainItem;
     void item.initialize().then(() => item.rename("Ledger client migration")).catch(() => {});

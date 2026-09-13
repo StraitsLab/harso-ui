@@ -57,3 +57,11 @@ export async function captureChat(example: Locator, name: string) {
   await mkdir("/tmp/harso-a", { recursive: true });
   await example.screenshot({ path: `/tmp/harso-a/7-${name}.png`, animations: "disabled" });
 }
+
+/** The scripted adapter pauses on a terminal approval; approve it (if shown) so the run can complete. */
+export async function settleRun(example: Locator) {
+  const approve = example.getByRole("button", { name: "Approve", exact: true }).last();
+  await approve.waitFor({ state: "visible", timeout: 15_000 }).catch(() => undefined);
+  if (await approve.isVisible()) await approve.click();
+  await expect(example.getByRole("status", { name: "Streaming" })).toHaveCount(0, { timeout: 20_000 });
+}
