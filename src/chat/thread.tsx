@@ -15,12 +15,12 @@ export interface HarsoThreadProps extends HarsoMessageSlots {
   components?: { UserMessage?: ComponentType; AssistantMessage?: ComponentType; EditComposer?: ComponentType };
 }
 
-export function HarsoThread({ composer, header, footer, empty = "Start a conversation.", className = "", components, assistantName, toolUI, reasoning, error, attachment, text }: HarsoThreadProps) {
+export function HarsoThread({ composer, header, footer, empty = "Start a conversation.", className = "", components, assistantName, toolUI, reasoning, error, attachment, text, actions }: HarsoThreadProps) {
   const messages = useMemo(() => ({
-    UserMessage: components?.UserMessage ?? (() => <HarsoUserMessage attachment={attachment} />),
-    AssistantMessage: components?.AssistantMessage ?? (() => <HarsoAssistantMessage assistantName={assistantName} toolUI={toolUI} reasoning={reasoning} error={error} text={text} />),
+    UserMessage: components?.UserMessage ?? (() => <HarsoUserMessage attachment={attachment} actions={actions} />),
+    AssistantMessage: components?.AssistantMessage ?? (() => <HarsoAssistantMessage assistantName={assistantName} toolUI={toolUI} reasoning={reasoning} error={error} text={text} actions={actions} />),
     EditComposer: components?.EditComposer ?? HarsoEditComposer,
-  }), [components?.UserMessage, components?.AssistantMessage, components?.EditComposer, assistantName, toolUI, reasoning, error, attachment, text]);
+  }), [components?.UserMessage, components?.AssistantMessage, components?.EditComposer, assistantName, toolUI, reasoning, error, attachment, text, actions]);
   return <ThreadPrimitive.Root className={`hkc-thread ${className}`}>
     <ThreadPrimitive.Viewport className="hkc-thread-viewport" autoScroll>
       <div className="hkc-thread-transcript" role="log" aria-label="Conversation">

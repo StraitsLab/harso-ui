@@ -1,6 +1,6 @@
 export { HarsoThread, type HarsoThreadProps } from "./thread";
 export { HarsoUserMessage, HarsoAssistantMessage, HarsoEditComposer, type HarsoMessageSlots } from "./message";
-export { HarsoMessageActions } from "./message-actions";
+export { HarsoMessageActions, type HarsoMessageActionCapabilities } from "./message-actions";
 
 // Lane 2: composer
 export { HarsoComposer, type HarsoComposerProps } from "./composer";
