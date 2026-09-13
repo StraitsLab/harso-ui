@@ -82,4 +82,9 @@ describe("HarsoChatShell", () => {
     expect(screen.getByRole("main")).toHaveTextContent("Conversation");
     expect(screen.queryByRole("button", { name: "Open context" })).not.toBeInTheDocument();
   });
+  it("renders the thread area as a div when the host owns the page main landmark", () => {
+    render(<HarsoChatShell sidebar={<nav>Threads</nav>} mainLandmark={false}>Thread content</HarsoChatShell>);
+    expect(screen.queryByRole("main")).toBeNull();
+    expect(document.querySelector(".hkc-shell-main")?.tagName).toBe("DIV");
+  });
 });

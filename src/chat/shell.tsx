@@ -11,6 +11,8 @@ export type HarsoChatShellProps = Omit<HTMLAttributes<HTMLDivElement>, "title"> 
   main?: ReactNode;
   composer?: ReactNode;
   aside?: ReactNode;
+  /** Render the thread area as a `<main>` landmark (default). Hosts that already own a page `<main>` pass `false` to avoid nested/duplicate main landmarks. */
+  mainLandmark?: boolean;
 };
 
 function ShellSheet({ label, kind, onClose, children }: { label: string; kind: "sidebar" | "aside"; onClose: () => void; children: ReactNode }) {
@@ -28,7 +30,7 @@ function ShellSheet({ label, kind, onClose, children }: { label: string; kind: "
   </dialog>;
 }
 
-export function HarsoChatShell({ sidebar, header, title, actions, themeToggle, main, composer, aside, children, className = "", ...props }: HarsoChatShellProps) {
+export function HarsoChatShell({ sidebar, header, title, actions, themeToggle, main, composer, aside, mainLandmark = true, children, className = "", ...props }: HarsoChatShellProps) {
   const root = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState<"phone" | "tablet" | "desktop">("desktop");
   const [sheet, setSheet] = useState<"sidebar" | "aside" | null>(null);
@@ -53,7 +55,7 @@ export function HarsoChatShell({ sidebar, header, title, actions, themeToggle, m
           {actions}{themeToggle}
           {aside && layout !== "desktop" && <button type="button" className="hkc-shell-icon" aria-label="Open context" aria-haspopup="dialog" aria-expanded={sheet === "aside"} onClick={() => setSheet("aside")}><SidebarSimple size={20} /></button>}
         </header>
-        <main className="hkc-shell-main">{main ?? children}</main>
+        {mainLandmark ? <main className="hkc-shell-main">{main ?? children}</main> : <div className="hkc-shell-main">{main ?? children}</div>}
         {composer && <div className="hkc-shell-composer">{composer}</div>}
       </div>
       {aside && layout === "desktop" && <aside className="hkc-shell-aside" aria-label="Context">{aside}</aside>}
