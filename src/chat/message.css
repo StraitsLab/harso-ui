@@ -35,9 +35,11 @@
 .harso-kit .hkc-edit-composer > div { display: flex; justify-content: flex-end; gap: var(--hk-space-2); }
 .harso-kit :is(.hkc-edit-composer, .hkc-message-error) button { padding: var(--hk-space-2) var(--hk-space-3); border: 1px solid var(--hk-line-strong); border-radius: var(--hk-radius-pill); background: var(--hk-surface); color: inherit; font: inherit; font-size: var(--hk-text-sm); cursor: pointer; }
 .harso-kit .hkc-edit-composer .hkc-edit-save { background: var(--hk-dark); color: var(--hk-inverse); }
-@container hkc-thread (min-width: 1024px) {
-  .harso-kit .hkc-message-actions { opacity: 0; }
-  .harso-kit .hkc-message:hover .hkc-message-actions, .harso-kit .hkc-message:focus-within .hkc-message-actions { opacity: 1; }
+/* Hover-reveal is a pointer capability, not a viewport width: fine pointers get quiet actions that appear on hover or
+   keyboard focus; coarse pointers (touch) always show them, since there is nothing to hover. */
+@media (hover: hover) and (pointer: fine) {
+  .harso-kit .hkc-message-actions { opacity: 0; transition: opacity var(--hk-fast, 120ms) var(--hk-ease, ease); }
+  .harso-kit .hkc-message:hover .hkc-message-actions, .harso-kit .hkc-message:focus-within .hkc-message-actions, .harso-kit .hkc-message-actions:has(button[aria-pressed="true"]) { opacity: 1; }
 }
 @container hkc-thread (max-width: 640px) {
   .harso-kit .hkc-message-actions button { min-width: 44px; min-height: 44px; }

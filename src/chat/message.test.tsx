@@ -43,6 +43,29 @@ describe("Harso messages and MessageActions", () => {
     await waitFor(() => expect(writeText).toHaveBeenCalledWith("Original answer"));
   });
 
+  test("a host clipboard replaces navigator.clipboard and reports the copied state", async () => {
+    // Electron renderers under a strict permission policy have no navigator.clipboard; the host writes through IPC.
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: undefined });
+    const copyToClipboard = vi.fn().mockResolvedValue(undefined);
+    render(<Example copyToClipboard={copyToClipboard} />);
+    const copy = within(screen.getByRole("article", { name: "Harso" })).getByRole("button", { name: "Copy message" });
+    fireEvent.click(copy);
+    await waitFor(() => expect(copyToClipboard).toHaveBeenCalledWith("Original answer"));
+    await waitFor(() => expect(copy).toHaveAttribute("title", "Copied"));
+    expect(copy).toHaveAttribute("aria-pressed", "true");
+  });
+
+  test("a host clipboard that rejects leaves the button in its resting state", async () => {
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: undefined });
+    const copyToClipboard = vi.fn().mockRejectedValue(new Error("denied"));
+    render(<Example copyToClipboard={copyToClipboard} />);
+    const copy = within(screen.getByRole("article", { name: "Harso" })).getByRole("button", { name: "Copy message" });
+    fireEvent.click(copy);
+    await waitFor(() => expect(copyToClipboard).toHaveBeenCalledOnce());
+    await new Promise(resolve => setTimeout(resolve, 10));
+    expect(copy).toHaveAttribute("title", "Copy");
+  });
+
   test("cancel preserves the original; save creates a navigable branch", async () => {
     render(<Example />);
     fireEvent.click(screen.getByRole("button", { name: "Edit message" }));

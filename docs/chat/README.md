@@ -88,7 +88,7 @@ the `hkc-` prefix; preserve primitive-generated `data-*` attributes.
 - Shell: its measured container is phone at ≤640px, tablet at 641–1023px,
   desktop at ≥1024px (`src/chat/shell.tsx`, `shell.css`). Tablet has a navigation
   rail; phone/tablet open navigation/context as native dialog sheets.
-- Action-bar contract: hover reveal at ≥1024px container width; visible below;
+- Action-bar contract: hover/focus reveal on fine pointers (`@media (hover: hover) and (pointer: fine)`); always visible on touch; `copyToClipboard` slot for hosts whose renderer has no `navigator.clipboard`;
   ≤640px targets are 44px. Composer phone contract: sticky, full-bleed,
   `max(12px, env(safe-area-inset-bottom))` bottom padding and 16px input text.
   These are acceptance criteria, not a substitute for screenshots.

@@ -14,6 +14,8 @@ export interface HarsoMessageSlots {
   attachment?: ComponentType;
   /** Which message actions the host runtime actually supports; defaults to all. */
   actions?: HarsoMessageActionCapabilities;
+  /** Host clipboard for Copy; renderers without navigator.clipboard (Electron with a strict permission policy) supply one. */
+  copyToClipboard?: (text: string) => void | Promise<void>;
 }
 
 function StreamingText() {
@@ -35,18 +37,18 @@ function DefaultError() {
   return <div className="hkc-message-error" role="alert"><span>{status?.type === "incomplete" && status.reason === "error" && typeof status.error === "string" ? status.error : "The response was interrupted."}</span><ActionBarPrimitive.Reload>Retry</ActionBarPrimitive.Reload></div>;
 }
 
-export function HarsoUserMessage({ attachment: Attachment = DefaultAttachment, actions }: Pick<HarsoMessageSlots, "attachment" | "actions"> = {}) {
-  return <MessagePrimitive.Root className="hkc-message hkc-message--user" role="article" aria-label="You"><div className="hkc-message-speaker">You</div><div className="hkc-message-bubble"><MessagePrimitive.Parts components={{ Text: StreamingText }} /><div className="hkc-message-attachments"><MessagePrimitive.Attachments components={{ Attachment }} /></div></div><HarsoMessageActions user capabilities={actions} /></MessagePrimitive.Root>;
+export function HarsoUserMessage({ attachment: Attachment = DefaultAttachment, actions, copyToClipboard }: Pick<HarsoMessageSlots, "attachment" | "actions" | "copyToClipboard"> = {}) {
+  return <MessagePrimitive.Root className="hkc-message hkc-message--user" role="article" aria-label="You"><div className="hkc-message-speaker">You</div><div className="hkc-message-bubble"><MessagePrimitive.Parts components={{ Text: StreamingText }} /><div className="hkc-message-attachments"><MessagePrimitive.Attachments components={{ Attachment }} /></div></div><HarsoMessageActions user capabilities={actions} copyToClipboard={copyToClipboard} /></MessagePrimitive.Root>;
 }
 
-export function HarsoAssistantMessage({ assistantName = "Harso", toolUI, reasoning = DefaultReasoning, error: Error = DefaultError, text: Text = StreamingText, actions }: HarsoMessageSlots = {}) {
+export function HarsoAssistantMessage({ assistantName = "Harso", toolUI, reasoning = DefaultReasoning, error: Error = DefaultError, text: Text = StreamingText, actions, copyToClipboard }: HarsoMessageSlots = {}) {
   const status = useAuiState(state => state.message.status);
   return <MessagePrimitive.Root className="hkc-message hkc-message--assistant" role="article" aria-label={assistantName}>
     <div className="hkc-message-speaker"><Sparkle size={16} aria-hidden="true" />{assistantName}</div>
     <MessagePrimitive.Parts components={{ Text, Reasoning: reasoning, tools: toolUI }} />
     {status?.type === "incomplete" && status.reason === "error" && <Error />}
     {status?.type === "incomplete" && status.reason === "cancelled" && <p className="hkc-message-stopped" role="status">Stopped by you.</p>}
-    <HarsoMessageActions capabilities={actions} />
+    <HarsoMessageActions capabilities={actions} copyToClipboard={copyToClipboard} />
   </MessagePrimitive.Root>;
 }
 
