@@ -88,3 +88,16 @@
   .hk-auth-media-carousel__indicator::before { background: CanvasText; }
   .hk-auth-media-carousel__indicator[aria-current="true"] { outline: 1px solid Highlight; }
 }
+/* Viewport-level sheets: literal 640 breakpoint follows the shared phone contract. */
+@media (max-width: 640px) {
+  .hk-field { grid-template-columns: minmax(0, 1fr); }
+  .hk-field > label { grid-column: 1 / -1; }
+  .hk-settings-modal, .hk-selector-modal, .hk-selector-popover, .hk-dropdown-popover {
+    position: fixed; inset: auto 0 0; margin: 0; transform: none; position-anchor: auto; position-area: none;
+    width: 100%; min-width: 0; max-width: 100%; max-height: min(85dvh, calc(100dvh - env(safe-area-inset-top) - 16px));
+    border-radius: 16px 16px 0 0; box-shadow: var(--hk-shadow); overflow: auto; overscroll-behavior: contain;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  [dir="rtl"] .hk-selector-modal { transform: none; }
+  .hk-selector-popover { left: 0 !important; top: auto !important; width: 100% !important; }
+}

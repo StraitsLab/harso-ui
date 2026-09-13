@@ -21,7 +21,14 @@ test("prompt open native menus remain anchored and viewport-contained", async ({
       expect(await menu.evaluate(element => element.matches(":popover-open"))).toBe(true);
       const anchor = (await trigger.boundingBox())!;
       const bounds = (await menu.boundingBox())!;
-      expect(Math.min(Math.abs(bounds.y - (anchor.y + anchor.height)), Math.abs(bounds.y + bounds.height - anchor.y)), `${label} vertical anchor gap at ${width}`).toBeLessThanOrEqual(24);
+      if (width <= 640) {
+        // Native dropdowns intentionally become bottom sheets on phones.
+        expect(bounds.x).toBe(0);
+        expect(bounds.width).toBe(width);
+        expect(bounds.y + bounds.height).toBe(1000);
+      } else {
+        expect(Math.min(Math.abs(bounds.y - (anchor.y + anchor.height)), Math.abs(bounds.y + bounds.height - anchor.y)), `${label} vertical anchor gap at ${width}`).toBeLessThanOrEqual(24);
+      }
       expect(bounds.x, `${label} left viewport edge`).toBeGreaterThanOrEqual(0);
       expect(bounds.x + bounds.width, `${label} right viewport edge`).toBeLessThanOrEqual(width + 1);
       expect(bounds.y).toBeGreaterThanOrEqual(0);

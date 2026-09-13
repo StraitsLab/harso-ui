@@ -1,5 +1,15 @@
 .hk-tool, .hk-agent, .hk-artifact, .hk-sources { min-width: 0; }
 .hk-tool-heading { margin: 0; font: inherit; }
+.hk-tool .hk-activity-name { font: var(--hk-text-base)/1.6 var(--hk-mono); }
+.hk-tool .hk-work-trigger-label { flex: 1; }
+.hk-tool .hk-badge { margin-inline-start: auto; font-size: var(--hk-text-xs); }
+.hk-tool .hk-badge > span { font-size: 0; width: 16px; height: 16px; background: var(--hk-tertiary); mask: var(--hk-shell-Clock) center / contain no-repeat; }
+.hk-tool .hk-badge--positive > span { background: var(--hk-positive-mark); mask-image: var(--hk-shell-CheckCircle); }
+.hk-tool .hk-badge--negative > span { background: var(--hk-negative-mark); mask-image: var(--hk-shell-XCircle); }
+.hk-tool .hk-badge--attention > span { background: var(--hk-attention-mark); }
+.hk-tool .hk-badge[data-state="input-streaming"] > span, .hk-tool .hk-badge[data-state="input-available"] > span { background: var(--hk-accent-mark); mask-image: var(--hk-shell-CircleNotch); animation: hk-turn 1.1s linear infinite; }
+.hk-tool .hk-badge[data-state="output-denied"] > span { background: var(--hk-negative-mark); mask-image: var(--hk-shell-XCircle); }
+@media (prefers-reduced-motion: reduce) { .hk-tool .hk-badge[data-state] > span { animation: none; } }
 .hk-activity-name { color: var(--hk-ink); font-weight: 520; }
 .hk-activity-section { margin-block: 20px; min-width: 0; font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
 .hk-activity-section h4 { margin: 0 0 8px; font-size: 11px; font-weight: 550; letter-spacing: .05em; text-transform: uppercase; color: var(--hk-secondary); }

@@ -19,8 +19,8 @@ test("social appearance is painted and fixed width stays stable across labels an
     }
     expect(new Set(backgrounds).size).toBe(3);
     await example.getByLabel("Social appearance", { exact: true }).selectOption("colorful");
-    expect(await button.evaluate(element => getComputedStyle(element).minHeight)).toBe("42px");
-    expect((await button.boundingBox())!.height).toBeGreaterThanOrEqual(42);
+    expect(await button.evaluate(element => getComputedStyle(element).minHeight)).toBe("36px");
+    expect((await button.boundingBox())!.height).toBeGreaterThanOrEqual(36);
     expect(await button.evaluate(element => getComputedStyle(element).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
     for (const width of [390, 1440]) {
       await page.setViewportSize({ width, height: 1000 });

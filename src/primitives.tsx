@@ -1,3 +1,4 @@
+import { EyeIcon, EyeSlashIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { createElement, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type CSSProperties, type ReactNode } from "react";
 
 export type ButtonProps = ComponentPropsWithRef<"button"> & { variant?: "primary" | "quiet" | "outline" | "danger" | "secondary" | "ghost" | "link"; size?: "xs" | "small" | "medium"; pending?: boolean; leadingIcon?: ReactNode; trailingIcon?: ReactNode; iconOnly?: boolean };
@@ -16,8 +17,19 @@ export function Link({ className = "", children, variant = "primary", size = "me
   return <a {...props} className={`hk-link hk-link--${variant} hk-link--${size} ${className}`}>{leadingIcon && <span aria-hidden="true">{leadingIcon}</span>}{children}{trailingIcon && <span aria-hidden="true">{trailingIcon}</span>}</a>;
 }
 
-export function Input({ className = "", leading, trailing, ...props }: ComponentPropsWithRef<"input"> & { leading?: ReactNode; trailing?: ReactNode }) {
-  return <div className={leading || trailing ? "hk-input-shell" : "hk-input-plain"} data-invalid={props["aria-invalid"]} data-disabled={props.disabled || undefined}>{leading && <span className="hk-input-adornment">{leading}</span>}<input {...props} className={`hk-input ${className}`} />{trailing && <span className="hk-input-adornment">{trailing}</span>}</div>;
+export type InputProps = ComponentPropsWithRef<"input"> & { leading?: ReactNode; trailing?: ReactNode; leadingIcon?: ReactNode; trailingIcon?: ReactNode; revealable?: boolean };
+
+export function Input({ className = "", leading, trailing, leadingIcon, trailingIcon, revealable = false, type, ...props }: InputProps) {
+  const [revealed, setRevealed] = useState(false);
+  const canReveal = type === "password" && revealable;
+  const startIcon = leadingIcon ?? (type === "search" && !leading ? <MagnifyingGlassIcon size={16} weight="regular" /> : null);
+  const input = <input {...props} type={canReveal && revealed ? "text" : type} className={`hk-input ${className}`} />;
+  // Keep the input in the same React child slot across adornment changes.
+  const decorated = leading || trailing || startIcon || trailingIcon || canReveal;
+  return <div className={decorated ? "hk-input-shell" : "hk-input-plain"} data-invalid={props["aria-invalid"]} data-disabled={props.disabled || undefined}>
+    {(startIcon || leading) && <span className="hk-input-adornment">{startIcon && <span className="hk-input-icon" aria-hidden="true">{startIcon}</span>}{leading}</span>}{input}{(trailing || trailingIcon) && <span className="hk-input-adornment">{trailing}{trailingIcon && <span className="hk-input-icon" aria-hidden="true">{trailingIcon}</span>}</span>}
+    {canReveal && <IconButton label={revealed ? "Hide password" : "Show password"} aria-pressed={revealed} disabled={props.disabled} className="hk-input-reveal" onClick={() => setRevealed(value => !value)}>{revealed ? <EyeSlashIcon size={18} weight="regular" aria-hidden="true" /> : <EyeIcon size={18} weight="regular" aria-hidden="true" />}</IconButton>}
+  </div>;
 }
 
 export function Textarea({ className = "", ...props }: ComponentPropsWithRef<"textarea">) {
@@ -121,8 +133,8 @@ export function Separator({ orientation = "horizontal", treatment = "single", al
   return <div className={`hk-separator${populated ? " hk-separator--content" : ""}`} role={populated ? undefined : "separator"} aria-orientation={populated ? undefined : orientation} data-orientation={orientation} data-treatment={treatment} data-align={align}>{children}</div>;
 }
 
-export function EmptyState({ title, description, action }: { title: string; description: string; action?: ReactNode }) {
-  return <section className="hk-empty"><h3>{title}</h3><p>{description}</p>{action}</section>;
+export function EmptyState({ title, description, icon, action, actionLabel, onAction }: { title: string; description: string; icon?: ReactNode; action?: ReactNode; actionLabel?: string; onAction?: () => void }) {
+  return <section className="hk-empty">{icon && <span className="hk-empty-icon" aria-hidden="true">{icon}</span>}<h3>{title}</h3><p>{description}</p>{action ?? (actionLabel && <Button variant="primary" disabled={!onAction} onClick={onAction}>{actionLabel}</Button>)}</section>;
 }
 
 export function Disclosure({ summary, children, className = "", ...props }: Omit<ComponentPropsWithRef<"details">, "children"> & { summary: ReactNode; children: ReactNode }) {

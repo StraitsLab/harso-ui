@@ -196,13 +196,21 @@ for (const family of ["home-dashboard", "hr-management", "marketing-dashboard", 
     for (const width of [1512, 390]) {
       await page.setViewportSize({ width, height: 1040 });
       await expect(workspace).toHaveAttribute("data-compact", String(width === 390));
-      await expect(navigation).toBeVisible();
-      await toggle.click();
-      await expect(navigation).toBeHidden();
-      await expect(toggle).toHaveAttribute("aria-expanded", "false");
-      await toggle.click();
-      await expect(navigation).toBeVisible();
-      await expect(toggle).toHaveAttribute("aria-expanded", "true");
+      if (width === 390) {
+        await expect(navigation).toBeHidden();
+        await toggle.click();
+        await expect(navigation).toBeVisible();
+        await expect(toggle).toHaveAttribute("aria-expanded", "true");
+        const backdrop = workspace.getByRole("button", { name: "Close workspace navigation", exact: true });
+        const backdropBounds = (await backdrop.boundingBox())!;
+        // The drawer covers the backdrop's centre; click its exposed right edge.
+        await backdrop.click({ position: { x: backdropBounds.width - 8, y: 8 } });
+        await expect(navigation).toBeHidden();
+        await expect(toggle).toHaveAttribute("aria-expanded", "false");
+      } else {
+        await expect(navigation).toBeVisible();
+        await expect(toggle).toBeHidden();
+      }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
       await workspace.getByRole("button", { name: "Navigate", exact: true }).click();
       const panel = workspace.getByRole("dialog");
@@ -292,12 +300,21 @@ for (const family of ["ai-chat", "chat-starter"]) {
     for (const width of [1512, 390]) {
       await page.setViewportSize({ width, height: 1040 });
       await expect(workspace).toHaveAttribute("data-compact", String(width === 390));
-      await expect(navigation).toBeVisible();
-      await workspace.getByRole("button", { name: "Toggle workspace navigation", exact: true }).click();
-      await expect(navigation).toBeHidden();
+      const toggle = workspace.locator(".hk-ai-navigation-toggle");
+      if (width === 390) {
+        await expect(navigation).toBeHidden();
+        await toggle.click();
+        await expect(navigation).toBeVisible();
+        const backdrop = workspace.getByRole("button", { name: "Close workspace navigation", exact: true });
+        const backdropBounds = (await backdrop.boundingBox())!;
+        // The drawer covers the backdrop's centre; click its exposed right edge.
+        await backdrop.click({ position: { x: backdropBounds.width - 8, y: 8 } });
+        await expect(navigation).toBeHidden();
+      } else {
+        await expect(navigation).toBeVisible();
+        await expect(toggle).toBeHidden();
+      }
       await expect(draft).toHaveValue("A draft retained across layouts");
-      await workspace.getByRole("button", { name: "Toggle workspace navigation", exact: true }).click();
-      await expect(navigation).toBeVisible();
       expect(await draft.evaluate((element, previous) => element === previous, original)).toBe(true);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     }

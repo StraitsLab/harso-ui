@@ -8,8 +8,12 @@
 .hk-input-shell > .hk-input { flex: 1; min-height: 34px; border: 0; background: transparent; }
 .hk-input-shell:has(> .hk-input:focus-visible) { border-color: var(--hk-accent); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
 .hk-input-shell > .hk-input:focus-visible { outline: none; box-shadow: none; }
-.hk-input-shell[data-invalid="true"] { border-color: var(--hk-negative); }
+.hk-input-shell[data-invalid="true"], .hk-input-shell[data-invalid="true"]:has(> .hk-input:focus-visible) { border-color: var(--hk-negative); }
 .hk-input-shell[data-disabled] { background: var(--hk-hover); }
+.hk-input-icon { pointer-events: none; }
+.hk-input-icon svg { display: block; width: 16px; height: 16px; }
+.hk-input-reveal { margin-inline-end: 2px; }
+.hk-input-shell[data-disabled] .hk-input-adornment { color: var(--hk-tertiary); }
 .hk-input-adornment { display: inline-flex; align-items: center; color: var(--hk-secondary); padding-inline: 10px; flex-shrink: 0; }
 .hk-input-adornment:has(select) { flex-shrink: 1; min-width: 0; max-width: 48%; padding: 0; }
 .hk-input-adornment select { border: 0; background: transparent; font-size: 13px; }

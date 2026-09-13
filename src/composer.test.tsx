@@ -47,7 +47,7 @@ describe("ComposerPanel controlled presentation", () => {
     rerender(<ComposerAttachmentTile name="asset" status="uploading" progress={-1} />);
     expect(arc()).toHaveAttribute("stroke-dashoffset", "100");
     rerender(<ComposerAttachmentTile name="asset" status="complete" progress={1} />);
-    expect(container.querySelector("svg")).not.toBeInTheDocument();
+    expect(container.querySelector(".hk-composer-progress-ring")).not.toBeInTheDocument();
   });
   it("panel composes supplied context and voice requests without inferred recording or footer", () => {
     const voice = vi.fn(() => false);

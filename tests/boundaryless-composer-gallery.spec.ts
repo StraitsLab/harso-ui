@@ -16,7 +16,9 @@ test("panel context and voice stay host-owned while working locks input", async 
   await expect(voice).not.toHaveAttribute("aria-pressed");
   await example.getByLabel("Host reports working").check();
   await expect(example.locator(".hk-composer-panel")).toHaveAttribute("aria-busy", "true");
+  await expect(voice).toBeVisible();
   await expect(voice).toBeDisabled();
+  await expect(example.locator(".hk-composer-attachment-tile")).toBeVisible();
   await expect(example.getByRole("textbox")).toBeDisabled();
   await expect(example.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
   await example.getByLabel("Host reports working").uncheck();

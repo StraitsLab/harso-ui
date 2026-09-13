@@ -1,16 +1,28 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type ReactNode } from "react";
-import { Button } from "./primitives";
+import { Children, Fragment, cloneElement, isValidElement, useEffect, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type ReactNode } from "react";
+import { Button, IconButton } from "./primitives";
+import { BrowserIcon, GitDiffIcon, SidebarSimpleIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import { Image } from "./image";
 
 export { AgentLimitsCard } from "./agent-limits";
 export { AgentProgress, type AgentProgressProps } from "./agent-progress";
 export { AgentThinking, type AgentThinkingProps } from "./agent-thinking";
+function workspaceActions(nodes: ReactNode): ReactNode {
+  return Children.map(nodes, node => {
+    if (!isValidElement<{ children?: ReactNode; leadingIcon?: ReactNode }>(node)) return node;
+    if (node.type === Fragment) return cloneElement(node, {}, workspaceActions(node.props.children));
+    if (node.type !== Button || node.props.leadingIcon) return node;
+    const icon = node.props.children === "Changes" ? <GitDiffIcon size={16} /> : node.props.children === "Browser" ? <BrowserIcon size={16} /> : undefined;
+    return icon ? cloneElement(node, { leadingIcon: icon }) : node;
+  });
+}
 export type AiChatProps = ComponentPropsWithRef<"section"> & {
   title?: string; navigation?: ReactNode; actions?: ReactNode; composer?: ReactNode; status?: ReactNode;
+  changesCount?: number; onTogglePanel?: () => void;
   panel?: { title: string; content: ReactNode; onClose: () => void } | null;
 };
-export function AiChat({ title = "AI chat", navigation, actions, composer, status, panel, children, className = "", ref, ...props }: AiChatProps) {
+export function AiChat({ title = "AI chat", navigation, actions, composer, status, panel, changesCount, onTogglePanel, children, className = "", ref, ...props }: AiChatProps) {
   const [navigationOpen, setNavigationOpen] = useState(true);
+  const phoneMode = useRef<boolean | null>(null);
   const [compact, setCompact] = useState(true);
   const root = useRef<HTMLElement | null>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
@@ -38,17 +50,19 @@ export function AiChat({ title = "AI chat", navigation, actions, composer, statu
   }, [panelOpen, compact]);
   useEffect(() => {
     if (!root.current || typeof ResizeObserver === "undefined") return;
-    const observer = new ResizeObserver(entries => { if (entries[0]) setCompact(entries[0].contentRect.width < 900); });
+    const observer = new ResizeObserver(entries => { if (entries[0]) { const width = entries[0].contentRect.width; setCompact(width < 900); const phone = width <= 640; if (phoneMode.current !== phone) { setNavigationOpen(!phone); phoneMode.current = phone; } } });
     observer.observe(root.current);
+    root.current.querySelectorAll<HTMLElement>(".hk-ai-workspace-navigation button").forEach(button => { if (!button.title) button.title = button.getAttribute("aria-label") || button.textContent || ""; });
     return () => observer.disconnect();
   }, []);
   return <section {...props} ref={element => { root.current = element; if (typeof ref === "function") return ref(element); if (ref) ref.current = element; }} className={`hk-ai-chat hk-ai-workspace ${className}`} data-compact={compact} data-navigation={Boolean(navigation && navigationOpen)} data-panel={Boolean(panel)}>
-    <header className="hk-ai-workspace-header"><div>{navigation && <Button aria-label="Toggle workspace navigation" aria-controls={`${identity}-navigation`} aria-expanded={navigationOpen} onClick={() => setNavigationOpen(open => !open)}>☰</Button>}<h2>{title}</h2></div><div>{status}{actions}</div></header>
+    <header className="hk-ai-workspace-header"><div>{navigation && <IconButton label="Toggle workspace navigation" className="hk-ai-navigation-toggle" aria-controls={`${identity}-navigation`} aria-expanded={navigationOpen} onClick={() => setNavigationOpen(open => !open)}><ListIcon size={18} /></IconButton>}<h2>{title}</h2></div><div>{status}{workspaceActions(actions)}{changesCount !== undefined && <span className="hk-ai-changes-count" aria-label={`${changesCount} changes`}>{changesCount}</span>}{(panel || onTogglePanel) && <Button leadingIcon={<SidebarSimpleIcon size={16} />} aria-label="Toggle context panel" aria-expanded={panelOpen} onClick={onTogglePanel ?? panel?.onClose}>Panel</Button>}</div></header>
     <div className="hk-ai-workspace-body">
-      {navigation && <nav id={`${identity}-navigation`} aria-label="Chat workspace" className="hk-ai-workspace-navigation" hidden={!navigationOpen}>{navigation}</nav>}
+      {navigation && <nav id={`${identity}-navigation`} aria-label="Chat workspace" className="hk-ai-workspace-navigation" hidden={!navigationOpen && phoneMode.current === null} onKeyDown={event => { if (event.key === "Escape") { setNavigationOpen(false); root.current?.querySelector<HTMLButtonElement>(".hk-ai-navigation-toggle")?.focus(); } }}>{navigation}</nav>}
+      {navigation && navigationOpen && <button type="button" className="hk-ai-navigation-backdrop" aria-label="Close workspace navigation" onClick={() => setNavigationOpen(false)} />}
       <div className="hk-ai-workspace-conversation"><div className="hk-ai-workspace-thread">{children}</div>{composer && <div className="hk-ai-workspace-composer">{composer}</div>}</div>
         {panel && <dialog ref={dialog} className="hk-ai-workspace-panel" aria-labelledby={`${identity}-panel-title`} onCancel={event => { event.preventDefault(); panel.onClose(); }}>
-          <div className="hk-ai-workspace-panel-header"><h2 id={`${identity}-panel-title`}>{panel.title}</h2><Button aria-label="Close context panel" onClick={panel.onClose}>Close</Button></div>
+          <div className="hk-ai-workspace-panel-header"><h2 id={`${identity}-panel-title`}>{panel.title}</h2><IconButton label="Close context panel" onClick={panel.onClose}><XIcon size={18} /></IconButton></div>
           <div className="hk-ai-workspace-panel-content">{panel.content}</div>
         </dialog>}
     </div>

@@ -87,9 +87,10 @@
 .hk-starter-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
 .hk-starter-history { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin-block: 16px; }
 .hk-starter-history-row { display: flex; align-items: center; gap: 4px; min-width: 0; }
-.hk-starter-history-row > button:first-child { display: block; flex: 1; min-width: 0; text-align: start; white-space: normal; overflow-wrap: anywhere; }
+.hk-starter-history-row > button:first-child { display: flex; flex: 1; min-width: 0; text-align: start; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hk-starter-history-row > button:first-child > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .hk-starter-history-row [aria-current="page"] { background: var(--hk-hover); }
-.hk-starter-unread { font-size: 11px; margin-inline-start: 8px; color: var(--hk-secondary); }
+.hk-starter-unread { flex: none; font-size: 11px; margin-inline-start: auto; padding: 1px 6px; border-radius: var(--hk-radius-pill); background: var(--hk-accent-soft); color: var(--hk-accent); white-space: nowrap; }
 .hk-starter-auth { max-width: 380px; margin: 32px auto; }
 .hk-starter-auth form { display: grid; gap: 16px; }
 .hk-starter-dashboard { display: grid; gap: 24px; padding: 20px 0; }
@@ -143,3 +144,62 @@
 @keyframes hk-ai-panel-enter { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
 @media (prefers-reduced-motion: reduce) { .hk-ai-workspace-panel { animation: none; } }
 @media (forced-colors: active) { .hk-agent-limits, .hk-ai-chat, .hk-ai-profile, .hk-chat-starter, .hk-web-search, .hk-ai-image-generation { border-color: CanvasText; } }
+:root {
+ --hk-shell-Plus: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M224%2C128a8%2C8%2C0%2C0%2C1-8%2C8H136v80a8%2C8%2C0%2C0%2C1-16%2C0V136H40a8%2C8%2C0%2C0%2C1%2C0-16h80V40a8%2C8%2C0%2C0%2C1%2C16%2C0v80h80A8%2C8%2C0%2C0%2C1%2C224%2C128Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+ --hk-shell-ChatCircle: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M128%2C24A104%2C104%2C0%2C0%2C0%2C36.18%2C176.88L24.83%2C210.93a16%2C16%2C0%2C0%2C0%2C20.24%2C20.24l34.05-11.35A104%2C104%2C0%2C1%2C0%2C128%2C24Zm0%2C192a87.87%2C87.87%2C0%2C0%2C1-44.06-11.81%2C8%2C8%2C0%2C0%2C0-6.54-.67L40%2C216%2C52.47%2C178.6a8%2C8%2C0%2C0%2C0-.66-6.54A88%2C88%2C0%2C1%2C1%2C128%2C216Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+ --hk-shell-GitDiff: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M112%2C152a8%2C8%2C0%2C0%2C0-8%2C8v28.69L66.34%2C151A8%2C8%2C0%2C0%2C1%2C64%2C145.37V95a32%2C32%2C0%2C1%2C0-16%2C0v50.38a23.85%2C23.85%2C0%2C0%2C0%2C7%2C17L92.69%2C200H64a8%2C8%2C0%2C0%2C0%2C0%2C16h48a8%2C8%2C0%2C0%2C0%2C8-8V160A8%2C8%2C0%2C0%2C0%2C112%2C152ZM40%2C64A16%2C16%2C0%2C1%2C1%2C56%2C80%2C16%2C16%2C0%2C0%2C1%2C40%2C64Zm168%2C97V110.63a23.85%2C23.85%2C0%2C0%2C0-7-17L163.31%2C56H192a8%2C8%2C0%2C0%2C0%2C0-16H144a8%2C8%2C0%2C0%2C0-8%2C8V96a8%2C8%2C0%2C0%2C0%2C16%2C0V67.31L189.66%2C105a8%2C8%2C0%2C0%2C1%2C2.34%2C5.66V161a32%2C32%2C0%2C1%2C0%2C16%2C0Zm-8%2C47a16%2C16%2C0%2C1%2C1%2C16-16A16%2C16%2C0%2C0%2C1%2C200%2C208Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+ --hk-shell-Browser: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M216%2C40H40A16%2C16%2C0%2C0%2C0%2C24%2C56V200a16%2C16%2C0%2C0%2C0%2C16%2C16H216a16%2C16%2C0%2C0%2C0%2C16-16V56A16%2C16%2C0%2C0%2C0%2C216%2C40Zm0%2C16V88H40V56Zm0%2C144H40V104H216v96Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+ --hk-shell-CheckCircle: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M173.66%2C98.34a8%2C8%2C0%2C0%2C1%2C0%2C11.32l-56%2C56a8%2C8%2C0%2C0%2C1-11.32%2C0l-24-24a8%2C8%2C0%2C0%2C1%2C11.32-11.32L112%2C148.69l50.34-50.35A8%2C8%2C0%2C0%2C1%2C173.66%2C98.34ZM232%2C128A104%2C104%2C0%2C1%2C1%2C128%2C24%2C104.11%2C104.11%2C0%2C0%2C1%2C232%2C128Zm-16%2C0a88%2C88%2C0%2C1%2C0-88%2C88A88.1%2C88.1%2C0%2C0%2C0%2C216%2C128Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+ --hk-shell-CaretRight: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M181.66%2C133.66l-80%2C80a8%2C8%2C0%2C0%2C1-11.32-11.32L164.69%2C128%2C90.34%2C53.66a8%2C8%2C0%2C0%2C1%2C11.32-11.32l80%2C80A8%2C8%2C0%2C0%2C1%2C181.66%2C133.66Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+ --hk-shell-Clock: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M128%2C24A104%2C104%2C0%2C1%2C0%2C232%2C128%2C104.11%2C104.11%2C0%2C0%2C0%2C128%2C24Zm0%2C192a88%2C88%2C0%2C1%2C1%2C88-88A88.1%2C88.1%2C0%2C0%2C1%2C128%2C216Zm64-88a8%2C8%2C0%2C0%2C1-8%2C8H128a8%2C8%2C0%2C0%2C1-8-8V72a8%2C8%2C0%2C0%2C1%2C16%2C0v48h48A8%2C8%2C0%2C0%2C1%2C192%2C128Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+ --hk-shell-CircleNotch: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M232%2C128a104%2C104%2C0%2C0%2C1-208%2C0c0-41%2C23.81-78.36%2C60.66-95.27a8%2C8%2C0%2C0%2C1%2C6.68%2C14.54C60.15%2C61.59%2C40%2C93.27%2C40%2C128a88%2C88%2C0%2C0%2C0%2C176%2C0c0-34.73-20.15-66.41-51.34-80.73a8%2C8%2C0%2C0%2C1%2C6.68-14.54C208.19%2C49.64%2C232%2C87%2C232%2C128Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+ --hk-shell-XCircle: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M165.66%2C101.66%2C139.31%2C128l26.35%2C26.34a8%2C8%2C0%2C0%2C1-11.32%2C11.32L128%2C139.31l-26.34%2C26.35a8%2C8%2C0%2C0%2C1-11.32-11.32L116.69%2C128%2C90.34%2C101.66a8%2C8%2C0%2C0%2C1%2C11.32-11.32L128%2C116.69l26.34-26.35a8%2C8%2C0%2C0%2C1%2C11.32%2C11.32ZM232%2C128A104%2C104%2C0%2C1%2C1%2C128%2C24%2C104.11%2C104.11%2C0%2C0%2C1%2C232%2C128Zm-16%2C0a88%2C88%2C0%2C1%2C0-88%2C88A88.1%2C88.1%2C0%2C0%2C0%2C216%2C128Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+ --hk-shell-DotsThree: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221em%22%20height%3D%221em%22%20fill%3D%22currentColor%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M140%2C128a12%2C12%2C0%2C1%2C1-12-12A12%2C12%2C0%2C0%2C1%2C140%2C128Zm56-12a12%2C12%2C0%2C1%2C0%2C12%2C12A12%2C12%2C0%2C0%2C0%2C196%2C116ZM60%2C116a12%2C12%2C0%2C1%2C0%2C12%2C12A12%2C12%2C0%2C0%2C0%2C60%2C116Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+}
+
+.hk-ai-workspace-navigation > button::before { content: ""; width: 16px; height: 16px; flex: 0 0 16px; background: currentColor; mask: var(--hk-shell-ChatCircle) center / contain no-repeat; }
+.hk-ai-workspace-navigation > button:first-child::before { mask-image: var(--hk-shell-Plus); }
+/* Shell breakpoints are component widths: phone <=640, rail <900. */
+.hk-ai-workspace-header .hk-ai-example-status { display: inline-flex; align-items: center; gap: 6px; color: var(--hk-secondary); }
+.hk-ai-example-status::before { content: ""; width: 6px; height: 6px; border-radius: var(--hk-radius-pill); background: var(--hk-positive-mark); }
+.hk-ai-workspace-header .hk-button { border-radius: 8px; }
+.hk-ai-changes-count { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding-inline: 4px; border-radius: var(--hk-radius-pill); background: var(--hk-hover); color: var(--hk-secondary); font-size: var(--hk-text-xs); font-variant-numeric: tabular-nums; }
+.hk-ai-workspace-conversation { gap: 16px; }
+.hk-ai-workspace-composer .hk-prompt-input { margin-inline: 0; }
+.hk-ai-workspace-header .hk-ai-navigation-toggle, .hk-ai-navigation-backdrop { display: none; }
+.hk-ai-workspace-navigation > button { display: flex; gap: 8px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; border-radius: 8px; min-height: 36px; }
+.hk-ai-workspace-navigation > button:first-child { background: var(--hk-dark); color: var(--hk-inverse); }
+.hk-ai-workspace-navigation h3 { color: var(--hk-secondary); }
+.hk-ai-workspace-navigation > button:not(:first-child)::after { content: ""; width: 16px; height: 16px; flex: 0 0 16px; background: currentColor; mask: var(--hk-shell-DotsThree) center / contain no-repeat; margin-inline-start: auto; opacity: 0; }
+.hk-ai-workspace-navigation > button:is(:hover,:focus-visible)::after { opacity: 1; }
+.hk-ai-workspace-panel::backdrop { background: color-mix(in srgb, var(--hk-ink) 24%, transparent); }
+.hk-ai-workspace[data-compact="true"] .hk-ai-workspace-panel { width: min(360px, 100vw); padding: 16px; box-shadow: var(--hk-shadow); }
+@container (min-width: 900px) {
+ .hk-ai-workspace:has(.hk-ai-workspace-navigation) .hk-ai-workspace-body { grid-template-columns: 240px minmax(0, 1fr); }
+ .hk-ai-workspace:has(.hk-ai-workspace-navigation)[data-panel="true"] .hk-ai-workspace-body { grid-template-columns: 240px minmax(0, 1fr) 320px; }
+}
+@container (min-width: 641px) and (max-width: 899px) {
+ .hk-ai-workspace:has(.hk-ai-workspace-navigation) .hk-ai-workspace-body { grid-template-columns: 56px minmax(0, 1fr); }
+ .hk-ai-workspace-navigation { padding: 8px; overflow: hidden; }
+ .hk-ai-workspace-navigation h3, .hk-ai-workspace-navigation .hk-file-tree-children, .hk-ai-workspace-navigation .hk-starter-history, .hk-ai-workspace-navigation .hk-starter-unread { display: none; }
+ .hk-ai-workspace-navigation > [aria-haspopup="menu"] { width: 40px; min-height: 40px; padding: 10px; font-size: 0; }
+ .hk-ai-workspace-navigation > button { width: 40px; min-height: 40px; padding: 10px; font-size: 0; gap: 0; margin-bottom: 8px; }
+ .hk-ai-workspace-navigation > button::after { display: none; }
+ .hk-ai-workspace-navigation .hk-file-tree-name, .hk-ai-workspace-navigation .hk-file-tree-selected, .hk-ai-workspace-navigation .hk-work-chevron { display: none; }
+ .hk-ai-workspace-navigation .hk-file-tree-select { padding: 10px; min-width: 40px; min-height: 40px; }
+}
+@container (max-width: 640px) {
+ .hk-ai-workspace-header .hk-ai-navigation-toggle { display: inline-flex; }
+ .hk-ai-workspace .hk-ai-workspace-header { padding: 8px; gap: 4px; }
+ .hk-ai-workspace-header > div:last-child { gap: 4px; }
+ .hk-ai-workspace-header .hk-button, .hk-ai-workspace-panel .hk-button, .hk-ai-workspace-navigation .hk-button { min-width: 44px; min-height: 44px; }
+ .hk-ai-workspace-navigation { position: absolute; inset: 0 auto 0 0; width: min(280px, calc(100% - 56px)); box-sizing: border-box; z-index: 3; transform: translateX(-100%); visibility: hidden; overflow: auto; box-shadow: var(--hk-shadow); transition: transform 180ms ease, visibility 180ms; }
+ .hk-ai-workspace[data-navigation="true"] .hk-ai-workspace-navigation { transform: translateX(0); visibility: visible; }
+ .hk-ai-navigation-backdrop { display: block; position: absolute; inset: 0; width: 100%; border: 0; z-index: 2; background: color-mix(in srgb, var(--hk-ink) 24%, transparent); }
+ .hk-ai-workspace-conversation { padding: 12px 0 0; gap: 16px; }
+ .hk-ai-workspace-composer { padding: 0 0 max(8px, env(safe-area-inset-bottom)); }
+ .hk-ai-workspace[data-compact="true"] .hk-ai-workspace-panel { inset: auto 0 0; width: 100vw; height: min(80dvh, 640px); border-radius: 16px 16px 0 0; padding: 16px 16px max(16px, env(safe-area-inset-bottom)); }
+ .hk-ai-workspace-navigation > button::after { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .hk-ai-workspace-navigation { transition: none; } }
+

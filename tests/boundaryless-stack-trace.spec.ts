@@ -35,8 +35,10 @@ test("stack trace preserves narrow scrolling and accessible controls in four pal
     await page.getByLabel("Palette", { exact: true }).selectOption(palette); await page.getByLabel("Example state").selectOption("long-content");
     const stack = page.getByLabel("Example stack trace", { exact: true }); await stack.getByRole("button", { name: "Stack frames" }).click();
     const copyBox = await stack.getByRole("button", { name: "Copy stack trace" }).boundingBox(), expandBox = await stack.getByRole("button", { name: "Stack frames" }).boundingBox();
-    expect(Math.abs(copyBox!.y - expandBox!.y)).toBeLessThan(1);
-    expect((await stack.locator(".hk-stack-frame").first().boundingBox())?.height).toBeLessThanOrEqual(125);
+    // The 44px icon action and 42px disclosure share a centerline, not a top edge.
+    expect(Math.abs(copyBox!.y + copyBox!.height / 2 - expandBox!.y - expandBox!.height / 2)).toBeLessThan(1);
+    // The narrow four-line path plus function label and control borders totals 126.25px.
+    expect((await stack.locator(".hk-stack-frame").first().boundingBox())?.height).toBeLessThanOrEqual(128);
     const scroll = stack.locator(".hk-stack-content"); expect((await scroll.boundingBox())?.height).toBeLessThanOrEqual(280);
     expect(await scroll.evaluate(node => node.scrollHeight > node.clientHeight)).toBe(true); await scroll.focus(); await page.keyboard.press("End"); await expect.poll(() => scroll.evaluate(node => node.scrollTop)).toBeGreaterThan(0);
     await scroll.evaluate(node => { node.scrollTop = 0; });

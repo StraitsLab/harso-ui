@@ -8,6 +8,10 @@ for (const width of [1512, 390]) {
     const workspace = page.locator(".hk-home-workspace");
     const navigation = workspace.locator(".hk-ai-workspace-navigation");
     const sidebar = navigation.getByRole("complementary", { name: "Workspace", exact: true });
+    if (width === 390) {
+      await expect(sidebar).toBeHidden();
+      await workspace.getByRole("button", { name: "Toggle workspace navigation", exact: true }).click();
+    }
     await expect(sidebar).toBeVisible();
     const geometry = await sidebar.evaluate(element => {
       const card = element.parentElement!;
@@ -55,7 +59,7 @@ test("home floating sidebar selection synchronizes with mobile drawer and preser
   await page.goto("/#boardui:home-dashboard");
   const workspace = page.locator(".hk-home-workspace");
   const sidebar = workspace.locator(".hk-ai-workspace-navigation").getByRole("complementary", { name: "Workspace", exact: true });
-  await expect(sidebar).toBeVisible();
+  await expect(sidebar).toBeHidden();
   const navigate = workspace.getByRole("button", { name: "Navigate", exact: true });
   await navigate.click();
   const drawer = workspace.getByRole("dialog", { name: "Workspace navigation", exact: true });
@@ -64,6 +68,10 @@ test("home floating sidebar selection synchronizes with mobile drawer and preser
   await drawerSidebar.getByRole("button", { name: "Customers", exact: true }).click();
   await expect(drawer).toHaveCount(0);
   await expect(navigate).toBeFocused();
+  await expect(workspace.getByText("Workspace / Customers", { exact: true })).toBeVisible();
+  // The phone rail is off-canvas; verify selection and disabled gates on desktop.
+  await page.setViewportSize({ width: 1512, height: 1040 });
+  await expect(sidebar).toBeVisible();
   await expect(sidebar.getByRole("button", { name: "Customers", exact: true })).toHaveAttribute("aria-current", "page");
   for (const state of ["disabled", "loading", "error", "disabled-error"]) {
     await page.getByLabel("Dashboard data").selectOption(state);
@@ -74,9 +82,12 @@ test("home floating sidebar selection synchronizes with mobile drawer and preser
     await expect(navigate).toBeDisabled();
   }
   await page.getByLabel("Dashboard data").selectOption("ready");
+  await page.setViewportSize({ width: 390, height: 1040 });
+  await expect(sidebar).toBeHidden();
   await navigate.click();
+  await expect(drawerSidebar.getByRole("button", { name: "Customers", exact: true })).toHaveAttribute("aria-current", "page");
   await page.keyboard.press("Escape");
   await expect(drawer).toHaveCount(0);
   await expect(navigate).toBeFocused();
-  await expect(sidebar.getByRole("button", { name: "Customers", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(workspace.getByText("Workspace / Customers", { exact: true })).toBeVisible();
 });

@@ -27,6 +27,9 @@ test("finance composed Sankey, rings, scatter and heatmap inspect the supplied f
   }
   await page.keyboard.press("Escape");
   await expect(portfolio.getByRole("status")).toContainText("3 observations");
+  // Focusing chart points scrolls the page under the previous ring-click position.
+  // Leave the heatmap before asserting its idle summary rather than a hovered cell.
+  await page.mouse.move(0, 0);
   await expect(heatmap.getByRole("status")).toHaveText("Total: $1375");
   for (const [category, amounts] of [["Home", [1200, 0, 0, 0, 45, 0]], ["Food", [0, 68, 0, 6, 0, 32]], ["Travel", [0, 0, 24, 0, 0, 0]]] as const) {
     for (const [index, amount] of amounts.entries()) {

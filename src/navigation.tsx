@@ -1,4 +1,5 @@
 import { useCallback, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type ReactElement, type ReactNode } from "react";
+import { XIcon } from "@phosphor-icons/react";
 import { flushSync } from "react-dom";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { Button, IconButton, type ButtonProps } from "./primitives";
@@ -142,8 +143,8 @@ export function StatusDot({ tone = "neutral", className = "", ...props }: Compon
   return <span {...props} aria-hidden="true" className={`hk-status-dot hk-tone--${tone} ${className}`} />;
 }
 
-export function Chip({ tone = "neutral", variant = "subtle", className = "", ...props }: ComponentPropsWithRef<"span"> & { tone?: ChipTone; variant?: "bold" | "subtle" | "caption" }) {
-  return <span {...props} className={`hk-chip hk-tone--${tone} hk-chip--${variant} ${className}`} />;
+export function Chip({ tone = "neutral", variant = "subtle", className = "", leadingIcon, onRemove, removeLabel = "Remove", children, ...props }: ComponentPropsWithRef<"span"> & { tone?: ChipTone; variant?: "bold" | "subtle" | "caption"; leadingIcon?: ReactNode; onRemove?: () => void; removeLabel?: string }) {
+  return <span {...props} className={`hk-chip hk-tone--${tone} hk-chip--${variant} ${className}`}>{leadingIcon && <span className="hk-chip-icon" aria-hidden="true">{leadingIcon}</span>}{children}{onRemove && <IconButton label={removeLabel} className="hk-chip-remove" onClick={onRemove}><XIcon size={18} weight="regular" aria-hidden="true" /></IconButton>}</span>;
 }
 
 export function CloseButton({ label = "Close", size = "medium", ...props }: Omit<ButtonProps, "children" | "size" | "aria-label"> & { label?: string; size?: "2xs" | "xs" | "small" | "medium" }) {

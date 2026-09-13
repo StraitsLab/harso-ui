@@ -5,7 +5,7 @@ body { margin: 0; }
 .hkl-wordmark span { font-weight: 400; font-size: var(--hk-text-sm); letter-spacing: 0; margin-left: 16px; color: var(--hk-tertiary); }
 .hkl-theme-controls { display: flex; gap: 12px; }
 .hkl-theme-controls .hk-select { width: 112px; }
-.hkl-layout { display: grid; grid-template-columns: 282px minmax(0, 1fr); gap: 70px; padding: 36px 64px 0 30px; max-width: 1560px; margin: auto; }
+.hkl-layout { display: grid; grid-template-columns: 256px minmax(0, 1fr); gap: 40px; padding: 28px 40px 0 24px; max-width: 1680px; margin: auto; }
 .hkl-navigation { position: sticky; top: 24px; align-self: start; max-height: calc(100vh - 48px); display: flex; flex-direction: column; min-height: 0; }
 .hkl-search { position: relative; display: flex; align-items: center; gap: 8px; }
 .hkl-search .hk-input { box-sizing: border-box; height: 32px; min-height: 32px; border: 1px solid var(--hk-line-strong); border-radius: 8px; background: var(--hk-surface); padding: 0 32px; font-size: var(--hk-text-sm); }
@@ -18,7 +18,7 @@ body { margin: 0; }
 .hkl-navigation nav { overflow-y: auto; scrollbar-width: thin; padding: 0 6px 16px 0; }
 .hkl-navigation ul { list-style: none; margin: 0; padding: 0; }
 .hkl-navigation li > button { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 30px; border: 0; border-radius: 6px; padding: 4px 12px; line-height: 22px; background: transparent; color: var(--hk-secondary); cursor: pointer; font-size: 13px; text-align: left; }
-.hkl-navigation li > button > span:first-child { flex: 1; }
+.hkl-navigation li > button > span:first-child { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hkl-navigation li > button:hover, .hkl-navigation li > button[aria-current="page"] { background: var(--hk-hover); color: var(--hk-ink); }
 .hkl-navigation li > button[aria-current="page"] { font-weight: 500; }
 .hkl-reference-kind { font-family: var(--hk-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; line-height: 14px; padding: 0 4px; border: 1px solid var(--hk-line); border-radius: 4px; color: var(--hk-secondary); }
@@ -39,7 +39,7 @@ body { margin: 0; }
 .hkl-theme-controls .hk-select, .hkl-preview-heading .hk-select, .hkl-filters .hk-select, .hkl-foundation-picker .hk-select, .hkl-example-stack > .hk-data-toolbar .hk-select, .hkl-example-stack > label > .hk-select, .hkls-options .hk-select { box-sizing: border-box; height: 32px; min-height: 32px; font-size: var(--hk-text-sm); border: 1px solid var(--hk-line-strong); border-radius: 8px; background-color: var(--hk-surface); padding-block: 0; }
 .hkl-example-stack > .hk-choice, .hkl-example-stack > .hk-data-toolbar > .hk-choice, .hkls-options > .hk-choice { font-size: var(--hk-text-sm); }
 .hkl-live-example { position: relative; min-height: 255px; display: flex; align-items: center; padding: 32px; background: var(--hk-panel); border: 1px solid var(--hk-line); border-radius: 12px; }
-.hkl-live-example > :not(.hkl-preview-chip) { width: 100%; max-width: 650px; }
+.hkl-live-example > :first-child { width: 100%; max-width: 100%; }
 .hkl-preview-chip { position: absolute; top: 10px; left: 32px; pointer-events: none; color: var(--hk-tertiary); font-size: 11px; line-height: 14px; letter-spacing: .06em; text-transform: uppercase; }
 .hkl-live-example > .hk-icon-button { width: 42px; }
 .hkl-example-stack { display: grid; gap: 20px; width: 100%; }
@@ -84,8 +84,8 @@ body { margin: 0; }
 .hkl-no-results { color: var(--hk-secondary); font-size: 13px; padding: 24px 12px; }
 .hkl-skip { position: absolute; left: 24px; top: -100px; padding: 12px 20px; background: var(--hk-ink); color: var(--hk-inverse); border-radius: 24px; z-index: 10; }
 .hkl-skip:focus { top: 20px; }
-@media (max-width: 1100px) { .hkl-layout { gap: 36px; padding-right: 32px; grid-template-columns: 240px minmax(0, 1fr); } }
-@media (max-width: 760px) {
+@media (min-width: 641px) and (max-width: 1023px) { .hkl-layout { gap: 36px; padding-right: 32px; grid-template-columns: 220px minmax(0, 1fr); } }
+@media (max-width: 640px) {
   .hkl-header { padding: 8px 20px; gap: 8px; flex-wrap: wrap; }
   .hkl-theme-controls { gap: 8px; }
   .hkl-theme-controls .hk-select { width: 92px; }
@@ -126,3 +126,57 @@ body { margin: 0; }
 .hkld-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 16px; }
 .hkld-controls > .hk-field { width: 200px; }
 .hkld-stage > output { color: var(--hk-secondary); font-size: 12px; }
+/* Gallery chrome uses viewport breakpoints; examples use the stage container. */
+.hkl-header { height: 52px; padding-block: 0; }
+.hkl-theme-controls { align-items: center; gap: 8px; }
+.hkl-theme-select, .hkl-filter-select { position: relative; min-width: 0; }
+.hkl-theme-select .hk-select { padding-left: 32px; }
+.hkl-select-icon { position: absolute; left: 10px; top: 8px; display: flex; pointer-events: none; color: var(--hk-secondary); }
+.hkl-theme-cycle { display: none; }
+.hkl-filter-select { flex: 1; }
+.hkl-filter-select > svg { position: absolute; right: 10px; top: 8px; pointer-events: none; color: var(--hk-secondary); }
+.hkl-filter-select .hk-select { width: 100%; appearance: none; background-image: none; padding-right: 30px; }
+.hkl-filters > .hk-button { flex-shrink: 0; }
+.hkl-navigation li > button { min-height: 32px; }
+.hkl-search > .hk-icon-button { width: 32px; height: 32px; min-height: 32px; right: 0; }
+.hkl-preview-frame { border: 1px solid var(--hk-line); border-radius: var(--hk-radius-card); background: var(--hk-panel); min-width: 0; }
+.hkl-preview-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--hk-line); }
+.hkl-preview-chip { position: static; color: var(--hk-secondary); }
+.hkl-viewport-controls { display: flex; gap: 4px; }
+.hkl-viewport-controls .hk-icon-button { width: 32px; height: 32px; min-height: 32px; padding: 0; }
+.hkl-viewport-controls [aria-pressed="true"] { background: var(--hk-hover); color: var(--hk-ink); box-shadow: inset 0 0 0 1px var(--hk-line-strong); }
+.hkl-preview-stage { width: 100%; margin-inline: auto; min-width: 0; }
+.hkl-live-example { box-sizing: border-box; width: 100%; border: 0; background: transparent; }
+.hkl-specification[hidden] { display: none; }
+.hkl-navigation-backdrop { display: none; }
+@media (max-width: 640px) {
+  .hkl-header { position: sticky; top: 0; z-index: 42; background: var(--hk-canvas); padding: 0 16px; flex-wrap: nowrap; gap: 8px; }
+  .hkl-wordmark { flex: 1; }
+  .hkl-wordmark span { margin-left: 4px; }
+  .hkl-mobile-navigation { display: flex; padding: 0; }
+  .hkl-mobile-navigation .hk-icon-button, .hkl-theme-cycle { width: 44px; height: 44px; min-height: 44px; padding: 0; }
+  .hkl-theme-controls { gap: 0; }
+  .hkl-theme-cycle { display: inline-flex; }
+  .hkl-theme-select > .hkl-select-icon { display: none; }
+  /* Keep selects rendered and operable by accessibility/test APIs. */
+  .hkl-theme-select > .hk-select { position: absolute; width: 1px; height: 1px; min-height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .hkl-theme-select:focus-within .hkl-theme-cycle { outline: 2px solid var(--hk-accent); outline-offset: -2px; }
+  .hkl-layout { padding: 16px; }
+  .hkl-main { padding-top: 16px; }
+  .hkl-title-row h1 { font-size: var(--hk-text-heading); }
+  .hkl-navigation-backdrop { display: block; position: fixed; inset: 52px 0 0; border: 0; background: color-mix(in srgb, var(--hk-ink) 30%, transparent); z-index: 40; }
+  .hkl-navigation { display: none; position: fixed; inset: 52px auto 0 0; box-sizing: border-box; width: min(320px, calc(100vw - 48px)); max-height: none; margin: 0; padding: 16px; background: var(--hk-canvas); box-shadow: var(--hk-shadow); z-index: 41; }
+  .hkl-navigation[data-open="true"] { display: flex; }
+  .hkl-navigation nav { overscroll-behavior: contain; }
+  .hkl-navigation li > button, .hkl-search .hk-input, .hkl-filters .hk-select, .hkl-filters .hk-button, .hkl-preview-heading .hk-select, .hkl-foundation-picker .hk-select { min-height: 44px; }
+  .hkl-filter-select > svg { top: 14px; }
+  .hkl-search > .hk-icon-button { width: 44px; height: 44px; min-height: 44px; }
+  .hkl-search .hk-input { padding-right: 44px; }
+  .hkl-preview-toolbar { padding: 16px; }
+  .hkl-viewport-controls .hk-icon-button { width: 44px; height: 44px; min-height: 44px; }
+  .hkl-preview-chip { font-size: 10px; letter-spacing: .02em; }
+  .hkl-live-example { padding: 16px; }
+  .hkl-reference-meta a { min-height: 44px; }
+  .hkl-foundation-example, .hkl-pending { padding: 16px; }
+  .hkl-example-row { gap: 12px; }
+}

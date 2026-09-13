@@ -54,6 +54,53 @@
 .hk-composer-panel [disabled], .hk-composer-panel [aria-disabled="true"] { cursor: not-allowed; }
 .hk-composer-status-tab, .hk-model-picker { box-sizing: border-box; min-height: var(--hk-space-8); padding: 4px 8px; border: 1px solid var(--hk-line); font: inherit; font-size: var(--hk-text-sm); border-radius: 8px; background: transparent; color: var(--hk-secondary); cursor: pointer; }
 .hk-composer-status-tab:hover:not(:disabled), .hk-model-picker:hover:not(:disabled), .hk-composer-file-action:hover, .hk-composer-menu summary:hover, .hk-composer-attachment-tile:hover { background: var(--hk-hover); color: var(--hk-ink); }
+.hk-glass-composer { container: glass-composer / inline-size; box-sizing: border-box; width: 100%; max-width: 760px; margin-inline: auto; }
+/* Keep size containment on the fieldset, not its nested grid wrappers: Chromium
+   drops their descendant layout when the enclosing fieldset becomes disabled. */
+.hk-composer, .hk-composer .hk-glass-composer { container-type: normal; }
+.hk-composer > .hk-composer-controls { container: prompt glass-composer / inline-size; }
+.hk-model-picker { display: inline-flex; align-items: center; gap: var(--hk-space-1); }
+.hk-model-picker svg, .hk-composer-error svg, .hk-composer-attachment-tile > svg { flex: none; }
+.hk-composer-voice { position: relative; }
+.hk-composer-voice[data-live="true"]::after { content: ""; position: absolute; top: var(--hk-space-1); right: var(--hk-space-1); width: 6px; height: 6px; border-radius: var(--hk-radius-pill); background: var(--hk-accent-mark); }
+.hk-composer-error { display: flex; align-items: flex-start; gap: var(--hk-space-2); padding-block: var(--hk-space-2); color: var(--hk-negative); font-size: var(--hk-text-sm); }
+.hk-composer-attachment-tile { box-sizing: border-box; gap: var(--hk-space-2); padding: var(--hk-space-1) var(--hk-space-2); border-radius: var(--hk-radius-card); background: var(--hk-panel); }
+.hk-composer-attachment-thumbnail { width: 40px; height: 40px; object-fit: cover; flex: none; border-radius: var(--hk-space-2); }
+.hk-composer-attachment-name { min-width: 0; color: var(--hk-ink); }
+.hk-composer-attachment-size { white-space: nowrap; }
+.hk-composer-attachment-kind { display: none; }
+.hk-composer-attachment-size + .hk-composer-attachment-kind + span { padding-inline: var(--hk-space-2); border-radius: var(--hk-radius-pill); background: var(--hk-hover); font-size: var(--hk-text-xs); }
+.hk-prompt-input { padding-bottom: var(--hk-space-3); }
+.hk-composer-file-action { width: var(--hk-space-8); justify-content: center; }
+.hk-composer-attachment-tile .hk-icon-button { min-width: var(--hk-space-8); }
+@container glass-composer (max-width: 640px) {
+  .hk-prompt-footer { flex-wrap: wrap; }
+  .hk-prompt-footer > .hk-prompt-submit { align-self: flex-end; margin-inline-start: auto; }
+}
+/* Viewport docking and touch targets; component queries above own wrapping. */
+@media (max-width: 640px) {
+  .hk-prompt-input { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .hk-glass-composer { position: sticky; bottom: 0; padding: var(--hk-space-3); padding-bottom: max(12px, env(safe-area-inset-bottom)); border-radius: var(--hk-space-4) var(--hk-space-4) 0 0; }
+  .hk-composer .hk-glass-composer { position: static; }
+  .hk-composer .hk-prompt-footer .hk-button:not(.hk-prompt-submit), .hk-composer-attachment-tile .hk-button, .hk-composer-file-action, .hk-model-picker, .hk-composer-menu summary { min-height: 44px; height: auto; }
+  .hk-composer .hk-prompt-footer .hk-icon-button, .hk-composer-attachment-tile .hk-icon-button, .hk-composer-file-action { min-width: 44px; }
+  .hk-composer-choices label, .hk-composer-menu label { min-height: 44px; align-items: center; }
+  .hk-glass-composer .hk-prompt-textarea { font-size: var(--hk-text-user); }
+  .hk-composer-panel .hk-prompt-footer:has(.hk-composer-file-action):has(.hk-composer-voice) { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px 44px; gap: var(--hk-space-2); }
+  .hk-composer-panel .hk-composer-file-action { grid-column: 1; grid-row: 1; }
+  .hk-composer-panel .hk-permission-menu { grid-column: 2 / 4; grid-row: 1; }
+  .hk-composer-panel .hk-composer-model-control { grid-column: 1 / 3; grid-row: 2; }
+  .hk-composer-panel .hk-composer-voice { grid-column: 3; grid-row: 2; }
+  .hk-composer-panel .hk-prompt-footer > [aria-pressed] { grid-column: 4; grid-row: 1; }
+  .hk-composer-panel .hk-prompt-submit { grid-column: 4; grid-row: 2; }
+  .hk-composer-attachment-kind { display: none; }
+  .hk-composer-attachment-name { flex: 1; }
+  .hk-prompt-input:not([data-flush="true"]), .hk-glass-composer:not([data-flush="true"]) { border-radius: var(--hk-space-4); }
+  .hk-composer > .hk-composer-controls > .hk-glass-composer { border-radius: 0; }
+}
+@media (min-width: 641px) and (max-width: 1023px) { .hk-composer-panel .hk-prompt-footer { flex-wrap: nowrap; } }
+@media (min-width: 1024px) { .hk-composer-panel { width: 100%; max-width: 760px; margin-inline: auto; } }
 @media (forced-colors: active) { .hk-glass-composer { border-color: CanvasText; } }
+@media (max-height: 480px) { .hk-composer-effort-popover { position-area: none; inset: 8px; margin: auto; width: max-content; height: max-content; max-height: calc(100dvh - 16px); } }
 @media (pointer: coarse) { .hk-composer .hk-prompt-footer .hk-select { min-height: 44px; } }
 @media (prefers-reduced-motion: reduce) { .hk-composer-loader .hk-spinner { animation: none; } }

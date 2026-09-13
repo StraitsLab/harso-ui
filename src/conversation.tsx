@@ -1,4 +1,5 @@
 import { Children, createContext, isValidElement, useContext, useEffect, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type CSSProperties, type ElementType, type ReactNode, type RefObject } from "react";
+import { ArrowsClockwiseIcon, CaretLeftIcon, CaretRightIcon, CopyIcon, DotsThreeIcon, PencilSimpleIcon, SpeakerHighIcon, ThumbsDownIcon, ThumbsUpIcon } from "@phosphor-icons/react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Button, EmptyState, IconButton, type ButtonProps } from "./primitives";
@@ -100,6 +101,12 @@ export function MessageAction({ label, tooltip, ...props }: ButtonProps & { labe
   return tooltip ? <Tooltip content={tooltip}>{button}</Tooltip> : button;
 }
 
+/** Icon-only transcript action; the label remains the accessible name. */
+export function MessageActionButton({ label, tooltip = label, children, className = "", ...props }: ButtonProps & { label: string; tooltip?: string }) {
+  const Icon = /not helpful|unhelpful/i.test(label) ? ThumbsDownIcon : /helpful/i.test(label) ? ThumbsUpIcon : /copy/i.test(label) ? CopyIcon : /retry|regenerate|another answer/i.test(label) ? ArrowsClockwiseIcon : /read/i.test(label) ? SpeakerHighIcon : /edit/i.test(label) ? PencilSimpleIcon : DotsThreeIcon;
+  return <Tooltip content={tooltip}><IconButton variant="quiet" size="small" {...props} label={label} className={`hk-message-action-button ${className}`}>{children ?? <Icon size={18} weight="regular" aria-hidden="true" />}</IconButton></Tooltip>;
+}
+
 type BranchState = { selected: number; count: number; setCount: (count: number) => void; select: (branch: number) => void };
 const BranchContext = createContext<BranchState | null>(null);
 function useBranch() {
@@ -137,12 +144,12 @@ export function MessageBranchSelector({ className = "", ...props }: DivProps) {
 
 export function MessageBranchPrevious({ onClick, ...props }: ButtonProps) {
   const { selected, select } = useBranch();
-  return <IconButton {...props} label={props["aria-label"] ?? "Previous response"} disabled={props.disabled || selected === 0} onClick={event => { onClick?.(event); if (!event.defaultPrevented) select(selected - 1); }}>{props.children ?? <span aria-hidden="true">←</span>}</IconButton>;
+  return <MessageActionButton {...props} label={props["aria-label"] ?? "Previous response"} disabled={props.disabled || selected === 0} onClick={event => { onClick?.(event); if (!event.defaultPrevented) select(selected - 1); }}>{props.children ?? <CaretLeftIcon size={18} aria-hidden="true" />}</MessageActionButton>;
 }
 
 export function MessageBranchNext({ onClick, ...props }: ButtonProps) {
   const { selected, count, select } = useBranch();
-  return <IconButton {...props} label={props["aria-label"] ?? "Next response"} disabled={props.disabled || selected >= count - 1} onClick={event => { onClick?.(event); if (!event.defaultPrevented) select(selected + 1); }}>{props.children ?? <span aria-hidden="true">→</span>}</IconButton>;
+  return <MessageActionButton {...props} label={props["aria-label"] ?? "Next response"} disabled={props.disabled || selected >= count - 1} onClick={event => { onClick?.(event); if (!event.defaultPrevented) select(selected + 1); }}>{props.children ?? <CaretRightIcon size={18} aria-hidden="true" />}</MessageActionButton>;
 }
 
 export function MessageBranchPage({ children, ...props }: ComponentPropsWithRef<"span">) {

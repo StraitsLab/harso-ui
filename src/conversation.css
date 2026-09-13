@@ -1,4 +1,4 @@
-.hk-conversation { display: flex; flex-direction: column; position: relative; min-width: 0; min-height: 0; height: 540px; }
+.hk-conversation { display: flex; flex-direction: column; position: relative; min-width: 0; min-height: 0; height: 540px; container: conversation / inline-size; }
 .hk-conversation-viewport { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; overflow-anchor: none; scroll-padding-top: 48px; }
 .hk-conversation-content { padding: var(--hk-space-6) 0 calc(var(--hk-space-8) + var(--hk-space-2)); min-width: 0; display: flex; flex-direction: column; gap: calc(var(--hk-space-8) + var(--hk-space-2)); }
 .hk-button.hk-conversation-jump { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: var(--hk-surface); border: 0; box-shadow: var(--hk-shadow); }
@@ -50,6 +50,26 @@
 .hk-shimmer { color: var(--hk-ink); }
 .hk-shimmer[data-active] { background: linear-gradient(105deg, var(--hk-secondary) calc(50% - var(--hk-shimmer-spread)), var(--hk-ink) 50%, var(--hk-secondary) calc(50% + var(--hk-shimmer-spread))); background-size: 220% 100%; background-clip: text; -webkit-background-clip: text; color: transparent; animation: hk-text-shimmer var(--hk-shimmer-duration) linear infinite; }
 @keyframes hk-text-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
-@media (max-width: 620px) { .hk-conversation-content { padding-inline: 4px; } .hk-message--user .hk-message-content { max-width: 100%; } }
+/* Component-owned phone/tablet/desktop breakpoints: 640 / 1024. */
+.hk-message-avatar { width: 20px; height: 20px; flex: 0 0 20px; border-radius: var(--hk-radius-pill); object-fit: cover; }
+.hk-message-actions { margin-inline-start: 0; }
+.hk-message-actions .hk-icon-button, .hk-message-branch-selector .hk-icon-button { width: 36px; min-width: 36px; height: 36px; padding: 0; border-radius: 8px; }
+.hk-message-actions .hk-icon-button:hover:not(:disabled), .hk-message-actions .hk-icon-button[aria-pressed="true"] { background: var(--hk-hover); }
+.hk-message-actions .hk-snippet { background: transparent; padding: 0; border: 0; }
+@container conversation (min-width: 1024px) {
+  .hk-message-actions { opacity: 0; transition: opacity 120ms ease; }
+  .hk-message:hover .hk-message-actions, .hk-message:focus-within .hk-message-actions { opacity: 1; }
+}
+@container conversation (max-width: 640px) {
+  .hk-conversation-content { padding-inline: var(--hk-space-4); }
+  .hk-message-actions .hk-icon-button, .hk-message-branch-selector .hk-icon-button { width: 44px; min-width: 44px; height: 44px; min-height: 44px; }
+  .hk-message--user { align-self: flex-end; max-width: 100%; }
+  .hk-message--user .hk-message-label, .hk-message--user .hk-message-actions { justify-content: flex-end; }
+  .hk-message--user .hk-message-content { max-width: 100%; padding: var(--hk-space-4); border-radius: 16px; background: var(--hk-hover); }
+}
+/* Standalone Message samples have no Conversation ancestor. */
+@media (max-width: 640px) {
+  .hk-message-actions .hk-icon-button, .hk-message-branch-selector .hk-icon-button { width: 44px; min-width: 44px; height: 44px; min-height: 44px; }
+}
 @media (prefers-reduced-motion: reduce), (forced-colors: active) { .hk-shimmer[data-active] { animation: none; background: none; color: var(--hk-ink); } }
 @media (forced-colors: active) { .hk-conversation-jump, .hk-suggestion { border: 1px solid ButtonText; } .hk-message-response pre { border: 1px solid CanvasText; } }

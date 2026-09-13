@@ -76,6 +76,30 @@ test("AI Chat retains its opener when an open panel changes responsive mode", as
   await expect(trigger).toBeFocused();
 });
 
+test("AI Chat container boundaries choose drawer, rail and non-modal desktop panel", async ({ page }) => {
+  await page.setViewportSize({ width: 1512, height: 1040 });
+  await page.goto("/#boardui:ai-chat");
+  const workspace = page.locator(".hk-ai-workspace");
+  const trigger = workspace.getByRole("button", { name: "Changes", exact: true });
+  for (const width of [640, 641, 899, 900, 1024]) {
+    await workspace.evaluate((element, width) => { element.style.width = `${width}px`; }, width);
+    await expect(workspace).toHaveAttribute("data-compact", String(width < 900));
+    await expect(workspace).toHaveAttribute("data-navigation", String(width > 640));
+    await trigger.click();
+    const panel = workspace.getByRole("dialog");
+    await expect(panel).toBeVisible();
+    expect(await panel.evaluate(element => element.matches(":modal"))).toBe(width < 900);
+    if (width >= 900) {
+      await expect(workspace.locator(".hk-ai-workspace-body")).toHaveCSS("grid-template-columns", `240px ${width - 560}px 320px`);
+    } else if (width > 640) {
+      await expect(workspace.getByRole("navigation")).toHaveCSS("width", "56px");
+    }
+    await page.keyboard.press("Escape");
+    await expect(panel).toHaveCount(0);
+    await expect(trigger).toBeFocused();
+  }
+});
+
 for (const mode of ["light", "dark"] as const) for (const palette of ["clean", "cozy"]) for (const width of [1512, 390]) {
   test(`AI Chat ${mode} ${palette} ${width}`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1040 });

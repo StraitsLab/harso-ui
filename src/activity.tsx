@@ -22,7 +22,7 @@ export function getStatusBadge(state: string) {
     "output-denied": { label: "Denied", icon: "×", tone: "attention" },
   };
   const status = Object.hasOwn(statuses, state) ? statuses[state as ToolState] : { label: "Unknown status", icon: "?", tone: "neutral" as const };
-  return <Badge tone={status.tone}><span aria-hidden="true">{status.icon}</span>{status.label}</Badge>;
+  return <Badge tone={status.tone} data-state={Object.hasOwn(statuses, state) ? state : "unknown"}><span aria-hidden="true">{status.icon}</span>{status.label}</Badge>;
 }
 
 export function Tool({ className = "", ...props }: WorkDisclosureProps) {

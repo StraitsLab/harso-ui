@@ -83,8 +83,15 @@ test("VARIANTS input combined focus hint required invalid and disabled", async (
   await fixture.getByRole("button", { name: "Toggle disabled" }).focus();
   await page.keyboard.press("Tab");
   await expect(input).toBeFocused();
-  await expect(shell).toHaveCSS("outline-style", "solid");
-  await expect(shell).toHaveCSS("outline-width", "2px");
+  const focusRing = await shell.evaluate(element => {
+    const probe = document.createElement("span");
+    probe.style.color = "var(--hk-accent-soft)";
+    element.append(probe);
+    const color = getComputedStyle(probe).color;
+    probe.remove();
+    return `${color} 0px 0px 0px 3px`;
+  });
+  await expect(shell).toHaveCSS("box-shadow", focusRing);
   const errorColor = await fixture.locator(".hk-field-error").evaluate(element => getComputedStyle(element).color);
   await expect(shell).toHaveCSS("border-top-color", errorColor);
   await input.fill("Retained draft");
@@ -149,8 +156,8 @@ test("VARIANTS theme expanded and compact controls paint light and dark", async 
   const compact = provider.getByRole("button", { name: "Change appearance, currently light" });
   const compactBox = await rectangle(compact);
   const expandedBox = await rectangle(expanded);
-  expect(compactBox.width).toBe(42);
-  expect(compactBox.height).toBe(42);
+  expect(compactBox.width).toBe(36);
+  expect(compactBox.height).toBe(36);
   expect(expandedBox.width).toBeGreaterThan(compactBox.width * 2);
   await expect(compact).toHaveText("◐");
   await compact.focus();

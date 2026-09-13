@@ -295,8 +295,8 @@ test("new surfaces remain legible in themes, narrow windows and forced colors", 
   }
 });
 
-test("fallback CSS stays centered when anchor positioning rules are omitted", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 720 });
+test("fallback CSS stays centered on desktop and bottom-sheet on phone when anchor positioning rules are omitted", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/#boardui:dropdown");
   const removed = await page.evaluate(() => {
     let count = 0;
@@ -313,8 +313,15 @@ test("fallback CSS stays centered when anchor positioning rules are omitted", as
   const menu = page.getByRole("menu", { name: "Model menu" });
   const bounds = await menu.boundingBox();
   expect(bounds).not.toBeNull();
-  expect(Math.abs(bounds!.x + bounds!.width / 2 - 195)).toBeLessThan(2);
-  expect(Math.abs(bounds!.y + bounds!.height / 2 - 360)).toBeLessThan(2);
+  expect(Math.abs(bounds!.x + bounds!.width / 2 - 720)).toBeLessThan(2);
+  expect(Math.abs(bounds!.y + bounds!.height / 2 - 500)).toBeLessThan(2);
+  await page.setViewportSize({ width: 390, height: 720 });
+  const phone = await menu.boundingBox();
+  expect(phone).not.toBeNull();
+  expect(phone!.x).toBe(0);
+  expect(phone!.width).toBe(390);
+  expect(phone!.y + phone!.height).toBe(720);
+  expect(phone!.height).toBeLessThanOrEqual(720 * 0.85);
   expect(await menu.evaluate(element => element.matches(":popover-open"))).toBe(true);
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Choose model" })).toBeFocused();

@@ -94,12 +94,19 @@ for (const mode of ["light", "dark"] as const) for (const palette of ["clean", "
     const workspace = page.locator(".hk-starter-workspace");
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const navigation = workspace.getByRole("button", { name: "Toggle workspace navigation" });
+    if (width === 390) {
+      await expect(workspace).toHaveAttribute("data-navigation", "false");
+      await navigation.click();
+    }
+    await expect(workspace.getByRole("button", { name: "Personal ideas Unread", exact: true })).toBeVisible();
     expect(await workspace.locator(".hk-starter-history-row > button:first-child").evaluateAll(buttons => buttons.every(button => {
       const content = document.createRange();
       content.selectNodeContents(button);
       const bounds = button.getBoundingClientRect();
       return [...content.getClientRects()].every(rect => rect.left >= bounds.left && rect.right <= bounds.right);
     }))).toBe(true);
+    if (width === 390) await navigation.click();
     await workspace.screenshot({ path: test.info().outputPath("chat-starter.png") });
     await page.getByLabel("Starter state", { exact: true }).selectOption("loading");
     await expect(workspace.getByText("Loading history…")).toBeVisible();
@@ -109,12 +116,16 @@ for (const mode of ["light", "dark"] as const) for (const palette of ["clean", "
     await page.getByLabel("Starter state", { exact: true }).selectOption("disabled");
     await expect(workspace.getByRole("textbox", { name: "Starter message" })).toBeDisabled();
     await page.getByLabel("Starter state", { exact: true }).selectOption("ready");
+    if (width === 390) await navigation.click();
     await workspace.getByRole("button", { name: "Dashboard", exact: true }).click();
+    if (width === 390) await navigation.click();
     await expect(workspace.getByRole("region", { name: "Starter dashboard" })).toBeVisible();
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     await workspace.screenshot({ path: test.info().outputPath("starter-dashboard.png") });
+    if (width === 390) await navigation.click();
     await workspace.getByRole("button", { name: "Example account", exact: true }).click();
     await page.getByRole("menuitem", { name: "Sign up", exact: true }).click();
+    if (width === 390) await navigation.click();
     await expect(workspace.getByRole("textbox", { name: "Name", exact: true })).toBeVisible();
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

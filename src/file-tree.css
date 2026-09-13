@@ -6,6 +6,9 @@
 .hk-button.hk-file-tree-select:hover:not(:disabled) { background: var(--hk-hover); color: var(--hk-ink); }
 .hk-button.hk-file-tree-select[aria-current="true"] { color: var(--hk-ink); font-weight: 500; background: var(--hk-hover); }
 .hk-file-tree-select .hk-work-trigger-label { flex: 1; flex-wrap: nowrap; }
+.hk-file-tree-icon { width: 16px; height: 16px; color: var(--hk-tertiary); }
+.hk-file-tree-icon svg { width: 16px; height: 16px; }
+@media (max-width: 640px) { .hk-button.hk-file-tree-select, .hk-file-tree-actions .hk-button { min-height: 44px; } }
 .hk-file-tree-icon, .hk-file-tree-selected { display: inline-flex; align-items: center; flex: 0 0 auto; }
 .hk-file-tree-name { min-width: 0; overflow-wrap: anywhere; }
 .hk-file-tree-content.hk-work-content { margin: 0; }

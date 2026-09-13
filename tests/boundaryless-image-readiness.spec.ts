@@ -107,8 +107,10 @@ test("gallery native drawer retains focus and fits the viewport across compact a
   await expect.poll(() => gallery.evaluate(element => element.matches(":modal"))).toBe(true);
   const compact = await gallery.boundingBox();
   expect(compact!.x + compact!.width).toBeCloseTo(390, 0);
-  expect(compact!.y).toBe(0);
-  expect(compact!.height).toBe(740);
+  // Phone context panels are full-width bottom sheets, capped at 80dvh / 640px.
+  expect(compact!.x).toBe(0);
+  expect(compact!.height).toBe(Math.min(740 * 0.8, 640));
+  expect(compact!.y + compact!.height).toBe(740);
   const close = gallery.getByRole("button", { name: "Close context panel" });
   await close.focus();
   await page.keyboard.press("Shift+Tab");

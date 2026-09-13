@@ -26,7 +26,7 @@ test("AI CONSUMER wide AiChat disabled actions retain mounted draft while escape
   const original = await draft.elementHandle();
   await workspace.getByRole("button", { name: "Changes", exact: true }).click();
   const close = workspace.getByRole("button", { name: "Close context panel" });
-  const navigation = workspace.getByRole("button", { name: "Toggle workspace navigation" });
+  const navigation = workspace.locator(".hk-ai-navigation-toggle");
   await example.getByLabel("Chat state", { exact: true }).selectOption("disabled");
   const request = await example.getByLabel("Workspace request").textContent();
   for (const control of [workspace.getByRole("navigation").getByRole("button", { name: "Test planning", exact: true }), workspace.getByRole("dialog").getByRole("button", { name: "Browser", exact: true })]) {
@@ -38,14 +38,21 @@ test("AI CONSUMER wide AiChat disabled actions retain mounted draft while escape
   await expect(example.getByLabel("Workspace request")).toHaveText(request!);
   await expect(draft).toBeDisabled();
   await expect(close).toBeEnabled();
-  await expect(navigation).toBeEnabled();
+  await expect(navigation).toBeHidden();
   await page.keyboard.press("Escape");
   await expect(workspace.getByRole("dialog")).toHaveCount(0);
   await expect(example.getByLabel("Workspace request")).toHaveText("Close panel.");
   await example.getByLabel("Chat state", { exact: true }).selectOption("ready");
   expect(await original!.evaluate(element => element.isConnected)).toBe(true);
   await expect(draft).toHaveValue("Retained chat draft");
+  // Navigation is persistent on desktop; its escape toggle is phone-only.
+  await page.setViewportSize({ width: 390, height: 1040 });
+  await expect(navigation).toBeVisible();
+  await expect(navigation).toHaveAttribute("aria-expanded", "false");
   await navigation.press("Enter");
+  await expect(navigation).toHaveAttribute("aria-expanded", "true");
+  await workspace.getByRole("navigation").getByRole("button", { name: "Test planning", exact: true }).press("Escape");
+  await expect(navigation).toBeFocused();
   await expect(navigation).toHaveAttribute("aria-expanded", "false");
 });
 
@@ -103,7 +110,10 @@ for (const family of ["composer", "composer-panel"]) {
         await expect(example.getByText(/Local submission:/)).toHaveCount(0);
         await expect(example.getByRole("button", { name: "Remove brief.md" })).toBeDisabled();
       } else await expect(draft).toBeEnabled();
-      if (state === "loading") await expect(example.getByRole("status").filter({ hasText: /Working|Preparing/ })).toBeVisible();
+      if (state === "loading") {
+        await expect(example.locator(family === "composer" ? ".hk-composer" : ".hk-composer-panel").first()).toHaveAttribute("aria-busy", "true");
+        if (family === "composer-panel") await expect(example.getByRole("status").filter({ hasText: "Working" })).toBeVisible();
+      }
       if (state === "error") await expect(example.getByRole("alert").filter({ hasText: /draft could not be sent/ })).toBeVisible();
     }
     await example.getByRole("button", { name: "Send", exact: true }).click();
