@@ -20,10 +20,15 @@ const components: ComponentProps<typeof MarkdownTextPrimitive>["components"] = {
   input: ({ node: _node, ...props }) => props.type === "checkbox" ? <input {...props} aria-label={props.checked ? "Completed task" : "Open task"} /> : <input {...props} />,
   table: ({ node: _node, ...props }) => <div className="hkc-markdown-table" role="region" aria-label="Table" tabIndex={0}><table {...props} /></div>,
   hr: ({ node: _node, ...props }) => <hr {...props} />,
+  // Agent transcripts are untrusted: remote images never load (no request leaves the host); the alt text is kept as a label.
+  img: ({ node: _node, alt }) => <span className="hkc-markdown-image-label">{alt ? `Image: ${alt}` : "Image omitted"}</span>,
   CodeHeader: () => null,
   SyntaxHighlighter: ({ code, language }: SyntaxHighlighterProps) => <HarsoCodeBlock code={code} language={language} />,
 };
 
+/** react-markdown already drops javascript:/data: hrefs; this makes the policy explicit and keeps only http(s), mailto and in-page links. */
+const safeUrl = (url: string) => /^(https?:|mailto:|#|\/)/i.test(url) ? url : "";
+
 export function HarsoMarkdownText(_props: Partial<TextMessagePartProps>) {
-  return <MarkdownTextPrimitive className="hkc-markdown hkc-message-text" containerProps={{ "data-testid": "hkc-markdown" } as ComponentProps<typeof MarkdownTextPrimitive>["containerProps"]} remarkPlugins={[remarkGfm]} smooth components={components} />;
+  return <MarkdownTextPrimitive className="hkc-markdown hkc-message-text" containerProps={{ "data-testid": "hkc-markdown" } as ComponentProps<typeof MarkdownTextPrimitive>["containerProps"]} remarkPlugins={[remarkGfm]} skipHtml urlTransform={safeUrl} smooth components={components} />;
 }

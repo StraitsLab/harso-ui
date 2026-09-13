@@ -37,3 +37,4 @@
 .harso-kit .hkc-markdown th { background: var(--hk-panel); font-weight: 600; }
 .harso-kit .hkc-markdown hr { margin: var(--hk-space-6) 0; border: 0; border-top: 1px solid var(--hk-line); }
 .harso-kit .hkc-markdown img { max-width: 100%; }
+.harso-kit .hkc-markdown-image-label { color: var(--hk-tertiary); font-size: var(--hk-text-sm); }

@@ -20,7 +20,7 @@ function Message() {
 }
 
 function ExampleRuntime({ state, disabled, refuse }: { state: ExampleState; disabled: boolean; refuse: boolean }) {
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState("Nothing sent yet. Draft stays local.");
   const runtime = useLocalRuntime(echo, { adapters: { attachments } });
   const seeded = useRef(false);
   useEffect(() => {

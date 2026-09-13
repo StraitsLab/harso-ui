@@ -92,8 +92,9 @@ export function Library() {
       setRoute(routeFromHash());
       setViewport(viewportFromHash());
       const selection = selectionFromHash();
-      setSelectedId(selection ?? initialSelection());
-      setExampleState("default");
+      // Only a real reference hash changes the selection; in-page anchors (#component-preview) and retired/unknown
+      // hashes leave the current component, its state and the draft untouched.
+      if (selection) { setSelectedId(selection); setExampleState("default"); }
     };
     window.addEventListener("hashchange", update);
     return () => window.removeEventListener("hashchange", update);
