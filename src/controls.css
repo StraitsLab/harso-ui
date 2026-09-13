@@ -20,7 +20,7 @@
 .hk-choice.hk-choice--small input { width: 16px; height: 16px; }
 .hk-choice.hk-choice--large input { width: 22px; height: 22px; }
 .hk-choice-card { padding: 14px 16px; border-radius: 12px; align-items: flex-start; gap: 12px; }
-.hk-choice-card:has(input:checked), .hk-choice-card:has(input:indeterminate) { background: var(--hk-hover); }
+.hk-choice-card:has(input:checked), .hk-choice-card:has(input[type="checkbox"]:indeterminate) { background: var(--hk-hover); }
 .hk-choice-card:hover:has(input:not(:disabled)) { background: var(--hk-hover); }
 .hk-choice-card:has(input:disabled) { color: var(--hk-secondary); cursor: not-allowed; }
 .hk-choice-card input { margin-top: 4px; flex-shrink: 0; }
