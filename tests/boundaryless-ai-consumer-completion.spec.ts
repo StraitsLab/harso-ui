@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const sourceFiles = ["preview/ai-chat-example.tsx", "preview/composer-example.tsx", "preview/consumer-readiness-examples.tsx", "src/agent-surfaces.tsx", "src/composer.tsx", "src/prompt-input.tsx", "src/question.tsx", "src/misc-surfaces.tsx", "tests/boundaryless-ai-consumer-completion.spec.ts"];
+const sourceFiles = ["preview/chat-thread-example.tsx", "preview/chat-composer-example.tsx", "preview/consumer-readiness-examples.tsx", "src/chat/composer.tsx", "src/question.tsx", "src/misc-surfaces.tsx", "tests/boundaryless-ai-consumer-completion.spec.ts"];
 const hashes = () => Object.fromEntries(sourceFiles.map(file => [file, createHash("sha256").update(readFileSync(resolve(import.meta.dirname, "..", file))).digest("hex")]));
 let before: ReturnType<typeof hashes>;
 test.beforeAll(async ({ browser }) => {
@@ -15,167 +15,56 @@ test.afterAll(async () => {
   expect(hashes()).toEqual(before);
 });
 
-test("AI CONSUMER wide AiChat disabled actions retain mounted draft while escape chrome stays available", async ({ page }) => {
-  await page.setViewportSize({ width: 1512, height: 1040 });
-  await page.goto("/#boardui:ai-chat");
-  const example = page.getByTestId("live-example");
-  const workspace = example.locator(".hk-ai-workspace");
-  await expect(workspace).toHaveAttribute("data-compact", "false");
-  const draft = workspace.getByRole("textbox", { name: "Message", exact: true });
-  await draft.fill("Retained chat draft");
-  const original = await draft.elementHandle();
-  await workspace.getByRole("button", { name: "Changes", exact: true }).click();
-  const close = workspace.getByRole("button", { name: "Close context panel" });
-  const navigation = workspace.locator(".hk-ai-navigation-toggle");
-  await example.getByLabel("Chat state", { exact: true }).selectOption("disabled");
-  const request = await example.getByLabel("Workspace request").textContent();
-  for (const control of [workspace.getByRole("navigation").getByRole("button", { name: "Test planning", exact: true }), workspace.getByRole("dialog").getByRole("button", { name: "Browser", exact: true })]) {
-    await expect(control).toBeDisabled();
-    await control.evaluate((button: HTMLButtonElement) => button.click());
-  }
-  await expect(workspace.getByRole("dialog", { name: "Proposed changes" })).toBeVisible();
-  await expect(navigation).toHaveAttribute("aria-expanded", "true");
-  await expect(example.getByLabel("Workspace request")).toHaveText(request!);
-  await expect(draft).toBeDisabled();
-  await expect(close).toBeEnabled();
-  await expect(navigation).toBeHidden();
-  await page.keyboard.press("Escape");
-  await expect(workspace.getByRole("dialog")).toHaveCount(0);
-  await expect(example.getByLabel("Workspace request")).toHaveText("Close panel.");
-  await example.getByLabel("Chat state", { exact: true }).selectOption("ready");
-  expect(await original!.evaluate(element => element.isConnected)).toBe(true);
-  await expect(draft).toHaveValue("Retained chat draft");
-  // Navigation is persistent on desktop; its escape toggle is phone-only.
-  await page.setViewportSize({ width: 390, height: 1040 });
-  await expect(navigation).toBeVisible();
-  await expect(navigation).toHaveAttribute("aria-expanded", "false");
-  await navigation.press("Enter");
-  await expect(navigation).toHaveAttribute("aria-expanded", "true");
-  await workspace.getByRole("navigation").getByRole("button", { name: "Test planning", exact: true }).press("Escape");
-  await expect(navigation).toBeFocused();
-  await expect(navigation).toHaveAttribute("aria-expanded", "false");
+test("runtime empty loading error and disabled recovery stay distinct", async ({ page }) => {
+  await page.goto("/#harso:chat-thread");
+  const state = page.getByLabel("Thread state", { exact: true });
+  await state.selectOption("empty");
+  await expect(page.getByRole("log")).toContainText("Start a conversation.");
+  await expect(page.getByRole("article")).toHaveCount(0);
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  await state.selectOption("loading");
+  await expect(page.getByRole("status", { name: "Streaming", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Stop", exact: true })).toBeEnabled();
+  await state.selectOption("error");
+  await expect(page.getByRole("alert")).toContainText("Simulated adapter error");
+  await expect(page.getByRole("button", { name: "Retry", exact: true })).toBeEnabled();
+  await expect(page.getByText("Start a conversation.", { exact: true })).toHaveCount(0);
+  await state.selectOption("empty");
+  const input = page.getByRole("textbox", { name: "Message", exact: true });
+  await input.fill("Retained local draft");
+  const mounted = await input.elementHandle();
+  await page.getByLabel("Disable thread input", { exact: true }).check();
+  await expect(input).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
+  await page.getByLabel("Disable thread input", { exact: true }).uncheck();
+  await expect(input).toHaveValue("Retained local draft");
+  expect(await mounted!.evaluate(element => element.isConnected)).toBe(true);
 });
 
-test("AI CONSUMER AiChat empty loading error and refused retry preserve local draft and attachment", async ({ page }) => {
-  await page.goto("/#boardui:ai-chat");
-  const example = page.getByTestId("live-example");
-  const draft = example.getByRole("textbox", { name: "Message", exact: true });
-  await draft.fill("Retry this local draft");
-  await example.locator('input[type="file"]').last().setInputFiles({ name: "context.txt", mimeType: "text/plain", buffer: Buffer.from("Local only") });
-  const attachment = example.getByRole("button", { name: "Remove attachment context.txt" });
-  for (const state of ["empty", "loading", "error"]) {
-    await example.getByLabel("Chat state", { exact: true }).selectOption(state);
-    await expect(draft).toHaveValue("Retry this local draft");
-    await expect(attachment).toBeVisible();
-    if (state === "empty") await expect(example.getByText("A little space to create.", { exact: true })).toBeVisible();
-    else {
-      await expect(draft).toBeDisabled();
-      await expect(example.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
-    }
-    if (state === "loading") await expect(example.getByRole("status").filter({ hasText: "Loading conversation" })).toBeVisible();
-  }
-  await expect(example.getByRole("alert")).toContainText("could not load");
-  await example.getByLabel("Hold host state").check();
-  await example.getByRole("button", { name: "Retry", exact: true }).click();
-  await expect(example.getByRole("alert")).toBeVisible();
-  await expect(example.getByLabel("Workspace request")).toHaveText("Retry requested; host retained state.");
-  await example.getByLabel("Hold host state").uncheck();
-  await example.getByRole("button", { name: "Retry", exact: true }).click();
-  await expect(example.getByRole("alert")).toHaveCount(0);
-  await expect(draft).toBeEnabled();
-  await expect(draft).toHaveValue("Retry this local draft");
-  await expect(attachment).toBeVisible();
-});
-
-for (const family of ["composer", "composer-panel"]) {
-  test(`AI CONSUMER ${family} mounted empty loading error disabled recovery`, async ({ page }) => {
-    await page.goto(`/#boardui:${family}`);
-    const example = page.getByTestId("live-example");
-    const draft = example.getByRole("textbox", { name: "Message", exact: true });
-    await expect(example.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
-    await draft.fill("   ");
-    await draft.press("Enter");
-    await expect(example.getByText(/Local submission:/)).toHaveCount(0);
-    await draft.fill("Retained composer draft");
-    const original = await draft.elementHandle();
-    for (const state of ["loading", "disabled", "error", "ready"]) {
-      await example.getByLabel("Composer host state", { exact: true }).selectOption(state);
-      expect(await original!.evaluate(element => element.isConnected)).toBe(true);
-      await expect(draft).toHaveValue("Retained composer draft");
-      if (state === "loading" || state === "disabled") {
-        await expect(draft).toBeDisabled();
-        const send = example.getByRole("button", { name: "Send", exact: true });
-        await expect(send).toBeDisabled();
-        await send.evaluate((button: HTMLButtonElement) => button.click());
-        await expect(example.getByText(/Local submission:/)).toHaveCount(0);
-        await expect(example.getByRole("button", { name: "Remove brief.md" })).toBeDisabled();
-      } else await expect(draft).toBeEnabled();
-      if (state === "loading") {
-        await expect(example.locator(family === "composer" ? ".hk-composer" : ".hk-composer-panel").first()).toHaveAttribute("aria-busy", "true");
-        if (family === "composer-panel") await expect(example.getByRole("status").filter({ hasText: "Working" })).toBeVisible();
-      }
-      if (state === "error") await expect(example.getByRole("alert").filter({ hasText: /draft could not be sent/ })).toBeVisible();
-    }
-    await example.getByRole("button", { name: "Send", exact: true }).click();
-    await expect(example.getByText("Local submission: Retained composer draft", { exact: true })).toBeVisible();
-    await expect(draft).toHaveValue("");
-  });
-}
-
-test("AI CONSUMER core Composer GlassComposer controlled edit refusal reports callback then accepts replacement", async ({ page }) => {
-  await page.goto("/#boardui:composer");
-  const example = page.getByTestId("live-example");
-  const draft = example.locator(".hk-composer .hk-glass-composer").getByRole("textbox", { name: "Message" });
-  await draft.fill("Host draft");
-  await example.getByLabel("Hold host state").check();
-  await draft.fill("Refused edit");
-  await expect(draft).toHaveValue("Host draft");
-  await expect(example.getByLabel("Composer draft requests")).toHaveText("2 requests");
-  await example.getByRole("button", { name: "Send", exact: true }).click();
-  await expect(draft).toHaveValue("Host draft");
-  await expect(example.getByText(/Local submission:/)).toHaveCount(0);
-  await example.getByLabel("Hold host state").uncheck();
-  await draft.fill("Accepted replacement");
-  await expect(draft).toHaveValue("Accepted replacement");
-  await expect(example.getByLabel("Composer draft requests")).toHaveText("3 requests");
-});
-
-test("AI CONSUMER PromptInput mounted empty loading error disabled recovery and refusal", async ({ page }) => {
-  await page.goto("/#vercel:prompt-input");
-  const example = page.getByTestId("live-example");
-  const draft = example.getByRole("textbox", { name: "Prompt", exact: true });
-  await expect(example.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
-  await draft.fill("   ");
-  await draft.press("Enter");
-  await expect(example.getByLabel("Prompt result")).not.toContainText("Accepted locally");
-  await draft.fill("Preserved prompt");
-  await example.locator('input[type="file"]').last().setInputFiles({ name: "prompt.txt", mimeType: "text/plain", buffer: Buffer.from("Never uploaded") });
-  const original = await draft.elementHandle();
-  for (const state of ["loading", "disabled", "error"]) {
-    await example.getByLabel("Prompt host state", { exact: true }).selectOption(state);
-    expect(await original!.evaluate(element => element.isConnected)).toBe(true);
-    await expect(draft).toHaveValue("Preserved prompt");
-    await expect(example.getByRole("list", { name: "Prompt attachments" })).toContainText("prompt.txt");
-    await expect(example.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
-    if (state !== "error") {
-      await expect(draft).toBeDisabled();
-      await expect(example.getByRole("button", { name: "Remove prompt.txt" })).toBeDisabled();
-      await example.getByRole("button", { name: "Clear draft", exact: true }).evaluate((button: HTMLButtonElement) => button.click());
-      await expect(draft).toHaveValue("Preserved prompt");
-    }
-    if (state === "loading") await expect(example.getByRole("status").filter({ hasText: "Waiting for the local host." })).toBeVisible();
-  }
-  await expect(example.getByRole("alert")).toHaveText("The local host rejected submission. Draft and attachments retained.");
-  await example.getByLabel("Hold prompt changes").check();
-  await example.getByRole("button", { name: "Retry local prompt", exact: true }).click();
-  await expect(example.getByRole("alert")).toBeVisible();
-  await example.getByLabel("Hold prompt changes").uncheck();
-  await example.getByRole("button", { name: "Retry local prompt", exact: true }).click();
-  await expect(example.getByRole("alert")).toHaveCount(0);
-  await example.getByRole("button", { name: "Send", exact: true }).click();
-  await expect(example.getByLabel("Prompt result")).toHaveText("Accepted locally · Balanced: Preserved prompt · Files: prompt.txt");
-  await expect(draft).toHaveValue("");
-  await expect(example.getByRole("list", { name: "Prompt attachments" })).toHaveCount(0);
+test("runtime composer preserves mounted drafts, attachments and host refusal", async ({ page }) => {
+  await page.goto("/#harso:chat-composer");
+  await page.getByLabel("Composer state", { exact: true }).selectOption("with attachment");
+  const input = page.getByRole("textbox", { name: "Message", exact: true });
+  await input.fill("Keep this draft");
+  const mounted = await input.elementHandle();
+  await expect(page.getByText("requirements.md", { exact: true })).toBeVisible();
+  await page.getByLabel("Disable composer input", { exact: true }).check();
+  await expect(input).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Add attachment", exact: true })).toBeDisabled();
+  await page.getByLabel("Disable composer input", { exact: true }).uncheck();
+  expect(await mounted!.evaluate(element => element.isConnected)).toBe(true);
+  await expect(input).toHaveValue("Keep this draft");
+  await page.getByLabel("Refuse submission", { exact: true }).check();
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await expect(page.getByTestId("composer-host-result")).toContainText("Submission refused");
+  await expect(input).toHaveValue("Keep this draft");
+  await expect(page.getByText("requirements.md", { exact: true })).toBeVisible();
+  await page.getByLabel("Refuse submission", { exact: true }).uncheck();
+  await page.getByRole("button", { name: "Remove requirements.md", exact: true }).click();
+  await expect(page.getByText("requirements.md", { exact: true })).toHaveCount(0);
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await expect(input).toHaveValue("");
 });
 
 test("AI CONSUMER Question native disabled option emits no callback and recovers without remount", async ({ page }) => {

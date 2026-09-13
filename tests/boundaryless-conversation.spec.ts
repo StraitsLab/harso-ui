@@ -1,111 +1,68 @@
-import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-test("streamed content follows the bottom but preserves a reader above it and jump focus", async ({ page }) => {
-  await page.goto("/#vercel:conversation");
-  const viewport = page.getByRole("log");
-  const distance = () => viewport.evaluate(element => element.scrollHeight - element.clientHeight - element.scrollTop);
-  for (let index = 0; index < 8; index++) await page.getByRole("button", { name: "Add sample update" }).click();
-  await expect.poll(distance).toBeLessThan(3);
-  await viewport.focus();
-  await viewport.press("Home");
+test("runtime transcript retains reader position across mounted disable and jumps to latest", async ({ page }) => {
+  await page.goto("/#harso:chat-thread");
+  await page.getByLabel("Thread state", { exact: true }).selectOption("long transcript");
+  const viewport = page.locator(".hkc-thread-viewport");
+  await expect(page.getByRole("article")).toHaveCount(40);
+  const mounted = await viewport.elementHandle();
+  await viewport.evaluate(element => { element.scrollTop = 0; element.dispatchEvent(new Event("scroll")); });
   await expect.poll(() => viewport.evaluate(element => element.scrollTop)).toBeLessThan(3);
-  const position = await viewport.evaluate(element => element.scrollTop);
-  await page.getByRole("button", { name: "Add sample update" }).click();
-  await expect.poll(() => viewport.evaluate(element => element.scrollTop)).toBe(position);
-  const jump = page.getByRole("button", { name: "Latest response ↓" });
-  await expect(jump).toBeVisible();
-  await jump.focus();
-  await jump.press("Enter");
-  await expect.poll(distance).toBeLessThan(3);
-  await expect(jump).toBeFocused();
-  await viewport.focus();
-  await expect(jump).toBeHidden();
-  await page.getByRole("button", { name: "Switch sample conversation" }).click();
-  await expect(page.getByRole("article")).toHaveCount(2);
-  await expect.poll(distance).toBeLessThan(3);
+  const transcript = await page.getByRole("log").textContent();
+  await page.getByLabel("Disable thread input", { exact: true }).check();
+  await expect(page.getByRole("log")).toHaveText(transcript!);
+  await expect.poll(() => viewport.evaluate(element => element.scrollTop)).toBeLessThan(3);
+  await page.getByLabel("Disable thread input", { exact: true }).uncheck();
+  expect(await mounted!.evaluate(element => element.isConnected)).toBe(true);
+  const jump = page.getByRole("button", { name: "Latest message", exact: true });
+  await jump.focus(); await page.keyboard.press("Enter");
+  await expect.poll(() => viewport.evaluate(element => element.scrollHeight - element.clientHeight - element.scrollTop)).toBeLessThan(3);
+  // Runtime scroll primitive may hide after reaching bottom; keyboard activation remains real.
 });
 
-test("export is user initiated and empty and streaming states remain truthful", async ({ page }) => {
-  const downloads: string[] = [];
-  page.on("download", download => downloads.push(download.suggestedFilename()));
-  await page.goto("/#vercel:conversation");
-  expect(downloads).toEqual([]);
-  const pending = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Download conversation" }).click();
-  const download = await pending;
-  expect(download.suggestedFilename()).toBe("harso-synthetic-conversation.md");
-  const file = await download.path();
-  expect(await readFile(file!, "utf8")).toContain("## assistant\n\n## Start smaller.");
-  await page.getByRole("checkbox", { name: "Streaming sample" }).check();
-  await expect(page.getByRole("log")).toHaveAttribute("aria-busy", "true");
-  await page.getByRole("button", { name: "Clear sample" }).click();
-  await expect(page.getByText("A little space to think.")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Download conversation" })).toBeDisabled();
-  await page.getByRole("checkbox", { name: "Streaming sample" }).uncheck();
-  await page.getByRole("button", { name: "Help me find a direction" }).click();
-  await expect(page.getByRole("article")).toHaveCount(2);
+test("runtime empty loading error and disabled recovery stay distinct", async ({ page }) => {
+  await page.goto("/#harso:chat-thread");
+  const state = page.getByLabel("Thread state", { exact: true });
+  await state.selectOption("empty");
+  await expect(page.getByRole("log")).toContainText("Start a conversation.");
+  await expect(page.getByRole("article")).toHaveCount(0);
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  await state.selectOption("loading");
+  await expect(page.getByRole("status", { name: "Streaming", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Stop", exact: true })).toBeEnabled();
+  await state.selectOption("error");
+  await expect(page.getByRole("alert")).toContainText("Simulated adapter error");
+  await expect(page.getByRole("button", { name: "Retry", exact: true })).toBeEnabled();
+  await expect(page.getByText("Start a conversation.", { exact: true })).toHaveCount(0);
+  await state.selectOption("empty");
+  const input = page.getByRole("textbox", { name: "Message", exact: true });
+  await input.fill("Retained local draft");
+  const mounted = await input.elementHandle();
+  await page.getByLabel("Disable thread input", { exact: true }).check();
+  await expect(input).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
+  await page.getByLabel("Disable thread input", { exact: true }).uncheck();
+  await expect(input).toHaveValue("Retained local draft");
+  expect(await mounted!.evaluate(element => element.isConnected)).toBe(true);
 });
 
-test("controlled branches refuse unaccepted changes and retain keyed notes", async ({ page }) => {
-  await page.goto("/#vercel:message");
-  await page.getByText("Notes on this version", { exact: true }).click();
-  await page.getByLabel("Version one notes").fill("Keep this draft");
-  await page.getByRole("checkbox", { name: "Keep host version" }).check();
-  await page.getByRole("button", { name: "Next response" }).click();
-  await expect(page.getByLabel("Message action", { exact: true })).toHaveText("Requested version 2");
+test("runtime branches and feedback preserve draft ownership", async ({ page }) => {
+  await page.goto("/#harso:chat-thread");
+  await page.getByLabel("Thread state", { exact: true }).selectOption("branching");
+  const draft = page.getByRole("textbox", { name: "Message", exact: true });
+  await draft.fill("Keep these local notes");
+  await expect(page.getByText("2 of 2", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Previous branch", exact: true }).click();
   await expect(page.getByText("1 of 2", { exact: true })).toBeVisible();
-  await expect(page.getByLabel("Version one notes")).toHaveValue("Keep this draft");
-  await page.getByRole("checkbox", { name: "Keep host version" }).uncheck();
-  await page.getByRole("button", { name: "Next response" }).click();
-  await expect(page.getByLabel("Version one notes")).toBeHidden();
-  await expect(page.getByRole("heading", { name: "Begin with an invitation." })).toBeVisible();
-  await page.getByRole("button", { name: "Previous response" }).click();
-  await expect(page.getByLabel("Version one notes")).toHaveValue("Keep this draft");
-  await page.getByRole("button", { name: "Mark helpful" }).click();
-  await expect(page.getByRole("button", { name: "Mark helpful" })).toHaveAttribute("aria-pressed", "true");
-  await page.getByLabel("Example state").selectOption("disabled");
-  await expect(page.getByRole("button", { name: "Next response" })).toBeDisabled();
-});
-
-test("Markdown causes no external request and no script or image execution", async ({ page, baseURL }) => {
-  if (!baseURL) throw new Error("This test requires a configured baseURL");
-  const configuredURL = new URL(baseURL);
-  const external: string[] = [];
-  page.on("request", request => {
-    const url = new URL(request.url());
-    if (url.origin !== configuredURL.origin || url.protocol !== configuredURL.protocol) external.push(request.url());
-  });
-  const dialogs: string[] = [];
-  page.on("dialog", async dialog => { dialogs.push(dialog.message()); await dialog.dismiss(); });
-  await page.goto("/#vercel:message");
-  await page.getByRole("checkbox", { name: "Untrusted Markdown sample" }).check();
-  const response = page.locator(".hk-message-response").first();
-  await expect(response.locator("img, script, iframe")).toHaveCount(0);
-  await expect(response.getByRole("link")).toHaveCount(1);
-  await expect(response.getByRole("link")).toHaveAttribute("href", "https://example.com/");
-  await expect(response).toContainText("Image: An inert remote image");
-  expect(external).toEqual([]);
-  expect(dialogs).toEqual([]);
-  const scan = await new AxeBuilder({ page }).include('[data-testid="live-example"]').analyze();
-  expect(scan.violations).toEqual([]);
-});
-
-test("suggestions fill only the example draft with keyboard and long-content touch", async ({ page, browser, baseURL }) => {
-  await page.goto("/#vercel:suggestion");
-  await page.getByRole("button", { name: "Show me the trade-offs" }).focus();
-  await page.keyboard.press("Enter");
-  await expect(page.getByLabel("Draft, not sent")).toHaveValue("Show me the trade-offs");
-  const context = await browser.newContext({ viewport: { width: 320, height: 740 }, hasTouch: true, baseURL });
-  const touch = await context.newPage();
-  await touch.goto("/#vercel:suggestion");
-  await touch.getByLabel("Example state").selectOption("long-content");
-  await touch.getByRole("button", { name: /Help me decide what to do first/ }).tap();
-  await expect(touch.getByLabel("Draft, not sent")).toHaveValue(/Help me decide/);
-  expect(await touch.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await expect(touch.getByTestId("live-example")).toHaveScreenshot("conversation-suggestions-narrow.png", { animations: "disabled" });
-  await context.close();
+  await expect(page.getByRole("log")).toContainText("First branch: start with a focused launch.");
+  await page.getByRole("button", { name: "Helpful", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Helpful", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Next branch", exact: true }).click();
+  await expect(page.getByRole("log")).toContainText("Second branch: begin with an invitation.");
+  await expect(draft).toHaveValue("Keep these local notes");
+  await page.getByRole("button", { name: "Previous branch", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Helpful", exact: true })).toHaveAttribute("aria-pressed", "true");
 });
 
 test("shimmer respects static states, reduced motion, semantic elements and forced colors", async ({ page }) => {
@@ -141,23 +98,41 @@ test("shimmer respects static states, reduced motion, semantic elements and forc
   await expect(heading).toHaveCSS("animation-name", "none");
 });
 
-test("message and conversation remain legible across palettes, narrow widths and keyboard focus", async ({ page }) => {
-  for (const appearance of ["light", "dark"]) {
-    await page.goto("/#vercel:conversation");
-    await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
-    const sample = page.getByTestId("conversation-sample");
-    await expect(sample).toHaveScreenshot(`conversation-${appearance}.png`, { animations: "disabled" });
+test("runtime Markdown rejects unsafe content without remote requests", async ({ page, baseURL }) => {
+  const external: string[] = []; const dialogs: string[] = [];
+  page.on("request", request => { if (/^https?:/.test(request.url()) && new URL(request.url()).origin !== new URL(baseURL!).origin) external.push(request.url()); });
+  page.on("dialog", async dialog => { dialogs.push(dialog.message()); await dialog.dismiss(); });
+  // Inject hostile text into the actual runtime Markdown fixture, not a removed module.
+  await page.route("**/chat-markdown-example.tsx*", async route => {
+    const response = await route.fetch();
+    const source = await response.text();
+    const body = source.replace("# A calmer space to build", "# A calmer space to build\\n\\n<script>alert('unsafe')</script>\\n\\n![Remote](https://invalid.example/image.png)\\n\\n[Unsafe](javascript:alert(1))");
+    expect(body).not.toBe(source); await route.fulfill({ response, body });
+  });
+  await page.goto("/#harso:chat-markdown");
+  const response = page.locator(".hkc-markdown").first();
+  await expect(response).toBeVisible();
+  await expect(response.locator("img,script,iframe")).toHaveCount(0);
+  await expect(response.locator('a[href^="javascript:"]')).toHaveCount(0);
+  expect(external).toEqual([]); expect(dialogs).toEqual([]);
+});
+
+test("runtime conversation retains keyboard branches and responsive palette readability", async ({ page }) => {
+  for (const width of [375, 1024, 1440]) for (const mode of ["light", "dark"]) for (const palette of ["clean", "cozy"]) {
+    await page.setViewportSize({ width, height: 860 });
+    await page.goto("/#harso:chat-thread");
+    await page.evaluate(({ mode, palette }) => { document.documentElement.dataset.mode = mode; document.documentElement.dataset.palette = palette; }, { mode, palette });
+    await page.getByLabel("Thread state", { exact: true }).selectOption("branching");
+    await page.getByRole("button", { name: "Previous branch", exact: true }).focus();
+    await page.keyboard.press("Enter");
+    await expect(page.getByText("1 of 2", { exact: true })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     const scan = await new AxeBuilder({ page }).include('[data-testid="live-example"]').analyze();
     expect(scan.violations).toEqual([]);
+    await page.screenshot({ path: test.info().outputPath(`runtime-${width}-${mode}-${palette}.png`), animations: "disabled" });
   }
-  await page.goto("/#vercel:message");
-  await page.getByLabel("Palette", { exact: true }).selectOption("cozy");
-  await page.getByLabel("Appearance", { exact: true }).selectOption("light");
-  await page.setViewportSize({ width: 375, height: 860 });
-  await page.getByRole("button", { name: "Next response" }).focus();
-  await expect(page.getByTestId("message-sample")).toHaveScreenshot("conversation-message-cozy-narrow.png", { animations: "disabled" });
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.emulateMedia({ forcedColors: "active" });
+  await page.getByRole("button", { name: "Next branch", exact: true }).focus();
   await page.keyboard.press("Enter");
   await expect(page.getByText("2 of 2", { exact: true })).toBeVisible();
 });

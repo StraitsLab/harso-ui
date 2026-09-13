@@ -21,6 +21,9 @@ export type ReferenceComponent = {
 export const referenceComponents = inventory.components as ReferenceComponent[];
 export const referenceSources = inventory.sources;
 export const referenceAccounting = inventory.accounting;
+export const retiredReferences = inventory.retiredComponents;
+export const retiredReferenceIds = retiredReferences.map(reference => reference.id);
+export const activeReferenceAccounting = inventory.accounting.active;
 
 export type CatalogueFilter = { query?: string; vendor?: ReferenceVendor | "all"; category?: string };
 

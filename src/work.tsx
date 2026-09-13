@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type ReactNode, type RefObject } from "react";
 import { Button, type ButtonProps } from "./primitives";
-import { MessageResponse, Shimmer } from "./conversation";
+import { MessageResponse, Shimmer } from "./text-effects";
 import { Tooltip } from "./navigation";
 
 type DivProps = ComponentPropsWithRef<"div">;

@@ -1,9 +1,11 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
+const inventory = JSON.parse(readFileSync(new URL("../src/catalog.json", import.meta.url), "utf8")) as { components: { vendor: string }[]; retiredComponents: { id: string }[] };
 import AxeBuilder from "@axe-core/playwright";
 
 test("pinned anatomy and helpers remain discoverable without claiming full parity", async ({ page }) => {
   await page.goto("/#boardui:button");
-  await expect(page.locator(".hkl-result-count")).toContainText("126 mapped family previews");
+  await expect(page.locator(".hkl-result-count")).toContainText(`${inventory.components.length} mapped family previews`);
   const search = page.getByRole("textbox", { name: "Find a component" });
   const references = page.getByRole("navigation", { name: "Component references" });
   for (const [query, family] of [["FileTreeActions", "File Tree"], ["ContextCacheUsage", "Context"], ["SchemaDisplayExample", "Schema Display"], ["OpenInSeparator", "Open In Chat"], ["EdgeTemporary", "Edge"]]) {
@@ -14,15 +16,15 @@ test("pinned anatomy and helpers remain discoverable without claiming full parit
     else await expect(page.getByTestId("live-example")).toBeVisible();
     await expect(page.locator(".hkl-parts").getByText(query, { exact: true }).last()).toBeVisible();
   }
-  await search.fill("PromptInputMessage");
-  await references.getByRole("button", { name: /^Prompt Input V/ }).click();
+  await search.fill("QuestionValue");
+  await references.getByRole("button", { name: /^Question V/ }).click();
   const helpers = page.locator("summary").filter({ hasText: "Documented helper APIs and types" });
   await helpers.focus();
   await page.keyboard.press("Enter");
-  await expect(page.locator("details[open]").getByText("PromptInputMessage", { exact: true })).toBeVisible();
-  await expect(page.locator(".hkl-parts").getByText("PromptInputMessage", { exact: true })).toHaveCount(0);
+  await expect(page.locator("details[open]").getByText("QuestionValue", { exact: true })).toBeVisible();
+  await expect(page.locator(".hkl-parts").getByText("QuestionValue", { exact: true })).toHaveCount(0);
   await page.setViewportSize({ width: 320, height: 844 });
-  await expect(page.locator("details[open]").getByText("usePromptInputReferencedSources", { exact: true })).toBeVisible();
+  await expect(page.locator("details[open]").getByText("QuestionResponse", { exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.locator("details[open]").screenshot({ path: test.info().outputPath("helper-reflow.png") });
   await page.getByRole("button", { name: "Browse components" }).click();
@@ -147,26 +149,26 @@ test("bad deep links do not crash and source filters stay independent", async ({
   await page.goto("/#%E0%A4%A");
   await expect(page.getByRole("heading", { name: "Button", exact: true })).toBeVisible();
   await page.getByLabel("Reference source").selectOption("vercel");
-  await expect(page.getByRole("status").filter({ hasText: "49 references" })).toBeVisible();
+  await expect(page.getByRole("status").filter({ hasText: `${inventory.components.filter(component => component.vendor === "vercel").length} references` })).toBeVisible();
   await page.getByRole("button", { name: "Built only", exact: true }).click();
   const references = page.getByRole("navigation", { name: "Component references" });
-  for (const name of ["Conversation", "Message", "Shimmer", "Suggestion"]) await expect(references.getByRole("button", { name: new RegExp(`^${name}`) })).toBeVisible();
+  for (const name of ["Shimmer"]) await expect(references.getByRole("button", { name: new RegExp(`^${name}`) })).toBeVisible();
   await expect(page.getByLabel("Reference source")).toHaveValue("vercel");
   await expect(references.locator(".hkl-reference-kind").filter({ hasText: /^B$/ })).toHaveCount(0);
   await expect(references.getByRole("button", { name: /^Audio Player/ })).toBeVisible();
-  await page.getByRole("textbox", { name: "Find a component" }).fill("MessageBranchNext");
-  await expect(references.getByRole("button", { name: /^Message/ })).toBeVisible();
+  await page.getByRole("textbox", { name: "Find a component" }).fill("AudioPlayerVolumeRange");
+  await expect(references.getByRole("button", { name: /^Audio Player/ })).toBeVisible();
   await expect(references.getByRole("button", { name: /^Conversation/ })).toHaveCount(0);
   await page.getByRole("textbox", { name: "Find a component" }).fill("Audio");
   await expect(references.getByRole("button", { name: /^Audio Player/ })).toBeVisible();
   await page.getByRole("textbox", { name: "Find a component" }).fill("no-such-reference-1438");
   await expect(page.getByText("No matching references. Try a component or subcomponent name.")).toBeVisible();
   await page.getByRole("textbox", { name: "Find a component" }).fill("");
-  for (const name of ["Conversation", "Message", "Shimmer", "Suggestion"]) await expect(references.getByRole("button", { name: new RegExp(`^${name}`) })).toBeVisible();
+  for (const name of ["Shimmer"]) await expect(references.getByRole("button", { name: new RegExp(`^${name}`) })).toBeVisible();
   await expect(references.getByRole("button", { name: /^Audio Player/ })).toBeVisible();
   await expect(references.locator(".hkl-reference-kind").filter({ hasText: /^B$/ })).toHaveCount(0);
   await page.getByRole("button", { name: "Built only", exact: true }).click();
-  await expect(page.getByRole("navigation", { name: "Component references" }).getByRole("button")).toHaveCount(49);
+  await expect(page.getByRole("navigation", { name: "Component references" }).getByRole("button")).toHaveCount(inventory.components.filter(component => component.vendor === "vercel").length);
   await expect(references.getByRole("button", { name: /^Audio Player/ })).toBeVisible();
   await expect(references.locator(".hkl-reference-kind").filter({ hasText: /^B$/ })).toHaveCount(0);
   await expect(page.getByLabel("Reference source")).toHaveValue("vercel");
@@ -376,4 +378,12 @@ test("file hierarchy disabled actions remain inert even inside the native legend
   await controls.selectOption("default");
   await tree.getByRole("button", { name: "Inspect src", exact: true }).click();
   await expect(page.getByLabel("Hierarchy request")).toContainText("Inspect requested: src");
+});
+
+for (const retired of inventory.retiredComponents) test(`retired ${retired.id} has a truthful fallback, not a renderer`, async ({ page }) => {
+  await page.goto(`/#${retired.id}`);
+  await expect(page.getByTestId("retired-route")).toBeVisible();
+  await expect(page.getByTestId("live-example")).toHaveCount(0);
+  await page.getByTestId("retired-route").locator('a[href="#harso:chat-shell"]').click();
+  await expect(page.getByRole("textbox", { name: "Message", exact: true })).toBeVisible();
 });

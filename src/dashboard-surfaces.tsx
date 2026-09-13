@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type ReactNode } from "react";
 import { StatCards, type StatItem } from "./data";
 import { Table, type DataColumn } from "./data";
-import { AiChat, type AiChatProps } from "./agent-surfaces";
+import { DashboardWorkspace, type DashboardWorkspaceProps } from "./dashboard-workspace";
 import { KitProvider, type Appearance, type Palette } from "./theme";
 
 export type DashboardRow = Record<string, ReactNode> & { id: string };
@@ -20,51 +20,51 @@ export function FinanceDashboard({ title, stats = [], navigation, actions, cashF
     </div>
   </section>;
 }
-export type HomeDashboardProps = AiChatProps & { stats?: readonly StatItem[]; breadcrumb?: ReactNode; search?: ReactNode; hires?: ReactNode; earnings?: ReactNode; revenue?: ReactNode; contributions?: ReactNode; customers?: ReactNode };
+export type HomeDashboardProps = DashboardWorkspaceProps & { stats?: readonly StatItem[]; breadcrumb?: ReactNode; search?: ReactNode; hires?: ReactNode; earnings?: ReactNode; revenue?: ReactNode; contributions?: ReactNode; customers?: ReactNode };
 export function HomeDashboard({ title = "Home", stats = [], breadcrumb, search, hires, earnings, revenue, contributions, customers, children, className = "", ...props }: HomeDashboardProps) {
   const charts = ([["Earnings", earnings], ["Revenue", revenue], ["Contributions", contributions]] as const).filter(([, content]) => content != null && typeof content !== "boolean");
-  return <AiChat {...props} title={title} className={`hk-home-workspace ${className}`}>
+  return <DashboardWorkspace {...props} title={title} className={`hk-home-workspace ${className}`}>
     {(breadcrumb || search) && <div className="hk-home-toolbar">{breadcrumb}{search}</div>}
     {hires != null && typeof hires !== "boolean" && <section aria-label="Recent hires">{hires}</section>}
     {stats.length > 0 && <StatCards label={`${title} metrics`} items={stats} />}
     {charts.length > 0 && <div className="hk-home-charts">{charts.map(([label, content]) => <section key={label} aria-label={label}>{content}</section>)}</div>}
     {customers != null && typeof customers !== "boolean" && <section aria-label="Customers">{customers}</section>}
     {children}
-  </AiChat>;
+  </DashboardWorkspace>;
 }
-export type HrManagementProps = AiChatProps & { stats?: readonly StatItem[]; recentHires?: ReactNode; pipeline?: ReactNode; engagement?: ReactNode; movement?: ReactNode; team?: ReactNode; employees?: ReactNode };
+export type HrManagementProps = DashboardWorkspaceProps & { stats?: readonly StatItem[]; recentHires?: ReactNode; pipeline?: ReactNode; engagement?: ReactNode; movement?: ReactNode; team?: ReactNode; employees?: ReactNode };
 export function HrManagement({ title = "People", stats = [], recentHires, pipeline, engagement, movement, team, employees, children, className = "", ...props }: HrManagementProps) {
   const charts = ([["Hiring pipeline", pipeline], ["Engagement", engagement], ["Workforce movement", movement]] as const).filter(([, content]) => content != null && typeof content !== "boolean");
-  return <AiChat {...props} title={title} className={`hk-hr-workspace ${className}`}>
+  return <DashboardWorkspace {...props} title={title} className={`hk-hr-workspace ${className}`}>
     {stats.length > 0 && <StatCards label={`${title} metrics`} items={stats} />}
     {recentHires != null && typeof recentHires !== "boolean" && <section aria-label="Recent hires">{recentHires}</section>}
     {charts.length > 0 && <div className="hk-hr-charts">{charts.map(([label, content]) => <section key={label} aria-label={label}>{content}</section>)}</div>}
     {team != null && typeof team !== "boolean" && <section aria-label="Team breakdown">{team}</section>}
     {employees != null && typeof employees !== "boolean" && <section aria-label="Employees">{employees}</section>}
     {children}
-  </AiChat>;
+  </DashboardWorkspace>;
 }
-export type MarketingDashboardProps = AiChatProps & { stats?: readonly StatItem[]; acquisition?: ReactNode; spending?: ReactNode; traffic?: ReactNode; performance?: ReactNode; visitors?: ReactNode; campaigns?: ReactNode };
+export type MarketingDashboardProps = DashboardWorkspaceProps & { stats?: readonly StatItem[]; acquisition?: ReactNode; spending?: ReactNode; traffic?: ReactNode; performance?: ReactNode; visitors?: ReactNode; campaigns?: ReactNode };
 export function MarketingDashboard({ title = "Marketing", stats = [], acquisition, spending, traffic, performance, visitors, campaigns, children, className = "", ...props }: MarketingDashboardProps) {
   const charts = ([["Acquisition funnel", acquisition], ["Spend by channel", spending], ["Traffic sources", traffic], ["Ad spend and ROAS", performance], ["Visitors", visitors]] as const).filter(([, content]) => content != null && typeof content !== "boolean");
-  return <AiChat {...props} title={title} className={`hk-marketing-workspace ${className}`}>
+  return <DashboardWorkspace {...props} title={title} className={`hk-marketing-workspace ${className}`}>
     {stats.length > 0 && <StatCards label={`${title} metrics`} items={stats} />}
     {charts.length > 0 && <div className="hk-marketing-charts">{charts.map(([label, content]) => <section key={label} aria-label={label}>{content}</section>)}</div>}
     {campaigns != null && typeof campaigns !== "boolean" && <section aria-label="Campaigns">{campaigns}</section>}
     {children}
-  </AiChat>;
+  </DashboardWorkspace>;
 }
-export type MedicalProfileProps = AiChatProps & { stats?: readonly StatItem[]; identity?: ReactNode; steps?: ReactNode; sleep?: ReactNode; calendar?: ReactNode; activity?: ReactNode; alerts?: ReactNode; patients?: ReactNode };
+export type MedicalProfileProps = DashboardWorkspaceProps & { stats?: readonly StatItem[]; identity?: ReactNode; steps?: ReactNode; sleep?: ReactNode; calendar?: ReactNode; activity?: ReactNode; alerts?: ReactNode; patients?: ReactNode };
 export function MedicalProfile({ title = "Health overview", stats = [], identity, steps, sleep, calendar, activity, alerts, patients, children, className = "", ...props }: MedicalProfileProps) {
   const charts = ([["Steps", steps], ["Sleep score", sleep], ["Most active days", calendar], ["Activity", activity]] as const).filter(([, content]) => content != null && typeof content !== "boolean");
-  return <AiChat {...props} title={title} className={`hk-medical-workspace ${className}`}>
+  return <DashboardWorkspace {...props} title={title} className={`hk-medical-workspace ${className}`}>
     {identity != null && typeof identity !== "boolean" && <section aria-label="Patient information">{identity}</section>}
     {stats.length > 0 && <StatCards label={`${title} metrics`} items={stats} />}
     {charts.length > 0 && <div className="hk-medical-charts">{charts.map(([label, content]) => <section key={label} aria-label={label}>{content}</section>)}</div>}
     {alerts != null && typeof alerts !== "boolean" && <section aria-label="Important alerts">{alerts}</section>}
     {patients != null && typeof patients !== "boolean" && <section aria-label="Patients">{patients}</section>}
     {children}
-  </AiChat>;
+  </DashboardWorkspace>;
 }
 type ContributionPeriod = "weekly" | "monthly" | "yearly";
 type ContributionItems = readonly { label: string; value: number }[];

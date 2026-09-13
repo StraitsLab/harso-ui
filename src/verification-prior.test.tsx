@@ -5,7 +5,7 @@ import { Questionnaire } from "./questionnaire";
 import { Question, QuestionInput, QuestionSubmit, type QuestionValue } from "./question";
 import { SettingsModal } from "./misc-surfaces";
 import { TaskList, WebSearch } from "./agent-trails";
-import { Conversation, ConversationContent, Message, MessageContent } from "./conversation";
+// Phase D: trails are runtime-free host content, not legacy conversation wrappers.
 import { AreaChartCard, ComboChartCard, LineChartCard } from "./chart-cards";
 
 const questions = [
@@ -209,7 +209,7 @@ describe("prior requirement verification", () => {
 
   it.each(["task-list", "web-search"])("composes %s inside an assistant conversation message without replacing neighboring content", family => {
     const complete = vi.fn();
-    const tree = (revealed: number) => <Conversation><ConversationContent><Message from="user"><MessageContent><input aria-label="Unsent draft" defaultValue="Keep my draft" /></MessageContent></Message><Message from="assistant"><MessageContent>{family === "task-list" ? <TaskList tasks={[{ id: "read", label: "Inspect request", steps: [{ label: "Finish inspection" }] }]} revealed={revealed} onComplete={complete} /> : <WebSearch steps={[{ label: "Inspect request" }, { label: "Finish inspection" }]} revealed={revealed} onComplete={complete} />}</MessageContent></Message></ConversationContent></Conversation>;
+    const tree = (revealed: number) => <section role="log" aria-label="Conversation messages"><article aria-label="You"><input aria-label="Unsent draft" defaultValue="Keep my draft" /></article><article aria-label="Harso">{family === "task-list" ? <TaskList tasks={[{ id: "read", label: "Inspect request", steps: [{ label: "Finish inspection" }] }]} revealed={revealed} onComplete={complete} /> : <WebSearch steps={[{ label: "Inspect request" }, { label: "Finish inspection" }]} revealed={revealed} onComplete={complete} />}</article></section>;
     const { rerender } = render(tree(1));
     const log = screen.getByRole("log", { name: "Conversation messages" });
     const assistant = within(log).getByRole("article", { name: "Harso" });

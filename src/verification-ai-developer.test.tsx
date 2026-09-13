@@ -6,10 +6,14 @@ import { Artifact, ArtifactAction, ArtifactActions, ArtifactContent, ArtifactDes
 import { Attachment, AttachmentEmpty, AttachmentPreview, AttachmentRemove, Attachments, type AttachmentData } from "./attachments";
 import { ChainOfThought, ChainOfThoughtContent, ChainOfThoughtHeader, ChainOfThoughtImage, ChainOfThoughtSearchResult, ChainOfThoughtSearchResults, ChainOfThoughtStep } from "./chain-of-thought";
 import { CodeBlock, CodeBlockContent } from "./code-block";
-import { Message, MessageAction, MessageActions, MessageContent, MessageResponse, MessageToolbar, Suggestion, Suggestions } from "./conversation";
+import { MessageResponse } from "./index";
+import { IconButton } from "./primitives";
+import { AssistantRuntimeProvider, useLocalRuntime, useAuiState, type ThreadMessage } from "@assistant-ui/react";
+import { HarsoComposer } from "./chat/composer";
+import { attachments } from "./chat/testing/scripted-adapter";
 import { Context, ContextCacheUsage, ContextContent, ContextContentBody, ContextContentHeader, ContextInputUsage, ContextOutputUsage, ContextReasoningUsage, type ContextProps } from "./context";
 import { InlineCitationCarousel, InlineCitationCarouselContent, InlineCitationCarouselHeader, InlineCitationCarouselIndex, InlineCitationCarouselItem, InlineCitationCarouselNext, InlineCitationCarouselPrev } from "./inline-citation";
-import { PromptInput, PromptInputHoverCard, PromptInputHoverCardContent, PromptInputHoverCardTrigger, PromptInputProvider, PromptInputSubmit, PromptInputTextarea, usePromptInputAttachments, usePromptInputReferencedSources, useProviderAttachments } from "./prompt-input";
+import { AttachmentHoverCard, AttachmentHoverCardContent, AttachmentHoverCardTrigger } from "./attachments";
 import { Queue, QueueItem, QueueItemAction, QueueItemContent, QueueItemDescription, QueueItemFile, QueueItemIndicator, QueueList, QueueSection, QueueSectionContent, QueueSectionLabel, QueueSectionTrigger, type QueueMessage, type QueueMessagePart, type QueueTodo } from "./queue";
 import { SchemaDisplayParameter, SchemaDisplayParameters, SchemaDisplayProperty, type SchemaParameter, type SchemaProperty } from "./schema-display";
 import { Plan, PlanAction, PlanContent, PlanDescription, PlanHeader, PlanTitle, PlanTrigger } from "./work";
@@ -46,69 +50,59 @@ describe("WEV-1492 supported AI and developer compositions", () => {
     expect(screen.getByRole("code").textContent).toBe("");
   });
 
-  it("Suggestion fills a controlled PromptInput only when accepted and never submits it implicitly", async () => {
-    const submitted = vi.fn();
-    const requested = vi.fn();
+  it("host suggestions update the one runtime draft only when accepted", async () => {
+    const submitted = vi.fn(); const requested = vi.fn();
     function Draft({ hold = false }: { hold?: boolean }) {
-      const [draft, setDraft] = useState("Original draft");
-      return <><Suggestions><Suggestion suggestion="Compare the trade-offs" onSelect={value => { requested(value); if (!hold) setDraft(value); }} /><Suggestion suggestion="Unavailable suggestion" disabled onSelect={setDraft} /></Suggestions><PromptInput value={draft} onValueChange={setDraft} onSubmit={submitted}><PromptInputTextarea aria-label="Suggested draft" /><PromptInputSubmit /></PromptInput></>;
+      const runtime = useLocalRuntime({ async *run({ messages }) { submitted(messages.at(-1)?.content); yield { content: [{ type: "text", text: "Done" }] }; } });
+      return <AssistantRuntimeProvider runtime={runtime}><button onClick={() => { requested("Compare the trade-offs"); if (!hold) runtime.thread.composer.setText("Compare the trade-offs"); }}>Compare the trade-offs</button><button disabled>Unavailable suggestion</button><HarsoComposer /></AssistantRuntimeProvider>;
     }
     const view = render(<Draft hold />);
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "Original draft" } });
     await userEvent.click(screen.getByRole("button", { name: "Compare the trade-offs" }));
     expect(requested).toHaveBeenCalledExactlyOnceWith("Compare the trade-offs");
     expect(screen.getByRole("textbox")).toHaveValue("Original draft");
     expect(submitted).not.toHaveBeenCalled();
     view.rerender(<Draft />);
     await userEvent.click(screen.getByRole("button", { name: "Compare the trade-offs" }));
-    expect(screen.getByRole("textbox")).toHaveValue("Compare the trade-offs");
     await userEvent.click(screen.getByRole("button", { name: "Unavailable suggestion" }));
     expect(screen.getByRole("textbox")).toHaveValue("Compare the trade-offs");
     expect(submitted).not.toHaveBeenCalled();
     await userEvent.click(screen.getByRole("button", { name: "Send" }));
-    expect(submitted).toHaveBeenCalledExactlyOnceWith("Compare the trade-offs");
+    expect(submitted).toHaveBeenCalledExactlyOnceWith([{ type: "text", text: "Compare the trade-offs" }]);
   });
 
-  it("named provider and prompt attachment hooks share files, remove once and clear without stale submission", async () => {
-    const created = vi.spyOn(URL, "createObjectURL").mockImplementation(blob => `blob:${(blob as File).name}`);
-    const revoked = vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {});
-    const submitted = vi.fn();
-    function ProviderFiles() {
-      const attachments = useProviderAttachments();
-      return <><button onClick={() => attachments.add([new File(["brief"], "brief.txt", { type: "text/plain" }), new File(["notes"], "notes.txt", { type: "text/plain" })])}>Add provider files</button><button onClick={attachments.clear}>Clear provider files</button><output aria-label="Provider files">{attachments.files.map(file => file.filename).join(", ")}</output></>;
+  it("runtime attachment views share files and remove once without stale submission", async () => {
+    const remove = vi.fn(attachments.remove); const submitted = vi.fn();
+    let runtime: ReturnType<typeof useLocalRuntime>;
+    function Files() {
+      const files = useAuiState(state => state.composer.attachments);
+      return <output aria-label="Provider files">{files.map(file => file.name).join(", ")}</output>;
     }
-    function PromptFiles() {
-      const attachments = usePromptInputAttachments();
-      return <><output aria-label="Prompt files">{attachments.files.map(file => file.filename).join(", ")}</output>{attachments.files.map(file => <button key={file.id} onClick={() => attachments.remove(file.id)}>Remove {file.filename}</button>)}</>;
+    function Host() {
+      runtime = useLocalRuntime({ async *run({ messages }) { submitted(messages.at(-1)); yield { content: [{ type: "text", text: "Done" }] }; } }, { adapters: { attachments: { ...attachments, remove } } });
+      return <AssistantRuntimeProvider runtime={runtime}><Files /><HarsoComposer /></AssistantRuntimeProvider>;
     }
-    const view = render(<PromptInputProvider><ProviderFiles /><PromptInput onSubmitMessage={submitted}><PromptFiles /><PromptInputSubmit /></PromptInput></PromptInputProvider>);
+    render(<Host />);
     expect(screen.getByRole("button", { name: "Send" })).toBeDisabled();
-    await userEvent.click(screen.getByRole("button", { name: "Add provider files" }));
+    await act(async () => { await runtime!.thread.composer.addAttachment(new File(["brief"], "brief.txt")); await runtime!.thread.composer.addAttachment(new File(["notes"], "notes.txt")); });
     expect(screen.getByLabelText("Provider files")).toHaveTextContent("brief.txt, notes.txt");
-    expect(screen.getByLabelText("Prompt files")).toHaveTextContent("brief.txt, notes.txt");
-    expect(created).toHaveBeenCalledTimes(2);
+    expect(screen.getByText("brief.txt")).toBeVisible();
     await userEvent.click(screen.getByRole("button", { name: "Remove brief.txt" }));
+    expect(remove).toHaveBeenCalledOnce();
     expect(screen.getByLabelText("Provider files")).toHaveTextContent(/^notes.txt$/);
-    expect(screen.getByLabelText("Prompt files")).toHaveTextContent(/^notes.txt$/);
-    expect(revoked).toHaveBeenCalledExactlyOnceWith("blob:brief.txt");
     await userEvent.click(screen.getByRole("button", { name: "Send" }));
-    expect(submitted).toHaveBeenCalledExactlyOnceWith({ text: "", files: [{ id: expect.any(String), type: "file", url: "blob:notes.txt", filename: "notes.txt", mediaType: "text/plain" }] });
-    await userEvent.click(screen.getByRole("button", { name: "Clear provider files" }));
+    expect(submitted).toHaveBeenCalledWith(expect.objectContaining({ attachments: [expect.objectContaining({ name: "notes.txt" })] }));
+    // Accepted runtime sends consume attachments; data URLs need no legacy object-URL revocation.
     expect(screen.getByLabelText("Provider files")).toBeEmptyDOMElement();
-    expect(screen.getByLabelText("Prompt files")).toBeEmptyDOMElement();
     expect(screen.getByRole("button", { name: "Send" })).toBeDisabled();
-    expect(revoked).toHaveBeenCalledTimes(2);
-    expect(revoked).toHaveBeenLastCalledWith("blob:notes.txt");
-    view.unmount();
-    expect(revoked).toHaveBeenCalledTimes(2);
   });
 
-  it.each([false, true])("referenced-source hook replaces duplicate IDs and removes and clears actual consumer state (provider: %s)", async provider => {
-    function Sources() {
-      const sources = usePromptInputReferencedSources();
-      return <><button onClick={() => sources.add({ id: "first", name: "Old title" })}>Add source</button><button onClick={() => sources.add([{ id: "first", name: "Updated title" }, { id: "second", name: "Another source" }])}>Replace and add</button><button onClick={() => sources.remove("first")}>Remove first</button><button onClick={sources.clear}>Clear sources</button><ul aria-label="Referenced sources">{sources.sources.map(source => <li key={source.id}>{source.name}</li>)}</ul></>;
+  it("host referenced sources replace duplicate IDs and remove and clear consumer state", async () => {
+    function SourcesHost() {
+      const [sources, setSources] = useState<{ id: string; name: string }[]>([]);
+      return <><button onClick={() => setSources([{ id: "first", name: "Old title" }])}>Add source</button><button onClick={() => setSources([{ id: "first", name: "Updated title" }, { id: "second", name: "Another source" }])}>Replace and add</button><button onClick={() => setSources(value => value.filter(source => source.id !== "first"))}>Remove first</button><button onClick={() => setSources([])}>Clear sources</button><ul aria-label="Referenced sources">{sources.map(source => <li key={source.id}>{source.name}</li>)}</ul></>;
     }
-    const prompt = <PromptInput><Sources /></PromptInput>;
-    render(provider ? <PromptInputProvider>{prompt}</PromptInputProvider> : prompt);
+    render(<SourcesHost />);
     const list = screen.getByRole("list", { name: "Referenced sources" });
     expect(within(list).queryAllByRole("listitem")).toHaveLength(0);
     await userEvent.click(screen.getByRole("button", { name: "Add source" }));
@@ -177,7 +171,7 @@ describe("WEV-1492 supported AI and developer compositions", () => {
     expect(view.container.querySelector("script")).toBeNull();
   });
 
-  it("typed queue messages and todos compose with PromptInput without adding work before explicit submission", async () => {
+  it("typed queue messages and todos compose with the runtime composer without adding work before explicit submission", async () => {
     expectTypeOf<{ id: string; parts: string }>().not.toExtend<QueueMessage>();
     expectTypeOf<{ text: string }>().not.toExtend<QueueMessagePart>();
     expectTypeOf<{ id: string; title: string; status: "running" }>().not.toExtend<QueueTodo>();
@@ -187,9 +181,13 @@ describe("WEV-1492 supported AI and developer compositions", () => {
     function QueuedDraft() {
       const [messages, setMessages] = useState<QueueMessage[]>([initial]);
       const [task, setTask] = useState<QueueTodo>(todo);
-      const [draft, setDraft] = useState("");
+      const runtime = useLocalRuntime({ async *run({ messages: turns }) {
+        const text = turns.at(-1)!.content.filter(part => part.type === "text").map(part => part.text).join("");
+        setMessages(previous => [...previous, { id: `draft-${previous.length + 1}`, parts: [{ type: "text", text }] }]);
+        yield { content: [{ type: "text", text: "Queued" }] };
+      } });
       const completed = task.status === "completed";
-      return <><Queue><QueueSection><QueueSectionTrigger><QueueSectionLabel label="Queued messages" count={messages.length} /></QueueSectionTrigger><QueueSectionContent><QueueList aria-label="Queued messages">{messages.map(message => <QueueItem key={message.id}>{message.parts.map((part, index) => part.type === "text" ? <QueueItemContent key={index}>{part.text}</QueueItemContent> : <QueueItemFile key={index} name={part.filename} />)}</QueueItem>)}</QueueList></QueueSectionContent></QueueSection><QueueList aria-label="Queued todos"><QueueItem><QueueItemIndicator completed={completed} /><QueueItemContent completed={completed}>{task.title}</QueueItemContent><QueueItemDescription completed={completed}>{task.description}</QueueItemDescription><QueueItemAction disabled={completed} onClick={() => setTask({ ...task, status: "completed" })}>Complete task</QueueItemAction></QueueItem></QueueList></Queue><PromptInput value={draft} onValueChange={setDraft} onSubmit={text => { setMessages(previous => [...previous, { id: `draft-${previous.length + 1}`, parts: [{ type: "text", text }] }]); setDraft(""); }}><PromptInputTextarea aria-label="Queued draft" /><PromptInputSubmit /></PromptInput></>;
+      return <><Queue><QueueSection><QueueSectionTrigger><QueueSectionLabel label="Queued messages" count={messages.length} /></QueueSectionTrigger><QueueSectionContent><QueueList aria-label="Queued messages">{messages.map(message => <QueueItem key={message.id}>{message.parts.map((part, index) => part.type === "text" ? <QueueItemContent key={index}>{part.text}</QueueItemContent> : <QueueItemFile key={index} name={part.filename} />)}</QueueItem>)}</QueueList></QueueSectionContent></QueueSection><QueueList aria-label="Queued todos"><QueueItem><QueueItemIndicator completed={completed} /><QueueItemContent completed={completed}>{task.title}</QueueItemContent><QueueItemDescription completed={completed}>{task.description}</QueueItemDescription><QueueItemAction disabled={completed} onClick={() => setTask({ ...task, status: "completed" })}>Complete task</QueueItemAction></QueueItem></QueueList></Queue><AssistantRuntimeProvider runtime={runtime}><HarsoComposer aria-label="Queued draft" /></AssistantRuntimeProvider></>;
     }
     const view = render(<QueuedDraft />);
     const messages = screen.getByRole("list", { name: "Queued messages" });
@@ -257,7 +255,7 @@ describe("WEV-1492 second AI and developer evidence slice", () => {
     const submitted = vi.fn();
     function Response({ text, disabled = false }: { text: string; disabled?: boolean }) {
       const [helpful, setHelpful] = useState(false);
-      return <form onSubmit={submitted}><Message from="assistant"><MessageContent data-testid="message-content"><MessageResponse>{text}</MessageResponse></MessageContent><MessageToolbar data-testid="message-toolbar"><MessageActions><MessageAction label="Helpful" aria-pressed={helpful} disabled={disabled} onClick={() => setHelpful(value => !value)}>Like</MessageAction></MessageActions><output aria-label="Feedback">{helpful ? "Marked helpful" : "No feedback"}</output></MessageToolbar></Message></form>;
+      return <form onSubmit={submitted}><article aria-label="Harso"><div data-testid="message-content"><MessageResponse>{text}</MessageResponse></div><div data-testid="message-toolbar"><div role="group" aria-label="Message actions"><IconButton type="button" label="Helpful" aria-pressed={helpful} disabled={disabled} onClick={() => setHelpful(value => !value)}>Like</IconButton></div><output aria-label="Feedback">{helpful ? "Marked helpful" : "No feedback"}</output></div></article></form>;
     }
     const view = render(<Response text="**Initial response**" />);
     const content = screen.getByTestId("message-content");
@@ -403,11 +401,11 @@ describe("WEV-1492 second AI and developer evidence slice", () => {
     expect(within(header).getByRole("button", { name: "Next citation" })).toBeDisabled();
   });
 
-  it("prompt hover-card parts share delayed disclosure, preserve interior focus and honor host refusal", () => {
+  it("shared attachment hover-card parts share delayed disclosure, preserve interior focus and honor host refusal", () => {
     vi.useFakeTimers();
     try {
       const changed = vi.fn();
-      const fixture = (open?: boolean) => <PromptInputHoverCard data-testid="prompt-hover" open={open} onOpenChange={changed} openDelay={100} closeDelay={50}><PromptInputHoverCardTrigger>Preview context</PromptInputHoverCardTrigger><PromptInputHoverCardContent align="end"><button>Inspect context</button></PromptInputHoverCardContent></PromptInputHoverCard>;
+      const fixture = (open?: boolean) => <AttachmentHoverCard data-testid="prompt-hover" open={open} onOpenChange={changed} openDelay={100} closeDelay={50}><AttachmentHoverCardTrigger>Preview context</AttachmentHoverCardTrigger><AttachmentHoverCardContent align="end"><button>Inspect context</button></AttachmentHoverCardContent></AttachmentHoverCard>;
       const view = render(fixture());
       const root = screen.getByTestId("prompt-hover");
       const trigger = screen.getByRole("button", { name: "Preview context" });

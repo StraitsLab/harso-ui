@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { AssistantRuntimeProvider, useLocalRuntime, type ChatModelAdapter } from "@assistant-ui/react";
+import { AssistantRuntimeProvider, useLocalRuntime, useExternalStoreRuntime, type ThreadMessage, type ChatModelAdapter } from "@assistant-ui/react";
 import { HarsoComposer } from "./composer";
 
 function setup(disabled = false) {
@@ -60,4 +60,38 @@ describe("HarsoComposer", () => {
     expect(harness.run).not.toHaveBeenCalled();
     expect(screen.getByRole("textbox")).toHaveValue("Retained");
   });
+  it("IME Enter does not submit a composed draft or blank whitespace", async () => {
+    const harness = setup();
+    const input = screen.getByRole("textbox");
+    fireEvent.change(input, { target: { value: "   " } });
+    fireEvent.submit(screen.getByRole("form"));
+    expect(harness.run).not.toHaveBeenCalled();
+    fireEvent.change(input, { target: { value: "日本語" } });
+    fireEvent.compositionStart(input);
+    fireEvent.keyDown(input, { key: "Enter", code: "Enter", isComposing: true, keyCode: 229 });
+    expect(harness.run).not.toHaveBeenCalled();
+    expect(input).toHaveValue("日本語");
+    fireEvent.compositionEnd(input);
+  });
+
+  it("external host refusal restores the submitted draft through the documented runtime bridge", async () => {
+    const append = vi.fn();
+    let runtime: ReturnType<typeof useExternalStoreRuntime>;
+    function Host() {
+      runtime = useExternalStoreRuntime<ThreadMessage>({ messages: [], isRunning: false, onNew: async message => {
+        const text = message.content.filter(part => part.type === "text").map(part => part.text).join("");
+        append(text);
+        // External-store onNew has no Boolean acceptance API; the host restores a refused draft after reset.
+        queueMicrotask(() => runtime.thread.composer.setText(text));
+      } });
+      return <AssistantRuntimeProvider runtime={runtime}><HarsoComposer attachments={false} /></AssistantRuntimeProvider>;
+    }
+    render(<Host />);
+    await userEvent.type(screen.getByRole("textbox"), "Keep refused draft");
+    await userEvent.click(screen.getByRole("button", { name: "Send" }));
+    expect(append).toHaveBeenCalledExactlyOnceWith("Keep refused draft");
+    await waitFor(() => expect(screen.getByRole("textbox")).toHaveValue("Keep refused draft"));
+    expect(runtime!.thread.getState().messages).toHaveLength(0);
+  });
+
 });

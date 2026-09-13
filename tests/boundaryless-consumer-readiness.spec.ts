@@ -1,48 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("prompt closed native menus stay hidden in the real catalogue", async ({ page }) => {
-  await page.goto("/#vercel:prompt-input");
-  const example = page.getByTestId("live-example");
-  await expect(example.locator(".hk-prompt-select-content")).toBeHidden();
-  await expect(example.locator(".hk-prompt-action-content")).toBeHidden();
-});
-
-test("prompt open native menus remain anchored and viewport-contained", async ({ page }) => {
-  for (const width of [390, 1440]) {
-    await page.setViewportSize({ width, height: 1000 });
-    await page.goto("/#vercel:prompt-input");
-    const example = page.getByTestId("live-example");
-    for (const [label, selector] of [["Balanced", ".hk-prompt-select-content"], ["Prompt actions", ".hk-prompt-action-content"]]) {
-      const trigger = example.getByRole("button", { name: label, exact: true });
-      const menu = example.locator(selector);
-      await trigger.click();
-      await expect(menu).toBeVisible();
-      await expect(menu).toHaveJSProperty("popover", "manual");
-      expect(await menu.evaluate(element => element.matches(":popover-open"))).toBe(true);
-      const anchor = (await trigger.boundingBox())!;
-      const bounds = (await menu.boundingBox())!;
-      if (width <= 640) {
-        // Native dropdowns intentionally become bottom sheets on phones.
-        expect(bounds.x).toBe(0);
-        expect(bounds.width).toBe(width);
-        expect(bounds.y + bounds.height).toBe(1000);
-      } else {
-        expect(Math.min(Math.abs(bounds.y - (anchor.y + anchor.height)), Math.abs(bounds.y + bounds.height - anchor.y)), `${label} vertical anchor gap at ${width}`).toBeLessThanOrEqual(24);
-      }
-      expect(bounds.x, `${label} left viewport edge`).toBeGreaterThanOrEqual(0);
-      expect(bounds.x + bounds.width, `${label} right viewport edge`).toBeLessThanOrEqual(width + 1);
-      expect(bounds.y).toBeGreaterThanOrEqual(0);
-      expect(bounds.y + bounds.height).toBeLessThanOrEqual(1001);
-      expect(bounds.x).toBeLessThan(anchor.x + anchor.width);
-      expect(bounds.x + bounds.width).toBeGreaterThan(anchor.x);
-      await page.screenshot({ path: test.info().outputPath(`prompt-${label.replace(" ", "-")}-open-${width}.png`) });
-      await page.keyboard.press("Escape");
-      await expect(menu).toBeHidden();
-      await expect(trigger).toBeFocused();
-    }
-  }
-});
-
+// Phase D removes prompt-only dropdown anatomy; native toolbar coverage remains.
 test("catalogue toolbar uses local actions, controlled refusal and native keyboard navigation", async ({ page }) => {
   await page.goto("/#vercel:toolbar");
   const example = page.getByTestId("live-example");
@@ -104,43 +62,30 @@ test("catalogue queue composes sections, attachments, completion, removal and re
   await expect(example.locator(".hk-queue-item")).toHaveCount(2);
 });
 
-test("catalogue prompt sends locally, preserves refused drafts and composes selection and tools", async ({ page }) => {
-  await page.goto("/#vercel:prompt-input");
-  const example = page.getByTestId("live-example");
-  const draft = example.getByRole("textbox", { name: "Prompt" });
-  const send = example.getByRole("button", { name: "Send", exact: true });
-  const result = example.getByLabel("Prompt result");
-  await expect(send).toBeDisabled();
-  await example.getByRole("button", { name: "Prompt actions", exact: true }).click();
-  await example.getByRole("menuitem", { name: "Insert example" }).click();
-  await expect(draft).toHaveValue("Summarize the project brief.");
-  await example.getByLabel("Hold prompt changes").check();
-  await example.getByRole("button", { name: "Balanced", exact: true }).click();
-  await expect(example.getByRole("menuitemradio", { name: "Unavailable" })).toBeDisabled();
-  await example.getByRole("menuitemradio", { name: "Fast", exact: true }).click();
-  await expect(example.getByRole("button", { name: "Balanced", exact: true })).toBeVisible();
-  await send.click();
-  await expect(result).toContainText("host retained the draft");
-  await expect(draft).toHaveValue("Summarize the project brief.");
-  await example.getByLabel("Hold prompt changes").uncheck();
-  await example.getByRole("button", { name: "Balanced", exact: true }).click();
-  await example.getByRole("menuitemradio", { name: "Fast", exact: true }).click();
-  await draft.fill("Local keyboard request");
-  await draft.press("Shift+Enter");
-  await expect(draft).toHaveValue("Local keyboard request\n");
-  await draft.press("Enter");
-  await expect(result).toContainText("Accepted locally · Fast: Local keyboard request");
-  await expect(draft).toHaveValue("");
-  await draft.fill("Retain while disabled");
-  await example.getByLabel("Disable prompt").check();
-  await expect(draft).toBeDisabled();
-  await expect(send).toBeDisabled();
-  await expect(example.getByRole("button", { name: "Fast", exact: true })).toBeDisabled();
-  await example.getByLabel("Disable prompt").uncheck();
-  await expect(draft).toHaveValue("Retain while disabled");
-  await example.getByRole("button", { name: "Clear draft", exact: true }).click();
-  await expect(draft).toHaveValue("");
-  await expect(send).toBeDisabled();
+test("runtime composer preserves mounted drafts, attachments and host refusal", async ({ page }) => {
+  await page.goto("/#harso:chat-composer");
+  await page.getByLabel("Composer state", { exact: true }).selectOption("with attachment");
+  const input = page.getByRole("textbox", { name: "Message", exact: true });
+  await input.fill("Keep this draft");
+  const mounted = await input.elementHandle();
+  await expect(page.getByText("requirements.md", { exact: true })).toBeVisible();
+  await page.getByLabel("Disable composer input", { exact: true }).check();
+  await expect(input).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Add attachment", exact: true })).toBeDisabled();
+  await page.getByLabel("Disable composer input", { exact: true }).uncheck();
+  expect(await mounted!.evaluate(element => element.isConnected)).toBe(true);
+  await expect(input).toHaveValue("Keep this draft");
+  await page.getByLabel("Refuse submission", { exact: true }).check();
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await expect(page.getByTestId("composer-host-result")).toContainText("Submission refused");
+  await expect(input).toHaveValue("Keep this draft");
+  await expect(page.getByText("requirements.md", { exact: true })).toBeVisible();
+  await page.getByLabel("Refuse submission", { exact: true }).uncheck();
+  await page.getByRole("button", { name: "Remove requirements.md", exact: true }).click();
+  await expect(page.getByText("requirements.md", { exact: true })).toHaveCount(0);
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await expect(input).toHaveValue("");
 });
 
 test("catalogue social variants call a local host without authentication or navigation", async ({ page }) => {
@@ -193,43 +138,23 @@ test("catalogue social variants call a local host without authentication or navi
   expect(page.url()).toBe(originalUrl);
 });
 
-test("catalogue prompt attachments and refused edits stay local and survive until accepted", async ({ page }) => {
-  await page.goto("/#vercel:prompt-input");
-  const example = page.getByTestId("live-example");
-  const draft = example.getByRole("textbox", { name: "Prompt" });
-  const result = example.getByLabel("Prompt result");
+test("runtime attachment input stays local", async ({ page }) => {
+  await page.goto("/#harso:chat-composer");
   const external: string[] = [];
   page.on("request", request => { if (/^https?:/.test(request.url()) && new URL(request.url()).origin !== new URL(page.url()).origin) external.push(request.url()); });
-  await draft.fill("Retained text");
-  await example.getByLabel("Hold prompt changes").check();
-  await draft.fill("Refused replacement");
-  await expect(draft).toHaveValue("Retained text");
-  await expect(result).toContainText("Draft edit requested; host retained the draft");
-  const file = { name: "brief.txt", mimeType: "text/plain", buffer: Buffer.from("Local fixture; not uploaded") };
-  await example.locator('input[type="file"]').last().setInputFiles(file);
-  await expect(example.getByRole("list", { name: "Prompt attachments" })).toHaveCount(0);
-  await example.getByLabel("Hold prompt changes").uncheck();
-  await example.getByRole("button", { name: "Clear draft", exact: true }).click();
-  await example.locator('input[type="file"]').last().setInputFiles(file);
-  await expect(example.getByRole("list", { name: "Prompt attachments" })).toContainText("brief.txt");
-  await example.getByRole("button", { name: "Remove brief.txt" }).click();
-  await expect(example.getByRole("list", { name: "Prompt attachments" })).toHaveCount(0);
-  await expect(example.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
-  await example.locator('input[type="file"]').last().setInputFiles(file);
-  await example.getByLabel("Hold prompt changes").check();
-  await example.getByRole("button", { name: "Send", exact: true }).click();
-  await expect(example.getByRole("list", { name: "Prompt attachments" })).toContainText("brief.txt");
-  await example.getByLabel("Hold prompt changes").uncheck();
-  await example.getByRole("button", { name: "Send", exact: true }).click();
-  await expect(result).toHaveText("Accepted locally · Balanced: Attachment only · Files: brief.txt");
-  await expect(example.getByRole("list", { name: "Prompt attachments" })).toHaveCount(0);
+  const chooser = page.waitForEvent("filechooser");
+  await page.getByRole("button", { name: "Add attachment", exact: true }).click();
+  await (await chooser).setFiles({ name: "local.txt", mimeType: "text/plain", buffer: Buffer.from("local fixture") });
+  await expect(page.getByText("local.txt", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Remove local.txt", exact: true }).click();
+  await expect(page.getByText("local.txt", { exact: true })).toHaveCount(0);
   expect(external).toEqual([]);
 });
 
 test("four original consumers retain visible actionable controls at narrow and wide widths", async ({ page }) => {
   for (const width of [390, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
-    for (const family of ["vercel:toolbar", "vercel:queue", "vercel:prompt-input", "boardui:social-button"]) {
+    for (const family of ["vercel:toolbar", "vercel:queue", "harso:chat-composer", "boardui:social-button"]) {
       await page.goto(`/#${family}`);
       const example = page.getByTestId("live-example");
       await expect(example.locator("output")).toBeVisible();

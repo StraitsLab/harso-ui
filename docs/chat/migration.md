@@ -1,3 +1,116 @@
+# Phase D breaking conversation retirement
+
+Phase D (2026-09-14) supersedes the Phase A retain-all-exports policy and the
+AiProfile/AiImageGeneration out-of-scope policy below. `src/chat` is the sole
+product conversation. No legacy compatibility aliases remain. MessageResponse
+and Shimmer keep their root export names and move to runtime-free `src/text-effects`.
+Agent/trails, Question, Queue, Image, ModelSelector and dashboards remain supported.
+The private DashboardWorkspace is not a public chat API.
+
+External desktop usage and dependency pins must be audited before publishing this
+breaking kit release. Kit verification is not desktop verification. Download/export,
+profile/image templates, native read-aloud host wiring, and model/context/permission
+controls have no automatic one-to-one replacement; preserve host ownership and one
+draft owner. Use AssistantRuntimeProvider with HarsoThread and HarsoComposer.
+
+## Complete Phase D declaration disposition (91 direct declarations)
+
+| Declaration | Phase D status / replacement |
+| --- | --- |
+| `Conversation` | DELETE old export; REPLACE surviving chat use with HarsoThread (`src/chat/thread.tsx`) |
+| `ConversationContent` | DELETE old export; REPLACE surviving chat use with HarsoThread (`src/chat/thread.tsx`) |
+| `ConversationEmptyState` | DELETE old export; REPLACE surviving chat use with HarsoThread.empty |
+| `ConversationScrollButton` | DELETE old export; REPLACE surviving chat use with HarsoThread (`src/chat/thread.tsx`) |
+| `ConversationText` | DELETE; only retired conversation/starter demo export uses remain. No Harso download API exists; do not imply export parity. |
+| `messagesToMarkdown` | DELETE; only retired conversation/starter demo export uses remain. No Harso download API exists; do not imply export parity. |
+| `ConversationDownload` | DELETE; only retired conversation/starter demo export uses remain. No Harso download API exists; do not imply export parity. |
+| `Message` | DELETE old export; REPLACE surviving chat use with HarsoUserMessage / HarsoAssistantMessage (`src/chat/message.tsx`) |
+| `MessageContent` | DELETE old export; REPLACE surviving chat use with retire wrapper; HarsoUserMessage / HarsoAssistantMessage |
+| `MessageResponse` | MOVE unchanged to src/text-effects.tsx; export from src/index.ts. Runtime-free sanitized Markdown for activity/work; conversation rendering uses HarsoMarkdownText. |
+| `MessageActions` | DELETE old export; REPLACE surviving chat use with HarsoMessageActions (`src/chat/message-actions.tsx`) |
+| `MessageAction` | DELETE; REPLACE activity ArtifactAction implementation with IconButton + optional Tooltip from existing primitives/navigation (same label, type=button, ref, disabled and callback contract). Chat actions use HarsoMessageActions. |
+| `MessageActionButton` | DELETE old export; REPLACE surviving chat use with retire wrapper; new HarsoMessageActions |
+| `MessageBranch` | DELETE old export; REPLACE surviving chat use with new HarsoMessageActions branch picker |
+| `MessageBranchContent` | DELETE old export; REPLACE surviving chat use with new HarsoMessageActions branch picker |
+| `MessageBranchSelector` | DELETE old export; REPLACE surviving chat use with new HarsoMessageActions branch picker |
+| `MessageBranchPrevious` | DELETE old export; REPLACE surviving chat use with new HarsoMessageActions branch picker |
+| `MessageBranchNext` | DELETE old export; REPLACE surviving chat use with new HarsoMessageActions branch picker |
+| `MessageBranchPage` | DELETE old export; REPLACE surviving chat use with new HarsoMessageActions branch picker |
+| `MessageToolbar` | DELETE old export; REPLACE surviving chat use with retire wrapper; new HarsoMessageActions |
+| `Suggestions` | DELETE old export; REPLACE surviving chat use with HarsoThread.empty host content |
+| `Suggestion` | DELETE old export; REPLACE surviving chat use with HarsoThread.empty host content |
+| `Shimmer` | MOVE unchanged to src/text-effects.tsx; export from src/index.ts. Keep generic shimmer API, vercel:shimmer route and reduced-motion/forced-colors behavior. |
+| `Composer` | DELETE old export; REPLACE surviving chat use with HarsoComposer / HarsoComposerProps (`src/chat/composer.tsx`) |
+| `ComposerAttachments` | DELETE old export; REPLACE surviving chat use with HarsoComposerAttachment / HarsoMessageAttachment (`src/chat/attachments.tsx`) |
+| `ComposerLoader` | DELETE old export; REPLACE surviving chat use with retire; runtime send/stop state |
+| `ComposerPanelProps` | DELETE old export; REPLACE surviving chat use with HarsoComposer / HarsoComposerProps (`src/chat/composer.tsx`) |
+| `ComposerPanel` | DELETE old export; REPLACE surviving chat use with HarsoComposer / HarsoComposerProps (`src/chat/composer.tsx`) |
+| `GlassComposer` | DELETE old export; REPLACE surviving chat use with HarsoComposer / HarsoComposerProps (`src/chat/composer.tsx`) |
+| `StatusBar` | DELETE unused legacy picker/status API. Future host controls use existing Select/Dropdown/ModelSelector in HarsoComposer.leading/trailing; no one-to-one chat export and no new second permission/draft store. |
+| `AiChatComposerPreview` | DELETE old export; REPLACE surviving chat use with HarsoComposer / HarsoComposerProps (`src/chat/composer.tsx`) |
+| `ComposerWithAttachments` | DELETE old export; REPLACE surviving chat use with HarsoComposer / HarsoComposerProps (`src/chat/composer.tsx`) |
+| `ComposerAttachmentStrip` | DELETE old export; REPLACE surviving chat use with HarsoComposerAttachment / HarsoMessageAttachment (`src/chat/attachments.tsx`) |
+| `ComposerAttachmentTile` | DELETE old export; REPLACE surviving chat use with HarsoComposerAttachment / HarsoMessageAttachment (`src/chat/attachments.tsx`) |
+| `ComposerPermission` | DELETE unused legacy picker/status API. Future host controls use existing Select/Dropdown/ModelSelector in HarsoComposer.leading/trailing; no one-to-one chat export and no new second permission/draft store. |
+| `ComposerChoice` | DELETE unused legacy picker/status API. Future host controls use existing Select/Dropdown/ModelSelector in HarsoComposer.leading/trailing; no one-to-one chat export and no new second permission/draft store. |
+| `PermissionMenuProps` | DELETE unused legacy picker/status API. Future host controls use existing Select/Dropdown/ModelSelector in HarsoComposer.leading/trailing; no one-to-one chat export and no new second permission/draft store. |
+| `PermissionMenu` | DELETE unused legacy picker/status API. Future host controls use existing Select/Dropdown/ModelSelector in HarsoComposer.leading/trailing; no one-to-one chat export and no new second permission/draft store. |
+| `ComposerStatusTab` | DELETE unused legacy picker/status API. Future host controls use existing Select/Dropdown/ModelSelector in HarsoComposer.leading/trailing; no one-to-one chat export and no new second permission/draft store. |
+| `ModelPickerProps` | DELETE unused legacy picker/status API. Future host controls use existing Select/Dropdown/ModelSelector in HarsoComposer.leading/trailing; no one-to-one chat export and no new second permission/draft store. |
+| `ModelPicker` | DELETE unused legacy picker/status API. Future host controls use existing Select/Dropdown/ModelSelector in HarsoComposer.leading/trailing; no one-to-one chat export and no new second permission/draft store. |
+| `PromptInputFile` | DELETE old export; REPLACE surviving chat use with retire legacy payload type; adapter boundary |
+| `PromptInputMessage` | DELETE old export; REPLACE surviving chat use with retire legacy payload type; adapter boundary |
+| `usePromptInputController` | DELETE old export; REPLACE surviving chat use with retire local store; AssistantRuntimeProvider + runtime |
+| `useProviderAttachments` | DELETE old export; REPLACE surviving chat use with retire hooks; composer runtime attachments |
+| `usePromptInputAttachments` | DELETE old export; REPLACE surviving chat use with retire hooks; composer runtime attachments |
+| `usePromptInputReferencedSources` | DELETE old export; REPLACE surviving chat use with retire hook; host context/attachment adapter |
+| `PromptInputProps` | DELETE old export; REPLACE surviving chat use with HarsoComposer / HarsoComposerProps |
+| `PromptInput` | DELETE old export; REPLACE surviving chat use with HarsoComposer / HarsoComposerProps |
+| `PromptInputProvider` | DELETE old export; REPLACE surviving chat use with retire local store; AssistantRuntimeProvider + runtime |
+| `PromptInputTextarea` | DELETE old export; REPLACE surviving chat use with HarsoComposer internal ComposerPrimitive.Input |
+| `PromptInputFooter` | DELETE old export; REPLACE surviving chat use with HarsoComposer.leading / trailing |
+| `PromptInputTools` | DELETE old export; REPLACE surviving chat use with HarsoComposer.leading / trailing |
+| `PromptInputButton` | DELETE old export; REPLACE surviving chat use with HarsoComposer.leading / trailing |
+| `PromptInputSubmit` | DELETE old export; REPLACE surviving chat use with HarsoComposer internal Send / Cancel |
+| `PromptInputBody` | DELETE old export; REPLACE surviving chat use with retire wrappers; HarsoComposer or adjacent host region |
+| `PromptInputHeader` | DELETE old export; REPLACE surviving chat use with retire wrappers; HarsoComposer or adjacent host region |
+| `PromptInputSelect` | DELETE old export; REPLACE surviving chat use with retire wrappers; native select in HarsoComposer.leading |
+| `PromptInputSelectTrigger` | DELETE old export; REPLACE surviving chat use with retire wrappers; native select in HarsoComposer.leading |
+| `PromptInputSelectContent` | DELETE old export; REPLACE surviving chat use with retire wrappers; native select in HarsoComposer.leading |
+| `PromptInputSelectItem` | DELETE old export; REPLACE surviving chat use with retire wrappers; native select in HarsoComposer.leading |
+| `PromptInputSelectValue` | DELETE old export; REPLACE surviving chat use with retire wrappers; native select in HarsoComposer.leading |
+| `PromptInputActionMenu` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host menu in leading / trailing |
+| `PromptInputActionMenuTrigger` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host menu in leading / trailing |
+| `PromptInputActionMenuContent` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host menu in leading / trailing |
+| `PromptInputActionMenuItem` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host menu in leading / trailing |
+| `PromptInputActionAddAttachments` | DELETE old export; REPLACE surviving chat use with HarsoComposer internal AddAttachment |
+| `PromptInputActionAddScreenshot` | DELETE old export; REPLACE surviving chat use with retire built-in action; host capture control in leading |
+| `PromptInputHoverCard` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned contextual UI |
+| `PromptInputHoverCardTrigger` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned contextual UI |
+| `PromptInputHoverCardContent` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned contextual UI |
+| `PromptInputTabsList` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned picker UI |
+| `PromptInputTab` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned picker UI |
+| `PromptInputTabLabel` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned picker UI |
+| `PromptInputTabBody` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned picker UI |
+| `PromptInputTabItem` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned picker UI |
+| `PromptInputCommand` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned command picker |
+| `PromptInputCommandInput` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned command picker |
+| `PromptInputCommandList` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned command picker |
+| `PromptInputCommandEmpty` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned command picker |
+| `PromptInputCommandGroup` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned command picker |
+| `PromptInputCommandItem` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned command picker |
+| `PromptInputCommandSeparator` | DELETE old export; REPLACE surviving chat use with retire chat wrappers; host-owned command picker |
+| `AiChatProps` | DELETE public type; MOVE required dashboard section/ref/navigation/status/controlled-panel contract to private DashboardWorkspaceProps; public dashboard props extend that type. Product chat uses HarsoChatShellProps. |
+| `AiChat` | DELETE public shell; REPLACE product chat with HarsoChatShell. MOVE only non-conversation layout infrastructure required by dashboards into private DashboardWorkspace in src/dashboard-workspace.tsx (not a public AiChat alias). |
+| `AiImageGenerationProps` | DELETE entire shell and API; no direct src/chat equivalent. Profile/image primitives, charts, Image, and agent families remain. Do not recreate this template. |
+| `AiImageGeneration` | DELETE entire shell and API; no direct src/chat equivalent. Profile/image primitives, charts, Image, and agent families remain. Do not recreate this template. |
+| `AiProfileProps` | DELETE entire shell and API; no direct src/chat equivalent. Profile/image primitives, charts, Image, and agent families remain. Do not recreate this template. |
+| `AiProfile` | DELETE entire shell and API; no direct src/chat equivalent. Profile/image primitives, charts, Image, and agent families remain. Do not recreate this template. |
+| `ChatStarterProps` | DELETE old export; REPLACE surviving chat use with HarsoChatShell + HarsoThread.empty |
+| `ChatStarter` | DELETE old export; REPLACE surviving chat use with HarsoChatShell + HarsoThread.empty |
+
+## Historical Phase A migration snapshot (2026-09-13; not current support)
+
 # Legacy conversation migration map
 
 Snapshot: 2026-09-13, during parallel Phase A implementation. Every declaration

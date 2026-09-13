@@ -1,7 +1,6 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { ActivityRingsCard, BarListCard, FunnelChartCard, RevenueChartCard, SankeyChartCard, ScatterChartCard, StageBarsCard } from "./chart-cards";
-import { AiChatExample } from "../preview/ai-chat-example";
 beforeAll(() => {
   Object.defineProperties(HTMLDialogElement.prototype, {
     show: { configurable: true, value() { this.open = true; } },
@@ -12,16 +11,16 @@ beforeAll(() => {
 afterAll(() => {
   for (const method of ["show", "showModal", "close"]) Reflect.deleteProperty(HTMLDialogElement.prototype, method);
 });
-import { AiProfileExample } from "../preview/ai-profile-example";
 import { FinanceExample } from "../preview/finance-example";
 import { MarketingDashboardExample } from "../preview/marketing-dashboard-example";
 import { HomeDashboardExample } from "../preview/home-dashboard-example";
 import { HrManagementExample } from "../preview/hr-management-example";
 import { MedicalProfileExample } from "../preview/medical-profile-example";
-import { ImageGenerationExample } from "../preview/image-generation-example";
 
 vi.mock("../../../../apps/ui-preview/node_modules/react", async () => import("react"));
 
+// Phase D: the AI Chat, AI Profile and Image Generation template cases left with their retired demos (the
+// product conversation is src/chat; profile/image templates have no replacement). Chart and dashboard proofs remain.
 describe("WEV-1492 exact chart and template proof", () => {
   it("ring pointer hover selects its metric, dims siblings and restores the aggregate on leave", () => {
     const view = render(<ActivityRingsCard title="Activity" rings={[{ id: "move", label: "Move", value: 25, target: 100, unit: "kcal" }, { id: "run", label: "Run", value: 10, target: 20, unit: "km" }]} />);
@@ -131,44 +130,6 @@ describe("WEV-1492 exact chart and template proof", () => {
     expect(screen.getByRole("status")).toHaveTextContent("January — Current: 20 · Previous: 10");
   });
 
-  it("AI Chat repository file selection opens actual inert code and preserves recent-chat isolation", async () => {
-    render(<AiChatExample state="default" />);
-    fireEvent.click(screen.getByRole("button", { name: "Welcome.tsx" }));
-    const panel = await screen.findByRole("dialog", { name: "Proposed changes" });
-    expect(panel).toHaveTextContent("Welcome.tsx · Proposed, not applied");
-    expect(panel.querySelector("code")).toHaveTextContent("export function Welcome()");
-    expect(panel.querySelector("code")).toHaveTextContent("<h1>A little space to create.</h1>");
-    expect(panel.querySelector("h1")).toBeNull();
-    fireEvent.click(within(panel).getByRole("button", { name: "Close context panel" }));
-    fireEvent.click(screen.getByRole("button", { name: "Test planning" }));
-    expect(screen.getByText("The host has not started this task. No test results are available yet.")).toBeVisible();
-    expect(screen.queryByText("Create a calm landing page for our studio.")).not.toBeInTheDocument();
-  });
-
-  it("profile heatmap and plotted token inspection use the actual selected month data", () => {
-    const view = render(<AiProfileExample state="default" />);
-    const heatmap = within(view.container.querySelector(".hk-heatmap")!);
-    fireEvent.pointerEnter(heatmap.getByRole("button", { name: "Sat · Week of 07-27: 6" }));
-    expect(heatmap.getByRole("status")).toHaveTextContent("Sat · Week of 07-27: 6");
-    expect(heatmap.getByRole("button", { name: "Sat · Week of 07-27: 6" })).toHaveAttribute("data-intensity", "0.6");
-    expect(heatmap.getByRole("rowheader", { name: "Sat" })).toHaveAttribute("data-active", "true");
-    const trend = within(view.container.querySelector(".hk-interactive-chart")!);
-    const trendPath = () => view.container.querySelector(".hk-interactive-line")!.getAttribute("d")!;
-    expect(Number(trendPath().match(/^M44,([\d.]+)/)![1])).toBeCloseTo(104.6451612903);
-    fireEvent.pointerEnter(trend.getByRole("button", { name: /Inspect 2026-08-04/ }));
-    expect(trend.getByRole("status")).toHaveTextContent("2026-08-04 — Tokens used: 90");
-    expect(Number(view.container.querySelector(".hk-interactive-dot")!.getAttribute("cy"))).toBeCloseTo(180.3374689826);
-    fireEvent.change(screen.getByRole("combobox", { name: "Activity month" }), { target: { value: "2026-07" } });
-    const updated = within(view.container.querySelector(".hk-heatmap")!);
-    fireEvent.pointerEnter(updated.getByRole("button", { name: "Wed · Week of 06-29: 4" }));
-    expect(updated.getByRole("status")).toHaveTextContent("Wed · Week of 06-29: 4");
-    expect(updated.getByRole("button", { name: "Wed · Week of 06-29: 4" })).toHaveAttribute("data-intensity", "0.4");
-    expect(trend.queryByRole("button", { name: /Inspect 2026-08-04/ })).not.toBeInTheDocument();
-    fireEvent.pointerEnter(trend.getByRole("button", { name: /Inspect 2026-07-01/ }));
-    expect(trend.getByRole("status")).toHaveTextContent("2026-07-01 — Tokens used: 1300");
-    expect(Number(trendPath().match(/^M44,([\d.]+)/)![1])).toBeCloseTo(131.4876847291);
-  });
-
   it("finance composes real Sankey rings scatter and heatmap with supplied financial values", () => {
     const view = render(<FinanceExample state="default" />);
     const flow = within(screen.getByRole("region", { name: "Cash flow" }));
@@ -245,19 +206,6 @@ describe("WEV-1492 exact chart and template proof", () => {
     expect(screen.getByLabelText("Marketing request")).toHaveTextContent("Inspect Aug: organic 9000, paid 0, social 2000");
   });
 
-  it("profile contribution statistics are actual period totals rather than static slot labels", () => {
-    render(<AiProfileExample state="default" />);
-    const statistics = screen.getByLabelText("Monthly contributions");
-    const values = () => [...statistics.querySelectorAll("dd > .hk-stat-value")].map(node => node.textContent);
-    expect(values()).toEqual(["156", "26", "78", "64,650"]);
-    fireEvent.change(screen.getByRole("combobox", { name: "Profile data" }), { target: { value: "empty" } });
-    expect(screen.queryByLabelText("Monthly contributions")).not.toBeInTheDocument();
-    expect(screen.getByText("No activity recorded for this example.")).toBeVisible();
-    fireEvent.change(screen.getByRole("combobox", { name: "Profile data" }), { target: { value: "ready" } });
-    fireEvent.change(screen.getByRole("combobox", { name: "Activity month" }), { target: { value: "2026-07" } });
-    expect([...screen.getByLabelText("Monthly contributions").querySelectorAll("dd > .hk-stat-value")].map(node => node.textContent)).toEqual(["154", "26", "77", "64,000"]);
-  });
-
   it("home earnings bars and inspection amounts follow the selected period and empty data", () => {
     render(<HomeDashboardExample state="default" />);
     const earnings = screen.getByRole("region", { name: "Earnings" });
@@ -279,7 +227,7 @@ describe("WEV-1492 exact chart and template proof", () => {
 
   it("home navigation and search change the actual customer view", () => {
     render(<HomeDashboardExample state="default" />);
-    const navigation = within(screen.getByRole("navigation", { name: "Chat workspace" }));
+    const navigation = within(screen.getByRole("navigation", { name: "Dashboard workspace" }));
     fireEvent.click(navigation.getByRole("button", { name: "Customers" }));
     expect(navigation.getByRole("button", { name: "Customers" })).toHaveAttribute("aria-current", "page");
     expect(screen.queryByRole("region", { name: "Earnings" })).not.toBeInTheDocument();
@@ -345,35 +293,6 @@ describe("WEV-1492 exact chart and template proof", () => {
     expect(identity().querySelector("h3")).toHaveTextContent("Mira Sample");
     expect(values()).toEqual(["1991-04-12", "Woman", "A+", "Dr. Taylor Sample"]);
     expect(screen.getByRole("combobox", { name: "Selected profile" })).toHaveValue("1");
-  });
-
-  it("image agent sidebar scopes history and drafts while prompt thread and status track work", () => {
-    const view = render(<ImageGenerationExample state="default" />);
-    const navigation = within(screen.getByRole("navigation", { name: "Chat workspace" }));
-    expect(navigation.getByRole("button", { name: "Image artist" })).toHaveAttribute("aria-pressed", "true");
-    expect(navigation.getByRole("button", { name: "A quiet horizon · complete" })).toHaveAttribute("aria-current", "page");
-    fireEvent.click(navigation.getByRole("button", { name: "Warm morning light · complete" }));
-    expect(view.container.querySelector(".hk-message-response")).toHaveTextContent("Warm morning light");
-    expect(screen.getByText("Illustration · Soft · Portrait")).toBeInTheDocument();
-    fireEvent.change(screen.getByRole("textbox", { name: "Describe your image" }), { target: { value: "Artist draft" } });
-    fireEvent.click(navigation.getByRole("button", { name: "Product studio" }));
-    expect(navigation.queryByRole("button", { name: "Warm morning light · complete" })).not.toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "Describe your image" })).toHaveValue("");
-    expect(screen.getByText("Product studio · Local preview")).toBeInTheDocument();
-    fireEvent.change(screen.getByRole("textbox", { name: "Describe your image" }), { target: { value: "A copper teapot" } });
-    fireEvent.change(screen.getByRole("combobox", { name: "Model" }), { target: { value: "Photo" } });
-    fireEvent.click(screen.getByRole("button", { name: "Generate image" }));
-    expect(view.container.querySelector(".hk-message-response")).toHaveTextContent("A copper teapot");
-    expect(screen.getByText("Photo · Soft · Landscape")).toBeInTheDocument();
-    expect(screen.getByText("Product studio · Generating · synthetic")).toBeInTheDocument();
-    expect(navigation.getByRole("button", { name: "A copper teapot · generating" })).toHaveAttribute("aria-current", "page");
-    fireEvent.click(screen.getByRole("button", { name: "Stop generation" }));
-    expect(screen.getByText("Product studio · Local preview")).toBeInTheDocument();
-    expect(navigation.getByRole("button", { name: "A copper teapot · stopped" })).toHaveAttribute("aria-current", "page");
-    fireEvent.click(navigation.getByRole("button", { name: "Image artist" }));
-    expect(screen.getByRole("textbox", { name: "Describe your image" })).toHaveValue("Artist draft");
-    expect(view.container.querySelector(".hk-message-response")).toHaveTextContent("Warm morning light");
-    expect(navigation.queryByRole("button", { name: "A copper teapot · stopped" })).not.toBeInTheDocument();
   });
 
   it("HR team tabs expose roster distributions and chart details disclose their supplied observations", () => {

@@ -189,8 +189,8 @@ for (const family of ["home-dashboard", "hr-management", "marketing-dashboard", 
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.setViewportSize({ width: 1512, height: 1040 });
     await page.goto(`/#boardui:${family}`);
-    const workspace = page.getByTestId("live-example").locator(".hk-ai-workspace");
-    const navigation = workspace.getByRole("navigation", { name: "Chat workspace", exact: true });
+    const workspace = page.getByTestId("live-example").locator(".hk-dashboard-workspace");
+    const navigation = workspace.getByRole("navigation", { name: "Dashboard workspace", exact: true });
     const toggle = workspace.getByRole("button", { name: "Toggle workspace navigation", exact: true });
     const target = { "home-dashboard": "Customers", "hr-management": "Employees", "marketing-dashboard": "Campaigns", "medical-profile": "Patients" }[family]!;
     for (const width of [1512, 390]) {
@@ -258,22 +258,6 @@ test("readiness carousel measures full peek mixed widths and start center alignm
   }
 });
 
-test("readiness profile shell opens and dismisses profile navigation at narrow and wide widths", async ({ page }) => {
-  await page.goto("/#boardui:ai-profile");
-  const workspace = page.locator(".hk-profile-workspace");
-  for (const width of [1512, 390]) {
-    await page.setViewportSize({ width, height: 1040 });
-    await expect(workspace).toHaveAttribute("data-compact", String(width === 390));
-    await workspace.getByRole("button", { name: "Browse profiles", exact: true }).click();
-    const panel = workspace.getByRole("dialog", { name: "Profiles", exact: true });
-    await expect(panel).toBeVisible();
-    await panel.getByRole("button", { name: "Noah Rivera", exact: true }).click();
-    await expect(panel).toHaveCount(0);
-    await expect(workspace.getByRole("heading", { name: "Noah Rivera", exact: true })).toBeVisible();
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  }
-});
-
 test("readiness finance shell navigation changes actual content at narrow and wide widths", async ({ page }) => {
   await page.goto("/#boardui:finance-dashboard");
   const navigation = page.getByRole("navigation", { name: "Finance navigation" });
@@ -289,65 +273,38 @@ test("readiness finance shell navigation changes actual content at narrow and wi
   }
 });
 
-for (const family of ["ai-chat", "chat-starter"]) {
-  test(`readiness ${family} sidebar stays mounted and preserves drafts across responsive toggles`, async ({ page }) => {
-    await page.goto(`/#boardui:${family}`);
-    const workspace = page.getByTestId("live-example").locator(".hk-ai-workspace");
-    const navigation = workspace.getByRole("navigation", { name: "Chat workspace", exact: true });
-    const draft = workspace.getByRole("textbox", { name: family === "ai-chat" ? "Message" : "Starter message", exact: true });
-    await draft.fill("A draft retained across layouts");
-    const original = await draft.elementHandle();
-    for (const width of [1512, 390]) {
-      await page.setViewportSize({ width, height: 1040 });
-      await expect(workspace).toHaveAttribute("data-compact", String(width === 390));
-      const toggle = workspace.locator(".hk-ai-navigation-toggle");
-      if (width === 390) {
-        await expect(navigation).toBeHidden();
-        await toggle.click();
-        await expect(navigation).toBeVisible();
-        const backdrop = workspace.getByRole("button", { name: "Close workspace navigation", exact: true });
-        const backdropBounds = (await backdrop.boundingBox())!;
-        // The drawer covers the backdrop's centre; click its exposed right edge.
-        await backdrop.click({ position: { x: backdropBounds.width - 8, y: 8 } });
-        await expect(navigation).toBeHidden();
-      } else {
-        await expect(navigation).toBeVisible();
-        await expect(toggle).toBeHidden();
-      }
-      await expect(draft).toHaveValue("A draft retained across layouts");
-      expect(await draft.evaluate((element, previous) => element === previous, original)).toBe(true);
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    }
-  });
-}
+test("runtime branches and feedback preserve draft ownership", async ({ page }) => {
+  await page.goto("/#harso:chat-thread");
+  await page.getByLabel("Thread state", { exact: true }).selectOption("branching");
+  const draft = page.getByRole("textbox", { name: "Message", exact: true });
+  await draft.fill("Keep these local notes");
+  await expect(page.getByText("2 of 2", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Previous branch", exact: true }).click();
+  await expect(page.getByText("1 of 2", { exact: true })).toBeVisible();
+  await expect(page.getByRole("log")).toContainText("First branch: start with a focused launch.");
+  await page.getByRole("button", { name: "Helpful", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Helpful", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Next branch", exact: true }).click();
+  await expect(page.getByRole("log")).toContainText("Second branch: begin with an invitation.");
+  await expect(draft).toHaveValue("Keep these local notes");
+  await page.getByRole("button", { name: "Previous branch", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Helpful", exact: true })).toHaveAttribute("aria-pressed", "true");
+});
 
-test("readiness starter message feedback rename export preview and synthetic stop stay conversation scoped", async ({ page }) => {
-  await page.goto("/#boardui:chat-starter");
-  const workspace = page.locator(".hk-starter-workspace");
-  const helpful = workspace.getByRole("button", { name: "Helpful", exact: true });
-  await helpful.click();
-  await expect(helpful).toHaveAttribute("aria-pressed", "true");
-  await workspace.getByRole("button", { name: "Personal ideas Unread", exact: true }).click();
-  await expect(helpful).toHaveAttribute("aria-pressed", "false");
-  await workspace.getByRole("button", { name: "Personal welcome", exact: true }).click();
-  await expect(helpful).toHaveAttribute("aria-pressed", "true");
-  await workspace.getByRole("button", { name: "Actions for Personal welcome", exact: true }).click();
-  await page.getByRole("menuitem", { name: "Rename", exact: true }).click();
-  await workspace.getByLabel("Conversation name").fill("Readiness notes");
-  await workspace.getByRole("button", { name: "Save name", exact: true }).click();
-  await expect(workspace.getByRole("heading", { name: "Readiness notes", exact: true })).toBeVisible();
-  const draft = workspace.getByRole("textbox", { name: "Starter message", exact: true });
-  await draft.fill("A uniquely identifiable local request");
-  await workspace.getByRole("button", { name: "Send", exact: true }).click();
-  await expect(workspace.getByText("Working · synthetic")).toBeVisible();
-  await workspace.getByRole("button", { name: "Stop", exact: true }).click();
-  await expect(workspace.getByText("Stopped in this synthetic example.")).toBeVisible();
-  await expect(workspace.getByText("Working · synthetic")).toHaveCount(0);
-  await workspace.getByRole("button", { name: "Export preview", exact: true }).click();
-  const exported = workspace.getByRole("region", { name: "Export preview", exact: true });
-  await expect(exported.locator("pre")).toContainText("## user\n\nA uniquely identifiable local request");
-  await expect(exported.locator("pre")).toContainText("## assistant\n\nStopped in this synthetic example.");
-  await workspace.getByRole("button", { name: "Personal ideas", exact: true }).click();
-  await expect(exported).toHaveCount(0);
-  await expect(draft).toHaveValue("");
+test("Harso shell retains runtime draft across responsive navigation", async ({ page }) => {
+  await page.goto("/#harso:chat-shell");
+  const draft = page.getByRole("textbox", { name: "Message", exact: true });
+  await draft.fill("A draft retained across layouts");
+  const original = await draft.elementHandle();
+  for (const width of [1512, 390, 1024]) {
+    await page.setViewportSize({ width, height: 1040 });
+    await expect(draft).toHaveValue("A draft retained across layouts");
+    expect(await original!.evaluate(element => element.isConnected)).toBe(true);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    if (width === 390) {
+      await page.getByRole("button", { name: "Open conversations", exact: true }).click();
+      await expect(page.getByRole("button", { name: "New conversation", exact: true })).toBeVisible();
+      await page.keyboard.press("Escape");
+    }
+  }
 });

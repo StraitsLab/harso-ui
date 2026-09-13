@@ -25,16 +25,16 @@ test.beforeEach(async ({ page }) => {
 });
 
 for (const transition of ["view", "disabled", "unmount"]) test(`read aloud cancels on ${transition}`, async ({ page }) => {
-  await page.goto("/#boardui:chat-starter");
+  await page.goto("/#vercel:speech-input");
   await page.getByRole("button", { name: "Read aloud", exact: true }).click();
-  if (transition === "view") await page.getByRole("button", { name: "Dashboard", exact: true }).click();
-  if (transition === "disabled") await page.getByRole("combobox", { name: "Starter state" }).selectOption("disabled");
-  if (transition === "unmount") await page.getByRole("button", { name: "Speech Input V Initial implementation", exact: true }).click();
+  if (transition === "view") await page.getByLabel("Speech view", { exact: true }).selectOption("Dashboard");
+  if (transition === "disabled") await page.getByLabel("Disable read aloud", { exact: true }).check();
+  if (transition === "unmount") await page.getByLabel("Mount read aloud", { exact: true }).uncheck();
   expect(await page.evaluate(() => (window as unknown as { speechCalls: string[] }).speechCalls)).toHaveLength(2);
 });
 
 test("stale utterance completion cannot clear a newer reading", async ({ page }) => {
-  await page.goto("/#boardui:chat-starter");
+  await page.goto("/#vercel:speech-input");
   await page.getByRole("button", { name: "Read aloud", exact: true }).click();
   await page.evaluate(() => {
     const browser = window as unknown as { saveSpeechEnd: () => () => void; lateEnd: () => void };
@@ -51,26 +51,27 @@ for (const failure of ["unsupported", "startup"]) test(`read aloud reports ${fai
     if (failure === "unsupported") Reflect.deleteProperty(window, "SpeechSynthesisUtterance");
     else window.speechSynthesis.speak = () => { throw new Error("Output unavailable"); };
   }, failure);
-  await page.goto("/#boardui:chat-starter");
+  await page.goto("/#vercel:speech-input");
   await page.getByRole("button", { name: "Read aloud", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText(/unavailable/i);
   await expect(page.getByRole("button", { name: "Read aloud", exact: true })).toBeVisible();
 });
 
 test("local read aloud honors refusal, stops, and cancels across conversation/team boundaries", async ({ page }) => {
-  await page.goto("/#boardui:chat-starter");
+  await page.goto("/#vercel:speech-input");
   const read = page.getByRole("button", { name: "Read aloud", exact: true });
-  await page.getByLabel("Hold host state").check();
   await read.click();
-  expect(await page.evaluate(() => (window as unknown as { speechCalls: string[] }).speechCalls)).toEqual([]);
-  await page.getByLabel("Hold host state").uncheck();
-  await read.click();
+  await page.getByLabel("Refuse speech host changes", { exact: true }).check();
+  await page.getByLabel("Speech identity", { exact: true }).selectOption("Team");
+  await expect(page.getByLabel("Speech identity", { exact: true })).toHaveValue("Personal");
   await expect(page.getByRole("button", { name: "Stop reading", exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Personal ideas Unread", exact: true }).click();
+  expect(await page.evaluate(() => (window as unknown as { speechCalls: string[] }).speechCalls)).toHaveLength(1);
+  await page.getByLabel("Refuse speech host changes", { exact: true }).uncheck();
+  await page.getByLabel("Speech view", { exact: true }).selectOption("Dashboard");
   expect(await page.evaluate(() => (window as unknown as { speechCalls: string[] }).speechCalls)).toHaveLength(2);
+  await page.getByLabel("Speech view", { exact: true }).selectOption("Conversation");
   await read.click();
-  await page.getByRole("button", { name: "Personal team", exact: true }).click();
-  await page.getByRole("menuitemradio", { name: "Studio", exact: true }).click();
+  await page.getByLabel("Speech identity", { exact: true }).selectOption("Team");
   expect(await page.evaluate(() => (window as unknown as { speechCalls: string[] }).speechCalls)).toHaveLength(4);
   await read.click();
   await page.evaluate(() => (window as unknown as { failSpeech: () => void }).failSpeech());
@@ -82,7 +83,7 @@ test("local read aloud honors refusal, stops, and cancels across conversation/te
 
 test("no remote voice fallback", async ({ page }) => {
   await page.addInitScript(() => { window.speechSynthesis.getVoices = () => [{ localService: false, lang: "en-US" } as SpeechSynthesisVoice]; });
-  await page.goto("/#boardui:chat-starter");
+  await page.goto("/#vercel:speech-input");
   await page.getByRole("button", { name: "Read aloud", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText("local voice");
   expect(await page.evaluate(() => (window as unknown as { speechCalls: string[] }).speechCalls)).toEqual([]);

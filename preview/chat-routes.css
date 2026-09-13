@@ -11,3 +11,6 @@
 .hkl-chat-stage { flex: 1; min-height: 0; display: flex; flex-direction: column; container-type: inline-size; }
 .hkl-chat-stage > * { flex: 1; min-height: 0; }
 @media (max-width: 640px) { .hkl-chat-header { display: none; } }
+
+/* The thread fixture needs a real scroll viewport (reader position, "Latest message"); other chat routes keep page scroll so Axe can reach every element. */
+.hkl-chat-root:has(> .hkl-chat-stage[data-route="harso:chat-thread"]) { height: 100dvh; }

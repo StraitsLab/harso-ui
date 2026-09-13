@@ -76,10 +76,6 @@ body { margin: 0; }
 .hkl-footer { margin-top: 64px; padding-bottom: 32px; font-size: 11px; color: var(--hk-secondary); }
 .hkc-stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; min-width: 0; width: 100%; }
 .hkc-stack > output { color: var(--hk-secondary); font-size: 12px; min-height: 18px; }
-.hkc-chat-heading { display: flex; align-items: center; justify-content: space-between; padding: 8px 28px; font-size: 12px; color: var(--hk-secondary); }
-.hkc-message-sample { padding: 24px 28px; }
-.hkc-message-sample .hk-disclosure { margin-top: 28px; }
-@media (max-width: 620px) { .hkc-chat-heading { padding-inline: 4px; } .hkc-message-sample { padding: 16px 4px; } }
 .hkl-mobile-navigation { display: none; }
 .hkl-no-results { color: var(--hk-secondary); font-size: 13px; padding: 24px 12px; }
 .hkl-skip { position: absolute; left: 24px; top: -100px; padding: 12px 20px; background: var(--hk-ink); color: var(--hk-inverse); border-radius: 24px; z-index: 10; }
@@ -180,3 +176,5 @@ body { margin: 0; }
   .hkl-foundation-example, .hkl-pending { padding: 16px; }
   .hkl-example-row { gap: 12px; }
 }
+
+.hkl-work-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--hk-space-2); }

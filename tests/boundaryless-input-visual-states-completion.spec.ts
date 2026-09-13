@@ -51,14 +51,8 @@ async function mountSpeechStates(page: Page) {
 }
 
 for (const appearance of ["light", "dark"] as const) for (const palette of ["clean", "cozy"]) for (const width of [390, 1440]) {
-  test(`INPUT VISUAL ${appearance} ${palette} ${width} current prompt and mocked speech states`, async ({ page }, testInfo) => {
+  test(`INPUT VISUAL ${appearance} ${palette} ${width} runtime composer and mocked speech states`, async ({ page }, testInfo) => {
     const mutation = process.env.INPUT_VISUAL_MUTATION;
-    if (mutation === "reference") await page.route("**/consumer-readiness-examples.tsx*", async route => {
-      const response = await route.fetch();
-      const body = await response.text();
-      expect(body).toContain("referencedSources.add(source)");
-      await route.fulfill({ response, body: body.replace("referencedSources.add(source)", "undefined") });
-    });
     if (mutation === "accent") await page.route("**/primitives.css*", async route => {
       const response = await route.fetch();
       const body = await response.text();
@@ -70,45 +64,26 @@ for (const appearance of ["light", "dark"] as const) for (const palette of ["cle
     await page.emulateMedia({ reducedMotion: "no-preference", colorScheme: appearance });
     const externalRequests: string[] = [];
     page.on("request", request => { if (new URL(request.url()).origin !== new URL(test.info().project.use.baseURL!).origin && !request.url().startsWith("data:")) externalRequests.push(request.url()); });
-    await page.goto("/#vercel:prompt-input");
-    await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
-    await page.getByLabel("Palette", { exact: true }).selectOption(palette);
-    const prompt = page.getByTestId("live-example");
-    await prompt.getByRole("textbox", { name: "Prompt", exact: true }).fill("Review the supplied project brief.\nKeep this draft local.");
-    await expect(prompt.getByRole("button", { name: "Send", exact: true })).toBeEnabled();
-    await expect(prompt.getByRole("tab", { name: "brief.md", exact: true })).toHaveAttribute("aria-selected", "true");
-    await prompt.getByRole("tab", { name: "notes.md", exact: true }).click();
-    await expect(prompt.getByRole("tabpanel")).toContainText("Keep review comments concise");
-    await prompt.getByRole("button", { name: "Project rules", exact: true }).focus();
-    await expect(prompt.getByText("Use existing kit controls. Never read workspace files.", { exact: true })).toBeVisible();
-    await prompt.getByRole("button", { name: "Project rules", exact: true }).press("Escape");
-    const search = prompt.getByRole("combobox", { name: "Find supplied context" });
-    await search.fill("no-such-context");
-    await expect(prompt.getByText("No supplied context matches.", { exact: true })).toBeVisible();
-    await search.fill("brief");
-    await search.press("ArrowDown");
-    await search.press("Enter");
-    const references = prompt.getByRole("list", { name: "Selected context" });
-    await expect(references).toContainText("brief.md");
-    await search.press("Enter");
-    await expect(references.getByRole("listitem")).toHaveCount(1);
-    await prompt.getByLabel("Hold prompt changes").check();
-    await prompt.getByRole("button", { name: "Remove context brief.md" }).click();
-    await expect(references.getByRole("listitem")).toHaveCount(1);
-    await prompt.getByLabel("Hold prompt changes").uncheck();
-    await prompt.getByLabel("Disable prompt").check();
-    await expect(search).toBeDisabled();
-    await expect(prompt.getByRole("tab", { name: "brief.md", exact: true })).toBeDisabled();
-    await prompt.getByLabel("Disable prompt").uncheck();
-    await expect(prompt.getByRole("tab", { name: "notes.md", exact: true })).toHaveAttribute("aria-selected", "true");
-    await expect(prompt.getByRole("textbox", { name: "Prompt", exact: true })).toHaveValue("Review the supplied project brief.\nKeep this draft local.");
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    await prompt.screenshot({ path: testInfo.outputPath("current-prompt-gallery.png") });
-    await prompt.getByRole("button", { name: "Send", exact: true }).click();
-    await expect(prompt.getByLabel("Prompt result")).toContainText("Context: brief.md");
-    await expect(references.getByRole("listitem")).toHaveCount(1);
-    await prompt.getByRole("button", { name: "Remove context brief.md" }).click();
-    await expect(prompt.getByText("No context selected.", { exact: true })).toBeVisible();
+    await page.goto("/#harso:chat-composer");
+    await page.evaluate(({ appearance, palette }) => { const kit = document.querySelector<HTMLElement>(".harso-kit")!; kit.dataset.mode = appearance; kit.dataset.palette = palette; }, { appearance, palette });
+    const prompt = page.getByTestId("composer-fixture");
+    for (const state of ["empty", "typing", "disabled", "error", "with attachment", "refused submission"]) {
+      await page.getByLabel("Composer state", { exact: true }).selectOption(state);
+      const input = prompt.getByRole("textbox", { name: "Message", exact: true });
+      if (state === "disabled") await expect(input).toBeDisabled();
+      else await expect(input).toBeEnabled();
+      if (state === "empty" || state === "disabled") await expect(prompt.getByRole("button", { name: "Send", exact: true })).toBeDisabled();
+      if (state === "error") await expect(prompt.getByRole("alert")).toBeVisible();
+      if (state === "with attachment") await expect(prompt.getByText("requirements.md", { exact: true })).toBeVisible();
+      if (state === "refused submission") {
+        await input.fill("Review the supplied project brief.");
+        await prompt.getByRole("button", { name: "Send", exact: true }).click();
+        await expect(input).toHaveValue("Review the supplied project brief.");
+        await expect(page.getByTestId("composer-host-result")).toContainText("Submission refused");
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      await prompt.screenshot({ path: testInfo.outputPath(`composer-${state}.png`) });
+    }
     await page.goto("/#vercel:speech-input");
     await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
     await page.getByLabel("Palette", { exact: true }).selectOption(palette);

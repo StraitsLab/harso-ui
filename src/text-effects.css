@@ -1,0 +1,28 @@
+.hk-message-response { min-width: 0; overflow-wrap: anywhere; }
+.hk-message-response > * + * { margin-top: var(--hk-space-4); }
+.hk-message-response > :first-child { margin-top: 0; }
+.hk-message-response :is(h1, h2, h3, h4) { line-height: 1.4; font-weight: 500; letter-spacing: -.01em; color: var(--hk-ink); }
+.hk-message-response h1 { font-size: var(--hk-text-title); }
+.hk-message-response h2 { font-size: var(--hk-text-title); }
+.hk-message-response h3 { font-size: var(--hk-text-user); line-height: 1.5; }
+.hk-message-response :is(h1, h2, h3) + * { margin-top: 12px; }
+.hk-message-response a { color: var(--hk-accent); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: currentColor; }
+.hk-message-response a:hover { text-decoration-thickness: 2px; }
+.hk-message-response pre { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--hk-surface); border: 1px solid var(--hk-line); box-shadow: none; padding: var(--hk-space-4); border-radius: 12px; font-family: var(--hk-mono); font-size: var(--hk-text-sm); line-height: 1.65; color: var(--hk-ink); }
+.hk-message-response code { font-family: var(--hk-mono); font-size: .85em; }
+.hk-message-response pre > code { font-size: inherit; }
+.hk-message-response :not(pre) > code { background: var(--hk-hover); padding: 2px 7px; border-radius: 6px; }
+.hk-message-response table { display: block; overflow-x: auto; max-width: 100%; border-collapse: collapse; font-size: var(--hk-text-base); line-height: 1.5; }
+.hk-message-response th { font-weight: 500; color: var(--hk-secondary); font-size: var(--hk-text-base); }
+.hk-message-response :is(th, td) { padding: 8px var(--hk-space-6) 8px 0; border-bottom: 1px solid var(--hk-line); text-align: start; }
+.hk-message-response tr:last-child td { border-bottom: 0; }
+.hk-message-response blockquote { margin-inline: 0; border-inline-start: 2px solid var(--hk-line-strong); padding-inline-start: var(--hk-space-4); color: var(--hk-secondary); }
+.hk-message-response ul, .hk-message-response ol { padding-inline-start: 22px; }
+.hk-message-response li + li { margin-top: 4px; }
+.hk-message-response li::marker { color: var(--hk-faint); }
+.hk-message-image-label { color: var(--hk-tertiary); font-size: var(--hk-text-sm); }
+.hk-shimmer { color: var(--hk-ink); }
+.hk-shimmer[data-active] { background: linear-gradient(105deg, var(--hk-secondary) calc(50% - var(--hk-shimmer-spread)), var(--hk-ink) 50%, var(--hk-secondary) calc(50% + var(--hk-shimmer-spread))); background-size: 220% 100%; background-clip: text; -webkit-background-clip: text; color: transparent; animation: hk-text-shimmer var(--hk-shimmer-duration) linear infinite; }
+@keyframes hk-text-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce), (forced-colors: active) { .hk-shimmer[data-active] { animation: none; background: none; color: var(--hk-ink); } }
+@media (forced-colors: active) { .hk-message-response pre { border-color: CanvasText; } }

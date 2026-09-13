@@ -3,7 +3,7 @@
 @import "./activity.css";
 @import "./data.css";
 @import "./work.css";
-@import "./conversation.css";
+@import "./text-effects.css";
 @import "./dates.css";
 @import "./navigation.css";
 @import "./controls.css";
@@ -26,7 +26,6 @@
 @import "./edge.css";
 @import "./panel.css";
 @import "./toolbar.css";
-@import "./prompt-input.css";
 @import "./selectors.css";
 @import "./image.css";
 @import "./transcription.css";
@@ -44,9 +43,9 @@
 @import "./open-in-chat.css";
 @import "./chart-cards.css";
 @import "./agent-surfaces.css";
+@import "./dashboard-workspace.css";
 @import "./misc-surfaces.css";
 @import "./dashboard-surfaces.css";
-@import "./composer.css";
 
 .hk-button {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;

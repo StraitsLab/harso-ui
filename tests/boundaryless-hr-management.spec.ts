@@ -86,7 +86,7 @@ for (const width of [1512, 390]) for (const mode of ["light", "dark"] as const) 
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(await workspace.evaluate(element => {
-      const thread = element.querySelector(".hk-ai-workspace-thread")!;
+      const thread = element.querySelector(".hk-dashboard-workspace-thread")!;
       const charts = element.querySelector(".hk-hr-charts")!;
       return charts.getBoundingClientRect().width <= thread.clientWidth;
     })).toBe(true);

@@ -2,7 +2,6 @@ import { test, expect } from "@playwright/test";
 
 const cases = [
   { name: "Announcement", hash: "boardui:announcement", selector: ".hk-announcement:first-child", close: "Dismiss A little more room to think.", open: "Show announcement again" },
-  { name: "Loader", hash: "boardui:composer-loader", selector: ".hk-composer-loader", close: "Stop preview", open: "Start preview" },
   { name: "Notification", hash: "boardui:notification", selector: ".hk-notification", close: "Dismiss notification", open: "Show notification" },
 ];
 
@@ -47,14 +46,13 @@ for (const surface of cases) {
           await expect(target).toHaveAttribute("hidden", "");
           await expect(target).toHaveCSS("display", "none");
           await expect(target).toHaveCSS("opacity", "0");
-          await expect(example.getByRole("status").filter({ hasText: surface.name === "Loader" ? "Preparing work unit" : "Work unit updated" })).toHaveCount(0);
+          await expect(example.getByRole("status").filter({ hasText: "Work unit updated" })).toHaveCount(0);
         } else {
           await expect(target).not.toHaveAttribute("hidden");
           await expect(target).toHaveCSS("opacity", "1");
           await expect(target).toBeVisible();
         }
       }
-      if (reducedMotion === "reduce" && surface.name === "Loader") await expect(target.locator(".hk-composer-orbit")).toHaveCSS("animation-name", "none");
       await testInfo.attach("presence-frames", { body: JSON.stringify(samples), contentType: "application/json" });
     });
   }

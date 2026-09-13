@@ -1,3 +1,17 @@
+> **Phase D — 2026-09-14 current support:** 114 active reference families
+> (69 BoardUI + 45 Vercel), 359 part records (328 Vercel), 15 helpers.
+> Twelve reference families are retired. `src/chat` is the sole product conversation;
+> MessageResponse/Shimmer moved to runtime-free `src/text-effects` with root names intact.
+> Agent/trails, Queue, Image, Question and all dashboards remain. The private
+> DashboardWorkspace is not a public chat alias. See [Phase D migration](chat/migration.md).
+> Original capture counts, hashes, paths, tests and acceptance claims below are a
+> **historical pre-retirement snapshot**, not active support or a fresh run.
+> External desktop pin/usage migration is NOT verified by kit tests; audit before release.
+
+## Active migration gaps
+
+Export/download, read-aloud host wiring and context/model/permission controls remain host responsibilities. Retired API implementation promises in the snapshot below are closed by retirement, not promised work. No template or desktop parity is claimed.
+
 # Every open library requirement
 
 WEV-1498. Immutable inventory; zero-based row indices. Unverified means an unclosed proof obligation, not necessarily a missing implementation. See coverage.json for complete history.

@@ -6,7 +6,12 @@
       "retrievedAt": "2026-09-06T05:37:14.114Z",
       "componentCount": 77,
       "uiComponentCount": 66,
-      "supplementalCapture": { "date": "2026-09-07", "family": "questionnaire", "identity": "sha256:d4124b3e45006762ffc52c25674d7f1d14893ec6a9236230c2eb91ec467292bc", "note": "Original Sept 6 source identity covers 76 families; this public capture adds Questionnaire." },
+      "supplementalCapture": {
+        "date": "2026-09-07",
+        "family": "questionnaire",
+        "identity": "sha256:d4124b3e45006762ffc52c25674d7f1d14893ec6a9236230c2eb91ec467292bc",
+        "note": "Original Sept 6 source identity covers 76 families; this public capture adds Questionnaire."
+      },
       "foundationCount": 2,
       "templateCount": 9,
       "identity": "sha256:d0475d8f95dce8b508182065d8bc50aab216b1c2cb46a64ec054ddb0860d418a",
@@ -22,7 +27,7 @@
     }
   ],
   "accounting": {
-    "note": "126 individually mapped reference families: 66 BoardUI components, 2 BoardUI foundations, 9 BoardUI templates and 49 Vercel AI Elements components. Questionnaire supplements the Sept 6 inventory with a Sept 7 public capture. Public template compositions are included, not excluded. Five BoardUI showcase routes duplicate these families. Vercel question is public in pinned repository documentation but absent from the website sitemap. AI SDK transport/hooks are behavior APIs, not additional visual components; no runtime adoption is implied.",
+    "note": "Phase D active reference inventory; original source captures and identities remain historical provenance.",
     "boardUiDiscovery": {
       "discovery_union": "All official /components/* pages appearing in sitemap, navigation, gallery, or linked documentation; recursively followed all observed /templates/* routes.",
       "unvisited_discovered_catalogue_urls": [],
@@ -79,28 +84,28 @@
         "kind": "showcase_page"
       },
       {
-        "name": "Chat Starter — Dashboard",
+        "name": "Chat Starter \u2014 Dashboard",
         "url": "https://www.boardui.com/components/chat-starter",
         "kind": "showcase_page"
       },
       {
-        "name": "Chat Starter — Components and Blocks",
+        "name": "Chat Starter \u2014 Components and Blocks",
         "url": "https://www.boardui.com/components/chat-starter",
         "kind": "showcase_page"
       },
       {
-        "name": "Chat Starter — Sign in",
+        "name": "Chat Starter \u2014 Sign in",
         "url": "https://www.boardui.com/components/chat-starter",
         "kind": "showcase_page"
       },
       {
-        "name": "Chat Starter — Sign up",
+        "name": "Chat Starter \u2014 Sign up",
         "url": "https://www.boardui.com/components/chat-starter",
         "kind": "showcase_page"
       }
     ],
-    "apiPartCount": 422,
-    "helperApiCount": 21,
+    "apiPartCount": 359,
+    "helperApiCount": 15,
     "vercelAnatomyAudit": {
       "date": "2026-09-06",
       "issue": "WEV-1446",
@@ -110,6 +115,24 @@
       "reclassifiedUiNames": 2,
       "addedDocumentedTypes": 3,
       "note": "Curated pinned-document anatomy, not compiled export parity. Shared headings, subcomponent bullets, shared-props prose, public type imports and Types blocks supplement the original first-heading capture. Edge.Temporary and Edge.Animated were already captured but misclassified as helpers. Source identities and inventorySha256 describe the original discovery inputs and are unchanged; they are not a hash of this corrected catalogue. BoardUI was not re-audited. Future, unlinked and gated-only entries remain outside the captured reference set."
+    },
+    "historicalNote": "126 individually mapped reference families: 66 BoardUI components, 2 BoardUI foundations, 9 BoardUI templates and 49 Vercel AI Elements components. Questionnaire supplements the Sept 6 inventory with a Sept 7 public capture. Public template compositions are included, not excluded. Five BoardUI showcase routes duplicate these families. Vercel question is public in pinned repository documentation but absent from the website sitemap. AI SDK transport/hooks are behavior APIs, not additional visual components; no runtime adoption is implied.",
+    "active": {
+      "families": 114,
+      "parts": 359,
+      "helpers": 15,
+      "byVendor": {
+        "boardui": {
+          "families": 69,
+          "parts": 31,
+          "retiredFamilies": 8
+        },
+        "vercel": {
+          "families": 45,
+          "parts": 328,
+          "retiredFamilies": 4
+        }
+      }
     }
   },
   "components": [
@@ -125,15 +148,47 @@
       "access": "Public reference; gated source not used",
       "harsoExport": "Questionnaire",
       "parts": [],
-      "helperApis": ["`QuestionnaireAnswers`"],
-      "variants": ["Multiple select", "Single select", "Mixed selection", "Other response", "Controlled answers and steps", "Default answers and steps", "Custom labels", "Dismissible"],
+      "helperApis": [
+        "`QuestionnaireAnswers`"
+      ],
+      "variants": [
+        "Multiple select",
+        "Single select",
+        "Mixed selection",
+        "Other response",
+        "Controlled answers and steps",
+        "Default answers and steps",
+        "Custom labels",
+        "Dismissible"
+      ],
       "variantDetails": [
-        { "name": "Prompt, option rows, optional Other field, step pills, Previous/Next/Done and dismiss", "kind": "documented_option_or_state", "dimension": "anatomy", "url": "https://www.boardui.com/components/questionnaire" },
-        { "name": "Directional question slide and animated height", "kind": "documented_option_or_state", "dimension": "motion", "url": "https://www.boardui.com/components/questionnaire" }
+        {
+          "name": "Prompt, option rows, optional Other field, step pills, Previous/Next/Done and dismiss",
+          "kind": "documented_option_or_state",
+          "dimension": "anatomy",
+          "url": "https://www.boardui.com/components/questionnaire"
+        },
+        {
+          "name": "Directional question slide and animated height",
+          "kind": "documented_option_or_state",
+          "dimension": "motion",
+          "url": "https://www.boardui.com/components/questionnaire"
+        }
       ],
       "evidence": "sha256:d4124b3e45006762ffc52c25674d7f1d14893ec6a9236230c2eb91ec467292bc",
-      "uncertainty": ["Public documentation only; no gated implementation inspected. Disabled, invalid configuration, scoped shortcuts and reduced motion are Harso safeguards, not claimed observed reference behavior."],
-      "interactions": ["Toggle multiple choices", "Single choice auto-advances after configurable 180ms default", "Digits select numbered rows", "Typing selects Other; Enter advances", "Navigate previous/next or step pills with retained answers", "Done reports answers in option order", "Host controls answers and steps", "Dismiss callback"]
+      "uncertainty": [
+        "Public documentation only; no gated implementation inspected. Disabled, invalid configuration, scoped shortcuts and reduced motion are Harso safeguards, not claimed observed reference behavior."
+      ],
+      "interactions": [
+        "Toggle multiple choices",
+        "Single choice auto-advances after configurable 180ms default",
+        "Digits select numbered rows",
+        "Typing selects Other; Enter advances",
+        "Navigate previous/next or step pills with retained answers",
+        "Done reports answers in option order",
+        "Host controls answers and steps",
+        "Dismiss callback"
+      ]
     },
     {
       "id": "boardui:activity-rings-card",
@@ -469,284 +524,6 @@
         "Choose wave, spin, stars, or infinity",
         "set label/tone/timer/shimmer",
         "fall back to static for reduced motion"
-      ]
-    },
-    {
-      "id": "boardui:ai-chat",
-      "vendor": "boardui",
-      "slug": "ai-chat",
-      "name": "AI Chat",
-      "category": "Templates",
-      "kind": "template",
-      "description": "Full coding-agent chat workspace template.",
-      "url": "https://www.boardui.com/components/ai-chat",
-      "access": "pro",
-      "harsoExport": "AiChat",
-      "parts": [],
-      "variants": [
-        "Agent sidebar",
-        "Repositories tree",
-        "Recent chats",
-        "Message thread",
-        "Feedback actions",
-        "Composer",
-        "Status bar",
-        "Changes/code panel",
-        "Browser preview"
-      ],
-      "variantDetails": [
-        {
-          "name": "Agent sidebar",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-chat#whats-included"
-        },
-        {
-          "name": "Repositories tree",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-chat#whats-included"
-        },
-        {
-          "name": "Recent chats",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-chat#whats-included"
-        },
-        {
-          "name": "Message thread",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-chat#whats-included"
-        },
-        {
-          "name": "Feedback actions",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-chat#whats-included"
-        },
-        {
-          "name": "Composer",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-chat#whats-included"
-        },
-        {
-          "name": "Status bar",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-chat#whats-included"
-        },
-        {
-          "name": "Changes/code panel",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-chat#whats-included"
-        },
-        {
-          "name": "Browser preview",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-chat#whats-included"
-        }
-      ],
-      "evidence": "sha256:9342ffeb012a82ecafbbc63f28037af2049ceacc9a54f0a8133c59c0b2122cef",
-      "uncertainty": [
-        "Public documentation describes behavior; full runtime, accessibility, and backend behavior were not independently tested."
-      ],
-      "interactions": [
-        "Navigate repository/recent chats",
-        "use message feedback and composer",
-        "switch Changes/Browser side panel"
-      ]
-    },
-    {
-      "id": "boardui:ai-image-generation",
-      "vendor": "boardui",
-      "slug": "ai-image-generation",
-      "name": "AI Image Generation",
-      "category": "Templates",
-      "kind": "template",
-      "description": "Full image-generation conversation and gallery template.",
-      "url": "https://www.boardui.com/components/ai-image-generation",
-      "access": "pro",
-      "harsoExport": "AiImageGeneration",
-      "parts": [],
-      "variants": [
-        "Agent sidebar",
-        "Prompt thread",
-        "Generation frame",
-        "Countdown",
-        "Canvas ripple placeholder",
-        "Mask reveal",
-        "Feedback row",
-        "Composer",
-        "Status bar",
-        "Masonry gallery"
-      ],
-      "variantDetails": [
-        {
-          "name": "Agent sidebar",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        },
-        {
-          "name": "Prompt thread",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        },
-        {
-          "name": "Generation frame",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        },
-        {
-          "name": "Countdown",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        },
-        {
-          "name": "Canvas ripple placeholder",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        },
-        {
-          "name": "Mask reveal",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        },
-        {
-          "name": "Feedback row",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        },
-        {
-          "name": "Composer",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        },
-        {
-          "name": "Status bar",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        },
-        {
-          "name": "Masonry gallery",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-image-generation#whats-included"
-        }
-      ],
-      "evidence": "sha256:352b22f382f53df17cfb80572f42fcf9a73255d4bc59f0aa38c7931b80b71ab1",
-      "uncertainty": [
-        "Public documentation describes behavior; full runtime, accessibility, and backend behavior were not independently tested.",
-        "Timing, uploads, generated content, or backend integration may be simulated/configurable. No live provider call, upload, or deployment was exercised."
-      ],
-      "interactions": [
-        "Show countdown/reveal frame",
-        "copy feedback with confirmation",
-        "download/open gallery actions",
-        "use composer controls"
-      ]
-    },
-    {
-      "id": "boardui:ai-profile",
-      "vendor": "boardui",
-      "slug": "ai-profile",
-      "name": "AI Profile",
-      "category": "Templates",
-      "kind": "template",
-      "description": "AI-work contributions profile template.",
-      "url": "https://www.boardui.com/components/ai-profile",
-      "access": "pro",
-      "harsoExport": "AiProfile",
-      "parts": [],
-      "variants": [
-        "Responsive app shell",
-        "Profile card",
-        "Cover photo",
-        "Share/edit actions",
-        "Contribution stats",
-        "Activity heatmap",
-        "Agents bar chart",
-        "Tokens trend chart",
-        "Mobile drawer"
-      ],
-      "variantDetails": [
-        {
-          "name": "Responsive app shell",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-profile#whats-included"
-        },
-        {
-          "name": "Profile card",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-profile#whats-included"
-        },
-        {
-          "name": "Cover photo",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-profile#whats-included"
-        },
-        {
-          "name": "Share/edit actions",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-profile#whats-included"
-        },
-        {
-          "name": "Contribution stats",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-profile#whats-included"
-        },
-        {
-          "name": "Activity heatmap",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-profile#whats-included"
-        },
-        {
-          "name": "Agents bar chart",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-profile#whats-included"
-        },
-        {
-          "name": "Tokens trend chart",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-profile#whats-included"
-        },
-        {
-          "name": "Mobile drawer",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/ai-profile#whats-included"
-        }
-      ],
-      "evidence": "sha256:1a410a6eac621fe3493951cb4ea8a69ee465ebf73e5aae3cce0402ee88a41d8e",
-      "uncertainty": [
-        "Public documentation describes behavior; full runtime, accessibility, and backend behavior were not independently tested."
-      ],
-      "interactions": [
-        "Share/edit profile",
-        "inspect heatmap",
-        "change agents-chart month",
-        "inspect tokens trend",
-        "use responsive drawer"
       ]
     },
     {
@@ -1862,118 +1639,6 @@
       "listedInSitemap": true
     },
     {
-      "id": "boardui:chat-starter",
-      "vendor": "boardui",
-      "slug": "chat-starter",
-      "name": "Chat Starter",
-      "category": "Templates",
-      "kind": "template",
-      "description": "Free working AI-chat starter with related dashboard and authentication pages.",
-      "url": "https://www.boardui.com/components/chat-starter",
-      "access": "free_public",
-      "harsoExport": "ChatStarter",
-      "parts": [],
-      "variants": [
-        "App sidebar",
-        "Team and user menus",
-        "Chat composer",
-        "Thinking indicator",
-        "Chat history rail",
-        "Rename",
-        "Unread",
-        "Export",
-        "Message actions",
-        "Dashboard",
-        "Sign-in screen",
-        "Sign-up screen"
-      ],
-      "variantDetails": [
-        {
-          "name": "App sidebar",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Team and user menus",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Chat composer",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Thinking indicator",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Chat history rail",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Rename",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Unread",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Export",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Message actions",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Dashboard",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Sign-in screen",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        },
-        {
-          "name": "Sign-up screen",
-          "kind": "named_template_constituent",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/chat-starter#whats-included"
-        }
-      ],
-      "evidence": "sha256:9ab198d67d2f7ba23e3bb0e042e298692b48239fce9ba76d90835c2f29f782ec",
-      "uncertainty": [
-        "Public documentation describes behavior; full runtime, accessibility, and backend behavior were not independently tested.",
-        "Timing, uploads, generated content, or backend integration may be simulated/configurable. No live provider call, upload, or deployment was exercised."
-      ],
-      "interactions": [
-        "Stream/stop replies",
-        "copy/read aloud",
-        "rename/export local chat history",
-        "provider integration is described but not exercised"
-      ]
-    },
-    {
       "id": "boardui:checkbox",
       "vendor": "boardui",
       "slug": "checkbox",
@@ -2652,513 +2317,6 @@
       "listedInSitemap": true
     },
     {
-      "id": "boardui:composer",
-      "vendor": "boardui",
-      "slug": "composer",
-      "name": "Composer",
-      "category": "Blocks",
-      "kind": "block_component",
-      "description": "Agent-chat prompt pill and status/control assembly.",
-      "url": "https://www.boardui.com/components/composer",
-      "access": "pro",
-      "harsoExport": "Composer",
-      "parts": [
-        {
-          "name": "GlassComposer",
-          "harsoExport": "GlassComposer",
-          "note": "Public prose and/or public documentation example"
-        },
-        {
-          "name": "StatusBar",
-          "harsoExport": "StatusBar",
-          "note": "Public prose and/or public documentation example"
-        },
-        {
-          "name": "AiChatComposerPreview",
-          "harsoExport": "AiChatComposerPreview",
-          "note": "Public prose and/or public documentation example"
-        }
-      ],
-      "variants": [
-        "Working state",
-        "The parts",
-        "Idle",
-        "Composer",
-        "StatusBar",
-        "AiChatComposerPreview",
-        "GlassComposer"
-      ],
-      "variantDetails": [
-        {
-          "name": "Working state",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer#working-state"
-        },
-        {
-          "name": "The parts",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer#parts"
-        },
-        {
-          "name": "Idle",
-          "kind": "documented_option_or_state",
-          "dimension": "state",
-          "url": "https://www.boardui.com/components/composer#working-state"
-        },
-        {
-          "name": "Working state",
-          "kind": "documented_option_or_state",
-          "dimension": "state",
-          "url": "https://www.boardui.com/components/composer#working-state"
-        },
-        {
-          "name": "Composer",
-          "kind": "documented_option_or_state",
-          "dimension": "part",
-          "url": "https://www.boardui.com/components/composer#parts"
-        },
-        {
-          "name": "StatusBar",
-          "kind": "documented_option_or_state",
-          "dimension": "part",
-          "url": "https://www.boardui.com/components/composer#parts"
-        },
-        {
-          "name": "AiChatComposerPreview",
-          "kind": "documented_option_or_state",
-          "dimension": "part",
-          "url": "https://www.boardui.com/components/composer#parts"
-        },
-        {
-          "name": "GlassComposer",
-          "kind": "documented_option_or_state",
-          "dimension": "part",
-          "url": "https://www.boardui.com/components/composer#parts"
-        }
-      ],
-      "evidence": "sha256:2dd23c5d35118ad6f3130c66c2aa747148584a600c08f818deb7b40e29b4df08",
-      "uncertainty": [
-        "Public documentation describes behavior; full runtime, accessibility, and backend behavior were not independently tested."
-      ],
-      "interactions": [
-        "Use attachment/model menus, microphone/send controls",
-        "show branch/project/context",
-        "transition to working/glass treatment"
-      ]
-    },
-    {
-      "id": "boardui:composer-attachments",
-      "vendor": "boardui",
-      "slug": "composer-attachments",
-      "name": "Composer Attachments",
-      "category": "Blocks",
-      "kind": "block_component",
-      "description": "Composer attachments with individual progress tiles and a sequential queue.",
-      "url": "https://www.boardui.com/components/composer-attachments",
-      "access": "pro",
-      "harsoExport": "ComposerAttachments",
-      "parts": [
-        {
-          "name": "ComposerWithAttachments",
-          "harsoExport": "ComposerWithAttachments",
-          "note": "Public prose and/or public documentation example"
-        },
-        {
-          "name": "ComposerAttachmentStrip",
-          "harsoExport": "ComposerAttachmentStrip",
-          "note": "Public prose and/or public documentation example"
-        },
-        {
-          "name": "ComposerAttachmentTile",
-          "harsoExport": "ComposerAttachmentTile",
-          "note": "Public prose and/or public documentation example"
-        }
-      ],
-      "variants": [
-        "Upload queue",
-        "Tile kinds",
-        "Bring your own uploader",
-        "image",
-        "document",
-        "spreadsheet",
-        "presentation",
-        "code",
-        "video",
-        "Queued",
-        "Uploading",
-        "Landed",
-        "Simulated sequential queue",
-        "Real uploader progress"
-      ],
-      "variantDetails": [
-        {
-          "name": "Upload queue",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer-attachments#queue"
-        },
-        {
-          "name": "Tile kinds",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer-attachments#kinds"
-        },
-        {
-          "name": "Bring your own uploader",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer-attachments#own-uploader"
-        },
-        {
-          "name": "image",
-          "kind": "documented_option_or_state",
-          "dimension": "kind",
-          "url": "https://www.boardui.com/components/composer-attachments#kinds"
-        },
-        {
-          "name": "document",
-          "kind": "documented_option_or_state",
-          "dimension": "kind",
-          "url": "https://www.boardui.com/components/composer-attachments#kinds"
-        },
-        {
-          "name": "spreadsheet",
-          "kind": "documented_option_or_state",
-          "dimension": "kind",
-          "url": "https://www.boardui.com/components/composer-attachments#kinds"
-        },
-        {
-          "name": "presentation",
-          "kind": "documented_option_or_state",
-          "dimension": "kind",
-          "url": "https://www.boardui.com/components/composer-attachments#kinds"
-        },
-        {
-          "name": "code",
-          "kind": "documented_option_or_state",
-          "dimension": "kind",
-          "url": "https://www.boardui.com/components/composer-attachments#kinds"
-        },
-        {
-          "name": "video",
-          "kind": "documented_option_or_state",
-          "dimension": "kind",
-          "url": "https://www.boardui.com/components/composer-attachments#kinds"
-        },
-        {
-          "name": "Queued",
-          "kind": "documented_option_or_state",
-          "dimension": "upload",
-          "url": "https://www.boardui.com/components/composer-attachments#queue"
-        },
-        {
-          "name": "Uploading",
-          "kind": "documented_option_or_state",
-          "dimension": "upload",
-          "url": "https://www.boardui.com/components/composer-attachments#queue"
-        },
-        {
-          "name": "Landed",
-          "kind": "documented_option_or_state",
-          "dimension": "upload",
-          "url": "https://www.boardui.com/components/composer-attachments#queue"
-        },
-        {
-          "name": "Simulated sequential queue",
-          "kind": "documented_option_or_state",
-          "dimension": "control",
-          "url": "https://www.boardui.com/components/composer-attachments#own-uploader"
-        },
-        {
-          "name": "Real uploader progress",
-          "kind": "documented_option_or_state",
-          "dimension": "control",
-          "url": "https://www.boardui.com/components/composer-attachments#own-uploader"
-        }
-      ],
-      "evidence": "sha256:6a46f7378722d9aa046351364061fee74f656682d22fa8ba2bab549eddf7773e",
-      "uncertainty": [
-        "Public documentation describes behavior; full runtime, accessibility, and backend behavior were not independently tested.",
-        "Timing, uploads, generated content, or backend integration may be simulated/configurable. No live provider call, upload, or deployment was exercised."
-      ],
-      "interactions": [
-        "Queue files",
-        "animate upload percentage/ring",
-        "dismiss landed tiles",
-        "accept real externally supplied progress"
-      ]
-    },
-    {
-      "id": "boardui:composer-loader",
-      "vendor": "boardui",
-      "slug": "composer-loader",
-      "name": "Composer Loader",
-      "category": "Blocks",
-      "kind": "block_component",
-      "description": "Animated perimeter loading treatment for an existing composer.",
-      "url": "https://www.boardui.com/components/composer-loader",
-      "access": "free_public",
-      "harsoExport": "ComposerLoader",
-      "parts": [],
-      "variants": [
-        "In a conversation",
-        "The composer itself",
-        "Active",
-        "Inactive",
-        "Reduced-motion static",
-        "colors",
-        "arc",
-        "bloom",
-        "bloomStrength",
-        "speed"
-      ],
-      "variantDetails": [
-        {
-          "name": "In a conversation",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer-loader#conversation"
-        },
-        {
-          "name": "The composer itself",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer-loader#composer"
-        },
-        {
-          "name": "Active",
-          "kind": "documented_option_or_state",
-          "dimension": "state",
-          "url": "https://www.boardui.com/components/composer-loader#conversation"
-        },
-        {
-          "name": "Inactive",
-          "kind": "documented_option_or_state",
-          "dimension": "state",
-          "url": "https://www.boardui.com/components/composer-loader#conversation"
-        },
-        {
-          "name": "Reduced-motion static",
-          "kind": "documented_option_or_state",
-          "dimension": "state",
-          "url": "https://www.boardui.com/components/composer-loader#conversation"
-        },
-        {
-          "name": "colors",
-          "kind": "documented_option_or_state",
-          "dimension": "tuning",
-          "url": "https://www.boardui.com/components/composer-loader#options"
-        },
-        {
-          "name": "arc",
-          "kind": "documented_option_or_state",
-          "dimension": "tuning",
-          "url": "https://www.boardui.com/components/composer-loader#options"
-        },
-        {
-          "name": "bloom",
-          "kind": "documented_option_or_state",
-          "dimension": "tuning",
-          "url": "https://www.boardui.com/components/composer-loader#options"
-        },
-        {
-          "name": "bloomStrength",
-          "kind": "documented_option_or_state",
-          "dimension": "tuning",
-          "url": "https://www.boardui.com/components/composer-loader#options"
-        },
-        {
-          "name": "speed",
-          "kind": "documented_option_or_state",
-          "dimension": "tuning",
-          "url": "https://www.boardui.com/components/composer-loader#options"
-        }
-      ],
-      "evidence": "sha256:dd9f34180940daaad2c23387949503bbba53830f31967e9ca1c6dd1f8f56c440",
-      "uncertainty": [
-        "Public documentation describes behavior; full runtime, accessibility, and backend behavior were not independently tested.",
-        "Loader is free; its public demonstration composes the separate Pro Composer. The demo does not grant Pro source access."
-      ],
-      "interactions": [
-        "Fade on/off with waiting state",
-        "adjust colors/arc/bloom/speed",
-        "stop motion for reduced-motion preference"
-      ]
-    },
-    {
-      "id": "boardui:composer-panel",
-      "vendor": "boardui",
-      "slug": "composer-panel",
-      "name": "Composer Panel",
-      "category": "Blocks",
-      "kind": "block_component",
-      "description": "Two-row agent prompt card with permissions, model picker, and status tab.",
-      "url": "https://www.boardui.com/components/composer-panel",
-      "access": "pro",
-      "harsoExport": "ComposerPanel",
-      "parts": [
-        {
-          "name": "PermissionMenu",
-          "harsoExport": "PermissionMenu",
-          "note": "Public prose and/or public documentation example"
-        },
-        {
-          "name": "ComposerStatusTab",
-          "harsoExport": "ComposerStatusTab",
-          "note": "Public prose and/or public documentation example"
-        },
-        {
-          "name": "ModelPicker",
-          "harsoExport": "ModelPicker",
-          "note": "Public prose and/or public documentation example"
-        }
-      ],
-      "variants": [
-        "Permissions",
-        "Model picker",
-        "Status tab",
-        "Attachments",
-        "Auto",
-        "Manual",
-        "Plan mode",
-        "Bypass all",
-        "Provider rail",
-        "Model radio rows",
-        "Effort popover",
-        "Quick Search",
-        "ComposerStatusTab",
-        "Custom status",
-        "No status",
-        "Enter sends",
-        "Shift+Enter newline",
-        "Disabled send"
-      ],
-      "variantDetails": [
-        {
-          "name": "Permissions",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer-panel#permissions"
-        },
-        {
-          "name": "Model picker",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer-panel#models"
-        },
-        {
-          "name": "Status tab",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer-panel#status-tab"
-        },
-        {
-          "name": "Attachments",
-          "kind": "named_documentation_composition_or_example",
-          "dimension": null,
-          "url": "https://www.boardui.com/components/composer-panel#attachments"
-        },
-        {
-          "name": "Auto",
-          "kind": "documented_option_or_state",
-          "dimension": "permission",
-          "url": "https://www.boardui.com/components/composer-panel#permissions"
-        },
-        {
-          "name": "Manual",
-          "kind": "documented_option_or_state",
-          "dimension": "permission",
-          "url": "https://www.boardui.com/components/composer-panel#permissions"
-        },
-        {
-          "name": "Plan mode",
-          "kind": "documented_option_or_state",
-          "dimension": "permission",
-          "url": "https://www.boardui.com/components/composer-panel#permissions"
-        },
-        {
-          "name": "Bypass all",
-          "kind": "documented_option_or_state",
-          "dimension": "permission",
-          "url": "https://www.boardui.com/components/composer-panel#permissions"
-        },
-        {
-          "name": "Provider rail",
-          "kind": "documented_option_or_state",
-          "dimension": "composition",
-          "url": "https://www.boardui.com/components/composer-panel#models"
-        },
-        {
-          "name": "Model radio rows",
-          "kind": "documented_option_or_state",
-          "dimension": "composition",
-          "url": "https://www.boardui.com/components/composer-panel#models"
-        },
-        {
-          "name": "Effort popover",
-          "kind": "documented_option_or_state",
-          "dimension": "composition",
-          "url": "https://www.boardui.com/components/composer-panel#models"
-        },
-        {
-          "name": "Quick Search",
-          "kind": "documented_option_or_state",
-          "dimension": "composition",
-          "url": "https://www.boardui.com/components/composer-panel#models"
-        },
-        {
-          "name": "ComposerStatusTab",
-          "kind": "documented_option_or_state",
-          "dimension": "status",
-          "url": "https://www.boardui.com/components/composer-panel#status-tab"
-        },
-        {
-          "name": "Custom status",
-          "kind": "documented_option_or_state",
-          "dimension": "status",
-          "url": "https://www.boardui.com/components/composer-panel#status-tab"
-        },
-        {
-          "name": "No status",
-          "kind": "documented_option_or_state",
-          "dimension": "status",
-          "url": "https://www.boardui.com/components/composer-panel#status-tab"
-        },
-        {
-          "name": "Enter sends",
-          "kind": "documented_option_or_state",
-          "dimension": "input",
-          "url": "https://www.boardui.com/components/composer-panel#wiring"
-        },
-        {
-          "name": "Shift+Enter newline",
-          "kind": "documented_option_or_state",
-          "dimension": "input",
-          "url": "https://www.boardui.com/components/composer-panel#wiring"
-        },
-        {
-          "name": "Disabled send",
-          "kind": "documented_option_or_state",
-          "dimension": "input",
-          "url": "https://www.boardui.com/components/composer-panel#wiring"
-        }
-      ],
-      "evidence": "sha256:face1389a406a8eef61e7177606b16a0bd8bd737f35869edf6b3eaaff45413e5",
-      "uncertainty": [
-        "Public documentation describes behavior; full runtime, accessibility, and backend behavior were not independently tested.",
-        "Public documentation describes six effort positions from Faster to Smarter; this pass does not establish every stop label. Provider/model lineups are sample data, not component variants."
-      ],
-      "interactions": [
-        "Choose permission/provider/model/effort",
-        "search lineups",
-        "auto-grow prompt",
-        "Enter sends and Shift+Enter adds a line",
-        "attach files"
-      ]
-    },
-    {
       "id": "vercel:confirmation",
       "vendor": "vercel",
       "slug": "confirmation",
@@ -3362,47 +2520,6 @@
       "helperApis": [],
       "evidence": "git:6a9d5b1822ffb10bba4bd97175f01edd7d8651cd:apps/docs/content/components/(workflow)/controls.mdx:8cc3beda3bc4f29a4526cbcc150ed00b3df7dbe6",
       "documentationSha256": "592ab406e179adc3d41fb5ee6629d907269d548f645766f862ddcd76017c9299",
-      "listedInSitemap": true
-    },
-    {
-      "id": "vercel:conversation",
-      "vendor": "vercel",
-      "slug": "conversation",
-      "name": "Conversation",
-      "category": "AI / chatbot",
-      "kind": "component",
-      "description": "Wraps messages and automatically scrolls to the bottom. Also includes a scroll button that appears when not at the bottom.",
-      "url": "https://elements.ai-sdk.dev/components/conversation",
-      "access": "public_documentation_and_open_source",
-      "harsoExport": "Conversation",
-      "parts": [
-        {
-          "name": "Conversation",
-          "harsoExport": "Conversation"
-        },
-        {
-          "name": "ConversationContent",
-          "harsoExport": "ConversationContent"
-        },
-        {
-          "name": "ConversationEmptyState",
-          "harsoExport": "ConversationEmptyState"
-        },
-        {
-          "name": "ConversationScrollButton",
-          "harsoExport": "ConversationScrollButton"
-        },
-        {
-          "name": "ConversationDownload",
-          "harsoExport": "ConversationDownload"
-        }
-      ],
-      "variants": [],
-      "helperApis": [
-        "`messagesToMarkdown`"
-      ],
-      "evidence": "git:6a9d5b1822ffb10bba4bd97175f01edd7d8651cd:apps/docs/content/components/(chatbot)/conversation.mdx:33b82899476f4c4e8402eb271a237a383c5f1594",
-      "documentationSha256": "806bfb96bc8af2100e1e25b3e947f9e850c16cb4c9a2068197c16dfe1ed0aecf",
       "listedInSitemap": true
     },
     {
@@ -4181,18 +3298,18 @@
       "harsoExport": "HeatmapChartCard",
       "parts": [],
       "variants": [
-        "Weekday × hour",
-        "Region × month"
+        "Weekday \u00d7 hour",
+        "Region \u00d7 month"
       ],
       "variantDetails": [
         {
-          "name": "Weekday × hour",
+          "name": "Weekday \u00d7 hour",
           "kind": "documented_option_or_state",
           "dimension": "matrix-composition",
           "url": "https://www.boardui.com/components/heatmap-chart-card#data"
         },
         {
-          "name": "Region × month",
+          "name": "Region \u00d7 month",
           "kind": "documented_option_or_state",
           "dimension": "matrix-composition",
           "url": "https://www.boardui.com/components/heatmap-chart-card#data"
@@ -5069,73 +4186,6 @@
       ]
     },
     {
-      "id": "vercel:message",
-      "vendor": "vercel",
-      "slug": "message",
-      "name": "Message",
-      "category": "AI / chatbot",
-      "kind": "component",
-      "description": "A comprehensive suite of components for displaying chat messages, including message rendering, branching, actions, and markdown responses.",
-      "url": "https://elements.ai-sdk.dev/components/message",
-      "access": "public_documentation_and_open_source",
-      "harsoExport": "Message",
-      "parts": [
-        {
-          "name": "Message",
-          "harsoExport": "Message"
-        },
-        {
-          "name": "MessageContent",
-          "harsoExport": "MessageContent"
-        },
-        {
-          "name": "MessageResponse",
-          "harsoExport": "MessageResponse"
-        },
-        {
-          "name": "MessageActions",
-          "harsoExport": "MessageActions"
-        },
-        {
-          "name": "MessageAction",
-          "harsoExport": "MessageAction"
-        },
-        {
-          "name": "MessageBranch",
-          "harsoExport": "MessageBranch"
-        },
-        {
-          "name": "MessageBranchContent",
-          "harsoExport": "MessageBranchContent"
-        },
-        {
-          "name": "MessageBranchSelector",
-          "harsoExport": "MessageBranchSelector"
-        },
-        {
-          "name": "MessageBranchPrevious",
-          "harsoExport": "MessageBranchPrevious"
-        },
-        {
-          "name": "MessageBranchNext",
-          "harsoExport": "MessageBranchNext"
-        },
-        {
-          "name": "MessageBranchPage",
-          "harsoExport": "MessageBranchPage"
-        },
-        {
-          "name": "MessageToolbar",
-          "harsoExport": "MessageToolbar"
-        }
-      ],
-      "variants": [],
-      "helperApis": [],
-      "evidence": "git:6a9d5b1822ffb10bba4bd97175f01edd7d8651cd:apps/docs/content/components/(chatbot)/message.mdx:ed1898470558d0e71a67e6bfee4e29a68b19bdd2",
-      "documentationSha256": "d008e3840b937ebf2b9c85c3887a5277e7f2d1ba9a4fef3853b9b601ef5c0158",
-      "listedInSitemap": true
-    },
-    {
       "id": "vercel:mic-selector",
       "vendor": "vercel",
       "slug": "mic-selector",
@@ -5952,175 +5002,6 @@
       "listedInSitemap": true
     },
     {
-      "id": "vercel:prompt-input",
-      "vendor": "vercel",
-      "slug": "prompt-input",
-      "name": "Prompt Input",
-      "category": "AI / chatbot",
-      "kind": "component",
-      "description": "Allows a user to send a message with file attachments to a large language model. It includes a textarea, file upload capabilities, a submit button, and a dropdown for selecting the model.",
-      "url": "https://elements.ai-sdk.dev/components/prompt-input",
-      "access": "public_documentation_and_open_source",
-      "harsoExport": "PromptInput",
-      "parts": [
-        {
-          "name": "PromptInput",
-          "harsoExport": "PromptInput"
-        },
-        {
-          "name": "PromptInputTextarea",
-          "harsoExport": "PromptInputTextarea"
-        },
-        {
-          "name": "PromptInputFooter",
-          "harsoExport": "PromptInputFooter"
-        },
-        {
-          "name": "PromptInputTools",
-          "harsoExport": "PromptInputTools"
-        },
-        {
-          "name": "PromptInputButton",
-          "harsoExport": "PromptInputButton"
-        },
-        {
-          "name": "PromptInputSubmit",
-          "harsoExport": "PromptInputSubmit"
-        },
-        {
-          "name": "PromptInputSelect",
-          "harsoExport": "PromptInputSelect"
-        },
-        {
-          "name": "PromptInputSelectTrigger",
-          "harsoExport": "PromptInputSelectTrigger"
-        },
-        {
-          "name": "PromptInputSelectContent",
-          "harsoExport": "PromptInputSelectContent"
-        },
-        {
-          "name": "PromptInputSelectItem",
-          "harsoExport": "PromptInputSelectItem"
-        },
-        {
-          "name": "PromptInputSelectValue",
-          "harsoExport": "PromptInputSelectValue"
-        },
-        {
-          "name": "PromptInputBody",
-          "harsoExport": "PromptInputBody"
-        },
-        {
-          "name": "PromptInputActionMenu",
-          "harsoExport": "PromptInputActionMenu"
-        },
-        {
-          "name": "PromptInputActionMenuTrigger",
-          "harsoExport": "PromptInputActionMenuTrigger"
-        },
-        {
-          "name": "PromptInputActionMenuContent",
-          "harsoExport": "PromptInputActionMenuContent"
-        },
-        {
-          "name": "PromptInputActionMenuItem",
-          "harsoExport": "PromptInputActionMenuItem"
-        },
-        {
-          "name": "PromptInputActionAddAttachments",
-          "harsoExport": "PromptInputActionAddAttachments"
-        },
-        {
-          "name": "PromptInputActionAddScreenshot",
-          "harsoExport": "PromptInputActionAddScreenshot"
-        },
-        {
-          "name": "PromptInputProvider",
-          "harsoExport": "PromptInputProvider"
-        },
-        {
-          "name": "PromptInputHeader",
-          "harsoExport": "PromptInputHeader"
-        },
-        {
-          "name": "PromptInputHoverCard",
-          "harsoExport": "PromptInputHoverCard"
-        },
-        {
-          "name": "PromptInputHoverCardTrigger",
-          "harsoExport": "PromptInputHoverCardTrigger"
-        },
-        {
-          "name": "PromptInputHoverCardContent",
-          "harsoExport": "PromptInputHoverCardContent"
-        },
-        {
-          "name": "PromptInputTabsList",
-          "harsoExport": "PromptInputTabsList"
-        },
-        {
-          "name": "PromptInputTab",
-          "harsoExport": "PromptInputTab"
-        },
-        {
-          "name": "PromptInputTabLabel",
-          "harsoExport": "PromptInputTabLabel"
-        },
-        {
-          "name": "PromptInputTabBody",
-          "harsoExport": "PromptInputTabBody"
-        },
-        {
-          "name": "PromptInputTabItem",
-          "harsoExport": "PromptInputTabItem"
-        },
-        {
-          "name": "PromptInputCommand",
-          "harsoExport": "PromptInputCommand"
-        },
-        {
-          "name": "PromptInputCommandInput",
-          "harsoExport": "PromptInputCommandInput"
-        },
-        {
-          "name": "PromptInputCommandList",
-          "harsoExport": "PromptInputCommandList"
-        },
-        {
-          "name": "PromptInputCommandEmpty",
-          "harsoExport": "PromptInputCommandEmpty"
-        },
-        {
-          "name": "PromptInputCommandGroup",
-          "harsoExport": "PromptInputCommandGroup"
-        },
-        {
-          "name": "PromptInputCommandItem",
-          "harsoExport": "PromptInputCommandItem"
-        },
-        {
-          "name": "PromptInputCommandSeparator",
-          "harsoExport": "PromptInputCommandSeparator"
-        }
-      ],
-      "variants": [
-        "Cursor style",
-        "Button tooltips",
-        "Attachments"
-      ],
-      "helperApis": [
-        "`usePromptInputAttachments`",
-        "`usePromptInputController`",
-        "`useProviderAttachments`",
-        "`usePromptInputReferencedSources`",
-        "`PromptInputMessage`"
-      ],
-      "evidence": "git:6a9d5b1822ffb10bba4bd97175f01edd7d8651cd:apps/docs/content/components/(chatbot)/prompt-input.mdx:ad2c9f5b4756f50230b78f820d9f15a6772f697a",
-      "documentationSha256": "e582b606d9f13870179ebedbb913f8b3fd38461a78772dcfb08f42511f9b4a1c",
-      "listedInSitemap": true
-    },
-    {
       "id": "vercel:question",
       "vendor": "vercel",
       "slug": "question",
@@ -6254,9 +5135,7 @@
           "harsoExport": "QueueItemFile"
         }
       ],
-      "variants": [
-        "With PromptInput"
-      ],
+      "variants": [],
       "helperApis": [
         "`QueueMessagePart`",
         "`QueueMessage`",
@@ -7883,35 +6762,6 @@
       ]
     },
     {
-      "id": "vercel:suggestion",
-      "vendor": "vercel",
-      "slug": "suggestion",
-      "name": "Suggestion",
-      "category": "AI / chatbot",
-      "kind": "component",
-      "description": "A suggestion component that displays a horizontal row of clickable suggestions for user interaction.",
-      "url": "https://elements.ai-sdk.dev/components/suggestion",
-      "access": "public_documentation_and_open_source",
-      "harsoExport": "Suggestion",
-      "parts": [
-        {
-          "name": "Suggestions",
-          "harsoExport": "Suggestions"
-        },
-        {
-          "name": "Suggestion",
-          "harsoExport": "Suggestion"
-        }
-      ],
-      "variants": [
-        "Usage with AI Input"
-      ],
-      "helperApis": [],
-      "evidence": "git:6a9d5b1822ffb10bba4bd97175f01edd7d8651cd:apps/docs/content/components/(chatbot)/suggestion.mdx:4ac9de613f9facee50f461f5ddbbe5097bdbe6f7",
-      "documentationSha256": "d41a8774131e2597dbbbe6c8bd73ef2b4e5b11eda4d6fca8b4733aec997d8413",
-      "listedInSitemap": true
-    },
-    {
       "id": "boardui:switch",
       "vendor": "boardui",
       "slug": "switch",
@@ -9117,6 +7967,92 @@
         "hover/link site marks",
         "collapse excess marks into a count"
       ]
+    }
+  ],
+  "retiredComponents": [
+    {
+      "id": "boardui:ai-chat",
+      "vendor": "boardui",
+      "name": "AI Chat",
+      "replacement": "harso:chat-shell",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "boardui:ai-image-generation",
+      "vendor": "boardui",
+      "name": "AI Image Generation",
+      "replacement": null,
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "boardui:ai-profile",
+      "vendor": "boardui",
+      "name": "AI Profile",
+      "replacement": null,
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "boardui:chat-starter",
+      "vendor": "boardui",
+      "name": "Chat Starter",
+      "replacement": "harso:chat-shell",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "boardui:composer",
+      "vendor": "boardui",
+      "name": "Composer",
+      "replacement": "harso:chat-composer",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "boardui:composer-attachments",
+      "vendor": "boardui",
+      "name": "Composer Attachments",
+      "replacement": "harso:chat-composer",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "boardui:composer-loader",
+      "vendor": "boardui",
+      "name": "Composer Loader",
+      "replacement": "harso:chat-composer",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "boardui:composer-panel",
+      "vendor": "boardui",
+      "name": "Composer Panel",
+      "replacement": "harso:chat-composer",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "vercel:conversation",
+      "vendor": "vercel",
+      "name": "Conversation",
+      "replacement": "harso:chat-shell",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "vercel:message",
+      "vendor": "vercel",
+      "name": "Message",
+      "replacement": "harso:chat-shell",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "vercel:prompt-input",
+      "vendor": "vercel",
+      "name": "Prompt Input",
+      "replacement": "harso:chat-composer",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
+    },
+    {
+      "id": "vercel:suggestion",
+      "vendor": "vercel",
+      "name": "Suggestion",
+      "replacement": "harso:chat-shell",
+      "reason": "Phase D breaking retirement; historical reference capture, not a shipped export."
     }
   ]
 }

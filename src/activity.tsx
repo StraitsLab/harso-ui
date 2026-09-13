@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, type ComponentPropsWithRef, type ReactNode } from "react";
-import { Badge, type ButtonProps } from "./primitives";
-import { MessageAction, MessageResponse } from "./conversation";
+import { Badge, IconButton, type ButtonProps } from "./primitives";
+import { Tooltip } from "./navigation";
+import { MessageResponse } from "./text-effects";
 import { Plan, PlanContent, PlanTrigger, type WorkDisclosureProps } from "./work";
 
 type DivProps = ComponentPropsWithRef<"div">;
@@ -105,8 +106,9 @@ export function ArtifactActions({ className = "", ...props }: DivProps) {
   return <div {...props} role="group" aria-label={props["aria-label"] ?? "Artifact actions"} className={`hk-artifact-actions ${className}`} />;
 }
 
-export function ArtifactAction({ icon, children, ...props }: ButtonProps & { label: string; tooltip?: string; icon?: ReactNode }) {
-  return <MessageAction {...props} type="button">{icon ? <span aria-hidden="true">{icon}</span> : children}</MessageAction>;
+export function ArtifactAction({ icon, children, tooltip, ...props }: ButtonProps & { label: string; tooltip?: string; icon?: ReactNode }) {
+  const button = <IconButton {...props} type="button">{icon ? <span aria-hidden="true">{icon}</span> : children}</IconButton>;
+  return tooltip ? <Tooltip content={tooltip}>{button}</Tooltip> : button;
 }
 
 export function ArtifactClose({ label = "Close artifact", children = "×", ...props }: ButtonProps & { label?: string }) {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { filterReferences, referenceComponents, referenceSources } from "./catalog";
+import { filterReferences, referenceComponents, referenceSources, retiredReferenceIds, retiredReferences } from "./catalog";
 import inventory from "./catalog.json";
 
 describe("pinned reference inventory", () => {
@@ -14,9 +14,9 @@ describe("pinned reference inventory", () => {
   });
   test("maps each pinned vendor family individually without duplicate identities", () => {
     expect(new Set(referenceComponents.map(component => component.id)).size).toBe(referenceComponents.length);
-    expect(referenceComponents.filter(component => component.vendor === "vercel")).toHaveLength(49);
+    expect(referenceComponents.filter(component => component.vendor === "vercel")).toHaveLength(45);
     for (const source of referenceSources) {
-      expect(referenceComponents.filter(component => component.vendor === source.vendor)).toHaveLength(source.componentCount);
+      expect(referenceComponents.filter(component => component.vendor === source.vendor).length + retiredReferences.filter(component => component.vendor === source.vendor).length).toBe(source.componentCount);
       expect(source.retrievedAt).toMatch(/^2026-09-06/);
       expect(source.identity).not.toBe("");
     }
@@ -34,7 +34,8 @@ describe("pinned reference inventory", () => {
   test("includes public documentation not yet in the website sitemap", () => {
     expect(referenceComponents.find(component => component.id === "vercel:question")?.url).toContain("github.com/vercel/ai-elements/blob/6a9d5b1822ffb10bba4bd97175f01edd7d8651cd/");
     const parts = referenceComponents.filter(component => component.vendor === "vercel").flatMap(component => component.parts);
-    expect(parts.length).toBeGreaterThanOrEqual(350);
+    // Phase D removes 63 anatomy records; retained Vercel anatomy is exactly 328.
+    expect(parts).toHaveLength(328);
     expect(parts.find(part => part.name === "AudioPlayerVolumeRange")).toBeTruthy();
     expect(parts.find(part => part.name === "ConfirmationAction")).toBeTruthy();
   });
@@ -63,7 +64,7 @@ describe("pinned reference inventory", () => {
   });
 
   test("keeps documented types discoverable without presenting them as visual parts", () => {
-    for (const [slug, names] of [["prompt-input", ["PromptInputMessage"]], ["question", ["QuestionValue", "QuestionResponse"]]] as const) {
+    for (const [slug, names] of [["question", ["QuestionValue", "QuestionResponse"]]] as const) {
       const family = inventory.components.find(component => component.id === `vercel:${slug}`)!;
       for (const name of names) {
         expect(family.helperApis).toContain(`\`${name}\``);
@@ -74,17 +75,23 @@ describe("pinned reference inventory", () => {
     const edge = inventory.components.find(component => component.id === "vercel:edge")!;
     expect(edge.helperApis).toEqual([]);
     expect(filterReferences({ query: "EdgeTemporary" }).map(component => component.id)).toContain(edge.id);
-    expect(filterReferences({ query: "usePromptInputController" }).map(component => component.id)).toContain("vercel:prompt-input");
+    expect(filterReferences({ query: "usePromptInputController" }).map(component => component.id)).toEqual([]);
   });
 
   test("counts UI anatomy separately from helpers and excludes foreign and demo names", () => {
     const parts = inventory.components.flatMap(component => component.parts);
     const helpers = inventory.components.flatMap(component => component.helperApis ?? []);
-    expect(parts).toHaveLength(422);
-    expect(helpers).toHaveLength(21);
+    expect(parts).toHaveLength(359);
+    expect(helpers).toHaveLength(15);
     expect(inventory.accounting.apiPartCount).toBe(parts.length);
-    expect(referenceComponents).toHaveLength(126);
+    expect(inventory.accounting.helperApiCount).toBe(helpers.length);
+    expect(referenceComponents).toHaveLength(114);
     const names = [...parts.map(part => part.name), ...helpers.map(name => name.replaceAll("`", ""))];
     for (const name of ["SpeechRecognition", "SpeechRecognitionEvent", "SpeechRecognitionResult", "SpeechRecognitionAlternative", "SpeechRecognitionErrorEvent", "PromptInputAttachmentsDisplay", "useWebSearch", "CheckpointType", "CheckpointDemo", "getThinkingMessage", "Temporary", "Animated", "EdgeProps", "FileIcon", "ToolUIPart", "useChat"]) expect(names).not.toContain(name);
+  });
+  test("retires the exact Phase D reference set without hiding Shimmer", () => {
+    expect([...retiredReferenceIds].sort()).toEqual(["boardui:ai-chat", "boardui:ai-image-generation", "boardui:ai-profile", "boardui:chat-starter", "boardui:composer", "boardui:composer-attachments", "boardui:composer-loader", "boardui:composer-panel", "vercel:conversation", "vercel:message", "vercel:prompt-input", "vercel:suggestion"]);
+    expect(referenceComponents.some(component => retiredReferenceIds.includes(component.id))).toBe(false);
+    expect(referenceComponents.find(component => component.id === "vercel:shimmer")).toBeTruthy();
   });
 });

@@ -6,7 +6,7 @@ for (const width of [1512, 390]) {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/#boardui:home-dashboard");
     const workspace = page.locator(".hk-home-workspace");
-    const navigation = workspace.locator(".hk-ai-workspace-navigation");
+    const navigation = workspace.locator(".hk-dashboard-workspace-navigation");
     const sidebar = navigation.getByRole("complementary", { name: "Workspace", exact: true });
     if (width === 390) {
       await expect(sidebar).toBeHidden();
@@ -58,7 +58,7 @@ test("home floating sidebar selection synchronizes with mobile drawer and preser
   await page.setViewportSize({ width: 390, height: 1040 });
   await page.goto("/#boardui:home-dashboard");
   const workspace = page.locator(".hk-home-workspace");
-  const sidebar = workspace.locator(".hk-ai-workspace-navigation").getByRole("complementary", { name: "Workspace", exact: true });
+  const sidebar = workspace.locator(".hk-dashboard-workspace-navigation").getByRole("complementary", { name: "Workspace", exact: true });
   await expect(sidebar).toBeHidden();
   const navigate = workspace.getByRole("button", { name: "Navigate", exact: true });
   await navigate.click();

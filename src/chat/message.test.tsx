@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { AssistantRuntimeProvider, ComposerPrimitive, useLocalRuntime, type ToolCallMessagePartComponent, type ToolCallMessagePartProps, type ThreadMessageLike } from "@assistant-ui/react";
 import { HarsoThread } from "./thread";
 import type { HarsoMessageSlots } from "./message";
@@ -125,4 +125,63 @@ describe("Harso messages and MessageActions", () => {
     expect(await attachments.send(attachment)).toMatchObject({ status: { type: "complete" }, content: [{ type: "file", filename: "notes.txt" }] });
     await attachments.remove(attachment);
   });
+  test("pending clipboard completion after a branch edit does not replace the new response", async () => {
+    let resolveCopy!: () => void;
+    const writeText = vi.fn(() => new Promise<void>(resolve => { resolveCopy = resolve; }));
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
+    render(<Example />);
+    fireEvent.click(within(screen.getByRole("article", { name: "Harso" })).getByRole("button", { name: "Copy message" }));
+    expect(writeText).toHaveBeenCalledExactlyOnceWith("Original answer");
+    fireEvent.click(screen.getByRole("button", { name: "Edit message" }));
+    fireEvent.change(screen.getByRole("textbox", { name: "Edit your message" }), { target: { value: "New branch" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save & send" }));
+    await waitFor(() => expect(screen.getByRole("article", { name: "Harso" })).toHaveTextContent("Edited answer."));
+    await act(async () => resolveCopy());
+    expect(screen.getByRole("article", { name: "Harso" })).toHaveTextContent("Edited answer.");
+    expect(screen.getByText("2 of 2")).toBeInTheDocument();
+    expect(writeText).toHaveBeenCalledOnce();
+  });
+
+  test("pending feedback follows message identity through unmount, not a replacement response", async () => {
+    let resolveFeedback!: () => void;
+    submitFeedback.mockImplementationOnce(() => new Promise<void>(resolve => { resolveFeedback = resolve; }));
+    const view = render(<Example />);
+    fireEvent.click(screen.getByRole("button", { name: "Helpful" }));
+    await waitFor(() => expect(submitFeedback).toHaveBeenCalledOnce());
+    view.unmount();
+    render(<Example seed={[{ id: "replacement", role: "assistant", content: "Replacement answer", status: { type: "complete", reason: "stop" } }]} />);
+    await act(async () => resolveFeedback());
+    expect(screen.getByRole("article", { name: "Harso" })).toHaveTextContent("Replacement answer");
+    expect(screen.getByRole("button", { name: "Helpful" })).toHaveAttribute("aria-pressed", "false");
+  });
+
+  test("clipboard rejection stays retryable and never claims copied success", async () => {
+    const writeText = vi.fn().mockRejectedValueOnce(new Error("Permission denied")).mockResolvedValueOnce(undefined);
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
+    render(<Example />);
+    const copy = within(screen.getByRole("article", { name: "Harso" })).getByRole("button", { name: "Copy message" });
+    await act(async () => fireEvent.click(copy));
+    expect(copy).not.toHaveAttribute("data-copied");
+    expect(copy).toBeEnabled();
+    await act(async () => fireEvent.click(copy));
+    expect(writeText).toHaveBeenCalledTimes(2);
+    expect(copy).toHaveAttribute("data-copied", "true");
+  });
+
+  test("pending copy reentry does not announce success until a writer resolves", async () => {
+    const resolutions: (() => void)[] = [];
+    const writeText = vi.fn(() => new Promise<void>(resolve => resolutions.push(resolve)));
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
+    render(<Example />);
+    const copy = within(screen.getByRole("article", { name: "Harso" })).getByRole("button", { name: "Copy message" });
+    fireEvent.click(copy); fireEvent.click(copy);
+    expect(copy).not.toHaveAttribute("data-copied");
+    // assistant-ui permits repeated user-gesture writes, unlike a legacy pending lock; neither can mutate message text.
+    expect(writeText).toHaveBeenCalledTimes(2);
+    await act(async () => resolutions[1]());
+    expect(copy).toHaveAttribute("data-copied", "true");
+    await act(async () => resolutions[0]());
+    expect(screen.getByRole("article", { name: "Harso" })).toHaveTextContent("Original answer");
+  });
+
 });

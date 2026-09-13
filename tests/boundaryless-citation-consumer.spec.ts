@@ -59,7 +59,6 @@ test("shared hover placement handles edges, alignments and controlled refusal", 
     const { createRoot } = (await import(domUrl)).default;
     const citation = await import(`${producerUrl}inline-citation.tsx`);
     const attachment = await import(`${producerUrl}attachments.tsx`);
-    const prompt = await import(`${producerUrl}prompt-input.tsx`);
     function Consumer() {
       const [open, setOpen] = React.useState(false);
       const [refuse, setRefuse] = React.useState(false);
@@ -70,7 +69,6 @@ test("shared hover placement handles edges, alignments and controlled refusal", 
         ...[
           [citation.InlineCitationCard, citation.InlineCitationCardTrigger, citation.InlineCitationCardBody, "Citation"],
           [attachment.AttachmentHoverCard, attachment.AttachmentHoverCardTrigger, attachment.AttachmentHoverCardContent, "Attachment"],
-          [prompt.PromptInputHoverCard, prompt.PromptInputHoverCardTrigger, prompt.PromptInputHoverCardContent, "Prompt"],
         ].map(([Card, Trigger, Content, name], index) => React.createElement("div", { key: name, "data-testid": `edge-${name}`, style: { position: "fixed", top: 24 + index * 120, left: 8, zIndex: 4 } },
           React.createElement(Card, { open: index === 0 ? open : undefined, onOpenChange: index === 0 ? (next: boolean) => { setRequests((value: number) => value + 1); if (!refuse) setOpen(next); } : undefined, openDelay: 20, closeDelay: 40 },
             React.createElement(Trigger, { sources: ["https://example.com"], "data-testid": "edge-trigger" }, name),
@@ -81,7 +79,7 @@ test("shared hover placement handles edges, alignments and controlled refusal", 
     createRoot(root).render(React.createElement(Consumer));
   }, { reactUrl, domUrl, producerUrl });
   const fixture = page.getByRole("region", { name: "Placement fixture" });
-  for (const name of ["Citation", "Attachment", "Prompt"]) {
+  for (const name of ["Citation", "Attachment"]) {
     const wrapper = fixture.getByTestId(`edge-${name}`);
     const trigger = wrapper.getByTestId("edge-trigger");
     const content = wrapper.locator(".hk-attachment-hover-content");
