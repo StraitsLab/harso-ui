@@ -57,7 +57,7 @@ function SettingsPages({ defaultPage = "general", pages = {}, planArtSrc, childr
       <h3 id={`${identity}-heading`}>{settingsTitles[page]}</h3>
       {page === "general" && <div className="hk-settings-plan"><div className="hk-settings-plan-art">
         {allowedArtwork && failedArtwork !== planArtSrc ? <img src={planArtSrc} alt="Plan artwork" referrerPolicy="no-referrer" onError={() => setFailedArtwork(planArtSrc)} /> : <div role="img" aria-label="Plan artwork" data-artwork="native"><span /><span /><span /></div>}
-      </div><h4>Current plan</h4></div>}
+      </div><div className="hk-settings-plan-caption"><h4>Current plan</h4><p>Plan details arrive from the host when an account is connected.</p></div></div>}
       {pages[page] ?? (page === "general" && children != null ? children : <p className="hk-settings-empty">No {page === "general" ? "plan or preferences" : page === "profile" ? "profile information" : page === "tools" ? "tool connections" : "storage information"} supplied.</p>)}
     </section>
   </div>;
@@ -111,7 +111,7 @@ export function AuthCard({ title = "Welcome", description, mode, layout = "stack
         if (form.reportValidity()) onSubmitData(new FormData(form));
       }}><fieldset disabled={blocked}>
         {mode === "verify" ? <label>Verification code<InputOtp {...field("code")} /></label> : <><label>Email<Input {...field("email")} type="email" autoComplete="email" /></label><label>Password<Input {...field("password")} type="password" autoComplete={mode === "signup" ? "new-password" : "current-password"} /></label>{mode === "signup" && confirmPassword && <label>Confirm password<Input {...field("confirmPassword")} type="password" autoComplete="new-password" /></label>}</>}
-        {children}<Button type="submit" disabled={blocked || !onSubmitData}>{submitLabel ?? (mode === "signup" ? "Create account" : mode === "verify" ? "Verify code" : "Sign in")}</Button>
+        {children}<Button type="submit" leadingIcon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M4 12h14m-6-6 6 6-6 6" /></svg>} disabled={blocked || !onSubmitData}>{submitLabel ?? (mode === "signup" ? "Create account" : mode === "verify" ? "Verify code" : "Sign in")}</Button>
         {mode === "verify" && <Button disabled={blocked || !onResend} onClick={() => { if (!blocked) onResend?.(); }}>Resend code</Button>}
       </fieldset></form> : children}
       {providerButtons}{footnote != null && <footer>{footnote}</footer>}
