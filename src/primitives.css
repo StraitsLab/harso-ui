@@ -139,6 +139,8 @@ input.hk-radio-dot:checked::before { content: ""; width: 50%; height: 50%; borde
 .hk-choice input:focus-visible, input.hk-radio-dot:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 3px; }
 .hk-choice:not(.hk-switch) input:disabled { opacity: .55; cursor: not-allowed; }
 .hk-choice-description { display: block; font-size: var(--hk-text-sm); color: var(--hk-tertiary); margin-top: 2px; }
+.hk-choice:not(.hk-switch):has(.hk-choice-description) { align-items: flex-start; }
+.hk-choice:not(.hk-switch):has(.hk-choice-description) > input { margin-top: 3px; }
 .hk-switch input {
   appearance: none; position: relative; width: 38px; height: 24px; border: 1px solid var(--hk-control-line);
   border-radius: 20px; background: var(--hk-hover); transition: background var(--hk-fast) var(--hk-ease);

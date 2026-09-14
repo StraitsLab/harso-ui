@@ -33,7 +33,7 @@ export function NavigationExample({ component, state, palette = "clean" }: { com
   const [hostRequest, setHostRequest] = useState("");
   const [tabContent, setTabContent] = useState("full");
   const [hintContent, setHintContent] = useState("Copy a link to this sample brief");
-  const [hintOpen, setHintOpen] = useState(false);
+  const [hintOpen, setHintOpen] = useState(true); // the default capture shows the bubble; hover/focus/Escape still drive it
   const [holdHint, setHoldHint] = useState(false);
   const disabled = state === "disabled" || localDisabled;
   const lifecycleControls = <Checkbox label="Disable example controls" checked={localDisabled} onChange={event => setLocalDisabled(event.target.checked)} />;

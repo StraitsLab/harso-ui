@@ -61,5 +61,6 @@
 .hk-otp-slots { display: flex; gap: 4px; }
 .hk-otp-slots > span { display: grid; place-items: center; min-width: 0; width: 2.3em; height: 36px; border: 1px solid var(--hk-line-strong); border-radius: 8px; color: var(--hk-ink); font: 18px var(--hk-mono); }
 .hk-otp-slots [data-group-start] { margin-inline-start: 8px; }
+@media (pointer: coarse), (max-width: 640px) { .hk-otp-slots > span { height: 44px; width: 2.1em; } }
 .hk-otp-group:focus-within .hk-otp-slots { border-color: var(--hk-accent); box-shadow: 0 0 0 3px var(--hk-accent-soft); border-radius: 8px; }
 .hk-otp-group:has(:disabled) { opacity: .5; }

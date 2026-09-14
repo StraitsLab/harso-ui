@@ -6,7 +6,7 @@ test("all chip tones preserve text contrast in every palette", async ({ page }) 
   for (const appearance of ["light", "dark"]) for (const palette of ["clean", "cozy"]) {
     await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
     await page.getByLabel("Palette", { exact: true }).selectOption(palette);
-    await expect(page.locator(".hk-chip")).toHaveCount(39);
+    await expect(page.locator(".hk-chip")).toHaveCount(15); // five semantic statuses x three treatments (the rainbow alias grid moved to unit coverage)
     expect((await new AxeBuilder({ page }).include(".hkl-live-example").analyze()).violations, `${appearance}/${palette}`).toEqual([]);
   }
 });
