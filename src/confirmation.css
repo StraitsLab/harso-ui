@@ -1,8 +1,8 @@
-.hk-confirmation { display: grid; gap: 10px; min-width: 0; padding: 12px 14px; border: 1px solid var(--hk-line); border-radius: 14px; background: var(--hk-surface); color: var(--hk-ink); }
+.hk-confirmation { display: grid; gap: 12px; min-width: 0; width: 100%; max-width: 560px; box-sizing: border-box; padding: 20px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); color: var(--hk-ink); }
 .hk-confirmation--approval-requested { border-color: color-mix(in srgb, var(--hk-attention) 45%, var(--hk-line)); }
-.hk-confirmation-title { margin: 0; font-size: 14px; font-weight: 560; }
-.hk-confirmation-request, .hk-confirmation-accepted, .hk-confirmation-rejected { color: var(--hk-secondary); font-size: 13px; }
+.hk-confirmation-title { margin: 0; font-size: var(--hk-text-title); font-weight: 560; }
+.hk-confirmation-request, .hk-confirmation-accepted, .hk-confirmation-rejected { color: var(--hk-secondary); font-size: var(--hk-text-base); line-height: 1.6; }
 .hk-confirmation-accepted { color: var(--hk-positive); }
 .hk-confirmation-rejected { color: var(--hk-negative); }
-.hk-confirmation-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.hk-confirmation-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 @media (forced-colors: active) { .hk-confirmation { border-color: CanvasText; } }

@@ -40,10 +40,14 @@
 .hk-range-pair > div { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--hk-secondary); }
 .hk-range-pair output { font-variant-numeric: tabular-nums; }
 .hk-range-pair > .hk-slider { margin: 0; }
-.hk-file-upload { display: grid; gap: 10px; min-width: 0; }
+.hk-file-upload { display: grid; gap: 16px; min-width: 0; max-width: 560px; padding: 20px; border: 1px dashed var(--hk-line-strong); border-radius: 12px; background: var(--hk-panel); }
+.hk-file-upload > div:first-child { display: flex; align-items: center; gap: 8px; }
+.hk-file-upload-icon { display: inline-flex; }
+.hk-file-upload-hint { display: grid; gap: 8px; font-size: var(--hk-text-base); }
+.hk-file-upload-hint p { margin: 0; line-height: 1.5; }
 .hk-file-upload > label { font-size: var(--hk-text-label); font-weight: 500; color: var(--hk-secondary); }
-.hk-file-picker { display: block; width: 100%; min-width: 0; min-height: 44px; font-size: 13px; color: var(--hk-secondary); }
-.hk-file-picker::file-selector-button { font: inherit; color: var(--hk-ink); background: var(--hk-hover); border: 1px solid transparent; min-height: 36px; padding: 6px 14px; margin-inline-end: 12px; border-radius: var(--hk-space-2); cursor: pointer; }
+.hk-file-picker { display: block; width: 100%; min-width: 0; min-height: 44px; font-family: var(--hk-font); font-size: var(--hk-text-sm); color: var(--hk-secondary); }
+.hk-file-picker::file-selector-button { font: inherit; color: var(--hk-canvas); background: var(--hk-ink); border: 1px solid transparent; min-height: 36px; padding: 6px 14px; margin-inline-end: 12px; border-radius: var(--hk-space-2); cursor: pointer; }
 .hk-file-picker:disabled::file-selector-button { color: var(--hk-secondary); cursor: not-allowed; }
 .hk-file-list { list-style: none; margin: 8px 0 0; padding: 0; }
 .hk-file-list > li { display: flex; align-items: flex-start; gap: 16px; padding: 16px 0; }

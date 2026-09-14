@@ -43,6 +43,10 @@ export function DatesExample({ component, state }: { component: DateExport; stat
     {composition === "uncontrolled" && <DateRangePicker {...limits} label="Local research window" defaultValue={{ start: "2026-09-07", end: "2026-09-11" }} today="2026-09-06" onValueChange={next => setAction(`Local range: ${next ? `${next.start} / ${next.end}` : "cleared"}`)} />}
     {composition === "month" && <MonthPanel {...limits} value={date} today="2026-09-06" onValueChange={next => { setAction(`Requested date: ${next}`); if (!hold) setDate(next); }} />}
     {(composition === "meeting" || composition === "dst") && <MeetingScheduler key={composition} label="Find a little time" description="Choose from the times supplied by your host. This example does not book anything." slots={empty ? [] : meetingSlots} today={composition === "dst" ? "2026-11-01" : "2026-09-06"} defaultTimeZone={composition === "dst" ? "America/New_York" : "Asia/Singapore"} timeZones={["Asia/Singapore", "Europe/London", "America/New_York", "UTC"]} disabled={disabled} onConfirm={slot => setAction(`Requested meeting: ${slot.id}`)} />}
-    <output aria-label="Selected date">{date ?? "No date"}</output><output aria-label="Selected range">{range ? `${range.start} / ${range.end}` : "No range"}</output><output aria-label="Date action">{action}</output>
+    <div style={{ display: "grid", gap: 8 }}>
+      {(composition === "single" || composition === "month") && <div><span className="hkl-example-label">Selected date</span><output aria-label="Selected date" style={{ display: "block", marginTop: 8, fontFamily: "var(--hk-mono)", fontSize: "var(--hk-text-sm)" }}>{date ?? "No date"}</output></div>}
+      {(composition === "range" || composition === "uncontrolled") && <div><span className="hkl-example-label">{composition === "uncontrolled" ? "Unchanged host range (independent of local picker)" : "Selected range"}</span><output aria-label="Selected range" style={{ display: "block", marginTop: 8, fontFamily: "var(--hk-mono)", fontSize: "var(--hk-text-sm)" }}>{range ? `${range.start} / ${range.end}` : "No range"}</output></div>}
+      <output aria-label="Date action">{action}</output>
+    </div>
   </div>;
 }

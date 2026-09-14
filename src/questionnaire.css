@@ -1,5 +1,7 @@
 .hk-questionnaire { width: 100%; max-width: 640px; color: var(--hk-ink); }
-.hk-questionnaire > button { display: flex; margin-left: auto; }
+.hk-questionnaire-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: start; margin-bottom: 16px; }
+.hk-questionnaire-heading h3 { margin: 0; }
+.hk-questionnaire-heading > button { width: 44px; height: 44px; padding: 0; }
 .hk-questionnaire h3 { margin: 0 0 20px; font-size: 20px; font-weight: 550; letter-spacing: -.025em; overflow-wrap: anywhere; }
 .hk-questionnaire fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .hk-questionnaire-option { display: flex; align-items: center; gap: 12px; padding: 12px 8px; min-height: 44px; border-radius: 10px; cursor: pointer; }
@@ -11,7 +13,7 @@
 .hk-questionnaire-option kbd { font: inherit; color: var(--hk-secondary); }
 .hk-questionnaire-other { margin-bottom: 12px; }
 .hk-questionnaire nav { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 24px; }
-.hk-questionnaire [aria-current="step"] { background: var(--hk-hover); text-decoration: underline; text-underline-offset: 4px; }
+.hk-questionnaire [aria-current="step"] { background: var(--hk-hover); text-decoration: none; }
 .hk-questionnaire footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; }
 .hk-questionnaire :focus-visible { outline: 2px solid var(--hk-ink); outline-offset: 3px; }
 .hk-questionnaire[aria-disabled="true"] { opacity: .6; }

@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type ComponentPropsWithRef } from "react";
+import { MicrophoneIcon, StopIcon } from "@phosphor-icons/react";
 import { Button } from "./primitives";
 
 type Recognition = {
@@ -116,5 +117,5 @@ export function SpeechInput({ onTranscriptionChange, onAudioRecorded, lang = "en
       recorder.start();
     } catch (reason) { failed(reason); }
   };
-  return <><Button {...props} pending={busy || props.pending} disabled={disabled || !available} type="button" aria-pressed={listening} aria-describedby={[props["aria-describedby"], error ? errorId : undefined].filter(Boolean).join(" ") || undefined} aria-label={props["aria-label"] ?? (listening ? "Stop speech input" : "Start speech input")} className={`${listening ? "hk-speech-input--listening" : ""} ${props.className ?? ""}`} onClick={event => { props.onClick?.(event); if (!event.defaultPrevented) void toggle(); }}>{children ?? (status === "requesting" ? "Requesting microphone…" : status === "processing" ? "Transcribing…" : listening ? "Stop" : "Speak")}</Button>{error && <span id={errorId} role="alert">{error}</span>}</>;
+  return <><Button variant="primary" {...props} pending={busy || props.pending} disabled={disabled || !available} type="button" aria-pressed={listening} aria-describedby={[props["aria-describedby"], error ? errorId : undefined].filter(Boolean).join(" ") || undefined} aria-label={props["aria-label"] ?? (listening ? "Stop speech input" : "Start speech input")} className={`${listening ? "hk-speech-input--listening" : ""} ${props.className ?? ""}`} onClick={event => { props.onClick?.(event); if (!event.defaultPrevented) void toggle(); }}>{listening ? <StopIcon size={16} aria-hidden /> : <MicrophoneIcon size={16} aria-hidden />}{children ?? (status === "requesting" ? "Requesting microphone…" : status === "processing" ? "Transcribing…" : listening ? "Stop" : "Speak")}</Button>{error && <span id={errorId} role="alert">{error}</span>}</>;
 }

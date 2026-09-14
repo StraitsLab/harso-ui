@@ -1,5 +1,5 @@
-.hk-agent-limits-card { min-width: 0; padding: 16px; color: var(--hk-ink); background: transparent; border: 0; border-radius: 0; box-shadow: none; font-size: 13px; overflow-wrap: anywhere; }
-.hk-agent-limits-card h3 { margin: 0; font-size: 14px; font-weight: 600; }
+.hk-agent-limits-card { min-width: 0; width: 100%; max-width: 560px; box-sizing: border-box; padding: 16px; color: var(--hk-ink); background: var(--hk-panel); border: 1px solid var(--hk-line); border-radius: 12px; box-shadow: none; font-size: var(--hk-text-base); overflow-wrap: anywhere; }
+.hk-agent-limits-card h3 { margin: 0; font-size: var(--hk-text-user); font-weight: 600; }
 .hk-agent-limits-heading, .hk-agent-limits-card li, .hk-agent-limits-limit > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .hk-agent-limits-heading > span, .hk-agent-limits-card li > span:last-child { font-variant-numeric: tabular-nums; color: var(--hk-secondary); }
 .hk-agent-limits-heading .hk-button { padding: 4px 0; gap: 12px; text-align: start; white-space: normal; }
@@ -20,6 +20,9 @@
 .hk-agent-limits-plan a { color: inherit; text-underline-offset: 3px; }
 .hk-agent-limits-limit { margin-top: 16px; }
 .hk-agent-limits-limit p { color: var(--hk-secondary); font-size: 12px; margin: 4px 0 8px; }
-.hk-agent-limits-limit progress { display: block; width: 100%; height: 6px; accent-color: var(--hk-accent); }
+.hk-agent-limits-limit progress { display: block; width: 100%; height: 8px; appearance: none; border: 0; border-radius: 4px; overflow: hidden; background: var(--hk-line); accent-color: var(--hk-accent); }
 .hk-agent-limits-card [role="alert"] { color: var(--hk-negative); }
+.hk-agent-limits-limit progress::-webkit-progress-bar { background: var(--hk-line); border-radius: 4px; }
+.hk-agent-limits-limit progress::-webkit-progress-value { background: var(--hk-accent-mark); border-radius: 4px; }
+.hk-agent-limits-limit progress::-moz-progress-bar { background: var(--hk-accent-mark); border-radius: 4px; }
 @media (forced-colors: active) { .hk-agent-limits-segments > span { background: Highlight !important; border-color: Canvas; } .hk-agent-limits-segments { outline: 1px solid CanvasText; } }

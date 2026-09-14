@@ -15,7 +15,7 @@ export type InteractiveChartProps = Omit<ChartCardProps, "data"> & {
 };
 type Point = { x: number; y: number; base: number; index: number };
 const empty: readonly ChartRow[] = [];
-const colors = ["var(--hk-accent)", "var(--hk-positive)", "var(--hk-warning)", "var(--hk-secondary)"];
+const colors = ["var(--hk-accent-mark)", "var(--hk-secondary)", "var(--hk-faint)", "var(--hk-ink)"];
 const finite = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value);
 const read = (row: ChartRow, key: string) => finite(row[key]) ? row[key] as number : null;
 
@@ -56,6 +56,7 @@ export function InteractiveChart({ kind, title, value, caption, data = empty, se
   const period = ranges.find(item => item.id === selectedRange);
   const rows = period?.data ?? data;
   const groups = kind === "combo" ? [bar ?? { key: "value", label: "Volume" }, line ?? { key: "secondary", label: "Rate" }] : series ?? (kind === "area" && rows.some(row => "secondary" in row) ? [{ key: "value", label: "Primary" }, { key: "secondary", label: "Secondary" }] : [{ key: "value", label: title }]);
+  const seriesColor = (index: number) => groups[index].color ?? (kind === "combo" ? index === 0 ? "var(--hk-secondary)" : "var(--hk-accent-mark)" : colors[index % colors.length]);
   const invalidSeries = !groups.length || groups.some(group => !group.key || group.key === "label") || new Set(groups.map(group => group.key)).size !== groups.length;
   const invalidRanges = ranges.some(item => !item.id) || new Set(ranges.map(item => item.id)).size !== ranges.length || (!!ranges.length && !period);
   const failure = error || (invalidSeries ? "Series keys must be unique, numeric fields." : invalidRanges ? "Period IDs must be unique and select an available period." : "");
@@ -123,11 +124,13 @@ export function InteractiveChart({ kind, title, value, caption, data = empty, se
       <output role="status" className="hk-interactive-headline">{active === null ? resting : <>{describe(active)}{activeTotal !== null && <strong>Total: {activeTotal}</strong>}</>}</output>
       {deltaValue !== undefined && <span className="hk-interactive-delta">{finite(deltaValue * 100) ? `${deltaValue >= 0 ? "+" : ""}${Number((deltaValue * 100).toFixed(2))}%` : "Change unavailable"}</span>}
       {!hasPlot && <p>No plottable values{percent ? "; shares require complete non-negative values and a positive total" : ""}.</p>}
-      <div className="hk-interactive-axes">{plots.filter((_, index) => kind === "combo" || index === 0).map((plot, index) => <span key={index}>{kind === "combo" ? groups[index].label : percent ? "Share" : "Value"}: {percent ? "0% – 100%" : `${text(plot.minimum * plot.scale, groups[index])} – ${text(plot.maximum * plot.scale, groups[index])}`}</span>)}</div>
-      <svg className="hk-interactive-plot" viewBox="0 0 440 212" role="img" aria-label={`${title} chart`} onPointerLeave={event => { if (event.pointerType !== "touch" && !buttons.current.includes(document.activeElement as HTMLButtonElement)) setInspection(null); }}>
-        <defs>{groups.map((group, index) => <linearGradient key={index} id={`${id}-${index}`} x1="0" y1="0" x2="0" y2="1"><stop stopColor={group.color ?? colors[index % colors.length]} stopOpacity=".3" /><stop offset="1" stopColor={group.color ?? colors[index % colors.length]} stopOpacity=".04" /></linearGradient>)}</defs>
+      <div className="hk-interactive-axes">{plots.filter((_, index) => kind === "combo" || index === 0).map((_, index) => <span key={index}>{kind === "combo" ? groups[index].label : percent ? "Share" : "Value"}</span>)}</div>
+      <div className="hk-interactive-canvas">
+      <div className="hk-interactive-ticks" aria-hidden="true">{plots.filter((_, index) => kind === "combo" || index === 0).map((plot, index) => <div key={index} className={index ? "hk-axis-right" : "hk-axis-left"}>{[1, .5, 0].map(level => <span key={level} style={{top: `${(20 + (1 - level) * 164) / 212 * 100}%`}}>{percent ? `${level * 100}%` : text(Number(((plot.minimum + (plot.maximum - plot.minimum) * level) * plot.scale).toPrecision(4)), groups[index])}</span>)}</div>)}</div>
+      <svg className="hk-interactive-plot" preserveAspectRatio="none" viewBox="0 0 440 212" role="img" aria-label={`${title} chart`} onPointerLeave={event => { if (event.pointerType !== "touch" && !buttons.current.includes(document.activeElement as HTMLButtonElement)) setInspection(null); }}>
+        <defs>{groups.map((group, index) => <linearGradient key={index} id={`${id}-${index}`} x1="0" y1="0" x2="0" y2="1"><stop stopColor={seriesColor(index)} stopOpacity=".3" /><stop offset="1" stopColor={seriesColor(index)} stopOpacity=".04" /></linearGradient>)}</defs>
         <path className="hk-interactive-grid" d="M44 20H396 M44 102H396 M44 184H396" />
-        {plots.map((plot, groupIndex) => <g key={groupIndex} data-series={groups[groupIndex].key} style={{ "--hk-series-color": groups[groupIndex].color ?? colors[groupIndex % colors.length] } as CSSProperties}>
+        {plots.map((plot, groupIndex) => <g key={groupIndex} data-series={groups[groupIndex].key} style={{ "--hk-series-color": seriesColor(groupIndex) } as CSSProperties}>
           <path className="hk-interactive-zero" d={`M44 ${plot.zero}H396`} />
           {kind === "combo" && groupIndex === 0 ? plot.points.map((point, index) => point && <rect key={index} className="hk-interactive-bar" data-active={active === null ? undefined : active === index} x={point.x - Math.min(14, 140 / rows.length)} y={Math.min(point.base, point.y)} width={Math.min(28, 280 / rows.length)} height={Math.abs(point.base - point.y)} rx="3" />) : segments(plot.points).map((part, index) => <g key={index}>
             {kind !== "combo" && <path className="hk-interactive-area" fill={`url(#${id}-${groupIndex})`} d={`${path(part, shape === "curved")} ${path([...part].reverse().map(point => ({ x: point.x, y: point.base })), shape === "curved").replace(/^M/, "L")} Z`} />}
@@ -138,16 +141,16 @@ export function InteractiveChart({ kind, title, value, caption, data = empty, se
         </g>)}
         {active !== null && <path className="hk-interactive-cursor" d={`M${rows.length === 1 ? 220 : 44 + active / (rows.length - 1) * 352} 20V184`} />}
         {rows.map((row, index) => <rect key={index} aria-hidden="true" data-inspect={index} x={rows.length === 1 ? 24 : 44 + index / (rows.length - 1) * 352 - 176 / (rows.length - 1)} y="12" width={rows.length === 1 ? 392 : 352 / (rows.length - 1)} height="180" fill="transparent" onPointerEnter={() => inspect(index)} onPointerDown={() => inspect(index)} onClick={() => inspect(index)} />)}
-      </svg>
+      </svg></div>
       <div className="hk-interactive-points" role="group" aria-label={`${title} point inspection`} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInspection(null); }}>
-        {rows.map((row, index) => <Button key={index} ref={element => { buttons.current[index] = element; }} disabled={blocked} aria-label={`Inspect ${describe(index)}`} aria-pressed={active === index} onFocus={() => inspect(index)} onPointerEnter={() => inspect(index)} onPointerLeave={event => { if (event.pointerType !== "touch" && document.activeElement !== event.currentTarget) setInspection(null); }} onClick={() => inspect(index)} onKeyDown={event => {
+        {rows.map((row, index) => <Button key={index} style={{left: `${rows.length === 1 ? 50 : 10 + index / (rows.length - 1) * 80}%`}} ref={element => { buttons.current[index] = element; }} disabled={blocked} aria-label={`Inspect ${describe(index)}`} aria-pressed={active === index} onFocus={() => inspect(index)} onPointerEnter={() => inspect(index)} onPointerLeave={event => { if (event.pointerType !== "touch" && document.activeElement !== event.currentTarget) setInspection(null); }} onClick={() => inspect(index)} onKeyDown={event => {
           if (blocked) return;
           if (event.key === "Escape") { event.preventDefault(); setInspection(null); return; }
           const next = event.key === "Home" ? 0 : event.key === "End" ? rows.length - 1 : event.key === "ArrowRight" ? Math.min(rows.length - 1, index + 1) : event.key === "ArrowLeft" ? Math.max(0, index - 1) : null;
           if (next !== null) { event.preventDefault(); buttons.current[next]?.focus(); }
-        }}>{row.label}</Button>)}
+        }}>{row.label}<span aria-hidden="true" className="hk-chart-inspect-icon">⌕</span></Button>)}
       </div>
-      <ul className={`hk-interactive-legend${tiles ? " hk-interactive-tiles" : ""}`} aria-label={`${title} series`}>{groups.map((group, index) => <li key={index}><span aria-hidden="true" style={{ background: group.color ?? colors[index % colors.length] }} />{summaries[index]}</li>)}</ul>
+      <ul className={`hk-interactive-legend${tiles ? " hk-interactive-tiles" : ""}`} aria-label={`${title} series`}>{groups.map((group, index) => <li key={index}><span aria-hidden="true" style={{ background: seriesColor(index) }} />{tiles ? summaries[index] : groups.length === 1 && group.label === title ? "Observed values" : group.label}</li>)}</ul>
     </>)}
   </article>;
 }

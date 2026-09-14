@@ -1,13 +1,13 @@
 .hk-inline-citation { position: relative; display: inline; }
 .hk-inline-citation-text { color: inherit; }
-.hk-inline-citation-card { position: relative; display: inline-flex; vertical-align: baseline; }
-.hk-inline-citation-trigger { display: inline-flex; align-items: center; min-height: 22px; padding: 1px 6px; border: 1px solid var(--hk-control-line); border-radius: 999px; background: var(--hk-surface); color: var(--hk-accent); cursor: pointer; font: 600 11px/1.4 var(--hk-mono); }
+.hk-inline-citation-card { position: relative; display: inline-flex; vertical-align: baseline; margin-inline-start: 4px; }
+.hk-inline-citation-trigger { display: inline-flex; align-items: center; min-height: 22px; padding: 1px 6px; border: 1px solid var(--hk-control-line); border-radius: 999px; background: var(--hk-surface); color: var(--hk-accent); cursor: pointer; font: 600 var(--hk-text-xs)/1.4 var(--hk-mono); }
 .hk-inline-citation-trigger:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
 .hk-inline-citation-card-body { position: absolute; z-index: 2; top: calc(100% + 8px); left: 0; display: none; width: min(360px, calc(100vw - 24px)); padding: 12px; border: 1px solid var(--hk-control-line); border-radius: 12px; background: var(--hk-surface); box-shadow: 0 12px 32px color-mix(in srgb, var(--hk-ink) 16%, transparent); }
 .hk-inline-citation-card-body:not([hidden]) { display: block; }
 .hk-inline-citation-carousel { display: grid; gap: 8px; }
 .hk-inline-citation-carousel-header { display: flex; align-items: center; gap: 6px; }
-.hk-inline-citation-carousel-index { margin-inline: auto; color: var(--hk-secondary); font: 11px/1.4 var(--hk-mono); }
+.hk-inline-citation-carousel-index { margin-inline: auto; color: var(--hk-secondary); font: var(--hk-text-xs)/1.4 var(--hk-mono); }
 .hk-inline-citation-carousel-content { min-width: 0; }
 .hk-inline-citation-carousel-item { display: none; min-width: 0; }
 .hk-inline-citation-carousel-item[data-active] { display: block; }
@@ -15,5 +15,6 @@
 .hk-inline-citation-source a { color: var(--hk-accent); overflow-wrap: anywhere; text-underline-offset: 3px; }
 .hk-inline-citation-source p, .hk-inline-citation-quote { margin: 0; color: var(--hk-secondary); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
 .hk-inline-citation-quote { padding-left: 10px; border-left: 2px solid var(--hk-control-line); }
+@media (max-width: 640px), (pointer: coarse) { .hk-inline-citation-trigger { min-width: 44px; position: relative; } .hk-inline-citation-trigger::after { content: ""; position: absolute; inset: 50% 0 auto; height: 44px; transform: translateY(-50%); } }
 @media (prefers-reduced-motion: reduce) { .hk-inline-citation-card-body { transition: none; } }
 @media (forced-colors: active) { .hk-inline-citation-trigger, .hk-inline-citation-card-body { border-color: CanvasText; } }

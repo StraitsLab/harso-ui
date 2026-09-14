@@ -1,8 +1,10 @@
-.hk-toolbar { position: relative; z-index: 4; display: flex; flex-wrap: wrap; align-items: center; max-width: 100%; gap: 4px; padding: 5px; border: 1px solid var(--hk-line); border-radius: 12px; background: color-mix(in srgb, var(--hk-surface) 90%, transparent); color: var(--hk-ink); box-shadow: var(--hk-shadow); backdrop-filter: blur(12px); }
+.hk-toolbar { position: relative; z-index: 4; display: flex; flex-wrap: wrap; align-items: center; width: fit-content; align-self: start; max-width: 100%; gap: 8px; padding: 8px; border: 1px solid var(--hk-line); border-radius: 12px; background: color-mix(in srgb, var(--hk-surface) 90%, transparent); color: var(--hk-ink); box-shadow: var(--hk-shadow); backdrop-filter: blur(12px); }
 .hk-canvas > .hk-toolbar { position: absolute; max-width: calc(100% - 2 * var(--hk-toolbar-offset)); }
 .hk-canvas > .hk-toolbar--top { top: var(--hk-toolbar-offset); left: 50%; transform: translateX(-50%); }
 .hk-canvas > .hk-toolbar--bottom { bottom: var(--hk-toolbar-offset); left: 50%; transform: translateX(-50%); }
 .hk-canvas > .hk-toolbar--left { left: var(--hk-toolbar-offset); top: 50%; transform: translateY(-50%); }
 .hk-canvas > .hk-toolbar--right { right: var(--hk-toolbar-offset); top: 50%; transform: translateY(-50%); }
 .hk-toolbar:hover, .hk-toolbar:focus-within { opacity: 1; }
+.hk-toolbar > .hk-button { gap: 8px; }.hk-toolbar > .hk-button:last-child { border-inline-start: 1px solid var(--hk-line-strong); }
+@media (max-width: 640px) { .hk-toolbar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }.hk-toolbar > .hk-button { justify-content: center; width: 100%; } }
 @media (forced-colors: active) { .hk-toolbar { border-color: CanvasText; background: Canvas; } }

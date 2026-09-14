@@ -1,9 +1,9 @@
 .hk-terminal { min-width: 0; overflow: hidden; border: 1px solid var(--hk-line); border-radius: 16px; background: var(--hk-surface); color: var(--hk-ink); }
 .hk-terminal-header { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 8px 12px; border-bottom: 1px solid var(--hk-line); }
 .hk-terminal-title { font-weight: 600; }
-.hk-terminal-status { color: var(--hk-secondary); font-size: 12px; }
+.hk-terminal-status { color: var(--hk-secondary); font-size: var(--hk-text-xs); }
 .hk-terminal-actions { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; }
-.hk-terminal-content { max-height: 360px; overflow: auto; padding: 14px; background: var(--hk-terminal-bg, #151515); color: var(--hk-terminal-fg, #f2f2f2); font: 13px/1.6 var(--hk-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.hk-terminal-content { max-height: 360px; overflow: auto; padding: 14px; background: var(--hk-terminal-bg, #151515); color: var(--hk-terminal-fg, #f2f2f2); font: var(--hk-text-sm)/1.6 var(--hk-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
 .hk-terminal-cursor { color: var(--hk-terminal-c2); animation: hk-terminal-blink 1s steps(2, start) infinite; }
 .hk-terminal-copy { border: 0; }
 .hk-terminal-c0 { color: #f87171; } .hk-terminal-c1 { color: #fb923c; } .hk-terminal-c2 { color: #4ade80; } .hk-terminal-c3 { color: #facc15; } .hk-terminal-c4 { color: #60a5fa; } .hk-terminal-c5 { color: #c084fc; } .hk-terminal-c6 { color: #2dd4bf; } .hk-terminal-c7 { color: #f8fafc; }
@@ -11,3 +11,8 @@
 @keyframes hk-terminal-blink { 50% { opacity: .2; } }
 @media (prefers-reduced-motion: reduce) { .hk-terminal-cursor { animation: none; } }
 @media (forced-colors: active) { .hk-terminal, .hk-terminal-header { border-color: CanvasText; } .hk-terminal-content { background: Canvas; color: CanvasText; } }
+
+.hk-terminal { border-radius: 12px; }
+.hk-terminal-title { min-width: 0; overflow-wrap: anywhere; }
+.hk-terminal-clear { gap: 8px; }
+@media (max-width: 640px), (pointer: coarse) { .hk-terminal-actions .hk-button { min-height: 44px; } .hk-terminal-header { flex-wrap: wrap; gap: 8px; } }

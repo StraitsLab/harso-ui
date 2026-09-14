@@ -4,6 +4,7 @@ export type JSXPreviewProps = Omit<ComponentPropsWithRef<"div">, "onError"> & { 
 export function JSXPreview({ jsx, isStreaming = false, components, bindings, onError, className = "", children, ...props }: JSXPreviewProps) {
   const unsupported = components !== undefined || bindings !== undefined || onError !== undefined;
   return <div {...props} className={`hk-jsx-preview ${className}`} aria-busy={isStreaming || undefined} data-streaming={isStreaming || undefined}>
+    <div className="hk-jsx-preview-label">{children != null ? "Rendered result" : "JSX source · read only"}</div>
     {unsupported && <JSXPreviewError>JSX source is not executed; components, bindings, and onError are unsupported. Pass trusted, host-rendered children instead.</JSXPreviewError>}
     {children ?? (jsx.trim() ? <pre><code>{jsx}</code></pre> : <p role="status">{isStreaming ? "Waiting for JSX" : "No JSX supplied"}</p>)}
   </div>;

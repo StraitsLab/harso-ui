@@ -5,7 +5,7 @@ export const chainOfThoughtExports = ["ChainOfThought"] as const;
 export type ChainOfThoughtExport = typeof chainOfThoughtExports[number];
 export const chainOfThoughtNotes = { ChainOfThought: { behavior: "A compact, conversation-scoped reasoning disclosure. Step state is supplied by the host; opening it never starts, stops, retries or stores execution.", example: '<ChainOfThought open={open} onOpenChange={setOpen}><ChainOfThoughtHeader /><ChainOfThoughtContent><ChainOfThoughtStep label="Search" status="complete" /><ChainOfThoughtSearchResults><ChainOfThoughtSearchResult>Docs</ChainOfThoughtSearchResult></ChainOfThoughtSearchResults></ChainOfThoughtContent></ChainOfThought>' } };
 export function ChainOfThoughtExample({ state }: { state: ExampleState }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [hold, setHold] = useState(false);
   const [localDisabled, setLocalDisabled] = useState(false);
   const [snapshot, setSnapshot] = useState("default");
@@ -16,14 +16,14 @@ export function ChainOfThoughtExample({ state }: { state: ExampleState }) {
     if (!hold) setOpen(next);
   };
   return <div className="hkl-example-stack">
-    <p>Authored sample work summaries, not hidden model reasoning. The host supplies each snapshot. Changing this local example never starts work, fetches data or retries anything.</p>
+    <div className="hk-data-toolbar"><p>Authored sample work summaries, not hidden model reasoning. The host supplies each snapshot. Changing this local example never starts work, fetches data or retries anything.</p>
     <label>Supplied summary state<Select value={snapshot} onChange={event => setSnapshot(event.target.value)}>
       <option value="default">Supplied progress</option><option value="empty">Empty</option><option value="loading">Host loading</option><option value="error">Host error</option><option value="replacement">Replacement summary</option>
     </Select></label>
     <Checkbox label="Disable disclosure controls" checked={localDisabled} onChange={event => setLocalDisabled(event.target.checked)} />
     <Checkbox label="Hold disclosure state" checked={hold} onChange={event => setHold(event.target.checked)} />
-    <Button size="small" disabled={disabled} onClick={() => requestOpen(!open)}>{open ? "Close supplied summary" : "Open supplied summary"}</Button>
-    <output aria-label="Disclosure request">{request}</output>
+    <Button size="small" disabled={disabled} onClick={() => requestOpen(!open)}><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="m9 5 7 7-7 7"/></svg>{open ? "Close supplied summary" : "Open supplied summary"}</Button>
+    <output aria-label="Disclosure request">{request}</output></div>
     <ChainOfThought open={open} onOpenChange={requestOpen}>
       <ChainOfThoughtHeader disabled={disabled}>Supplied work summary</ChainOfThoughtHeader>
       <ChainOfThoughtContent aria-busy={snapshot === "loading"}>

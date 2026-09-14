@@ -1,5 +1,7 @@
-.hk-flow-controls { position: relative; z-index: 3; display: flex; flex-wrap: wrap; gap: 4px; max-width: 100%; padding: 5px; border: 1px solid var(--hk-line); border-radius: 999px; background: color-mix(in srgb, var(--hk-surface) 90%, transparent); box-shadow: var(--hk-shadow); backdrop-filter: blur(12px); }
+.hk-flow-controls { position: relative; z-index: 3; display: flex; flex-wrap: wrap; gap: 4px; max-width: 100%; padding: 4px; border: 1px solid var(--hk-line-strong); border-radius: 12px; background: color-mix(in srgb, var(--hk-surface) 90%, transparent); box-shadow: var(--hk-shadow); backdrop-filter: blur(12px); }
 .hk-canvas > .hk-flow-controls { position: absolute; bottom: 12px; left: 12px; max-width: calc(100% - 24px); }
 .hk-flow-controls button:disabled { opacity: 0.5; cursor: default; }
-.hk-flow-controls button { display: grid; place-items: center; width: 30px; height: 30px; border: 0; border-radius: 50%; background: transparent; color: var(--hk-ink); cursor: pointer; font: inherit; }.hk-flow-controls button:hover { background: var(--hk-hover); }
+.hk-flow-controls button { display: grid; place-items: center; width: 42px; height: 42px; border: 0; border-radius: 8px; background: transparent; color: var(--hk-ink); cursor: pointer; font: inherit; }.hk-flow-controls button:hover { background: var(--hk-hover); }
+.hk-flow-controls button:nth-child(3) { border-inline-start: 1px solid var(--hk-line); }
 @media (forced-colors: active) { .hk-flow-controls { border-color: CanvasText; background: Canvas; } }
+@media (max-width: 640px), (pointer: coarse) { .hk-flow-controls button { width: 44px; height: 44px; } }

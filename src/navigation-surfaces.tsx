@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type CSSProperties, type MouseEvent, type ReactNode, type Ref, type RefObject } from "react";
 import { Button, IconButton, Separator, type ButtonProps } from "./primitives";
 import { Tooltip } from "./navigation";
+import { CaretDownIcon, CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 
 function useNativeRef<Element>(local: RefObject<Element | null>, forwarded: Ref<Element> | undefined) {
   return useCallback((element: Element | null) => {
@@ -98,7 +99,7 @@ export function Dropdown({ label, children, open, defaultOpen = false, onOpenCha
 export function DropdownTrigger({ ref, onClick, onKeyDown, disabled, style, ...props }: ButtonProps) {
   const menu = useMenu();
   const attached = useNativeRef(menu.trigger, ref);
-  return <Button {...props} ref={attached} disabled={disabled || menu.disabled || !menu.available} style={{ ...style, anchorName: menu.anchor } as CSSProperties} aria-haspopup="menu" aria-expanded={menu.visible} aria-controls={menu.identity} title={!menu.available ? "Menu requires native popover support" : props.title} onClick={event => { if (event.currentTarget.matches(":disabled")) return; onClick?.(event); if (!event.defaultPrevented) { menu.edge.current = "first"; menu.request(!menu.visible); } }} onKeyDown={event => {
+  return <Button {...props} trailingIcon={props.trailingIcon ?? <CaretDownIcon size={16} aria-hidden="true" />} ref={attached} disabled={disabled || menu.disabled || !menu.available} style={{ ...style, anchorName: menu.anchor } as CSSProperties} aria-haspopup="menu" aria-expanded={menu.visible} aria-controls={menu.identity} title={!menu.available ? "Menu requires native popover support" : props.title} onClick={event => { if (event.currentTarget.matches(":disabled")) return; onClick?.(event); if (!event.defaultPrevented) { menu.edge.current = "first"; menu.request(!menu.visible); } }} onKeyDown={event => {
     onKeyDown?.(event);
     if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
     const forward = getComputedStyle(event.currentTarget).direction === "rtl" ? "ArrowLeft" : "ArrowRight";
@@ -238,5 +239,5 @@ export function Carousel({ label, children, align = "start", gap = 24, showArrow
     const rtl = getComputedStyle(event.currentTarget).direction === "rtl";
     if (event.key === "Home" || event.key === "End") { event.preventDefault(); go(event.key === "Home" ? 0 : position.count - 1); }
     else if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); step((event.key === "ArrowRight" ? 1 : -1) * (rtl ? -1 : 1)); }
-  }}>{children}</div>{scrollable && <div className="hk-carousel-controls">{showArrows && <IconButton label="Previous slide" aria-controls={identity} disabled={position.start} onClick={() => step(-1)}><span aria-hidden="true">‹</span></IconButton>}{showDots && <div className="hk-carousel-dots" role="group" aria-label="Choose slide">{Array.from({ length: position.count }, (_, index) => <button key={index} type="button" aria-label={`Go to slide ${index + 1}`} aria-controls={identity} aria-current={index === position.index ? "true" : undefined} onClick={() => go(index)}><span /></button>)}</div>}{showArrows && <IconButton label="Next slide" aria-controls={identity} disabled={position.end} onClick={() => step(1)}><span aria-hidden="true">›</span></IconButton>}</div>}<span className="hk-sr-only" role="status">{position.count ? `Slide ${position.index + 1} of ${position.count}` : "No slides"}</span></section>;
+  }}>{children}</div>{scrollable && <div className="hk-carousel-controls">{showArrows && <IconButton label="Previous slide" aria-controls={identity} disabled={position.start} onClick={() => step(-1)}><CaretLeftIcon size={18} aria-hidden="true" /></IconButton>}{showDots && <div className="hk-carousel-dots" role="group" aria-label="Choose slide">{Array.from({ length: position.count }, (_, index) => <button key={index} type="button" aria-label={`Go to slide ${index + 1}`} aria-controls={identity} aria-current={index === position.index ? "true" : undefined} onClick={() => go(index)}><span /></button>)}</div>}{showArrows && <IconButton label="Next slide" aria-controls={identity} disabled={position.end} onClick={() => step(1)}><CaretRightIcon size={18} aria-hidden="true" /></IconButton>}</div>}<span className="hk-sr-only" role="status">{position.count ? `Slide ${position.index + 1} of ${position.count}` : "No slides"}</span></section>;
 }

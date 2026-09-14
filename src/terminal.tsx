@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useRef, type ComponentPropsWithRef, type ReactNode } from "react";
 import { Snippet, SnippetCopyButton, type DeveloperCopyProps } from "./developer-content";
+import { EraserIcon } from "@phosphor-icons/react";
 import { Button } from "./primitives";
 
 type DivProps = ComponentPropsWithRef<"div">;
@@ -46,5 +47,5 @@ export function TerminalHeader({ className = "", ...props }: DivProps) { return 
 export function TerminalTitle({ children = "Terminal", className = "", ...props }: DivProps) { return <div {...props} className={`hk-terminal-title ${className}`}>{children}</div>; }
 export function TerminalStatus({ children, className = "", ...props }: DivProps) { const { isStreaming } = useTerminal(); return <div {...props} role="status" className={`hk-terminal-status ${className}`}>{children ?? (isStreaming ? "Streaming" : "Ready")}</div>; }
 export function TerminalActions({ className = "", ...props }: DivProps) { return <div {...props} className={`hk-terminal-actions ${className}`} />; }
-export function TerminalClearButton({ children = "Clear", className = "", onClick, ...props }: ComponentPropsWithRef<typeof Button>) { const { onClear, disabled } = useTerminal(); return <Button {...props} type="button" disabled={disabled || props.disabled || !onClear} className={`hk-terminal-clear ${className}`} onClick={event => { event.stopPropagation(); onClick?.(event); if (!event.defaultPrevented) onClear?.(); }}>{children}</Button>; }
+export function TerminalClearButton({ children = "Clear", className = "", onClick, ...props }: ComponentPropsWithRef<typeof Button>) { const { onClear, disabled } = useTerminal(); return <Button {...props} type="button" disabled={disabled || props.disabled || !onClear} className={`hk-terminal-clear ${className}`} onClick={event => { event.stopPropagation(); onClick?.(event); if (!event.defaultPrevented) onClear?.(); }}><EraserIcon size={18} aria-hidden="true" />{children}</Button>; }
 export function TerminalContent({ className = "", ...props }: DivProps) { const { output, isStreaming, autoScroll } = useTerminal(); const ref = useRef<HTMLDivElement>(null); useEffect(() => { if (autoScroll && ref.current) ref.current.scrollTop = ref.current.scrollHeight; }, [autoScroll, output]); return <div {...props} ref={ref} role="log" aria-live={isStreaming ? "polite" : "off"} aria-busy={isStreaming || undefined} tabIndex={0} className={`hk-terminal-content ${className}`}>{renderAnsi(output)}{isStreaming && <span className="hk-terminal-cursor" aria-label="Output streaming">▌</span>}</div>; }

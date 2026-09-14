@@ -40,7 +40,6 @@ export function AgentThinking({ state, elapsed, variant = "wave", tone = variant
       {variant === "stars" ? Array.from({ length: 5 }, (_, index) => <span className="hk-thinking-star" key={index} />) : null}
       {variant === "infinity" ? <svg viewBox="0 0 32 20" focusable="false"><path className="hk-thinking-track" d="M16 10C11 1 2 1 2 10S11 19 16 10S30 1 30 10S21 19 16 10" /><path className="hk-thinking-comet" pathLength="100" d="M16 10C11 1 2 1 2 10S11 19 16 10S30 1 30 10S21 19 16 10" /></svg> : null}
     </span>
-    <span className="hk-thinking-status" role="status" aria-live="polite"><span className="hk-thinking-label">{children !== undefined ? children : label}</span>{state !== undefined ? getStatusBadge(state) : null}</span>
-    <ThinkingTimer key={runKey} active={active} elapsed={elapsed} visible={showTimer} />
+    <span className="hk-thinking-content"><span className="hk-thinking-announcement" role="status" aria-live="polite"><span className="hk-thinking-label">{children !== undefined ? children : label}</span>{state !== undefined ? <span className="hk-thinking-status">{getStatusBadge(state)}</span> : null}</span><ThinkingTimer key={runKey} active={active} elapsed={elapsed} visible={showTimer} /></span>
   </div>;
 }

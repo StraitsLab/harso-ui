@@ -1,10 +1,11 @@
+.hk-reasoning-elapsed { max-width: 160px; }
 .hk-work { min-width: 0; max-width: 100%; }
 .hk-work[tabindex="-1"]:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 4px; }
-.hk-button.hk-work-trigger { width: 100%; padding-inline: 0; justify-content: space-between; white-space: normal; text-align: start; gap: 20px; min-height: 36px; font-size: var(--hk-text-base); font-weight: 500; color: var(--hk-secondary); }
-.hk-button.hk-work-trigger:hover:not(:disabled) { background: none; color: var(--hk-ink); }
+.hk-button.hk-work-trigger { width: 100%; padding-inline: 8px; background: transparent; justify-content: space-between; white-space: normal; text-align: start; gap: 20px; min-height: 36px; font-size: var(--hk-text-base); font-weight: 500; color: var(--hk-secondary); }
+.hk-button.hk-work-trigger:hover:not(:disabled) { background: var(--hk-hover); color: var(--hk-ink); }
 .hk-work-trigger-label { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; overflow-wrap: anywhere; }
-.hk-work-chevron { flex-shrink: 0; width: 16px; height: 16px; font-size: 0; background: currentColor; mask: var(--hk-shell-CaretRight) center / contain no-repeat; transition: transform var(--hk-fast) var(--hk-ease); }
-.hk-work-trigger[aria-expanded="true"] .hk-work-chevron { transform: rotate(90deg); }
+.hk-work-chevron { flex-shrink: 0; width: 8px; height: 8px; margin: 4px; font-size: 0; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform var(--hk-fast) var(--hk-ease); }
+.hk-work-trigger[aria-expanded="true"] .hk-work-chevron { transform: rotate(45deg); }
 .hk-work-content { margin-block: 16px 8px; min-width: 0; overflow-wrap: anywhere; }
 .hk-work-content[hidden] { display: none; }
 .hk-plan-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px 20px; }
@@ -20,9 +21,9 @@
 .hk-task-icon { color: var(--hk-tertiary); text-align: center; border: 1px solid currentColor; border-radius: var(--hk-radius-pill); width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: var(--hk-text-xs); line-height: 1; margin-top: 3px; }
 @media (max-width: 640px) { .hk-button.hk-work-trigger { min-height: 44px; } }
 .hk-task-item-content { min-width: 0; overflow-wrap: anywhere; }
-.hk-task-item-status { font-size: 12px; color: var(--hk-secondary); padding-top: 2px; }
+.hk-task-item-status { justify-self: start; font-size: var(--hk-text-xs); color: var(--hk-secondary); padding: 2px 8px; border-radius: 999px; background: var(--hk-hover); }
 .hk-task-file { display: inline-flex; align-items: baseline; gap: 8px; max-width: 100%; font: 12px/1.7 var(--hk-mono); color: var(--hk-secondary); overflow-wrap: anywhere; white-space: normal; text-align: start; }
-.hk-reasoning .hk-work-content { font-size: var(--hk-text-base); padding-inline-start: 18px; border-inline-start: 1px solid var(--hk-line); }
+.hk-reasoning .hk-work-content { font-size: var(--hk-text-base); padding-inline-start: 16px; border-inline-start: 1px solid var(--hk-line); }
 .hk-checkpoint { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; color: var(--hk-secondary); }
 .hk-checkpoint::after { content: ""; height: 1px; flex: 1 0 24px; background: var(--hk-line); margin-inline-start: 12px; }
 .hk-checkpoint-icon { font-size: 18px; }

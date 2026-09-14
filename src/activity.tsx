@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, type ComponentPropsWithRef, type ReactNode } from "react";
+import { MagnifyingGlassIcon, TextAlignLeftIcon, XIcon } from "@phosphor-icons/react";
 import { Badge, IconButton, type ButtonProps } from "./primitives";
 import { Tooltip } from "./navigation";
 import { MessageResponse } from "./text-effects";
@@ -79,7 +80,7 @@ export type AgentToolDescriptor = { description?: string; inputSchema?: JsonValu
 export function AgentTool({ value, tool, className = "", ...props }: WorkDisclosureProps & { value: string; tool: AgentToolDescriptor }) {
   const group = useContext(AgentToolsContext);
   const open = group ? group.value === value : props.open;
-  return <Plan {...props} open={open} disabled={group?.disabled || props.disabled} onOpenChange={next => { if (group) group.setValue(next ? value : null); props.onOpenChange?.(next); }} className={`hk-agent-tool ${className}`}><PlanTrigger><span className="hk-activity-name">{value}</span>{tool.description && <span className="hk-agent-tool-description">{tool.description}</span>}</PlanTrigger><PlanContent><ToolInput label="Input schema" input={tool.inputSchema} /></PlanContent></Plan>;
+  return <Plan {...props} open={open} disabled={group?.disabled || props.disabled} onOpenChange={next => { if (group) group.setValue(next ? value : null); props.onOpenChange?.(next); }} className={`hk-agent-tool ${className}`}><PlanTrigger>{value.includes("search") ? <MagnifyingGlassIcon size={16} aria-hidden="true" /> : <TextAlignLeftIcon size={16} aria-hidden="true" />}<span className="hk-activity-name">{value}</span>{tool.description && <span className="hk-agent-tool-description">{tool.description}</span>}</PlanTrigger><PlanContent><ToolInput label="Input schema" input={tool.inputSchema} /></PlanContent></Plan>;
 }
 
 export function AgentOutput({ schema, className = "", ...props }: Omit<DivProps, "children" | "dangerouslySetInnerHTML"> & { schema: string }) {
@@ -111,7 +112,7 @@ export function ArtifactAction({ icon, children, tooltip, ...props }: ButtonProp
   return tooltip ? <Tooltip content={tooltip}>{button}</Tooltip> : button;
 }
 
-export function ArtifactClose({ label = "Close artifact", children = "×", ...props }: ButtonProps & { label?: string }) {
+export function ArtifactClose({ label = "Close artifact", children = <XIcon size={18} />, ...props }: ButtonProps & { label?: string }) {
   return <ArtifactAction {...props} label={label} icon={children} />;
 }
 

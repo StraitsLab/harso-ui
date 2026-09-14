@@ -8,7 +8,7 @@
 .hk-color-roles .hk-color { overflow-wrap: anywhere; }
 .hk-social-button--full { width: 100%; }
 .hk-social-button--colorful { --hk-social-bg: color-mix(in srgb, var(--hk-accent) 8%, var(--hk-surface)); --hk-social-fg: var(--hk-accent); }
-.hk-social-button--black { --hk-social-bg: #171a20; --hk-social-fg: #fff; }
+.hk-social-button--black { --hk-social-bg: var(--hk-dark); --hk-social-fg: var(--hk-canvas); }
 .hk-social-button--white { --hk-social-bg: #fff; --hk-social-fg: #171a20; }
 .hk-button.hk-social-button { background: var(--hk-social-bg); color: var(--hk-social-fg); transition: transform var(--hk-fast) var(--hk-ease); }
 .hk-button.hk-social-button:hover:not(:disabled) { background: color-mix(in srgb, var(--hk-social-bg) 94%, var(--hk-social-fg)); }

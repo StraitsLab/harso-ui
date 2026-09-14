@@ -24,7 +24,7 @@ export function HrManagementExample({ state }: { state: ExampleState }) {
   const [sort, setSort] = useState<DataSort>(null);
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState<string[]>([]);
-  const [tab, setTab] = useState("People");
+  const [tab, setTab] = useState("Departments");
   const [section, setSection] = useState("Overview");
   const [panel, setPanel] = useState<"navigation" | "employee" | null>(null);
   const [draft, setDraft] = useState(emptyDraft);

@@ -133,7 +133,7 @@ export function FileUpload({ label, description, icon = "↥", accept = "", mult
   const statusText = { selected: "Selected", uploading: "Uploading", complete: "Complete", error: "Failed" };
   return <section className="hk-file-upload" aria-label={`${label} selection`} onDragOver={event => { if (event.dataTransfer.types.includes("Files")) event.preventDefault(); }} onDrop={event => { event.preventDefault(); select(Array.from(event.dataTransfer.files)); }}>
     <div><span className="hk-file-upload-icon" aria-hidden="true">{icon}</span> <label htmlFor={identity}>{label}</label></div>
-    <p id={`${identity}-hint`} className="hk-field-hint">{description ?? "Choose files or drop them here."}</p>
+    <div id={`${identity}-hint`} className="hk-file-upload-hint"><p>Choose files or drop them here.</p>{description && <p className="hk-field-hint">{description}</p>}</div>
     <input ref={picker} className="hk-file-picker" id={identity} type="file" accept={accept || undefined} multiple={multiple} disabled={disabled} aria-describedby={`${identity}-hint${errors.length ? ` ${identity}-errors` : ""}`} aria-invalid={errors.length > 0 || undefined} onChange={event => { select(Array.from(event.currentTarget.files ?? [])); event.currentTarget.value = ""; }} />
     {errors.length > 0 && <ul className="hk-field-error" id={`${identity}-errors`} role="alert">{errors.map((error, index) => <li key={`${index}:${error}`}>{error}</li>)}</ul>}
     {files.length > 0 && <ul className="hk-file-list">{files.map(file => <li key={file.id}>

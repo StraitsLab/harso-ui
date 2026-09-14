@@ -57,7 +57,7 @@ export function AudioPlayerPlayButton({ className = "", ...props }: ComponentPro
     if (event.defaultPrevented || !audio) return;
     try { if (playing) audio.pause(); else await audio.play(); }
     catch (error) { setError(error instanceof Error ? error.message : "Audio playback was refused."); }
-  }} aria-label={props["aria-label"] ?? (playing ? "Pause" : "Play")}>{playing ? "Ⅱ" : "▶"}</button>;
+  }} aria-label={props["aria-label"] ?? (playing ? "Pause" : "Play")}>{<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">{playing ? <path d="M6 4h4v16H6zM14 4h4v16h-4z" /> : <path d="m7 4 14 8-14 8z" />}</svg>}</button>;
 }
 function seek(audio: HTMLAudioElement | null, offset: number) { if (audio && Number.isFinite(offset) && Number.isFinite(audio.duration)) audio.currentTime = Math.max(0, Math.min(audio.duration, audio.currentTime + offset)); }
 export function AudioPlayerSeekBackwardButton({ seekOffset = 10, className = "", ...props }: ComponentPropsWithRef<"button"> & { seekOffset?: number }) {

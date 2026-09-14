@@ -133,7 +133,7 @@ export function Checkpoint({ className = "", ...props }: DivProps) {
   return <div {...props} className={`hk-checkpoint ${className}`} />;
 }
 
-export function CheckpointIcon({ children = "◇", className = "", ...props }: ComponentPropsWithRef<"span">) {
+export function CheckpointIcon({ children = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M3 11a9 9 0 1 1 2 7M3 4v7h7"/><path d="M12 7v5l3 2"/></svg>, className = "", ...props }: ComponentPropsWithRef<"span">) {
   return <span {...props} aria-hidden="true" className={`hk-checkpoint-icon ${className}`}>{children}</span>;
 }
 

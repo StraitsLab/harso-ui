@@ -88,7 +88,7 @@ export function CodeBlockContent(props: CodeBlockContentProps) {
   useLayoutEffect(() => registerContent?.(), [registerContent]);
   return <CodeBody {...props} />;
 }
-function CodeBody({ code: suppliedCode, language: suppliedLanguage, showLineNumbers: suppliedLineNumbers, className = "", ...props }: CodeBlockContentProps) {
+function CodeBody({ code: suppliedCode, language: suppliedLanguage, showLineNumbers: suppliedLineNumbers, className = "", ref: forwardedRef, ...props }: CodeBlockContentProps) {
   const context = useContext(CodeContext);
   const code = suppliedCode ?? context?.code ?? "";
   const language = suppliedLanguage ?? context?.language;
@@ -102,12 +102,15 @@ function CodeBody({ code: suppliedCode, language: suppliedLanguage, showLineNumb
     }).catch(() => { if (current) setHighlight(null); });
     return () => { current = false; };
   }, [code, language]);
+  const contentRef = useRef<HTMLPreElement>(null);
+  const [overflow, setOverflow] = useState(false);
+  useEffect(() => { const node = contentRef.current; if (!node) return; const measure = () => setOverflow(node.scrollWidth > node.clientWidth + 1); measure(); if (typeof ResizeObserver === "undefined") return; const observer = new ResizeObserver(measure); observer.observe(node); return () => observer.disconnect(); }, [code, highlight]);
   const tokens = highlight?.code === code && highlight.language === language ? highlight.tokens : undefined;
   const lines = code.split(/(\r\n|\n|\r)/);
-  return <pre {...props} aria-label="Code" tabIndex={0} className={`hk-code-content ${className}`}><code>{lines.map((line, index) => {
+  return <><pre {...props} ref={node => { contentRef.current = node; if (typeof forwardedRef === "function") return forwardedRef(node); if (forwardedRef) forwardedRef.current = node; }} data-overflow={overflow || undefined} aria-label="Code" tabIndex={0} className={`hk-code-content ${className}`}><code>{lines.map((line, index) => {
     if (index % 2 !== 0) return null;
     const lineTokens = tokens?.[index / 2];
     const exactTokens = lineTokens?.map(token => token.content).join("") === line ? lineTokens : undefined;
     return <span className="hk-code-line" key={index}>{showLineNumbers && <span className="hk-code-line-number" aria-hidden="true" data-line-number={index / 2 + 1} />}<span>{exactTokens ? exactTokens.map((token, tokenIndex) => <span className="hk-code-token" key={tokenIndex} style={token.htmlStyle as CSSProperties}>{token.content}</span>) : line}</span>{lines[index + 1] ?? ""}</span>;
-  })}</code></pre>;
+  })}</code></pre>{overflow && <span className="hk-code-scroll-hint">Scroll horizontally to view full source →</span>}</>;
 }

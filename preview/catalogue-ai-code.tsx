@@ -1,4 +1,5 @@
 // Lane-owned gallery fixtures (ai-code). The router in catalogue-examples.tsx calls this first-match; return undefined to pass.
+import { CheckCircleIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 import { SelectorsExample } from "./selectors-examples";
 import { SpeechInputExample } from "./native-speech-examples";
@@ -35,7 +36,7 @@ export function renderAiCode(component: string, state: ExampleState = "default")
   if (component === "SchemaDisplay") return <SchemaDisplay method="GET" path="/work/{id}" parameters={[{ name: "id", type: "string", required: true, location: "path" }]} responseBody={[{ name: "status", type: "string" }]} />;
   if (component === "Sandbox") return <Sandbox open><SandboxHeader state="output-available" title="work.tsx" /><SandboxContent><SandboxTabs><SandboxTabsBar><SandboxTabsList><SandboxTabsTrigger value="code">Code</SandboxTabsTrigger><SandboxTabsTrigger value="output">Output</SandboxTabsTrigger></SandboxTabsList></SandboxTabsBar><SandboxTabContent value="code">const result = await work();</SandboxTabContent><SandboxTabContent value="output">Completed.</SandboxTabContent></SandboxTabs></SandboxContent></Sandbox>;
   if (component === "WebPreview") return <WebPreviewExample state={state} />;
-  if (component === "JsxPreview") return <JsxPreview jsx="<Result />" />;
+  if (component === "JsxPreview") return <JsxPreview jsx="<Result />"><section className="hk-jsx-preview-result"><span><CheckCircleIcon size={16} aria-hidden="true" />RESEARCH COMPLETE</span><h3>A clearer view of the evidence</h3><p>Three firsthand sources reviewed. Key findings and open questions are ready for your next decision.</p><p>3 sources · 2 open questions</p></section></JsxPreview>;
 
   return undefined;
 }

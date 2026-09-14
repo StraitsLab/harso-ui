@@ -148,7 +148,7 @@ export function Chip({ tone = "neutral", variant = "subtle", className = "", lea
 }
 
 export function CloseButton({ label = "Close", size = "medium", ...props }: Omit<ButtonProps, "children" | "size" | "aria-label"> & { label?: string; size?: "2xs" | "xs" | "small" | "medium" }) {
-  return <IconButton {...props} label={label} size={size === "medium" ? "medium" : "small"} className={`hk-close hk-close--${size} ${props.className ?? ""}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></IconButton>;
+  return <IconButton {...props} label={label} size={size === "medium" ? "medium" : "small"} className={`hk-close hk-close--${size} ${props.className ?? ""}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={size === "2xs" ? 1.25 : size === "medium" ? 1.75 : 1.5} strokeLinecap="round" aria-hidden="true"><path d="m4 4 16 16M20 4 4 20" vectorEffect="non-scaling-stroke" /></svg></IconButton>;
 }
 
 export const TooltipTrigger = TooltipPrimitive.Trigger;

@@ -1,23 +1,31 @@
 .hk-schema-display { display: grid; gap: 12px; min-width: 0; color: var(--hk-ink); }
 .hk-schema-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
-.hk-schema-method { padding: 3px 7px; border-radius: 6px; font: 11px var(--hk-mono); font-weight: 600; }
+.hk-schema-method { padding: 3px 7px; border-radius: 6px; font: var(--hk-text-xs) var(--hk-mono); font-weight: 600; }
 .hk-schema-method--get { color: var(--hk-positive); background: color-mix(in srgb, var(--hk-positive) 12%, transparent); }
 .hk-schema-method--post { color: var(--hk-accent); background: color-mix(in srgb, var(--hk-accent) 12%, transparent); }
 .hk-schema-method--put, .hk-schema-method--patch { color: var(--hk-attention); background: color-mix(in srgb, var(--hk-attention) 12%, transparent); }
 .hk-schema-method--delete { color: var(--hk-negative); background: color-mix(in srgb, var(--hk-negative) 12%, transparent); }
-.hk-schema-path { overflow-wrap: anywhere; font: 14px var(--hk-mono); }
+.hk-schema-path { overflow-wrap: anywhere; font: var(--hk-text-base) var(--hk-mono); }
 .hk-schema-path-marker { color: var(--hk-accent); }
-.hk-schema-description { margin: 0; color: var(--hk-secondary); font-size: 13px; line-height: 1.6; }
+.hk-schema-description { margin: 0; color: var(--hk-secondary); font-size: var(--hk-text-sm); line-height: 1.6; }
 .hk-schema-content { display: grid; gap: 2px; }
 .hk-schema-section { border-top: 1px solid var(--hk-line); }
-.hk-schema-section summary { min-height: 38px; padding: 10px 0; cursor: pointer; color: var(--hk-ink); font-size: 13px; }
-.hk-schema-section summary span { color: var(--hk-secondary); font: 11px var(--hk-mono); }
+.hk-schema-section summary { min-height: 38px; padding: 10px 0; cursor: pointer; color: var(--hk-ink); font-size: var(--hk-text-sm); }
+.hk-schema-section summary span { color: var(--hk-secondary); font: var(--hk-text-xs) var(--hk-mono); }
 .hk-schema-parameter-list, .hk-schema-property-list { display: grid; gap: 10px; padding: 2px 0 14px; }
-.hk-schema-parameter, .hk-schema-property { min-width: 0; font-size: 13px; }
+.hk-schema-parameter, .hk-schema-property { min-width: 0; font-size: var(--hk-text-sm); }
 .hk-schema-parameter > div, .hk-schema-property-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 8px; }
-.hk-schema-parameter span, .hk-schema-property-row span { color: var(--hk-secondary); font: 11px var(--hk-mono); }
-.hk-schema-parameter p, .hk-schema-property p { margin: 3px 0 0; color: var(--hk-secondary); font-size: 12px; }
+.hk-schema-parameter span, .hk-schema-property-row span { color: var(--hk-secondary); font: var(--hk-text-xs) var(--hk-mono); }
+.hk-schema-parameter p, .hk-schema-property p { margin: 3px 0 0; color: var(--hk-secondary); font-size: var(--hk-text-xs); }
 .hk-schema-parameter b, .hk-schema-property b { color: var(--hk-negative); }
 .hk-schema-property-nested { display: grid; gap: 8px; margin: 8px 0 0 14px; padding-left: 12px; border-left: 1px solid var(--hk-line); }
-.hk-schema-example { margin: 0; padding: 12px; overflow: auto; border-radius: 10px; background: var(--hk-hover); color: var(--hk-ink); font: 12px/1.6 var(--hk-mono); white-space: pre-wrap; }
+.hk-schema-example { margin: 0; padding: 12px; overflow: auto; border-radius: 10px; background: var(--hk-hover); color: var(--hk-ink); font: var(--hk-text-xs)/1.6 var(--hk-mono); white-space: pre-wrap; }
 @media (forced-colors: active) { .hk-schema-section, .hk-schema-property-nested { border-color: CanvasText; } }
+
+.hk-schema-header { gap: 8px; }
+.hk-schema-method, .hk-schema-section summary span { font: var(--hk-text-xs)/20px var(--hk-mono); }
+.hk-schema-path { font: var(--hk-text-sm)/20px var(--hk-mono); }
+.hk-schema-section summary { display: flex; align-items: center; gap: 8px; list-style: none; min-height: 44px; }
+.hk-schema-section summary::-webkit-details-marker { display: none; }
+.hk-schema-section summary::before { content: ""; width: 8px; height: 8px; margin: 0 4px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); }
+.hk-schema-section[open] summary::before { transform: rotate(45deg); }

@@ -1,4 +1,4 @@
-.hk-agent-progress-root { color: var(--hk-ink); background: transparent; min-width: 0; font-size: 13px; }
+.hk-agent-progress-root { max-width: 560px; padding: 16px; border: 1px solid var(--hk-line); border-radius: 12px; color: var(--hk-ink); background: transparent; min-width: 0; font-size: var(--hk-text-base); }
 .hk-agent-progress-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
 .hk-agent-progress-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 4px; border: 0; border-radius: 4px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
 .hk-agent-progress-toggle:hover { color: var(--hk-accent); }
@@ -7,15 +7,16 @@
 .hk-agent-progress-chevron { width: 16px; text-align: center; }
 .hk-agent-progress-summary, .hk-agent-progress-demo { color: var(--hk-secondary); overflow-wrap: anywhere; }
 .hk-agent-progress-demo { display: block; margin: 2px 0 8px 28px; }
-.hk-agent-progress-root > .hk-agent-progress { display: grid; gap: var(--hk-space-2, 8px); margin: 10px 0 0; padding: 0; list-style: none; color: var(--hk-secondary); }
+.hk-agent-progress-root > .hk-agent-progress { display: grid; gap: var(--hk-space-2, 8px); margin: 16px 0 0; font-size: var(--hk-text-base); padding: 0; list-style: none; color: var(--hk-secondary); }
 .hk-agent-progress-root > .hk-agent-progress[hidden] { display: none; }
-.hk-agent-progress-root > .hk-agent-progress > li { display: flex; align-items: baseline; gap: 9px; min-width: 0; overflow-wrap: anywhere; animation: hk-progress-reveal 240ms ease-out both; animation-delay: calc(var(--hk-progress-order) * 35ms); }
-.hk-agent-progress-root > .hk-agent-progress > li[data-state="active"] { color: var(--hk-ink); }
+.hk-agent-progress-root > .hk-agent-progress > li { display: flex; align-items: center; gap: 8px; min-width: 0; overflow-wrap: anywhere; animation: hk-progress-reveal 240ms ease-out both; animation-delay: calc(var(--hk-progress-order) * 35ms); }
+.hk-agent-progress-root > .hk-agent-progress > li[data-state="active"] { color: var(--hk-ink); font-weight: 550; border-radius: 8px; background: var(--hk-panel); }
 .hk-agent-progress-root > .hk-agent-progress > li[data-state="complete"] { color: var(--hk-secondary); }
-.hk-agent-progress-root > .hk-agent-progress > li > .hk-agent-progress-marker { flex: 0 0 20px; text-align: center; font: inherit; font-variant-numeric: tabular-nums; color: inherit; background: transparent; }
+.hk-agent-progress-root > .hk-agent-progress > li > .hk-agent-progress-marker { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: 0 0 20px; text-align: center; font: inherit; font-variant-numeric: tabular-nums; color: inherit; background: transparent; }
 .hk-agent-progress-root > .hk-agent-progress > li > .hk-agent-progress-label { display: block; flex: 1; min-width: 0; width: auto; height: auto; background: none; border-radius: 0; font: inherit; color: inherit; }
 .hk-agent-progress-meter { display: inline-flex; width: 22px; height: 22px; flex: 0 0 22px; color: var(--hk-accent); }
 .hk-agent-progress-meter svg { width: 100%; height: 100%; transform: rotate(-90deg); fill: none; stroke: currentColor; stroke-width: 2; }
+.hk-agent-progress-root li[data-state="active"] .hk-agent-progress-marker { color: var(--hk-accent); background: var(--hk-accent-soft); border-radius: 50%; }
 .hk-agent-progress-track { opacity: .2; }
 .hk-agent-progress-value { transition: stroke-dashoffset 180ms linear; }
 .hk-agent-progress-root[data-state="paused"] *, .hk-agent-progress-root[data-state="disabled"] * { animation-play-state: paused; }

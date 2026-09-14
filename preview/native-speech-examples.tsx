@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, SpeechInput } from "@harso/ui";
+import { MicrophoneIcon, StopIcon, SpeakerHighIcon, TrashIcon } from "@phosphor-icons/react";
+import { Button, Checkbox, Select, SpeechInput } from "@harso/ui";
 
 export function SpeechInputExample({ disabled = false }: { disabled?: boolean }) {
   const [transcript, setTranscript] = useState("");
-  return <section aria-label="Native speech input example">
-    <p>Your browser may send audio to its speech service. Use dummy speech only. Nothing starts until you press Start.</p>
+  return <section className="hk-native-speech-example" aria-label="Native speech input example">
+    <h3>Speech input</h3><p>Your browser may send audio to its speech service. Use dummy speech only. Nothing starts until you press Speak.</p>
     <SpeechInput disabled={disabled} onTranscriptionChange={text => setTranscript(previous => previous ? `${previous} ${text}` : text)} />
     <output aria-label="Speech transcript" aria-live="polite">{transcript || "No transcript yet."}</output>
-    <Button disabled={disabled || !transcript} onClick={() => setTranscript("")}>Clear transcript</Button>
+    <Button disabled={disabled || !transcript} onClick={() => setTranscript("")}><TrashIcon size={16} aria-hidden />Clear transcript</Button>
     <ReadAloudHostExample disabled={disabled} />
   </section>;
 }
@@ -69,19 +70,19 @@ export function ReadAloudHostExample({ disabled = false }: { disabled?: boolean 
   const [locked, setLocked] = useState(false);
   const [refuse, setRefuse] = useState(false);
   const [mounted, setMounted] = useState(true);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState("Local host ready.");
   const request = (change: () => void) => {
     setResult(refuse ? "Host refused change; identity and view retained." : "Host accepted change.");
     if (!refuse) change();
   };
   return <section aria-label="Read aloud host fixture" data-testid="read-aloud-host">
-    <p>Read aloud uses an English local system voice only. No remote fallback.</p>
-    <label>Speech identity <select aria-label="Speech identity" value={identity} onChange={event => request(() => setIdentity(event.target.value))}><option>Personal</option><option>Team</option></select></label>
-    <label>Speech view <select aria-label="Speech view" value={view} onChange={event => request(() => setView(event.target.value))}><option>Conversation</option><option>Dashboard</option></select></label>
-    <label><input type="checkbox" aria-label="Disable read aloud" checked={locked} onChange={event => setLocked(event.target.checked)} />Disable read aloud</label>
-    <label><input type="checkbox" aria-label="Refuse speech host changes" checked={refuse} onChange={event => setRefuse(event.target.checked)} />Refuse speech host changes</label>
-    <label><input type="checkbox" aria-label="Mount read aloud" checked={mounted} onChange={event => setMounted(event.target.checked)} />Mount read aloud</label>
-    <output aria-label="Speech host result" data-testid="speech-host-result">{result}</output>
+    <h3>Read aloud</h3><p>Read aloud uses an English local system voice only. No remote fallback.</p>
+    <div className="hk-data-toolbar"><label>Speech identity <Select aria-label="Speech identity" value={identity} onChange={event => request(() => setIdentity(event.target.value))}><option>Personal</option><option>Team</option></Select></label>
+    <label>Speech view <Select aria-label="Speech view" value={view} onChange={event => request(() => setView(event.target.value))}><option>Conversation</option><option>Dashboard</option></Select></label>
+    <Checkbox label="Disable read aloud" checked={locked} onChange={event => setLocked(event.target.checked)} />
+    <Checkbox label="Refuse speech host changes" checked={refuse} onChange={event => setRefuse(event.target.checked)} />
+    <Checkbox label="Mount read aloud" checked={mounted} onChange={event => setMounted(event.target.checked)} />
+    </div><output aria-label="Speech host result" data-testid="speech-host-result">{result}</output>
     {mounted && <ReadAloudSample context={`${identity}:${view}`} visible={view === "Conversation"} disabled={disabled || locked} />}
   </section>;
 }
@@ -89,7 +90,7 @@ export function ReadAloudHostExample({ disabled = false }: { disabled?: boolean 
 function ReadAloudSample({ context, visible, disabled }: { context: string; visible: boolean; disabled: boolean }) {
   const { reading, error, read } = useLocalReadAloud(context, disabled);
   return <div data-testid="read-aloud-sample">
-    {visible && <><p>Keep the first experience quiet and useful.</p><Button disabled={disabled} aria-label={reading === 0 ? "Stop reading" : "Read aloud"} onClick={() => read("Keep the first experience quiet and useful.", 0)}>{reading === 0 ? "Stop reading" : "Read aloud"}</Button></>}
+    {visible && <><p>Keep the first experience quiet and useful.</p><Button disabled={disabled} aria-label={reading === 0 ? "Stop reading" : "Read aloud"} onClick={() => read("Keep the first experience quiet and useful.", 0)}>{reading === 0 ? <StopIcon size={16} aria-hidden /> : <SpeakerHighIcon size={16} aria-hidden />}{reading === 0 ? "Stop reading" : "Read aloud"}</Button></>}
     <output aria-label="Read aloud state" data-testid="read-aloud-state">{reading === null ? "Idle" : "Reading"}</output>
     {error && <p role="alert">{error}</p>}
   </div>;

@@ -1,8 +1,10 @@
-.hk-canvas { position: relative; min-height: 240px; overflow: hidden; border: 1px solid var(--hk-line); border-radius: 16px; background-color: var(--hk-surface); background-image: radial-gradient(circle, var(--hk-line) 1px, transparent 1px); background-size: 20px 20px; color: var(--hk-ink); }
+.hk-canvas { position: relative; width: 100%; min-height: 240px; overflow: hidden; border: 1px solid var(--hk-line); border-radius: 16px; background-color: var(--hk-panel); background-image: radial-gradient(circle, var(--hk-line) 1px, transparent 1px); background-size: 20px 20px; color: var(--hk-ink); }
 .hk-canvas[data-interactive="true"] { touch-action: none; }
 .hk-canvas-viewport { position: relative; min-height: inherit; transform-origin: 0 0; }
 .hk-canvas-selection { position: absolute; pointer-events: none; border: 1px solid var(--hk-accent); background: color-mix(in srgb, var(--hk-accent) 12%, transparent); }
 .hk-canvas-help { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .hk-canvas [data-canvas-node][data-selected="true"] { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
-.hk-canvas-viewport > .hk-edge { position: absolute; inset: 0; }
+.hk-canvas-viewport > .hk-edge, .hk-canvas-viewport > .hk-connection { position: absolute; inset: 0; }
+.hk-workflow-example--vertical .hk-node-handle--source { top: 100%; right: auto; left: 50%; transform: translate(-50%, -50%); }.hk-workflow-example--vertical .hk-node-handle--target { top: 0; left: 50%; transform: translate(-50%, -50%); }
 @media (forced-colors: active) { .hk-canvas { border-color: CanvasText; background-image: none; } }
+.hk-workflow-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; }.hk-workflow-footer > div { display: flex; flex-wrap: wrap; gap: 12px; color: var(--hk-secondary); font-size: var(--hk-text-sm); }

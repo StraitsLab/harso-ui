@@ -102,11 +102,10 @@ export function Questionnaire({ questions, select = "multiple", answers, default
     if (option) { event.preventDefault(); choose(option.value); }
     else if (question?.other && Number(event.key) === question.options.length + 1) { event.preventDefault(); chooseOther(); }
   }}>
-    {onDismiss && <Button aria-label="Dismiss questionnaire" disabled={disabled} onClick={onDismiss}>×</Button>}
     {invalid ? <p role="alert">Invalid questionnaire: question IDs and option values must be unique.</p> : !question ? <p role="status">No questions to answer.</p> : <>
       <motion.div layout={!reducedMotion} transition={{ duration: reducedMotion ? 0 : 0.18 }}>
         <motion.div key={question.id} initial={reducedMotion ? false : { opacity: 0, x: direction * 12 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.18 }}>
-          <h3 ref={heading} tabIndex={-1} id={`${identity}-prompt`}>{question.question}</h3>
+          <header className="hk-questionnaire-heading"><h3 ref={heading} tabIndex={-1} id={`${identity}-prompt`}>{question.question}</h3>{onDismiss && <Button aria-label="Dismiss questionnaire" disabled={disabled} onClick={onDismiss}>×</Button>}</header>
           <fieldset disabled={disabled} aria-labelledby={`${identity}-prompt`}>
             {question.options.map((option, index) => <label className="hk-questionnaire-option" key={option.value}>
               <input type={mode === "single" ? "radio" : "checkbox"} name={`${identity}-${question.id}`} checked={answer.values.includes(option.value)} onChange={() => choose(option.value)} onClick={() => { if (mode === "single" && answer.values.includes(option.value)) choose(option.value); }} aria-label={option.label} />
@@ -123,7 +122,7 @@ export function Questionnaire({ questions, select = "multiple", answers, default
         </motion.div>
       </motion.div>
       <nav aria-label="Question steps">{questions.map((item, index) => <Button key={item.id} disabled={disabled} aria-current={index === currentStep ? "step" : undefined} onClick={() => move(index)}>{item.stepLabel ?? `Step ${index + 1}`}</Button>)}</nav>
-      <footer><Button disabled={disabled || currentStep === 0} onClick={() => move(currentStep - 1)}>{labels.previous ?? "Previous"}</Button><Button disabled={disabled || (mode === "single" && answer.other !== undefined && !answer.other.trim())} onClick={advance}>{currentStep === questions.length - 1 ? labels.complete ?? "Done" : labels.next ?? "Next"}</Button></footer>
+      <footer><Button disabled={disabled || currentStep === 0} onClick={() => move(currentStep - 1)}><span aria-hidden="true">←</span>{labels.previous ?? "Previous"}</Button><Button variant="primary" disabled={disabled || (mode === "single" && answer.other !== undefined && !answer.other.trim())} onClick={advance}>{currentStep === questions.length - 1 ? labels.complete ?? "Done" : labels.next ?? "Next"}<span aria-hidden="true">→</span></Button></footer>
     </>}
   </section>;
 }

@@ -1,4 +1,4 @@
-.hk-agent-thinking.hk-thinking { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-width: 0; color: var(--hk-secondary); font-size: 13px; }
+.hk-agent-thinking.hk-thinking { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-width: 0; color: var(--hk-secondary); font-size: var(--hk-text-base); }
 .hk-thinking .hk-thinking-indicator { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; position: relative; width: 24px; height: 24px; flex: none; color: var(--hk-accent); }
 .hk-thinking[data-tone="subtle"] .hk-thinking-indicator { color: var(--hk-secondary); }
 .hk-thinking-dot { border-radius: 50%; background: currentColor; opacity: .55; }
@@ -23,9 +23,12 @@
 .hk-thinking-indicator path { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 .hk-thinking-track { opacity: .3; }
 .hk-thinking-comet { stroke-dasharray: 24 76; }
-.hk-thinking-status { display: contents; }
+.hk-thinking-content { display: grid; grid-template-columns: minmax(0, auto) auto; align-items: center; justify-content: start; gap: 8px; min-width: 0; flex: 1; }
+.hk-thinking-announcement { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-width: 0; }
+.hk-thinking-status { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font-size: var(--hk-text-xs); }
+.hk-thinking-status .hk-badge::before, .hk-thinking-status .hk-badge > span[aria-hidden="true"] { display: none; }
 .hk-thinking-label { min-width: 0; overflow-wrap: anywhere; }
-.hk-thinking time { font: 11px var(--hk-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hk-thinking time { font: var(--hk-text-xs) var(--hk-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 @keyframes hk-thinking-wave { 0%, 70%, 100% { opacity: .35; transform: scale(.8); } 30% { opacity: 1; transform: scale(1); } }
 @keyframes hk-thinking-orbit { 0%, 15% { opacity: 1; } 65%, 100% { opacity: .3; } }

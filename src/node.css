@@ -1,10 +1,10 @@
-.hk-node { position: relative; display: grid; gap: 10px; min-width: 180px; padding: 14px; border: 1px solid var(--hk-line); border-radius: 14px; background: var(--hk-surface); color: var(--hk-ink); box-shadow: var(--hk-shadow); }
-.hk-node-handle { position: absolute; top: 50%; width: 8px; height: 8px; border: 2px solid var(--hk-surface); border-radius: 50%; background: var(--hk-accent); transform: translateY(-50%); }
+.hk-node { position: relative; display: grid; gap: 8px; min-width: 180px; padding: 16px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); color: var(--hk-ink); box-shadow: var(--hk-shadow); }
+.hk-node-handle { position: absolute; top: 50%; width: 10px; height: 10px; border: 1px solid var(--hk-surface); border-radius: 50%; background: var(--hk-accent-mark); transform: translateY(-50%); }
 .hk-node-handle--target { left: -6px; }
 .hk-node-handle--source { right: -6px; }
 .hk-node-header, .hk-node-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.hk-node-title { margin: 0; font-size: 14px; }
+.hk-node-title { display: flex; align-items: center; gap: 8px; margin: 0; font-size: var(--hk-text-base); font-weight: 600; }
 .hk-node-description { margin: 0; color: var(--hk-secondary); font-size: 12px; }
 .hk-node-action { margin-left: auto; }
-.hk-node-content { min-width: 0; }
+.hk-node-content { min-width: 0; color: var(--hk-secondary); font-size: var(--hk-text-base); }
 @media (forced-colors: active) { .hk-node { border-color: CanvasText; } .hk-node-handle { border-color: Canvas; background: Highlight; } }

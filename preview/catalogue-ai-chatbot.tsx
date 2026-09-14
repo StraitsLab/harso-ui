@@ -1,5 +1,6 @@
 // Lane-owned gallery fixtures (ai-chatbot). The router in catalogue-examples.tsx calls this first-match; return undefined to pass.
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { OpenInTrigger, OpenInLabel, QuestionDescription, QuestionActions, QuestionSubmit, QuestionInput } from "@harso/ui";
 import { SelectorsExample } from "./selectors-examples";
 import { SpeechInputExample } from "./native-speech-examples";
 import { QueueExample, SocialButtonExample, ToolbarExample } from "./consumer-readiness-examples";
@@ -31,12 +32,23 @@ import { RadialRadarExample } from "./radial-radar-example";
 const data = [{ label: "Mon", value: 36 }, { label: "Tue", value: 52 }, { label: "Wed", value: 42 }, { label: "Thu", value: 72 }, { label: "Fri", value: 61 }];
 const stats = [{ id: "one", label: "Active", value: "24" }, { id: "two", label: "Trend", value: "+18%", trend: "positive" as const }];
 
+function ClarificationExample() {
+  const [response, setResponse] = useState("");
+  return <Question style={{ maxWidth: 640 }} className="hk-question-demo" onSubmit={value => setResponse(`Response submitted: ${value.selectedValues.join(", ") || value.text}`)}>
+    <QuestionPrompt>What should happen next?</QuestionPrompt>
+    <QuestionDescription>The workspace review is ready. Choose an option, then send your response.</QuestionDescription>
+    <QuestionOptions><QuestionOption value="continue" aria-label="Continue"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="m9 5 7 7-7 7"/></svg><span>Continue with the recommended plan</span></QuestionOption><QuestionOption value="review"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8v4m0 4h.01"/><circle cx="12" cy="12" r="9"/></svg><span>Review the changes first</span></QuestionOption></QuestionOptions>
+    <QuestionInput aria-label="Additional instructions" placeholder="Or add your own instructions…" />
+    <QuestionActions><QuestionSubmit variant="primary">Send response <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></QuestionSubmit>{response && <output>{response}</output>}</QuestionActions>
+  </Question>;
+}
+
 export function renderAiChatbot(component: string, state: ExampleState = "default"): ReactNode | undefined {
-  if (component === "OpenIn" || component === "OpenInChat") return <OpenIn query="Explain this result"><OpenInContent><OpenInChatGPT /><OpenInClaude /></OpenInContent></OpenIn>;
+  if (component === "OpenIn" || component === "OpenInChat") return <OpenIn style={{ maxWidth: 304 }} query="Explain this result"><OpenInTrigger /><OpenInContent><OpenInLabel>Continue this conversation in</OpenInLabel><OpenInChatGPT /><OpenInClaude /></OpenInContent></OpenIn>;
   if (component === "OpenInChatGPT" || component === "OpenInClaude" || component === "OpenInContent") return <OpenIn query="Explain this result"><OpenInContent>{component === "OpenInChatGPT" ? <OpenInChatGPT /> : component === "OpenInClaude" ? <OpenInClaude /> : <OpenInContent>Host-provided destination content</OpenInContent>}</OpenInContent></OpenIn>;
   if (component === "Image") return <Image alt="Illustrative landscape, a local sample" src={sampleImage(0)} />;
   if (component === "ModelSelector") return <SelectorsExample component={component} state={state} />;
-  if (component === "Question") return <Question><QuestionPrompt>What should happen next?</QuestionPrompt><QuestionOptions><QuestionOption value="continue">Continue</QuestionOption></QuestionOptions></Question>;
+  if (component === "Question") return <ClarificationExample />;
   if (component === "Queue") return <QueueExample state={state} />;
 
   return undefined;

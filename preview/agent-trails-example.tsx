@@ -6,7 +6,7 @@ export function AgentTrailsExample({ component, state }: { component: "TaskList"
   return <TrailExample key={`${component}-${state}`} component={component} state={state} />;
 }
 function TrailExample({ component, state }: { component: "TaskList" | "WebSearch"; state: ExampleState }) {
-  const [revealed, setRevealed] = useState(0);
+  const [revealed, setRevealed] = useState(state === "default" ? 3 : 0);
   const [timed, setTimed] = useState(false);
   const [run, setRun] = useState(0);
   const [complete, setComplete] = useState(false);
@@ -39,7 +39,7 @@ function TrailExample({ component, state }: { component: "TaskList" | "WebSearch
   const playback = { revealed: timed ? undefined : revealed, startDelay: 320, stepInterval: 850, disabled, error: state === "error" ? "The host reported an interrupted trail. No success inferred." : undefined, onComplete: () => setComplete(true) };
   return <div className="hkl-example-stack" aria-label="Agent trails example">
     <p>Presentation fixture only. Advance supplied events or replay their timing; neither runs tools nor changes backend state.</p>
-    <div className="hk-trail-example-controls">
+    <div className="hk-trail-example-controls hk-data-toolbar">
       <label>Playback <Select aria-label="Trail playback" disabled={state === "disabled"} value={timed ? "timed" : "events"} onChange={event => { reset(); setTimed(event.target.value === "timed"); }}><option value="events">Controlled events</option><option value="timed">Timed presentation</option></Select></label>
       <Button disabled={disabled || timed || empty || revealed >= total || state === "error"} onClick={() => setRevealed(previous => previous + 1)}>Advance event</Button>
       <Button disabled={state === "disabled"} onClick={reset}>Restart trail</Button>

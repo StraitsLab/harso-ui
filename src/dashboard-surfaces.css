@@ -1,3 +1,19 @@
+.hk-auth-specimen .hk-auth-content { max-width: 400px; margin-inline: auto; padding: 24px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); }
+.hk-auth-specimen button[type="submit"] { background: var(--hk-dark); color: var(--hk-canvas); border-radius: var(--hk-radius-pill); }
+.hk-foundation-specimen { display: grid; gap: 24px; width: 100%; color: var(--hk-ink); }
+.hk-foundation-specimen h2 { margin: 0; font-size: var(--hk-text-title); }
+.hk-foundation-specimen p { margin: 8px 0 0; color: var(--hk-secondary); font-size: var(--hk-text-base); }
+.hk-foundation-colors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.hk-foundation-color { display: grid; gap: 8px; min-width: 0; }
+.hk-foundation-paint { display: block; height: 88px; border: 1px solid var(--hk-line-strong); border-radius: 12px; }
+.hk-foundation-color strong { font-size: var(--hk-text-base); font-weight: 550; }
+.hk-foundation-specimen code { color: var(--hk-secondary); font: var(--hk-text-sm)/1.5 var(--hk-mono); overflow-wrap: anywhere; }
+.hk-foundation-surface { padding: 24px; background: var(--hk-panel); border: 1px solid var(--hk-line); border-radius: 12px; }
+.hk-foundation-type { border-top: 1px solid var(--hk-line); }
+.hk-foundation-type-row { display: grid; grid-template-columns: 144px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--hk-line); }
+.hk-foundation-type-row > div { display: grid; gap: 4px; font-size: var(--hk-text-xs); }
+.hk-foundation-type-row p { margin: 0; color: var(--hk-ink); line-height: 1.5; }
+@media (max-width: 640px) { .hk-foundation-colors { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hk-foundation-type-row { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
 .hk-dashboard { display: grid; gap: 18px; min-width: 0; padding: 20px; border: 1px solid var(--hk-line); border-radius: 20px; background: var(--hk-surface); color: var(--hk-ink); }
 .hk-dashboard > header h2, .hk-contributions-card h3 { margin: 0; font-size: 18px; font-weight: 560; letter-spacing: -.02em; }
 .hk-contributions-card { display: grid; gap: 14px; min-width: 0; padding: 16px; border: 1px solid var(--hk-line); border-radius: 16px; background: var(--hk-surface); color: var(--hk-ink); }
@@ -18,7 +34,27 @@
 .hk-contributions-activity[data-view="cells"] b { text-align: center; }
 .hk-contribution b { color: var(--hk-ink); font: 11px var(--hk-mono); }
 .hk-dashboard-table { min-width: 0; overflow: auto; }
-.hk-home-workspace .hk-dashboard-workspace-thread { display: grid; gap: 28px; }
+/* Dashboard records retain every field on narrow screens. */
+@media (max-width: 640px) {
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table .hk-table { min-width: 0; width: 100%; }
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table :is(table, tbody) { display: block; }
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table thead tr { display: flex; flex-wrap: wrap; gap: 8px; }
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table thead th { padding: 4px; }
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table tbody tr { display: grid; grid-template-columns: minmax(0, 1fr); padding: 16px; margin-top: 12px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); }
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table tbody td { display: flex; justify-content: space-between; align-items: center; gap: 16px; width: auto; padding: 8px 0; border: 0; white-space: normal; text-align: start; min-width: 0; }
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table tbody td[data-label]::before { content: attr(data-label); color: var(--hk-secondary); font-size: var(--hk-text-xs); flex: 0 0 88px; }
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table tbody td :is(.hk-select, .hk-button) { min-width: 0; max-width: 100%; white-space: normal; }
+  :is(.hk-hr-team, .hk-marketing-tabs) [role="tablist"] { display: flex; flex-wrap: wrap; overflow: visible; }
+}
+.hk-dashboard-workspace details > summary, .hk-finance details > summary { min-height: 44px; align-content: center; color: var(--hk-secondary); cursor: pointer; }
+.hk-finance .hk-sankey-scroll > svg { min-width: 0 !important; width: 100%; }
+.hk-finance .hk-heatmap { min-width: 0; width: 100%; }
+.hk-finance .hk-heatmap th { min-width: 0; }
+.hk-finance .hk-heatmap th[scope="row"] { min-width: 64px; }
+.hk-finance-allocation { display: none; }
+@media (max-width: 640px) { .hk-finance-flow > .hk-chart-card { display: none; } .hk-finance-allocation { display: grid; gap: 12px; padding: 16px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); } .hk-finance-allocation h3 { margin: 0; font-size: var(--hk-text-user); } .hk-finance-allocation dl { display: grid; gap: 12px; margin: 0; } .hk-finance-allocation dl > div { display: flex; justify-content: space-between; gap: 12px; } .hk-finance-allocation dd { margin: 0; font-variant-numeric: tabular-nums; } }
+
+.hk-home-workspace .hk-dashboard-workspace-thread { display: grid; gap: 24px; }
 .hk-home-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
 .hk-home-toolbar label { display: grid; gap: 6px; font-size: 12px; }
 .hk-home-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
@@ -31,12 +67,12 @@
 .hk-home-series { overflow: auto; max-width: 100%; }
 .hk-home-series .hk-chart-bars { min-width: 260px; }
 .hk-home-series .hk-chart-bar-column > .hk-chart-bar { position: static; align-self: end; }
-.hk-marketing-workspace .hk-dashboard-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
-.hk-medical-workspace .hk-dashboard-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.hk-marketing-workspace .hk-dashboard-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.hk-medical-workspace .hk-dashboard-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
 .hkl-live-example > .hk-medical-example { max-width: none; }
-.hk-medical-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.hk-medical-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .hk-medical-charts > section { min-width: 0; }
-.hk-medical-charts .hk-chart-card { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.hk-medical-charts .hk-chart-card { padding: 16px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); box-shadow: none; }
 .hk-medical-workspace[data-compact="true"] .hk-medical-charts { grid-template-columns: minmax(0, 1fr); }
 .hk-medical-editor, .hk-medical-sleep { display: grid; gap: 14px; }
 .hk-medical-identity { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; }
@@ -56,7 +92,7 @@
 .hkl-live-example > .hk-marketing-example { max-width: none; }
 .hk-marketing-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .hk-marketing-charts > section { min-width: 0; }
-.hk-marketing-charts .hk-chart-card { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.hk-marketing-charts .hk-chart-card { padding: 16px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); box-shadow: none; }
 .hk-marketing-editor, .hk-marketing-funnel { display: grid; gap: 14px; }
 .hk-marketing-funnel > div { display: grid; gap: 6px; }
 .hk-marketing-funnel progress { width: 100%; height: 10px; accent-color: var(--hk-accent); }
@@ -69,7 +105,7 @@
 .hk-marketing-values .hk-button { white-space: normal; text-align: left; }
 .hk-marketing-charts > section[aria-label="Traffic sources"] { grid-column: 1 / -1; }
 .hk-marketing-workspace[data-compact="true"] .hk-marketing-charts { grid-template-columns: minmax(0, 1fr); }
-.hk-hr-workspace .hk-dashboard-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.hk-hr-workspace .hk-dashboard-workspace-thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
 .hk-hr-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .hk-hr-charts > section { min-width: 0; }
 .hk-hr-charts > section[aria-label="Workforce movement"] { grid-column: 1 / -1; }
@@ -85,16 +121,16 @@
 .hk-hr-breakdown { display: grid; gap: 10px; padding: 0; list-style: none; }
 .hk-hr-team { min-width: 0; margin: 0; padding: 0; border: 0; }
 .hk-hr-breakdown li { display: flex; justify-content: space-between; gap: 16px; }
-.hk-finance { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; min-width: 0; color: var(--hk-ink); }
+.hk-finance { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px; min-width: 0; color: var(--hk-ink); }
 .hk-finance:not(:has(> nav)) { grid-template-columns: minmax(0, 1fr); }
 .hk-finance-navigation { display: flex; flex-direction: column; align-items: stretch; gap: 8px; padding-block: 8px; }
-.hk-finance-main { display: grid; gap: 28px; min-width: 0; }
+.hk-finance-main { display: grid; gap: 24px; min-width: 0; }
 .hk-finance-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .hk-finance-header h2 { margin: 0; font-size: clamp(22px, 3vw, 32px); font-weight: 550; letter-spacing: -.035em; }
 .hk-finance-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.hk-finance-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.hk-finance-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .hk-finance-grid > section, .hk-finance-transactions { min-width: 0; }
-.hk-finance-grid .hk-chart-card { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.hk-finance-grid .hk-chart-card { padding: 16px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); box-shadow: none; }
 @media (max-width: 760px) {
   .hk-finance { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .hk-finance-navigation { flex-direction: row; flex-wrap: wrap; }

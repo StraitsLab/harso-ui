@@ -3,12 +3,21 @@
 .hk-sandbox-header::-webkit-details-marker { display: none; }
 .hk-sandbox-header::before { content: "⌄"; color: var(--hk-secondary); transition: transform var(--hk-fast) var(--hk-ease); }
 .hk-sandbox[open] .hk-sandbox-header::before { transform: rotate(180deg); }
-.hk-sandbox-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 520; }
+.hk-sandbox-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--hk-text-base); font-weight: 520; }
 .hk-sandbox-content { padding: 0 0 14px 22px; min-width: 0; }
 .hk-sandbox-tabs { min-width: 0; }
-.hk-sandbox-tabs-bar { display: flex; align-items: center; min-height: 38px; border-bottom: 1px solid var(--hk-line); }
+.hk-sandbox-tabs-bar { display: flex; align-items: center; min-height: 42px; border-bottom: 1px solid var(--hk-line); }
 .hk-sandbox-tabs-list { display: flex; gap: 4px; }
-.hk-sandbox-tabs-trigger { min-height: 34px; padding: 5px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--hk-secondary); cursor: pointer; font: inherit; font-size: 13px; }
+.hk-sandbox-tabs-trigger { min-height: 42px; padding: 5px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--hk-secondary); cursor: pointer; font: inherit; font-size: var(--hk-text-sm); }
 .hk-sandbox-tabs-trigger:hover, .hk-sandbox-tabs-trigger:focus-visible { background: var(--hk-hover); color: var(--hk-ink); }
+.hk-sandbox-tabs-trigger[aria-selected="true"] { color: var(--hk-ink); box-shadow: inset 0 -2px var(--hk-ink); border-radius: 8px 8px 0 0; }
+@media (max-width: 640px), (pointer: coarse) { .hk-sandbox-tabs-trigger, .hk-sandbox-tabs-bar { min-height: 44px; } }
 .hk-sandbox-tab-content { min-width: 0; padding-top: 14px; }
 @media (forced-colors: active) { .hk-sandbox { border-color: CanvasText; } .hk-sandbox-tabs-trigger:focus-visible { outline: 2px solid Highlight; } }
+
+.hk-sandbox-header { justify-content: flex-start; gap: 8px; }
+.hk-sandbox-title { flex: 1; font: var(--hk-text-sm)/20px var(--hk-mono); }
+.hk-sandbox-header::before { content: ""; width: 8px; height: 8px; margin: 4px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); }
+.hk-sandbox[open] .hk-sandbox-header::before { transform: rotate(45deg); }
+.hk-sandbox-header .hk-badge > span { display: none; }
+.hk-sandbox-tab-content { padding-block: 16px; font: var(--hk-text-sm)/20px var(--hk-mono); }

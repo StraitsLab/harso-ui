@@ -32,8 +32,8 @@
 .hk-carousel-item { flex-grow: 0; flex-shrink: 0; min-width: 0; max-width: 100%; scroll-snap-align: var(--hk-carousel-align, start); }
 .hk-carousel-controls { display: flex; justify-content: center; align-items: center; gap: 12px; padding-block-start: 8px; }
 .hk-carousel-dots { display: flex; flex-wrap: wrap; justify-content: center; }
-.hk-carousel-dots button { display: grid; place-items: center; width: 32px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; border-radius: 12px; }
+.hk-carousel-dots button { display: grid; place-items: center; width: 42px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; border-radius: 12px; }
 .hk-carousel-dots button span { width: 5px; height: 5px; border-radius: 50%; background: var(--hk-secondary); }
 .hk-carousel-dots button[aria-current] span { width: 18px; border-radius: 4px; background: var(--hk-ink); }
-@media (pointer: coarse) { .hk-carousel-dots button { width: 44px; } }
+@media (max-width: 640px), (pointer: coarse) { .hk-carousel-dots button { width: 44px; } }
 @media (forced-colors: active) { .hk-dropdown-popover { border-color: CanvasText; } .hk-dropdown-item:focus-visible, .hk-sidebar-item[aria-current] { outline: 2px solid Highlight; } .hk-carousel-dots button span { background: ButtonText; } .hk-carousel-dots button[aria-current] { outline: 1px solid Highlight; } }

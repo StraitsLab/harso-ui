@@ -1,5 +1,5 @@
 // Lane-owned gallery fixtures (blocks-templates). The router in catalogue-examples.tsx calls this first-match; return undefined to pass.
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { SelectorsExample } from "./selectors-examples";
 import { SpeechInputExample } from "./native-speech-examples";
 import { QueueExample, SocialButtonExample, ToolbarExample } from "./consumer-readiness-examples";
@@ -28,6 +28,10 @@ import { ActivityRingsCard, AgentLimitsCard, AgentProgress, AgentThinking, AreaC
 import { AudioPlayer, AudioPlayerControlBar, AudioPlayerElement, AudioPlayerPlayButton, Canvas, Connection, Controls, Edge, Image, Node, NodeContent, NodeHeader, NodeTitle, Panel, Question, QuestionOption, QuestionOptions, QuestionPrompt, Queue, QueueItem, Toolbar, Transcription, WebPreview, WebPreviewBody, WebPreviewNavigation, WebPreviewNavigationButton, WebPreviewUrl } from "@harso/ui";
 import { CanvasExample } from "./canvas-example";
 import { RadialRadarExample } from "./radial-radar-example";
+function AuthFixture({ state }: { state: ExampleState }) {
+  const [submitted, setSubmitted] = useState(false);
+  return <AuthCard className="hk-auth-specimen" mode="signin" layout="centered" title="Continue to Harso" description="One calm workspace for your next idea." disabled={state === "disabled"} error={state === "error" ? "This workspace is unavailable. Please try again." : undefined} onSubmitData={() => setSubmitted(true)} footnote={<p role="status">{submitted ? "Local preview complete. No credentials sent or stored." : "Preview only. Use fictional credentials; no account is connected."}</p>} />;
+}
 const data = [{ label: "Mon", value: 36 }, { label: "Tue", value: 52 }, { label: "Wed", value: 42 }, { label: "Thu", value: 72 }, { label: "Fri", value: 61 }];
 const stats = [{ id: "one", label: "Active", value: "24" }, { id: "two", label: "Trend", value: "+18%", trend: "positive" as const }];
 
@@ -39,9 +43,9 @@ export function renderBlocks(component: string, state: ExampleState = "default")
   if (component === "AgentLimitsCard") return <AgentLimitsExample />;
   if (component === "AgentProgress") return <AgentProgressExample />;
   if (component === "AgentThinking") return <AgentThinkingExample />;
-  if (component === "Color") return <Color value="#6b7cff" label="Accent" />;
-  if (component === "Typography") return <Typography variant="display">Boundaryless</Typography>;
-  if (component === "AuthCard") return <AuthCard title="Continue to Harso" description="Use your workspace identity."><AuthMediaCarousel><div className="hkl-example-stack"><Typography variant="caption">One calm workspace for every work unit.</Typography><label className="hk-field">Workspace name<input className="hk-input" placeholder="Your workspace" /></label></div><Typography variant="caption">A quiet surface for live progress and results.</Typography><Typography variant="caption">Your data stays scoped to your workspace.</Typography></AuthMediaCarousel></AuthCard>;
+  if (component === "Color") return <section className="hk-foundation-specimen" aria-label="Theme color palette"><header><h2>Color foundations</h2><p>Semantic roles adapt to the active theme. One accent, a quiet surface hierarchy.</p></header><div className="hk-foundation-colors">{[["Canvas", "canvas"], ["Panel", "panel"], ["Surface", "surface"], ["Hover", "hover"], ["Primary text", "ink"], ["Secondary text", "secondary"], ["Accent", "accent"], ["Hairline", "line"]].map(([label, token]) => <div className="hk-foundation-color" key={token}><span className="hk-foundation-paint" style={{ background: `var(--hk-${token})` }} /><strong>{label}</strong><code>--hk-{token}</code></div>)}</div><div className="hk-foundation-surface"><strong>Surfaces create hierarchy</strong><p>A panel sits on the canvas; a surface holds the work. Hairlines separate without competing.</p></div></section>;
+  if (component === "Typography") return <section className="hk-foundation-specimen" aria-label="Typography scale"><header><h2>Typography</h2><p>A compact scale for clear, everyday work.</p></header><div className="hk-foundation-type">{[["Display", "24", "600", "A little more clarity."], ["Heading", "20", "600", "Make room for focused work"], ["Section", "16", "600", "Everything in its right place"], ["Body", "15", "400", "Keep the conversation moving. Bring references, decisions, and next steps together in one calm workspace."], ["Interface", "14", "500", "Your workspace is up to date"], ["Technical", "13", "400", "src/workspace.tsx"], ["Metadata", "12", "400", "Updated just now · Visible to your team"]].map(([label, size, weight, sample]) => <div className="hk-foundation-type-row" key={label}><div><strong>{label}</strong><code>{size}px / {weight} / 1.5</code></div><p style={{ fontSize: `var(--hk-text-${({ "24": "heading", "20": "title", "16": "user", "15": "body", "14": "base", "13": "sm", "12": "xs" } as Record<string, string>)[size]})`, fontWeight: Number(weight), fontFamily: label === "Technical" ? "var(--hk-mono)" : undefined }}>{sample}</p></div>)}</div></section>;
+  if (component === "AuthCard") return <AuthFixture state={state} />;
   if (component === "FinanceDashboard") return <FinanceExample state={state} />;
   if (component === "HomeDashboard") return <HomeDashboardExample state={state} />;
   if (component === "HrManagement") return <HrManagementExample state={state} />;
