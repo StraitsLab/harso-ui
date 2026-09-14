@@ -23,9 +23,9 @@
 .hk-data-toolbar > label:not(.hk-choice) { display: grid; gap: 8px; font-size: 12px; min-width: 0; }
 @container (max-width: 640px) {
   /* Phone filters: search spans the row; the remaining selects share one consistent two-column grid. */
-  .hk-data-toolbar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .hk-data-toolbar > label:not(.hk-choice):first-child { grid-column: 1 / -1; }
-  .hk-data-toolbar .hk-input, .hk-data-toolbar .hk-select { max-width: none; width: 100%; }
+  .hk-data-toolbar:has(> label:not(.hk-choice) ~ label:not(.hk-choice)) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .hk-data-toolbar:has(> label:not(.hk-choice) ~ label:not(.hk-choice)) > label:not(.hk-choice):first-child { grid-column: 1 / -1; }
+  .hk-data-toolbar:has(> label:not(.hk-choice) ~ label:not(.hk-choice)) :is(.hk-input, .hk-select) { max-width: none; width: 100%; }
 }
 .hk-data-toolbar .hk-input { max-width: 300px; }
 .hk-data-footer > :not(nav) { font-size: 12px; color: var(--hk-secondary); }
