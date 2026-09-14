@@ -4,7 +4,7 @@ import type { ExampleState } from "./examples";
 import planArtwork from "./plan-art.svg?no-inline";
 
 export function SettingsExample({ state }: { state: ExampleState }) {
-  const [open, setOpen] = useState(state === "default");
+  const [open, setOpen] = useState(false);
   const [defaultPage, setDefaultPage] = useState<SettingsPage>("general");
   const [hold, setHold] = useState(false);
   const [requests, setRequests] = useState(0);

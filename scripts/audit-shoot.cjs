@@ -31,6 +31,9 @@ const modes = [["desktop-light", 1440, 900, "light"], ["desktop-dark", 1440, 900
           return { frame: r ? [Math.round(r.width), Math.round(r.height)] : null, overflow, empty, title: document.querySelector("main h1")?.textContent?.trim().slice(0, 60) };
         });
         // Portalled dialogs (settings modal) render outside the preview frame: shoot the open dialog when one is present.
+        // Modal fixtures start closed (the specs depend on that); the audit opens them through their own trigger.
+        const opener = page.getByRole("button", { name: /^Open settings$/ });
+        if (await opener.count()) { await opener.first().click(); await page.waitForTimeout(400); }
         const dialog = page.locator("[role=dialog]:visible").first();
         const target = (await dialog.count()) ? dialog : page.locator(".hkl-preview-frame").first();
         const shot = `${OUT}/${slug}--${mode}.png`;
