@@ -20,7 +20,7 @@ for (const width of [1512, 390]) {
       return { sidebar: element.getBoundingClientRect().toJSON(), rail: rail.getBoundingClientRect().toJSON(), border: style.borderInlineEndWidth, background: style.backgroundColor, shadow: style.boxShadow };
     });
     expect(parseFloat(geometry.border)).toBe(1);
-    expect(geometry.shadow).toBe("none");
+    if (width === 390) expect(geometry.shadow).not.toBe("none"); else expect(geometry.shadow).toBe("none"); // phone: the rail is a drawer over the canvas
     expect(geometry.background).not.toBe("rgba(0, 0, 0, 0)");
     expect(geometry.sidebar.x).toBeGreaterThanOrEqual(geometry.rail.x);
     expect(geometry.sidebar.right).toBeLessThanOrEqual(geometry.rail.right + 1);
