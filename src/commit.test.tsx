@@ -8,6 +8,12 @@ const { Commit, CommitHeader, CommitAuthor, CommitAuthorAvatar, CommitInfo, Comm
 afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
 
 describe("boundaryless commit summaries", () => {
+  test("metadata separators expose a dedicated responsive hook and preserve custom classes", () => {
+    render(<CommitSeparator className="host-separator" data-testid="separator" />);
+    expect(screen.getByTestId("separator")).toHaveClass("hk-commit-separator", "host-separator");
+    expect(screen.getByTestId("separator")).toHaveAttribute("aria-hidden", "true");
+    expect(screen.getByTestId("separator")).toHaveTextContent("·");
+  });
   test("all22 parts compose with native refs and inert supplied strings", () => {
     for (const part of [Commit, CommitHeader, CommitAuthor, CommitAuthorAvatar, CommitInfo, CommitMessage, CommitMetadata, CommitHash, CommitSeparator, CommitTimestamp, CommitActions, CommitCopyButton, CommitContent, CommitFiles, CommitFile, CommitFileInfo, CommitFileStatus, CommitFileIcon, CommitFilePath, CommitFileChanges, CommitFileAdditions, CommitFileDeletions]) expect(part).toBeTypeOf("function");
     const root = createRef<HTMLDivElement>(); const trigger = createRef<HTMLButtonElement>(); const avatar = createRef<HTMLSpanElement>();
