@@ -54,6 +54,14 @@
   font-weight: 500; font-size: var(--hk-text-base); line-height: 1.4;
   transition: background var(--hk-fast) var(--hk-ease), transform var(--hk-fast) var(--hk-ease);
 }
+/* Desktop hit-target contract: the painted control stays 36px (32px small), but every button's interactive box
+   is at least 42px tall via an invisible pseudo-element that extends the click area — the kit's bar is 42px on
+   fine pointers and 44px on coarse. Phone/coarse rules below grow the painted box itself. */
+.hk-button, .hk-icon-button { position: relative; isolation: isolate; }
+.hk-button::after, .hk-icon-button::after { content: ""; position: absolute; z-index: -1; left: 0; top: 50%; width: 100%; height: max(100%, 42px); transform: translateY(-50%); }
+.hk-icon-button::after { left: 50%; width: max(100%, 42px); transform: translate(-50%, -50%); }
+/* z-index -1 keeps the extension behind neighbouring painted controls in dense rows (file tree, toolbars): a click on a
+   painted box always reaches that control; only the empty gap between rows is claimed by the nearest target. */
 .hk-button:hover:not(:disabled) { background: color-mix(in srgb, var(--hk-hover) 94%, var(--hk-ink)); }
 .hk-button:active:not(:disabled) { transform: translateY(1px); }
 .hk-button--primary { background: var(--hk-dark); color: var(--hk-inverse); font-weight: 500; }
