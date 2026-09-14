@@ -17,7 +17,7 @@
 .hk-interactive-plot :is(path, circle) { vector-effect: non-scaling-stroke; }
 .hk-interactive-axes > span { min-width: 0; overflow-wrap: anywhere; }
 .hk-interactive-axes > span:last-child:not(:first-child) { text-align: right; }
-.hk-interactive-plot { display: block; width: 100%; height: 280px; overflow: hidden; }
+.hk-interactive-plot { display: block; width: 100%; height: 256px; overflow: hidden; } /* 440×192 box: the baseline sits 8 units above the bottom edge so the category row reads as the axis */
 @media (max-width: 640px) { .hk-interactive-plot { height: 180px; } .hk-interactive-canvas { margin-inline: 32px; } .hk-interactive-points { margin-inline: 32px; } .hk-interactive-points button { max-width: 62px; overflow: hidden; text-overflow: ellipsis; } }
 .hk-interactive-grid, .hk-interactive-zero { fill: none; stroke: var(--hk-line); stroke-width: 1; }
 .hk-interactive-zero { stroke-dasharray: 3 4; }
@@ -28,8 +28,8 @@
 .hk-interactive-dot, .hk-interactive-sample { fill: var(--hk-series-color); stroke: var(--hk-surface); stroke-width: 2; }
 .hk-interactive-dot { animation: hk-chart-dot 1.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 .hk-interactive-cursor { fill: none; stroke: var(--hk-secondary); stroke-width: 1; stroke-dasharray: 4 4; pointer-events: none; }
-.hk-interactive-points { position: relative; height: 44px; min-width: 0; }
-.hk-interactive-points button { position: absolute; transform: translateX(-50%); min-width: 44px; min-height: 44px; padding: 0 4px; background: transparent; border-radius: 4px; white-space: nowrap; font-size: var(--hk-text-xs, 12px); }
+.hk-interactive-points { position: relative; height: 44px; min-width: 0; margin-top: -24px; } /* 44px hit rows overlap the plot's empty bottom band so the label text sits ~12px under the baseline */
+.hk-interactive-points button { position: absolute; transform: translateX(-50%); min-width: 44px; min-height: 44px; padding: 8px 4px 0; align-items: flex-start; background: transparent; border-radius: 4px; white-space: nowrap; font-size: var(--hk-text-xs, 12px); }
 .hk-chart-inspect-icon { display: none; }
 .hk-interactive-points button:is(:hover, :focus-visible) .hk-chart-inspect-icon { display: inline; }
 .hk-interactive-points button[aria-pressed="true"], .hk-interactive-periods button[aria-pressed="true"] { background: var(--hk-hover); color: var(--hk-ink); box-shadow: inset 0 -2px var(--hk-accent); }

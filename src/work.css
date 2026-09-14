@@ -23,8 +23,11 @@
 .hk-task-item-content { min-width: 0; overflow-wrap: anywhere; }
 /* Align to the disclosure label, never the expanded content or phone status row. */
 .hk-task-item:has(> .hk-task-item-content > .hk-task > .hk-work-trigger) > .hk-task-icon { margin-top: 9px; }
+/* A file row is a 36px quiet button: centre the 16px ring on it. */
+.hk-task-item:has(> .hk-task-item-content > .hk-button:first-child) > .hk-task-icon { margin-top: 10px; }
 @media (max-width: 640px), (pointer: coarse) {
  .hk-task-item:has(> .hk-task-item-content > .hk-task > .hk-work-trigger) > .hk-task-icon { margin-top: 13px; }
+ .hk-task-item:has(> .hk-task-item-content > .hk-button:first-child) > .hk-task-icon { margin-top: 14px; }
 }
 .hk-task-item-status { justify-self: start; font-size: var(--hk-text-xs); color: var(--hk-secondary); padding: 2px 8px; border-radius: 999px; background: var(--hk-hover); }
 .hk-task-file { display: inline-flex; align-items: baseline; gap: 8px; max-width: 100%; font: 12px/1.7 var(--hk-mono); color: var(--hk-secondary); overflow-wrap: anywhere; white-space: normal; text-align: start; }
