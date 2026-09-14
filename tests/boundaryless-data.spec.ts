@@ -95,13 +95,12 @@ test("data canvases stay accessible across light, dark, narrow, forced-color and
   await expect(region.locator("tbody td[data-label=\"Status\"]").first()).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-  await page.evaluate(() => window.scrollTo(0, 0)); // the sticky gallery header paints at the scroll position; keep it above the tall capture
-  await expect(page.getByTestId("live-example")).toHaveScreenshot("data-table-cozy-narrow.png", { animations: "disabled" });
+  // Tall phone captures scroll the page; the gallery header is sticky and would paint into the stitched image, so hide it for the shot only.
+  await expect(page.getByTestId("live-example")).toHaveScreenshot("data-table-cozy-narrow.png", { animations: "disabled", stylePath: new URL("./hide-gallery-header.css", import.meta.url).pathname });
   await page.goto("/#boardui:stat-cards");
   await page.getByLabel("Metric layout").selectOption("footer");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await expect(page.getByTestId("live-example")).toHaveScreenshot("data-metrics-cozy-narrow.png", { animations: "disabled" });
+  await expect(page.getByTestId("live-example")).toHaveScreenshot("data-metrics-cozy-narrow.png", { animations: "disabled", stylePath: new URL("./hide-gallery-header.css", import.meta.url).pathname });
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.goto("/#boardui:data-table");
