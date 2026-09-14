@@ -29,9 +29,11 @@ async function mountCategories(page: Page, appearance: string, palette: string, 
 
 async function assertMapping(chart: Locator, labels: string[]) {
   const markers = chart.locator(".hk-radar-axis-label");
-  await expect(markers).toHaveText(labels.map((_, index) => String(index + 1)));
-  await expect(chart.locator(".hk-radar-category-number")).toHaveText(labels.map((_, index) => `${index + 1} · `));
-  const plot = await chart.locator("svg").boundingBox();
+  // Wave 1: axis labels carry the category name itself (ellipsised at 76px) instead of a number that needs a key.
+  await expect(markers).toHaveCount(labels.length);
+  for (const [index, label] of labels.entries()) await expect(markers.nth(index)).toHaveText(label);
+  await expect(chart.locator(".hk-radar-category-number")).toHaveCount(0);
+  const plot = await chart.locator(".hk-radar-plot, svg").first().boundingBox();
   expect(plot).not.toBeNull();
   for (const marker of await markers.all()) {
     await expect(marker).toBeVisible();
@@ -41,7 +43,7 @@ async function assertMapping(chart: Locator, labels: string[]) {
     expect(box.y).toBeGreaterThanOrEqual(plot!.y);
     expect(box.x + box.width).toBeLessThanOrEqual(plot!.x + plot!.width);
     expect(box.y + box.height).toBeLessThanOrEqual(plot!.y + plot!.height);
-    await expect(marker).not.toHaveCSS("fill", "rgba(0, 0, 0, 0)");
+    await expect(marker).not.toHaveCSS("color", "rgba(0, 0, 0, 0)");
   }
   const items = chart.locator(".hk-chart-metrics button");
   for (const [index, label] of labels.entries()) {

@@ -161,7 +161,7 @@ test("READINESS close button four glyph sizes retain hit targets and callbacks",
   await page.goto("/#boardui:close-button");
   const example = page.getByTestId("live-example");
   const observed = [];
-  for (const [size, width] of [["2xs", 12], ["xs", 14], ["small", 16], ["medium", 20]] as const) {
+  for (const [size, width] of [["2xs", 12], ["xs", 14], ["small", 16], ["medium", 18]] as const) { // wave 1: medium glyph is 18px (20 read heavy next to 16px icons)
     const button = example.getByRole("button", { name: `Close ${size} example`, exact: true });
     const control = await bounds(button);
     const glyph = await bounds(button.locator("svg"));

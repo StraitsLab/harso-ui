@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 for (const width of [1512, 390]) {
-  test(`home floating sidebar has detached geometry and controlled navigation at ${width}px`, async ({ page }) => {
+  test(`home sidebar sits flush in the navigation rail with controlled navigation at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1040 });
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/#boardui:home-dashboard");
@@ -13,21 +13,17 @@ for (const width of [1512, 390]) {
       await workspace.getByRole("button", { name: "Toggle workspace navigation", exact: true }).click();
     }
     await expect(sidebar).toBeVisible();
+    // Wave 1: the workspace sidebar sits flush in the navigation rail (panel tone + hairline), Linear-style, instead of a floating card.
     const geometry = await sidebar.evaluate(element => {
-      const card = element.parentElement!;
-      const style = getComputedStyle(card);
-      return { sidebar: element.getBoundingClientRect().toJSON(), card: card.getBoundingClientRect().toJSON(), slot: card.parentElement!.getBoundingClientRect().toJSON(), position: style.position, top: style.top, radius: style.borderRadius, border: style.borderTopWidth, shadow: style.boxShadow, background: style.backgroundColor };
+      const rail = element.closest(".hk-dashboard-workspace-navigation") as HTMLElement;
+      const style = getComputedStyle(rail);
+      return { sidebar: element.getBoundingClientRect().toJSON(), rail: rail.getBoundingClientRect().toJSON(), border: style.borderInlineEndWidth, background: style.backgroundColor, shadow: style.boxShadow };
     });
-    expect(geometry.position).toBe("sticky");
-    expect(parseFloat(geometry.top)).toBeGreaterThan(0);
-    expect(parseFloat(geometry.radius)).toBeGreaterThanOrEqual(12);
     expect(parseFloat(geometry.border)).toBe(1);
-    expect(geometry.shadow).not.toBe("none");
+    expect(geometry.shadow).toBe("none");
     expect(geometry.background).not.toBe("rgba(0, 0, 0, 0)");
-    expect(geometry.card.x).toBeGreaterThan(geometry.slot.x);
-    expect(geometry.card.y).toBeGreaterThan(geometry.slot.y);
-    expect(geometry.card.right).toBeLessThan(geometry.slot.right);
-    expect(geometry.sidebar.right).toBeLessThanOrEqual(geometry.card.right + 1);
+    expect(geometry.sidebar.x).toBeGreaterThanOrEqual(geometry.rail.x);
+    expect(geometry.sidebar.right).toBeLessThanOrEqual(geometry.rail.right + 1);
     await expect(sidebar.getByRole("button", { name: "Overview", exact: true })).toHaveAttribute("aria-current", "page");
     await page.getByLabel("Hold dashboard host state").check();
     await sidebar.getByRole("button", { name: "Customers", exact: true }).click();

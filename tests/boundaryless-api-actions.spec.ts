@@ -13,7 +13,8 @@ for (const appearance of ["light", "dark"] as const) for (const palette of ["cle
     await expect(option).toHaveAttribute("aria-pressed", "true");
     await expect.poll(() => option.evaluate(element => {
       const style = getComputedStyle(element);
-      return { border: style.borderTopColor === style.color, fill: style.backgroundColor !== "rgba(0, 0, 0, 0)" };
+      // Wave 1: the selected option paints an accent border (not the ink colour) plus the hover fill.
+      return { border: style.borderTopColor !== style.color && style.borderTopColor !== "rgba(0, 0, 0, 0)" && style.borderTopWidth !== "0px", fill: style.backgroundColor !== "rgba(0, 0, 0, 0)" };
     })).toEqual({ border: true, fill: true });
     await option.screenshot({ path: testInfo.outputPath("selected.png") });
   });

@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
 test("supplied chain summary retains native disclosure through disabled and content recovery", async ({ page }) => {
   const example = page.getByTestId("live-example");
   const header = example.locator("button.hk-chain-header");
-  await header.click();
+  await expect(header).toHaveAttribute("aria-expanded", "true"); // wave 1: the fixture opens expanded
   const originalHeader = await header.elementHandle();
   const content = example.locator(".hk-chain-content");
   const originalContent = await content.elementHandle();
@@ -57,6 +57,8 @@ test("chain host can refuse both opening and closing without changing supplied c
   const example = page.getByTestId("live-example");
   const header = example.locator("button.hk-chain-header");
   const content = example.locator(".hk-chain-content");
+  await header.click(); // wave 1: the fixture opens expanded; start from the closed state the flow expects
+  await expect(content).toBeHidden();
   await example.getByLabel("Hold disclosure state").check();
   await header.click();
   await expect(example.getByLabel("Disclosure request", { exact: true })).toHaveText("Requested: open");

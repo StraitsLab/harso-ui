@@ -52,9 +52,6 @@ html:active-view-transition-type(hk-theme)::view-transition-new(root) { z-index:
 .hk-tab-list[aria-orientation="vertical"] .hk-tab:not(.hk-tab--pill)[aria-selected="true"]::after { width: 2px; height: auto; top: 8px; bottom: 8px; left: -4px; right: auto; }
 .hk-pagination { display: flex; align-items: center; gap: 4px; min-width: 0; max-width: 100%; width: fit-content; }
 .hk-page-window { display: flex; align-items: center; gap: 4px; min-width: 0; overflow-x: auto; padding: 8px; }
-.hk-page-summary { display: none; font-size: var(--hk-text-sm); color: var(--hk-secondary); font-variant-numeric: tabular-nums; padding: 0 8px; white-space: nowrap; }
-/* Phone: the page window has no room; previous · "3 of 24" · next. */
-@media (max-width: 640px) { .hk-pagination .hk-page-window { display: none; } .hk-pagination .hk-page-summary { display: inline; } }
 .hk-page-window .hk-button { scroll-margin: 8px; }
 .hk-pagination > .hk-button, .hk-page-slot { flex-shrink: 0; }
 .hk-page-slot { display: inline-flex; align-items: center; gap: 4px; }

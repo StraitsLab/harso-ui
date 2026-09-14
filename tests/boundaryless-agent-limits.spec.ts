@@ -45,7 +45,7 @@ for (const width of [320, 1280]) for (const mode of ["light", "dark"] as const) 
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     }
     await page.getByLabel("Limits example state").selectOption("ready");
-    await expect(example.locator(".hk-agent-limits-card")).toHaveCSS("border-top-width", "0px");
+    await expect(example.locator(".hk-agent-limits-card")).toHaveCSS("border-top-width", "1px"); // wave 1: tonal card carries a hairline
     await expect(example.locator(".hk-agent-limits-group summary").first()).toHaveCSS("min-height", "44px");
     await example.screenshot({ path: test.info().outputPath("limits.png") });
   });

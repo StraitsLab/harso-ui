@@ -132,7 +132,6 @@ export function Pagination({ page, pageCount, onPageChange, siblings = 1, disabl
   const ordered = [...pages].sort((first, second) => first - second);
   return <nav className="hk-pagination" aria-label={label}>
     <Button size="small" aria-label="Previous page" disabled={disabled || current <= 1} onClick={() => onPageChange(current - 1)}>‹</Button>
-    <span className="hk-page-summary" aria-live="polite">{current} of {total}</span>
     <div className="hk-page-window">{ordered.map((number, index) => <span className="hk-page-slot" key={number}>{index > 0 && number - ordered[index - 1] > 1 && <span className="hk-page-gap" aria-hidden="true">…</span>}<Button size="small" disabled={disabled} aria-label={`Page ${number}`} aria-current={number === current ? "page" : undefined} onFocus={event => event.currentTarget.scrollIntoView({ block: "nearest", inline: "nearest" })} onClick={() => { if (number !== current) onPageChange(number); }}>{number}</Button></span>)}</div>
     <Button size="small" aria-label="Next page" disabled={disabled || current >= total} onClick={() => onPageChange(current + 1)}>›</Button>
   </nav>;

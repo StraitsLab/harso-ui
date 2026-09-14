@@ -51,7 +51,7 @@ body { margin: 0; }
 .hkl-preview-chip { position: absolute; top: 10px; left: 32px; pointer-events: none; color: var(--hk-tertiary); font-size: 11px; line-height: 14px; letter-spacing: .06em; text-transform: uppercase; }
 .hkl-live-example > .hk-icon-button { width: 42px; }
 .hkl-example-stack { display: grid; gap: 20px; width: 100%; justify-items: start; } /* inline controls hug their content; block content opts back in below */
-.hkl-example-stack > :is(.hk-input, .hk-textarea, .hk-input-shell, table, .hk-table-scroll, .hk-card, section, article, form, .hkls-options, .hk-data-toolbar, output, [class*="-card"], [class*="dashboard"], [class*="hk-work"], [class*="hk-task"], [class*="hk-plan"], [class*="hk-tool"], [class*="hk-reason"], [class*="hk-chain"]) { justify-self: stretch; }
+.hkl-example-stack > :is(.hk-input, .hk-textarea, .hk-input-shell, table, .hk-table-scroll, .hk-card, section, article, form, .hkls-options, .hk-data-toolbar, output, [class*="-card"], [class*="dashboard"], [class*="hk-work"], [class*="hk-task"], [class*="hk-plan"], [class*="hk-tool"], [class*="hk-reason"], [class*="hk-chain"], .hk-attachments, .hk-attachments-grid, .hk-queue, .hk-sources, .hk-context, .hk-file-tree, .hk-terminal, .hk-code-block, .hk-snippet, .hk-stack-trace, .hk-test-results, .hk-web-preview, .hk-artifact, .hk-sandbox, .hk-schema, .hk-package, .hk-env, .hk-commit, .hk-agent, .hk-jsx-preview) { justify-self: stretch; } /* block families fill the canvas */
 .hkl-example-row { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; }
 .hkl-example-output, .hkl-example-stack output { color: var(--hk-secondary); font-size: 12px; }
 .hkl-example-label { color: var(--hk-secondary); font-size: 13px; }

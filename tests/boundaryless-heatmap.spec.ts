@@ -58,10 +58,14 @@ for (const mode of ["light", "dark"] as const) for (const palette of ["clean", "
     const chart = page.locator(".hk-heatmap");
     expect(await chart.locator("tbody tr").first().evaluate(element => element.getBoundingClientRect().height)).toBeLessThan(80);
     if (width === 390) {
-      const region = chart.getByRole("region");
-      await region.focus();
-      await page.keyboard.press("ArrowRight");
-      await expect.poll(() => region.evaluate(element => element.scrollLeft)).toBeGreaterThan(0);
+      // Wave 1: narrow heatmaps page through time windows instead of scrolling horizontally.
+      const next = chart.getByRole("button", { name: "Next time window", exact: true });
+      const firstHeader = chart.locator("thead th").nth(1);
+      const before = await firstHeader.textContent();
+      await next.click();
+      await expect(firstHeader).not.toHaveText(before!);
+      await expect(chart.getByRole("button", { name: "Previous time window", exact: true })).toBeEnabled();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     }
     await chart.screenshot({ path: test.info().outputPath("heatmap.png") });
   });

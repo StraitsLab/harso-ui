@@ -12,6 +12,7 @@ for (const width of [390, 1440]) {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/#boardui:web-search");
     const example = page.getByLabel("Agent trails example");
+    await example.getByRole("button", { name: "Restart trail" }).click(); // the fixture opens populated; step from zero
     for (let event = 0; event < 3; event++) await example.getByRole("button", { name: "Advance event" }).click();
     const marks = example.locator(".hk-trail-marks .hk-trail-source");
     await expect(marks).toHaveCount(6);
@@ -59,6 +60,7 @@ test("web-search marks activate native safe links while missing, unsafe and disa
   page.on("dialog", async dialog => { dialogs.push(dialog.message()); await dialog.dismiss(); });
   await page.goto("/#boardui:web-search");
   const example = page.getByLabel("Agent trails example");
+  await example.getByRole("button", { name: "Restart trail" }).click(); // the fixture opens populated; step from zero
   for (let event = 0; event < 3; event++) await example.getByRole("button", { name: "Advance event" }).click();
   const originalUrl = page.url();
   const github = example.getByRole("link", { name: "Accessible theme patterns · github.com" });

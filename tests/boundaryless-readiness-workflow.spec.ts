@@ -124,7 +124,7 @@ test("readiness Table gallery composes keyboard selection actual sorting search 
   await search.fill("Audience");
   await expect(audience).toBeChecked();
   await search.focus();
-  await page.keyboard.press("Tab");
+  await page.keyboard.press("Shift+Tab"); // wave 1: the search lives in the table caption, inside the scroll region, so the region precedes it
   await expect(page.getByRole("region", { name: "Work records table", exact: true })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(table.getByRole("checkbox", { name: "Select visible rows", exact: true })).toBeFocused();

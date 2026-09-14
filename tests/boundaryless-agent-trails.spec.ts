@@ -4,6 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 test("task events count headers, retain disclosure and collapse only at the selected boundary", async ({ page }) => {
   await page.goto("/#boardui:task-list");
   const example = page.getByLabel("Agent trails example"), advance = example.getByRole("button", { name: "Advance event" });
+  await example.getByRole("button", { name: "Restart trail" }).click(); // the fixture now opens populated (three events); specs step from zero
   await expect(example.getByText("Inspect the supplied references", { exact: true })).toHaveCount(0);
   await example.getByLabel("Collapse policy").selectOption("task");
   await advance.click(); await expect(example.locator(".hk-trail-task details").first()).toHaveAttribute("open", "");
@@ -21,6 +22,7 @@ test("task events count headers, retain disclosure and collapse only at the sele
 test("search events reveal sources as a separate row and reject unsafe navigation", async ({ page }) => {
   await page.goto("/#boardui:web-search");
   const example = page.getByLabel("Agent trails example"), advance = example.getByRole("button", { name: "Advance event" });
+  await example.getByRole("button", { name: "Restart trail" }).click(); // the fixture now opens populated (three events); specs step from zero
   await advance.click(); await advance.click(); await expect(example.getByText("Sources", { exact: true })).toHaveCount(0);
   await expect(example.locator(".hk-trail-working")).toHaveText("Presenting supplied search steps");
   await advance.click(); await expect(example.getByText("Sources", { exact: true })).toBeVisible();
@@ -39,6 +41,7 @@ test("search events reveal sources as a separate row and reject unsafe navigatio
 test("timed playback cancels on disable, switching inputs and failed state", async ({ page }) => {
   await page.clock.install(); await page.goto("/#boardui:web-search");
   const example = page.getByLabel("Agent trails example");
+  await example.getByRole("button", { name: "Restart trail" }).click();
   await example.getByLabel("Trail playback").selectOption("timed");
   await page.clock.runFor(320); await expect(example.locator(".hk-trail-row")).toHaveCount(1);
   await example.getByLabel("Disable trail").check(); await page.clock.runFor(10000); await expect(example.locator(".hk-trail-row")).toHaveCount(1);
@@ -54,6 +57,7 @@ test("both trails fit narrow and desktop canvases with four palettes and reduced
     await page.goto(`/?trails=${component}-${scheme}-${palette}#boardui:${component}`);
     await page.getByLabel("Palette", { exact: true }).selectOption(palette); await page.getByLabel("Example state").selectOption("long-content");
     const example = page.getByLabel("Agent trails example"), advance = example.getByRole("button", { name: "Advance event" });
+  await example.getByRole("button", { name: "Restart trail" }).click(); // the fixture now opens populated (three events); specs step from zero
     for (let unit = 0; unit < (component === "task-list" ? 5 : 4); unit++) await advance.click();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await expect(example.locator(".hk-agent-trail")).toHaveCSS("border-top-width", "0px");
@@ -63,6 +67,7 @@ test("both trails fit narrow and desktop canvases with four palettes and reduced
   }
   await page.setViewportSize({ width: 1280, height: 900 }); await page.goto("/#boardui:task-list");
   const example = page.getByLabel("Agent trails example");
+  await example.getByRole("button", { name: "Restart trail" }).click();
   for (let unit = 0; unit < 5; unit++) await example.getByRole("button", { name: "Advance event" }).click();
   await example.screenshot({ path: testInfo.outputPath("task-list-desktop.png") });
 });

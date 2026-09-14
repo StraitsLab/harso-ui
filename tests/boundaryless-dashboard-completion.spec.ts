@@ -98,7 +98,7 @@ for (const dashboard of dashboards.slice(2)) {
 
 test("HR and marketing tabs refuse changes and resume after mounted disable", async ({ page }) => {
   for (const dashboard of [
-    { id: "hr-management", scenario: "HR data", hold: "Hold HR host state", original: "People", next: "Departments" },
+    { id: "hr-management", scenario: "HR data", hold: "Hold HR host state", original: "Departments", next: "People" }, // wave 1: Departments is the default team tab
     { id: "marketing-dashboard", scenario: "Marketing scenario", hold: "Host retains requests", original: "Sessions", next: "Channels" },
   ]) {
     await page.goto(`/#boardui:${dashboard.id}`);
@@ -228,7 +228,7 @@ test("HR marketing and medical unavailable samples replace charts and recover", 
       await scenario.selectOption(value);
       if (dashboard.id === "hr-management") {
         await expect(host.locator("svg.hk-hr-chart")).toHaveCount(0);
-        if (value === "empty") await expect(host.getByRole("tabpanel", { name: "People", exact: true })).toHaveText("No people to summarize");
+        if (value === "empty") await expect(host.getByRole("tabpanel", { name: "Departments", exact: true })).toHaveText("No people to summarize");
         else await expect(host.locator(".hk-hr-charts")).toHaveCount(0);
       } else if (dashboard.id === "marketing-dashboard") {
         await expect(host.locator("svg.hk-marketing-plot")).toHaveCount(0);

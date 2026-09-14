@@ -60,7 +60,8 @@ test("home composed notifications, earnings, revenue and contributions inspect a
   await workspace.getByLabel("Dashboard period").selectOption("Monthly");
   await expect(earnings.getByRole("listitem")).toHaveText(["Aster: $240", "Birch: $480", "Cedar: $720", "Dawn: $960", "Elm: $1,200", "Fern: $1,440", "Grove: $1,680"]);
   await expect(revenue.getByRole("status")).toHaveText("$8,960");
-  for (const [customer, amount] of [["Aster Studio", 320], ["Birch Works", 640], ["Cedar Labs", 960], ["Dawn Collective", 1280], ["Elm Design", 1600], ["Fern House", 1920], ["Grove Systems", 2240]]) {
+  // Wave 2: chart labels use the customer's first word (the full name lives in the table).
+  for (const [customer, amount] of [["Aster", 320], ["Birch", 640], ["Cedar", 960], ["Dawn", 1280], ["Elm", 1600], ["Fern", 1920], ["Grove", 2240]]) {
     await revenue.getByRole("button", { name: new RegExp(`^Inspect ${customer}`) }).focus();
     await expect(revenue.getByRole("status")).toContainText(String(customer));
     await expect(revenue.getByRole("status")).toContainText(String(amount));
@@ -99,7 +100,7 @@ test("home disabled host suppresses every composed chart interaction", async ({ 
   await page.getByLabel("Dashboard data").selectOption("disabled");
   await expect(page.getByLabel("Dashboard period")).toBeDisabled();
   await expect(page.locator(".hk-heatmap").getByRole("button").first()).toBeDisabled();
-  await expect(page.getByRole("button", { name: /^Inspect Aster Studio/ })).toBeDisabled();
+  await expect(page.getByRole("button", { name: /^Inspect Aster/ }).first()).toBeDisabled();
 });
 
 test("home controlled callbacks refuse changes while held and recover after release", async ({ page }) => {

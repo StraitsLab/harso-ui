@@ -197,7 +197,7 @@ test("VARIANTS button group native checked state paints selection and clears", a
   await page.keyboard.press("Space");
   await expect(checkbox).toBeChecked();
   expect(await paint.evaluate(element => getComputedStyle(element).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
-  expect(await paint.evaluate(element => getComputedStyle(element, "::after").width)).toBe("4px");
+  expect(await paint.evaluate(element => getComputedStyle(element, "::after").width)).toBe("auto"); // wave 1: the selected dot is gone; selection paints fill + weight only
   await page.keyboard.press("Space");
   await expect(checkbox).not.toBeChecked();
   await expect(paint).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
