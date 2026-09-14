@@ -160,6 +160,7 @@ test("dashboard navigation and marketing period requests stay host-controlled", 
     if (dashboard.id === "marketing-dashboard") {
       await host.getByRole("combobox", { name: "Analytics period" }).selectOption("Aug");
       await expect(host.getByRole("combobox", { name: "Analytics period" })).toHaveValue("Aug");
+      await host.locator("details", { has: page.getByText("ROAS unavailable (zero spend)") }).locator("summary").click(); // historical values live in the disclosure
       await expect(host.getByRole("button", { name: "Aug: $0 · ROAS unavailable (zero spend)", exact: true })).toBeVisible();
     }
   }

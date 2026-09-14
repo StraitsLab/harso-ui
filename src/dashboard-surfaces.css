@@ -67,6 +67,7 @@
 .hk-home-hires { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
 .hk-home-hires p { margin: 4px 0; color: var(--hk-secondary); font-size: 12px; }
 .hk-home-navigation, .hk-home-ticket { display: grid; gap: 12px; }
+.hk-home-navigation .hk-sidebar { inline-size: 100%; padding-inline: 0; } /* the sidebar fills the 240px rail instead of its 256px default */
 .hk-home-series { overflow: auto; max-width: 100%; }
 .hk-home-series .hk-chart-bars { min-width: 260px; }
 .hk-home-series .hk-chart-bar-column > .hk-chart-bar { position: static; align-self: end; }

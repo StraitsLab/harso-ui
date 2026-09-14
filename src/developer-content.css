@@ -34,8 +34,9 @@
 .hk-snippet:has(.hk-snippet-addon) .hk-snippet-input { padding-inline-start: 0; font-size: var(--hk-text-sm); }
 @media (max-width: 640px) { .hk-package-dependency { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
 @media (hover: hover) and (pointer: fine) {
- .hk-snippet > .hk-copy-control, .hk-environment-variable > .hk-copy-control { opacity: 0; }
- .hk-snippet:hover > .hk-copy-control, .hk-snippet:focus-within > .hk-copy-control, .hk-environment-variable:hover > .hk-copy-control, .hk-environment-variable:focus-within > .hk-copy-control { opacity: 1; }
+ /* A snippet exists to be copied: its copy control stays visible (Vercel/npm convention). Row copies in env-var lists reveal on hover. */
+ .hk-environment-variable > .hk-copy-control { opacity: 0; }
+ .hk-environment-variable:hover > .hk-copy-control, .hk-environment-variable:focus-within > .hk-copy-control { opacity: 1; }
  .hk-code-block:hover .hk-copy-control, .hk-code-block:focus-within .hk-copy-control, .hk-commit:hover .hk-copy-control, .hk-commit:focus-within .hk-copy-control, .hk-stack-trace:hover .hk-copy-control, .hk-stack-trace:focus-within .hk-copy-control, .hk-terminal:hover .hk-copy-control, .hk-terminal:focus-within .hk-copy-control { opacity: 1; }
 }
 

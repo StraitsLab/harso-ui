@@ -1,6 +1,6 @@
 .hk-dropdown-popover { display: none; position: fixed; inset: 0; margin: auto; width: max-content; min-width: min(240px, calc(100vw - 24px)); max-width: min(360px, calc(100vw - 24px)); max-height: min(460px, calc(100dvh - 24px)); overflow: auto; padding: 8px; border: 1px solid var(--hk-line); border-radius: 18px; color: var(--hk-ink); background: var(--hk-surface); box-shadow: 0 18px 70px rgb(0 0 0 / .12); font: inherit; }
 .hk-dropdown-popover:popover-open { display: block; }
-@supports (anchor-name: --anchor) { .hk-dropdown-popover { inset: auto; margin: 8px 0; min-height: min(64px, calc(100dvh - 24px)); max-height: stretch; position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline; } }
+@supports (anchor-name: --anchor) { .hk-dropdown-popover { inset: auto; margin: 8px 0; min-height: min(64px, calc(100dvh - 24px)); max-height: stretch; position-area: block-end span-inline-end; position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline; position-try-order: most-block-size; } } /* open on whichever side has the most room; scroll only when neither side fits */
 .hk-dropdown-group { padding-block: 4px; }
 .hk-dropdown-heading { display: block; color: var(--hk-secondary); font-size: 12px; padding: 8px 12px; }
 .hk-dropdown-item { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 10px 12px; border: 0; border-radius: 11px; background: transparent; text-align: start; color: var(--hk-ink); font: inherit; font-size: 14px; cursor: pointer; }

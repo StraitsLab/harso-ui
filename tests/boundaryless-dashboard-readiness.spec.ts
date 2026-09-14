@@ -31,9 +31,14 @@ test("finance composed Sankey, rings, scatter and heatmap inspect the supplied f
   // Leave the heatmap before asserting its idle summary rather than a hovered cell.
   await page.mouse.move(0, 0);
   await expect(heatmap.getByRole("status")).toHaveText("Total: $1375");
+  // Wave 2: the narrow finance card pages the six days two at a time; walk the windows.
+  const previousWindow = heatmap.getByRole("button", { name: "Previous time window", exact: true });
+  const nextWindow = heatmap.getByRole("button", { name: "Next time window", exact: true });
   for (const [category, amounts] of [["Home", [1200, 0, 0, 0, 45, 0]], ["Food", [0, 68, 0, 6, 0, 32]], ["Travel", [0, 0, 24, 0, 0, 0]]] as const) {
+    while (await previousWindow.isEnabled()) await previousWindow.click();
     for (const [index, amount] of amounts.entries()) {
       const label = `${category} · Sep ${index + 1}: $${amount}`;
+      if (await heatmap.getByRole("button", { name: label, exact: true }).count() === 0) await nextWindow.click();
       await heatmap.getByRole("button", { name: label, exact: true }).focus();
       await expect(heatmap.getByRole("status")).toHaveText(label);
     }

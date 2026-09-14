@@ -212,6 +212,9 @@ circle.hk-radial-value { fill: none; }
 .hk-ring-position i { margin-right: 4px; }
 .hk-radar-plot { width: min(100%, 320px); padding: 24px; margin-bottom: 40px; }
 .hk-radar-axis-label { position: absolute; transform: translate(-50%, -50%); font: var(--hk-text-xs) var(--hk-font); color: var(--hk-secondary); width: max-content; max-width: 76px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Labels on the left/right axes sit outside the ring; anchor them so they never leave the plot box. */
+.hk-radar-axis-label[data-side="end"] { transform: translate(-100%, -50%); }
+.hk-radar-axis-label[data-side="start"] { transform: translate(0, -50%); }
 .hk-radar-scale { position: absolute; top: 100%; left: 0; right: 0; display: flex; justify-content: center; gap: 12px; margin-top: 8px; font-size: 12px; line-height: 16px; color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
 .hk-radar-guide { fill: none; stroke: var(--hk-line-strong); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .hk-radar-domain { display: block; text-align: center; color: var(--hk-secondary); margin-top: 32px; }

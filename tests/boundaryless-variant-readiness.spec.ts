@@ -123,7 +123,7 @@ for (const variant of ["grid", "inline", "list"] as const) {
       await expect(collection).toHaveCSS("display", "grid");
       expect(second.x).toBeGreaterThan(first.x + first.width);
       expect(second.y).toBe(first.y);
-      expect(preview.height).toBe(100);
+      expect(preview.height).toBeCloseTo(preview.width * 9 / 16, 0); // wave 1: previews keep a 16:9 ratio inside a 160–220px column
       expect(preview.width).toBeCloseTo(first.width - 2, 0);
     } else if (variant === "inline") {
       await expect(collection).toHaveCSS("display", "flex");

@@ -71,7 +71,7 @@ function ChartSvg({ data, kind, title, active, inspect, onInspect, radarVariant 
         {points.map((point, index) => valid[index] && <circle key={index} className="hk-chart-radar-point" data-active={active === index} cx={point.x} cy={point.y} r={active === index ? 4 : 2} onPointerEnter={() => onInspect(index)} onPointerDown={() => onInspect(index)} />)}
         
       </svg>
-      {points.map((point,index) => <span key={index} className="hk-radar-axis-label" data-active={active === index} style={{left: `${point.axisX / 108 * 100}%`, top: `${point.axisY / 108 * 100}%`}} aria-hidden="true">{data[index].label.trim() || "Unlabeled category"}</span>)}
+      {points.map((point,index) => <span key={index} className="hk-radar-axis-label" data-active={active === index} data-side={point.axisX > 90 ? "end" : point.axisX < 18 ? "start" : undefined} style={{left: `${point.axisX / 108 * 100}%`, top: `${point.axisY / 108 * 100}%`}} aria-hidden="true">{data[index].label.trim() || "Unlabeled category"}</span>)}
       <div className="hk-radar-scale" aria-label="Guide scale"><span>Guides</span>{[1/3, 2/3, 1].map(level => <span key={level}>{Number((maximum * level).toPrecision(3))}</span>)}</div>
       {radarVariant === "score" && <div className="hk-radar-score"><small>Score</small><strong>{Number.isFinite(score) && score! >= 0 ? score : "Unavailable"}</strong></div>}
     </div>{metricList}
