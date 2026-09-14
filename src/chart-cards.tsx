@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ComponentPropsWithRef, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type CSSProperties, type ReactNode } from "react";
 import { Button, Select } from "./primitives";
 import { Tabs } from "./navigation";
 import { MonthPanel } from "./dates";
@@ -54,15 +54,15 @@ function ChartSvg({ data, kind, title, active, inspect, onInspect, radarVariant 
   const points = data.map((item, index) => {
     const angle = -Math.PI / 2 + index * Math.PI * 2 / data.length;
     const radius = valid[index] ? item.value / maximum * 36 : 0;
-    return { x: 54 + Math.cos(angle) * radius, y: 54 + Math.sin(angle) * radius, axisX: 54 + Math.cos(angle) * 43, axisY: 54 + Math.sin(angle) * 43 };
+    return { x: 54 + Math.cos(angle) * radius, y: 54 + Math.sin(angle) * radius, axisX: 54 + Math.cos(angle) * 46, axisY: 54 + Math.sin(angle) * 46 }; // labels sit 3 units past the max ring so a full-value marker never touches the text
   });
   const metricList = <ul className={`hk-chart-metrics${showTiles ? " hk-chart-stat-tiles" : ""}`}>{data.map((item, index) => <li key={index}><button {...inspect(index)} data-active={active === index}><span>{kind === "radial" && <span className="hk-ring-position"><i style={{background: item.color ?? ["var(--hk-accent-mark)", "var(--hk-secondary)", "var(--hk-faint)"][index % 3]}} />Ring {index + 1} · </span>}{kind === "radar" && !item.label.trim() ? "Unlabeled category" : item.label}</span><strong>{valid[index] ? kind === "radial" ? `${item.value}%` : item.value : "Unavailable"}</strong></button></li>)}</ul>;
   if (kind === "radar") return <>
     <div className="hk-radar-plot" data-variant={radarVariant}>
       <svg className="hk-chart-svg" viewBox="0 0 108 108" role="img" aria-label={`${title} chart`}>
         <title>{data.map((item, index) => `${item.label}: ${valid[index] ? item.value : "Unavailable"}`).join("; ")}</title>
-        {[1/3, 2/3, 1].map(level => <path key={level} className="hk-radar-guide" d={`${points.map((point, index) => `${index ? "L" : "M"}${54 + (point.axisX - 54) * 36 / 43 * level},${54 + (point.axisY - 54) * 36 / 43 * level}`).join(" ")} Z`} />)}
-        {points.map((point, index) => <line key={index} className="hk-radar-axis" data-active={active === index} x1="54" y1="54" x2={point.axisX} y2={point.axisY} onPointerEnter={() => onInspect(index)} onPointerDown={() => onInspect(index)} />)}
+        {[1/3, 2/3, 1].map(level => <path key={level} className="hk-radar-guide" d={`${points.map((point, index) => `${index ? "L" : "M"}${54 + (point.axisX - 54) * 36 / 46 * level},${54 + (point.axisY - 54) * 36 / 46 * level}`).join(" ")} Z`} />)}
+        {points.map((point, index) => <line key={index} className="hk-radar-axis" data-active={active === index} x1="54" y1="54" x2={54 + (point.axisX - 54) * 43 / 46} y2={54 + (point.axisY - 54) * 43 / 46} onPointerEnter={() => onInspect(index)} onPointerDown={() => onInspect(index)} />)}
         {(radarVariant === "filled" || radarVariant === "score") && valid.every(Boolean) && <polygon className="hk-chart-radar" points={points.map(point => `${point.x},${point.y}`).join(" ")} onPointerEnter={() => onInspect(-1)} onPointerDown={() => onInspect(-1)} />}
         {radarVariant === "lines" && points.map((point, index) => {
           const next = (index + 1) % points.length;
@@ -71,7 +71,7 @@ function ChartSvg({ data, kind, title, active, inspect, onInspect, radarVariant 
         {points.map((point, index) => valid[index] && <circle key={index} className="hk-chart-radar-point" data-active={active === index} cx={point.x} cy={point.y} r={active === index ? 4 : 2} onPointerEnter={() => onInspect(index)} onPointerDown={() => onInspect(index)} />)}
         
       </svg>
-      {points.map((point,index) => <span key={index} className="hk-radar-axis-label" data-active={active === index} data-side={point.axisX > 90 ? "end" : point.axisX < 18 ? "start" : undefined} style={{left: `${point.axisX / 108 * 100}%`, top: `${point.axisY / 108 * 100}%`}} aria-hidden="true">{data[index].label.trim() || "Unlabeled category"}</span>)}
+      {points.map((point,index) => <span key={index} className="hk-radar-axis-label" data-active={active === index} data-side={point.axisX > 90 ? "end" : point.axisX < 18 ? "start" : point.axisY > 90 ? "bottom" : point.axisY < 18 ? "top" : undefined} style={{left: `${point.axisX / 108 * 100}%`, top: `${point.axisY / 108 * 100}%`}} aria-hidden="true">{data[index].label.trim() || "Unlabeled category"}</span>)}
       <div className="hk-radar-scale" aria-label="Guide scale"><span>Guides</span>{[1/3, 2/3, 1].map(level => <span key={level}>{Number((maximum * level).toPrecision(3))}</span>)}</div>
       {radarVariant === "score" && <div className="hk-radar-score"><small>Score</small><strong>{Number.isFinite(score) && score! >= 0 ? score : "Unavailable"}</strong></div>}
     </div>{metricList}
@@ -117,7 +117,7 @@ function comparisonSummary(data: readonly ChartDatum[]) {
   };
   const current = total("value"), previous = total("secondary");
   const change = current.complete && previous.complete && current.amount !== null && previous.amount !== null && previous.amount > 0 ? (current.amount / previous.amount - 1) * 100 : NaN;
-  return `Current${current.complete ? "" : " observed"}: ${current.amount ?? "Unavailable"} · Previous${previous.complete ? "" : " observed"}: ${previous.amount ?? "Unavailable"} · ${Number.isFinite(change) ? `Change: ${change >= 0 ? "+" : ""}${Number(change.toFixed(2))}%` : "Change unavailable"}`;
+  return `Current${current.complete ? "" : " observed"}:\u00a0${current.amount ?? "Unavailable"} · Previous${previous.complete ? "" : " observed"}:\u00a0${previous.amount ?? "Unavailable"} · ${Number.isFinite(change) ? `Change:\u00a0${change >= 0 ? "+" : ""}${Number(change.toFixed(2))}%` : "Change unavailable"}`; // no-break space keeps "Change: +100%" on one line
 }
 function ChartCard({ title, value, caption, data = [], children, className = "", disabled = false, loading = false, error, mono = false, showIcons = true, shape = "eased", range = "", ranges = [], onRangeChange, limit, display, radarVariant, radialLayout, score, showTiles, anatomyControls, ...props }: DataChartCardProps & ChartAnatomyProps & { limit?: number; display?: "value" | "share" }) {
   const kind = className.match(/hk-chart-card--([a-z-]+)/)?.[1] ?? "bar";
@@ -332,6 +332,21 @@ export function SankeyChartCard({ title, caption, value, nodes = [], links = [],
   const [inspection, setInspection] = useState<string | SankeyLink | null>(null);
   const graph = sankeyLayout(nodes, links);
   const [compact, setCompact] = useState(false);
+  const labelLayer = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    // Stacked sink/source chips can land within a few px of each other; push overlapping neighbours apart by 4px so no borders touch.
+    const layer = labelLayer.current; if (!layer) return;
+    const chips = Array.from(layer.querySelectorAll<HTMLElement>("span"));
+    chips.forEach(chip => { chip.style.marginTop = ""; });
+    for (const position of ["source", "sink", "middle"]) {
+      const column = chips.filter(chip => chip.dataset.position === position).sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+      for (let index = 1; index < column.length; index += 1) {
+        const previous = column[index - 1].getBoundingClientRect(), current = column[index].getBoundingClientRect();
+        const overlap = previous.bottom + 4 - current.top;
+        if (overlap > 0) column[index].style.marginTop = `${overlap}px`;
+      }
+    }
+  });
   useEffect(() => { if (typeof window.matchMedia !== "function") return; const query = window.matchMedia("(max-width: 640px)"); const update = () => setCompact(query.matches); update(); query.addEventListener("change", update); return () => query.removeEventListener("change", update); }, []);
   const active = !disabled && typeof graph !== "string" && (typeof inspection === "string" ? graph.nodes.some(node => node.name === inspection) : graph.links.some(link => link.original === inspection)) ? inspection : null;
   const focus = (next: string | SankeyLink | null) => { if (!disabled) setInspection(next); };
@@ -347,7 +362,7 @@ export function SankeyChartCard({ title, caption, value, nodes = [], links = [],
         <title>{graph.links.map(linkLabel).join("; ")}</title><g transform={compact ? `translate(${graph.height} 0) rotate(90)` : undefined}>
         {graph.links.map((link, index) => link.original.value > 0 && <path key={index} className="hk-sankey-link" d={link.path} fill="none" stroke={active === link.original || active === link.source.name || active === link.target.name ? "var(--hk-accent-mark)" : "var(--hk-secondary)"} strokeWidth={link.width} opacity={!active || active === link.original || active === link.source.name || active === link.target.name ? .55 : .1} onPointerEnter={() => focus(link.original)} onPointerDown={() => focus(link.original)}><title>{linkLabel(link)}</title></path>)}
         {graph.nodes.map(node => <g key={node.name} data-sankey-node={node.name} onPointerEnter={() => focus(node.name)} onPointerDown={() => focus(node.name)}><rect x={node.x} y={node.y} width="12" height={node.height} fill={active === node.name || activeLink?.source.name === node.name || activeLink?.target.name === node.name ? "var(--hk-accent-mark)" : "var(--hk-secondary)"}><title>{nodeLabel(node)}</title></rect></g>)}
-      </g></svg><div className="hk-sankey-labels" aria-hidden="true">{graph.nodes.map(node => <span key={node.name} data-position={node.incoming === 0 ? "source" : node.outgoing === 0 ? "sink" : "middle"} style={{ left: `${compact ? (graph.height - node.y - node.height / 2 + 16) / (graph.height + 32) * 100 : (node.x + (node.incoming === 0 ? 0 : node.outgoing === 0 ? 12 : 6)) / graph.width * 100}%`, top: `${compact ? (node.x + (node.outgoing === 0 ? 12 : 0)) / graph.width * 100 : ((node.incoming && node.outgoing ? node.y : node.y + node.height / 2) + 16) / (graph.height + 32) * 100}%` }}>{node.name}</span>)}</div></div> : <p>No positive flows supplied.</p>}
+      </g></svg><div className="hk-sankey-labels" aria-hidden="true" ref={labelLayer}>{graph.nodes.map(node => <span key={node.name} data-position={node.incoming === 0 ? "source" : node.outgoing === 0 ? "sink" : "middle"} style={{ left: `${compact ? (graph.height - node.y - node.height / 2 + 16) / (graph.height + 32) * 100 : (node.x + (node.incoming === 0 ? 0 : node.outgoing === 0 ? 12 : 6)) / graph.width * 100}%`, top: `${compact ? (node.x + (node.outgoing === 0 ? 12 : 0)) / graph.width * 100 : ((node.incoming && node.outgoing ? node.y : node.y + node.height / 2) + 16) / (graph.height + 32) * 100}%` }}>{node.name}</span>)}</div></div> : <p>No positive flows supplied.</p>}
       <div className="hk-sankey-details"><section aria-label="Flow nodes"><h4>Nodes</h4>{graph.nodes.map(node => <Button key={node.name} disabled={disabled} onFocus={() => focus(node.name)} onBlur={() => setInspection(null)} onClick={() => focus(node.name)}>{nodeLabel(node)}{node.outgoing === 0 && node.incoming > 0 && graph.sinkTotal > 0 ? ` · ${(node.incoming / graph.sinkTotal * 100).toFixed(1).replace(/\.0$/, "")}% of sinks` : ""}<span aria-hidden="true">↗</span></Button>)}</section><section aria-label="Flow links"><h4>Links</h4>{graph.links.map((link, index) => <Button key={index} disabled={disabled} onFocus={() => focus(link.original)} onBlur={() => setInspection(null)} onClick={() => focus(link.original)}>{linkLabel(link)}<span aria-hidden="true">↗</span></Button>)}</section></div>
     </>)}
   </article>;

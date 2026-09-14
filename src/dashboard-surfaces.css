@@ -41,7 +41,7 @@
 @media (max-width: 640px) {
   :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table .hk-table { min-width: 0; width: 100%; }
   :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table :is(table, tbody) { display: block; }
-  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table thead tr { display: flex; flex-wrap: wrap; gap: 8px; }
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table thead tr { display: flex; flex-wrap: wrap; gap: 4px 8px; }
   :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table thead th { padding: 4px; }
   :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table tbody tr { display: grid; grid-template-columns: minmax(0, 1fr); padding: 16px; margin-top: 12px; border: 1px solid var(--hk-line); border-radius: 12px; background: var(--hk-surface); }
   :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table tbody td { display: flex; justify-content: space-between; align-items: center; gap: 16px; width: auto; padding: 8px 0; border: 0; white-space: normal; text-align: start; min-width: 0; }
