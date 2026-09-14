@@ -247,8 +247,9 @@ describe("prior requirement verification", () => {
     expect(container.querySelector(".hk-interactive-cursor")).toBeNull();
     fireEvent.pointerEnter(container.querySelector('[data-inspect="0"]')!);
     expect(screen.getByRole("status")).toHaveTextContent("January");
-    expect(container.querySelector(".hk-interactive-cursor")).toHaveAttribute("d", "M80 20V184" /* wave 2: combo endpoints inset to 80/360 so first and last bars sit inside the plot */);
-    expect(container.querySelector(".hk-interactive-dot")).toHaveAttribute("cx", "44");
+    const firstCentre = family === "combo" ? "80" : "44"; // wave 2: combo endpoints are inset so the first and last bars sit inside the plot
+    expect(container.querySelector(".hk-interactive-cursor")).toHaveAttribute("d", `M${firstCentre} 20V184`);
+    expect(container.querySelector(".hk-interactive-dot")).toHaveAttribute("cx", firstCentre);
     if (family === "combo") expect([...container.querySelectorAll(".hk-interactive-bar")].map(bar => bar.getAttribute("data-active"))).toEqual(["true", "false"]);
     fireEvent.pointerEnter(container.querySelector('[data-inspect="1"]')!);
     expect(screen.getByRole("status")).toHaveTextContent("February");
