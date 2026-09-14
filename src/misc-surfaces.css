@@ -79,7 +79,9 @@
 .hk-auth-card[data-layout="centered"] { margin-inline: auto; }
 .hk-auth-artwork { min-width: 0; overflow: hidden; align-content: center; }
 .hk-auth-artwork img, .hk-auth-logo img { max-width: 100%; height: auto; }
-.hk-auth-content footer { color: var(--hk-secondary); font-size: 12px; overflow-wrap: anywhere; }
+.hk-auth-card .hk-auth-content h2 { margin: 0; }
+.hk-auth-card .hk-input { border-color: var(--hk-line-strong); }
+.hk-auth-content footer { color: var(--hk-ink); font-size: 13px; overflow-wrap: anywhere; }
 .hk-auth-providers { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .hk-auth-providers[data-layout="inline"] { flex-direction: row; flex-wrap: wrap; }
 .hk-auth-providers[data-layout="grid"] { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); }

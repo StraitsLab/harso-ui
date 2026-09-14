@@ -1,4 +1,6 @@
 .hk-chart-card.hk-interactive-chart { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; gap: 16px; }
+.hk-interactive-chart { container-type: inline-size; }
+@container (max-width: 360px) { .hk-interactive-points[data-dense="true"] button:nth-child(even):not(:last-child):not(:focus-visible):not([aria-pressed="true"]) .hk-chart-category { visibility: hidden; } }
 .hk-interactive-chart header { display: flex; align-items: start; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
 .hk-interactive-chart header > div:first-child { flex: 1 1 160px; min-width: 0; }
 .hk-interactive-chart header h3, .hk-interactive-chart header p { overflow-wrap: anywhere; }

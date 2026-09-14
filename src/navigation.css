@@ -90,7 +90,7 @@ html:active-view-transition-type(hk-theme)::view-transition-new(root) { z-index:
 .hk-announcement-copy { flex: 1; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; }
 .hk-announcement-copy h3 { grid-column: 2; min-height: 36px; display: flex; align-items: center; }
 .hk-announcement-copy p, .hk-announcement-action { grid-column: 2; }
-.hk-announcement-copy:not(:has(.hk-announcement-icon)) { display: block; }
+.hk-announcement-copy:not(:has(.hk-announcement-icon)) { display: grid; }
 .hk-announcement h3 { font-size: var(--hk-text-user); line-height: 1.5; }
 .hk-announcement p { color: var(--hk-secondary); margin-top: 8px; font-size: var(--hk-text-base); overflow-wrap: anywhere; }
 .hk-announcement-icon { display: flex; align-items: center; height: 36px; color: var(--hk-accent); margin-bottom: 0; }

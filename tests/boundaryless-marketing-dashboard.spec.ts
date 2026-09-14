@@ -27,6 +27,8 @@ test("marketing metrics, zero spend and period geometry are truthful", async ({ 
   await expect(workspace.locator("rect[data-month='Aug']")).toHaveAttribute("height", "0");
   await workspace.getByRole("combobox", { name: "Analytics period" }).selectOption("Aug");
   await expect(workspace.getByRole("progressbar", { name: "Visits", exact: true })).toHaveAttribute("value", "11000");
+  // Historical values intentionally live in the chart disclosure.
+  await workspace.getByText("Inspect data", { exact: true }).first().click();
   await expect(workspace.getByRole("button", { name: "Aug: $0 · ROAS unavailable (zero spend)" })).toBeVisible();
   await expect(workspace.getByRole("img", { name: "Monthly ad spend and ROAS" }).locator("circle")).toHaveCount(0);
   await workspace.getByRole("tab", { name: "Sessions", exact: true }).focus();

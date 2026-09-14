@@ -43,7 +43,11 @@ describe("boundaryless activity presentation", () => {
   test("all seven supplied states and unknown status have readable labels", () => {
     const states = ["input-streaming", "input-available", "approval-requested", "approval-responded", "output-available", "output-error", "output-denied", "future-state"];
     render(<>{states.map(state => <div key={state}>{getStatusBadge(state)}</div>)}</>);
-    for (const label of ["Pending", "Running", "Awaiting approval", "Responded", "Completed", "Error", "Denied", "Unknown status"]) expect(screen.getByText(label)).toBeVisible();
+    for (const label of ["Pending", "Running", "Awaiting approval", "Responded", "Completed", "Error", "Denied", "Unknown status"]) {
+      expect(screen.getByText(label)).toBeVisible();
+      expect(screen.getByText(label)).toHaveAttribute("data-status-icon", "true");
+      expect(screen.getByText(label).querySelector("span")).toHaveAttribute("aria-hidden", "true");
+    }
   });
 
   test("tool and source disclosures respect controlled refusal, prevented requests and disabled roots", () => {

@@ -13,13 +13,16 @@
 .hk-foundation-type-row { display: grid; grid-template-columns: 144px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--hk-line); }
 .hk-foundation-type-row > div { display: grid; gap: 4px; font-size: var(--hk-text-xs); }
 .hk-foundation-type-row p { margin: 0; color: var(--hk-ink); line-height: 1.5; }
-@media (max-width: 640px) { .hk-foundation-colors { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hk-foundation-type-row { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
+@media (max-width: 640px) { .hk-foundation-colors { grid-template-columns: minmax(0, 1fr); } .hk-foundation-type-row { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
 .hk-dashboard { display: grid; gap: 18px; min-width: 0; padding: 20px; border: 1px solid var(--hk-line); border-radius: 20px; background: var(--hk-surface); color: var(--hk-ink); }
 .hk-dashboard > header h2, .hk-contributions-card h3 { margin: 0; font-size: 18px; font-weight: 560; letter-spacing: -.02em; }
-.hk-contributions-card { display: grid; gap: 14px; min-width: 0; padding: 16px; border: 1px solid var(--hk-line); border-radius: 16px; background: var(--hk-surface); color: var(--hk-ink); }
+.hk-contributions-card { display: grid; gap: 14px; width: min(100%, 480px); box-sizing: border-box; min-width: 0; padding: 16px; border: 1px solid var(--hk-line); border-radius: 16px; background: var(--hk-surface); color: var(--hk-ink); }
 .hk-contributions-card > div { display: grid; gap: 10px; }
-.hk-contribution { display: grid; grid-template-columns: 90px minmax(40px, 1fr) auto; align-items: center; gap: 10px; color: var(--hk-secondary); font-size: 12px; }
-.hk-contribution > meter { width: 100%; min-width: 0; accent-color: var(--hk-accent); }
+.hk-contribution { display: grid; grid-template-columns: max-content minmax(120px, 1fr) auto; align-items: center; gap: 10px; color: var(--hk-secondary); font-size: 12px; }
+.hk-contribution > meter { appearance: none; width: 100%; min-width: 0; height: 8px; border: 0; border-radius: 4px; background: var(--hk-hover); }
+.hk-contribution > meter::-webkit-meter-bar { height: 8px; border: 0; border-radius: 4px; background: var(--hk-hover); box-shadow: none; }
+.hk-contribution > meter::-webkit-meter-optimum-value, .hk-contribution > meter::-webkit-meter-suboptimum-value, .hk-contribution > meter::-webkit-meter-even-less-good-value { border-radius: 4px; background: var(--hk-accent); }
+.hk-contribution > meter::-moz-meter-bar { border-radius: 4px; background: var(--hk-accent); }
 .hk-contributions-card > label { display: grid; gap: 6px; font-size: 12px; }
 .hk-contributions-card select { color: inherit; background: var(--hk-surface); font: inherit; padding: 6px; }
 .hk-contributions-card select:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
@@ -32,7 +35,7 @@
 .hk-contributions-activity[data-view="cells"] .hk-contribution { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
 .hk-contributions-activity[data-view="cells"] button { background: var(--hk-hover); text-align: center; }
 .hk-contributions-activity[data-view="cells"] b { text-align: center; }
-.hk-contribution b { color: var(--hk-ink); font: 11px var(--hk-mono); }
+.hk-contribution b { color: var(--hk-ink); font: 12px var(--hk-mono); }
 .hk-dashboard-table { min-width: 0; overflow: auto; }
 /* Dashboard records retain every field on narrow screens. */
 @media (max-width: 640px) {
@@ -44,7 +47,7 @@
   :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table tbody td { display: flex; justify-content: space-between; align-items: center; gap: 16px; width: auto; padding: 8px 0; border: 0; white-space: normal; text-align: start; min-width: 0; }
   :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table tbody td[data-label]::before { content: attr(data-label); color: var(--hk-secondary); font-size: var(--hk-text-xs); flex: 0 0 88px; }
   :is(.hk-dashboard-workspace, .hk-finance) .hk-data-table tbody td :is(.hk-select, .hk-button) { min-width: 0; max-width: 100%; white-space: normal; }
-  :is(.hk-hr-team, .hk-marketing-tabs) [role="tablist"] { display: flex; flex-wrap: wrap; overflow: visible; }
+  :is(.hk-hr-team, .hk-marketing-tabs) [role="tablist"] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; }
 }
 .hk-dashboard-workspace details > summary, .hk-finance details > summary { min-height: 44px; align-content: center; color: var(--hk-secondary); cursor: pointer; }
 .hk-finance .hk-sankey-scroll > svg { min-width: 0 !important; width: 100%; }
@@ -110,7 +113,8 @@
 .hk-hr-charts > section { min-width: 0; }
 .hk-hr-charts > section[aria-label="Workforce movement"] { grid-column: 1 / -1; }
 .hk-hr-workspace[data-compact="true"] .hk-hr-charts { grid-template-columns: minmax(0, 1fr); }
-.hk-hr-hires { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 16px; padding: 0; list-style: none; }
+.hk-hr-hires { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 0; list-style: none; }
+@media (max-width: 640px) { .hk-hr-hires { grid-template-columns: minmax(0, 1fr); } }
 .hk-hr-hires p { margin: 5px 0; color: var(--hk-secondary); font-size: 12px; }
 .hk-hr-pipeline { display: grid; gap: 14px; }
 .hk-hr-pipeline label { display: grid; gap: 7px; font-size: 12px; }

@@ -6,11 +6,15 @@
 .hk-sankey header { flex-wrap: wrap; }
 .hk-sankey header select { width: auto; max-width: 100%; }
 .hk-sankey output { min-height: 2.8em; font-size: 12px; color: var(--hk-secondary); overflow-wrap: anywhere; }
-.hk-sankey-scroll { min-width: 0; position: relative; padding-inline: 32px; }
-.hk-sankey-labels { position: absolute; inset: 0 32px; pointer-events: none; }
+.hk-sankey-scroll { min-width: 0; position: relative; padding: 40px 100px; }
+.hk-sankey-labels { position: absolute; inset: 40px 100px; pointer-events: none; }
 .hk-sankey-labels span { position: absolute; transform: translate(-50%, -50%); width: max-content; max-width: 100px; padding: 4px 8px; border: 1px solid var(--hk-line); border-radius: 4px; background: var(--hk-surface); color: var(--hk-ink); font-size: var(--hk-text-xs, 12px); overflow-wrap: anywhere; }
 .hk-sankey-scroll svg { display: block; width: 100%; height: 280px; }
-@media (max-width: 640px) { .hk-sankey-scroll svg { height: 340px; } }
+.hk-sankey-labels span[data-position="source"] { transform: translate(calc(-100% - 8px), -50%); }
+.hk-sankey-labels span[data-position="sink"] { transform: translate(8px, -50%); }
+.hk-sankey-labels span[data-position="middle"] { transform: translate(-50%, calc(-100% - 12px)); }
+.hk-sankey-labels span[data-position="middle"]::after { content: ""; position: absolute; width: 1px; height: 12px; background: var(--hk-secondary); left: 50%; top: 100%; }
+@media (max-width: 640px) { .hk-sankey-scroll { padding: 44px 80px 44px 8px; } .hk-sankey-labels { inset: 44px 80px 44px 8px; } .hk-sankey-labels span[data-position="middle"] { left: calc(100% + 8px) !important; transform: translateY(-50%); } .hk-sankey-labels span[data-position="middle"]::after { width: 16px; height: 1px; left: -16px; top: 50%; } .hk-sankey-scroll svg { height: 340px; } .hk-sankey-labels span { padding: 4px; max-width: 80px; } .hk-sankey-labels span[data-position="source"] { transform: translate(-50%, calc(-100% - 8px)); } .hk-sankey-labels span[data-position="sink"] { transform: translate(-50%, 8px); } }
 .hk-sankey-scroll text { fill: var(--hk-ink); font: 11px var(--hk-mono); }
 .hk-sankey-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .hk-sankey-details section { min-width: 0; }
@@ -206,21 +210,22 @@ circle.hk-radial-value { fill: none; }
 .hk-sleep-key, .hk-ring-position i { display: inline-block; flex: none; width: 8px; height: 8px; border-radius: 50%; }
 .hk-ring-position { color: var(--hk-secondary); font-size: var(--hk-text-xs); }
 .hk-ring-position i { margin-right: 4px; }
-.hk-radar-plot { width: min(100%, 320px); padding: 24px; }
+.hk-radar-plot { width: min(100%, 320px); padding: 24px; margin-bottom: 40px; }
 .hk-radar-axis-label { position: absolute; transform: translate(-50%, -50%); font: var(--hk-text-xs) var(--hk-font); color: var(--hk-secondary); width: max-content; max-width: 76px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hk-radar-scale { position: absolute; top: 100%; left: 0; right: 0; display: flex; justify-content: center; gap: 12px; margin-top: 8px; font-size: 12px; line-height: 16px; color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
 .hk-radar-guide { fill: none; stroke: var(--hk-line-strong); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .hk-radar-domain { display: block; text-align: center; color: var(--hk-secondary); margin-top: 32px; }
 .hk-chart-pager { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: var(--hk-text-xs); }
-.hk-chart-pager button { min-width: 44px; min-height: 44px; }
+.hk-chart-pager button { min-width: 44px; min-height: 44px; border: 1px solid var(--hk-line); background: transparent; }
 .hk-active-days-scroll { max-height: none; overflow: visible; max-width: 400px; }
-.hk-active-days-scroll:has(.hk-chart-pager) .hk-month-heading button { visibility: hidden; }
-.hk-scatter-canvas { position: relative; }
-.hk-scatter-labels { position: absolute; inset: 0; pointer-events: none; font-size: var(--hk-text-xs); color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
+.hk-active-days-scroll:has(.hk-chart-pager) .hk-month-heading { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.hk-scatter-canvas { position: relative; padding-bottom: 40px; }
+.hk-scatter-labels { position: absolute; inset: 0 0 40px; pointer-events: none; font-size: var(--hk-text-xs); color: var(--hk-ink); font-variant-numeric: tabular-nums; }
 .hk-scatter-labels > span { position: absolute; }
 .hk-scatter-y-title { top: 0; left: 0; }
-.hk-scatter-x-title { bottom: 0; left: 53%; transform: translateX(-50%); }
+.hk-scatter-x-title { top: calc(100% + 24px); line-height: 16px; left: 53%; transform: translateX(-50%); }
 .hk-scatter-y-tick { right: 88%; transform: translateY(-50%); }
-.hk-scatter-x-tick { top: 86%; transform: translateX(-50%); }
+.hk-scatter-x-tick { top: 100%; line-height: 16px; transform: translateX(-50%); }
 .hk-scatter-zero { stroke: var(--hk-secondary); stroke-dasharray: 3 4; }
 .hk-scatter-plot .hk-chart-grid { vector-effect: non-scaling-stroke; }
 .hk-sankey-details button { font-variant-numeric: tabular-nums; }

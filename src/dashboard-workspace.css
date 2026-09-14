@@ -1,4 +1,12 @@
 .hk-dashboard-workspace { min-width: 0; color: var(--hk-ink); }
+/* One KPI policy for every dashboard composition, including finance. */
+:is(.hk-dashboard-workspace, .hk-finance) .hk-stat-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (min-width: 641px) and (max-width: 1023px) {
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-stat-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  :is(.hk-dashboard-workspace, .hk-finance) .hk-stat-cards { grid-template-columns: minmax(0, 1fr); }
+}
 .hk-dashboard-workspace > header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .hk-dashboard-workspace { position: relative; container-type: inline-size; padding: 0; border: 0; border-radius: 0; background: transparent; }
 .hk-dashboard-workspace > .hk-dashboard-workspace-header { align-items: center; flex-wrap: wrap; min-height: 44px; box-sizing: border-box; padding: 5px 12px 6px; border-bottom: 1px solid var(--hk-line); background: var(--hk-canvas); }

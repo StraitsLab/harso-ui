@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ComponentPropsWithRef, type ReactNode } from "react";
 import { Button, type ButtonProps } from "./primitives";
+import { ChecksIcon } from "@phosphor-icons/react";
 import { SegmentedControl } from "./navigation";
 
 export type NotificationTone = "information" | "success" | "error";
@@ -52,7 +53,7 @@ export function NotificationCenter({ items, onSelect, onMarkRead, filter, defaul
   const unread = items.filter(item => !item.read && !item.disabled);
   const markRead = (item: NotificationCenterItem) => { if (!item.read) onMarkRead?.(item.id); };
   return <section {...props} className={`hk-notification-center ${className}`} aria-label={props["aria-label"] ?? "Notification center"}>
-    <header className="hk-notification-center-header"><h2>Notifications</h2><span>{items.length}</span><Button size="small" disabled={disabled || !onMarkRead || !unread.length} onClick={() => unread.forEach(markRead)}>Mark all read</Button></header>
+    <header className="hk-notification-center-header"><div className="hk-notification-center-heading"><h2>Notifications</h2><span>{items.length}</span></div><Button leadingIcon={<ChecksIcon size={16} />} size="small" disabled={disabled || !onMarkRead || !unread.length} onClick={() => unread.forEach(markRead)}>Mark all read</Button></header>
     <SegmentedControl label="Notification filter" items={[{ value: "all", label: "All" }, { value: "mentions", label: "Mentions" }, { value: "system", label: "System" }]} value={selected} disabled={disabled} onValueChange={next => { if (filter === undefined) setLocalFilter(next as NotificationFilter); onFilterChange?.(next as NotificationFilter); }} />
     <div className="hk-notification-center-list">{visible.length ? visible.map(item => <div key={item.id} className="hk-notification-center-row"><button type="button" className={`hk-notification-center-item hk-notification-center-item--${item.tone ?? "information"}`} data-read={item.read || undefined} disabled={disabled || item.disabled || (!onSelect && (!onMarkRead || item.read))} onClick={() => { onSelect?.(item); markRead(item); }}><span aria-hidden="true">{item.avatar ?? item.icon ?? <span className="hk-notification-dot" />}</span><span><strong>{item.title}</strong>{item.description && <small>{item.description}</small>}</span>{!item.read && <span className="hk-notification-unread" aria-label="Unread" />}</button>{item.action && <NotificationAction disabled={disabled || item.disabled || item.action.disabled} onClick={() => { item.action?.onAction(); markRead(item); }}>{item.action.label}</NotificationAction>}</div>) : <p className="hk-notification-empty" role="status">{items.length ? "No notifications in this filter." : "You’re all caught up."}</p>}</div>
   </section>;

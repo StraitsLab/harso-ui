@@ -6,6 +6,16 @@ const data = [{ label: "Jan", value: 20, secondary: 30 }, { label: "Feb", value:
 const series = [{ key: "value", label: "Visits" }, { key: "secondary", label: "Referrals" }];
 
 describe("bounded interactive charts", () => {
+  it("insets combo endpoint bars and aligns category centers", () => {
+    const view = render(<ComboChartCard title="Insets" data={data} />);
+    const bars = view.container.querySelectorAll(".hk-interactive-bar");
+    expect(Number(bars[0].getAttribute("x"))).toBe(66);
+    expect(Number(bars[1].getAttribute("x")) + Number(bars[1].getAttribute("width"))).toBe(374);
+    const buttons = view.container.querySelectorAll<HTMLButtonElement>(".hk-interactive-points button");
+    expect(parseFloat(buttons[0].style.left)).toBeCloseTo(80 / 440 * 100);
+    expect(parseFloat(buttons[1].style.left)).toBeCloseTo(360 / 440 * 100);
+  });
+
   it("area stacks both series, changes geometry for overlap and normalizes percent", () => {
     const view = render(<AreaChartCard title="Traffic" data={data} series={series} shape="sharp" />);
     const second = () => view.container.querySelector('[data-series="secondary"] .hk-interactive-area')?.getAttribute("d");

@@ -1,5 +1,6 @@
 import { useState, type ComponentPropsWithRef, type ReactNode } from "react";
 import { Button, type ButtonProps } from "./primitives";
+import { CaretRightIcon } from "@phosphor-icons/react";
 export type QueueMessagePart = { type: string; text?: string; url?: string; filename?: string; mediaType?: string };
 export type QueueMessage = { id: string; parts: QueueMessagePart[] };
 export type QueueTodo = { id: string; title: string; description?: string; status?: "pending" | "completed" };
@@ -17,7 +18,7 @@ export function QueueSection({ defaultOpen = true, open, onOpenChange, onToggle,
     onOpenChange?.(next);
   }}>{children}</details>;
 }
-export function QueueSectionTrigger({ className = "", ...props }: ComponentPropsWithRef<"summary">) { return <summary {...props} className={`hk-queue-section-trigger ${className}`} />; }
+export function QueueSectionTrigger({ className = "", children, ...props }: ComponentPropsWithRef<"summary">) { return <summary {...props} className={`hk-queue-section-trigger ${className}`}><CaretRightIcon className="hk-queue-chevron" size={16} aria-hidden="true" />{children}</summary>; }
 export function QueueSectionLabel({ label, count, icon, className = "", ...props }: ComponentPropsWithRef<"span"> & { label: string; count?: number; icon?: ReactNode }) { return <span {...props} className={`hk-queue-section-label ${className}`}>{icon}{count !== undefined && <span>{count}</span>}{label}</span>; }
 export function QueueSectionContent({ className = "", ...props }: ComponentPropsWithRef<"div">) { return <div {...props} className={`hk-queue-section-content ${className}`} />; }
 export function QueueList({ className = "", ...props }: ComponentPropsWithRef<"ul">) { return <ul {...props} className={`hk-queue-list ${className}`} />; }

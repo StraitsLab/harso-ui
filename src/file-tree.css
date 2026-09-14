@@ -5,10 +5,11 @@
 .hk-button.hk-file-tree-select { flex: 1 1 120px; width: auto; min-width: 0; max-width: 100%; justify-content: flex-start; min-height: 42px; padding: 4px 8px; gap: 8px; border-radius: 6px; font-size: var(--hk-text-base); font-weight: 400; white-space: normal; text-align: start; color: var(--hk-secondary); background: transparent; }
 .hk-button.hk-file-tree-select:hover:not(:disabled) { background: var(--hk-hover); color: var(--hk-ink); }
 .hk-button.hk-file-tree-select[aria-current="true"] { color: var(--hk-ink); font-weight: 500; background: var(--hk-hover); }
-.hk-file-tree-select .hk-work-trigger-label { flex: 1; flex-wrap: nowrap; }
+.hk-file-tree-select .hk-work-trigger-label { flex: 1; flex-wrap: nowrap; gap: 8px; }
 .hk-file-tree-select.hk-work-trigger { flex-direction: row-reverse; }
 .hk-file-tree-select.hk-work-trigger > svg { flex: 0 0 16px; }
-.hk-file-tree-file > .hk-file-tree-row > .hk-file-tree-select { padding-inline-start: 32px; }
+.hk-file-tree-file > .hk-file-tree-row > .hk-file-tree-select { padding-inline-start: 8px; }
+.hk-file-tree-chevron-slot { flex: 0 0 16px; width: 16px; }
 .hk-file-tree-icon { width: 16px; height: 16px; color: var(--hk-tertiary); }
 .hk-file-tree-icon svg { width: 16px; height: 16px; }
 @media (max-width: 640px) { .hk-button.hk-file-tree-select, .hk-file-tree-actions .hk-button { min-height: 44px; } }
@@ -23,7 +24,7 @@
 .hk-file-tree { max-width: 640px; }
 .hk-file-tree-children { margin-inline-start: 16px; padding-inline-start: 0; }
 .hk-file-tree-row { flex-wrap: nowrap; }
-.hk-file-tree-select.hk-work-trigger > .hk-work-chevron { flex: 0 0 16px; }
+.hk-file-tree-select.hk-work-trigger > .hk-work-chevron { flex: 0 0 8px; width: 8px; margin: 4px; }
 @media (hover: hover) and (pointer: fine) { .hk-file-tree-actions { opacity: 0; } .hk-file-tree-row:hover > .hk-file-tree-actions, .hk-file-tree-row:focus-within > .hk-file-tree-actions { opacity: 1; } }
 
 .hk-file-tree { width: 100%; }

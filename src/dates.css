@@ -9,7 +9,7 @@
 .hk-month-grid button:hover { background: var(--hk-hover); }
 .hk-month-grid button[aria-pressed="true"] { background: var(--hk-ink); color: var(--hk-inverse); }
 .hk-month-grid button[aria-current="date"] { text-decoration: underline; text-underline-offset: 4px; }
-.hk-month-grid button[aria-disabled="true"] { color: var(--hk-secondary); text-decoration: line-through; cursor: not-allowed; }
+.hk-month-grid button[aria-disabled="true"] { color: var(--hk-secondary); text-decoration: none; cursor: not-allowed; }
 .hk-date-popover { position: fixed; inset: 0; margin: auto; padding: var(--hk-space-6); width: max-content; max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); overflow: auto; border: 1px solid var(--hk-line); border-radius: 20px; background: var(--hk-surface); color: var(--hk-ink); box-shadow: var(--hk-shadow); }
 .hk-date-popover-heading { margin-block-end: var(--hk-space-4); }
 .hk-date-selection { display: grid; justify-items: start; gap: var(--hk-space-2); }
@@ -43,6 +43,7 @@
 .hk-calendar-day h4 { margin: 0 0 var(--hk-space-2); font-size: 12px; font-weight: 450; padding-inline: var(--hk-space-2); }
 .hk-calendar-day time[aria-current="date"] { text-decoration: underline; text-underline-offset: 4px; font-weight: 650; }
 .hk-calendar-weekday { display: none; }
+.hk-calendar-event + .hk-calendar-event { margin-block-start: 8px; }
 .hk-calendar-event > button { display: block; width: 100%; min-width: 0; text-align: start; border-radius: 8px; padding: 6px 8px; min-height: 36px; }
 .hk-calendar-event > button > span { display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; font-size: 12px; }
 .hk-calendar-day .hk-disclosure { margin: 0; }

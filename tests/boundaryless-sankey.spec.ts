@@ -43,9 +43,9 @@ for (const mode of ["light", "dark"] as const) for (const palette of ["clean", "
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     const diagram = page.getByRole("region", { name: "Where the money goes diagram" });
     if (width === 390) {
-      await diagram.focus();
-      await page.keyboard.press("ArrowRight");
-      await expect.poll(() => diagram.evaluate(element => element.scrollLeft)).toBeGreaterThan(0);
+      await expect(diagram.locator("svg > g")).toHaveAttribute("transform", /rotate\(90\)/);
+      expect(await diagram.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+      await expect(diagram.locator(".hk-sankey-labels span")).toHaveCount(6);
     }
     await page.locator(".hk-sankey").screenshot({ path: test.info().outputPath("sankey.png") });
   });

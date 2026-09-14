@@ -92,10 +92,12 @@ export function InteractiveChart({ kind, title, value, caption, data = empty, se
   });
   const domain = (indices: readonly number[]) => indices.reduce(([low, high], index) => normalized[index].points.reduce(([minimum, maximum], point) => point ? [Math.min(minimum, point.amount, point.base), Math.max(maximum, point.amount, point.base)] : [minimum, maximum], [low, high]), [0, percent ? 1 : 0]);
   const commonDomain = domain(groups.map((_, index) => index));
+  const endpoint = kind === "combo" ? 80 : 44;
+  const pointX = (index: number) => rows.length === 1 ? 220 : endpoint + index / (rows.length - 1) * (440 - endpoint * 2);
   const plots = normalized.map((group, index) => {
     const [minimum, maximum] = kind === "combo" ? domain([index]) : commonDomain;
     const y = (amount: number) => 184 - (amount - minimum) / (maximum - minimum || 1) * 164;
-    return { minimum, maximum, scale: group.scale, zero: y(0), points: group.points.map((point, pointIndex) => point ? { x: rows.length === 1 ? 220 : 44 + pointIndex / (rows.length - 1) * 352, y: y(point.amount), base: y(point.base), index: pointIndex } : null) };
+    return { minimum, maximum, scale: group.scale, zero: y(0), points: group.points.map((point, pointIndex) => point ? { x: pointX(pointIndex), y: y(point.amount), base: y(point.base), index: pointIndex } : null) };
   });
   const text = (number: number | null, group?: ChartSeries) => number === null || !finite(number) ? "Unavailable" : (group?.format ?? format)(number);
   const summaries = groups.map((group, index) => {
@@ -139,16 +141,16 @@ export function InteractiveChart({ kind, title, value, caption, data = empty, se
           </g>)}
           {active !== null && plot.points[active] && !(kind === "combo" && groupIndex === 0) && <circle className="hk-interactive-dot" cx={plot.points[active]!.x} cy={plot.points[active]!.y} r="5" />}
         </g>)}
-        {active !== null && <path className="hk-interactive-cursor" d={`M${rows.length === 1 ? 220 : 44 + active / (rows.length - 1) * 352} 20V184`} />}
+        {active !== null && <path className="hk-interactive-cursor" d={`M${pointX(active)} 20V184`} />}
         {rows.map((row, index) => <rect key={index} aria-hidden="true" data-inspect={index} x={rows.length === 1 ? 24 : 44 + index / (rows.length - 1) * 352 - 176 / (rows.length - 1)} y="12" width={rows.length === 1 ? 392 : 352 / (rows.length - 1)} height="180" fill="transparent" onPointerEnter={() => inspect(index)} onPointerDown={() => inspect(index)} onClick={() => inspect(index)} />)}
       </svg></div>
-      <div className="hk-interactive-points" role="group" aria-label={`${title} point inspection`} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInspection(null); }}>
-        {rows.map((row, index) => <Button key={index} style={{left: `${rows.length === 1 ? 50 : 10 + index / (rows.length - 1) * 80}%`}} ref={element => { buttons.current[index] = element; }} disabled={blocked} aria-label={`Inspect ${describe(index)}`} aria-pressed={active === index} onFocus={() => inspect(index)} onPointerEnter={() => inspect(index)} onPointerLeave={event => { if (event.pointerType !== "touch" && document.activeElement !== event.currentTarget) setInspection(null); }} onClick={() => inspect(index)} onKeyDown={event => {
+      <div className="hk-interactive-points" data-dense={rows.length > 4} role="group" aria-label={`${title} point inspection`} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInspection(null); }}>
+        {rows.map((row, index) => <Button key={index} style={{left: `${pointX(index) / 440 * 100}%`}} ref={element => { buttons.current[index] = element; }} disabled={blocked} aria-label={`Inspect ${describe(index)}`} aria-pressed={active === index} onFocus={() => inspect(index)} onPointerEnter={() => inspect(index)} onPointerLeave={event => { if (event.pointerType !== "touch" && document.activeElement !== event.currentTarget) setInspection(null); }} onClick={() => inspect(index)} onKeyDown={event => {
           if (blocked) return;
           if (event.key === "Escape") { event.preventDefault(); setInspection(null); return; }
           const next = event.key === "Home" ? 0 : event.key === "End" ? rows.length - 1 : event.key === "ArrowRight" ? Math.min(rows.length - 1, index + 1) : event.key === "ArrowLeft" ? Math.max(0, index - 1) : null;
           if (next !== null) { event.preventDefault(); buttons.current[next]?.focus(); }
-        }}>{row.label}<span aria-hidden="true" className="hk-chart-inspect-icon">⌕</span></Button>)}
+        }}><span className="hk-chart-category">{row.label}</span><span aria-hidden="true" className="hk-chart-inspect-icon">⌕</span></Button>)}
       </div>
       <ul className={`hk-interactive-legend${tiles ? " hk-interactive-tiles" : ""}`} aria-label={`${title} series`}>{groups.map((group, index) => <li key={index}><span aria-hidden="true" style={{ background: seriesColor(index) }} />{tiles ? summaries[index] : groups.length === 1 && group.label === title ? "Observed values" : group.label}</li>)}</ul>
     </>)}

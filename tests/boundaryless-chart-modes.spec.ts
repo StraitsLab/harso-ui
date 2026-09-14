@@ -3,6 +3,22 @@ import AxeBuilder from "@axe-core/playwright";
 
 test.use({ hasTouch: true });
 
+test("wave2 chart label bands and compact category inspection", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 1040 });
+  await page.goto("/#boardui:scatter-chart-card");
+  const tick = await page.locator(".hk-scatter-x-tick").nth(1).boundingBox();
+  const title = await page.locator(".hk-scatter-x-title").boundingBox();
+  expect(title!.y - tick!.y - tick!.height).toBeGreaterThanOrEqual(8);
+  await page.goto("/#boardui:home-dashboard");
+  const chart = page.locator(".hk-interactive-chart").filter({ has: page.getByRole("heading", { name: "Revenue by customer" }) });
+  await expect(chart.locator('.hk-chart-category').filter({ hasText: "Dawn" })).toBeHidden();
+  const dawn = chart.getByRole("button", { name: /Inspect Dawn/ });
+  await dawn.focus();
+  await expect(chart.getByRole("status")).toContainText("Dawn");
+  await expect(chart.locator('.hk-chart-category').filter({ hasText: "Dawn" })).toBeVisible();
+});
+
+
 for (const family of ["area", "line", "combo"]) {
   test(`${family}: inspect with keyboard, pointer and touch; host owns period changes`, async ({ page }) => {
     await page.goto(`/#boardui:${family}-chart-card`);

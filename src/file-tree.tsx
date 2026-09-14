@@ -46,7 +46,7 @@ export type FileTreeFileProps = Omit<ButtonProps, "name" | "value"> & { path: st
 export function FileTreeFile({ path, name, icon, actions, children, disabled, onClick, className = "", ...props }: FileTreeFileProps) {
   const tree = useFileTree();
   const selected = tree.selectedPath === path;
-  return <li className="hk-file-tree-file"><div className="hk-file-tree-row"><Button {...props} className={`hk-file-tree-select ${className}`} type="button" aria-label={name} aria-current={selected || undefined} disabled={disabled || tree.disabled} onClick={event => { onClick?.(event); if (!event.defaultPrevented) tree.select(path); }}>{children ?? <><FileTreeIcon>{icon ?? <FileIcon size={18} />}</FileTreeIcon><FileTreeName>{name}</FileTreeName></>}{selected && <CheckIcon className="hk-file-tree-selected" size={14} aria-hidden="true" />}</Button>{actions}</div></li>;
+  return <li className="hk-file-tree-file"><div className="hk-file-tree-row"><Button {...props} className={`hk-file-tree-select ${className}`} type="button" aria-label={name} aria-current={selected || undefined} disabled={disabled || tree.disabled} onClick={event => { onClick?.(event); if (!event.defaultPrevented) tree.select(path); }}><span className="hk-file-tree-chevron-slot" aria-hidden="true" />{children ?? <><FileTreeIcon>{icon ?? <FileIcon size={18} />}</FileTreeIcon><FileTreeName>{name}</FileTreeName></>}{selected && <CheckIcon className="hk-file-tree-selected" size={14} aria-hidden="true" />}</Button>{actions}</div></li>;
 }
 
 export function FileTreeIcon({ className = "", ...props }: ComponentPropsWithRef<"span">) {

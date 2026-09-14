@@ -3,6 +3,7 @@
 .hk-tool .hk-activity-name { font: var(--hk-text-base)/1.6 var(--hk-mono); }
 .hk-tool .hk-work-trigger-label { flex: 1; }
 .hk-tool .hk-badge { margin-inline-start: auto; font-size: var(--hk-text-xs); }
+.hk-tool .hk-badge[data-status-icon="true"]::before { content: none; display: none; }
 .hk-tool .hk-badge > span { font-size: 0; width: 16px; height: 16px; background: var(--hk-tertiary); mask: var(--hk-shell-Clock) center / contain no-repeat; }
 .hk-tool .hk-badge--positive > span { background: var(--hk-positive-mark); mask-image: var(--hk-shell-CheckCircle); }
 .hk-tool .hk-badge--negative > span { background: var(--hk-negative-mark); mask-image: var(--hk-shell-XCircle); }

@@ -12,7 +12,7 @@ for (const family of barFamilies) {
     await expect(bars).toHaveCount(3);
     const heights = await bars.evaluateAll(elements => elements.map(element => element.getBoundingClientRect().height));
     expect(heights).toEqual([0, 60, 120]);
-    await expect(example.getByText("0.25", { exact: true })).toBeVisible();
+    await expect(example.locator(".hk-chart-number").getByText("0.25", { exact: true })).toBeVisible();
     await example.getByLabel("Chart scenario").selectOption("invalid");
     await expect(bars).toHaveCount(1);
     await expect(example.getByText("Unavailable", { exact: true })).toHaveCount(2);
@@ -76,7 +76,11 @@ test("revenue renders independent series and honors refused period changes", asy
 test("activity calendar uses dated records rather than generic bars", async ({ page }) => {
   await page.goto("/#boardui:most-active-days-card");
   const example = page.locator(".hk-shared-chart-example");
-  await expect(example.getByRole("grid")).toHaveCount(2);
+  await expect(example.getByRole("grid")).toHaveCount(1);
+  await expect(example.locator(".hk-chart-pager")).toContainText("September 2026");
+  await example.getByRole("button", { name: "Next activity month" }).click();
+  await expect(example.locator(".hk-chart-pager")).toContainText("October 2026");
+  await example.getByRole("button", { name: "Previous activity month" }).click();
   await example.getByRole("button", { name: /September 2, 2026/ }).click();
   await expect(example.getByRole("heading", { name: "2026-09-02 activity" })).toBeVisible();
   await example.getByRole("checkbox", { name: "Keep supplied chart selection" }).check();

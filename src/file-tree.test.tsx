@@ -60,6 +60,8 @@ describe("boundaryless file hierarchy", () => {
     const button = screen.getByRole("button", { name: "<script>not executable</script>" });
     expect(list.current?.tagName).toBe("UL"); expect(file.current).toBe(button);
     expect(button.querySelector("script")).toBeNull();
+    expect(button.firstElementChild).toHaveClass("hk-file-tree-chevron-slot");
+    expect(button.firstElementChild).toHaveAttribute("aria-hidden", "true");
     fireEvent.click(button); expect(select).not.toHaveBeenCalled();
   });
 
