@@ -253,8 +253,9 @@ describe("prior requirement verification", () => {
     if (family === "combo") expect([...container.querySelectorAll(".hk-interactive-bar")].map(bar => bar.getAttribute("data-active"))).toEqual(["true", "false"]);
     fireEvent.pointerEnter(container.querySelector('[data-inspect="1"]')!);
     expect(screen.getByRole("status")).toHaveTextContent("February");
-    expect(container.querySelector(".hk-interactive-cursor")).toHaveAttribute("d", "M396 20V184");
-    expect(container.querySelector(".hk-interactive-dot")).toHaveAttribute("cx", "396");
+    const lastCentre = family === "combo" ? "360" : "396";
+    expect(container.querySelector(".hk-interactive-cursor")).toHaveAttribute("d", `M${lastCentre} 20V184`);
+    expect(container.querySelector(".hk-interactive-dot")).toHaveAttribute("cx", lastCentre);
     if (family === "combo") expect([...container.querySelectorAll(".hk-interactive-bar")].map(bar => bar.getAttribute("data-active"))).toEqual(["false", "true"]);
     fireEvent.pointerLeave(container.querySelector(".hk-interactive-plot")!);
     expect(container.querySelector(".hk-interactive-cursor")).toBeNull();
