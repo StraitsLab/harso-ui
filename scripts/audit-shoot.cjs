@@ -30,7 +30,9 @@ const modes = [["desktop-light", 1440, 900, "light"], ["desktop-dark", 1440, 900
           const empty = !frame || frame.textContent.trim().length < 3;
           return { frame: r ? [Math.round(r.width), Math.round(r.height)] : null, overflow, empty, title: document.querySelector("main h1")?.textContent?.trim().slice(0, 60) };
         });
-        const target = page.locator(".hkl-preview-frame").first();
+        // Portalled dialogs (settings modal) render outside the preview frame: shoot the open dialog when one is present.
+        const dialog = page.locator("[role=dialog]:visible").first();
+        const target = (await dialog.count()) ? dialog : page.locator(".hkl-preview-frame").first();
         const shot = `${OUT}/${slug}--${mode}.png`;
         if (await target.count()) await target.screenshot({ path: shot, animations: "disabled" }); else await page.screenshot({ path: shot });
         index.push({ id, mode, path: shot, ...facts, errors: errors.splice(0) });

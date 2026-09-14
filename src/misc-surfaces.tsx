@@ -1,3 +1,4 @@
+import { CloseButton } from "./navigation";
 import { Children, isValidElement, useEffect, useId, useLayoutEffect, useRef, useState, type ChangeEvent, type ComponentPropsWithRef, type KeyboardEvent, type ReactNode } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Button, Input, Select, type ButtonProps } from "./primitives";
@@ -78,9 +79,9 @@ export function SettingsModal({ open = false, isOpen, title = "Settings", childr
   return <><span ref={anchor} hidden /><Dialog.Root open={active} onOpenChange={next => { if (!next) onClose?.(); }}>
     {active && <Dialog.Portal><KitProvider {...theme} className="hk-settings-portal">
       <Dialog.Overlay className="hk-settings-overlay" />
-      <Dialog.Content asChild aria-describedby={undefined} onOpenAutoFocus={() => { origin.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; }} onCloseAutoFocus={event => { event.preventDefault(); if (origin.current?.isConnected) origin.current.focus(); }}>
+      <Dialog.Content asChild aria-describedby={undefined} onOpenAutoFocus={event => { origin.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; event.preventDefault(); (event.currentTarget as HTMLElement | null)?.focus({ preventScroll: true }); }} /* focus the dialog itself: no control wears a ring on open; Tab reaches the close control first */ onCloseAutoFocus={event => { event.preventDefault(); if (origin.current?.isConnected) origin.current.focus(); }}>
         <dialog {...props} open onClose={event => { event.currentTarget.open = true; onClose?.(); }} className={`hk-settings-modal ${className}`}>
-          <header><Dialog.Title asChild><h2>{title}</h2></Dialog.Title><Dialog.Close asChild><Button disabled={!onClose} aria-label="Close settings">Close</Button></Dialog.Close></header>
+          <header><Dialog.Title asChild><h2>{title}</h2></Dialog.Title><Dialog.Close asChild><CloseButton disabled={!onClose} label="Close settings" /></Dialog.Close></header>
           <SettingsPages defaultPage={defaultPage} pages={pages} planArtSrc={planArtSrc}>{children}</SettingsPages>
         </dialog>
       </Dialog.Content>
