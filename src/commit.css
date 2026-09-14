@@ -22,6 +22,9 @@
 @media (max-width: 420px) {
   .hk-commit { grid-template-columns: minmax(0, 1fr) auto; }
   .hk-commit-actions { justify-content: flex-start; }
+  .hk-commit-author { align-items: flex-start; }
+  .hk-commit-metadata { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .hk-commit-metadata > .hk-commit-separator { display: none; }
   .hk-commit-file { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; gap: 4px 8px; }
   .hk-commit-file-info { display: contents; }
   .hk-commit-file-info > svg { grid-column: 1; grid-row: 1; align-self: start; }

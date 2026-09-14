@@ -17,7 +17,7 @@ export function CommitInfo({ className = "", ...props }: DivProps) { return <div
 export function CommitMessage({ className = "", ...props }: SpanProps) { return <span {...props} className={`hk-commit-message ${className}`} />; }
 export function CommitMetadata({ className = "", ...props }: DivProps) { return <div {...props} className={`hk-commit-metadata ${className}`} />; }
 export function CommitHash({ className = "", ...props }: SpanProps) { return <span {...props} className={`hk-commit-hash ${className}`} />; }
-export function CommitSeparator({ children = "·", ...props }: SpanProps) { return <span {...props} aria-hidden="true">{children}</span>; }
+export function CommitSeparator({ children = "·", className = "", ...props }: SpanProps) { return <span {...props} className={`hk-commit-separator ${className}`} aria-hidden="true">{children}</span>; }
 
 export function CommitTimestamp({ date, now = new Date(), children, className = "", ...props }: Omit<ComponentPropsWithRef<"time">, "dateTime"> & { date: Date; now?: Date }) {
   const valid = Number.isFinite(date.getTime());

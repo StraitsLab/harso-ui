@@ -40,7 +40,7 @@
  .hk-code-block:hover .hk-copy-control, .hk-code-block:focus-within .hk-copy-control, .hk-commit:hover .hk-copy-control, .hk-commit:focus-within .hk-copy-control, .hk-stack-trace:hover .hk-copy-control, .hk-stack-trace:focus-within .hk-copy-control, .hk-terminal:hover .hk-copy-control, .hk-terminal:focus-within .hk-copy-control { opacity: 1; }
 }
 
-.hk-package-header { align-items: flex-start; gap: 12px 16px; }
+.hk-package-header { align-items: baseline; gap: 12px 16px; }
 .hk-package-version { gap: 8px; }
 .hk-environment-variable { padding-inline: 12px; background: var(--hk-panel); border-radius: 8px; }
 .hk-environment-content { gap: 8px; }

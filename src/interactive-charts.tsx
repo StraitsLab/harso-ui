@@ -107,7 +107,7 @@ export function InteractiveChart({ kind, title, value, caption, data = empty, se
   });
   const describe = (index: number) => `${rows[index].label} — ${groups.map((group, groupIndex) => `${group.label}: ${text(values[groupIndex][index], group)}${percent && shares[index] ? ` (${Number((shares[index]![groupIndex] * 100).toFixed(2))}%)` : ""}`).join(" · ")}${percent && !shares[index] ? " · Share unavailable (requires complete non-negative values and a positive total)" : ""}`;
   const suppliedHeadline = period?.headline ?? headline;
-  const resting = value !== undefined ? value : suppliedHeadline !== undefined ? text(suppliedHeadline) : kind === "area" ? <><strong>Total{complete.every(Boolean) ? "" : " (available values)"}: {text(aggregate(values.flat()))}</strong>{summaries.join(" · ")}</> : summaries.join(" · ");
+  const resting = value !== undefined ? value : suppliedHeadline !== undefined ? text(suppliedHeadline) : kind === "area" || kind === "line" && groups.length > 1 && tiles ? <strong>Total{complete.every(Boolean) ? "" : " (available values)"}: {text(aggregate(values.flat()))}</strong> : summaries.join(" · ");
   const activeTotal = active !== null && kind === "area" ? complete[active] ? text(aggregate(values.map(group => group[active]))) : "Unavailable" : null;
   const inspect = (index: number) => { if (!blocked) setInspection({ rows, range: selectedRange, index }); };
   const selectPeriod = (next: string) => {
@@ -152,7 +152,7 @@ export function InteractiveChart({ kind, title, value, caption, data = empty, se
           if (next !== null) { event.preventDefault(); buttons.current[next]?.focus(); }
         }}><span className="hk-chart-category">{row.label}</span><span aria-hidden="true" className="hk-chart-inspect-icon">⌕</span></Button>)}
       </div>
-      <ul className={`hk-interactive-legend${tiles ? " hk-interactive-tiles" : ""}`} aria-label={`${title} series`}>{groups.map((group, index) => <li key={index}><span aria-hidden="true" style={{ background: seriesColor(index) }} />{tiles ? summaries[index] : groups.length === 1 && group.label === title ? "Observed values" : group.label}</li>)}</ul>
+      {groups.length > 1 && <ul className={`hk-interactive-legend${tiles ? " hk-interactive-tiles" : ""}`} aria-label={`${title} series`}>{groups.map((group, index) => <li key={index}><span aria-hidden="true" style={{ background: seriesColor(index) }} />{tiles ? summaries[index] : groups.length === 1 && group.label === title ? "Observed values" : group.label}</li>)}</ul>}
     </>)}
   </article>;
 }

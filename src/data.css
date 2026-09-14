@@ -12,7 +12,6 @@
 .hk-table th[data-align="end"] .hk-button { flex-direction: row-reverse; justify-content: flex-start; margin-inline-end: -12px; }
 .hk-table caption .hk-data-toolbar { margin-top: 16px; font-weight: 400; letter-spacing: normal; }
 .hk-table td .hk-icon-button { min-width: 42px; min-height: 42px; }
-.hk-table th:last-child { text-align: end; }
 .hk-table th .hk-button { color: inherit; margin-inline: -12px; background: transparent; min-height: 42px; font-size: var(--hk-text-xs); }
 .hk-table [data-selected] { background: var(--hk-hover); }
 .hk-table .hk-table-selection { width: 32px; padding-inline-end: 8px; }
@@ -48,8 +47,10 @@
   .hk-data-table .hk-table-scroll { overflow: visible; }
   .hk-data-table .hk-table, .hk-data-table .hk-table tbody { display: block; }
   .hk-data-table .hk-table caption { display: block; }
-  .hk-data-table .hk-table thead { display: block; margin-bottom: 12px; }
+  .hk-data-table .hk-table thead { display: block; margin-bottom: 12px; padding: 8px; background: var(--hk-hover); border: 1px solid var(--hk-line); border-radius: 8px; }
   .hk-data-table .hk-table thead tr { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .hk-data-table .hk-table thead tr::after { content: "Sort"; margin-inline-start: auto; padding-inline: 8px; color: var(--hk-secondary); font-size: 12px; }
+  .hk-data-table .hk-table td[data-label="Action"] .hk-icon-button { border: 1px solid var(--hk-line); border-radius: 8px; background: var(--hk-hover); }
   .hk-data-table .hk-table th { display: block; padding: 0 8px; border: 0; }
   .hk-data-table .hk-table th:not(:has(button)):not(.hk-table-selection) { display: none; }
   .hk-data-table .hk-table tbody tr { display: grid; grid-template-columns: 32px minmax(0, 1fr); padding: 16px 0; border-top: 1px solid var(--hk-line); }

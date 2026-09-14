@@ -6,6 +6,17 @@ const data = [{ label: "Jan", value: 20, secondary: 30 }, { label: "Feb", value:
 const series = [{ key: "value", label: "Visits" }, { key: "secondary", label: "Referrals" }];
 
 describe("bounded interactive charts", () => {
+  it.each([LineChartCard, AreaChartCard])("single-series charts omit the redundant legend, multi-series tiles own individual totals", Card => {
+    const view = render(<Card title="Traffic" data={data} series={[series[0]]} tiles />);
+    expect(view.container.querySelector(".hk-interactive-legend")).toBeNull();
+    view.rerender(<Card title="Traffic" data={data} series={series} tiles />);
+    expect(screen.getByRole("status")).toHaveTextContent("Total: 150");
+    expect(screen.getByRole("status")).not.toHaveTextContent("Visits");
+    expect(screen.getByRole("list", { name: "Traffic series" })).toHaveTextContent("Visits · total: 80");
+    expect(screen.getByRole("list", { name: "Traffic series" })).toHaveTextContent("Referrals · total: 70");
+    view.rerender(<Card title="Traffic" data={data} series={series} tiles headline={500} />);
+    expect(screen.getByRole("status")).toHaveTextContent("500");
+  });
   it("insets combo endpoint bars and aligns category centers", () => {
     const view = render(<ComboChartCard title="Insets" data={data} />);
     const bars = view.container.querySelectorAll(".hk-interactive-bar");

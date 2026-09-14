@@ -90,17 +90,17 @@ test("data canvases stay accessible across light, dark, narrow, forced-color and
   const region = page.getByRole("region", { name: "Work records table" });
   await region.focus();
   await expect(region).toBeFocused();
-  expect(await region.getByRole("columnheader", { name: "Status", exact: true }).evaluate(element => element.getBoundingClientRect().width)).toBeGreaterThan(50);
-  expect(await region.evaluate(element => element.scrollWidth > element.clientWidth)).toBe(true);
-  expect(await region.evaluate(element => element.scrollLeft)).toBe(0);
+  // Wave 1: under 640px the table stacks each row as a labelled card; nothing scrolls sideways and every field stays visible.
+  expect(await region.evaluate(element => element.scrollWidth > element.clientWidth)).toBe(false);
+  await expect(region.locator("tbody td[data-label=\"Status\"]").first()).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.evaluate(() => window.scrollTo(0, 0)); // the sticky gallery header paints at the scroll position; keep it above the tall capture
   await expect(page.getByTestId("live-example")).toHaveScreenshot("data-table-cozy-narrow.png", { animations: "disabled" });
-  await page.keyboard.press("ArrowRight");
-  await expect.poll(() => region.evaluate(element => element.scrollLeft)).toBeGreaterThan(0);
   await page.goto("/#boardui:stat-cards");
   await page.getByLabel("Metric layout").selectOption("footer");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.evaluate(() => window.scrollTo(0, 0));
   await expect(page.getByTestId("live-example")).toHaveScreenshot("data-metrics-cozy-narrow.png", { animations: "disabled" });
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);

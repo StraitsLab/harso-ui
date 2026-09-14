@@ -226,9 +226,9 @@ circle.hk-radial-value { fill: none; }
 .hk-scatter-labels { position: absolute; inset: 0 0 40px; pointer-events: none; font-size: var(--hk-text-xs); color: var(--hk-ink); font-variant-numeric: tabular-nums; }
 .hk-scatter-labels > span { position: absolute; }
 .hk-scatter-y-title { top: 0; left: 0; }
-.hk-scatter-x-title { top: calc(100% + 24px); line-height: 16px; left: 53%; transform: translateX(-50%); }
+.hk-scatter-x-title { top: calc(196 / 236 * 100% + 32px); line-height: 16px; left: 53%; transform: translateX(-50%); }
 .hk-scatter-y-tick { right: 88%; transform: translateY(-50%); }
-.hk-scatter-x-tick { top: 100%; line-height: 16px; transform: translateX(-50%); }
+.hk-scatter-x-tick { top: calc(196 / 236 * 100% + 8px); line-height: 16px; transform: translateX(-50%); }
 .hk-scatter-zero { stroke: var(--hk-secondary); stroke-dasharray: 3 4; }
 .hk-scatter-plot .hk-chart-grid { vector-effect: non-scaling-stroke; }
 .hk-sankey-details button { font-variant-numeric: tabular-nums; }
