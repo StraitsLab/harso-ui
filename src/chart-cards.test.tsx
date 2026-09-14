@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import chartStyles from "./chart-cards.css?raw";
 import { ActivityRingsCard, AreaChartCard, BarListCard, EarningsChartCard, FunnelChartCard, HeatmapChartCard, MostActiveDaysCard, OrdersChartCard, RadialChartCard, RadarChartCard, RevenueChartCard, SankeyChartCard, ScatterChartCard, SleepScoreCard, StageBarsCard, StepsCard } from "./chart-cards";
@@ -7,9 +7,10 @@ describe("chart cards", () => {
   it.each(["filled", "dots", "lines", "score"] as const)("radar %s persistently maps numbered axes to category labels without inspection", variant => {
     const data = [{ label: "Speed", value: 0 }, { label: "A long category with context", value: 40 }, { label: "", value: NaN }];
     const view = render(<RadarChartCard title="Mapped axes" data={data} variant={variant} />);
-    expect(Array.from(view.container.querySelectorAll(".hk-radar-axis-label"), label => label.textContent)).toEqual(["1", "2", "3"]);
-    expect(Array.from(view.container.querySelectorAll(".hk-radar-category-number"), label => label.textContent)).toEqual(["1 · ", "2 · ", "3 · "]);
-    expect(screen.getByRole("button", { name: "Unlabeled category: Unavailable" })).toHaveTextContent("3 · Unlabeled category");
+    // Axes carry the category label itself (numbered proxies retired in the SOTA pass); an empty label reads as unlabeled.
+    expect(Array.from(view.container.querySelectorAll(".hk-radar-axis-label"), label => label.textContent)).toEqual(["Speed", "A long category with context", "Unlabeled category"]);
+    expect(view.container.querySelectorAll(".hk-radar-category-number")).toHaveLength(0);
+    expect(screen.getByRole("button", { name: "Unlabeled category: Unavailable" })).toHaveTextContent("Unlabeled category");
     expect(screen.getByRole("status")).toHaveTextContent("Focus or touch a value to inspect");
     view.rerender(<RadarChartCard title="Mapped axes" data={[]} variant={variant} />);
     expect(view.container.querySelectorAll(".hk-radar-axis-label")).toHaveLength(0);
@@ -153,8 +154,11 @@ describe("chart cards", () => {
 
   it("active days rejects duplicate dates and supports a scrollable supplied month window", () => {
     const view = render(<MostActiveDaysCard title="Days" months={["2026-08", "2026-09"]} today="2026-09-08" days={[]} />);
-    expect(screen.getAllByRole("grid")).toHaveLength(2);
+    // One month is shown at a time with a pager; the supplied window is still reachable.
+    expect(screen.getAllByRole("grid")).toHaveLength(1);
     expect(screen.getByRole("region", { name: "Days months" })).toHaveAttribute("tabindex", "0");
+    expect(screen.getByRole("button", { name: "Previous activity month" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Next activity month" })).toBeInTheDocument();
     view.rerender(<MostActiveDaysCard title="Days" days={[{ date: "2026-02-30", rings: [] }]} />);
     expect(screen.getByRole("alert")).toHaveTextContent("valid unique dates");
     view.rerender(<MostActiveDaysCard title="Days" days={[{ date: "2026-09-08", rings: [] }, { date: "2026-09-08", rings: [] }]} />);
@@ -398,7 +402,7 @@ describe("chart cards", () => {
   it.each([StepsCard, EarningsChartCard])("%s keeps zero and fractional primary values proportional", Card => {
     const view = render(<Card title="Values" data={[{ label: "Zero", value: 0 }, { label: "Half", value: .25, secondary: 999 }, { label: "Full", value: .5 }]} />);
     expect(Array.from(view.container.querySelectorAll<HTMLElement>(".hk-chart-bar")).map(bar => bar.style.height)).toEqual(["0%", "50%", "100%"]);
-    expect(screen.getByText("0.25")).toBeVisible();
+    expect(Array.from(view.container.querySelectorAll(".hk-chart-bar-column .hk-chart-number"), node => node.textContent)).toEqual(["0", "0.25", "0.5"]); // the y-axis now shows real ticks, so read the per-bar readouts
   });
 
   it("bar scaling isolates invalid data and represents signed extremes without overflow", () => {

@@ -40,7 +40,7 @@ describe("WEV-1492 exact chart and template proof", () => {
   it("Sankey node and link pointer hover isolate the correct flows and restore totals", () => {
     const view = render(<SankeyChartCard title="Budget" nodes={[{ name: "Income" }, { name: "Rent" }, { name: "Food" }]} links={[{ source: "Income", target: "Rent", value: 75 }, { source: "Income", target: "Food", value: 25 }]} />);
     const plot = screen.getByRole("img", { name: "Budget chart" });
-    const rent = within(plot).getByText("Rent", { exact: true }).closest("g")!;
+    const rent = plot.querySelector('[data-sankey-node="Rent"]')!; // node labels are HTML overlays now; the pointer target is the node group
     const links = view.container.querySelectorAll(".hk-sankey-link");
     fireEvent.pointerEnter(rent);
     expect(screen.getByRole("status")).toHaveTextContent("Rent · In: 75 · Out: 0");
@@ -146,8 +146,9 @@ describe("WEV-1492 exact chart and template proof", () => {
     expect(portfolio.getByRole("status")).toHaveTextContent("Sample B");
     expect(portfolio.getByRole("status")).toHaveTextContent("35");
     expect(portfolio.getByRole("status")).toHaveTextContent("40");
-    expect(portfolio.getByRole("img", { name: /Sample B/ })).toHaveAttribute("cx", "336");
-    expect(portfolio.getByRole("img", { name: /Sample B/ })).toHaveAttribute("cy", "18");
+    // Scatter points keep a radius of padding inside the plot so edge samples are never clipped (336/18 -> 320/34).
+    expect(portfolio.getByRole("img", { name: /Sample B/ })).toHaveAttribute("cx", "320");
+    expect(portfolio.getByRole("img", { name: /Sample B/ })).toHaveAttribute("cy", "34");
     const matrix = within(view.container.querySelector(".hk-heatmap")!);
     fireEvent.pointerEnter(matrix.getByRole("button", { name: "Home · Sep 5: $45" }));
     expect(matrix.getByRole("status")).toHaveTextContent("Home · Sep 5: $45");
@@ -297,6 +298,8 @@ describe("WEV-1492 exact chart and template proof", () => {
 
   it("HR team tabs expose roster distributions and chart details disclose their supplied observations", () => {
     render(<HrManagementExample state="default" />);
+    // Departments is the default tab now (the People roster duplicated the employee table); People is still reachable.
+    fireEvent.click(screen.getByRole("tab", { name: "People" }));
     expect(within(screen.getByRole("tabpanel", { name: "People" })).getAllByRole("listitem")).toHaveLength(8);
     for (const [tab, expected] of [
       ["Departments", ["Engineering2", "Design2", "Sales2", "Operations2"]],

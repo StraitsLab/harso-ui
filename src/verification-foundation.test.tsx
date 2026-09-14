@@ -192,7 +192,7 @@ describe("WEV-1492 foundation equivalent contracts", () => {
     expect(button.closest("header")).not.toBeNull();
     expect(button.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
     expect(button.querySelector("svg")).toHaveAttribute("viewBox", "0 0 24 24");
-    expect(button.querySelector("path")).toHaveAttribute("d", "m6 6 12 12M18 6 6 18");
+    expect(button.querySelector("path")).toHaveAttribute("d", "m4 4 16 16M20 4 4 20");
     await user.click(button);
     expect(close).toHaveBeenCalledOnce();
     expect(screen.getByRole("dialog")).toBeInTheDocument();
