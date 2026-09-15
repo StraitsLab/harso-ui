@@ -3,8 +3,8 @@
   min-width: 0;
   margin: var(--hk-space-4) 0;
   overflow: hidden;
-  border: 1px solid var(--hk-line);
-  border-radius: 12px;
+  border: 0;
+  border-radius: var(--hk-radius-card);
   background: var(--hk-panel);
   color: var(--hk-ink);
 }
@@ -13,7 +13,7 @@
   align-items: center;
   gap: var(--hk-space-2);
   padding: var(--hk-space-1) var(--hk-space-3);
-  border-bottom: 1px solid var(--hk-line);
+  border-bottom: 0;
   font: var(--hk-text-xs)/1.5 var(--hk-mono);
   color: var(--hk-tertiary);
 }

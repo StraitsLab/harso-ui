@@ -1,5 +1,7 @@
-.harso-kit .hkc-reasoning { container-type: inline-size; color: var(--hk-secondary); margin-block: var(--hk-space-3); font-size: var(--hk-text-base); }
-.harso-kit .hkc-reasoning summary { display: flex; align-items: center; gap: var(--hk-space-2); min-height: 32px; cursor: pointer; list-style: none; }
+/* v3: reasoning is a quiet row — sparkle · label · chevron — never a box (rule 2). */
+.harso-kit .hkc-reasoning { container-type: inline-size; color: var(--hk-secondary); margin-block: var(--hk-space-3); font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-reasoning summary { display: flex; align-items: center; gap: 6px; min-height: 20px; cursor: pointer; list-style: none; }
+.harso-kit .hkc-reasoning summary svg { width: 12px; height: 12px; color: var(--hk-accent-mark); }
 .harso-kit .hkc-reasoning summary::-webkit-details-marker { display: none; }
 .harso-kit .hkc-reasoning[open] summary > svg { transform: rotate(90deg); }
 .harso-kit .hkc-reasoning summary:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }

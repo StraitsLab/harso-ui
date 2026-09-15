@@ -1,13 +1,19 @@
-.harso-kit .hkc-thread-list { display: flex; flex-direction: column; gap: var(--hk-space-3); color: var(--hk-ink); font-size: var(--hk-text-sm); min-width: 0; }
+/* v3 source list: 32px rows, 5% active tint, caps section labels 18px above, no badges (rule 7). */
+.harso-kit .hkc-thread-list { display: flex; flex-direction: column; gap: 1px; color: var(--hk-ink); font-size: var(--hk-text-chrome); min-width: 0; }
 .harso-kit .hkc-thread-list button { font: inherit; color: inherit; border: 0; background: transparent; cursor: pointer; }
 .harso-kit .hkc-thread-list button:disabled { cursor: default; opacity: .5; }
 .harso-kit .hkc-thread-list button:focus-visible, .harso-kit .hkc-thread-list input:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
-.harso-kit .hkc-thread-list .hkc-thread-new { display: flex; align-items: center; justify-content: center; gap: var(--hk-space-2); min-height: 36px; padding: var(--hk-space-2) var(--hk-space-3); background: var(--hk-dark); color: var(--hk-inverse); border-radius: var(--hk-radius-pill); }
-.harso-kit .hkc-thread-group { font-size: var(--hk-text-label); font-weight: 500; color: var(--hk-tertiary); margin: var(--hk-space-3) var(--hk-space-2) var(--hk-space-2); }
-.harso-kit .hkc-thread-row { border-radius: 8px; min-width: 0; position: relative; }
-.harso-kit .hkc-thread-row[data-active], .harso-kit .hkc-thread-row:hover { background: var(--hk-hover); }
+.harso-kit .hkc-thread-list .hkc-thread-new { display: flex; align-items: center; justify-content: flex-start; gap: 10px; min-height: 32px; padding: 0 10px; background: transparent; color: var(--hk-ink); border-radius: var(--hk-radius-row); font-weight: 500; }
+.harso-kit .hkc-thread-list .hkc-thread-new:hover { background: var(--hk-hover); }
+.harso-kit .hkc-thread-list .hkc-thread-new svg { color: var(--hk-secondary); width: 16px; height: 16px; }
+.harso-kit .hkc-thread-group { font-size: var(--hk-text-caps); font-weight: 600; letter-spacing: var(--hk-caps-tracking); text-transform: uppercase; color: var(--hk-tertiary); margin: 18px 10px 6px; }
+.harso-kit .hkc-thread-row { border-radius: var(--hk-radius-row); min-width: 0; position: relative; }
+.harso-kit .hkc-thread-row:hover { background: var(--hk-hover); }
+.harso-kit .hkc-thread-row[data-active] { background: var(--hk-active-tint); }
+.harso-kit .hkc-thread-row[data-active] .hkc-thread-trigger { font-weight: 600; }
 .harso-kit .hkc-thread-row-line { display: flex; align-items: center; min-height: 32px; min-width: 0; }
-.harso-kit .hkc-thread-trigger { display: flex; align-items: center; gap: var(--hk-space-2); min-width: 0; width: 100%; flex: 1 1 0; height: 32px; padding: 0 var(--hk-space-2); text-align: start; }
+.harso-kit .hkc-thread-trigger { display: flex; align-items: center; gap: 10px; min-width: 0; width: 100%; flex: 1 1 0; height: 32px; padding: 0 10px; text-align: start; color: var(--hk-secondary); }
+.harso-kit .hkc-thread-row[data-active] .hkc-thread-trigger, .harso-kit .hkc-thread-row:hover .hkc-thread-trigger { color: var(--hk-ink); }
 .harso-kit .hkc-thread-trigger svg { flex-shrink: 0; color: var(--hk-secondary); }
 .harso-kit .hkc-thread-trigger > span { flex: 1 1 0; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: block; }
 .harso-kit .hkc-thread-row-actions { display: flex; }
@@ -15,10 +21,10 @@
 .harso-kit .hkc-thread-row-actions button { display: grid; place-items: center; width: 28px; height: 32px; border-radius: 8px; color: var(--hk-secondary); }
 .harso-kit .hkc-thread-row-actions button:hover { background: var(--hk-surface); color: var(--hk-ink); }
 .harso-kit .hkc-thread-rename { display: flex; flex: 1; min-width: 0; gap: var(--hk-space-1); }
-.harso-kit .hkc-thread-rename input { min-width: 0; width: 100%; background: var(--hk-surface); color: var(--hk-ink); border: 1px solid var(--hk-line-strong); border-radius: 4px; font: inherit; padding: var(--hk-space-1); }
+.harso-kit .hkc-thread-rename input { min-width: 0; width: 100%; background: var(--hk-surface); color: var(--hk-ink); border: 0; border-radius: var(--hk-radius-control); font: inherit; padding: var(--hk-space-1); }
 .harso-kit .hkc-thread-delete { display: flex; flex-wrap: wrap; gap: var(--hk-space-2); padding: var(--hk-space-2); }
 .harso-kit .hkc-thread-delete span { width: 100%; }
-.harso-kit .hkc-thread-delete button { min-height: 32px; border: 1px solid var(--hk-line-strong); border-radius: var(--hk-radius-pill); padding: 0 var(--hk-space-2); }
+.harso-kit .hkc-thread-delete button { min-height: 32px; border: 0; background: var(--hk-hover); border-radius: var(--hk-radius-pill); padding: 0 var(--hk-space-3); }
 .harso-kit .hkc-thread-delete button:first-of-type { color: var(--hk-negative); }
 .harso-kit .hkc-thread-list-empty { color: var(--hk-secondary); padding: var(--hk-space-2); }
 .harso-kit .hkc-thread-list-error { color: var(--hk-negative); }

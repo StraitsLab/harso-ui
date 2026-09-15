@@ -1,20 +1,25 @@
-.harso-kit .hkc-tool { container-type: inline-size; background: var(--hk-panel); border: 1px solid var(--hk-line); border-radius: 12px; padding: var(--hk-space-3); margin-block: var(--hk-space-3); color: var(--hk-ink); min-width: 0; }
-.harso-kit .hkc-tool summary { display: flex; align-items: center; gap: var(--hk-space-2); cursor: pointer; list-style: none; min-height: 32px; }
+/* v3: a tool call is a quiet row (terminal glyph · command · status · 5px dot) that opens into a panel-tinted 12px card; no strokes (rules 1–3). */
+.harso-kit .hkc-tool { container-type: inline-size; background: transparent; border: 0; border-radius: var(--hk-radius-card); padding: 0; margin-block: var(--hk-space-2); color: var(--hk-ink); min-width: 0; }
+.harso-kit .hkc-tool[open], .harso-kit .hkc-tool:has(> details[open]) { background: var(--hk-panel); padding: var(--hk-space-3); }
+.harso-kit .hkc-tool summary { display: flex; align-items: center; gap: 10px; cursor: pointer; list-style: none; min-height: 36px; font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-tool summary > svg { width: 14px; height: 14px; color: var(--hk-secondary); stroke-width: var(--hk-stroke); }
 .harso-kit .hkc-tool summary::-webkit-details-marker { display: none; }
 .harso-kit .hkc-tool details[open] > summary > svg { transform: rotate(90deg); }
-.harso-kit .hkc-tool code, .harso-kit .hkc-tool pre { font-family: var(--hk-mono); font-size: var(--hk-text-sm); }
-.harso-kit .hkc-tool pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: var(--hk-space-2) 0 0; padding: var(--hk-space-2) var(--hk-space-3); line-height: 1.6; background: var(--hk-surface); border: 1px solid var(--hk-line); border-radius: 8px; color: var(--hk-ink); }
-.harso-kit .hkc-tool pre::before { content: attr(aria-label); display: block; margin-bottom: 4px; font-family: var(--hk-font); font-size: var(--hk-text-xs); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--hk-tertiary); }
+.harso-kit .hkc-tool code, .harso-kit .hkc-tool pre { font-family: var(--hk-mono); font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-tool summary code { font-weight: 600; }
+.harso-kit .hkc-tool pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: var(--hk-space-2) 0 0; padding: var(--hk-space-2) var(--hk-space-3); line-height: 1.6; background: var(--hk-surface); border: 0; border-radius: var(--hk-radius-control); color: var(--hk-ink); }
+.harso-kit .hkc-tool pre::before { content: attr(aria-label); display: block; margin-bottom: 4px; font-family: var(--hk-font); font-size: var(--hk-text-caps); font-weight: 600; letter-spacing: var(--hk-caps-tracking); text-transform: uppercase; color: var(--hk-tertiary); }
 .harso-kit .hkc-tool-body { color: var(--hk-secondary); font-size: var(--hk-text-sm); }
-.harso-kit .hkc-tool-state { margin-inline-start: auto; text-transform: capitalize; display: inline-flex; align-items: center; gap: var(--hk-space-2); font: var(--hk-text-sm) var(--hk-font); color: var(--hk-secondary); }
-.harso-kit .hkc-tool-state > span { width: 6px; height: 6px; border-radius: 50%; background: var(--hk-accent-mark); flex-shrink: 0; }
+.harso-kit .hkc-tool-state { margin-inline-start: auto; text-transform: capitalize; display: inline-flex; align-items: center; gap: var(--hk-space-2); font: 600 var(--hk-text-meta) var(--hk-font); color: var(--hk-tertiary); }
+.harso-kit .hkc-tool-state > span { width: var(--hk-dot); height: var(--hk-dot); border-radius: 50%; background: var(--hk-accent-mark); flex-shrink: 0; }
+.harso-kit .hkc-tool-state[data-state="awaiting approval"] { color: var(--hk-attention); }
 .harso-kit .hkc-tool-state[data-state="completed"] > span { background: var(--hk-positive-mark); }
 .harso-kit .hkc-tool-state[data-state="failed"] > span { background: var(--hk-negative-mark); }
 .harso-kit .hkc-tool-state[data-state="denied"] > span, .harso-kit .hkc-tool-state[data-state="awaiting approval"] > span { background: var(--hk-attention-mark); }
 .harso-kit .hkc-approval { font-size: var(--hk-text-sm); }
 .harso-kit .hkc-approval-actions { display: flex; justify-content: flex-end; gap: var(--hk-space-2); }
-.harso-kit .hkc-approval button { font: inherit; min-height: 32px; padding: var(--hk-space-2) var(--hk-space-3); border-radius: var(--hk-radius-pill); border: 1px solid var(--hk-line-strong); background: transparent; color: var(--hk-ink); cursor: pointer; }
-.harso-kit .hkc-approval .hkc-approval-primary { background: var(--hk-dark); color: var(--hk-canvas); border-color: var(--hk-dark); }
+.harso-kit .hkc-approval button { font: inherit; font-size: var(--hk-text-chrome); font-weight: 600; min-height: 32px; padding: var(--hk-space-2) 14px; border-radius: var(--hk-radius-pill); border: 0; background: var(--hk-hover); color: var(--hk-ink); cursor: pointer; }
+.harso-kit .hkc-approval .hkc-approval-primary { background: var(--hk-dark); color: var(--hk-inverse); }
 .harso-kit .hkc-approval button:disabled { opacity: .6; cursor: wait; }
 .harso-kit .hkc-approval [role="alert"] { color: var(--hk-negative); }
 .harso-kit .hkc-tool summary:focus-visible, .harso-kit .hkc-approval button:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
