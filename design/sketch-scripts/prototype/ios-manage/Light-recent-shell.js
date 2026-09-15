@@ -1,2 +1,0 @@
-var CONFIG={"id": "recent", "app": "Light/Clean", "index": 3};
-var o={"page": "Proto iOS Light", "app": "Light/Clean", "id": "recent", "x": 1530, "y": 1004, "title": "Recent", "back": false, "tab": "recent", "gap": 16};var i=H.iosScreen(o);i.body.stackLayout.alignItems=sketch.StackLayout.AlignItems.Start;i.finish();var cap=H.text({parent:i.screen.parent,text:CONFIG.id,size:13,color:H.sw(CONFIG.app,'tertiary')});cap.frame.x=o.x;cap.frame.y=976;H.out({id:i.screen.id});

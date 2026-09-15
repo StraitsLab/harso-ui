@@ -1,1 +1,0 @@
-H.out({doc:doc.id,version:sketch.version,pages:doc.pages.map(p=>p.name),symbols:doc.getSymbols().filter(s=>/^(GroupBox|Sheet|ActionSheet|SearchField|EmptyState|Switch|SegmentedControl)\/.*Light\/Clean/.test(s.name)).map(s=>({name:s.name,w:s.frame.width,h:s.frame.height}))});

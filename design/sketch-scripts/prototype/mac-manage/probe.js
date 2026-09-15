@@ -1,1 +1,0 @@
-H.out({doc:doc.id,version:sketch.version, symbols:doc.getSymbols().filter(function(s){return /^(EmptyState|Artifact|Button|Switch|Checkbox|Dialog)\/(Light\/Clean)/.test(s.name)}).map(function(s){return {name:s.name,w:s.frame.width,h:s.frame.height}})});

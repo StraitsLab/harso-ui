@@ -1,0 +1,1 @@
+console.log(JSON.stringify({version:sketch.version,pages:doc.pages.filter(p=>p.name==='Proto iOS Light'||p.name==='Proto iOS Dark').map(p=>({id:p.id,name:p.name,layers:p.layers.filter(l=>l.name.indexOf('Screen/')===0).map(l=>({name:l.name,id:l.id,x:l.frame.x,y:l.frame.y}))}))}));

@@ -1,1 +1,0 @@
-var s=sketch.find('#7DB2412A-CDA0-43F6-98FD-EF380D5DB9E2',doc)[0];H.fixIOS(s,"Dark/Clean","settings-appearance");

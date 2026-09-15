@@ -1,2 +1,0 @@
-var CONFIG={"id": "settings--sign-out", "app": "Dark/Clean", "index": 21};
-var o={"page": "Proto iOS Dark", "app": "Dark/Clean", "id": "settings--sign-out", "x": 10710, "y": 1004, "title": "Settings", "back": false, "tab": "settings", "gap": 16};var i=H.iosScreen(o);i.body.stackLayout.alignItems=sketch.StackLayout.AlignItems.Start;i.finish();var cap=H.text({parent:i.screen.parent,text:CONFIG.id,size:13,color:H.sw(CONFIG.app,'tertiary')});cap.frame.x=o.x;cap.frame.y=976;H.out({id:i.screen.id});

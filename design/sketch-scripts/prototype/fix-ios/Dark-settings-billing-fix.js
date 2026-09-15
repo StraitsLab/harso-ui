@@ -1,1 +1,0 @@
-var s=sketch.find('#F05F9B40-E704-453C-8CD4-484501574F0F',doc)[0];H.fixIOS(s,"Dark/Clean","settings-billing");

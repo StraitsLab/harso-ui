@@ -1,1 +1,0 @@
-H.out({symbols:doc.getSymbols().filter(s=>/AgentLimits|Button\/Light\/Clean\/primary\/base\/text|Kbd\/Light\/Clean|Switch\/Light\/Clean\/base\/on/.test(s.name)).map(s=>({name:s.name,w:s.frame.width,h:s.frame.height,texts:sketch.find('Text',s).map(t=>({text:t.text,id:t.id}))}))});

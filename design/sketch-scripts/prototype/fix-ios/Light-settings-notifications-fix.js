@@ -1,1 +1,0 @@
-var s=sketch.find('#E6D63460-3FE9-4093-8AEE-31C5A3E6F65D',doc)[0];H.fixIOS(s,"Light/Clean","settings-notifications");

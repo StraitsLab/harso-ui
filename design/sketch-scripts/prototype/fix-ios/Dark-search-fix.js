@@ -1,1 +1,0 @@
-var s=sketch.find('#DC77D488-C6B8-4D21-BA55-38841CEEDA2E',doc)[0];H.fixIOS(s,"Dark/Clean","search");

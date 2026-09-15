@@ -1,1 +1,0 @@
-var s=sketch.find('#ABCA5853-1805-4AF8-8E3E-CAEC410D2801',doc)[0];H.fixIOS(s,"Light/Clean","settings-voice");

@@ -1,1 +1,0 @@
-var s=sketch.find('#7EDA4785-164A-4A65-80B2-A413738A87B6',doc)[0];H.fixIOS(s,"Dark/Clean","conversation--approval");

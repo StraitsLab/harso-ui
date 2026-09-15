@@ -33,24 +33,28 @@ one ambient shadow on floating layers; icons at cap height. Rejected: glass/blur
 SF glyph style, pill-everything. Elements Apple has that we lacked and that matter for Weave were added as the
 bold families above; CommandPalette and EmptyState come from Linear/Raycast instead.
 
-## Clickable prototype (pages `Proto macOS Light/Dark`, `Proto iOS Light/Dark`)
+## Clickable prototype v2 — native macOS 27 / iOS 27 (pages `Proto macOS Light/Dark`, `Proto iOS Light/Dark`)
 
-Every screen of the Weave app as a Sketch frame — **142 screens**: macOS 34 × 2 appearances at 1440×900, iOS 37 × 2 at
-390×844 — built from the kit's own symbols and wired with Sketch prototype flows.
+Every screen of the Weave app as a Sketch frame — **144 screens**: macOS 34 × 2 appearances at 1440×900, iOS 38 × 2 at
+390×844 — wired with Sketch prototype flows and benchmarked against Apple's own macOS 27 / iOS 27 kits.
 
-**To click through:** open the file, go to a `Proto …` page, select the `signin` frame (it is the flow start point) and
-press ▶ (Preview) or ⌘P. Sign-in → home → conversation → ⋯ menu / approval / delete → activity → work inspector →
-projects → project → recent / artifacts / routines / customize → settings and all 11 categories → sign out. On iOS the
-floating tab bar switches root screens, pushed screens slide in, sheets and action sheets open over a scrim, Back works.
+**To click through:** open the file, go to a `Proto …` page, select the `signin` frame (flow start point) and press ▶ or
+⌘P. Sign-in → home → conversation → ⋯ menu / approval / delete → activity → work inspector → projects → project →
+recent / artifacts / routines / customize → settings and all 11 categories → sign out. Every screen is reachable from
+`signin` and none is a dead end (`sketch-scripts/prototype/graph.js` proves it: 0 / 0 on all four pages).
 
-Inventory came from the shipped desktop shell's route switch (12 routes + 11 settings categories); iOS screens derive
-from their macOS siblings using the kit's iOS 27 patterns. Screens are named `Screen/<platform>/<App>/<id>`; every
-clickable element is named `link:<id>` (or `link:back`), and `sketch-scripts/prototype/wire-flows.js` rebuilds the flows
-from those names at any time (`graph.js` checks that every screen is reachable from `signin` and none is a dead end —
-both 0 at commit time on all four pages).
+**Benchmark, measured not asserted** (`prototype-review/HIG-SPEC.md`): 30 Apple 27 components were imported from the
+official Sketch libraries and their geometry dumped — 256px vibrancy source list, 52px unified toolbar with the ‹ › capsule,
+32px sidebar rows / 11-bold headers, 260×170 alerts; iOS 54 status + 44 nav + 52 large title, 52px inset-grouped rows,
+346×62 floating capsule tab bar over the home indicator, 36×5 grabbers, 270-wide alerts. `lib-native.js` implements that
+chrome once; every screen is generated on it. Affordances are real SF Symbols (112 codepoints verified by rendering in
+SF Pro and reading back — `lib-sf.js`), never text "X" or Lucide strokes in chrome. Boundaryless keeps colour, content
+type (Inter) and tone; SF Pro carries chrome text.
 
-Two independent review rounds: 42/142 → 138/142 ≥8 (`prototype-review/`), the last 4 fixed inline and re-verified
-(menu anchoring 10/10, artifacts thumbnails, iOS segmented state). Journey contact sheets are in the same folder.
+**Review**: independent full-scale review vs Apple's apps (`prototype-review/v2-round1-*.md`), two fix waves
+(`v2-fix2-*.md`), then a founder-eye defect hunt on the journey contact sheets (`sheet-*.png`): macOS 16/16 clean, iOS 24/24
+clean after four copy nits. The lanes' numeric vision scorer self-reported a "compressed" 6–7 scale even on defect-free
+screens; numbers from it are recorded but not used as the gate.
 
 ### Verification
 

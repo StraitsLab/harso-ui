@@ -1,1 +1,0 @@
-var s=sketch.find('#896CC91D-DBA9-4DEE-A4C0-42378D607F75',doc)[0];H.fixIOS(s,"Dark/Clean","settings-shortcuts");

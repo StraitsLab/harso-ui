@@ -4,7 +4,7 @@ const sketch = require('sketch');
 var doc = sketch.getSelectedDocument();
 var H = {};
 H.doc = doc;
-H.page = function (name) { return doc.pages.find(function (p) { return p.name === name; }) || new sketch.Page({ name: name, parent: doc }); };
+H.page = function (name) { if (name && typeof name === 'object' && name.type === 'Page') return name; return doc.pages.find(function (p) { return p.name === name; }) || new sketch.Page({ name: name, parent: doc }); };
 H.sw = function (app, role) { var s = doc.swatches.find(function (x) { return x.name === app + '/' + role; }); if (!s) throw new Error('no swatch ' + app + '/' + role); return s.referencingColor; };
 H.hex = function (app, role) { var s = doc.swatches.find(function (x) { return x.name === app + '/' + role; }); if (!s) throw new Error('no swatch ' + app + '/' + role); return String(s.color).slice(0, 7); };
 H.alpha = function (hex7, a) { return hex7.slice(0, 7) + ('0' + Math.round(a * 255).toString(16)).slice(-2); };

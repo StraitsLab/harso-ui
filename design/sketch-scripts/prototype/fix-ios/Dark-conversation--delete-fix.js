@@ -1,1 +1,0 @@
-var s=sketch.find('#DCB5754A-C65F-4B70-ADF5-9F27C663F179',doc)[0];H.fixIOS(s,"Dark/Clean","conversation--delete");

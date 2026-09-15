@@ -1,1 +1,0 @@
-edit('settings-devices',function(s){var r=named(s,'row:Full Disk Access');var l=r.layers.find(k=>k.name==='label');l.verticalSizing=sketch.FlexSizing.Fixed;l.frame.height=56;l.stackLayout.apply();});

@@ -1,1 +1,0 @@
-var s=sketch.find('#F993CD5B-2FDA-47DF-A1A7-BED94318481B',doc)[0];H.fixIOS(s,"Dark/Clean","settings--sign-out");

@@ -1,1 +1,0 @@
-var s=sketch.find('#30E9ECC2-7DC6-4B4B-AAD0-74177B8429B5',doc)[0];H.fixIOS(s,"Dark/Clean","artifacts--empty");

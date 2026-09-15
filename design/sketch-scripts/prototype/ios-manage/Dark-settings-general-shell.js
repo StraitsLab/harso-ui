@@ -1,2 +1,0 @@
-var CONFIG={"id": "settings-general", "app": "Dark/Clean", "index": 12};
-var o={"page": "Proto iOS Dark", "app": "Dark/Clean", "id": "settings-general", "x": 6120, "y": 1004, "title": "General", "back": true, "tab": false, "gap": 16};var i=H.iosScreen(o);i.body.stackLayout.alignItems=sketch.StackLayout.AlignItems.Start;i.finish();var cap=H.text({parent:i.screen.parent,text:CONFIG.id,size:13,color:H.sw(CONFIG.app,'tertiary')});cap.frame.x=o.x;cap.frame.y=976;H.out({id:i.screen.id});

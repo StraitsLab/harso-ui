@@ -1,1 +1,0 @@
-H.out(doc.swatches.filter(s=>s.name.indexOf('Light/Clean/')===0).map(s=>s.name));
