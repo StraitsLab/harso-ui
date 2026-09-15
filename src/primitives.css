@@ -95,10 +95,10 @@
 .hk-input {
   /* v3 field: panel-tinted, no stroke; focus is a soft accent ring (rule 1). */
   display: block; width: 100%; min-width: 0; min-height: 36px; border: 0;
-  border-radius: var(--hk-radius-control); background: var(--hk-panel); color: var(--hk-ink); padding: 6px 12px; font-size: var(--hk-text-base); line-height: 1.5;
+  border-radius: var(--hk-radius-control); background: var(--hk-field-tint); color: var(--hk-ink); padding: 6px 12px; font-size: var(--hk-text-base); line-height: 1.5;
   transition: background var(--hk-fast) var(--hk-ease), box-shadow var(--hk-fast) var(--hk-ease);
 }
-.hk-input:hover:not(:disabled) { background: var(--hk-hover); }
+.hk-input:hover:not(:disabled) { background: var(--hk-field-tint-hover); }
 .hk-input:focus-visible { outline: none; background: var(--hk-surface); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
 .hk-input::placeholder { color: var(--hk-tertiary); opacity: 1; }
 .hk-input[aria-invalid="true"] { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hk-negative) 40%, transparent); }
@@ -145,9 +145,9 @@ input.hk-radio-dot:checked::before { content: ""; width: 50%; height: 50%; borde
 .hk-choice:not(.hk-switch):has(.hk-choice-description) > input { margin-top: 3px; }
 .hk-switch input {
   appearance: none; position: relative; width: 38px; height: 24px; border: 0;
-  border-radius: 20px; background: color-mix(in srgb, var(--hk-ink) 16%, transparent); transition: background var(--hk-fast) var(--hk-ease);
+  border-radius: 20px; background: var(--hk-hover); transition: background var(--hk-fast) var(--hk-ease);
 }
-.hk-switch input::before { content: ""; position: absolute; width: 18px; height: 18px; top: 3px; left: 3px; border-radius: 50%; background: var(--hk-surface); box-shadow: 0 1px 2px rgb(0 0 0 / .2); transition: transform var(--hk-fast) var(--hk-ease); }
+.hk-switch input::before { content: ""; position: absolute; width: 16px; height: 16px; top: 4px; left: 4px; border-radius: 50%; background: var(--hk-secondary); transition: transform var(--hk-fast) var(--hk-ease); }
 .hk-switch input:checked { background: var(--hk-dark); }
 .hk-switch input:checked::before { background: var(--hk-inverse); transform: translateX(14px); }
 .hk-switch input:disabled { opacity: .55; }
@@ -201,7 +201,8 @@ input.hk-radio-dot:checked::before { content: ""; width: 50%; height: 50%; borde
   .hk-textarea { min-height: 96px; }
   .hk-file-picker::file-selector-button { min-height: 44px; }
 }
-@media (forced-colors: active) { .hk-switch input:checked { background: Highlight; } .hk-switch input:checked::before { background: HighlightText; } .hk-button { border-color: ButtonBorder; } }
+/* Borderless is a tonal language; forced-colors has no tone, so every control gets its system border back there. */
+@media (forced-colors: active) { .hk-switch input:checked { background: Highlight; } .hk-switch input:checked::before { background: HighlightText; } .hk-button, .hk-icon-button, .hk-input, .hk-switch input { border: 1px solid ButtonBorder; } .hk-input { border-color: FieldText; } }
 @media (forced-colors: active) {
   .hk-choice:not(.hk-switch) input, .hk-switch input, input.hk-radio-dot { appearance: auto; accent-color: auto; }
   .hk-choice input::before, input.hk-radio-dot::before { display: none; }

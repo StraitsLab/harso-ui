@@ -4,11 +4,15 @@
 .hk-radio-dot--presentation[data-selected="true"] { border-color: var(--hk-accent); }
 .hk-radio-dot--presentation[data-selected="true"]::after { content: ""; width: 50%; height: 50%; border-radius: 50%; background: var(--hk-accent); }
 @media (forced-colors: active) { .hk-radio-dot--presentation { border-color: ButtonText; } .hk-radio-dot--presentation[data-selected="true"] { border-color: Highlight; } .hk-radio-dot--presentation[data-selected="true"]::after { background: Highlight; } }
-.hk-input-shell { display: flex; align-items: center; min-width: 0; min-height: 36px; border: 1px solid var(--hk-line-strong); border-radius: var(--hk-space-2); background: var(--hk-surface); }
-.hk-input-shell > .hk-input { flex: 1; min-height: 34px; border: 0; background: transparent; }
-.hk-input-shell:has(> .hk-input:focus-visible) { border-color: var(--hk-accent); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
-.hk-input-shell > .hk-input:focus-visible { outline: none; box-shadow: none; }
-.hk-input-shell[data-invalid="true"], .hk-input-shell[data-invalid="true"]:has(> .hk-input:focus-visible) { border-color: var(--hk-negative); }
+/* v3: the shell carries the field tint; the inner input is bare (rule 1). */
+.hk-input-shell { display: flex; align-items: center; min-width: 0; min-height: 36px; border: 0; border-radius: var(--hk-radius-control); background: var(--hk-field-tint); }
+.hk-input-shell:hover:not([data-disabled]) { background: var(--hk-field-tint-hover); }
+.hk-input-shell > .hk-input { flex: 1; min-height: 36px; border: 0; background: transparent; box-shadow: none; }
+.hk-input-shell > .hk-input:hover { background: transparent; }
+.hk-input-shell:has(> .hk-input:focus-visible) { background: var(--hk-surface); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
+.hk-input-shell > .hk-input:focus-visible { outline: none; box-shadow: none; background: transparent; }
+.hk-input-shell[data-invalid="true"], .hk-input-shell[data-invalid="true"]:has(> .hk-input:focus-visible) { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hk-negative) 40%, transparent); }
+.hk-input-shell[data-invalid="true"] > .hk-input { box-shadow: none; }
 .hk-input-shell[data-disabled] { background: var(--hk-hover); }
 .hk-input-icon { pointer-events: none; }
 .hk-input-icon svg { display: block; width: 16px; height: 16px; }

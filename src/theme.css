@@ -58,6 +58,8 @@
   --hk-stroke: 1.5;
   /* Borderless: surfaces separate by tonal step; the only stroke tokens left are inset list hairlines. */
   --hk-hairline: var(--hk-line);
+  --hk-field-tint: color-mix(in srgb, var(--hk-ink) 5%, transparent); /* v3 field fill: one tonal step below whatever it sits on */
+  --hk-field-tint-hover: color-mix(in srgb, var(--hk-ink) 8%, transparent);
   --hk-active-tint: color-mix(in srgb, var(--hk-ink) 5%, transparent);
   --hk-shadow-float: 0 6px 24px rgb(20 24 32 / .10);
   --hk-space-1: 4px;
@@ -128,6 +130,8 @@
   --hk-shadow: 0 14px 40px rgb(0 0 0 / .35), 0 1px 2px rgb(0 0 0 / .3);
   --hk-shadow-float: 0 6px 24px rgb(0 0 0 / .40);
   --hk-active-tint: color-mix(in srgb, var(--hk-ink) 8%, transparent);
+  --hk-field-tint: color-mix(in srgb, var(--hk-ink) 8%, transparent);
+  --hk-field-tint-hover: color-mix(in srgb, var(--hk-ink) 12%, transparent);
 }
 
 .harso-kit[data-mode="dark"][data-palette="cozy"] {
