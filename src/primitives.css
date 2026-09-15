@@ -101,7 +101,7 @@
 .hk-input:hover:not(:disabled) { background: var(--hk-field-tint-hover); }
 .hk-input:focus-visible { outline: none; background: var(--hk-surface); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
 .hk-input::placeholder { color: var(--hk-tertiary); opacity: 1; }
-.hk-input[aria-invalid="true"] { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hk-negative) 40%, transparent); }
+.hk-input[aria-invalid="true"]:not(:focus-visible) { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hk-negative) 40%, transparent); }
 .hk-input:disabled { color: var(--hk-tertiary); background: var(--hk-hover); }
 .hk-textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
 .hk-select { padding-inline-end: 36px; }

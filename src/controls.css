@@ -11,7 +11,8 @@
 .hk-input-shell > .hk-input:hover { background: transparent; }
 .hk-input-shell:has(> .hk-input:focus-visible) { background: var(--hk-surface); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
 .hk-input-shell > .hk-input:focus-visible { outline: none; box-shadow: none; background: transparent; }
-.hk-input-shell[data-invalid="true"], .hk-input-shell[data-invalid="true"]:has(> .hk-input:focus-visible) { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hk-negative) 40%, transparent); }
+.hk-input-shell[data-invalid="true"] { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hk-negative) 40%, transparent); }
+.hk-input-shell[data-invalid="true"]:has(> .hk-input:focus-visible) { box-shadow: 0 0 0 3px var(--hk-accent-soft); }
 .hk-input-shell[data-invalid="true"] > .hk-input { box-shadow: none; }
 .hk-input-shell[data-disabled] { background: var(--hk-hover); }
 .hk-input-icon { pointer-events: none; }
