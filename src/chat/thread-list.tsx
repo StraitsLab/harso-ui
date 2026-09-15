@@ -1,7 +1,33 @@
-import { useRef, useState, type ComponentProps } from "react";
+import { useRef, useState, type ReactNode, type ComponentProps } from "react";
 import { ThreadListPrimitive, ThreadListItemPrimitive, useAuiState, useAui, type ThreadListItemState } from "@assistant-ui/react";
 import { Archive, ChatCircle, PencilSimple, Plus, Trash } from "@phosphor-icons/react";
 import "./thread-list.css";
+
+export type HarsoSidebarNavItem = {
+  id: string;
+  label: string;
+  icon: ReactNode;
+  active?: boolean;
+  unread?: boolean;
+  count?: number;
+  onSelect?: () => void;
+};
+export type HarsoSidebarNavProps = {
+  label: string;
+  heading?: boolean;
+  items: readonly HarsoSidebarNavItem[];
+};
+/** Host-owned destinations; labels remain accessible in the shell's icon rail. */
+export function HarsoSidebarNav({ label, heading = true, items }: HarsoSidebarNavProps) {
+  return <nav className="hkc-sidebar-nav" aria-label={label}>
+    {heading && <h2 className="hkc-thread-group">{label}</h2>}
+    {items.map(item => <button key={item.id} type="button" className="hkc-sidebar-nav-row" title={item.label} aria-label={item.label} aria-current={item.active ? "page" : undefined} onClick={item.onSelect}>
+      <span className="hkc-sidebar-nav-icon" aria-hidden="true">{item.icon}</span><span className="hkc-sidebar-nav-label">{item.label}</span>
+      {item.unread && <span className="hkc-sidebar-nav-dot" aria-label="Unread" />}
+      {item.count != null && item.count > 0 && <span className="hkc-sidebar-nav-count" aria-hidden="true">{item.count}</span>}
+    </button>)}
+  </nav>;
+}
 
 export type HarsoThreadGroup = "Today" | "Yesterday" | "Earlier";
 export type HarsoThreadListProps = Omit<ComponentProps<typeof ThreadListPrimitive.Root>, "children"> & {

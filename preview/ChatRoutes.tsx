@@ -35,7 +35,7 @@ export function ChatRoutePage({ route }: { route: ChatRouteId }) {
   const entry = chatCatalog.find(item => item.id === route)!;
   const Example = routes[route];
   useEffect(() => { document.title = `${entry.name} · Harso`; }, [entry.name]);
-  return <KitProvider appearance={appearance} palette={palette} className="hkl-chat-root">
+  return <KitProvider appearance={appearance} palette={palette} className="hkl-chat-root" style={route === "harso:chat-shell" ? { height: "100dvh" } : undefined}>
     <header className="hkl-chat-header">
       <a className="hkl-chat-wordmark" href="#">Harso<span>/</span>chat</a>
       <nav className="hkl-chat-routes" aria-label="Conversation examples">{chatCatalog.map(item => <a key={item.id} href={`#${item.id}`} aria-current={item.id === route ? "page" : undefined}>{item.name.replace("Conversation ", "").toLowerCase()}</a>)}</nav>

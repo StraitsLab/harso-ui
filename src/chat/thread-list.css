@@ -1,3 +1,16 @@
+.harso-kit .hkc-sidebar-nav-row { display: flex; position: relative; align-items: center; gap: 10px; width: 100%; height: 32px; padding: 0 10px; border: 0; border-radius: var(--hk-radius-row); background: transparent; color: var(--hk-ink); font: inherit; font-size: var(--hk-text-chrome); text-align: left; cursor: pointer; }
+.harso-kit .hkc-sidebar-nav-row:hover { background: var(--hk-hover); }
+.harso-kit .hkc-sidebar-nav-row[aria-current="page"] { background: var(--hk-active-tint); font-weight: 600; }
+.harso-kit .hkc-sidebar-nav-row:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.harso-kit .hkc-sidebar-nav-icon { display: grid; place-items: center; flex: 0 0 16px; color: var(--hk-secondary); }
+.harso-kit .hkc-sidebar-nav-icon svg { width: 16px; height: 16px; }
+.harso-kit .hkc-sidebar-nav-label { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.harso-kit .hkc-sidebar-nav-dot { width: var(--hk-dot, 5px); height: var(--hk-dot, 5px); border-radius: var(--hk-radius-pill); background: var(--hk-accent); margin-left: auto; flex-shrink: 0; }
+.harso-kit .hkc-sidebar-nav-count { display: none; }
+.harso-kit .hkc-shell-rail .hkc-sidebar-nav-row { width: 36px; height: 36px; padding: 0; justify-content: center; margin: 0 auto 4px; }
+.harso-kit .hkc-shell-rail .hkc-sidebar-nav-label, .harso-kit .hkc-shell-rail .hkc-thread-group, .harso-kit .hkc-shell-rail .hkc-sidebar-nav-dot { display: none; }
+.harso-kit .hkc-shell-rail .hkc-sidebar-nav-count { display: grid; place-items: center; position: absolute; top: 0; right: 0; min-width: 14px; height: 14px; border-radius: var(--hk-radius-pill); background: var(--hk-accent); color: var(--hk-surface); font-size: var(--hk-text-caps); }
+.harso-kit [data-layout="phone"] .hkc-sidebar-nav-row { min-height: 44px; }
 /* v3 source list: 32px rows, 5% active tint, caps section labels 18px above, no badges (rule 7). */
 .harso-kit .hkc-thread-list { display: flex; flex-direction: column; gap: 1px; color: var(--hk-ink); font-size: var(--hk-text-chrome); min-width: 0; }
 .harso-kit .hkc-thread-list button { font: inherit; color: inherit; border: 0; background: transparent; cursor: pointer; }

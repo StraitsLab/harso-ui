@@ -2,8 +2,42 @@
 .harso-kit .hkc-shell-grid { display: grid; grid-template-columns: 240px minmax(0, 1fr); height: 100%; min-height: inherit; }
 .harso-kit .hkc-shell-grid[data-has-aside="true"] { grid-template-columns: 240px minmax(0, 1fr) 320px; }
 /* v3: columns separate by tonal step only (design/DIRECTION.md rule 1) — no rules between sidebar / center / aside. */
-.harso-kit .hkc-shell-sidebar, .harso-kit .hkc-shell-aside { overflow: auto; background: var(--hk-panel); padding: var(--hk-space-3); }
-.harso-kit .hkc-shell-aside { padding: var(--hk-space-1) var(--hk-space-6) var(--hk-space-6); }
+.harso-kit .hkc-shell-sidebar, .harso-kit .hkc-shell-aside { overflow: auto; background: var(--hk-panel); padding: 0; }
+.harso-kit .hkc-shell-sidebar { display: flex; flex-direction: column; min-height: 0; }
+.harso-kit .hkc-shell-titlebar, .harso-kit .hkc-shell-aside-header { display: flex; align-items: center; justify-content: space-between; height: 52px; flex-shrink: 0; padding: 0 16px; }
+.harso-kit .hkc-shell-titlebar > button { margin-left: auto; }
+.harso-kit .hkc-shell-window-controls { display: flex; gap: 8px; }
+.harso-kit .hkc-shell-window-controls i { width: 12px; height: 12px; border-radius: var(--hk-radius-pill); background: #ff5f57; }
+.harso-kit .hkc-shell-window-controls i:nth-child(2) { background: #febc2e; }
+.harso-kit .hkc-shell-window-controls i:nth-child(3) { background: #28c840; }
+.harso-kit .hkc-shell-nav, .harso-kit .hkc-shell-history { padding-inline: 10px; }
+.harso-kit .hkc-shell-account { margin-top: auto; padding: 16px 20px; }
+.harso-kit .hkc-shell-account-row { display: flex; align-items: center; gap: 10px; }
+.harso-kit .hkc-shell-avatar { display: grid; place-items: center; flex: 0 0 28px; height: 28px; border-radius: var(--hk-radius-pill); background: var(--hk-accent); color: var(--hk-surface); font-size: var(--hk-text-caps); font-weight: 600; }
+.harso-kit .hkc-shell-account-copy { flex: 1; min-width: 0; display: grid; gap: 2px; font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-shell-account-copy small { color: var(--hk-tertiary); font-size: var(--hk-text-meta); }
+.harso-kit .hkc-shell-aside-header { padding-inline: 24px; }
+.harso-kit .hkc-shell-aside-header h2 { margin: 0; font-size: var(--hk-text-chrome); font-weight: 600; }
+.harso-kit .hkc-shell-aside-body { padding: 4px 24px 24px; }
+.harso-kit .hkc-shell[data-sidebar="rail"] .hkc-shell-grid { grid-template-columns: 56px minmax(0, 1fr); }
+.harso-kit .hkc-shell[data-layout="desktop"][data-sidebar="rail"] .hkc-shell-grid[data-has-aside="true"] { grid-template-columns: 56px minmax(0, 1fr) 320px; }
+.harso-kit .hkc-shell-rail .hkc-shell-titlebar { padding: 0; justify-content: center; }
+.harso-kit .hkc-shell-rail .hkc-shell-titlebar > button { margin: 0; }
+.harso-kit .hkc-shell-rail .hkc-shell-nav { padding: 0; }
+.harso-kit .hkc-shell-rail .hkc-shell-history, .harso-kit .hkc-shell-rail .hkc-shell-account-copy, .harso-kit .hkc-shell-rail .hkc-shell-account-row > button { display: none; }
+.harso-kit .hkc-shell-rail .hkc-shell-account { padding: 16px 14px; }
+.harso-kit .hkc-shell-history-controls { display: flex; }
+.harso-kit .hkc-shell-history-controls .hkc-shell-icon svg { width: 14px; height: 14px; }
+.harso-kit .hkc-shell-icon:disabled { color: var(--hk-line-strong); cursor: default; background: transparent; }
+.harso-kit .hkc-shell-header { height: 52px; flex-shrink: 0; }
+.harso-kit .hkc-shell-heading { display: flex; align-items: baseline; }
+.harso-kit .hkc-shell-subtitle { white-space: nowrap; }
+.harso-kit .hkc-context p { margin: 0; font-size: var(--hk-text-meta); color: var(--hk-secondary); line-height: 1.7; }
+.harso-kit .hkc-context-project, .harso-kit .hkc-context-approval, .harso-kit .hkc-context-usage { display: flex; align-items: center; gap: 8px; }
+.harso-kit .hkc-context-project { margin-bottom: 8px; font-weight: 600; }
+.harso-kit .hkc-context-ring { width: 16px; height: 16px; flex-shrink: 0; }
+.harso-kit .hkc-context-dot { width: 5px; height: 5px; background: var(--hk-warning); border-radius: var(--hk-radius-pill); }
+@container hkc-shell (max-width: 640px) { .harso-kit .hkc-shell-history-controls, .harso-kit .hkc-shell-subtitle { display: none; } }
 .harso-kit .hkc-shell-center { background: var(--hk-surface); }
 .harso-kit .hkc-shell-center { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
 .harso-kit .hkc-shell-header { display: flex; align-items: center; gap: 6px; padding: 0 var(--hk-space-4) 0 var(--hk-space-3); min-height: 52px; }
@@ -20,9 +54,9 @@
 .harso-kit .hkc-shell[data-layout="tablet"] .hkc-shell-composer { padding-inline: var(--hk-space-6); }
 .harso-kit .hkc-shell-icon { display: inline-grid; flex-shrink: 0; place-items: center; width: 28px; height: 28px; border: 0; border-radius: var(--hk-radius-control); background: transparent; color: var(--hk-secondary); cursor: pointer; }
 .harso-kit .hkc-shell-icon svg { width: 16px; height: 16px; stroke-width: var(--hk-stroke); }
-.harso-kit .hkc-shell-icon:hover { background: var(--hk-hover); color: var(--hk-ink); }
+.harso-kit .hkc-shell-icon:hover:not(:disabled) { background: var(--hk-hover); color: var(--hk-ink); }
 .harso-kit .hkc-shell-icon:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
-.harso-kit .hkc-shell-rail { display: flex; justify-content: center; padding-top: var(--hk-space-2); background: var(--hk-panel); }
+.harso-kit .hkc-shell-rail { background: var(--hk-panel); }
 .harso-kit .hkc-shell-sheet { box-sizing: border-box; position: fixed; width: min(360px, 90vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; padding: var(--hk-space-4); border: 0; background: var(--hk-panel); color: var(--hk-ink); box-shadow: var(--hk-shadow); }
 .harso-kit .hkc-shell-sheet::backdrop { background: color-mix(in srgb, var(--hk-ink) 30%, transparent); }
 .harso-kit .hkc-shell-sheet--aside { margin-left: auto; }
