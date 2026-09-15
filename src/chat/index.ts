@@ -13,7 +13,7 @@ export { HarsoReasoning } from "./reasoning";
 export { HarsoMessageError, HarsoStoppedRun } from "./error";
 
 // Lane 4: shell
-export { HarsoThreadList, type HarsoThreadListProps, type HarsoThreadGroup } from "./thread-list";
+export { HarsoThreadList, HarsoSidebarNav, type HarsoThreadListProps, type HarsoThreadGroup, type HarsoSidebarNavItem, type HarsoSidebarNavProps } from "./thread-list";
 export { HarsoChatShell, type HarsoChatShellProps } from "./shell";
 
 // Lane 5: markdown

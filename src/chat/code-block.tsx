@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
+import { CheckIcon, CopyIcon, FileText } from "@phosphor-icons/react";
 import { useEffect, useState, type ComponentPropsWithoutRef, type ReactNode } from "react";
 import { IconButton } from "../primitives";
 import "./code-block.css";
@@ -34,11 +34,11 @@ export function HarsoCodeBlock({ code, language, filename, lineNumbers = false, 
   const lines = code.replace(/\n$/, "").split("\n");
   return <figure {...props} className={`hkc-code-block ${className}`}>
     <figcaption className="hkc-code-block-header">
-      <span className="hkc-code-block-language">{language || "text"}</span>
-      {filename && <span className="hkc-code-block-filename" title={filename}>{filename}</span>}
+      <FileText size={12} weight="regular" aria-hidden="true" />
+      <span className="hkc-code-block-filename" title={filename}>{filename || language || "text"}</span>
       <span className="hkc-code-block-feedback" role="status">{feedback}</span>
       <IconButton label={feedback === "Copied" ? "Copied" : "Copy code"} title={feedback === "Copied" ? "Copied" : "Copy code"} className="hkc-code-block-copy" onClick={copy}>
-        {feedback === "Copied" ? <CheckIcon size={16} aria-hidden="true" /> : <CopyIcon size={16} aria-hidden="true" />}
+        {feedback === "Copied" ? <CheckIcon size={12} aria-hidden="true" /> : <CopyIcon size={12} aria-hidden="true" />}
       </IconButton>
     </figcaption>
     <div className="hkc-code-block-viewport" role="region" aria-label={filename ? `Code: ${filename}` : "Code"} tabIndex={0}>

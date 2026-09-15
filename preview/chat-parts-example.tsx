@@ -44,7 +44,7 @@ export function ChatPartsExample() {
     return { adapter, Message };
   }, []);
   const runtime = useLocalRuntime(flow.adapter, { initialMessages: chatPartsFixtures });
-  return <AssistantRuntimeProvider runtime={runtime}><section className="hkc-chat-parts-example" style={{ maxWidth: 760, margin: "auto", padding: "var(--hk-space-4)" }}><h2>Conversation parts</h2><p>Static states and a live, simulated permission request.</p><StartApproval /><ThreadPrimitive.Root><ThreadPrimitive.Messages components={{ Message: flow.Message }} /></ThreadPrimitive.Root></section></AssistantRuntimeProvider>;
+  return <AssistantRuntimeProvider runtime={runtime}><section className="hkc-chat-parts-example" style={{ width: "100%", boxSizing: "border-box", maxWidth: 752, margin: "auto", padding: "var(--hk-space-4)" }}><h2>Conversation parts</h2><p>Static states and a live, simulated permission request.</p><StartApproval /><ThreadPrimitive.Root style={{ display: "flex", flexDirection: "column", gap: 28, marginTop: 28 }}><ThreadPrimitive.Messages components={{ Message: flow.Message }} /></ThreadPrimitive.Root></section></AssistantRuntimeProvider>;
 }
 
 function StartApproval() {

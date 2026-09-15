@@ -1,16 +1,22 @@
-.harso-kit .hkc-message { min-width: 0; margin-bottom: var(--hk-space-8); color: var(--hk-ink); }
+.harso-kit .hkc-message { min-width: 0; margin-bottom: 0; color: var(--hk-ink); }
 .harso-kit .hkc-message--user { display: flex; flex-direction: column; align-items: flex-end; }
-.harso-kit .hkc-message--assistant { display: flex; flex-direction: column; align-items: flex-start; font-size: var(--hk-text-body); line-height: 1.6; }
+.harso-kit .hkc-message--assistant { display: flex; flex-direction: column; align-items: flex-start; font-size: var(--hk-text-body); line-height: 22px; }
+/* v3: the assistant may open with one editorial headline (rule 4, 22px display). */
+.harso-kit .hkc-message--assistant .hkc-message-headline, .harso-kit .hkc-message--assistant > .hkc-markdown > h1:first-child, .harso-kit .hkc-message--assistant > .hkc-markdown > h2:first-child { margin: 0 0 var(--hk-space-3); font-size: var(--hk-text-display); font-weight: 600; line-height: 1.25; letter-spacing: -.01em; }
 .harso-kit .hkc-message--assistant > :not(.hkc-message-actions, .hkc-message-speaker) { align-self: stretch; min-width: 0; }
-.harso-kit .hkc-message-speaker { display: flex; align-items: center; gap: var(--hk-space-2); margin-bottom: var(--hk-space-2); color: var(--hk-tertiary); font-size: var(--hk-text-label); }
+.harso-kit .hkc-message-speaker { display: flex; align-items: center; gap: var(--hk-space-2); margin-bottom: var(--hk-space-3); color: var(--hk-ink); font-size: var(--hk-text-chrome); font-weight: 600; }
+.harso-kit .hkc-message-speaker time, .harso-kit .hkc-message-time { font-weight: 400; color: var(--hk-tertiary); font-size: var(--hk-text-meta); }
 .harso-kit .hkc-message-speaker svg { color: var(--hk-accent-mark); }
-.harso-kit .hkc-message-bubble { box-sizing: border-box; max-width: 78%; border-radius: 16px; background: var(--hk-hover); padding: var(--hk-space-3) var(--hk-space-4); font-size: var(--hk-text-user); line-height: 1.6; }
+/* v3: user turn = the one tinted bubble (rule 2), accent-soft, 16px radius, 14px body. */
+.harso-kit .hkc-message-bubble { box-sizing: border-box; max-width: 66%; border-radius: var(--hk-radius-composer); background: var(--hk-accent-soft); padding: 10px var(--hk-space-4); font-size: var(--hk-text-body); line-height: 1.55; }
+.harso-kit .hkc-message--user .hkc-message-time { margin-top: 6px; }
 .harso-kit .hkc-message-text { max-width: 100%; white-space: pre-wrap; overflow-wrap: anywhere; }
 .harso-kit .hkc-streaming-cursor { display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: middle; background: var(--hk-accent-mark); animation: hkc-cursor 1s steps(2) infinite; }
 .harso-kit .hkc-message-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--hk-space-1); margin-top: var(--hk-space-2); color: var(--hk-secondary); }
-.harso-kit .hkc-message--assistant .hkc-message-actions { margin-inline-start: calc(-1 * var(--hk-space-2)); }
-.harso-kit .hkc-message--user .hkc-message-actions { margin-inline-end: calc(-1 * var(--hk-space-2)); }
-.harso-kit .hkc-message-actions button { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; min-height: 32px; padding: var(--hk-space-2); border: 0; border-radius: var(--hk-radius-pill); background: transparent; color: inherit; cursor: pointer; }
+.harso-kit .hkc-message--assistant .hkc-message-actions { margin-inline-start: -4px; }
+.harso-kit .hkc-message--user .hkc-message-actions { margin-inline-end: -4px; }
+.harso-kit .hkc-message-actions button { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 24px; padding: 4px; border: 0; border-radius: var(--hk-radius-control); background: transparent; color: var(--hk-tertiary); cursor: pointer; }
+.harso-kit .hkc-message-actions svg { width: 14px; height: 14px; stroke-width: var(--hk-stroke); }
 .harso-kit .hkc-message-actions button:hover { background: var(--hk-hover); }
 .harso-kit .hkc-message-actions button[aria-pressed="true"] { color: var(--hk-accent); background: var(--hk-accent-soft); }
 .harso-kit .hkc-message button:disabled { opacity: .4; cursor: default; }
@@ -19,21 +25,21 @@
 .harso-kit .hkc-message-branches span { white-space: nowrap; }
 .harso-kit .hkc-message-attachments { display: flex; flex-wrap: wrap; gap: var(--hk-space-2); }
 .harso-kit .hkc-message-attachments:not(:empty) { margin-top: var(--hk-space-3); }
-.harso-kit .hkc-message-attachment { display: flex; align-items: center; gap: var(--hk-space-2); min-width: 0; max-width: 100%; padding: var(--hk-space-2); border: 1px solid var(--hk-line-strong); border-radius: var(--hk-radius-card); background: var(--hk-surface); font-size: var(--hk-text-sm); }
+.harso-kit .hkc-message-attachment { display: flex; align-items: center; gap: var(--hk-space-2); min-width: 0; max-width: 100%; padding: var(--hk-space-2); border: 0; border-radius: var(--hk-radius-card); background: var(--hk-panel); font-size: var(--hk-text-sm); }
 .harso-kit .hkc-message-attachment img { width: 48px; height: 32px; object-fit: cover; }
 .harso-kit .hkc-message-attachment span { overflow-wrap: anywhere; }
-.harso-kit .hkc-message-reasoning { width: 100%; margin-bottom: var(--hk-space-3); font-size: var(--hk-text-base); color: var(--hk-secondary); }
+.harso-kit .hkc-message-reasoning { width: 100%; margin-bottom: var(--hk-space-3); font-size: var(--hk-text-chrome); color: var(--hk-secondary); }
 .harso-kit .hkc-message-reasoning summary { display: flex; align-items: center; gap: var(--hk-space-2); cursor: pointer; list-style: none; }
 .harso-kit .hkc-message-reasoning summary::-webkit-details-marker { display: none; }
 .harso-kit .hkc-message-reasoning[open] summary svg { transform: rotate(90deg); }
 .harso-kit .hkc-message-reasoning > div { margin-top: var(--hk-space-2); white-space: pre-wrap; overflow-wrap: anywhere; }
 .harso-kit .hkc-message-error { display: flex; flex-wrap: wrap; align-items: center; gap: var(--hk-space-3); color: var(--hk-negative); font-size: var(--hk-text-base); }
 .harso-kit .hkc-message-stopped { color: var(--hk-secondary); font-size: var(--hk-text-sm); }
-.harso-kit .hkc-edit-composer { box-sizing: border-box; width: 78%; padding: var(--hk-space-4); background: var(--hk-panel); border: 1px solid var(--hk-line); border-radius: 16px; }
-.harso-kit .hkc-edit-composer textarea { box-sizing: border-box; width: 100%; min-height: 80px; padding: var(--hk-space-2); border: 1px solid var(--hk-line-strong); border-radius: 8px; background: var(--hk-surface); color: var(--hk-ink); font: inherit; font-size: var(--hk-text-body); resize: vertical; field-sizing: content; }
+.harso-kit .hkc-edit-composer { box-sizing: border-box; width: 78%; padding: var(--hk-space-4); background: var(--hk-panel); border: 0; border-radius: var(--hk-radius-composer); }
+.harso-kit .hkc-edit-composer textarea { box-sizing: border-box; width: 100%; min-height: 80px; padding: var(--hk-space-2); border: 0; border-radius: var(--hk-radius-control); background: var(--hk-surface); color: var(--hk-ink); font: inherit; font-size: var(--hk-text-body); resize: vertical; field-sizing: content; }
 .harso-kit .hkc-edit-composer p { font-size: var(--hk-text-sm); color: var(--hk-secondary); }
 .harso-kit .hkc-edit-composer > div { display: flex; justify-content: flex-end; gap: var(--hk-space-2); }
-.harso-kit :is(.hkc-edit-composer, .hkc-message-error) button { padding: var(--hk-space-2) var(--hk-space-3); border: 1px solid var(--hk-line-strong); border-radius: var(--hk-radius-pill); background: var(--hk-surface); color: inherit; font: inherit; font-size: var(--hk-text-sm); cursor: pointer; }
+.harso-kit :is(.hkc-edit-composer, .hkc-message-error) button { padding: var(--hk-space-2) var(--hk-space-3); border: 0; border-radius: var(--hk-radius-pill); background: var(--hk-hover); color: inherit; font: inherit; font-size: var(--hk-text-sm); cursor: pointer; }
 .harso-kit .hkc-edit-composer .hkc-edit-save { background: var(--hk-dark); color: var(--hk-inverse); }
 /* Hover-reveal is a pointer capability, not a viewport width: fine pointers get quiet actions that appear on hover or
    keyboard focus; coarse pointers (touch) always show them, since there is nothing to hover. */
@@ -42,10 +48,13 @@
   .harso-kit .hkc-message:hover .hkc-message-actions, .harso-kit .hkc-message:focus-within .hkc-message-actions, .harso-kit .hkc-message-actions:has(button[aria-pressed="true"]) { opacity: 1; }
 }
 @container hkc-thread (max-width: 640px) {
+  /* v3 phone: the user bubble stays quiet — its copy/edit row appears on tap (focus-within), not permanently (rule 2). */
+  .harso-kit .hkc-message--user .hkc-message-actions { display: none; }
+  .harso-kit .hkc-message--user:focus-within .hkc-message-actions { display: flex; }
   .harso-kit .hkc-message-actions button { min-width: 44px; min-height: 44px; }
   .harso-kit :is(.hkc-edit-composer, .hkc-message-error) button { min-height: 44px; }
   .harso-kit .hkc-edit-composer { width: 100%; }
-  .harso-kit .hkc-edit-composer textarea { font-size: var(--hk-text-user); }
+  .harso-kit .hkc-edit-composer textarea { font-size: 16px; }
 }
 @keyframes hkc-cursor { 50% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .harso-kit .hkc-streaming-cursor { animation: none; } }

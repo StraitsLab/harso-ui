@@ -92,8 +92,18 @@ test("VARIANTS input combined focus hint required invalid and disabled", async (
     return `${color} 0px 0px 0px 3px`;
   });
   await expect(shell).toHaveCSS("box-shadow", focusRing);
-  const errorColor = await fixture.locator(".hk-field-error").evaluate(element => getComputedStyle(element).color);
-  await expect(shell).toHaveCSS("border-top-color", errorColor);
+  // Boundaryless v3: invalid is a soft ring in the error colour (no stroke); it shows once focus leaves the field.
+  await fixture.getByRole("button", { name: "Toggle disabled" }).focus();
+  const errorRing = await shell.evaluate(element => {
+    const probe = document.createElement("span");
+    probe.style.color = "color-mix(in srgb, var(--hk-negative) 40%, transparent)";
+    element.append(probe);
+    const color = getComputedStyle(probe).color;
+    probe.remove();
+    return `${color} 0px 0px 0px 2px`;
+  });
+  await expect(shell).toHaveCSS("box-shadow", errorRing);
+  await input.focus();
   await input.fill("Retained draft");
   expect(await input.evaluate(element => (element as HTMLInputElement).validity.valueMissing)).toBe(false);
   const enabledPaint = await shell.evaluate(element => getComputedStyle(element).backgroundColor);

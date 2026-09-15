@@ -1,30 +1,68 @@
 .harso-kit .hkc-shell { container: hkc-shell / inline-size; height: 100%; min-height: 320px; background: var(--hk-canvas); color: var(--hk-ink); font-size: var(--hk-text-base); }
 .harso-kit .hkc-shell-grid { display: grid; grid-template-columns: 240px minmax(0, 1fr); height: 100%; min-height: inherit; }
-.harso-kit .hkc-shell-grid[data-has-aside="true"] { grid-template-columns: 240px minmax(0, 1fr) 280px; }
-.harso-kit .hkc-shell-sidebar, .harso-kit .hkc-shell-aside { overflow: auto; background: var(--hk-panel); padding: var(--hk-space-4); }
-.harso-kit .hkc-shell-sidebar { border-right: 1px solid var(--hk-line); }
-.harso-kit .hkc-shell-aside { border-left: 1px solid var(--hk-line); }
+.harso-kit .hkc-shell-grid[data-has-aside="true"] { grid-template-columns: 240px minmax(0, 1fr) 320px; }
+/* v3: columns separate by tonal step only (design/DIRECTION.md rule 1) — no rules between sidebar / center / aside. */
+.harso-kit .hkc-shell-sidebar, .harso-kit .hkc-shell-aside { overflow: auto; background: var(--hk-panel); padding: 0; }
+.harso-kit .hkc-shell-sidebar { display: flex; flex-direction: column; min-height: 0; }
+.harso-kit .hkc-shell-titlebar, .harso-kit .hkc-shell-aside-header { display: flex; align-items: center; justify-content: space-between; height: 52px; flex-shrink: 0; padding: 0 16px; }
+.harso-kit .hkc-shell-titlebar > button { margin-left: auto; }
+.harso-kit .hkc-shell-window-controls { display: flex; gap: 8px; }
+.harso-kit .hkc-shell-window-controls i { width: 12px; height: 12px; border-radius: var(--hk-radius-pill); background: #ff5f57; }
+.harso-kit .hkc-shell-window-controls i:nth-child(2) { background: #febc2e; }
+.harso-kit .hkc-shell-window-controls i:nth-child(3) { background: #28c840; }
+.harso-kit .hkc-shell-nav, .harso-kit .hkc-shell-history { padding-inline: 10px; }
+.harso-kit .hkc-shell-account { margin-top: auto; padding: 16px 20px; }
+.harso-kit .hkc-shell-account-row { display: flex; align-items: center; gap: 10px; }
+.harso-kit .hkc-shell-avatar { display: grid; place-items: center; flex: 0 0 28px; height: 28px; border-radius: var(--hk-radius-pill); background: var(--hk-accent); color: var(--hk-surface); font-size: var(--hk-text-caps); font-weight: 600; }
+.harso-kit .hkc-shell-account-copy { flex: 1; min-width: 0; display: grid; gap: 2px; font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-shell-account-copy small { color: var(--hk-tertiary); font-size: var(--hk-text-meta); }
+.harso-kit .hkc-shell-aside-header { padding-inline: 24px; }
+.harso-kit .hkc-shell-aside-header h2 { margin: 0; font-size: var(--hk-text-chrome); font-weight: 600; }
+.harso-kit .hkc-shell-aside-body { padding: 4px 24px 24px; }
+.harso-kit .hkc-shell[data-sidebar="rail"] .hkc-shell-grid { grid-template-columns: 56px minmax(0, 1fr); }
+.harso-kit .hkc-shell[data-layout="desktop"][data-sidebar="rail"] .hkc-shell-grid[data-has-aside="true"] { grid-template-columns: 56px minmax(0, 1fr) 320px; }
+.harso-kit .hkc-shell-rail .hkc-shell-titlebar { padding: 0; justify-content: center; }
+.harso-kit .hkc-shell-rail .hkc-shell-titlebar > button { margin: 0; }
+.harso-kit .hkc-shell-rail .hkc-shell-nav { padding: 0; }
+.harso-kit .hkc-shell-rail .hkc-shell-history, .harso-kit .hkc-shell-rail .hkc-shell-account-copy, .harso-kit .hkc-shell-rail .hkc-shell-account-row > button { display: none; }
+.harso-kit .hkc-shell-rail .hkc-shell-account { padding: 16px 14px; }
+.harso-kit .hkc-shell-history-controls { display: flex; }
+.harso-kit .hkc-shell-history-controls .hkc-shell-icon svg { width: 14px; height: 14px; }
+.harso-kit .hkc-shell-icon:disabled { color: var(--hk-line-strong); cursor: default; background: transparent; }
+.harso-kit .hkc-shell-header { height: 52px; flex-shrink: 0; }
+.harso-kit .hkc-shell-heading { display: flex; align-items: baseline; }
+.harso-kit .hkc-shell-subtitle { white-space: nowrap; }
+.harso-kit .hkc-context p { margin: 0; font-size: var(--hk-text-meta); color: var(--hk-secondary); line-height: 1.7; }
+.harso-kit .hkc-context-project, .harso-kit .hkc-context-approval, .harso-kit .hkc-context-usage { display: flex; align-items: center; gap: 8px; }
+.harso-kit .hkc-context-project { margin-bottom: 8px; font-weight: 600; }
+.harso-kit .hkc-context-ring { width: 16px; height: 16px; flex-shrink: 0; }
+.harso-kit .hkc-context-dot { width: 5px; height: 5px; background: var(--hk-attention); border-radius: var(--hk-radius-pill); }
+@container hkc-shell (max-width: 640px) { .harso-kit .hkc-shell-history-controls, .harso-kit .hkc-shell-subtitle { display: none; } }
+.harso-kit .hkc-shell-center { background: var(--hk-surface); }
 .harso-kit .hkc-shell-center { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-.harso-kit .hkc-shell-header { display: flex; align-items: center; gap: var(--hk-space-2); padding: 0 var(--hk-space-4); min-height: 56px; border-bottom: 1px solid var(--hk-line); }
+.harso-kit .hkc-shell-actions { display: contents; }
+.harso-kit .hkc-shell-header { display: flex; align-items: center; gap: 6px; padding: 0 var(--hk-space-4) 0 var(--hk-space-3); min-height: 52px; }
 .harso-kit .hkc-shell-heading { flex: 1; min-width: 0; }
-.harso-kit .hkc-shell-heading h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 0; font-size: var(--hk-text-md); font-weight: 500; }
+.harso-kit .hkc-shell-heading h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 0; font-size: var(--hk-text-title); font-weight: 600; }
+.harso-kit .hkc-shell-heading h1 small, .harso-kit .hkc-shell-subtitle { margin-left: var(--hk-space-2); font-size: var(--hk-text-meta); font-weight: 400; color: var(--hk-tertiary); }
 .harso-kit .hkc-shell-main { flex: 1; min-height: 0; overflow: auto; }
-.harso-kit .hkc-shell-composer { position: relative; flex-shrink: 0; padding: var(--hk-space-3) var(--hk-space-8); background: var(--hk-canvas); }
-.harso-kit .hkc-shell-composer > * { max-width: calc(832px - 2 * var(--hk-space-8)); margin-inline: auto; }
+.harso-kit .hkc-shell-composer { position: relative; flex-shrink: 0; padding: var(--hk-space-4) var(--hk-space-8) 20px; background: var(--hk-surface); }
+.harso-kit .hkc-shell-composer > * { max-width: 720px; margin-inline: auto; }
 /* Inside a shell, the shell's layout (not the thread's own width) sets the shared gutter for transcript + composer. */
 .harso-kit .hkc-shell[data-layout="desktop"] .hkc-thread-transcript { padding-inline: var(--hk-space-8); }
 .harso-kit .hkc-shell[data-layout="desktop"] .hkc-shell-composer { padding-inline: var(--hk-space-8); }
 .harso-kit .hkc-shell[data-layout="tablet"] .hkc-thread-transcript { padding-inline: var(--hk-space-6); }
 .harso-kit .hkc-shell[data-layout="tablet"] .hkc-shell-composer { padding-inline: var(--hk-space-6); }
-.harso-kit .hkc-shell-icon { display: inline-grid; flex-shrink: 0; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 8px; background: transparent; color: var(--hk-secondary); cursor: pointer; }
-.harso-kit .hkc-shell-icon:hover { background: var(--hk-hover); color: var(--hk-ink); }
+.harso-kit .hkc-shell-icon { display: inline-grid; flex-shrink: 0; place-items: center; width: 28px; height: 28px; border: 0; border-radius: var(--hk-radius-control); background: transparent; color: var(--hk-secondary); cursor: pointer; }
+.harso-kit .hkc-shell-icon svg { width: 16px; height: 16px; stroke-width: var(--hk-stroke); }
+.harso-kit .hkc-shell-icon:hover:not(:disabled) { background: var(--hk-hover); color: var(--hk-ink); }
 .harso-kit .hkc-shell-icon:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
-.harso-kit .hkc-shell-rail { display: flex; justify-content: center; padding-top: var(--hk-space-2); background: var(--hk-panel); border-right: 1px solid var(--hk-line); }
+.harso-kit .hkc-shell-rail { background: var(--hk-panel); }
 .harso-kit .hkc-shell-sheet { box-sizing: border-box; position: fixed; width: min(360px, 90vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; padding: var(--hk-space-4); border: 0; background: var(--hk-panel); color: var(--hk-ink); box-shadow: var(--hk-shadow); }
 .harso-kit .hkc-shell-sheet::backdrop { background: color-mix(in srgb, var(--hk-ink) 30%, transparent); }
 .harso-kit .hkc-shell-sheet--aside { margin-left: auto; }
 .harso-kit .hkc-shell-close { display: grid; margin-left: auto; margin-bottom: var(--hk-space-3); }
-.harso-kit .hkc-shell-placeholder { margin: var(--hk-space-4); padding: var(--hk-space-6); border: 1px dashed var(--hk-line-strong); border-radius: var(--hk-radius-card); color: var(--hk-secondary); }
+.harso-kit .hkc-shell-placeholder { margin: var(--hk-space-4); padding: var(--hk-space-6); border: 0; background: var(--hk-panel); border-radius: var(--hk-radius-card); color: var(--hk-secondary); }
 @container hkc-shell (min-width: 641px) and (max-width: 1023px) {
   .harso-kit .hkc-shell-grid, .harso-kit .hkc-shell-grid[data-has-aside="true"] { grid-template-columns: 56px minmax(0, 1fr); }
 }
@@ -32,24 +70,31 @@
   .harso-kit .hkc-shell-grid, .harso-kit .hkc-shell-grid[data-has-aside="true"] { grid-template-columns: minmax(0, 1fr); }
   .harso-kit .hkc-shell-header { height: 52px; min-height: 52px; padding: 0 var(--hk-space-1); }
   .harso-kit .hkc-shell-icon { width: 44px; height: 44px; }
-  .harso-kit .hkc-shell-composer { position: sticky; bottom: 0; padding: 0; background: transparent; }
+  /* v3 phone: ⋯ only in the bar (rest lives behind it), floating 52px pill composer inset 16 (iOS spec). */
+  .harso-kit .hkc-shell-actions > :not(:first-child) { display: none; }
+  .harso-kit .hkc-shell-composer { position: sticky; bottom: 0; padding: 8px 16px max(12px, env(safe-area-inset-bottom)); background: transparent; }
   .harso-kit .hkc-shell-composer::before { content: ""; position: absolute; left: 0; right: 0; top: -40px; height: 40px; background: linear-gradient(to bottom, transparent, var(--hk-canvas)); pointer-events: none; }
   .harso-kit .hkc-shell-composer > * { max-width: none; }
   .harso-kit .hkc-composer-chip { height: 32px; }
-  .harso-kit .hkc-shell-composer textarea { font-size: var(--hk-text-user); }
+  .harso-kit .hkc-shell-composer textarea { font-size: 16px; } /* iOS: <16px inputs trigger zoom */
   .harso-kit .hkc-shell-sheet--aside { width: 100vw; height: auto; max-height: 85dvh; margin: auto 0 0; border-radius: 16px 16px 0 0; }
 }
 
 /* Context panel + composer chip used by the shell example and desktop consumer. */
-.harso-kit .hkc-context { display: flex; flex-direction: column; gap: var(--hk-space-6); font-size: var(--hk-text-sm); }
-.harso-kit .hkc-context h2 { margin: 0 0 var(--hk-space-2); font-size: var(--hk-text-xs); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--hk-tertiary); }
+.harso-kit .hkc-context { display: flex; flex-direction: column; gap: 28px; font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-context h2 { margin: 0 0 10px; font-size: var(--hk-text-caps); font-weight: 600; letter-spacing: var(--hk-caps-tracking); text-transform: uppercase; color: var(--hk-tertiary); }
 .harso-kit .hkc-context-facts { margin: 0; display: grid; gap: var(--hk-space-2); }
 .harso-kit .hkc-context-facts > div { display: flex; justify-content: space-between; gap: var(--hk-space-3); align-items: baseline; }
 .harso-kit .hkc-context-facts dt { color: var(--hk-secondary); }
 .harso-kit .hkc-context-facts dd { margin: 0; color: var(--hk-ink); display: inline-flex; align-items: center; gap: 4px; text-align: right; }
 .harso-kit .hkc-context-files { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--hk-space-1); }
-.harso-kit .hkc-context-files code { font-size: 12px; color: var(--hk-secondary); }
-.harso-kit .hkc-composer-chip { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 10px; border-radius: var(--hk-radius-pill); background: var(--hk-panel); color: var(--hk-secondary); font-size: var(--hk-text-xs); font-weight: 500; }
+.harso-kit .hkc-context-files code { display: inline-flex; align-items: center; gap: 6px; font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-context-files code svg { flex-shrink: 0; color: var(--hk-tertiary); }
+.harso-kit .hkc-context-note { display: flex; gap: 8px; align-items: flex-start; margin: 0; color: var(--hk-secondary); }
+.harso-kit .hkc-context-note svg { flex-shrink: 0; margin-top: 3px; color: var(--hk-tertiary); }
+.harso-kit .hkc-context-files li { display: grid; gap: 2px; padding-block: 6px; }
+.harso-kit .hkc-context-files small { font-size: var(--hk-text-meta); color: var(--hk-tertiary); }
+.harso-kit .hkc-composer-chip { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px 0 8px; border-radius: var(--hk-radius-pill); background: var(--hk-panel); color: var(--hk-ink); font-size: var(--hk-text-meta); font-weight: 600; }
 .harso-kit .hkc-composer-chip--action { border: 0; cursor: pointer; font: inherit; font-size: var(--hk-text-xs); font-weight: 500; color: var(--hk-ink); }
 .harso-kit .hkc-composer-chip--action:hover { background: var(--hk-hover); }
 @container hkc-shell (max-width: 640px) { .harso-kit .hkc-composer-chip-detail { display: none; } }

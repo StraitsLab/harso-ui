@@ -1,9 +1,9 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AssistantRuntimeProvider, useLocalRuntime, useExternalStoreRuntime, type ThreadMessage, type ChatModelAdapter } from "@assistant-ui/react";
-import { HarsoComposer } from "./composer";
+import { HarsoComposer, type HarsoComposerProps } from "./composer";
 
-function setup(disabled = false) {
+function setup(disabled = false, props: HarsoComposerProps = {}) {
   let runtime: ReturnType<typeof useLocalRuntime>;
   let signal: AbortSignal;
   const run = vi.fn<ChatModelAdapter["run"]>(async function* ({ abortSignal }) {
@@ -13,13 +13,50 @@ function setup(disabled = false) {
   });
   function Harness() {
     runtime = useLocalRuntime({ run });
-    return <AssistantRuntimeProvider runtime={runtime}><HarsoComposer disabled={disabled} leading="Local model" trailing={<button type="button">Options</button>} error={disabled ? "Unavailable" : undefined} /></AssistantRuntimeProvider>;
+    return <AssistantRuntimeProvider runtime={runtime}><HarsoComposer disabled={disabled} leading="Local model" trailing={<button type="button">Options</button>} error={disabled ? "Unavailable" : undefined} {...props} /></AssistantRuntimeProvider>;
   }
   render(<Harness />);
   return { run, runtime: () => runtime!, signal: () => signal! };
 }
 
 describe("HarsoComposer", () => {
+  // v3 changes: inline DOM order, model/voice slots, phone defaults, true multiline state.
+  it("orders add / model / input / voice / send and activates host slots", async () => {
+    const onClick = vi.fn();
+    const voice = vi.fn();
+    setup(false, { modelSelector: { label: "Claude Fable 5.1", glyph: <svg data-testid="model-glyph" />, onClick }, voice: <button type="button" onClick={voice}>Voice input</button> });
+    const row = [screen.getByRole("button", { name: "Add attachment" }), screen.getByRole("button", { name: "Select model: Claude Fable 5.1" }), screen.getByRole("textbox"), screen.getByRole("button", { name: "Voice input" }), screen.getByRole("button", { name: "Send" })];
+    row.slice(1).forEach((node, index) => expect(row[index].compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy());
+    expect(screen.getByTestId("model-glyph")).toBeInTheDocument();
+    expect(row[2]).toHaveAttribute("placeholder", "Reply…");
+    await userEvent.click(row[1]);
+    await userEvent.click(row[3]);
+    expect(onClick).toHaveBeenCalledOnce();
+    expect(voice).toHaveBeenCalledOnce();
+  });
+
+  it("uses the phone placeholder and allows an explicit override", () => {
+    setup(false, { "data-layout": "phone" });
+    expect(screen.getByRole("textbox")).toHaveAttribute("placeholder", "Message Weave");
+    expect(document.querySelector(".hkc-composer-dock")).toHaveAttribute("data-layout", "phone");
+  });
+
+  it("honors a custom phone placeholder and picker disabled state", () => {
+    setup(false, { "data-layout": "phone", placeholder: "Ask anything", modelSelector: { label: "Unavailable", disabled: true } });
+    expect(screen.getByRole("textbox")).toHaveAttribute("placeholder", "Ask anything");
+    expect(screen.getByRole("button", { name: "Select model: Unavailable" })).toBeDisabled();
+  });
+
+  it("does not expand for a short draft; expands for newline and collapses after clearing", async () => {
+    const harness = setup();
+    await act(async () => harness.runtime().thread.composer.setText("Short"));
+    expect(screen.getByRole("form")).not.toHaveAttribute("data-multiline");
+    await act(async () => harness.runtime().thread.composer.setText("First\nSecond"));
+    expect(screen.getByRole("form")).toHaveAttribute("data-multiline", "true");
+    await act(async () => harness.runtime().thread.composer.setText(""));
+    expect(screen.getByRole("form")).not.toHaveAttribute("data-multiline");
+  });
+
   it("disables Send when empty and renders accessible slots", async () => {
     await act(async () => { setup(); });
     expect(screen.getByRole("button", { name: "Send" })).toBeDisabled();

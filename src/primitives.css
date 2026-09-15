@@ -49,7 +49,7 @@
 
 .hk-button {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: 36px; padding: 6px 14px; border: 1px solid transparent; border-radius: var(--hk-space-2);
+  min-height: 36px; padding: 6px 14px; border: 0; border-radius: var(--hk-radius-pill);
   background: var(--hk-hover); color: var(--hk-ink); cursor: pointer; white-space: nowrap;
   font-weight: 500; font-size: var(--hk-text-base); line-height: 1.4;
   transition: background var(--hk-fast) var(--hk-ease), transform var(--hk-fast) var(--hk-ease);
@@ -64,9 +64,10 @@
    painted box always reaches that control; only the empty gap between rows is claimed by the nearest target. */
 .hk-button:hover:not(:disabled) { background: color-mix(in srgb, var(--hk-hover) 94%, var(--hk-ink)); }
 .hk-button:active:not(:disabled) { transform: translateY(1px); }
-.hk-button--primary { background: var(--hk-dark); color: var(--hk-inverse); font-weight: 500; }
+.hk-button--primary { background: var(--hk-dark); color: var(--hk-inverse); font-weight: 600; }
 .hk-button--primary:hover:not(:disabled) { background: color-mix(in srgb, var(--hk-dark) 88%, var(--hk-canvas)); }
-.hk-button--outline { background: transparent; border-color: var(--hk-line-strong); }
+/* v3: no outlined buttons (rule 1) — "outline" is now the quiet tonal secondary. */
+.hk-button--outline { background: var(--hk-hover); }
 .hk-button--secondary { background: var(--hk-hover); }
 .hk-button--secondary:hover:not(:disabled) { background: color-mix(in srgb, var(--hk-hover) 80%, var(--hk-ink) 6%); }
 .hk-button--ghost { background: transparent; color: var(--hk-secondary); }
@@ -81,10 +82,10 @@
 .hk-button--secondary:disabled { background: var(--hk-hover); }
 .hk-button--primary:disabled { background: color-mix(in srgb, var(--hk-dark) 32%, var(--hk-canvas)); color: var(--hk-inverse); }
 .hk-button--small { min-height: 32px; padding: 5px 12px; font-size: var(--hk-text-label); }
-.hk-icon-button { width: 36px; height: 36px; padding: 8px; flex-shrink: 0; background: transparent; color: var(--hk-secondary); }
+.hk-icon-button { width: 36px; height: 36px; padding: 8px; flex-shrink: 0; background: transparent; color: var(--hk-secondary); border-radius: var(--hk-radius-control); }
 .hk-icon-button:hover:not(:disabled) { color: var(--hk-ink); background: var(--hk-hover); }
 .hk-icon-button:disabled { background: transparent; }
-.hk-icon-button svg { width: 18px; height: 18px; stroke-width: 1.5; }
+.hk-icon-button svg { width: 16px; height: 16px; stroke-width: var(--hk-stroke); }
 /* Close controls retain accessible targets and their existing glyph scale. */
 .hk-icon-button.hk-close { min-width: 42px; min-height: 42px; }
 .hk-close svg { width: 20px; height: 20px; }
@@ -92,15 +93,16 @@
 .hk-link:hover { text-decoration-color: var(--hk-ink); text-decoration-thickness: 2px; }
 .hk-button--link { padding-inline: 0; border-color: transparent; background: transparent; color: var(--hk-ink); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hk-faint); }
 .hk-input {
-  display: block; width: 100%; min-width: 0; min-height: 36px; border: 1px solid var(--hk-line-strong);
-  border-radius: var(--hk-space-2); background: var(--hk-surface); color: var(--hk-ink); padding: 6px 12px; font-size: var(--hk-text-base); line-height: 1.5;
-  transition: border-color var(--hk-fast) var(--hk-ease), box-shadow var(--hk-fast) var(--hk-ease);
+  /* v3 field: panel-tinted, no stroke; focus is a soft accent ring (rule 1). */
+  display: block; width: 100%; min-width: 0; min-height: 36px; border: 0;
+  border-radius: var(--hk-radius-control); background: var(--hk-field-tint); color: var(--hk-ink); padding: 6px 12px; font-size: var(--hk-text-base); line-height: 1.5;
+  transition: background var(--hk-fast) var(--hk-ease), box-shadow var(--hk-fast) var(--hk-ease);
 }
-.hk-input:hover:not(:disabled) { border-color: var(--hk-faint); }
-.hk-input:focus-visible { outline: none; border-color: var(--hk-accent); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
+.hk-input:hover:not(:disabled) { background: var(--hk-field-tint-hover); }
+.hk-input:focus-visible { outline: none; background: var(--hk-surface); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
 .hk-input::placeholder { color: var(--hk-tertiary); opacity: 1; }
-.hk-input[aria-invalid="true"] { border-color: var(--hk-negative); }
-.hk-input:disabled { color: var(--hk-tertiary); background: var(--hk-hover); border-color: transparent; }
+.hk-input[aria-invalid="true"]:not(:focus-visible) { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hk-negative) 40%, transparent); }
+.hk-input:disabled { color: var(--hk-tertiary); background: var(--hk-hover); }
 .hk-textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
 .hk-select { padding-inline-end: 36px; }
 .hk-select:not([multiple]):not([size]), .hk-select[size="1"] { appearance: none; background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%2216%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m48%2096%2080%2080%2080-80%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-size: 16px; background-position: right 12px center; }
@@ -142,11 +144,11 @@ input.hk-radio-dot:checked::before { content: ""; width: 50%; height: 50%; borde
 .hk-choice:not(.hk-switch):has(.hk-choice-description) { align-items: flex-start; }
 .hk-choice:not(.hk-switch):has(.hk-choice-description) > input { margin-top: 3px; }
 .hk-switch input {
-  appearance: none; position: relative; width: 38px; height: 24px; border: 1px solid var(--hk-control-line);
+  appearance: none; position: relative; width: 38px; height: 24px; border: 0;
   border-radius: 20px; background: var(--hk-hover); transition: background var(--hk-fast) var(--hk-ease);
 }
-.hk-switch input::before { content: ""; position: absolute; width: 16px; height: 16px; top: 3px; left: 3px; border-radius: 50%; background: var(--hk-secondary); transition: transform var(--hk-fast) var(--hk-ease); }
-.hk-switch input:checked { background: var(--hk-dark); border-color: var(--hk-dark); }
+.hk-switch input::before { content: ""; position: absolute; width: 16px; height: 16px; top: 4px; left: 4px; border-radius: 50%; background: var(--hk-secondary); transition: transform var(--hk-fast) var(--hk-ease); }
+.hk-switch input:checked { background: var(--hk-dark); }
 .hk-switch input:checked::before { background: var(--hk-inverse); transform: translateX(14px); }
 .hk-switch input:disabled { opacity: .55; }
 .hk-radio-group { min-width: 0; border: 0; margin: 0; padding: 0; }
@@ -154,19 +156,19 @@ input.hk-radio-dot:checked::before { content: ""; width: 50%; height: 50%; borde
 .hk-slider { display: block; min-height: 44px; width: 100%; accent-color: var(--hk-dark); }
 .hk-progress { appearance: auto; display: block; width: 100%; height: 6px; accent-color: var(--hk-accent); }
 .hk-badge { display: inline-flex; align-items: center; gap: 6px; font-size: var(--hk-text-xs); font-weight: 500; color: var(--hk-tertiary); }
-.hk-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--hk-badge-mark, currentColor); flex: none; }
+.hk-badge::before { content: ""; width: var(--hk-dot); height: var(--hk-dot); border-radius: 50%; background: var(--hk-badge-mark, currentColor); flex: none; }
 .hk-badge--plain::before { display: none; }
 .hk-badge--positive { color: var(--hk-positive); --hk-badge-mark: var(--hk-positive-mark); }
 .hk-badge--attention { color: var(--hk-attention); --hk-badge-mark: var(--hk-attention-mark); }
 .hk-badge--negative { color: var(--hk-negative); --hk-badge-mark: var(--hk-negative-mark); }
 .hk-badge--active { color: var(--hk-accent); --hk-badge-mark: var(--hk-accent-mark); }
-.hk-badge--active::before { box-shadow: 0 0 0 4px var(--hk-accent-soft); }
+
 .hk-badge--primary { color: var(--hk-accent); }
-.hk-avatar { width: var(--hk-avatar-size); height: var(--hk-avatar-size); display: inline-grid; place-items: center; border-radius: 50%; background: var(--hk-surface); border: 1px solid var(--hk-line); color: var(--hk-ink); font-size: var(--hk-text-sm); font-weight: 500; flex-shrink: 0; overflow: hidden; }
+.hk-avatar { width: var(--hk-avatar-size); height: var(--hk-avatar-size); display: inline-grid; place-items: center; border-radius: 50%; background: var(--hk-hover); color: var(--hk-ink); font-size: var(--hk-text-sm); font-weight: 600; flex-shrink: 0; overflow: hidden; }
 .hk-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .hk-avatar--blue { background: color-mix(in srgb, var(--hk-accent) 12%, var(--hk-canvas)); color: var(--hk-accent); }
-.hk-skeleton { display: block; width: 100%; min-height: 16px; border-radius: 4px; background: var(--hk-hover); animation: hk-breathe 1.8s ease-in-out infinite alternate; }
-.hk-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--hk-accent-soft); border-top-color: var(--hk-accent-mark); border-radius: 50%; animation: hk-turn 1.1s linear infinite; }
+.hk-skeleton { display: block; width: 100%; min-height: 16px; border-radius: var(--hk-radius-control); background: var(--hk-hover); animation: hk-breathe 1.8s ease-in-out infinite alternate; }
+.hk-spinner { display: inline-block; width: var(--hk-ring); height: var(--hk-ring); border: 1.5px solid var(--hk-line-strong); border-top-color: var(--hk-accent-mark); border-radius: 50%; animation: hk-turn 1.1s linear infinite; }
 .hk-separator { height: 1px; width: 100%; background: var(--hk-line); }
 .hk-separator[aria-orientation="vertical"] { width: 1px; height: 24px; }
 .hk-separator[data-treatment="double"] { height: 4px; border-block: 1px solid var(--hk-line); background: transparent; }
@@ -184,9 +186,10 @@ input.hk-radio-dot:checked::before { content: ""; width: 50%; height: 50%; borde
 .hk-chip-icon svg { width: 16px; height: 16px; }
 .hk-chip:has(.hk-chip-remove) { padding-block: 0; padding-inline-end: 0; }
 .hk-chip .hk-chip-remove { min-width: 32px; width: 32px; height: 32px; min-height: 32px; padding: 6px; color: inherit; border-radius: var(--hk-radius-pill); }
-.hk-empty h3 { font-size: var(--hk-text-title); line-height: 1.4; }
-.hk-empty p { color: var(--hk-secondary); font-size: var(--hk-text-body); line-height: 1.6; margin: var(--hk-space-4) auto var(--hk-space-6); max-width: 40ch; }
-.hk-disclosure > summary { min-height: 36px; padding: 6px 0; cursor: pointer; font-size: var(--hk-text-base); }
+.hk-empty h3 { font-size: var(--hk-text-title); font-weight: 600; line-height: 1.4; }
+.hk-empty-icon { color: var(--hk-accent-mark); }
+.hk-empty p { color: var(--hk-secondary); font-size: var(--hk-text-body); line-height: 1.6; margin: var(--hk-space-2) auto var(--hk-space-6); max-width: 40ch; }
+.hk-disclosure > summary { min-height: 32px; padding: 6px 0; cursor: pointer; font-size: var(--hk-text-chrome); color: var(--hk-secondary); }
 .hk-disclosure-body { padding: 10px 0 18px; color: var(--hk-secondary); font-size: var(--hk-text-base); }
 @keyframes hk-turn { to { transform: rotate(360deg); } }
 @keyframes hk-breathe { to { opacity: .55; } }
@@ -198,7 +201,8 @@ input.hk-radio-dot:checked::before { content: ""; width: 50%; height: 50%; borde
   .hk-textarea { min-height: 96px; }
   .hk-file-picker::file-selector-button { min-height: 44px; }
 }
-@media (forced-colors: active) { .hk-switch input:checked { background: Highlight; } .hk-switch input:checked::before { background: HighlightText; } .hk-button { border-color: ButtonBorder; } }
+/* Borderless is a tonal language; forced-colors has no tone, so every control gets its system border back there. */
+@media (forced-colors: active) { .hk-switch input:checked { background: Highlight; } .hk-switch input:checked::before { background: HighlightText; } .hk-button, .hk-icon-button, .hk-input, .hk-switch input { border: 1px solid ButtonBorder; } .hk-input { border-color: FieldText; } }
 @media (forced-colors: active) {
   .hk-choice:not(.hk-switch) input, .hk-switch input, input.hk-radio-dot { appearance: auto; accent-color: auto; }
   .hk-choice input::before, input.hk-radio-dot::before { display: none; }

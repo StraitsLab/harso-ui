@@ -1,7 +1,7 @@
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { AssistantRuntimeProvider, useLocalRuntime, type AssistantRuntime } from "@assistant-ui/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { HarsoThreadList, type HarsoThreadListProps } from "./thread-list";
+import { HarsoSidebarNav, HarsoThreadList, type HarsoThreadListProps } from "./thread-list";
 import { createScriptedAdapter } from "./testing/scripted-adapter";
 
 const adapter = createScriptedAdapter({ tools: false, reasoning: false, tokenDelayMs: 0, response: "Local response" });
@@ -16,6 +16,20 @@ async function seed(title = "First conversation") {
   await act(async () => { await runtime.threads.mainItem.initialize(); await runtime.threads.mainItem.rename(title); });
   await screen.findByRole("button", { name: title });
 }
+
+describe("HarsoSidebarNav", () => {
+  it("names navigation, marks the active destination and invokes host selection", () => {
+    const select = vi.fn();
+    render(<HarsoSidebarNav label="Weave" items={[{ id: "activity", label: "Activity", icon: <svg />, count: 3, unread: true, active: true, onSelect: select }, { id: "artifacts", label: "Artifacts", icon: <svg /> }]} />);
+    expect(screen.getByRole("navigation", { name: "Weave" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Weave" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Activity" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("button", { name: "Artifacts" })).not.toHaveAttribute("aria-current");
+    expect(screen.getByLabelText("Unread")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Activity" }));
+    expect(select).toHaveBeenCalledOnce();
+  });
+});
 
 describe("HarsoThreadList", () => {
   it("creates a new runtime conversation and preserves the existing one", async () => {

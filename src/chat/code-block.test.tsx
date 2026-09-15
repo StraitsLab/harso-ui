@@ -9,7 +9,7 @@ test("copies the original code and resets its accessible feedback", async () => 
   const writeText = vi.fn().mockResolvedValue(undefined);
   vi.stubGlobal("navigator", { clipboard: { writeText } });
   render(<HarsoCodeBlock code={"const ready = true;\n"} language="ts" filename="ready.ts" lineNumbers />);
-  expect(screen.getByText("ts")).toBeVisible();
+  expect(screen.getByText("ready.ts")).toBeVisible();
   expect(screen.getByRole("region", { name: "Code: ready.ts" })).toHaveAttribute("tabindex", "0");
   await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Copy code" })); });
   expect(writeText).toHaveBeenCalledWith("const ready = true;\n");

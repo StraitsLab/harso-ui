@@ -28,6 +28,37 @@ function mount() {
 }
 
 describe("HarsoChatShell", () => {
+  it("preserves nav and account slots while toggling the desktop rail", () => {
+    const { container } = render(<HarsoChatShell windowControls sidebar="History" nav={<nav aria-label="Weave">Activity</nav>} footer={<span>Abhi Bansal</span>} title="Billing" subtitle="Personal · 14 turns" />);
+    width(1440);
+    expect(screen.getByRole("navigation", { name: "Weave" })).toBeInTheDocument();
+    expect(container.querySelectorAll(".hkc-shell-window-controls i")).toHaveLength(3);
+    expect(screen.getByText("Personal · 14 turns")).toBeInTheDocument();
+    const toggle = screen.getByRole("button", { name: "Collapse sidebar" });
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    fireEvent.click(toggle);
+    expect(container.querySelector(".hkc-shell")).toHaveAttribute("data-sidebar", "rail");
+    expect(screen.getByRole("button", { name: "Expand sidebar" })).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByText("Abhi Bansal")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Expand sidebar" }));
+    expect(container.querySelector(".hkc-shell")).toHaveAttribute("data-sidebar", "expanded");
+  });
+  it("omits native window decoration by default and wires navigation callbacks", () => {
+    const back = vi.fn();
+    const { container } = render(<HarsoChatShell sidebar="History" onBack={back} />);
+    width(1440);
+    expect(container.querySelector(".hkc-shell-window-controls")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Go back" }));
+    expect(back).toHaveBeenCalledOnce();
+    expect(screen.getByRole("button", { name: "Go forward" })).toBeDisabled();
+  });
+  it("collapses and restores the desktop inspector", () => {
+    mount(); width(1440);
+    fireEvent.click(screen.getByRole("button", { name: "Collapse context" }));
+    expect(screen.queryByRole("complementary", { name: "Context" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Open context" }));
+    expect(screen.getByRole("complementary", { name: "Context" })).toBeInTheDocument();
+  });
   it("renders named regions and header/composer slots", () => {
     mount(); width(1024);
     expect(screen.getByRole("complementary", { name: "Conversation navigation" })).toBeInTheDocument();

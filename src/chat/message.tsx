@@ -1,11 +1,14 @@
 import type { ComponentType } from "react";
 import { ActionBarPrimitive, AttachmentPrimitive, ComposerPrimitive, MessagePartPrimitive, MessagePrimitive, useAuiState, type ReasoningMessagePartComponent, type TextMessagePartComponent, type ToolCallMessagePartComponent } from "@assistant-ui/react";
-import { CaretRight, FileText, Sparkle } from "@phosphor-icons/react";
+import { FileText, Sparkle } from "@phosphor-icons/react";
 import { HarsoMessageActions, type HarsoMessageActionCapabilities } from "./message-actions";
+import { HarsoReasoning } from "./reasoning";
 import "./message.css";
 
 export interface HarsoMessageSlots {
   assistantName?: string;
+  /** Optional editorial introduction; markdown first headings also receive display styling. */
+  headline?: string;
   toolUI?: { by_name?: Record<string, ToolCallMessagePartComponent | undefined>; Fallback?: ToolCallMessagePartComponent };
   /** Text part renderer; defaults to plain streaming text. Pass HarsoMarkdownText for GFM. */
   text?: TextMessagePartComponent;
@@ -28,8 +31,13 @@ function DefaultAttachment() {
   return <AttachmentPrimitive.Root className="hkc-message-attachment">{image?.type === "image" ? <img src={image.image} alt={attachment.name} /> : <FileText size={16} />}<span>{attachment.name}</span></AttachmentPrimitive.Root>;
 }
 
-function DefaultReasoning() {
-  return <details className="hkc-message-reasoning"><summary><CaretRight size={16} />Reasoning</summary><div><MessagePartPrimitive.Text /></div></details>;
+function MessageTime({ user = false }: { user?: boolean }) {
+  const createdAt = useAuiState(state => state.message.createdAt);
+  if (!createdAt) return null;
+  const date = new Date(createdAt);
+  const today = date.toDateString() === new Date().toDateString();
+  const time = date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  return <time className="hkc-message-time" dateTime={date.toISOString()}>{user ? `${today ? "Today" : date.toLocaleDateString("en-GB", { day: "numeric", month: "short" })} at ${time}` : time}</time>;
 }
 
 function DefaultError() {
@@ -38,13 +46,14 @@ function DefaultError() {
 }
 
 export function HarsoUserMessage({ attachment: Attachment = DefaultAttachment, actions, copyToClipboard }: Pick<HarsoMessageSlots, "attachment" | "actions" | "copyToClipboard"> = {}) {
-  return <MessagePrimitive.Root className="hkc-message hkc-message--user" role="article" aria-label="You"><div className="hkc-message-speaker">You</div><div className="hkc-message-bubble"><MessagePrimitive.Parts components={{ Text: StreamingText }} /><div className="hkc-message-attachments"><MessagePrimitive.Attachments components={{ Attachment }} /></div></div><HarsoMessageActions user capabilities={actions} copyToClipboard={copyToClipboard} /></MessagePrimitive.Root>;
+  return <MessagePrimitive.Root className="hkc-message hkc-message--user" role="article" aria-label="You"><div className="hkc-message-bubble"><MessagePrimitive.Parts components={{ Text: StreamingText }} /><div className="hkc-message-attachments"><MessagePrimitive.Attachments components={{ Attachment }} /></div></div><MessageTime user /><HarsoMessageActions user capabilities={actions} copyToClipboard={copyToClipboard} /></MessagePrimitive.Root>;
 }
 
-export function HarsoAssistantMessage({ assistantName = "Harso", toolUI, reasoning = DefaultReasoning, error: Error = DefaultError, text: Text = StreamingText, actions, copyToClipboard }: HarsoMessageSlots = {}) {
+export function HarsoAssistantMessage({ assistantName = "Harso", headline, toolUI, reasoning = HarsoReasoning, error: Error = DefaultError, text: Text = StreamingText, actions, copyToClipboard }: HarsoMessageSlots = {}) {
   const status = useAuiState(state => state.message.status);
   return <MessagePrimitive.Root className="hkc-message hkc-message--assistant" role="article" aria-label={assistantName}>
-    <div className="hkc-message-speaker"><Sparkle size={16} aria-hidden="true" />{assistantName}</div>
+    <div className="hkc-message-speaker"><Sparkle size={14} weight="regular" aria-hidden="true" />{assistantName}<MessageTime /></div>
+    {headline && <h2 className="hkc-message-headline">{headline}</h2>}
     <MessagePrimitive.Parts components={{ Text, Reasoning: reasoning, tools: toolUI }} />
     {status?.type === "incomplete" && status.reason === "error" && <Error />}
     {status?.type === "incomplete" && status.reason === "cancelled" && <p className="hkc-message-stopped" role="status">Stopped by you.</p>}

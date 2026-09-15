@@ -1,9 +1,15 @@
 import { useEffect, useRef, useState, type HTMLAttributes, type ReactNode } from "react";
-import { List, SidebarSimple, X } from "@phosphor-icons/react";
+import { CaretLeft, CaretRight, List, SidebarSimple, X } from "@phosphor-icons/react";
 import "./shell.css";
 
 export type HarsoChatShellProps = Omit<HTMLAttributes<HTMLDivElement>, "title"> & {
   sidebar: ReactNode;
+  nav?: ReactNode;
+  footer?: ReactNode;
+  windowControls?: boolean;
+  subtitle?: ReactNode;
+  onBack?: () => void;
+  onForward?: () => void;
   header?: ReactNode;
   title?: ReactNode;
   actions?: ReactNode;
@@ -30,8 +36,10 @@ function ShellSheet({ label, kind, onClose, children }: { label: string; kind: "
   </dialog>;
 }
 
-export function HarsoChatShell({ sidebar, header, title, actions, themeToggle, main, composer, aside, mainLandmark = true, children, className = "", ...props }: HarsoChatShellProps) {
+export function HarsoChatShell({ sidebar, nav, footer, windowControls = false, subtitle, onBack, onForward, header, title, actions, themeToggle, main, composer, aside, mainLandmark = true, children, className = "", ...props }: HarsoChatShellProps) {
   const root = useRef<HTMLDivElement>(null);
+  const [collapsed, setCollapsed] = useState(false);
+  const [asideOpen, setAsideOpen] = useState(true);
   const [layout, setLayout] = useState<"phone" | "tablet" | "desktop">("desktop");
   const [sheet, setSheet] = useState<"sidebar" | "aside" | null>(null);
   useEffect(() => {
@@ -45,21 +53,30 @@ export function HarsoChatShell({ sidebar, header, title, actions, themeToggle, m
   }, []);
   useEffect(() => { setSheet(null); }, [layout]);
   const sidebarToggle = <button type="button" className="hkc-shell-icon" aria-label="Open conversations" aria-haspopup="dialog" aria-expanded={sheet === "sidebar"} onClick={() => setSheet("sidebar")}><List size={20} /></button>;
-  return <div {...props} ref={root} className={`hkc-shell ${className}`} data-layout={layout}>
-    <div className="hkc-shell-grid" data-has-aside={!!aside}>
-      {layout === "desktop" ? <aside className="hkc-shell-sidebar" aria-label="Conversation navigation">{sidebar}</aside> : layout === "tablet" ? <nav className="hkc-shell-rail" aria-label="Conversation navigation">{sidebarToggle}</nav> : null}
+  const rail = layout === "tablet" || collapsed;
+  const sourceContent = <><div className="hkc-shell-nav">{nav}</div><div className="hkc-shell-history">{sidebar}</div>{footer && <footer className="hkc-shell-account">{footer}</footer>}</>;
+  const inspector = <><header className="hkc-shell-aside-header"><h2>Context</h2><button className="hkc-shell-icon" type="button" aria-label="Collapse context" onClick={() => layout === "desktop" ? setAsideOpen(false) : setSheet(null)}><SidebarSimple size={16} /></button></header><div className="hkc-shell-aside-body">{aside}</div></>;
+  return <div {...props} ref={root} className={`hkc-shell ${className}`} data-layout={layout} data-sidebar={layout === "phone" ? "hidden" : rail ? "rail" : "expanded"}>
+    <div className="hkc-shell-grid" data-has-aside={!!aside && asideOpen}>
+      {layout !== "phone" && <aside className={`hkc-shell-sidebar${rail ? " hkc-shell-rail" : ""}`} role={layout === "tablet" ? "navigation" : undefined} aria-label="Conversation navigation">
+        <div className="hkc-shell-titlebar">
+          {windowControls && !rail && <span className="hkc-shell-window-controls" aria-hidden="true"><i /><i /><i /></span>}
+          {layout === "tablet" ? sidebarToggle : <button type="button" className="hkc-shell-icon" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} aria-expanded={!collapsed} onClick={() => setCollapsed(!collapsed)}><SidebarSimple size={16} /></button>}
+        </div>{sourceContent}
+      </aside>}
       <div className="hkc-shell-center">
         <header className="hkc-shell-header">
           {layout === "phone" && sidebarToggle}
-          <div className="hkc-shell-heading">{header ?? <h1>{title}</h1>}</div>
-          {actions}{themeToggle}
-          {aside && layout !== "desktop" && <button type="button" className="hkc-shell-icon" aria-label="Open context" aria-haspopup="dialog" aria-expanded={sheet === "aside"} onClick={() => setSheet("aside")}><SidebarSimple size={20} /></button>}
+          <div className="hkc-shell-history-controls"><button type="button" className="hkc-shell-icon" aria-label="Go back" disabled={!onBack} onClick={onBack}><CaretLeft size={14} /></button><button type="button" className="hkc-shell-icon" aria-label="Go forward" disabled={!onForward} onClick={onForward}><CaretRight size={14} /></button></div>
+          <div className="hkc-shell-heading">{header ?? <h1>{title}</h1>}{subtitle && <span className="hkc-shell-subtitle">{subtitle}</span>}</div>
+          {actions && <div className="hkc-shell-actions">{actions}</div>}{themeToggle}
+          {aside && (layout !== "desktop" || !asideOpen) && <button type="button" className="hkc-shell-icon" aria-label="Open context" aria-haspopup={layout !== "desktop" ? "dialog" : undefined} aria-expanded={layout === "desktop" ? asideOpen : sheet === "aside"} onClick={() => layout === "desktop" ? setAsideOpen(true) : setSheet("aside")}><SidebarSimple size={20} /></button>}
         </header>
         {mainLandmark ? <main className="hkc-shell-main">{main ?? children}</main> : <div className="hkc-shell-main">{main ?? children}</div>}
         {composer && <div className="hkc-shell-composer">{composer}</div>}
       </div>
-      {aside && layout === "desktop" && <aside className="hkc-shell-aside" aria-label="Context">{aside}</aside>}
+      {aside && asideOpen && layout === "desktop" && <aside className="hkc-shell-aside" aria-label="Context">{inspector}</aside>}
     </div>
-    {sheet && <ShellSheet label={sheet === "sidebar" ? "Conversations" : "Context"} kind={sheet} onClose={() => setSheet(null)}>{sheet === "sidebar" ? sidebar : aside}</ShellSheet>}
+    {sheet && <ShellSheet label={sheet === "sidebar" ? "Conversations" : "Context"} kind={sheet} onClose={() => setSheet(null)}>{sheet === "sidebar" ? sourceContent : inspector}</ShellSheet>}
   </div>;
 }

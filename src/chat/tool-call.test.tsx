@@ -18,6 +18,16 @@ describe("Harso tool parts", () => {
     render(<HarsoToolCall {...part} {...overrides} />);
     expect(screen.getAllByRole("status")[0]).toHaveTextContent(state);
   });
+  test("completed tools start as quiet rows and disclose their panel on demand", () => {
+    const { container } = render(<HarsoToolCall {...part} result="done" />);
+    const details = container.querySelector("details")!;
+    expect(details).not.toHaveAttribute("open");
+    expect(screen.getByLabelText("Result")).not.toBeVisible();
+    fireEvent.click(container.querySelector("summary")!);
+    expect(details).toHaveAttribute("open");
+    expect(screen.getByLabelText("Result")).toBeVisible();
+    expect(container.querySelectorAll("summary > svg")).toHaveLength(2);
+  });
   test("default approval invokes the runtime responder", async () => {
     render(<HarsoToolCall {...part} approval={{ id: "gate" }} />);
     fireEvent.click(screen.getByRole("button", { name: "Approve" }));
@@ -26,6 +36,7 @@ describe("Harso tool parts", () => {
   });
   test("terminal and read-file preserve structured output", () => {
     const view = render(<HarsoTerminalTool {...part} args={{ command: "npm test" }} result={{ output: "passed", exitCode: 0 }} />);
+    fireEvent.click(view.container.querySelector("summary")!);
     expect(screen.getByLabelText("Command")).toHaveTextContent("npm test");
     expect(screen.getByLabelText("Output")).toHaveTextContent("passed");
     expect(screen.getByText(/Exit code/)).toHaveTextContent("0");

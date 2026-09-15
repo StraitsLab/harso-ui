@@ -1,11 +1,41 @@
-import { useRef, useState, type ComponentProps } from "react";
+import { useRef, useState, type ReactNode, type ComponentProps } from "react";
 import { ThreadListPrimitive, ThreadListItemPrimitive, useAuiState, useAui, type ThreadListItemState } from "@assistant-ui/react";
 import { Archive, ChatCircle, PencilSimple, Plus, Trash } from "@phosphor-icons/react";
 import "./thread-list.css";
 
+export type HarsoSidebarNavItem = {
+  id: string;
+  label: string;
+  /** Optional glyph — Recent rows in the v3 spec are text-only (rule 7). */
+  icon?: ReactNode;
+  active?: boolean;
+  unread?: boolean;
+  count?: number;
+  onSelect?: () => void;
+};
+export type HarsoSidebarNavProps = {
+  label: string;
+  heading?: boolean;
+  items: readonly HarsoSidebarNavItem[];
+};
+/** Host-owned destinations; labels remain accessible in the shell's icon rail. */
+export function HarsoSidebarNav({ label, heading = true, items }: HarsoSidebarNavProps) {
+  return <nav className="hkc-sidebar-nav" aria-label={label}>
+    {heading && <h2 className="hkc-thread-group">{label}</h2>}
+    {items.map(item => <button key={item.id} type="button" className="hkc-sidebar-nav-row" title={item.label} aria-label={item.label} aria-current={item.active ? "page" : undefined} onClick={item.onSelect}>
+      {item.icon && <span className="hkc-sidebar-nav-icon" aria-hidden="true">{item.icon}</span>}<span className="hkc-sidebar-nav-label">{item.label}</span>
+      {item.unread && <span className="hkc-sidebar-nav-dot" aria-label="Unread" />}
+      {item.count != null && item.count > 0 && <span className="hkc-sidebar-nav-count" aria-hidden="true">{item.count}</span>}
+    </button>)}
+  </nav>;
+}
+
 export type HarsoThreadGroup = "Today" | "Yesterday" | "Earlier";
 export type HarsoThreadListProps = Omit<ComponentProps<typeof ThreadListPrimitive.Root>, "children"> & {
   groupBy?: (thread: Omit<ThreadListItemState, "isMain">) => HarsoThreadGroup;
+  /** v3 source list: `heading` renders one caps label ("Recent") instead of day groups, and `newButton={false}` lets the host put New conversation in its nav. */
+  heading?: string;
+  newButton?: boolean;
 };
 
 function dayGroup(thread: Omit<ThreadListItemState, "isMain">): HarsoThreadGroup {
@@ -64,15 +94,18 @@ function ThreadRow() {
   </ThreadListItemPrimitive.Root>;
 }
 
-export function HarsoThreadList({ groupBy = dayGroup, className = "", ...props }: HarsoThreadListProps) {
+export function HarsoThreadList({ groupBy = dayGroup, heading, newButton = true, className = "", ...props }: HarsoThreadListProps) {
   const items = useAuiState(state => state.threads.threadItems);
   const ids = useAuiState(state => state.threads.threadIds);
   const loading = useAuiState(state => state.threads.isLoading);
   const groups = (["Today", "Yesterday", "Earlier"] as const).filter(group => items.some(item => ids.includes(item.id) && groupBy(item) === group));
   return <ThreadListPrimitive.Root {...props} className={`hkc-thread-list ${className}`} aria-label={props["aria-label"] ?? "Conversations"}>
-    <ThreadListPrimitive.New className="hkc-thread-new" title="New conversation"><Plus size={16} aria-hidden="true" /><span>New conversation</span></ThreadListPrimitive.New>
+    {newButton && <ThreadListPrimitive.New className="hkc-thread-new" title="New conversation"><Plus size={16} aria-hidden="true" /><span>New conversation</span></ThreadListPrimitive.New>}
     {loading ? <p role="status">Loading conversations…</p> : ids.length === 0 && <p className="hkc-thread-list-empty">No conversations yet.</p>}
-    {groups.map(group => <section key={group} aria-label={group}>
+    {heading ? ids.length > 0 && <section aria-label={heading}>
+      <h2 className="hkc-thread-group">{heading}</h2>
+      <ThreadListPrimitive.Items>{() => <ThreadRow />}</ThreadListPrimitive.Items>
+    </section> : groups.map(group => <section key={group} aria-label={group}>
       <h2 className="hkc-thread-group">{group}</h2>
       <ThreadListPrimitive.Items>{({ threadListItem }) => groupBy(threadListItem) === group ? <ThreadRow /> : null}</ThreadListPrimitive.Items>
     </section>)}

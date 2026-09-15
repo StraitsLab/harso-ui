@@ -30,9 +30,18 @@ describe("Harso messages and MessageActions", () => {
     expect(getComputedStyle(screen.getByRole("article", { name: "You" })).alignItems).toBe("flex-end");
     expect(getComputedStyle(screen.getByRole("article", { name: "Harso" })).alignItems).toBe("flex-start");
     expect(container.querySelector(".hkc-message-bubble")).toContainElement(screen.getByText("requirements.md"));
+    expect(container.querySelector(".hkc-message--user .hkc-message-speaker")).toBeNull();
     expect(screen.getByRole("img", { name: "conversation.png" })).toBeInTheDocument();
     const assistant = within(screen.getByRole("article", { name: "Harso" }));
     for (const name of ["Copy message", "Helpful", "Not helpful", "Regenerate response", "Read aloud"]) expect(assistant.getByRole("button", { name })).toHaveAttribute("title");
+  });
+
+  test("renders an editorial headline and timestamp without a visible You label", () => {
+    const createdAt = new Date(); createdAt.setHours(14, 2, 0, 0);
+    const { container } = render(<Example headline="A calmer first step" seed={messages.map(message => ({ ...message, createdAt }))} />);
+    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent("A calmer first step");
+    expect(screen.getByText("Today at 14:02")).toHaveAttribute("datetime", createdAt.toISOString());
+    expect(container.querySelector(".hkc-message-speaker time")).toHaveTextContent("14:02");
   });
 
   test("copy delegates to the clipboard primitive", async () => {
