@@ -33,28 +33,23 @@ one ambient shadow on floating layers; icons at cap height. Rejected: glass/blur
 SF glyph style, pill-everything. Elements Apple has that we lacked and that matter for Weave were added as the
 bold families above; CommandPalette and EmptyState come from Linear/Raycast instead.
 
-## Clickable prototype v2 — native macOS 27 / iOS 27 (pages `Proto macOS Light/Dark`, `Proto iOS Light/Dark`)
+## Clickable prototype v3 — the approved Boundaryless direction (pages `Proto macOS Light/Dark`, `Proto iOS Light/Dark`)
 
-Every screen of the Weave app as a Sketch frame — **144 screens**: macOS 34 × 2 appearances at 1440×900, iOS 38 × 2 at
-390×844 — wired with Sketch prototype flows and benchmarked against Apple's own macOS 27 / iOS 27 kits.
+**148 screens** (macOS 36 × 2 incl. two collapsed-rail twins, iOS 38 × 2), wired with Sketch flows: every screen reachable
+from `signin`, no dead ends (`sketch-scripts/prototype/graph.js` → 0/0 on all four pages). Open a `Proto …` page, select
+`signin`, ⌘P. The sidebar collapse button on `conversation` / `activity--work` goes to the rail twin and back.
 
-**To click through:** open the file, go to a `Proto …` page, select the `signin` frame (flow start point) and press ▶ or
-⌘P. Sign-in → home → conversation → ⋯ menu / approval / delete → activity → work inspector → projects → project →
-recent / artifacts / routines / customize → settings and all 11 categories → sign out. Every screen is reachable from
-`signin` and none is a dead end (`sketch-scripts/prototype/graph.js` proves it: 0 / 0 on all four pages).
+**Direction** — Abhi approved two renders on 2026-09-15 (`../docs/direction/conversation-target-*.png`, made from his
+2026-09-06 concept + the v2 build with the rule "complete capability, minimal look"). `lib-v3.js` is that direction as
+chrome: borderless (tonal columns, no rules, no outlined boxes — the border audit finds 0 enabled strokes on any screen
+beyond traffic lights, hairline list separators, rings and the battery), two shaded surfaces per screen (artifact/code card +
+composer), quiet rows with 5px dots, 16px hairline rings, one type scale (11 caps / 12 meta / 13 chrome / 14 body / 15
+title / 22 display), radius system (8 rows · 12 cards · 16 composer · pill chips), monoline SF glyphs, 56px icon-only rail
+or 240px source list with a 5% active tint, dark circular send. Native geometry still per `prototype-review/HIG-SPEC.md`.
 
-**Benchmark, measured not asserted** (`prototype-review/HIG-SPEC.md`): 30 Apple 27 components were imported from the
-official Sketch libraries and their geometry dumped — 256px vibrancy source list, 52px unified toolbar with the ‹ › capsule,
-32px sidebar rows / 11-bold headers, 260×170 alerts; iOS 54 status + 44 nav + 52 large title, 52px inset-grouped rows,
-346×62 floating capsule tab bar over the home indicator, 36×5 grabbers, 270-wide alerts. `lib-native.js` implements that
-chrome once; every screen is generated on it. Affordances are real SF Symbols (112 codepoints verified by rendering in
-SF Pro and reading back — `lib-sf.js`), never text "X" or Lucide strokes in chrome. Boundaryless keeps colour, content
-type (Inter) and tone; SF Pro carries chrome text.
-
-**Review**: independent full-scale review vs Apple's apps (`prototype-review/v2-round1-*.md`), two fix waves
-(`v2-fix2-*.md`), then a founder-eye defect hunt on the journey contact sheets (`sheet-*.png`): macOS 16/16 clean, iOS 24/24
-clean after four copy nits. The lanes' numeric vision scorer self-reported a "compressed" 6–7 scale even on defect-free
-screens; numbers from it are recorded but not used as the gate.
+**Review** — founder-eye defect hunt on the journey sheets (`prototype-review/sheet-*.png`): iOS 24/24 clean; macOS 16/16
+structurally clean, the reviewer's "leftover 1px strokes" claims were checked against the document (0 strokes) and at 2×
+(shadow edges / anti-aliasing), not defects. Side-by-side with the targets: `prototype-review/v3-vs-target.png`.
 
 ### Verification
 

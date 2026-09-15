@@ -1,0 +1,1 @@
+function refine(s,app){function walk(l){if(l.type==='Text'&&l.style.fontSize===12.5)l.style.fontSize=12;if(l.name==='sheet'){l.stackLayout=null;var hi=H.rect({parent:l,name:'sheet-home-indicator',w:139,h:5,radius:3,fill:H.sw(app,'ink')});hi.frame.x=125.5;hi.frame.y=l.frame.height-13;}if(l.layers)l.layers.slice().forEach(walk);}walk(s);}

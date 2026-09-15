@@ -1,2 +1,0 @@
-var ids=['signin','new-conversation','conversation','conversation--approval','conversation--menu','conversation--delete','search','activity','activity--work'];
-['Light/Clean','Dark/Clean'].forEach(function(app){var p=H.page('Proto macOS '+app.split('/')[0]);ids.forEach(function(id){p.layers.filter(function(l){return l.name==='Screen/macos/'+app+'/'+id;}).forEach(function(s){console.log(JSON.stringify({id:id,app:app,frame:s.id,x:s.frame.x,y:s.frame.y,w:s.frame.width,h:s.frame.height,children:s.layers.length}));});});});

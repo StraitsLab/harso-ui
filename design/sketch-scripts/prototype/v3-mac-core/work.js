@@ -1,0 +1,6 @@
+var ib=H.inspBody(named(s,'inspector'),APP);
+H.inspSection(ib,APP,'Objective',true);H.quietRow(ib,APP,{glyph:'folder',title:'Prepare the release',meta:'Weave Cloud · v0.18.3',strong:true});H.quietRow(ib,APP,{title:'Verify the ledger migration, run the test suite, and draft release notes.',tw:272});
+H.inspSection(ib,APP,'Attempt');H.quietRow(ib,APP,{dot:H.hex(APP,'accent'),title:'Running · Attempt 1',meta:'Started 14:16 · 2 minutes · 18.4k tokens'});
+H.inspSection(ib,APP,'Plan');[['tertiary','1. Review changed files','Completed · 7 files reviewed'],['attention-mark','2. Run npm test','Waiting for your approval'],['tertiary','3. Draft release notes','Queued after verification']].forEach(function(v){H.quietRow(ib,APP,{dot:H.hex(APP,v[0]),title:v[1],meta:v[2],tw:240});});
+H.inspSection(ib,APP,'Needs you');H.quietRow(ib,APP,{dot:H.hex(APP,'attention-mark'),title:'Allow workspace command',meta:'npm test · Project workspace',link:'conversation--approval',chevron:true});
+var actions=col(ib,'work-actions',272,8);button(actions,'Respond','conversation--approval',true,272);var sec=row(actions,'secondary-actions',272,32);button(sec,'Steer','conversation',false,132);button(sec,'Cancel','activity',false,132);H.order(sec);H.order(actions);H.order(ib);H.order(named(s,'inspector'));s.stackLayout.apply();finish();

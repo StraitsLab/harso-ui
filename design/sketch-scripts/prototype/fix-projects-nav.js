@@ -1,0 +1,4 @@
+// NO_PRELUDE
+const sketch = require('sketch'); var doc = sketch.getSelectedDocument(); var out = [];
+['Proto macOS Light', 'Proto macOS Dark'].forEach(function (pn) { var p = doc.pages.find(function (x) { return x.name === pn; }); var s = p.layers.find(function (l) { return l.name.indexOf('Screen/') === 0 && l.name.split('/').pop() === 'projects'; }); if (!s) return; var tb = sketch.find('Group', s).find(function (g) { return String(g.name) === 'toolbar'; }); if (!tb) { out.push(pn + ' no toolbar'); return; } var nav = tb.layers.find(function (k) { return String(k.name) === 'nav'; }); out.push(pn + ' nav=' + (nav ? Math.round(nav.frame.width) + 'x' + Math.round(nav.frame.height) + '@' + Math.round(nav.frame.x) : 'MISSING') + ' kids=' + tb.layers.map(function (k) { return String(k.name); }).join(',')); });
+console.log(JSON.stringify(out));
