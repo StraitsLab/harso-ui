@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AssistantRuntimeProvider, WebSpeechSynthesisAdapter, useAuiState, useLocalRuntime, type ToolCallMessagePartComponent, type ToolCallMessagePartProps } from "@assistant-ui/react";
 import { Bell, CaretRight, ChatCircle, Clock, Cube, FileText, DotsThree, Export, FolderSimple, GearSix, MagnifyingGlass, Microphone, PencilSimple, Sparkle, Stack } from "@phosphor-icons/react";
-import { HarsoChatShell, HarsoThread, HarsoComposer, HarsoMessageAttachment, HarsoReasoning, HarsoToolCall, HarsoMarkdownText } from "../src/chat";
+import { HarsoChatShell, HarsoThreadList, HarsoThread, HarsoComposer, HarsoMessageAttachment, HarsoReasoning, HarsoToolCall, HarsoMarkdownText } from "../src/chat";
 import { HarsoSidebarNav } from "../src/chat/thread-list";
 import { attachments, createScriptedAdapter, initialMessages } from "../src/chat/testing/scripted-adapter";
 
@@ -67,11 +67,7 @@ export function ChatShellExample() {
         { id: "all", label: "All projects", icon: <FolderSimple size={16} /> },
         { id: "personal", label: "Personal", icon: <FolderSimple size={16} /> },
         { id: "cloud", label: "Weave Cloud", icon: <FolderSimple size={16} /> },
-      ]} /><HarsoSidebarNav label="Recent" items={[
-        { id: "billing", label: "Move the billing webhook handler", active: true },
-        { id: "investor", label: "Draft the Q3 investor update" },
-        { id: "mac", label: "Why is the Mac build larger?" },
-      ]} /></>}
+      ]} /><HarsoThreadList heading="Recent" newButton={false} /></>}
       footer={<div className="hkc-shell-account-row"><span className="hkc-shell-avatar" role="img" aria-label="Abhi Bansal">AB</span><div className="hkc-shell-account-copy"><strong>Abhi Bansal</strong><small>Pro · Straits Lab</small></div><button type="button" className="hkc-shell-icon" aria-label="Account settings"><GearSix size={16} /></button></div>}
       subtitle="Personal · 14 turns"
       onBack={() => window.history.back()}

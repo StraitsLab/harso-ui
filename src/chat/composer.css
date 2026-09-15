@@ -5,7 +5,7 @@
 .harso-kit .hkc-composer-input { display: block; box-sizing: border-box; flex: 1; width: 0; min-width: 0; field-sizing: content; min-height: 24px; max-height: 240px; overflow-y: auto; resize: none; border: 0; background: transparent; color: var(--hk-ink); font: inherit; font-size: var(--hk-text-body); line-height: 24px; padding: 0; }
 .harso-kit .hkc-composer-input::placeholder { color: var(--hk-tertiary); }
 .harso-kit .hkc-composer-leading, .harso-kit .hkc-composer-trailing, .harso-kit .hkc-composer-voice { display: flex; align-items: center; gap: 8px; color: var(--hk-secondary); font-size: var(--hk-text-meta); min-width: 0; }
-.harso-kit .hkc-composer-leading { max-width: 30%; overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+.harso-kit .hkc-composer-leading { max-width: 30%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .harso-kit .hkc-composer-leading > * { flex-shrink: 0; }
 .harso-kit .hkc-composer-button { display: inline-flex; justify-content: center; align-items: center; flex-shrink: 0; width: 32px; height: 32px; padding: 0; border: 0; border-radius: var(--hk-radius-pill); color: var(--hk-secondary); background: transparent; cursor: pointer; }
 .harso-kit .hkc-composer-button:hover:not(:disabled) { background: var(--hk-hover); }

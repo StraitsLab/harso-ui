@@ -1,7 +1,7 @@
 "use client";
 
 import { MarkdownTextPrimitive, type SyntaxHighlighterProps } from "@assistant-ui/react-markdown";
-import type { TextMessagePartProps } from "@assistant-ui/react";
+import { MessagePartPrimitive, type TextMessagePartProps } from "@assistant-ui/react";
 import type { ComponentProps } from "react";
 import remarkGfm from "remark-gfm";
 import { HarsoCodeBlock } from "./code-block";
@@ -30,5 +30,6 @@ const components: ComponentProps<typeof MarkdownTextPrimitive>["components"] = {
 const safeUrl = (url: string) => /^(https?:|mailto:|#|\/)/i.test(url) ? url : "";
 
 export function HarsoMarkdownText(_props: Partial<TextMessagePartProps>) {
-  return <MarkdownTextPrimitive className="hkc-markdown hkc-message-text" containerProps={{ "data-testid": "hkc-markdown" } as ComponentProps<typeof MarkdownTextPrimitive>["containerProps"]} remarkPlugins={[remarkGfm]} skipHtml urlTransform={safeUrl} smooth components={components} />;
+  // Keep the streaming status announcement (role=status "Streaming") on markdown-rendered turns too.
+  return <><MarkdownTextPrimitive className="hkc-markdown hkc-message-text" containerProps={{ "data-testid": "hkc-markdown" } as ComponentProps<typeof MarkdownTextPrimitive>["containerProps"]} remarkPlugins={[remarkGfm]} skipHtml urlTransform={safeUrl} smooth components={components} /><MessagePartPrimitive.InProgress><span className="hkc-streaming-cursor" role="status" aria-label="Streaming" /></MessagePartPrimitive.InProgress></>;
 }

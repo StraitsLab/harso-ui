@@ -33,6 +33,9 @@ export function HarsoSidebarNav({ label, heading = true, items }: HarsoSidebarNa
 export type HarsoThreadGroup = "Today" | "Yesterday" | "Earlier";
 export type HarsoThreadListProps = Omit<ComponentProps<typeof ThreadListPrimitive.Root>, "children"> & {
   groupBy?: (thread: Omit<ThreadListItemState, "isMain">) => HarsoThreadGroup;
+  /** v3 source list: `heading` renders one caps label ("Recent") instead of day groups, and `newButton={false}` lets the host put New conversation in its nav. */
+  heading?: string;
+  newButton?: boolean;
 };
 
 function dayGroup(thread: Omit<ThreadListItemState, "isMain">): HarsoThreadGroup {
@@ -91,15 +94,18 @@ function ThreadRow() {
   </ThreadListItemPrimitive.Root>;
 }
 
-export function HarsoThreadList({ groupBy = dayGroup, className = "", ...props }: HarsoThreadListProps) {
+export function HarsoThreadList({ groupBy = dayGroup, heading, newButton = true, className = "", ...props }: HarsoThreadListProps) {
   const items = useAuiState(state => state.threads.threadItems);
   const ids = useAuiState(state => state.threads.threadIds);
   const loading = useAuiState(state => state.threads.isLoading);
   const groups = (["Today", "Yesterday", "Earlier"] as const).filter(group => items.some(item => ids.includes(item.id) && groupBy(item) === group));
   return <ThreadListPrimitive.Root {...props} className={`hkc-thread-list ${className}`} aria-label={props["aria-label"] ?? "Conversations"}>
-    <ThreadListPrimitive.New className="hkc-thread-new" title="New conversation"><Plus size={16} aria-hidden="true" /><span>New conversation</span></ThreadListPrimitive.New>
+    {newButton && <ThreadListPrimitive.New className="hkc-thread-new" title="New conversation"><Plus size={16} aria-hidden="true" /><span>New conversation</span></ThreadListPrimitive.New>}
     {loading ? <p role="status">Loading conversations…</p> : ids.length === 0 && <p className="hkc-thread-list-empty">No conversations yet.</p>}
-    {groups.map(group => <section key={group} aria-label={group}>
+    {heading ? ids.length > 0 && <section aria-label={heading}>
+      <h2 className="hkc-thread-group">{heading}</h2>
+      <ThreadListPrimitive.Items>{() => <ThreadRow />}</ThreadListPrimitive.Items>
+    </section> : groups.map(group => <section key={group} aria-label={group}>
       <h2 className="hkc-thread-group">{group}</h2>
       <ThreadListPrimitive.Items>{({ threadListItem }) => groupBy(threadListItem) === group ? <ThreadRow /> : null}</ThreadListPrimitive.Items>
     </section>)}

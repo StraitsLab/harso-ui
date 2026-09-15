@@ -30,7 +30,7 @@ describe("Harso tool parts", () => {
   });
   test("default approval invokes the runtime responder", async () => {
     render(<HarsoToolCall {...part} approval={{ id: "gate" }} />);
-    fireEvent.click(screen.getByRole("button", { name: "Allow once" }));
+    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
     expect(part.respondToApproval).toHaveBeenCalledWith({ approved: true });
     await screen.findByText("Approved");
   });
@@ -45,13 +45,13 @@ describe("Harso tool parts", () => {
     expect(screen.getByLabelText("File content")).toHaveTextContent("<script>not executable</script>");
     expect(view.container.querySelector("script")).toBeNull();
   });
-  test.each(["Allow once", "Deny"])("live %s resumes the scripted adapter", async decision => {
+  test.each(["Approve", "Deny"])("live %s resumes the scripted adapter", async decision => {
     render(<ChatPartsExample />);
     fireEvent.click(screen.getByRole("button", { name: "Start live approval" }));
     const prompt = await screen.findByText("Simulate running the checks? No shell command is executed.");
     const card = prompt.closest("section")!;
     fireEvent.click(within(card).getByRole("button", { name: decision }));
-    await waitFor(() => expect(card).toHaveAttribute("data-state", decision === "Allow once" ? "completed" : "denied"));
-    expect(within(card).getByLabelText("Output")).toHaveTextContent(decision === "Allow once" ? "Simulated checks passed" : "Command was not executed.");
+    await waitFor(() => expect(card).toHaveAttribute("data-state", decision === "Approve" ? "completed" : "denied"));
+    expect(within(card).getByLabelText("Output")).toHaveTextContent(decision === "Approve" ? "Simulated checks passed" : "Command was not executed.");
   });
 });

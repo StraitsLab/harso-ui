@@ -54,7 +54,7 @@
   .harso-kit .hkc-message-actions button { min-width: 44px; min-height: 44px; }
   .harso-kit :is(.hkc-edit-composer, .hkc-message-error) button { min-height: 44px; }
   .harso-kit .hkc-edit-composer { width: 100%; }
-  .harso-kit .hkc-edit-composer textarea { font-size: var(--hk-text-user); }
+  .harso-kit .hkc-edit-composer textarea { font-size: 16px; }
 }
 @keyframes hkc-cursor { 50% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .harso-kit .hkc-streaming-cursor { animation: none; } }

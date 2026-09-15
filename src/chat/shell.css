@@ -76,7 +76,7 @@
   .harso-kit .hkc-shell-composer::before { content: ""; position: absolute; left: 0; right: 0; top: -40px; height: 40px; background: linear-gradient(to bottom, transparent, var(--hk-canvas)); pointer-events: none; }
   .harso-kit .hkc-shell-composer > * { max-width: none; }
   .harso-kit .hkc-composer-chip { height: 32px; }
-  .harso-kit .hkc-shell-composer textarea { font-size: var(--hk-text-user); }
+  .harso-kit .hkc-shell-composer textarea { font-size: 16px; } /* iOS: <16px inputs trigger zoom */
   .harso-kit .hkc-shell-sheet--aside { width: 100vw; height: auto; max-height: 85dvh; margin: auto 0 0; border-radius: 16px 16px 0 0; }
 }
 
