@@ -29,18 +29,37 @@
   --hk-shadow: 0 14px 40px rgb(20 24 32 / .07), 0 1px 2px rgb(20 24 32 / .04);
   --hk-font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
   --hk-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
-  /* Type scale (px): 12 13 14 15 16 20 24 (+32 display, opt-in) */
-  --hk-text-xs: 12px;
-  --hk-text-sm: 13px;
-  --hk-text-label: 13px;
-  --hk-text-base: 14px;
-  --hk-text-md: 15px;
-  --hk-text-input: 15px;
-  --hk-text-body: 15px;
-  --hk-text-user: 16px;
-  --hk-text-title: 20px;
-  --hk-text-heading: 24px;
-  --hk-text-display: 32px;
+  /* Boundaryless v3 type scale (design/DIRECTION.md rule 4): 11 caps · 12 meta · 13 chrome · 14 body · 15 title · 22 display.
+     Legacy names stay as aliases so consumers keep compiling; new code uses the v3 names. */
+  --hk-text-caps: 11px;
+  --hk-text-meta: 12px;
+  --hk-text-chrome: 13px;
+  --hk-text-body: 14px;
+  --hk-text-title: 15px;
+  --hk-text-display: 22px;
+  --hk-caps-tracking: .06em;
+  --hk-text-xs: var(--hk-text-meta);
+  --hk-text-sm: var(--hk-text-chrome);
+  --hk-text-label: var(--hk-text-chrome);
+  --hk-text-base: var(--hk-text-body);
+  --hk-text-md: var(--hk-text-body);
+  --hk-text-input: var(--hk-text-body);
+  --hk-text-user: var(--hk-text-body);
+  --hk-text-heading: var(--hk-text-display);
+  /* v3 radius system (rule 5): 8 rows/buttons · 12 cards · 16 composer/bubbles · pill. */
+  --hk-radius-row: 8px;
+  --hk-radius-control: 8px;
+  --hk-radius-card: 12px;
+  --hk-radius-composer: 16px;
+  --hk-radius-pill: 999px;
+  /* v3 indicators (rule 3) and icon stroke (rule 6). */
+  --hk-dot: 5px;
+  --hk-ring: 16px;
+  --hk-stroke: 1.5;
+  /* Borderless: surfaces separate by tonal step; the only stroke tokens left are inset list hairlines. */
+  --hk-hairline: var(--hk-line);
+  --hk-active-tint: color-mix(in srgb, var(--hk-ink) 5%, transparent);
+  --hk-shadow-float: 0 6px 24px rgb(20 24 32 / .10);
   --hk-space-1: 4px;
   --hk-space-2: 8px;
   --hk-space-3: 12px;
@@ -49,8 +68,6 @@
   --hk-space-8: 32px;
   --hk-space-12: 48px;
   --hk-space-16: 64px;
-  --hk-radius-pill: 999px;
-  --hk-radius-card: 18px;
   --hk-fast: 120ms;
   --hk-reveal: 240ms;
   --hk-ease: cubic-bezier(.2, .7, .2, 1);
@@ -109,6 +126,8 @@
   --hk-inverse: #131518;
   --hk-glass: rgb(28 31 36 / .92);
   --hk-shadow: 0 14px 40px rgb(0 0 0 / .35), 0 1px 2px rgb(0 0 0 / .3);
+  --hk-shadow-float: 0 6px 24px rgb(0 0 0 / .40);
+  --hk-active-tint: color-mix(in srgb, var(--hk-ink) 8%, transparent);
 }
 
 .harso-kit[data-mode="dark"][data-palette="cozy"] {
