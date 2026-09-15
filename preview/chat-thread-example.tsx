@@ -7,7 +7,7 @@ import { HarsoReasoning } from "../src/chat/reasoning";
 import { HarsoCodeBlock } from "../src/chat/code-block";
 import { HarsoMarkdownText } from "../src/chat/markdown";
 import { HarsoToolCall } from "../src/chat/tool-call";
-import { attachments, createScriptedAdapter } from "../src/chat/testing/scripted-adapter";
+import { attachments, createScriptedAdapter, initialMessages as scriptedSeed } from "../src/chat/testing/scripted-adapter";
 
 export const chatThreadExports = ["HarsoThread", "HarsoUserMessage", "HarsoAssistantMessage", "HarsoEditComposer", "HarsoMessageActions"] as const;
 export const chatThreadNotes = "assistant-ui owns streaming, editing, branches, clipboard, feedback, and speech. This example uses an in-memory scripted adapter; no commands execute.";
@@ -17,7 +17,7 @@ type ThreadState = typeof states[number];
 const fixtureTime = new Date();
 fixtureTime.setHours(14, 2, 0, 0);
 const initialMessages: ThreadMessageLike[] = [
-  { role: "user", content: "Build a focused onboarding flow for the new workspace.", createdAt: fixtureTime },
+  { role: "user", content: "Build a focused onboarding flow for the new workspace.", createdAt: fixtureTime, attachments: scriptedSeed[0]?.attachments },
   { role: "assistant", createdAt: fixtureTime, status: { type: "complete", reason: "stop" }, content: [
     { type: "text", text: "## A calmer first step\n\nI’ll keep the setup focused: one clear decision at a time, with the details ready when you need them." },
     { type: "reasoning", text: "Start with the workspace name, then invite the team. Keep optional configuration out of the critical path." },
