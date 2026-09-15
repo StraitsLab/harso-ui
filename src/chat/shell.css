@@ -28,7 +28,7 @@
 .harso-kit .hkc-shell-rail .hkc-shell-account { padding: 16px 14px; }
 .harso-kit .hkc-shell-history-controls { display: flex; }
 .harso-kit .hkc-shell-history-controls .hkc-shell-icon svg { width: 14px; height: 14px; }
-.harso-kit .hkc-shell-icon:disabled { color: var(--hk-line-strong); cursor: default; background: transparent; }
+.harso-kit .hkc-shell-icon:disabled { color: var(--hk-faint); cursor: default; background: transparent; } /* faint ink, not a line colour: on the dark surface line-strong (#343941) was invisible */
 .harso-kit .hkc-shell-header { height: 52px; flex-shrink: 0; }
 .harso-kit .hkc-shell-heading { display: flex; align-items: baseline; }
 .harso-kit .hkc-shell-subtitle { white-space: nowrap; }
