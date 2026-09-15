@@ -1,0 +1,4 @@
+from build import *
+L=json.loads((ROOT/'ledger.json').read_text())
+code='var records='+json.dumps(L)+''';var changed=[];records.forEach(e=>{var s=sketch.find('#'+e.frame,doc)[0];var b=s.layers.find(l=>l.name==='body');if(e.id==='project--empty'){b.layers.filter(l=>l.type==='Group'&&l.name.indexOf('link:new-conversation')===0).forEach(l=>l.remove());}function walk(l){if(/^link:.* [0-9]+$/.test(l.name)){var old=l.name;l.name=l.name.replace(/ [0-9]+$/,'');changed.push({old:old,now:l.name});}(l.layers||[]).forEach(walk);}walk(s);if(e.id==='project--work'){var seg=b.layers.find(l=>l.name==='segmented-control');var work=seg.layers.find(l=>l.name==='link:project--work');work.style.fills=[{fillType:sketch.Style.FillType.Color,color:H.sw(e.app,'accent-soft')}];work.layers.filter(l=>l.type==='Text').forEach(l=>l.style.textColor=H.sw(e.app,'accent'));}H.relayout(s);});H.out(changed);'''
+print(run(code,'normalize-links'))

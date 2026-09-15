@@ -1,0 +1,2 @@
+var FRAME="75E710E9-E91B-4690-9FDE-E12A6075794E";
+var s=sketch.find('#'+FRAME,doc)[0];function w(l){if(l.type==='Text'){if(l.text.indexOf('Running only')===0){l.text='Running only the billing webhook tests. Before executing anything, I’ll ask you.';l.frame.width=342;l.fixedWidth=true;}if(l.text.indexOf('Every 1d')>=0)l.text=l.text.replace('Every 1d','Every day');if(l.text.indexOf('Account-wide usage')>=0){l.text='Requests: 41 / 500';l.frame.width=170;l.fixedWidth=true;}} (l.layers||[]).forEach(w);}w(s);H.relayout(s);H.out({id:s.id});

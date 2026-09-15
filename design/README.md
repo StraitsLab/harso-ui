@@ -33,6 +33,25 @@ one ambient shadow on floating layers; icons at cap height. Rejected: glass/blur
 SF glyph style, pill-everything. Elements Apple has that we lacked and that matter for Weave were added as the
 bold families above; CommandPalette and EmptyState come from Linear/Raycast instead.
 
+## Clickable prototype (pages `Proto macOS Light/Dark`, `Proto iOS Light/Dark`)
+
+Every screen of the Weave app as a Sketch frame — **142 screens**: macOS 34 × 2 appearances at 1440×900, iOS 37 × 2 at
+390×844 — built from the kit's own symbols and wired with Sketch prototype flows.
+
+**To click through:** open the file, go to a `Proto …` page, select the `signin` frame (it is the flow start point) and
+press ▶ (Preview) or ⌘P. Sign-in → home → conversation → ⋯ menu / approval / delete → activity → work inspector →
+projects → project → recent / artifacts / routines / customize → settings and all 11 categories → sign out. On iOS the
+floating tab bar switches root screens, pushed screens slide in, sheets and action sheets open over a scrim, Back works.
+
+Inventory came from the shipped desktop shell's route switch (12 routes + 11 settings categories); iOS screens derive
+from their macOS siblings using the kit's iOS 27 patterns. Screens are named `Screen/<platform>/<App>/<id>`; every
+clickable element is named `link:<id>` (or `link:back`), and `sketch-scripts/prototype/wire-flows.js` rebuilds the flows
+from those names at any time (`graph.js` checks that every screen is reachable from `signin` and none is a dead end —
+both 0 at commit time on all four pages).
+
+Two independent review rounds: 42/142 → 138/142 ≥8 (`prototype-review/`), the last 4 fixed inline and re-verified
+(menu anchoring 10/10, artifacts thumbnails, iOS segmented state). Journey contact sheets are in the same folder.
+
 ### Verification
 
 Three rounds of independent vision review against the rendered web kit (`review/round1-*.md`, `round2-*.md`,

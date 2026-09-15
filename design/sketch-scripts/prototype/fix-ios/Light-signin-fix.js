@@ -1,0 +1,1 @@
+var s=sketch.find('#8CBC262B-5820-4377-B4A8-2E0B983D01CE',doc)[0];H.fixIOS(s,"Light/Clean","signin");

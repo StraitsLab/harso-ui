@@ -1,0 +1,1 @@
+['Menu/Light/Clean/default','Dialog/Light/Clean/destructive','CommandPalette/Light/Clean/default'].forEach(n=>{var m=doc.getSymbols().find(s=>s.name===n);function tree(l){return {name:l.name,type:l.type,text:l.text,frame:l.frame,layers:(l.layers||[]).map(tree)}}H.out(tree(m))}); H.out(doc.getSymbols().filter(s=>/Ring|Usage/.test(s.name)).map(s=>s.name));

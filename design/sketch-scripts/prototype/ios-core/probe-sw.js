@@ -1,0 +1,1 @@
+H.out(doc.swatches.filter(function(s){return s.name.indexOf('Light/Clean/')===0}).map(function(s){return s.name}));

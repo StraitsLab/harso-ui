@@ -1,0 +1,1 @@
+var a=[];function walk(l){if(/ChatShell/.test(l.name))a.push({n:l.name,id:l.id,w:l.frame.width,h:l.frame.height,c:(l.layers||[]).map(function(k){return {n:k.name,id:k.id,w:k.frame.width,h:k.frame.height}})});(l.layers||[]).forEach(walk)};doc.pages.forEach(walk);H.out(a);

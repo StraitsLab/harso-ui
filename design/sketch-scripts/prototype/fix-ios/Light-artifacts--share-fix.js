@@ -1,0 +1,1 @@
+var s=sketch.find('#05BE1AC7-77FC-42A9-94AF-1BC8568A25D8',doc)[0];H.fixIOS(s,"Light/Clean","artifacts--share");

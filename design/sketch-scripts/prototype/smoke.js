@@ -1,0 +1,10 @@
+var app = 'Light/Clean';
+var s = H.screen({ page: 'Scratch', platform: 'macos', app: app, id: 'smoke', w: 1440, h: 900 });
+H.macSidebar(s, app, 'activity');
+var m = H.macMain(s, app);
+H.text({ parent: m, text: 'Activity', size: 24, weight: 6, color: H.sw(app, 'ink') });
+H.order(s);
+var i = H.iosScreen({ page: 'Scratch', app: app, id: 'smoke', x: 1500, title: 'Activity', back: true });
+H.text({ parent: i.body, text: 'Hello', size: 16, weight: 5, color: H.sw(app, 'ink') }); i.body.stackLayout.apply();
+H.iosTabBar(i.screen, app, 'activity'); i.screen.stackLayout.apply();
+H.out({ mac: String(s.id), ios: String(i.screen.id), macH: s.frame.height, iosH: i.screen.frame.height });

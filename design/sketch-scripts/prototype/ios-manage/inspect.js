@@ -1,0 +1,1 @@
+var s=sketch.find('#5D030E50-4887-4A85-9FA6-D32AC47785E5',doc)[0];function walk(l){if(l.name==='copy'||l.type==='Text')H.out({name:l.name,text:l.text,f:l.frame,stack:l.stackLayout,parent:l.parent.name});(l.layers||[]).forEach(walk);}walk(s);H.out({roles:doc.swatches.filter(x=>x.name.indexOf('Light/Clean')===0).map(x=>x.name)});

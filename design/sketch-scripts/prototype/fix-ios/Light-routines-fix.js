@@ -1,0 +1,1 @@
+var s=sketch.find('#B84A7FE6-21CB-466D-8B59-4B0CAE812674',doc)[0];H.fixIOS(s,"Light/Clean","routines");

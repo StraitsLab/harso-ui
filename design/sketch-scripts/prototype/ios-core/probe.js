@@ -1,0 +1,1 @@
+H.out({doc:doc.id,version:sketch.version, symbols:doc.getSymbols().filter(function(s){return /^(Composer|ChatShell|SocialButton|SearchField|Sheet|ActionSheet|Dialog|EmptyState)\//.test(s.name)&&/Light\/Clean/.test(s.name)}).map(function(s){return {name:s.name,id:s.id,w:s.frame.width,h:s.frame.height}})});

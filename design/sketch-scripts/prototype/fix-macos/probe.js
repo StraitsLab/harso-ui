@@ -1,0 +1,2 @@
+H.out({doc:doc.id,version:sketch.version});['Light','Dark'].forEach(a=>{var p=H.page('Proto macOS '+a);p.layers.filter(s=>s.name.startsWith('Screen/')).forEach(s=>H.out({name:s.name,id:s.id,x:s.frame.x,y:s.frame.y}));});
+['conversation','projects','artifacts--detail','settings-billing','conversation--menu'].forEach(id=>{var s=H.page('Proto macOS Light').layers.find(l=>l.name==='Screen/macos/Light/Clean/'+id);function walk(l,d){if(d<5)H.out({screen:id,d:d,name:l.name,type:l.type,id:l.id,text:l.text,frame:l.frame});if(d<4)(l.layers||[]).forEach(x=>walk(x,d+1));}walk(s,0);});

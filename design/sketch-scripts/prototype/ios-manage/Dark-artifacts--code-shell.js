@@ -1,0 +1,2 @@
+var CONFIG={"id": "artifacts--code", "app": "Dark/Clean", "index": 26};
+var o={"page": "Proto iOS Dark", "app": "Dark/Clean", "id": "artifacts--code", "x": 13260, "y": 1004, "title": "Artifacts", "back": true, "tab": false, "gap": 16};o.trailing='upload';o.trailingLink='artifacts--share';var i=H.iosScreen(o);i.body.stackLayout.alignItems=sketch.StackLayout.AlignItems.Start;i.finish();var cap=H.text({parent:i.screen.parent,text:CONFIG.id,size:13,color:H.sw(CONFIG.app,'tertiary')});cap.frame.x=o.x;cap.frame.y=976;H.out({id:i.screen.id});

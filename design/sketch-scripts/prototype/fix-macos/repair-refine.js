@@ -1,0 +1,1 @@
+edit(TARGET,function(s){if(TARGET==='routines--new'){var p=named(s,'overlay:routines--new');var order=[named(p,'dialog-heading'),p.layers.find(l=>l.type==='Text'),named(p,'field:Name'),named(p,'field:Prompt'),named(p,'field:Schedule'),named(p,'field:Profile'),named(p,'routing'),named(p,'dialog-footer')];order.forEach(l=>{if(l)l.index=0;});p.stackLayout.apply();p.frame.y=100;} });

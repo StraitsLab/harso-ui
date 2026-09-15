@@ -1,0 +1,22 @@
+// Lane-local repair generators. Preserve screen IDs, positions and existing navigation.
+var APP;
+function all(l){var a=[l];(l.layers||[]).forEach(k=>a=a.concat(all(k)));return a;}
+function named(l,n){return all(l).find(k=>k.name===n);}
+function texts(l){return all(l).filter(k=>k.type==='Text');}
+function replace(l,a,b){texts(l).filter(t=>t.text===a).forEach(t=>t.text=b);}
+function clear(l){l.layers.slice().forEach(k=>k.remove());}
+function col(p,n,w,g,pad,fill,h){var f=H.frame({parent:p,name:n,dir:'col',w:w,h:h,gap:g===undefined?16:g,pad:pad||0,fill:fill?H.sw(APP,fill):null});f.stackLayout.alignItems=0;return f;}
+function row(p,n,w,g,pad,fill,h){return H.frame({parent:p,name:n,dir:'row',w:w,h:h,gap:g===undefined?8:g,pad:pad||0,fill:fill?H.sw(APP,fill):null});}
+function tx(p,t,size,role,w,weight){return H.text({parent:p,text:t,size:size||14,color:H.sw(APP,role||'ink'),w:w,weight:weight||5});}
+function space(p,vert){var f=H.frame({parent:p,name:'flex-space',w:1,h:1});f[vert?'verticalSizing':'horizontalSizing']=sketch.FlexSizing.Fill;return f;}
+function btn(p,t,id,kind,w,h){var b=row(p,'link:'+id,w,8,{left:12,right:12,top:0,bottom:0},kind==='primary'?'ink':'surface',h||36);b.style.corners.radii=[8,8,8,8];b.style.borders=[{color:H.sw(APP,'line'),thickness:1,position:sketch.Style.BorderPosition.Inside}];b.stackLayout.justifyContent=1;tx(b,t,13,kind==='primary'?'inverse':kind==='danger'?'negative':'ink',undefined,6);H.order(b);return b;}
+function ib(p,icon,id){var b=row(p,'link:'+id,32,0,0,null,32);b.stackLayout.justifyContent=1;H.icon({parent:b,d:H.paths[icon],size:18,color:H.hex(APP,'secondary')});H.order(b);return b;}
+function card(p,n,w,g,pad){var c=col(p,n,w,g===undefined?16:g,pad===undefined?20:pad,'surface');c.style.corners.radii=[12,12,12,12];c.style.borders=[{color:H.sw(APP,'line'),thickness:1,position:sketch.Style.BorderPosition.Inside}];return c;}
+function mono(p,t,w){return H.text({parent:p,text:t,size:12,mono:true,color:H.sw(APP,'secondary'),w:w});}
+function utility(s){all(s).filter(l=>l.name==='link:search'&&l.type==='Group').forEach(b=>{b.style.fills=[{color:H.sw(APP,'surface'),enabled:true}];b.style.borders=[{color:H.sw(APP,'line'),thickness:1,position:sketch.Style.BorderPosition.Inside}];texts(b).forEach(t=>t.style.textColor=H.sw(APP,'ink'));});var f=named(s,'sidebar');var foot=f&&named(f,'link:settings');if(foot){foot.stackLayout.gap=6;foot.stackLayout.apply();}}
+function normalized(s){all(s).forEach(l=>{if(/^link:.* \d+$/.test(l.name))l.name=l.name.replace(/ \d+$/,'');});}
+function final(s){utility(s);H.relayout(s);normalized(s);H.out({screen:s.name,id:s.id,frame:s.frame,links:all(s).filter(l=>l.name.startsWith('link:')).map(l=>l.name)});}
+function edit(id,fn){['Light','Dark'].forEach(a=>{APP=a+'/Clean';var s=H.page('Proto macOS '+a).layers.find(l=>l.name==='Screen/macos/'+APP+'/'+id);if(!s)throw Error('Missing '+id);var x=s.frame.x,y=s.frame.y;fn(s);final(s);s.frame.x=x;s.frame.y=y;});}
+
+var TARGET="routines--new";
+edit(TARGET,function(s){if(TARGET==='customize--profile'){all(named(s,'overlay:customize--profile')).filter(l=>l.type==='SymbolInstance').forEach(i=>i.overrides.filter(o=>o.property==='stringValue').forEach(o=>o.value='On'));}if(TARGET==='conversation--menu'){var d=named(s,'destructive-divider');d.style.fills=[{color:H.sw(APP,'line-strong'),enabled:true}];d.frame.height=2;}if(TARGET==='routines'||TARGET==='routines--new'){all(named(s,'main')).filter(l=>/^routine-row/.test(l.name)).forEach(r=>{var ts=texts(r);var daily=ts.some(t=>t.text==='Daily brief');ts.filter(t=>t.text.includes('Workspace sprite')).forEach(t=>t.text=(daily?'Personal':'No project')+' · Workspace sprite');});} });

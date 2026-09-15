@@ -1,0 +1,1 @@
+H.out({doc:doc.id,version:sketch.version,pages:doc.pages.filter(p=>p.name.indexOf('Proto macOS')===0).map(p=>({name:p.name,id:p.id})),symbols:doc.getSymbols().filter(s=>/^(Button|Menu|Dialog|CommandPalette|EmptyState|ProgressRing|Input)\//.test(s.name)&&s.name.indexOf('Light/Clean')>=0).map(s=>({name:s.name,w:s.frame.width,h:s.frame.height}))});

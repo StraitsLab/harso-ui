@@ -1,0 +1,2 @@
+var CONFIG={"id": "artifacts--share", "app": "Dark/Clean", "index": 27};
+var o={"page": "Proto iOS Dark", "app": "Dark/Clean", "id": "artifacts--share", "x": 13770, "y": 1004, "title": "Artifacts", "back": true, "tab": false, "gap": 16};var i=H.iosScreen(o);i.body.stackLayout.alignItems=sketch.StackLayout.AlignItems.Start;i.finish();var cap=H.text({parent:i.screen.parent,text:CONFIG.id,size:13,color:H.sw(CONFIG.app,'tertiary')});cap.frame.x=o.x;cap.frame.y=976;H.out({id:i.screen.id});

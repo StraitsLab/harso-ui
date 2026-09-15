@@ -1,0 +1,1 @@
+['EmptyState/Light/Clean/default','Artifact/Light/Clean/document/preview'].forEach(function(n){var s=doc.getSymbols().find(function(s){return s.name===n});H.out({name:n,layers:sketch.find('Text',s).map(function(t){return {id:t.id,text:t.text}})});});

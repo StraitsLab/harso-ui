@@ -1,0 +1,1 @@
+H.out(doc.getSymbols().filter(s=>/^(EmptyState|GroupBox|Sheet|ActionSheet|SearchField)\/Light\/Clean/.test(s.name)).map(s=>({name:s.name,texts:sketch.find('Text',s).map(t=>({id:t.id,text:t.text,frame:t.frame}))})));

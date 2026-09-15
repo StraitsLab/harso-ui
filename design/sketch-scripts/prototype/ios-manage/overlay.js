@@ -1,0 +1,9 @@
+s.stackLayout=null;
+var scrim=H.rect({parent:s,name:'overlay-scrim',w:390,h:844,fill:H.alpha(H.hex(APP,'ink'),0.4)});
+var sh=col(s,ID==='settings--sign-out'?'ActionSheet':'Sheet',16,16,390,'panel');
+if(ID==='settings--sign-out'){txt(sh,'Sign out of Weave?',22);note(sh,'This signs out only this iPhone. Your conversations stay in your account.');button(sh,'Sign out','signin',true);button(sh,'Cancel','back');}
+if(ID==='projects--new'){txt(sh,'New project',22);note(sh,'Keep related conversations and work together.');field(sh,'NAME','My project');button(sh,'Create project','project');button(sh,'Cancel','back');}
+if(ID==='routines--new'){txt(sh,'New routine',22);field(sh,'NAME','Daily brief');field(sh,'INSTRUCTIONS','Summarize my priorities for today');field(sh,'SCHEDULE','Every day at 9:00 AM');button(sh,'Create routine','routines');button(sh,'Cancel','back');}
+if(ID==='settings-billing--plan'){txt(sh,'Choose a plan',22);note(sh,'Choose the billing period that works for you.');segmented(sh,['Monthly','Annual'],[ID,ID]);var g=group(sh);row(g,'Pro','More room for your daily work',ID,'sparkles','Selected');H.order(g);note(sh,'Review pricing and payment details at checkout.');button(sh,'Continue','settings-billing');button(sh,'Cancel','back');}
+if(ID==='artifacts--share'){txt(sh,'Share artifact',22);var g=group(sh);row(g,'Copy link',null,'artifacts--detail','link');row(g,'Save to Files',null,'artifacts--detail','download');H.order(g);button(sh,'Cancel','back');}
+H.order(sh);sh.frame.x=0;sh.frame.y=844-sh.frame.height-20;sh.style.corners.radii=[24,24,24,24];s.frame.width=390;s.frame.height=844;H.out({id:s.id,sheetY:sh.frame.y,sheetH:sh.frame.height});
