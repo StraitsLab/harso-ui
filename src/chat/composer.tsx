@@ -42,12 +42,16 @@ export function HarsoComposer({ modelSelector, voice, "data-layout": layout, lea
       const input = element.querySelector<HTMLTextAreaElement>("textarea");
       const form = element.querySelector<HTMLElement>(".hkc-composer");
       if (!input || !form) return;
-      const style = getComputedStyle(form);
-      const controls = [...form.querySelectorAll<HTMLElement>(".hkc-composer-control")].filter(node => getComputedStyle(node).display !== "none");
+      // Hosts render the composer under test environments without a full window (e.g. a consumer test that mounts a
+      // surface through a stubbed DOM); the pill/expanded switch is progressive, so skip measuring rather than throw.
+      const view = element.ownerDocument.defaultView;
+      if (!view || typeof view.getComputedStyle !== "function") return;
+      const style = view.getComputedStyle(form);
+      const controls = [...form.querySelectorAll<HTMLElement>(".hkc-composer-control")].filter(node => view.getComputedStyle(node).display !== "none");
       const width = form.clientWidth - parseFloat(style.paddingLeft || "0") - parseFloat(style.paddingRight || "0") - controls.reduce((sum, node) => sum + node.getBoundingClientRect().width, 0) - controls.length * (parseFloat(style.columnGap) || 0);
       // Measure at the collapsed row width even when expanded, avoiding wrap/unwrap oscillation.
       const probe = input.cloneNode() as HTMLTextAreaElement;
-      const inputStyle = getComputedStyle(input);
+      const inputStyle = view.getComputedStyle(input);
       Object.assign(probe.style, { position: "fixed", visibility: "hidden", pointerEvents: "none", height: "0", minHeight: "0", maxHeight: "none", width: `${Math.max(1, width)}px`, font: inputStyle.font, lineHeight: inputStyle.lineHeight, padding: "0", border: "0", boxSizing: "border-box" });
       probe.removeAttribute("id");
       probe.setAttribute("aria-hidden", "true");
