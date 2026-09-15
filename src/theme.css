@@ -111,7 +111,7 @@
   --hk-hover: #262a31;
   --hk-ink: #f2f3f5;
   --hk-secondary: #a5aab3;
-  --hk-tertiary: #8b919b;
+  --hk-tertiary: #979da6; /* >=4.5:1 on the 8% active tint (Axe: the desktop Work row reads its meta on the selected tint) */
   --hk-faint: #666c76;
   --hk-line: #262a30;
   --hk-line-strong: #343941;
