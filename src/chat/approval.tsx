@@ -33,7 +33,7 @@ function ApprovalDecision({ approval, onDecide }: HarsoApprovalProps & { approva
     {approval.prompt && <p>{approval.prompt}</p>}
     {approval.resolution ? <p role="status">Approval {approval.resolution}</p> : approved !== undefined ? <p role="status">{approved ? "Approved" : "Denied"}</p> : <div className="hkc-approval-actions">
       <button type="button" disabled={pending} onClick={() => void decide(false)}>Deny</button>
-      <button type="button" className="hkc-approval-primary" disabled={pending} onClick={() => void decide(true)}>Approve</button>
+      <button type="button" className="hkc-approval-primary" disabled={pending} onClick={() => void decide(true)}>Allow once</button>
     </div>}
     {error && <p role="alert">{error}</p>}
   </div>;

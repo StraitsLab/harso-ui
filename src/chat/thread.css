@@ -1,15 +1,15 @@
 .harso-kit .hkc-thread { container: hkc-thread / inline-size; display: flex; flex: 1; flex-direction: column; min-width: 0; min-height: 0; height: 100%; background: var(--hk-canvas); color: var(--hk-ink); }
 .harso-kit .hkc-thread-viewport { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; }
-.harso-kit .hkc-thread-transcript { box-sizing: border-box; max-width: 832px; margin-inline: auto; padding: var(--hk-space-8); }
+.harso-kit .hkc-thread-transcript { box-sizing: border-box; width: calc(100% - 64px); max-width: 720px; margin-inline: auto; padding-block: 28px; display: flex; flex-direction: column; gap: 28px; }
 .harso-kit .hkc-thread-empty { padding-block: var(--hk-space-8); color: var(--hk-secondary); font-size: var(--hk-text-body); }
-.harso-kit .hkc-thread-scroll { display: flex; align-items: center; gap: var(--hk-space-2); align-self: center; flex-shrink: 0; padding: var(--hk-space-2) var(--hk-space-3); border: 1px solid var(--hk-line); border-radius: var(--hk-radius-pill); background: var(--hk-surface); color: var(--hk-accent); font: inherit; font-size: var(--hk-text-sm); cursor: pointer; }
+.harso-kit .hkc-thread-scroll { display: flex; align-items: center; gap: var(--hk-space-2); align-self: center; flex-shrink: 0; padding: var(--hk-space-2) var(--hk-space-3); border: 0; border-radius: var(--hk-radius-pill); background: var(--hk-surface); color: var(--hk-accent); font: inherit; font-size: var(--hk-text-sm); cursor: pointer; }
 .harso-kit .hkc-thread-scroll:disabled { display: none; }
 .harso-kit .hkc-thread-composer { flex-shrink: 0; padding: var(--hk-space-3) var(--hk-space-8); }
 .harso-kit .hkc-thread-scroll:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
-@container hkc-thread (max-width: 1023px) { .harso-kit .hkc-thread-transcript { padding-inline: var(--hk-space-6); } }
+@container hkc-thread (max-width: 1023px) { .harso-kit .hkc-thread-transcript { width: calc(100% - 48px); } }
 @container hkc-thread (max-width: 640px) {
   .harso-kit .hkc-thread-transcript { padding-bottom: var(--hk-space-12, 48px); }
-  .harso-kit .hkc-thread-transcript { padding: var(--hk-space-4); }
+  .harso-kit .hkc-thread-transcript { width: calc(100% - 32px); padding-inline: 0; }
   .harso-kit .hkc-thread-composer { position: sticky; bottom: 0; padding: var(--hk-space-3) 0 max(12px, env(safe-area-inset-bottom)); background: var(--hk-canvas); }
   .harso-kit .hkc-thread-scroll { min-height: 44px; }
 }

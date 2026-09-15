@@ -14,7 +14,7 @@
   gap: var(--hk-space-2);
   padding: var(--hk-space-1) var(--hk-space-3);
   border-bottom: 0;
-  font: var(--hk-text-xs)/1.5 var(--hk-mono);
+  font: var(--hk-text-meta)/1.5 var(--hk-mono);
   color: var(--hk-tertiary);
 }
 .harso-kit .hkc-code-block-filename {
@@ -44,8 +44,8 @@
 .harso-kit .hkc-code-block-viewport {
   display: flex;
   overflow-x: auto;
-  padding: var(--hk-space-3);
-  font: var(--hk-text-sm)/1.55 var(--hk-mono);
+  padding: var(--hk-space-4);
+  font: calc(var(--hk-text-meta) + .5px)/1.6 var(--hk-mono);
   tab-size: 2;
 }
 .harso-kit .hkc-code-block pre,

@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { AssistantRuntimeProvider, ComposerPrimitive, useLocalRuntime, type ThreadMessageLike } from "@assistant-ui/react";
 import { HarsoThread, type HarsoThreadProps } from "./thread";
+import threadCSS from "./thread.css?inline";
 import { createScriptedAdapter } from "./testing/scripted-adapter";
 
 function Example({ messages = [], ...props }: HarsoThreadProps & { messages?: ThreadMessageLike[] }) {
@@ -18,6 +19,12 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 describe("HarsoThread", () => {
+  test("uses a centred 720px transcript with a single 28px turn gap", () => {
+    render(<><style>{threadCSS}</style><Example /></>);
+    const style = getComputedStyle(screen.getByRole("log"));
+    expect(style.maxWidth).toBe("720px");
+    expect(style.gap).toBe("28px");
+  });
   test("renders its empty state, conversation log and supplied composer", () => {
     render(<Example empty="Ask a question." />);
     expect(screen.getByRole("log", { name: "Conversation" })).toHaveTextContent("Ask a question.");

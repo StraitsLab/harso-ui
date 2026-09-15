@@ -1,4 +1,4 @@
-.harso-kit .hkc-message { min-width: 0; margin-bottom: 28px; color: var(--hk-ink); }
+.harso-kit .hkc-message { min-width: 0; margin-bottom: 0; color: var(--hk-ink); }
 .harso-kit .hkc-message--user { display: flex; flex-direction: column; align-items: flex-end; }
 .harso-kit .hkc-message--assistant { display: flex; flex-direction: column; align-items: flex-start; font-size: var(--hk-text-body); line-height: 22px; }
 /* v3: the assistant may open with one editorial headline (rule 4, 22px display). */
@@ -13,8 +13,8 @@
 .harso-kit .hkc-message-text { max-width: 100%; white-space: pre-wrap; overflow-wrap: anywhere; }
 .harso-kit .hkc-streaming-cursor { display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: middle; background: var(--hk-accent-mark); animation: hkc-cursor 1s steps(2) infinite; }
 .harso-kit .hkc-message-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--hk-space-1); margin-top: var(--hk-space-2); color: var(--hk-secondary); }
-.harso-kit .hkc-message--assistant .hkc-message-actions { margin-inline-start: calc(-1 * var(--hk-space-2)); }
-.harso-kit .hkc-message--user .hkc-message-actions { margin-inline-end: calc(-1 * var(--hk-space-2)); }
+.harso-kit .hkc-message--assistant .hkc-message-actions { margin-inline-start: -4px; }
+.harso-kit .hkc-message--user .hkc-message-actions { margin-inline-end: -4px; }
 .harso-kit .hkc-message-actions button { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 24px; padding: 4px; border: 0; border-radius: var(--hk-radius-control); background: transparent; color: var(--hk-tertiary); cursor: pointer; }
 .harso-kit .hkc-message-actions svg { width: 14px; height: 14px; stroke-width: var(--hk-stroke); }
 .harso-kit .hkc-message-actions button:hover { background: var(--hk-hover); }

@@ -1,13 +1,13 @@
-import { CaretRight } from "@phosphor-icons/react";
+import { CaretRight, Sparkle } from "@phosphor-icons/react";
 import { MessagePartPrimitive, type ReasoningMessagePartProps } from "@assistant-ui/react";
 import "./reasoning.css";
 
-export function HarsoReasoning({ status, text }: ReasoningMessagePartProps) {
+/** Hosts may supply measured elapsed time; unknown durations are never invented. */
+export function HarsoReasoning({ status, durationSeconds }: ReasoningMessagePartProps & { durationSeconds?: number }) {
   const running = status.type === "running";
-  const preview = text ? text.trim().split(/(?<=[.!?])\s+/)[0] ?? "" : "";
-  const label = running ? "Thinking…" : "Reasoning";
+  const label = running ? "Thinking…" : durationSeconds === undefined ? "Reasoned" : `Reasoned for ${durationSeconds} seconds`;
   return <details className="hkc-reasoning" data-streaming={running}>
-    <summary><CaretRight size={16} aria-hidden="true" /><span>{label}</span>{!running && preview && <span className="hkc-reasoning-preview" aria-hidden="true">{preview}</span>}</summary>
+    <summary><Sparkle size={12} weight="regular" aria-hidden="true" /><span>{label}</span><CaretRight className="hkc-reasoning-chevron" size={9} aria-hidden="true" /></summary>
     <div><MessagePartPrimitive.Text /></div>
   </details>;
 }

@@ -4,7 +4,7 @@ import { AssistantRuntimeProvider, MessagePrimitive, ThreadPrimitive, useLocalRu
 import { HarsoReasoning } from "./reasoning";
 
 test("reasoning uses the part text and native disclosure", () => {
-  function Message() { return <MessagePrimitive.Root><MessagePrimitive.Parts components={{ Reasoning: HarsoReasoning }} /></MessagePrimitive.Root>; }
+  function Message() { return <MessagePrimitive.Root><MessagePrimitive.Parts components={{ Reasoning: props => <HarsoReasoning {...props} durationSeconds={18} /> }} /></MessagePrimitive.Root>; }
   function Harness() {
     const runtime = useLocalRuntime({ async *run() {} }, { initialMessages: [{ role: "assistant", content: [{ type: "reasoning", text: "Inspect the tokens first." }] }] });
     return <AssistantRuntimeProvider runtime={runtime}><ThreadPrimitive.Messages components={{ Message }} /></AssistantRuntimeProvider>;
@@ -12,6 +12,8 @@ test("reasoning uses the part text and native disclosure", () => {
   const { container } = render(<Harness />);
   const disclosure = container.querySelector("details")!;
   expect(disclosure).not.toHaveAttribute("open");
+  expect(screen.getByText("Reasoned for 18 seconds")).toBeInTheDocument();
+  expect(disclosure.querySelectorAll("summary svg")).toHaveLength(2);
   fireEvent.click(screen.getByText(/^Reason/));
   expect(disclosure).toHaveAttribute("open");
   expect(screen.getByText("Inspect the tokens first.", { selector: ":not(.hkc-reasoning-preview)" })).toBeVisible();
@@ -23,7 +25,7 @@ test("reasoning marks streaming until the adapter completes", async () => {
   let runtime: ReturnType<typeof useLocalRuntime>;
   let complete!: () => void;
   const finished = new Promise<void>(resolve => { complete = resolve; });
-  function Message() { return <MessagePrimitive.Root><MessagePrimitive.Parts components={{ Reasoning: HarsoReasoning }} /></MessagePrimitive.Root>; }
+  function Message() { return <MessagePrimitive.Root><MessagePrimitive.Parts components={{ Reasoning: props => <HarsoReasoning {...props} durationSeconds={18} /> }} /></MessagePrimitive.Root>; }
   function Harness() {
     runtime = useLocalRuntime({ async *run() {
       yield { content: [{ type: "reasoning", text: "Checking…" }] };
