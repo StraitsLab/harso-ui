@@ -33,6 +33,10 @@ describe("Harso attachments", () => {
     fireEvent.change(input, { target: { files: [new File(["hello"], "notes.txt", { type: "text/plain" })] } });
     expect(await screen.findByText("notes.txt")).toBeVisible();
     expect(screen.getByText("5 B")).toBeVisible();
+    const chip = screen.getByText("notes.txt").closest(".hkc-attachment");
+    expect(chip).toHaveClass("hkc-attachment--composer");
+    expect(chip?.closest(".hkc-composer-attachments")).not.toBeNull();
+    expect(chip?.closest("fieldset")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Remove notes.txt" }));
     await waitFor(() => expect(screen.queryByText("notes.txt")).not.toBeInTheDocument());
     expect(remove).toHaveBeenCalledOnce();

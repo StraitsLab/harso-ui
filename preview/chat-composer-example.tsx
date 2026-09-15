@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AssistantRuntimeProvider, MessagePrimitive, ThreadPrimitive, useLocalRuntime, type ChatModelAdapter } from "@assistant-ui/react";
+import { Cube, Microphone } from "@phosphor-icons/react";
 import { HarsoComposer } from "../src/chat/composer";
 import { HarsoMessageAttachment } from "../src/chat/attachments";
 
@@ -21,6 +22,8 @@ function Message() {
 
 function ExampleRuntime({ state, disabled, refuse }: { state: ExampleState; disabled: boolean; refuse: boolean }) {
   const [result, setResult] = useState("Nothing sent yet. Draft stays local.");
+  const [phone, setPhone] = useState(false);
+  useEffect(() => { const query = matchMedia("(max-width: 640px)"); const update = () => setPhone(query.matches); update(); query.addEventListener("change", update); return () => query.removeEventListener("change", update); }, []);
   const runtime = useLocalRuntime(echo, { adapters: { attachments } });
   const seeded = useRef(false);
   useEffect(() => {
@@ -44,7 +47,7 @@ function ExampleRuntime({ state, disabled, refuse }: { state: ExampleState; disa
         if (refuse && event.target instanceof HTMLTextAreaElement && event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.stopPropagation(); setResult("Submission refused by host. Draft and attachments retained."); }
       }}>
       <ThreadPrimitive.Messages components={{ UserMessage: Message, AssistantMessage: Message }} />
-      <HarsoComposer disabled={disabled || state === "disabled"} leading="Harso local · echo" trailing={<span>Local only</span>} error={state === "error" ? "Could not send. Your draft is retained; try Send again." : undefined} />
+      <HarsoComposer disabled={disabled || state === "disabled"} data-layout={phone ? "phone" : "desktop"} modelSelector={{ label: "Claude Fable 5.1", glyph: <Cube size={12} />, onClick: () => setResult("Demo model: Claude Fable 5.1. Local echo adapter; no network requests.") }} voice={<button type="button" className="hkc-composer-button" aria-label="Voice input" onClick={() => setResult("Voice input requires a host speech adapter.")}><Microphone size={16} aria-hidden="true" /></button>} error={state === "error" ? "Could not send. Your draft is retained; try Send again." : undefined} />
       <output aria-label="Composer host result" data-testid="composer-host-result" aria-live="polite">{result}</output>
       </div>
     </ThreadPrimitive.Root>
