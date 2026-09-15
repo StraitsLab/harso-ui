@@ -1,4 +1,4 @@
-.harso-kit .hkc-thread { container: hkc-thread / inline-size; display: flex; flex: 1; flex-direction: column; min-width: 0; min-height: 0; height: 100%; background: var(--hk-canvas); color: var(--hk-ink); }
+.harso-kit .hkc-thread { container: hkc-thread / inline-size; display: flex; flex: 1; flex-direction: column; min-width: 0; min-height: 0; height: 100%; background: var(--hk-surface); color: var(--hk-ink); }
 .harso-kit .hkc-thread-viewport { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; }
 .harso-kit .hkc-thread-transcript { box-sizing: border-box; width: calc(100% - 64px); max-width: 720px; margin-inline: auto; padding-block: 28px; display: flex; flex-direction: column; gap: 28px; }
 .harso-kit .hkc-thread-empty { padding-block: var(--hk-space-8); color: var(--hk-secondary); font-size: var(--hk-text-body); }

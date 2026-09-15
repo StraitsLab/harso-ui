@@ -69,7 +69,7 @@ export function HarsoChatShell({ sidebar, nav, footer, windowControls = false, s
           {layout === "phone" && sidebarToggle}
           <div className="hkc-shell-history-controls"><button type="button" className="hkc-shell-icon" aria-label="Go back" disabled={!onBack} onClick={onBack}><CaretLeft size={14} /></button><button type="button" className="hkc-shell-icon" aria-label="Go forward" disabled={!onForward} onClick={onForward}><CaretRight size={14} /></button></div>
           <div className="hkc-shell-heading">{header ?? <h1>{title}</h1>}{subtitle && <span className="hkc-shell-subtitle">{subtitle}</span>}</div>
-          {actions}{themeToggle}
+          {actions && <div className="hkc-shell-actions">{actions}</div>}{themeToggle}
           {aside && (layout !== "desktop" || !asideOpen) && <button type="button" className="hkc-shell-icon" aria-label="Open context" aria-haspopup={layout !== "desktop" ? "dialog" : undefined} aria-expanded={layout === "desktop" ? asideOpen : sheet === "aside"} onClick={() => layout === "desktop" ? setAsideOpen(true) : setSheet("aside")}><SidebarSimple size={20} /></button>}
         </header>
         {mainLandmark ? <main className="hkc-shell-main">{main ?? children}</main> : <div className="hkc-shell-main">{main ?? children}</div>}

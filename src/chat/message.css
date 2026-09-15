@@ -48,6 +48,9 @@
   .harso-kit .hkc-message:hover .hkc-message-actions, .harso-kit .hkc-message:focus-within .hkc-message-actions, .harso-kit .hkc-message-actions:has(button[aria-pressed="true"]) { opacity: 1; }
 }
 @container hkc-thread (max-width: 640px) {
+  /* v3 phone: the user bubble stays quiet — its copy/edit row appears on tap (focus-within), not permanently (rule 2). */
+  .harso-kit .hkc-message--user .hkc-message-actions { display: none; }
+  .harso-kit .hkc-message--user:focus-within .hkc-message-actions { display: flex; }
   .harso-kit .hkc-message-actions button { min-width: 44px; min-height: 44px; }
   .harso-kit :is(.hkc-edit-composer, .hkc-message-error) button { min-height: 44px; }
   .harso-kit .hkc-edit-composer { width: 100%; }

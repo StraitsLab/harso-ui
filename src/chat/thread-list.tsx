@@ -6,7 +6,8 @@ import "./thread-list.css";
 export type HarsoSidebarNavItem = {
   id: string;
   label: string;
-  icon: ReactNode;
+  /** Optional glyph — Recent rows in the v3 spec are text-only (rule 7). */
+  icon?: ReactNode;
   active?: boolean;
   unread?: boolean;
   count?: number;
@@ -22,7 +23,7 @@ export function HarsoSidebarNav({ label, heading = true, items }: HarsoSidebarNa
   return <nav className="hkc-sidebar-nav" aria-label={label}>
     {heading && <h2 className="hkc-thread-group">{label}</h2>}
     {items.map(item => <button key={item.id} type="button" className="hkc-sidebar-nav-row" title={item.label} aria-label={item.label} aria-current={item.active ? "page" : undefined} onClick={item.onSelect}>
-      <span className="hkc-sidebar-nav-icon" aria-hidden="true">{item.icon}</span><span className="hkc-sidebar-nav-label">{item.label}</span>
+      {item.icon && <span className="hkc-sidebar-nav-icon" aria-hidden="true">{item.icon}</span>}<span className="hkc-sidebar-nav-label">{item.label}</span>
       {item.unread && <span className="hkc-sidebar-nav-dot" aria-label="Unread" />}
       {item.count != null && item.count > 0 && <span className="hkc-sidebar-nav-count" aria-hidden="true">{item.count}</span>}
     </button>)}
