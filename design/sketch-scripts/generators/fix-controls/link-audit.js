@@ -1,0 +1,1 @@
+H.out({accent:H.hex('Dark/Clean','accent'),canvas:H.hex('Dark/Clean','canvas'),links:sketch.find('SymbolMaster',H.page('Controls')).filter(s=>s.name.indexOf('LinkButton/Dark/Clean/')===0).map(s=>({name:s.name,children:s.layers.map(l=>({name:l.name,type:l.type,x:l.frame.x,y:l.frame.y,w:l.frame.width,h:l.frame.height,fill:l.style.fills.map(f=>String(f.color))}))}))});

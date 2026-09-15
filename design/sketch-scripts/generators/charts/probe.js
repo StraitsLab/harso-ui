@@ -1,0 +1,1 @@
+H.out({doc:String(doc.id),version:sketch.version,pages:doc.pages.filter(p=>p.name==='Charts').map(p=>({id:String(p.id),layers:p.layers.map(l=>({id:String(l.id),name:l.name}))}))});

@@ -1,0 +1,1 @@
+var p=H.page('Blocks'); H.out({doc:String(doc.id),page:String(p.id),sheets:p.layers.map(function(l){return {id:String(l.id),name:l.name,h:l.frame.height,y:l.frame.y};})});

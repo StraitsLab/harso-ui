@@ -1,0 +1,1 @@
+H.out(['Light/Clean','Light/Cozy','Dark/Clean','Dark/Cozy'].map(a=>({app:a,secondary:H.hex(a,'secondary'),tertiary:H.hex(a,'tertiary'),ink:H.hex(a,'ink'),line:H.hex(a,'line')})));

@@ -1,0 +1,1 @@
+H.out(doc.pages.map(p=>({name:p.name,id:p.id,sheets:p.layers.filter(l=>/ — (Light|Dark)\//.test(l.name)).map(l=>({name:l.name,id:l.id,x:l.frame.x,y:l.frame.y,h:l.frame.height}))})));

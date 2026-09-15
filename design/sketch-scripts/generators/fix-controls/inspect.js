@@ -1,0 +1,1 @@
+var p=H.page('Controls');H.out(p.layers.map(l=>({name:l.name,id:String(l.id),x:l.frame.x,y:l.frame.y,w:l.frame.width,h:l.frame.height,symbols:sketch.find('SymbolMaster',l).length})));

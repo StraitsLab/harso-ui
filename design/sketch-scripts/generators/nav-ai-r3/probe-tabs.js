@@ -1,0 +1,1 @@
+var sh=H.page('Navigation').layers.find(l=>l.name==='TabBar — Light/Clean');function tree(l){return {name:l.name,type:l.type,x:l.frame.x,y:l.frame.y,w:l.frame.width,h:l.frame.height,text:l.text,layers:(l.layers||[]).map(tree)};}H.out(tree(sh));

@@ -1,0 +1,1 @@
+var p=H.page('Controls');var rows=[];p.layers.filter(l=>l.name.indexOf('Dropdown — ')===0).forEach(sh=>{var x=sh.frame.x,y=sh.frame.y;sketch.find('Group',sh).filter(g=>g.name==='specimens').forEach(g=>{g.stackLayout.alignItems=sketch.StackLayout.AlignItems.Start;});H.relayout(sh);sh.frame.x=x;sh.frame.y=y;rows.push({name:sh.name,id:String(sh.id)});});H.out(rows);

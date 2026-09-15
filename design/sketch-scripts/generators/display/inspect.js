@@ -1,0 +1,1 @@
+H.out({doc:String(doc.id),pages:doc.pages.map(p=>({name:p.name,id:String(p.id),sheets:p.name==='Display'?p.layers.map(l=>({name:l.name,id:String(l.id)})):[]}))});

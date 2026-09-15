@@ -1,0 +1,1 @@
+H.out(H.page('AI Chat').layers.filter(l=>l.name.startsWith('Shell/')).map(function(s){function tree(l,d){return {name:l.name,id:l.id,x:l.frame.x,y:l.frame.y,w:l.frame.width,h:l.frame.height,pad:l.stackLayout?l.stackLayout.padding:null,kids:d?(l.layers||[]).map(k=>tree(k,d-1)):[]};}return tree(s,4);}));

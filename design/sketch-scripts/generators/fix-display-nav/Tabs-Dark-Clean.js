@@ -1,0 +1,24 @@
+var originalFrame=H.frame;H.frame=function(o){var f=originalFrame(o);if(o.align!==undefined)f.stackLayout.alignItems=o.align;return f;};
+var APP = "Dark/Clean";
+var FAMILY = 'Tabs';
+var APPS=['Light/Clean','Light/Cozy','Dark/Clean','Dark/Cozy'], apps=APPS;
+var page=H.page('Display');
+var prior=page.layers.find(l=>l.name===FAMILY+' — '+APP);if(!prior)throw Error('Missing original '+FAMILY+' '+APP);
+var oldX=prior.frame.x,oldY=prior.frame.y;H.dropSheet('Display',FAMILY+' — '+APP);var existing=null;
+var sh=H.sheet({name:FAMILY+' — '+APP,parent:page,x:oldX,y:oldY,fill:H.sw(APP,'canvas-deep')});
+function tx(p,t,s,r,w,weight){return H.text({parent:p,text:t,size:s||14,color:H.sw(APP,r||'ink'),w:w,weight:weight||5});}
+function ic(p,n,s,r){return H.icon({parent:p,d:H.paths[n]||n,size:s||16,color:H.hex(APP,r||'secondary')});}
+function fr(p,n,o){return H.frame(Object.assign({parent:p,name:n,gap:8},o||{}));}
+function sy(p,v,o){return fr(p,FAMILY+'/'+APP+'/'+v,o);}
+function row(label){var c=fr(sh,label,{dir:'col',gap:12,align:sketch.StackLayout.AlignItems.Start});tx(c,label,12,'tertiary',null,6);return H.row(c,'Specimens',APP,{w:1000,gap:24});}
+function col(p,n,o){return fr(p,n,Object.assign({dir:'col',align:sketch.StackLayout.AlignItems.Start},o||{}));}
+function pill(p,t,primary){var b=fr(p,'action',{pad:{top:6,right:14,bottom:6,left:14},h:36,radius:999,fill:H.sw(APP,primary?'ink':'hover')});tx(b,t,14,primary?'inverse':'ink',null,6);return b;}
+function dot(p,size,role){return H.rect({parent:p,w:size,h:size,oval:true,fill:H.sw(APP,role||'accent-mark')});}
+function line(p,w){return H.rect({parent:p,w:w,h:1,fill:H.sw(APP,'line')});}
+function finish(){function ord(p){(p.layers||[]).slice().forEach(k=>{if(k.layers)ord(k);});if(p.stackLayout)H.order(p);}ord(sh);H.relayout(sh);var made=H.symbolize(sh,new RegExp('^'+FAMILY+'/'));H.relayout(sh);sh.frame.x=oldX;sh.frame.y=oldY;H.out({family:FAMILY,app:APP,sheet:String(sh.id),made:made,h:Math.round(sh.frame.height),w:Math.round(sh.frame.width),x:sh.frame.x,y:sh.frame.y});}
+tx(sh,FAMILY+' — '+APP,20,'ink',null,6);
+
+['underline','icons','counts'].forEach(v=>{var r=row(v);var b=sy(r,v+'/default',{gap:0});['Overview','Activity','Files'].forEach((t,i)=>{var c=col(b,'tab',{gap:10});var q=fr(c,'label row',{h:32,pad:{top:0,right:16,bottom:0,left:16},gap:8});if(v==='icons')ic(q,['home','clock','file'][i],16,i===0?'ink':'secondary');tx(q,t,14,i===0?'ink':'secondary',null,6);if(v==='counts'){var n=fr(q,'count',{radius:999,pad:4,fill:H.sw(APP,'hover')});tx(n,['12','8','3'][i],12,'secondary');}H.rect({parent:c,w:v==='icons'?132:v==='counts'?152:110,h:2,fill:H.sw(APP,i===0?'ink':'line')});});});
+
+var r=row('Overview pane · History disabled');var b=sy(r,'pane/default',{dir:'col',gap:20,w:560,align:sketch.StackLayout.AlignItems.Start});var bar=fr(b,'tabs',{gap:0});['Overview','Sources','History'].forEach((t,i)=>{var tab=col(bar,'tab',{gap:10});var q=fr(tab,'label row',{h:32,pad:{left:16,right:16,top:0,bottom:0},gap:8});if(i===0)ic(q,'file');tx(q,t,14,i===2?'tertiary':i===0?'ink':'secondary',null,6);if(i===1){var badge=fr(q,'count',{pad:4,radius:999,fill:H.sw(APP,'hover')});tx(badge,'6',12,'secondary');}H.rect({parent:tab,w:140,h:2,fill:H.sw(APP,i===0?'ink':'line')});});var pane=col(b,'panel',{gap:10,w:560});tx(pane,'Start smaller.',16,'ink',null,6);tx(pane,'Make the first experience exceptional.',14,'secondary');tx(pane,'Draft title',13,'secondary');var input=fr(pane,'input',{w:420,h:36,pad:10,radius:8,fill:H.sw(APP,'surface'),border:H.sw(APP,'control-line')});tx(input,'A focused launch',14);
+finish();

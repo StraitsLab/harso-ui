@@ -1,0 +1,1 @@
+var p=doc.pages.find(function(p){return p.name==='AI Voice & Workflow';}); H.out({doc:doc.id,version:sketch.version, page:p?{id:p.id,layers:p.layers.map(function(l){return {name:l.name,id:l.id,x:l.frame.x,y:l.frame.y,h:l.frame.height};})}:null});

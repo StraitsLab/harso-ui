@@ -1,0 +1,1 @@
+H.out({doc:String(doc.id),version:sketch.version, page:doc.pages.filter(p=>p.name==='AI Code').map(p=>({id:p.id,layers:p.layers.map(l=>({id:l.id,name:l.name}))}))});

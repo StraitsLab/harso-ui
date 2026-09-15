@@ -1,0 +1,1 @@
+H.out({pages:doc.pages.map(p=>({name:p.name,id:p.id})),sheets:H.page('Navigation').layers.map(l=>({id:l.id,name:l.name,h:l.frame.height,w:l.frame.width,x:l.frame.x,y:l.frame.y}))});

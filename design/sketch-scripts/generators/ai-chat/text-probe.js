@@ -1,0 +1,1 @@
+var p=H.page('AI Chat');var sheets=p.layers.filter(s=>s.name.startsWith('Attachments — '));H.out(sheets.map(s=>({name:s.name,text:sketch.find('Text',s).map(t=>({text:t.text,font:t.style.fontFamily}))})));

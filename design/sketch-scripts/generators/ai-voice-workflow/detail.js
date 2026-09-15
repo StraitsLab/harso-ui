@@ -1,0 +1,1 @@
+var p=H.page('AI Voice & Workflow');var sh=p.layers.find(function(l){return l.name==='Canvas — Light/Clean';});function walk(l,d){return {name:l.name,type:l.type,id:l.id,x:l.frame.x,y:l.frame.y,w:l.frame.width,h:l.frame.height,children:d?(l.layers||[]).map(function(k){return walk(k,d-1);}):undefined};}H.out(walk(sh,7));

@@ -1,0 +1,1 @@
+H.out(H.page('Charts').layers.map(l=>({name:l.name,id:l.id,x:l.frame.x,y:l.frame.y,w:l.frame.width,h:l.frame.height})));

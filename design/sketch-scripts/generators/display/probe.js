@@ -1,0 +1,1 @@
+H.out(sketch.find('SymbolMaster',H.page('Display')).filter(l=>/^Avatar\/Light\/Clean\/.*status$/.test(l.name)).map(l=>({name:l.name,frame:l.frame,clip:l.clipsContent,stack:l.stackLayout,layers:l.layers.map(k=>({type:k.type,frame:k.frame,name:k.name}))})));

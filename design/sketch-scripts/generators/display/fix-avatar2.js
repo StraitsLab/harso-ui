@@ -1,0 +1,1 @@
+var fixed=[];sketch.find('SymbolMaster',H.page('Display')).filter(l=>/^Avatar\/.*\/status$/.test(l.name)).forEach(a=>{var s=a.frame.width;a.layers.filter(l=>l.type==='ShapePath').forEach(l=>{l.frame.x=s*0.68-4;l.frame.y=s*0.68-4;l.index=a.layers.length-1;});fixed.push(a.name);});H.out({fixed:fixed});

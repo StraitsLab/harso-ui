@@ -1,0 +1,1 @@
+var p=H.page('AI Chat');var apps=['Light/Clean','Light/Cozy','Dark/Clean','Dark/Cozy'];p.layers.forEach(function(l){var a=apps.findIndex(function(a){return l.name.endsWith(' — '+a);});if(a>=0)l.frame.x=a*1600;});H.out(p.layers.map(l=>({id:l.id,x:l.frame.x,y:l.frame.y})));

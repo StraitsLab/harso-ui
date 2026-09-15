@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Minimal MCP-over-HTTP client for Sketch (streamable HTTP). Usage: sk.py <tool> [json-args]  |  sk.py --list"""
-import json, sys, os, re, urllib.request
+import json, sys, os, re, urllib.request, fcntl
 
 URL = os.environ.get("SKETCH_MCP_URL", "http://localhost:31126/mcp")
 SESSION_FILE = "/tmp/harso-sketch/session.txt"
@@ -54,13 +54,22 @@ if __name__ == "__main__":
         sys.exit(0)
     tool = sys.argv[1]; args = json.loads(sys.argv[2]) if len(sys.argv) > 2 else {}
     if tool == "run_code" and "code_file" in args:
-        args["script"] = open(args.pop("code_file")).read()
+        body = open(args.pop("code_file")).read()
+        prelude = os.environ.get("SK_PRELUDE", "/tmp/harso-sk/lib.js")
+        if os.path.exists(prelude) and "// NO_PRELUDE" not in body:
+            body = open(prelude).read() + "\n" + body
+        args["script"] = body
+    lock = open("/tmp/harso-sk/sketch.lock", "w"); fcntl.flock(lock, fcntl.LOCK_EX)
     r = call("tools/call", {"name": tool, "arguments": args})
     if "error" in r: print("ERROR", json.dumps(r["error"])[:2000]); sys.exit(1)
     out = r.get("result", {})
     for c in out.get("content", []):
-        if c.get("type") == "text": print(c["text"][:int(os.environ.get("SK_MAX", "6000"))])
+        if c.get("type") == "text":
+            txt = c["text"]; m = re.search(r"generated at (/\S+\.png)", txt)
+            if m and tool == "get_screenshot":
+                import shutil; p = f"/tmp/harso-sk/shots/{os.environ.get('SK_TAG','last')}.png"; shutil.copy(m.group(1), p); print("IMAGE", p)
+            else: print(txt[:int(os.environ.get("SK_MAX", "6000"))])
         elif c.get("type") == "image":
-            p = f"/tmp/harso-sketch/shot-{os.environ.get('SK_TAG','last')}.png"
+            p = f"/tmp/harso-sk/shots/{os.environ.get('SK_TAG','last')}.png"
             import base64; open(p, "wb").write(base64.b64decode(c["data"])); print("IMAGE", p)
     if out.get("isError"): sys.exit(1)

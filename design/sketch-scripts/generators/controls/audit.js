@@ -1,0 +1,1 @@
+var p=H.page('Controls');H.out({page:String(p.id),sheets:p.layers.filter(l=>l.name.includes(' — ')).map(s=>({family:s.name.split(' — ')[0],app:s.name.split(' — ')[1],sheet:String(s.id),count:sketch.find('SymbolMaster',s).length,h:s.frame.height,w:s.frame.width,x:s.frame.x,y:s.frame.y,names:sketch.find('SymbolMaster',s).map(l=>l.name)}))});

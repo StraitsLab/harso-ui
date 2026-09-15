@@ -1,0 +1,1 @@
+var p=doc.pages.find(p=>p.name==='AI Code');var changed=[];p.layers.filter(s=>s.name.startsWith('StackTrace — ')).forEach(function(s){var app=s.name.split(' — ')[1];sketch.find('Text',s).filter(t=>t.text==='TypeError').forEach(function(t){t.style.textColor=H.sw(app,'negative');changed.push(String(t.id));});});H.out({changed:changed});

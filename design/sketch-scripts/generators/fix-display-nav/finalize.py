@@ -1,0 +1,10 @@
+from pathlib import Path
+import json
+P=Path('/tmp/harso-sk/lanes/fix-display-nav');a=json.loads((P/'audit.json').read_text());over=json.loads((P/'grid-overlaps.json').read_text())
+with (P/'FIX-REPORT.md').open('a') as out:
+ out.write('## Final verification and concerns\n\n- Live read-back: 72 scoped sheets, 288 symbol masters, no duplicate sheet or symbol names, exactly four appearances per family. All 72 screenshots exist; 18 four-appearance contact sheets were vision-reviewed.\n- All original x/y grid anchors preserved exactly. No swatches or text styles created. Only Display and Navigation edited; document never saved.\n- **Canvas layout concern:** preserving the required original y anchors while adding missing variants causes 24 adjacent sheet overlaps (six per appearance). Component screenshots remain clean, but page-level reflow is needed by the lead. See `grid-overlaps.json`: Announcement→Notification 209px; Pagination→Breadcrumb 182px; Tabs→SegmentedControl 202px; SegmentedControl→Table 59px; Table→Typography 245px; Sidebar→SettingsModal 5px. Did not move unaffected sheets or violate explicit reuse-y instruction.\n- Settings plan banner is restored with an editable layers glyph rather than reference abstract curved artwork; functional structure and checkbox semantics are restored.\n- Menu generator initially failed trigger discovery; rebuilt successfully after direct child lookup; final all-four visual check confirms alignment.\n- Toolkit lock contention increased runtime; completed both runner processes with verified exit status.\n- Scores above are self-assessment calibrated to review, not a second independent reviewer certification.\n\n## Sheet / symbol / screenshot ledger\n\n')
+ for x in a:
+  fam,app=x['name'].split(' — ');shot='/tmp/harso-sk/shots/fix-dn-'+fam+'-'+app.replace('/','-')+'.png'
+  out.write('- '+x['name']+': `'+x['id']+'`, '+str(len(x['symbols']))+' symbols; `'+shot+'`.\n')
+ out.write('\nLANE_RESULT: done_with_concerns — 18 families / 72 appearances rebuilt and visually checked; lead must reflow page-level overlaps caused by mandatory original-y preservation.\n')
+print('Final report appended',len(a),'sheets')

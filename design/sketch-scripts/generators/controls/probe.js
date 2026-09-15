@@ -1,0 +1,1 @@
+H.out({doc:String(doc.id),version:sketch.version,controls:doc.pages.filter(p=>p.name==='Controls').map(p=>({id:String(p.id),layers:p.layers.map(l=>({id:String(l.id),name:l.name}))}))});

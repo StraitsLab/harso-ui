@@ -1,0 +1,1 @@
+var p=H.page('Blocks'),fixed=[];p.layers.forEach(function(sh){if(sh.name.indexOf('Dark/')<0)return;var app=sh.name.split(' — ')[1];sketch.find('Text',sh).forEach(function(t){if(/Resets|Verify the result|steps left|Preview only/.test(t.text)){t.style.textColor=H.sw(app,'secondary');fixed.push(t.text);}});});H.out({fixed:fixed});
