@@ -23,7 +23,10 @@ const components: ComponentProps<typeof MarkdownTextPrimitive>["components"] = {
   // Agent transcripts are untrusted: remote images never load (no request leaves the host); the alt text is kept as a label.
   img: ({ node: _node, alt }) => <span className="hkc-markdown-image-label">{alt ? `Image: ${alt}` : "Image omitted"}</span>,
   CodeHeader: () => null,
-  SyntaxHighlighter: ({ code, language }: SyntaxHighlighterProps) => <HarsoCodeBlock code={code} language={language} />,
+  // assistant-ui collapses the fence info-string to a single language token, so filename/meta
+  // are not available here; wire only what the token honestly carries. A ```diff fence renders as
+  // an add/remove diff block; every other language gets the per-line rows with a number gutter.
+  SyntaxHighlighter: ({ code, language }: SyntaxHighlighterProps) => <HarsoCodeBlock code={code} language={language} lineNumbers diff={language === "diff"} />,
 };
 
 /** react-markdown already drops javascript:/data: hrefs; this makes the policy explicit and keeps only http(s), mailto and in-page links. */

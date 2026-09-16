@@ -1,8 +1,7 @@
 "use client";
 
-import { CheckIcon, CopyIcon, FileText } from "@phosphor-icons/react";
-import { useEffect, useState, type ComponentPropsWithoutRef, type ReactNode } from "react";
-import { IconButton } from "../primitives";
+import { BracketsAngleIcon, CheckIcon, CopyIcon } from "@phosphor-icons/react";
+import { useEffect, useMemo, useState, type ComponentPropsWithoutRef, type ReactNode } from "react";
 import "./code-block.css";
 
 export interface HarsoCodeBlockProps extends Omit<ComponentPropsWithoutRef<"figure">, "children"> {
@@ -10,14 +9,18 @@ export interface HarsoCodeBlockProps extends Omit<ComponentPropsWithoutRef<"figu
   language?: string;
   filename?: string;
   lineNumbers?: boolean;
+  /** Line numbers (1-based) to emphasise with the accent tint. */
+  highlightLines?: readonly number[];
+  /** Render `+`/`-` prefixed lines as add/remove diff rows with tonal tints and an accessible label. */
+  diff?: boolean;
   highlight?: (code: string, language: string | undefined) => ReactNode;
 }
 
-export function HarsoCodeBlock({ code, language, filename, lineNumbers = false, highlight, className = "", ...props }: HarsoCodeBlockProps) {
+type Row = { text: string; kind: "" | "add" | "remove"; emphasised: boolean };
+
+export function HarsoCodeBlock({ code, language, filename, lineNumbers = false, highlightLines, diff = false, highlight, className = "", ...props }: HarsoCodeBlockProps) {
   const [feedback, setFeedback] = useState("");
-  useEffect(() => {
-    setFeedback("");
-  }, [code]);
+  useEffect(() => { setFeedback(""); }, [code]);
   useEffect(() => {
     if (!feedback) return;
     const timer = setTimeout(() => setFeedback(""), 2000);
@@ -31,19 +34,43 @@ export function HarsoCodeBlock({ code, language, filename, lineNumbers = false, 
       setFeedback("Could not copy code");
     }
   };
-  const lines = code.replace(/\n$/, "").split("\n");
+  const emphasis = useMemo(() => new Set(highlightLines ?? []), [highlightLines]);
+  const rows: Row[] = useMemo(() => code.replace(/\r?\n$/, "").split(/\r?\n/).map((text, index) => {
+    const kind: Row["kind"] = diff && text.startsWith("+") ? "add" : diff && text.startsWith("-") ? "remove" : "";
+    return { text, kind, emphasised: emphasis.has(index + 1) };
+  }), [code, diff, emphasis]);
+  // The per-row layout owns line numbers and tints; a whole-block highlighter (Shiki) still renders unrowed.
+  const rowed = !highlight;
+  const label = filename || language || "text";
   return <figure {...props} className={`hkc-code-block ${className}`}>
     <figcaption className="hkc-code-block-header">
-      <FileText size={12} weight="regular" aria-hidden="true" />
-      <span className="hkc-code-block-filename" title={filename}>{filename || language || "text"}</span>
+      <BracketsAngleIcon size={16} weight="regular" aria-hidden="true" className="hkc-code-block-glyph" />
+      <span className="hkc-code-block-filename" title={filename || language}>{label}</span>
+      {filename && language ? <span className="hkc-code-block-chip">{language}</span> : null}
       <span className="hkc-code-block-feedback" role="status">{feedback}</span>
-      <IconButton label={feedback === "Copied" ? "Copied" : "Copy code"} title={feedback === "Copied" ? "Copied" : "Copy code"} className="hkc-code-block-copy" onClick={copy}>
-        {feedback === "Copied" ? <CheckIcon size={12} aria-hidden="true" /> : <CopyIcon size={12} aria-hidden="true" />}
-      </IconButton>
+      <button type="button" className="hkc-code-block-copy" onClick={copy} aria-label={feedback === "Copied" ? "Copied" : "Copy code"} title={feedback === "Copied" ? "Copied" : "Copy code"}>
+        {feedback === "Copied" ? <CheckIcon size={14} aria-hidden="true" /> : <CopyIcon size={14} aria-hidden="true" />}
+        <span className="hkc-code-block-copy-label">{feedback === "Copied" ? "Copied" : "Copy"}</span>
+      </button>
     </figcaption>
     <div className="hkc-code-block-viewport" role="region" aria-label={filename ? `Code: ${filename}` : "Code"} tabIndex={0}>
-      {lineNumbers && <div className="hkc-code-block-numbers" aria-hidden="true">{lines.map((_, index) => <span key={index}>{index + 1}</span>)}</div>}
-      <pre><code>{highlight ? highlight(code, language) : code}</code></pre>
+      {rowed
+        ? <ol className="hkc-code-block-rows" role="presentation">
+            {rows.map((row, index) => <li
+              key={index}
+              role="presentation"
+              className={`hkc-code-block-row${row.kind ? ` hkc-code-block-row--${row.kind}` : ""}${row.emphasised ? " hkc-code-block-row--on" : ""}`}
+              data-diff={row.kind || undefined}
+            >
+              {lineNumbers && <span className="hkc-code-block-num" aria-hidden="true">{index + 1}</span>}
+              {row.kind && <span className="hkc-code-block-sr">{row.kind === "add" ? "Added:" : "Removed:"}</span>}
+              <span className="hkc-code-block-code">{row.text || "\u00A0"}</span>
+            </li>)}
+          </ol>
+        : <>
+            {lineNumbers && <div className="hkc-code-block-numbers" aria-hidden="true">{rows.map((_, index) => <span key={index}>{index + 1}</span>)}</div>}
+            <pre><code>{highlight!(code, language)}</code></pre>
+          </>}
     </div>
   </figure>;
 }

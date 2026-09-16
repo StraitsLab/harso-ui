@@ -56,7 +56,8 @@ export function ChatMarkdownExample() {
     <section className="hkc-chat-markdown-example" style={{ maxWidth: 760, minWidth: 0, margin: "auto", padding: "var(--hk-space-4)" }}>
       <Replay />
       <ThreadPrimitive.Root><ThreadPrimitive.Messages components={{ Message: MarkdownMessage }} /></ThreadPrimitive.Root>
-      <HarsoCodeBlock language="typescript" filename="src/greeting.ts" lineNumbers code={'export const greeting = "A long line demonstrates horizontal scrolling without widening the conversation on mobile.";\nconsole.log(greeting);'} />
+      <HarsoCodeBlock language="typescript" filename="work-unit.ts" lineNumbers highlightLines={[1]} code={'const result: string = "Work complete";\n\nconsole.log(result);\n'} />
+      <HarsoCodeBlock language="typescript" filename="work-unit.ts" lineNumbers diff code={'- const result = "Pending";\n+ const result: string = "Work complete";\n console.log(result);\n'} />
     </section>
   </AssistantRuntimeProvider>;
 }

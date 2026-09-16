@@ -5,49 +5,110 @@
   overflow: hidden;
   border: 0;
   border-radius: var(--hk-radius-card);
-  background: var(--hk-panel);
+  background: var(--hk-surface);
   color: var(--hk-ink);
 }
 .harso-kit .hkc-code-block-header {
   display: flex;
   align-items: center;
   gap: var(--hk-space-2);
-  padding: var(--hk-space-1) var(--hk-space-3);
+  /* Sketch: 28px header row inset 16px; no dividing rule (v3 borderless). */
+  padding: var(--hk-space-3) var(--hk-space-4) var(--hk-space-2);
   border-bottom: 0;
-  font: var(--hk-text-meta)/1.5 var(--hk-mono);
   color: var(--hk-tertiary);
 }
+.harso-kit .hkc-code-block-glyph { flex-shrink: 0; color: var(--hk-secondary); }
 .harso-kit .hkc-code-block-filename {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  /* Sketch: 14px / weight 6 filepath in ink. */
+  font: 600 var(--hk-text-body)/1.3 var(--hk-font);
+  color: var(--hk-ink);
+}
+.harso-kit .hkc-code-block-chip {
+  flex-shrink: 0;
+  padding: 2px var(--hk-space-2);
+  border-radius: var(--hk-radius-pill);
+  background: var(--hk-panel);
+  font: 500 var(--hk-text-meta)/1.4 var(--hk-font);
+  color: var(--hk-secondary);
 }
 .harso-kit .hkc-code-block-feedback { margin-left: auto; }
 .harso-kit .hkc-code-block-copy {
   flex-shrink: 0;
+  margin-left: auto;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
+  gap: var(--hk-space-1);
+  height: 28px;
+  padding: 0 var(--hk-space-3);
   border: 0;
-  border-radius: var(--hk-radius-pill);
-  background: transparent;
+  border-radius: var(--hk-radius-row);
+  background: var(--hk-field-tint);
   color: var(--hk-secondary);
+  font: 500 var(--hk-text-meta)/1 var(--hk-font);
   cursor: pointer;
 }
-.harso-kit .hkc-code-block-copy:hover { background: var(--hk-hover); }
+/* When feedback claims the auto margin, the copy button keeps its own gap only. */
+.harso-kit .hkc-code-block-feedback:not(:empty) + .hkc-code-block-copy { margin-left: var(--hk-space-2); }
+.harso-kit .hkc-code-block-chip + .hkc-code-block-feedback:empty + .hkc-code-block-copy,
+.harso-kit .hkc-code-block-filename + .hkc-code-block-feedback:empty + .hkc-code-block-copy { margin-left: auto; }
+.harso-kit .hkc-code-block-copy:hover { background: var(--hk-field-tint-hover); }
+.harso-kit .hkc-code-block-copy-label { white-space: nowrap; }
 .harso-kit .hkc-code-block-copy:focus-visible,
 .harso-kit .hkc-code-block-viewport:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: -2px; }
 .harso-kit .hkc-code-block-viewport {
-  display: flex;
   overflow-x: auto;
-  padding: var(--hk-space-4);
-  font: calc(var(--hk-text-meta) + .5px)/1.6 var(--hk-mono);
+  padding: 0 var(--hk-space-4) var(--hk-space-4);
+  font: calc(var(--hk-text-meta) + .5px)/1 var(--hk-mono);
   tab-size: 2;
 }
+
+/* Per-line rows: Sketch 32px height, radius 6, 24px number gutter, code inset 42px from the row edge. */
+.harso-kit .hkc-code-block-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: max-content;
+}
+.harso-kit .hkc-code-block-row {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 var(--hk-space-2);
+  border-radius: var(--hk-radius-code-row, 6px);
+}
+.harso-kit .hkc-code-block-row--on { background: var(--hk-accent-soft); }
+.harso-kit .hkc-code-block-row--add { background: color-mix(in srgb, var(--hk-positive) 12%, transparent); }
+.harso-kit .hkc-code-block-row--remove { background: color-mix(in srgb, var(--hk-negative) 12%, transparent); }
+.harso-kit .hkc-code-block-num {
+  flex-shrink: 0;
+  width: 24px;
+  margin-right: var(--hk-space-3);
+  text-align: right;
+  color: var(--hk-tertiary);
+  user-select: none;
+}
+.harso-kit .hkc-code-block-code { white-space: pre; }
+.harso-kit .hkc-code-block-row--add .hkc-code-block-code { color: var(--hk-positive); }
+.harso-kit .hkc-code-block-row--remove .hkc-code-block-code { color: var(--hk-negative); }
+/* Screen-reader-only diff announcement; the tint carries it visually. */
+.harso-kit .hkc-code-block-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Whole-block highlighter (Shiki via markdown) keeps the legacy pre/gutter layout. */
+.harso-kit .hkc-code-block-viewport:has(pre) { display: flex; }
 .harso-kit .hkc-code-block pre,
 .harso-kit .hkc-code-block pre code {
   margin: 0;
@@ -68,5 +129,5 @@
 }
 .harso-kit .hkc-code-block-numbers span { display: block; }
 @container hkc-code (max-width: 640px) {
-  .harso-kit .hkc-code-block-copy { width: 44px; height: 44px; }
+  .harso-kit .hkc-code-block-copy { height: 44px; }
 }

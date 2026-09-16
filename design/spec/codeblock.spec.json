@@ -1,0 +1,23 @@
+{
+  "component": "CodeBlock",
+  "source": "Sketch: AI Code / CodeBlock — Light/Clean (frame 497F07AC)",
+  "measured": "2026-09-17",
+  "card": { "fill": "#ffffff", "radius": 12, "width": 720, "padding_x": 16, "padding_y": 16, "note": "no border, no footer; on canvas #f2f4f8" },
+  "header": {
+    "height": 28,
+    "left": { "code_icon": {"size":16}, "filepath": {"size":14, "weight":6, "color":"#1f2226", "sample":"work-unit.ts"} },
+    "right": {
+      "language_chip": {"w":74,"h":23,"radius":999,"fill":"#eef0f3","label":{"size":12,"weight":5,"color":"#5b6067","sample":"typescript"}},
+      "copy_action": {"w":68,"h":28,"radius":8,"fill":"#ffffff","label":{"size":12,"weight":5,"color":"#1f2226","text":"Copy"},"icon":{"size":16}}
+    }
+  },
+  "code_rows": {
+    "height": 32, "radius": 6,
+    "gutter": {"num_width":24, "num":{"size":13,"weight":5,"color":"#646a73"}},
+    "code": {"x_offset":42, "size":13, "weight":5, "color":"#1f2226"},
+    "highlight_default": {"fill":"#dce8fb"},
+    "diff_add": {"fill":"#eef0f3","text_color":"#206636","prefix":"+ "},
+    "diff_remove": {"fill":"#eef0f3","text_color":"#b93427","prefix":"- "}
+  },
+  "variants": ["default · ready", "diff · ready"]
+}
