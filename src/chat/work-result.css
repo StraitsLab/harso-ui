@@ -1,0 +1,97 @@
+/* HarsoWorkResult — Sketch AI Chat / Task — Light/Clean (097ADC07) 1368x530.
+   Replaces the 9-line placeholder `.work-result`/`.artifact-card` CSS in weave-cloud
+   (currentColor borders, hard-coded hex, opacity hierarchy — none of it tokened).
+   Borderless per DIRECTION rule 1: tonal --hk-surface card; hairlines only as inset separators. */
+
+.harso-kit .hkc-work-result {
+  margin: var(--hk-space-4) 0;
+  padding: var(--hk-space-4);
+  border-radius: var(--hk-radius-card);
+  background: var(--hk-surface);
+  color: var(--hk-ink);
+}
+
+/* Header: chevron + title (sz16/600) and a right-aligned status chip. */
+.harso-kit .hkc-work-header { display: flex; align-items: center; gap: var(--hk-space-2); }
+.harso-kit .hkc-work-toggle {
+  display: flex; align-items: center; gap: var(--hk-space-2);
+  flex: 1; min-width: 0; padding: 0; border: 0; background: transparent;
+  color: var(--hk-ink); font-family: var(--hk-font); cursor: pointer; text-align: left;
+}
+.harso-kit .hkc-work-toggle > svg { flex-shrink: 0; color: var(--hk-tertiary); }
+.harso-kit .hkc-work-toggle:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; border-radius: var(--hk-radius-row); }
+.harso-kit .hkc-work-title {
+  font-size: var(--hk-text-title); font-weight: 600; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Status chip: panel tint by default; status ink for terminal states (spec #eef0f3). */
+.harso-kit .hkc-work-chip {
+  flex-shrink: 0; padding: 3px var(--hk-space-2); border-radius: var(--hk-radius-pill);
+  background: var(--hk-panel); color: var(--hk-secondary);
+  font-size: var(--hk-text-chrome); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.harso-kit .hkc-work-chip--running { background: var(--hk-accent-soft); color: var(--hk-accent); }
+.harso-kit .hkc-work-chip--succeeded { color: var(--hk-positive); }
+.harso-kit .hkc-work-chip--failed { color: var(--hk-negative); }
+.harso-kit .hkc-work-chip--cancelled { color: var(--hk-attention); }
+
+/* Step rows: 16px status glyph at x0, label at x28, optional trailing chip. */
+.harso-kit .hkc-work-steps { list-style: none; margin: var(--hk-space-3) 0 0; padding: 0; }
+.harso-kit .hkc-work-step {
+  display: flex; align-items: flex-start; gap: var(--hk-space-3);
+  min-height: 23px; padding-block: var(--hk-space-1);
+  font-size: var(--hk-text-chrome); line-height: 1.6;
+}
+.harso-kit .hkc-work-step-label { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.harso-kit .hkc-work-step--pending .hkc-work-step-label { color: var(--hk-tertiary); }
+
+.harso-kit .hkc-work-glyph { flex-shrink: 0; margin-top: 2px; }
+.harso-kit .hkc-work-glyph--running { color: var(--hk-accent-mark); animation: hkc-work-spin 900ms linear infinite; }
+.harso-kit .hkc-work-glyph--done { color: var(--hk-positive-mark); }
+.harso-kit .hkc-work-glyph--failed { color: var(--hk-negative-mark); }
+.harso-kit .hkc-work-glyph--pending { width: 16px; height: 16px; border-radius: var(--hk-radius-pill); background: var(--hk-field-tint); }
+@keyframes hkc-work-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .harso-kit .hkc-work-glyph--running { animation: none; } }
+
+/* Inset separator (permitted list hairline, rule 1). */
+.harso-kit .hkc-work-separator { height: 1px; margin: var(--hk-space-3) 0; background: var(--hk-line); }
+
+/* Produced files: compact rows INSIDE the card (ratified by the Task artboard),
+   expanding to a rich renderer (HarsoArtifact) when a detail node is supplied. */
+.harso-kit .hkc-work-artifacts { list-style: none; margin: 0; padding: 0; }
+.harso-kit .hkc-work-artifact + .hkc-work-artifact { margin-top: var(--hk-space-1); }
+.harso-kit .hkc-work-artifact-row {
+  display: flex; align-items: center; gap: var(--hk-space-2); width: 100%;
+  min-height: 23px; padding: var(--hk-space-1) var(--hk-space-2);
+  border: 0; border-radius: var(--hk-radius-row); background: transparent;
+  color: var(--hk-ink); font-family: var(--hk-font); font-size: var(--hk-text-chrome);
+  cursor: pointer; text-align: left;
+}
+.harso-kit .hkc-work-artifact-row--static { cursor: default; }
+.harso-kit button.hkc-work-artifact-row:hover { background: var(--hk-field-tint); }
+.harso-kit .hkc-work-artifact-row:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 1px; }
+.harso-kit .hkc-work-artifact-caret { flex-shrink: 0; color: var(--hk-tertiary); }
+.harso-kit .hkc-work-artifact-glyph { flex-shrink: 0; color: var(--hk-secondary); }
+.harso-kit .hkc-work-artifact-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* The expanded detail is a nested viewport: one tonal step down so it reads as a child of the
+   card, not more card content. The row already names the file, so a nested HarsoArtifact
+   suppresses its own name/meta header (see .hkc-work-artifact-detail .hkc-artifact-* below). */
+.harso-kit .hkc-work-artifact-detail {
+  margin: var(--hk-space-1) 0 var(--hk-space-3);
+  border-radius: var(--hk-radius-row);
+  background: var(--hk-canvas);
+  overflow: hidden;
+}
+.harso-kit .hkc-work-artifact-detail .hkc-artifact { background: transparent; }
+.harso-kit .hkc-work-artifact-detail .hkc-artifact-glyph,
+.harso-kit .hkc-work-artifact-detail .hkc-artifact-name { display: none; }
+.harso-kit .hkc-work-artifact-detail .hkc-artifact-header { padding-bottom: var(--hk-space-1); }
+
+/* Summary sentence + primary action (spec: dark pill at the foot). */
+.harso-kit .hkc-work-summary {
+  display: flex; align-items: flex-start; gap: var(--hk-space-2);
+  margin: 0; font-size: var(--hk-text-chrome); color: var(--hk-secondary);
+}
+.harso-kit .hkc-work-summary--failed { color: var(--hk-negative); }
+.harso-kit .hkc-work-action { margin-top: var(--hk-space-3); }

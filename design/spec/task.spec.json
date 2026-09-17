@@ -1,0 +1,45 @@
+{
+  "source": "Sketch AI Chat / Task — Light/Clean (097ADC07-403D-40F7-93A2-2CC89FF5F8A0) 1368x530",
+  "docId": "40E7AE0D-B568-476B-9630-D3AB62280DBE",
+  "note": "Two states measured side by side: `running` (left column) and `completed` (right column). A `failed` state is NOT on this artboard — derive it from the completed shape with negative-token status ink, and flag it as an extension.",
+  "card": {
+    "width": 640,
+    "innerWidth": 608,
+    "pad": 16,
+    "fill": "#ffffff",
+    "sketchBorder": "#e6e8ec/1",
+    "note": "Sketch draws a hairline; DIRECTION rule 1 is borderless -> implement tonal --hk-surface on --hk-canvas and flag the deviation (same call as CodeBlock/Tool/Artifact)."
+  },
+  "header": {
+    "y": 16, "height": 23,
+    "title": { "x": 0, "size": 16, "weight": 600, "sample": "Shape the launch brief" },
+    "chip": { "x": 368, "w": 72, "h": 23, "fill": "#eef0f3", "note": "status chip e.g. `1 of 3` / `3 of 3`; --hk-panel tint" },
+    "icon": { "x": 448, "size": 16, "note": "trailing chevron / collapse affordance" }
+  },
+  "stepRows": {
+    "note": "Activity/step rows: icon at x0 (16px status glyph: spinner running / check complete), detail at x28, trailing chip right-aligned.",
+    "heights": [36, 36, 23],
+    "icon": { "x": 0, "size": 16 },
+    "detail": { "x": 28, "w": 420 },
+    "chip": { "x": 460, "w": 72, "h": 23, "fill": "#eef0f3" }
+  },
+  "separator": { "h": 1, "color": "#e6e8ec", "insetX": 16, "note": "permitted inset list hairline (rule 1)" },
+  "artifactRow": {
+    "y": 175, "height": 23,
+    "note": "RATIFIED: produced files appear INSIDE the task card as compact rows, not as separate bordered cards.",
+    "icon": { "x": 0, "size": 16 },
+    "name": { "x": 24, "size": 13, "sample": "launch-brief.md" },
+    "chip": { "x": 472, "w": 45, "h": 23, "fill": "#eef0f3", "note": "short meta chip e.g. size/type" }
+  },
+  "taskNotes": {
+    "label": { "y": 206, "size": 13, "text": "Task notes" },
+    "field": { "y": 230, "w": 608, "h": 72, "fill": "#fafafb", "sketchBorder": "#e6e8ec/1", "pad": 12, "note": "field tint -> --hk-field-tint, borderless" }
+  },
+  "statusLine": { "y": 319, "size": 13, "samples": ["The final step is complete.", "A decision is needed before the fi…"] },
+  "primaryAction": { "y": 343, "h": 36, "fill": "#1f2226", "note": "dark primary pill (--hk-dark / --hk-inverse text), width fits label" },
+  "statusInk": {
+    "running": "blue accent (spinner glyphs + progress)",
+    "completed": "green positive (check glyphs)",
+    "failed": "NOT in artboard — use --hk-negative ink, same layout"
+  }
+}

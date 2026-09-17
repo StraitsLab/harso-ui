@@ -2,6 +2,7 @@ import { AssistantRuntimeProvider, MessagePrimitive, ThreadPrimitive, useAui, us
 import { HarsoMarkdownText } from "../src/chat/markdown";
 import { HarsoCodeBlock } from "../src/chat/code-block";
 import { HarsoArtifact } from "../src/chat/artifact";
+import { HarsoWorkResult } from "../src/chat/work-result";
 import { createScriptedAdapter } from "../src/chat/testing/scripted-adapter";
 
 export const chatMarkdownFixture = `# A calmer space to build
@@ -74,6 +75,23 @@ export function ChatMarkdownExample() {
           code={'# A quieter place to think\n\nThe best workspace leaves room for the work.\n'}
           onExpand={() => {}}
           preview={<p>The best workspace leaves room for the work.</p>} />
+      </div>
+      <div data-testid="work-demos" style={{ display: "flex", flexDirection: "column", gap: 28, marginTop: 28 }}>
+        <HarsoWorkResult title="Shape the launch brief" status="running"
+          steps={[
+            { id: "a", label: "Shaping the recommendation", state: "done" },
+            { id: "b", label: "Checking the evidence", state: "running", chip: "12s" },
+            { id: "c", label: "Six sources reviewed", state: "pending" },
+          ]}
+          summary="A decision is needed before the final step." />
+        <HarsoWorkResult title="Shape the launch brief" status="succeeded"
+          steps={[
+            { id: "a", label: "Shaping the recommendation", state: "done" },
+            { id: "b", label: "Checking the evidence", state: "done" },
+            { id: "c", label: "Six sources reviewed", state: "done" },
+          ]}
+          artifacts={[{ id: "one", name: "launch-brief.md", chip: "4 KB", detail: <HarsoArtifact name="launch-brief.md" meta="Research brief · Markdown" language="markdown" code={'# A quieter place to think\n\nThe best workspace leaves room for the work.\n'} preview={<p>The best workspace leaves room for the work.</p>} /> }]}
+          summary="The final step is complete." />
       </div>
     </section>
   </AssistantRuntimeProvider>;
