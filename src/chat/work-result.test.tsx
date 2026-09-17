@@ -49,10 +49,26 @@ test("an unavailable artifact is a static row, never an expandable control", () 
   expect(screen.queryByText("never")).not.toBeInTheDocument();
 });
 
-test("a failed result carries the failure sentence and a status region name", () => {
-  render(<HarsoWorkResult title="Shape the launch brief" status="failed" summary="The attempt could not finish." />);
-  expect(screen.getByRole("region", { name: "Work unit failed" })).toBeVisible();
-  expect(screen.getByText("The attempt could not finish.")).toBeVisible();
+test("rich summary stays inside the work-result region and collapses with the card", () => {
+  render(<HarsoWorkResult title="Shape the launch brief" status="succeeded" summaryContent={<p data-testid="rich-summary">**The final step is complete.**</p>} />);
+  const region = screen.getByRole("region", { name: "Work unit finished" });
+  expect(within(region).getByTestId("rich-summary")).toBeVisible();
+  const toggle = screen.getByRole("button", { name: /Shape the launch brief/ });
+  fireEvent.click(toggle);
+  expect(screen.queryByTestId("rich-summary")).not.toBeInTheDocument();
+});
+
+test("rich failed summaries retain failure class and warning icon", () => {
+  render(<HarsoWorkResult title="Shape the launch brief" status="failed" summaryContent={<p>Failure details</p>} />);
+  const summary = screen.getByText("Failure details").closest(".hkc-work-summary");
+  expect(summary).toHaveClass("hkc-work-summary--failed");
+  expect(summary?.querySelector(".hkc-work-glyph--failed")).not.toBeNull();
+});
+
+test("plain summaries remain backward compatible", () => {
+  render(<HarsoWorkResult title="Shape the launch brief" status="succeeded" summary="The final step is complete." />);
+  expect(screen.getByText("The final step is complete.")).toBeVisible();
+  expect(screen.getByText("The final step is complete.").closest(".hkc-work-summary")).not.toBeNull();
 });
 
 test("renders a host-supplied primary action only when given", () => {

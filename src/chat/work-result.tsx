@@ -28,6 +28,8 @@ export interface HarsoWorkArtifact {
 export interface HarsoWorkResultProps extends Omit<ComponentPropsWithoutRef<"section">, "title" | "children"> {
   title: string;
   status: HarsoWorkStatus;
+  /** Optional rich summary node; when supplied it replaces the plain summary inside the same card layout. */
+  summaryContent?: ReactNode;
   /** Sentence under the steps, e.g. "The final step is complete." */
   summary?: string;
   steps?: readonly HarsoWorkStep[];
@@ -74,7 +76,7 @@ function ArtifactRow({ artifact }: { artifact: HarsoWorkArtifact }) {
   </li>;
 }
 
-export function HarsoWorkResult({ title, status, summary, steps, artifacts, chip, action, defaultOpen = true, className = "", ...props }: HarsoWorkResultProps) {
+export function HarsoWorkResult({ title, status, summary, summaryContent, steps, artifacts, chip, action, defaultOpen = true, className = "", ...props }: HarsoWorkResultProps) {
   const [open, setOpen] = useState(defaultOpen);
   const done = steps?.filter(step => step.state === "done").length ?? 0;
   const statusChip = chip ?? (steps?.length ? `${done} of ${steps.length}` : undefined);
@@ -100,12 +102,12 @@ export function HarsoWorkResult({ title, status, summary, steps, artifacts, chip
           {artifacts.map(artifact => <ArtifactRow key={artifact.id} artifact={artifact} />)}
         </ul>
       </> : null}
-      {summary ? <>
+      {summaryContent || summary ? <>
         <div className="hkc-work-separator" role="presentation" />
-        <p className={`hkc-work-summary${status === "failed" ? " hkc-work-summary--failed" : ""}`}>
+        <div className={`hkc-work-summary${status === "failed" ? " hkc-work-summary--failed" : ""}`}>
           {status === "failed" ? <WarningCircleIcon size={16} weight="fill" aria-hidden="true" className="hkc-work-glyph hkc-work-glyph--failed" /> : null}
-          {summary}
-        </p>
+          {summaryContent ?? summary}
+        </div>
       </> : null}
       {action ? <div className="hkc-work-action">{action}</div> : null}
     </> : null}
