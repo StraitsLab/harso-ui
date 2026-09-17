@@ -1,6 +1,7 @@
 import { AssistantRuntimeProvider, MessagePrimitive, ThreadPrimitive, useAui, useAuiState, useLocalRuntime } from "@assistant-ui/react";
 import { HarsoMarkdownText } from "../src/chat/markdown";
 import { HarsoCodeBlock } from "../src/chat/code-block";
+import { HarsoArtifact } from "../src/chat/artifact";
 import { createScriptedAdapter } from "../src/chat/testing/scripted-adapter";
 
 export const chatMarkdownFixture = `# A calmer space to build
@@ -58,6 +59,22 @@ export function ChatMarkdownExample() {
       <ThreadPrimitive.Root><ThreadPrimitive.Messages components={{ Message: MarkdownMessage }} /></ThreadPrimitive.Root>
       <HarsoCodeBlock language="typescript" filename="work-unit.ts" lineNumbers highlightLines={[1]} code={'const result: string = "Work complete";\n\nconsole.log(result);\n'} />
       <HarsoCodeBlock language="typescript" filename="work-unit.ts" lineNumbers diff code={'- const result = "Pending";\n+ const result: string = "Work complete";\n console.log(result);\n'} />
+      <div data-testid="artifact-demos" style={{ display: "flex", flexDirection: "column", gap: 28, marginTop: 28 }}>
+        <HarsoArtifact name="A quieter place to think" meta="Research brief · Markdown" language="markdown" defaultMode="preview" highlightLines={[1]}
+          code={'# A quieter place to think\n\nThe best workspace leaves room for the work.\n'}
+          onExpand={() => {}}
+          preview={<>
+            <p style={{ fontSize: 16, fontWeight: 600 }}>The best workspace leaves room for the work.</p>
+            <p style={{ fontWeight: 600 }}>What stood out</p>
+            <p>People want to see what matters now, with the detail one deliberate step away. Progress stays visible without taking over the conversation.</p>
+            <p style={{ fontWeight: 600 }}>The next small step</p>
+            <p>Try the calmer flow with one real task. Keep the decisions visible, and let the rest recede.</p>
+          </>} />
+        <HarsoArtifact name="A quieter place to think" meta="Research brief · Markdown" language="markdown" defaultMode="code" highlightLines={[1]}
+          code={'# A quieter place to think\n\nThe best workspace leaves room for the work.\n'}
+          onExpand={() => {}}
+          preview={<p>The best workspace leaves room for the work.</p>} />
+      </div>
     </section>
   </AssistantRuntimeProvider>;
 }

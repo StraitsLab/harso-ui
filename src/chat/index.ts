@@ -19,6 +19,7 @@ export { HarsoChatShell, type HarsoChatShellProps } from "./shell";
 // Lane 5: markdown
 export { HarsoMarkdownText } from "./markdown";
 export { HarsoCodeBlock, type HarsoCodeBlockProps } from "./code-block";
+export { HarsoArtifact, type HarsoArtifactProps, type HarsoArtifactMode } from "./artifact";
 
 // Lane 6: runtime
 export { HARSO_STREAM_VERSION, type HarsoEvent, type HarsoTransport } from "./runtime/stream-types";

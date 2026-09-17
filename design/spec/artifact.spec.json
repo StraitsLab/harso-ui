@@ -1,0 +1,46 @@
+{
+  "source": "Sketch AI Code / Artifact — Light/Clean (C1CE0DEA-AF49-475F-986E-4490DA4199CE) 784x801",
+  "docId": "40E7AE0D-B568-476B-9630-D3AB62280DBE",
+  "card": {
+    "fill": "#ffffff",
+    "sketchBorder": "#e6e8ec/1",
+    "radius": 16,
+    "note": "Sketch shows a 1px hairline; per DIRECTION rule 1 implement borderless with tonal separation (--hk-surface on --hk-canvas).",
+    "innerWidth": 720,
+    "pad": 16
+  },
+  "header": {
+    "height": 28,
+    "fileIcon": { "x": 0, "size": 16, "stroke": "#5b6067" },
+    "title": { "x": 26, "size": 14, "weight": 600, "sample": "A quieter place to think" },
+    "actions": {
+      "order": ["Copy", "Download", "Expand"],
+      "each": { "w": 32, "h": 28, "fill": "#ffffff", "sketchBorder": "#e6e8ec/1", "icon": 16 },
+      "xs": [572, 614, 656],
+      "note": "Right-aligned trio. Copy=overlapping rects, Download=tray+down arrow, Expand=corner brackets. Borderless tonal per rule 1."
+    }
+  },
+  "meta": { "y": 56, "size": 13, "color": "muted", "sample": "Research brief \u00b7 Synthetic example" },
+  "tabs": {
+    "height": 32,
+    "items": [
+      { "name": "Preview", "x": 0, "w": 73 },
+      { "name": "Code", "x": 83, "w": 57 }
+    ],
+    "activeFill": "#eef0f3",
+    "activeRadius": 8,
+    "size": 13,
+    "note": "Segmented control; active tab gets the panel-tint pill."
+  },
+  "divider": { "y": 128, "height": 1, "color": "#e6e8ec", "inset": 24, "note": "Permitted inset separator (rule 1)." },
+  "body": {
+    "preview": {
+      "note": "Rendered markdown. title sz16, section headers sz14/600, body sz14. Pad 16.",
+      "title": 16, "sectionHeader": 14, "bodyText": 14
+    },
+    "code": {
+      "note": "Line-numbered rows h32; number x8 sz13, code x42 sz13; active line highlight #dce8fb (--hk-accent-soft). Reuse HarsoCodeBlock lineNumbers+highlightLines.",
+      "rowHeight": 32, "numberX": 8, "codeX": 42, "size": 13, "highlight": "#dce8fb"
+    }
+  }
+}

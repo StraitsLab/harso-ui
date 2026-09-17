@@ -1,0 +1,99 @@
+/* HarsoArtifact — Sketch AI Code / Artifact — Light/Clean (C1CE0DEA) 784x801.
+   Rich model-produced file card: header + actions, Preview/Code tabs, inline body.
+   Borderless per DIRECTION rule 1: tonal --hk-surface card on the --hk-canvas transcript. */
+
+.harso-kit .hkc-artifact {
+  margin: 0;
+  border-radius: var(--hk-radius-card, 16px);
+  background: var(--hk-surface);
+  color: var(--hk-ink);
+  overflow: hidden;
+}
+
+.harso-kit .hkc-artifact-header {
+  display: flex;
+  align-items: center;
+  gap: var(--hk-space-2);
+  padding: var(--hk-space-3) var(--hk-space-4);
+  min-height: 28px;
+}
+.harso-kit .hkc-artifact-glyph { flex-shrink: 0; color: var(--hk-secondary); }
+.harso-kit .hkc-artifact-name {
+  font-family: var(--hk-font);
+  font-size: var(--hk-text-sm, 14px);
+  font-weight: 600;
+  color: var(--hk-ink);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.harso-kit .hkc-artifact-feedback {
+  margin-left: auto;
+  font-size: var(--hk-text-caps, 11px);
+  color: var(--hk-tertiary);
+}
+.harso-kit .hkc-artifact-actions { display: flex; align-items: center; gap: var(--hk-space-1); flex-shrink: 0; }
+.harso-kit .hkc-artifact-feedback:empty + .hkc-artifact-actions { margin-left: auto; }
+.harso-kit .hkc-artifact-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--hk-radius-control, 8px);
+  background: transparent;
+  color: var(--hk-secondary);
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+.harso-kit .hkc-artifact-action:hover { background: var(--hk-field-tint); color: var(--hk-ink); }
+.harso-kit .hkc-artifact-action:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 1px; }
+
+.harso-kit .hkc-artifact-meta {
+  margin: 0;
+  padding: 0 var(--hk-space-4) var(--hk-space-2);
+  font-size: var(--hk-text-chrome, 13px);
+  color: var(--hk-secondary);
+}
+
+/* Segmented Preview/Code control: active tab gets the panel-tint pill (DIRECTION rule 6). */
+.harso-kit .hkc-artifact-tabs {
+  display: flex;
+  gap: var(--hk-space-1);
+  padding: 0 var(--hk-space-4) var(--hk-space-3);
+}
+.harso-kit .hkc-artifact-tab {
+  padding: var(--hk-space-2) var(--hk-space-3);
+  border: 0;
+  border-radius: var(--hk-radius-control, 8px);
+  background: transparent;
+  color: var(--hk-secondary);
+  font-family: var(--hk-font);
+  font-size: var(--hk-text-chrome, 13px);
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+.harso-kit .hkc-artifact-tab:hover { color: var(--hk-ink); }
+.harso-kit .hkc-artifact-tab[aria-selected="true"] { background: var(--hk-panel); color: var(--hk-ink); }
+.harso-kit .hkc-artifact-tab:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 1px; }
+
+/* Inset separator under the toolbar (permitted list hairline, rule 1). */
+.harso-kit .hkc-artifact-divider {
+  height: 1px;
+  margin: 0 var(--hk-space-4);
+  background: var(--hk-line);
+}
+
+.harso-kit .hkc-artifact-body { padding: var(--hk-space-4); }
+.harso-kit .hkc-artifact-preview { font-size: var(--hk-text-sm, 14px); color: var(--hk-ink); line-height: 1.6; }
+.harso-kit .hkc-artifact-preview > :first-child { margin-top: 0; }
+.harso-kit .hkc-artifact-preview > :last-child { margin-bottom: 0; }
+
+/* The Code tab reuses HarsoCodeBlock; the artifact card already owns the surface + radius,
+   so strip the nested block's own card chrome and header (the artifact toolbar replaces it). */
+.harso-kit .hkc-artifact-body .hkc-artifact-code { background: transparent; border-radius: 0; }
+.harso-kit .hkc-artifact-body .hkc-artifact-code .hkc-code-block-header { display: none; }
+.harso-kit .hkc-artifact-body .hkc-artifact-code .hkc-code-block-viewport { padding: 0; }
