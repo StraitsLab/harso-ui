@@ -7,9 +7,13 @@
 .harso-kit .hkc-tool summary .hkc-tool-chevron { width: 11px; height: 11px; flex-shrink: 0; }
 .harso-kit .hkc-tool details[open] > summary > .hkc-tool-chevron { transform: rotate(90deg); }
 .harso-kit .hkc-tool-meta { font-size: var(--hk-text-meta); color: var(--hk-tertiary); }
+.harso-kit .hkc-tool[open] > details > summary, .harso-kit .hkc-tool:has(> details[open]) > details > summary { border-bottom: 1px solid var(--hk-line); padding-bottom: var(--hk-space-3); margin-bottom: var(--hk-space-1); }
 .harso-kit .hkc-tool code, .harso-kit .hkc-tool pre { font-family: var(--hk-mono); font-size: var(--hk-text-chrome); }
 .harso-kit .hkc-tool summary code { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.harso-kit .hkc-tool pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: var(--hk-space-2) 0 0; padding: var(--hk-space-2) 0; line-height: 1.6; background: transparent; border: 0; border-radius: var(--hk-radius-control); color: var(--hk-ink); }
+.harso-kit .hkc-tool pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: var(--hk-space-2) 0 0; padding: 0; line-height: 1.6; background: transparent; border: 0; color: var(--hk-ink); }
+/* Spec (AI Chat / Tool expanded): the input value sits in a tonal box (#f4f5f7, r8); output stays bare text.
+   The caps label renders inside the box (a minor, defensible deviation from the artboard's label-above-box). */
+.harso-kit .hkc-tool pre[aria-label="Command"], .harso-kit .hkc-tool pre[aria-label="Path"], .harso-kit .hkc-tool pre[aria-label="Arguments"] { padding: var(--hk-space-3); background: var(--hk-field-tint); border-radius: var(--hk-radius-row); }
 .harso-kit .hkc-tool pre::before { content: attr(aria-label); display: block; margin-bottom: 4px; font-family: var(--hk-font); font-size: var(--hk-text-caps); font-weight: 600; letter-spacing: var(--hk-caps-tracking); text-transform: uppercase; color: var(--hk-tertiary); }
 .harso-kit .hkc-tool pre[data-label]::before { content: attr(data-label); }
 .harso-kit .hkc-tool-body { color: var(--hk-secondary); font-size: var(--hk-text-sm); }
