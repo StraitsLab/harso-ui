@@ -73,4 +73,25 @@ describe("Harso attachments", () => {
     fireEvent.paste(screen.getByRole("textbox"), { clipboardData: { files: [new File([], "blocked.png", { type: "image/png" })] } });
     expect(harness.runtime().thread.composer.getState().attachments).toHaveLength(1);
   });
+
+  it("shows an upload progress bar with an accessible percentage while an attachment is uploading", async () => {
+    const uploading: AttachmentAdapter = {
+      accept: "*",
+      async add({ file }) { return { id: file.name, name: file.name, file, type: "document", contentType: file.type, status: { type: "running", reason: "uploading", progress: 0.64 }, content: [] }; },
+      async send(attachment) { return { ...attachment, status: { type: "complete" }, content: attachment.content ?? [] }; },
+      remove: vi.fn(async () => {}),
+    };
+    function UserMessage() { return <MessagePrimitive.Root><MessagePrimitive.Attachments components={{ Attachment: HarsoMessageAttachment }} /></MessagePrimitive.Root>; }
+    function Harness() {
+      const runtime = useLocalRuntime({ async *run() { yield { content: [{ type: "text", text: "ok" }] }; } }, { adapters: { attachments: uploading } });
+      return <AssistantRuntimeProvider runtime={runtime}><ThreadPrimitive.Messages components={{ UserMessage, AssistantMessage: () => null }} /><HarsoComposer /></AssistantRuntimeProvider>;
+    }
+    render(<Harness />);
+    fireEvent.click(screen.getByRole("button", { name: "Add attachment" }));
+    fireEvent.change(document.querySelector('input[type="file"]')!, { target: { files: [new File(["x"], "requirements.pdf", { type: "application/pdf" })] } });
+    expect(await screen.findByText("Uploading · 64%")).toBeVisible();
+    const bar = screen.getByRole("progressbar", { name: "Uploading requirements.pdf" });
+    expect(bar).toHaveAttribute("aria-valuenow", "64");
+    expect(screen.queryByText(/KB|MB|B$/)).not.toBeInTheDocument();
+  });
 });
