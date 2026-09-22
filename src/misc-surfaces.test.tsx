@@ -262,6 +262,55 @@ describe("misc surfaces", () => {
     expect(close).toHaveBeenCalledOnce();
     expect(dialog.open).toBe(true);
   });
+  it.each([
+    ["dialog", undefined],
+    ["get", "dialog"],
+    ["dialog", "post"],
+    ["dialog", ""],
+    ["dialog", "invalid"],
+    ["get", undefined],
+  ] as const)("synthetic submit %s / override %s does not pretend to perform native default action", (method, override) => {
+    const close = vi.fn(); const hostSubmit = vi.fn();
+    render(<SettingsModal open onClose={close} onSubmit={hostSubmit}><form aria-label="Host form" method={method}><button type="submit" formMethod={override}>Submit settings</button></form></SettingsModal>);
+    const submitter = screen.getByRole("button", { name: "Submit settings" });
+    // Native requestSubmit/method overrides are covered in the real-browser suite.
+    const event = new SubmitEvent("submit", { bubbles: true, cancelable: true, submitter });
+    fireEvent(screen.getByRole("form", { name: "Host form" }), event);
+    expect(event.defaultPrevented).toBe(false);
+    expect(close).not.toHaveBeenCalled();
+    expect(hostSubmit).toHaveBeenCalledOnce();
+    expect(screen.getByRole("dialog")).toHaveAttribute("open");
+  });
+  it.each(["form", "dialog", "capture"])("settings honors cancellation by the existing %s submit handler", owner => {
+    const close = vi.fn(); const hostSubmit = vi.fn(event => { if (owner === "dialog") event.preventDefault(); });
+    const formSubmit = vi.fn(event => { if (owner === "form") event.preventDefault(); });
+    render(<SettingsModal open onClose={close} onSubmit={hostSubmit} onSubmitCapture={event => { if (owner === "capture") event.preventDefault(); }}><form aria-label="Host form" method="dialog" onSubmit={formSubmit}><button>Submit settings</button></form></SettingsModal>);
+    expect(fireEvent.submit(screen.getByRole("form", { name: "Host form" }))).toBe(false);
+    expect(formSubmit).toHaveBeenCalledOnce();
+    expect(hostSubmit).toHaveBeenCalledOnce();
+    expect(close).not.toHaveBeenCalled();
+    expect(screen.getByRole("dialog")).toHaveAttribute("open");
+  });
+  it.each(["ancestor", "document"])("settings waits for %s submit cancellation before requesting close", owner => {
+    const close = vi.fn(); const order: string[] = [];
+    const cancel = (event: Event) => { order.push("document"); if (owner === "document") event.preventDefault(); };
+    document.addEventListener("submit", cancel);
+    try {
+      render(<section onSubmit={event => { order.push("ancestor"); if (owner === "ancestor") event.preventDefault(); }}><SettingsModal open onClose={close} onSubmit={() => order.push("modal")}><form aria-label="Host form" method="dialog" onSubmit={() => order.push("form")}><button>Submit settings</button></form></SettingsModal></section>);
+      expect(fireEvent.submit(screen.getByRole("form", { name: "Host form" }))).toBe(false);
+      expect(order).toEqual(["form", "modal", "ancestor", "document"]);
+      expect(close).not.toHaveBeenCalled();
+      expect(screen.getByRole("dialog")).toHaveAttribute("open");
+    } finally { document.removeEventListener("submit", cancel); }
+  });
+  it("settings reopens native closure without a close callback", () => {
+    render(<SettingsModal open><form aria-label="Host form" method="dialog"><input type="submit" value="Done" /></form></SettingsModal>);
+    const dialog = screen.getByRole("dialog") as HTMLDialogElement;
+    // jsdom has no native dialog form default action; browser tests requestSubmit.
+    dialog.open = false;
+    fireEvent(dialog, new Event("close"));
+    expect(dialog).toHaveAttribute("open");
+  });
   it("renders accessible visual primitives and modal actions", () => {
     const onClose = vi.fn();
     render(<><Color value="#fff" /><Persona state="thinking" /><SocialButton provider="GitHub" /><SettingsModal open onClose={onClose}>Preferences</SettingsModal><AuthCard title="Sign in" /></>);

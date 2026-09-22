@@ -165,6 +165,94 @@ for (const appearance of ["light", "dark"] as const) for (const palette of ["cle
   });
 }
 
+test("INPUT VISUAL composer layout settles under a resting pointer and the touch target never resizes on hover", async ({ page }, testInfo) => {
+  for (const width of [390, 320, 1440]) {
+    await page.setViewportSize({ width, height: 1050 });
+    await page.goto("/#harso:chat-composer");
+    await page.getByLabel("Composer state", { exact: true }).selectOption("refused submission");
+    const prompt = page.getByTestId("composer-fixture");
+    const input = prompt.getByRole("textbox", { name: "Message", exact: true });
+    await input.fill("Review the supplied project brief.");
+    const send = prompt.getByRole("button", { name: "Send", exact: true });
+
+    // Invariant: the phone touch target is a stable box; hover restyles it, never resizes it.
+    await page.mouse.move(1, 1);
+    await page.waitForTimeout(100);
+    const idle = await send.boundingBox();
+    await page.mouse.move(1, 1);
+
+    // Derive a draft whose wrap decision differs between the hover-driven width estimates, if any remains.
+    const estIdle = await page.evaluate(() => {
+      const form = document.querySelector(".hkc-composer")!;
+      const style = getComputedStyle(form);
+      const controls = [...form.querySelectorAll<HTMLElement>(".hkc-composer-control")].filter(node => getComputedStyle(node).display !== "none");
+      return form.clientWidth - parseFloat(style.paddingLeft || "0") - parseFloat(style.paddingRight || "0") - controls.reduce((sum, node) => sum + node.getBoundingClientRect().width, 0) - controls.length * (parseFloat(style.columnGap) || 0);
+    });
+    await send.hover();
+    await page.waitForTimeout(100);
+    const estHover = await page.evaluate(() => {
+      const form = document.querySelector(".hkc-composer")!;
+      const style = getComputedStyle(form);
+      const controls = [...form.querySelectorAll<HTMLElement>(".hkc-composer-control")].filter(node => getComputedStyle(node).display !== "none");
+      return form.clientWidth - parseFloat(style.paddingLeft || "0") - parseFloat(style.paddingRight || "0") - controls.reduce((sum, node) => sum + node.getBoundingClientRect().width, 0) - controls.length * (parseFloat(style.columnGap) || 0);
+    });
+    await page.mouse.move(1, 1);
+    await page.waitForTimeout(100);
+    const provocateur = await page.evaluate(({ lo, hi }) => {
+      const form = document.querySelector(".hkc-composer")!;
+      const input = form.querySelector("textarea")!;
+      const inputStyle = getComputedStyle(input);
+      const wraps = (text: string, w: number) => {
+        const probe = input.cloneNode() as HTMLTextAreaElement;
+        Object.assign(probe.style, { position: "fixed", visibility: "hidden", pointerEvents: "none", height: "0", minHeight: "0", maxHeight: "none", width: `${Math.max(1, w)}px`, font: inputStyle.font, lineHeight: inputStyle.lineHeight, padding: "0", border: "0", boxSizing: "border-box" });
+        probe.removeAttribute("id");
+        probe.value = text;
+        document.body.append(probe);
+        const wrapped = probe.scrollHeight > parseFloat(inputStyle.lineHeight) + 1;
+        probe.remove();
+        return wrapped;
+      };
+      const base = "Review the supplied project brief.";
+      const candidates = [...Array.from({ length: 23 }, (_, i) => base.slice(0, 12 + i)), ...Array.from({ length: 6 }, (_, i) => base.slice(0, 22) + "x".repeat(i + 1))];
+      return candidates.find(text => wraps(text, lo) !== wraps(text, hi)) ?? base;
+    }, { lo: Math.min(estIdle, estHover), hi: Math.max(estIdle, estHover) });
+
+    // Behavior: the compact/expanded state must settle under a resting pointer after the host
+    // refuses submission — with the exact consumer draft and with the derived boundary draft.
+    await input.fill("Review the supplied project brief.");
+    await send.click();
+    await expect(input).toHaveValue("Review the supplied project brief.");
+    for (const draft of ["Review the supplied project brief.", provocateur]) {
+      if (draft !== "Review the supplied project brief.") {
+        await input.fill(draft);
+        await expect(input).toHaveValue(draft);
+      }
+      const frames = await page.evaluate(async () => {
+        const samples: (string | undefined | null)[] = [];
+        for (let i = 0; i < 60; i++) {
+          await new Promise(requestAnimationFrame);
+          samples.push(document.querySelector(".hkc-composer")!.getAttribute("data-multiline"));
+        }
+        return samples;
+      });
+      expect(new Set(frames), `data-multiline must settle, not oscillate, at ${width}px (est ${Math.round(estIdle * 10) / 10}..${Math.round(estHover * 10) / 10}, draft ${JSON.stringify(draft)}, frames ${JSON.stringify(frames.filter((v, i) => v !== frames[i ? i - 1 : 0]).slice(0, 6))})`).toEqual(new Set([frames[0]]));
+    }
+    await prompt.screenshot({ path: testInfo.outputPath(`composer-settled-${width}.png`) });
+
+    // Invariant: the touch target keeps its box across hover (the measured operand of the layout probe).
+    await send.hover();
+    await page.waitForTimeout(100);
+    const hovered = await send.boundingBox();
+    expect({ width: hovered!.width, height: hovered!.height }, `Send box must not resize on hover at ${width}px`).toEqual({ width: idle!.width, height: idle!.height });
+
+    // Behavior preserved: explicit newline expands, clearing collapses.
+    await input.fill("First\nSecond");
+    await expect(prompt.locator(".hkc-composer")).toHaveAttribute("data-multiline", "true");
+    await input.fill("");
+    await expect(prompt.locator(".hkc-composer")).not.toHaveAttribute("data-multiline");
+  }
+});
+
 test("INPUT VISUAL actual gallery unavailable state never requests native permission", async ({ page }, testInfo) => {
   await page.addInitScript(() => {
     Object.defineProperty(window, "SpeechRecognition", { configurable: true, value: undefined });

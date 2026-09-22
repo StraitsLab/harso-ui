@@ -2,7 +2,11 @@ import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
   page.setDefaultTimeout(5000);
-  await page.goto("/#vercel:chain-of-thought");
+  // Gallery loading has a separate bounded budget; interactions still get 5s.
+  const readyDeadline = performance.now() + 15_000;
+  await page.goto("/#vercel:chain-of-thought", { waitUntil: "domcontentloaded", timeout: 15_000 });
+  await page.getByTestId("live-example").getByRole("combobox", { name: "Supplied summary state", exact: true })
+    .waitFor({ state: "visible", timeout: Math.max(1, readyDeadline - performance.now()) });
 });
 
 test("supplied chain summary retains native disclosure through disabled and content recovery", async ({ page }) => {
