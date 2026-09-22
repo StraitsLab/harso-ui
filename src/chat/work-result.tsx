@@ -34,6 +34,8 @@ export interface HarsoWorkResultProps extends Omit<ComponentPropsWithoutRef<"sec
   summary?: string;
   steps?: readonly HarsoWorkStep[];
   artifacts?: readonly HarsoWorkArtifact[];
+  /** Non-null custom selector/list replaces artifacts inside the same collapse scope. */
+  artifactContent?: ReactNode;
   /** Status chip text, e.g. "3 of 3". Defaults to a step count when steps are supplied. */
   chip?: string;
   /** Primary action rendered at the foot of the card (dark pill). */
@@ -76,7 +78,7 @@ function ArtifactRow({ artifact }: { artifact: HarsoWorkArtifact }) {
   </li>;
 }
 
-export function HarsoWorkResult({ title, status, summary, summaryContent, steps, artifacts, chip, action, defaultOpen = true, className = "", ...props }: HarsoWorkResultProps) {
+export function HarsoWorkResult({ title, status, summary, summaryContent, steps, artifacts, artifactContent, chip, action, defaultOpen = true, className = "", ...props }: HarsoWorkResultProps) {
   const [open, setOpen] = useState(defaultOpen);
   const done = steps?.filter(step => step.state === "done").length ?? 0;
   const statusChip = chip ?? (steps?.length ? `${done} of ${steps.length}` : undefined);
@@ -96,7 +98,10 @@ export function HarsoWorkResult({ title, status, summary, summaryContent, steps,
           {step.chip ? <span className="hkc-work-chip">{step.chip}</span> : null}
         </li>)}
       </ol> : null}
-      {artifacts?.length ? <>
+      {artifactContent != null ? <>
+        <div className="hkc-work-separator" role="presentation" />
+        {artifactContent}
+      </> : artifacts?.length ? <>
         <div className="hkc-work-separator" role="presentation" />
         <ul className="hkc-work-artifacts" aria-label="Produced files">
           {artifacts.map(artifact => <ArtifactRow key={artifact.id} artifact={artifact} />)}

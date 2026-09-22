@@ -22,6 +22,8 @@ export { HarsoCodeBlock, type HarsoCodeBlockProps } from "./code-block";
 export { HarsoArtifact, type HarsoArtifactProps, type HarsoArtifactMode } from "./artifact";
 export { HarsoWorkResult, type HarsoWorkResultProps, type HarsoWorkStatus, type HarsoWorkStep, type HarsoWorkStepState, type HarsoWorkArtifact } from "./work-result";
 
+export { HarsoOutputDetail, type HarsoOutputDetailProps, type HarsoOutputAction, type HarsoOutputPreviewState } from "./output-detail";
+
 // Lane 6: runtime
 export { HARSO_STREAM_VERSION, type HarsoEvent, type HarsoTransport } from "./runtime/stream-types";
 export { initialHarsoState, reduceHarsoEvent, mapHistory, type HarsoStreamState, type HarsoViewTurn } from "./runtime/convert";

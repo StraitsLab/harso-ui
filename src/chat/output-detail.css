@@ -1,0 +1,59 @@
+/* WEV-1785: pane-only translation of accepted C1 source. No shell/theme ownership. */
+.harso-kit .hkc-output-detail {
+  width: 100%; min-width: 0; color: var(--hk-ink); background: var(--hk-panel);
+}
+.harso-kit .hkc-output-header {
+  position: relative; display: flex; align-items: center; gap: var(--hk-space-3);
+  margin-inline: calc(var(--hk-space-4) + var(--hk-space-1)); padding-top: var(--hk-space-3);
+}
+.harso-kit .hkc-output-title {
+  flex: 1; min-width: 0; overflow-wrap: anywhere;
+  font-size: var(--hk-text-title); font-weight: 500;
+}
+.harso-kit .hkc-output-detail .hk-button {
+  min-width: 44px; min-height: 44px; height: auto; white-space: normal;
+  font-size: var(--hk-text-chrome); line-height: 20px;
+}
+/* Actual layout boxes, not inherited overlapping pseudo hit areas. */
+.harso-kit .hkc-output-detail .hk-button::after { content: none; }
+.harso-kit .hkc-output-details-toggle { flex: 0 0 72px; }
+.harso-kit .hkc-output-close { flex: 0 0 44px; padding: 0; }
+.harso-kit .hkc-output-body {
+  min-width: 0; padding: var(--hk-space-6) calc(var(--hk-space-4) + var(--hk-space-1));
+}
+.harso-kit .hkc-output-detail[data-kind="image"] .hkc-output-body { padding-top: var(--hk-space-8); }
+.harso-kit .hkc-output-content { min-width: 0; overflow-wrap: anywhere; }
+.harso-kit .hkc-output-detail[data-kind="image"] .hkc-output-content img {
+  display: block; width: 100%; height: auto; object-fit: contain; border-radius: var(--hk-radius-row);
+}
+.harso-kit .hkc-output-detail[data-kind="document"] .hkc-output-content {
+  padding: calc(var(--hk-space-6) + var(--hk-space-1));
+  background: var(--hk-surface); border-radius: var(--hk-radius-card);
+}
+.harso-kit .hkc-output-actions {
+  display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--hk-space-2);
+  margin-top: var(--hk-space-6);
+}
+.harso-kit .hkc-output-actions:empty { display: none; }
+.harso-kit .hkc-output-action { min-width: 0; max-width: 100%; }
+.harso-kit .hkc-output-action--download { width: 112px; }
+.harso-kit .hkc-output-action--expand { width: 96px; }
+.harso-kit .hkc-output-action--openExternally { width: 148px; }
+.harso-kit .hkc-output-action > .hk-button { width: 100%; padding: var(--hk-space-3); }
+.harso-kit .hkc-output-action-description, .harso-kit .hkc-output-status {
+  font-size: var(--hk-text-chrome); color: var(--hk-secondary); overflow-wrap: anywhere;
+}
+.harso-kit .hkc-output-action-description:not(:empty) { margin-top: var(--hk-space-2); }
+.harso-kit .hkc-output-status:not(:empty) { margin-top: var(--hk-space-4); }
+.harso-kit .hkc-output-details {
+  position: absolute; top: calc(100% + var(--hk-space-1)); right: 0; z-index: 2;
+  width: 332px; max-width: 100%; max-height: 70dvh; overflow: auto; overflow-wrap: anywhere;
+  padding: calc(var(--hk-space-4) + var(--hk-space-1));
+  background: var(--hk-surface); border-radius: var(--hk-radius-card); box-shadow: var(--hk-shadow-float);
+  font-size: var(--hk-text-chrome);
+}
+@media (forced-colors: active) {
+  .harso-kit .hkc-output-detail .hk-button { border: 1px solid ButtonText; }
+  .harso-kit .hkc-output-detail .hk-button:disabled { border-color: GrayText; color: GrayText; }
+  .harso-kit .hkc-output-details { border: 1px solid CanvasText; }
+}
