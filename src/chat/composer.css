@@ -40,6 +40,8 @@
   .harso-kit .hkc-composer { min-height: 52px; padding: 4px; gap: 4px; }
   .harso-kit .hkc-composer-button { width: 44px; height: 44px; }
   .harso-kit .hkc-composer-model { display: none; }
-  /* Keep the primary visual disc 36px inside its 44px touch target. */
-  .harso-kit .hkc-composer-send, .harso-kit .hkc-composer-send:hover:not(:disabled) { background: radial-gradient(circle closest-side, var(--hk-dark) 81.8%, transparent 82%); }
+  /* Keep the primary visual disc 36px inside its 44px touch target — including on hover,
+     where the base .hkc-composer-send:hover rule would otherwise resize the box and swing
+     the composer's collapsed-row width measurement. */
+  .harso-kit .hkc-composer-send, .harso-kit .hkc-composer-send:hover:not(:disabled) { width: 44px; height: 44px; background: radial-gradient(circle closest-side, var(--hk-dark) 81.8%, transparent 82%); }
 }

@@ -1,0 +1,27 @@
+html, body, #root { margin: 0; min-height: 100%; }
+.c1-fixture { min-height: 100vh; }
+.c1-pane { width: min(520px, 100%); min-height: 900px; background: var(--hk-panel); }
+.c1-controls { padding: 20px; max-width: 520px; }
+.c1-controls h1 { font-size: var(--hk-text-title); margin-bottom: 20px; }
+.c1-fixture .c1-selector, .c1-fixture-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.c1-fixture .c1-selector > :first-child { width: 82px; }
+.c1-fixture .c1-selector > :nth-child(2) { width: 112px; }
+.c1-fixture .c1-controls .hk-button, .c1-fixture .c1-details-content .hk-button { min-height: 44px; min-width: 44px; white-space: normal; }
+.c1-fixture .c1-controls .hk-button::after, .c1-fixture .c1-details-content .hk-button::after { content: none; }
+.c1-fixture-actions { margin-block: 20px; }
+.c1-controls output { display: block; overflow-wrap: anywhere; }
+.c1-document { min-height: 584px; display: flex; flex-direction: column; gap: 20px; }
+.c1-document h3 { font-size: var(--hk-text-display); line-height: 26px; font-weight: 500; }
+.c1-document .c1-deck { font-size: var(--hk-text-title); line-height: 19px; }
+.c1-deck strong { font-weight: 500; }
+.c1-document > p:not(.c1-deck) { line-height: 22px; color: var(--hk-secondary); }
+.c1-table-scroll { overflow-x: auto; max-width: 100%; }
+.c1-table-scroll table { width: 100%; min-width: 280px; border-collapse: collapse; text-align: left; }
+.c1-table-scroll th, .c1-table-scroll td { height: 48px; padding: 12px; font-weight: 400; }
+.c1-table-scroll th { background: var(--hk-panel); font-weight: 500; }
+.c1-details-content { display: flex; flex-direction: column; gap: 20px; }
+.c1-details-content h3 { font-size: var(--hk-text-title); }
+.c1-details-content dl { margin: 0; display: grid; gap: 20px; }
+.c1-details-content dt { font-weight: 500; margin-bottom: 8px; }
+.c1-details-content dd { margin: 0; color: var(--hk-secondary); }
+@media (forced-colors: active) { .c1-fixture .c1-controls .hk-button { border: 1px solid ButtonText; } }

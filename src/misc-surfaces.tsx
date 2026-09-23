@@ -66,6 +66,20 @@ export function SettingsModal({ open = false, isOpen, title = "Settings", childr
   const active = isOpen ?? open;
   const anchor = useRef<HTMLSpanElement>(null);
   const origin = useRef<HTMLElement | null>(null);
+  const dialog = useRef<HTMLElement | null>(null);
+  const focused = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (!active) return;
+    // Observe focus, not submission: cancellation and native form ownership stay
+    // entirely with the browser, including stopped propagation and late handlers.
+    const rememberFocus = (event: FocusEvent) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement) || target === document.body) return;
+      focused.current = dialog.current?.hasAttribute("open") && target.closest("dialog") === dialog.current ? target : null;
+    };
+    document.addEventListener("focusin", rememberFocus, true);
+    return () => { document.removeEventListener("focusin", rememberFocus, true); focused.current = null; };
+  }, [active]);
   const [theme, setTheme] = useState<{ appearance: Appearance; palette: Palette }>({ appearance: "system", palette: "clean" });
   useLayoutEffect(() => {
     const provider = anchor.current?.closest<HTMLElement>(".harso-kit");
@@ -79,8 +93,20 @@ export function SettingsModal({ open = false, isOpen, title = "Settings", childr
   return <><span ref={anchor} hidden /><Dialog.Root open={active} onOpenChange={next => { if (!next) onClose?.(); }}>
     {active && <Dialog.Portal><KitProvider {...theme} className="hk-settings-portal">
       <Dialog.Overlay className="hk-settings-overlay" />
-      <Dialog.Content asChild aria-describedby={undefined} onOpenAutoFocus={event => { origin.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; event.preventDefault(); (event.currentTarget as HTMLElement | null)?.focus({ preventScroll: true }); }} /* focus the dialog itself: no control wears a ring on open; Tab reaches the close control first */ onCloseAutoFocus={event => { event.preventDefault(); if (origin.current?.isConnected) origin.current.focus(); }}>
-        <dialog {...props} open onClose={event => { event.currentTarget.open = true; onClose?.(); }} className={`hk-settings-modal ${className}`}>
+      <Dialog.Content ref={element => { dialog.current = element; }} asChild aria-describedby={undefined} onOpenAutoFocus={event => { origin.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; event.preventDefault(); (event.currentTarget as HTMLElement | null)?.focus({ preventScroll: true }); }} /* focus the dialog itself: no control wears a ring on open; Tab reaches the close control first */ onCloseAutoFocus={event => { event.preventDefault(); const target = origin.current; if (target?.isConnected && !target.matches(":disabled, [inert], [inert] *") && (document.activeElement === document.body || dialog.current?.contains(document.activeElement))) target.focus({ preventScroll: true }); }}>
+        <dialog {...props} open onClose={event => {
+          if (event.target !== event.currentTarget) return;
+          const element = event.currentTarget;
+          const target = focused.current;
+          const lostFocus = document.activeElement === document.body || document.activeElement === element;
+          element.open = true;
+          onClose?.();
+          // React may accept the request or unmount synchronously. Restore only
+          // a still-owned, enabled target after a refusal, never unrelated focus.
+          queueMicrotask(() => {
+            if (dialog.current === element && element.isConnected && element.open && target === focused.current && target?.isConnected && target.closest("dialog") === element && !target.matches(":disabled, [inert], [inert] *") && lostFocus && (document.activeElement === document.body || document.activeElement === element)) target.focus({ preventScroll: true });
+          });
+        }} className={`hk-settings-modal ${className}`}>
           <header><Dialog.Title asChild><h2>{title}</h2></Dialog.Title><Dialog.Close asChild><CloseButton disabled={!onClose} label="Close settings" /></Dialog.Close></header>
           <SettingsPages defaultPage={defaultPage} pages={pages} planArtSrc={planArtSrc}>{children}</SettingsPages>
         </dialog>

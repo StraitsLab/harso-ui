@@ -4,6 +4,33 @@ import { HarsoWorkResult } from "./work-result";
 
 afterEach(() => cleanup());
 
+test("artifactContent replaces legacy files and collapses with rich summary, steps and footer", () => {
+  render(<HarsoWorkResult title="Outputs" status="succeeded"
+    artifacts={[{ id: "old", name: "legacy.png", detail: <p>Legacy detail</p> }]}
+    artifactContent={<button>Image selector</button>}
+    summaryContent={<p>Rich summary</p>} steps={[{ id: "s", label: "Finished step", state: "done" }]}
+    action={<button>Host action</button>} />);
+  const region = screen.getByRole("region", { name: "Work unit finished" });
+  expect(within(region).getByRole("button", { name: "Image selector" })).toBeVisible();
+  expect(screen.queryByRole("list", { name: "Produced files" })).toBeNull();
+  expect(screen.queryByText("legacy.png")).toBeNull();
+  fireEvent.click(screen.getByRole("button", { name: "Outputs" }));
+  for (const text of ["Image selector", "Rich summary", "Finished step", "Host action"]) expect(screen.queryByText(text)).toBeNull();
+});
+
+test.each([null, undefined])("nullish artifactContent %s retains legacy expansion", artifactContent => {
+  render(<HarsoWorkResult title="Outputs" status="succeeded" artifactContent={artifactContent}
+    artifacts={[{ id: "old", name: "legacy.png", detail: <p>Legacy detail</p> }]} />);
+  fireEvent.click(screen.getByRole("button", { name: "legacy.png" }));
+  expect(screen.getByText("Legacy detail")).toBeVisible();
+});
+
+test("an explicitly empty custom fragment suppresses legacy files", () => {
+  render(<HarsoWorkResult title="Outputs" status="succeeded" artifactContent={<></>}
+    artifacts={[{ id: "old", name: "legacy.png" }]} />);
+  expect(screen.queryByRole("list", { name: "Produced files" })).toBeNull();
+});
+
 const STEPS = [
   { id: "a", label: "Shaping the recommendation", state: "done" as const },
   { id: "b", label: "Checking the evidence", state: "done" as const },

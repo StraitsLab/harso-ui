@@ -1,9 +1,16 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
+
+// Gallery loading has a separate bounded budget; interactions still get 5000ms.
+async function openExample(page: Page, hash: string, ready: Locator) {
+  const readyDeadline = performance.now() + 15_000;
+  await page.goto(`/#${hash}`, { waitUntil: "domcontentloaded", timeout: 15_000 });
+  await ready.waitFor({ state: "visible", timeout: Math.max(1, readyDeadline - performance.now()) });
+}
 
 test.beforeEach(async ({ page }) => { page.setDefaultTimeout(5000); });
 
 test("theme host refusal and mounted disable/re-enable retain appearance", async ({ page }) => {
-  await page.goto("/#boardui:theme-toggle");
+  await openExample(page, "boardui:theme-toggle", page.getByTestId("live-example").getByRole("radio", { name: "Dark", exact: true }));
   const example = page.getByTestId("live-example");
   const dark = example.getByRole("radio", { name: "Dark", exact: true });
   const original = await dark.elementHandle();
@@ -25,7 +32,7 @@ test("theme host refusal and mounted disable/re-enable retain appearance", async
 });
 
 test("tabs retain drafts through disabled state and handle host refusal and replacement", async ({ page }) => {
-  await page.goto("/#boardui:tabs");
+  await openExample(page, "boardui:tabs", page.getByTestId("live-example").getByRole("textbox", { name: "Draft title" }));
   const example = page.getByTestId("live-example");
   const draft = example.getByRole("textbox", { name: "Draft title" });
   await draft.fill("Retained navigation draft");
@@ -53,7 +60,7 @@ test("tabs retain drafts through disabled state and handle host refusal and repl
 });
 
 test("tooltip disabled action, replacement, and host refusal use the real trigger", async ({ page }) => {
-  await page.goto("/#boardui:tooltip");
+  await openExample(page, "boardui:tooltip", page.getByTestId("live-example").getByRole("button", { name: "Copy link", exact: true }));
   const example = page.getByTestId("live-example");
   const copy = example.getByRole("button", { name: "Copy link", exact: true });
   const original = await copy.elementHandle();
@@ -84,7 +91,7 @@ test("tooltip disabled action, replacement, and host refusal use the real trigge
 });
 
 test("sidebar refuses navigation and retains work through disabled and empty navigation", async ({ page }) => {
-  await page.goto("/#boardui:sidebar");
+  await openExample(page, "boardui:sidebar", page.getByTestId("navigation-surface-example").getByRole("textbox", { name: "Working note" }));
   const example = page.getByTestId("navigation-surface-example");
   const draft = example.getByRole("textbox", { name: "Working note" });
   await draft.fill("Keep this workspace draft");
@@ -112,7 +119,7 @@ test("sidebar refuses navigation and retains work through disabled and empty nav
 });
 
 test("dropdown retains host open intent across disabling and replaces open contents", async ({ page }) => {
-  await page.goto("/#boardui:dropdown");
+  await openExample(page, "boardui:dropdown", page.getByTestId("navigation-surface-example").getByRole("button", { name: "Choose model" }));
   const example = page.getByTestId("navigation-surface-example");
   const trigger = example.getByRole("button", { name: "Choose model" });
   const original = await trigger.elementHandle();
@@ -141,7 +148,7 @@ for (const appearance of ["light", "dark"] as const) for (const palette of ["cle
     test.setTimeout(180000);
     await page.setViewportSize({ width: viewport, height: 1000 });
     await page.emulateMedia({ colorScheme: appearance, reducedMotion: "reduce" });
-    await page.goto("/#boardui:carousel");
+    await openExample(page, "boardui:carousel", page.getByTestId("navigation-surface-example").getByRole("region", { name: "Research results", exact: true }));
     await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
     await page.getByLabel("Palette", { exact: true }).selectOption(palette);
     const example = page.getByTestId("navigation-surface-example");
