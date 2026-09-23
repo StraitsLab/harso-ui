@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
+import cardStyles from "./output-card.css?raw";
 
 afterEach(cleanup);
 
@@ -242,6 +243,12 @@ test("no element in the card has a non-zero border width (computed style)", () =
   }
   // jsdom does not resolve custom properties; the browser spec asserts the resolved 12px.
   expect(getComputedStyle(card).borderRadius).toBe("var(--hk-radius-card)");
+  // jsdom also drops `border`/`outline` shorthands containing var(), so pin the source too:
+  // outside forced colors, the only border/outline declarations allowed are zero/none.
+  const normal = cardStyles.replace(/\/\*[\s\S]*?\*\//g, "").split("@media (forced-colors: active)")[0];
+  const declarations = [...normal.matchAll(/(?:^|[;{\s])((?:border|outline)(?:-(?:top|right|bottom|left))?(?:-(?:width|style|color))?)\s*:\s*([^;}]+)/g)].map(match => `${match[1]}: ${match[2].trim()}`);
+  expect(declarations.length).toBeGreaterThan(0);
+  expect(declarations.filter(line => !/^(border|outline)[a-z-]*: (0|none)$/.test(line))).toEqual([]);
 });
 
 test("Details discloses sources/disclaimers inline when onOpenDetails is omitted; Escape closes and restores focus", () => {
