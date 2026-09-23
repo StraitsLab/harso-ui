@@ -1,0 +1,56 @@
+/* WEV-1851 S1: approved inline Flights card (Sketch 'iOS — Inline results' 01, founder 23 Sep).
+   Borderless tonal card: surface fill, radius 12, no stroke; compact header; <=3 rows; one filled action.
+   Desktop type scale uses the kit tokens only (title 15 · body 14 · chrome 13 · meta 12). */
+.harso-kit .hkc-output-card {
+  display: flex; flex-direction: column; gap: var(--hk-space-4);
+  width: 100%; min-width: 0; padding: var(--hk-space-4);
+  border: 0; border-radius: var(--hk-radius-card);
+  background: var(--hk-surface); color: var(--hk-ink);
+  overflow-wrap: break-word;
+}
+.harso-kit .hkc-output-card :where(h2, p, ul) { margin: 0; }
+
+.harso-kit .hkc-output-card-header { display: flex; align-items: flex-start; gap: var(--hk-space-3); min-width: 0; }
+.harso-kit .hkc-output-card-heading { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.harso-kit .hkc-output-card-title { font-size: var(--hk-text-title); font-weight: 600; line-height: 1.35; }
+.harso-kit .hkc-output-card-subtitle { font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
+
+.harso-kit .hkc-output-card-rows { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-4); }
+/* Baseline alignment puts the trailing value on the label line's baseline (first baseline of the main column). */
+.harso-kit .hkc-output-card-row { display: flex; align-items: baseline; gap: var(--hk-space-3); min-width: 0; }
+.harso-kit .hkc-output-card-row-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.harso-kit .hkc-output-card-row-line { display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--hk-space-2); row-gap: 2px; min-width: 0; }
+.harso-kit .hkc-output-card-row-label { min-width: 0; font-size: var(--hk-text-body); font-weight: 600; line-height: 1.4; }
+.harso-kit .hkc-output-card-pick {
+  flex-shrink: 0; padding: 1px var(--hk-space-2); border-radius: var(--hk-radius-pill);
+  background: var(--hk-accent-soft); color: var(--hk-accent);
+  font-size: var(--hk-text-meta); font-weight: 600; line-height: 1.4;
+}
+.harso-kit .hkc-output-card-row-secondary { font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
+/* Trailing value sits on the label line (Sketch), right-aligned, tabular. */
+.harso-kit .hkc-output-card-row-value {
+  flex-shrink: 0; max-width: 45%; text-align: right;
+  font-size: var(--hk-text-chrome); font-weight: 500; line-height: 20px; color: var(--hk-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.harso-kit .hkc-output-card-fallback { font-size: var(--hk-text-body); line-height: 1.5; white-space: pre-line; }
+
+.harso-kit .hkc-output-card-action { display: flex; flex-direction: column; gap: var(--hk-space-1); }
+.harso-kit .hkc-output-card .hk-button { min-height: 44px; height: auto; border: 0; white-space: normal; }
+/* Real 44px layout boxes, not the kit's overlapping pseudo hit extension. */
+.harso-kit .hkc-output-card .hk-button::after { content: none; }
+.harso-kit .hkc-output-card-action > .hk-button { width: 100%; padding: 10px var(--hk-space-4); }
+.harso-kit .hkc-output-card-reason { font-size: var(--hk-text-chrome); color: var(--hk-secondary); text-align: center; }
+
+.harso-kit .hkc-output-card-details-toggle { flex: 0 0 auto; min-width: 44px; margin: -10px -8px 0 0; padding-inline: var(--hk-space-2); font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-output-card-details { display: flex; flex-direction: column; gap: var(--hk-space-2); font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
+.harso-kit .hkc-output-card-details[hidden] { display: none; }
+.harso-kit .hkc-output-card-details-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-1); }
+
+@media (forced-colors: active) {
+  .harso-kit .hkc-output-card { outline: 1px solid CanvasText; }
+  .harso-kit .hkc-output-card .hk-button { border: 1px solid ButtonText; }
+  .harso-kit .hkc-output-card .hk-button:disabled { border-color: GrayText; color: GrayText; }
+  .harso-kit .hkc-output-card-pick { outline: 1px solid CanvasText; }
+}
