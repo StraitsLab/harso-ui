@@ -302,3 +302,45 @@ test("text is plain: markup-looking strings render literally, never as HTML", ()
   expect(screen.getByText("**S$1**")).toBeVisible();
   expect(container.querySelector("b, img, strong, em")).toBeNull();
 });
+
+test("a row status word (overdue/paid), even beyond the visible cap, falls back instead of dropping the assertion", () => {
+  for (const status of ["overdue", "paid"] as const) {
+    const document = { ...flights, blocks: [{ kind: "rows", items: [{ label: "Pacific Freight", trailing: "S$1" }, { label: "Hidden", status }] }, flights.blocks[1]] };
+    const { unmount } = render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} caps={{ maxRows: 1 }} onReply={() => {}} />);
+    expect(screen.getByText(flights.fallback_text)).toBeVisible();
+    expect(screen.queryByRole("listitem")).toBeNull();
+    unmount();
+  }
+});
+
+test("every text sink is plain text: fallback, subtitle, action label and Details never become markup", () => {
+  const markup = "<img src=x onerror=alert(1)><b>x</b>";
+  const fallbackDoc = { ...flights, header: { title: "T", subtitle: markup }, fallback_text: markup, blocks: [{ kind: "status", state: "failed" }] };
+  const first = render(<chat.HarsoOutputCard document={fallbackDoc as chat.HarsoOutputDocument} onReply={() => {}} />);
+  expect(first.container.querySelector("img, b")).toBeNull();
+  expect(screen.getAllByText(markup)).toHaveLength(2);
+  first.unmount();
+  const actionDoc = { ...flights, blocks: [flights.blocks[0], { kind: "action", primary: { kind: "reply", label: markup, text: "t" } }], details: { disclaimers: [markup] } };
+  const second = render(<chat.HarsoOutputCard document={actionDoc as chat.HarsoOutputDocument} onReply={() => {}} />);
+  fireEvent.click(screen.getByRole("button", { name: "Details" }));
+  expect(second.container.querySelector("img, b")).toBeNull();
+  expect(screen.getByRole("button", { name: markup })).toBeVisible();
+});
+
+test("the reply action performs no side effect of its own: no window.open, no fetch, no navigation", () => {
+  const open = vi.spyOn(window, "open").mockImplementation(() => null);
+  const fetchSpy = vi.fn();
+  vi.stubGlobal("fetch", fetchSpy);
+  const before = window.location.href;
+  try {
+    const { card, onReply } = renderCard();
+    fireEvent.click(within(card).getByRole("button", { name: "Choose SQ 638" }));
+    expect(onReply).toHaveBeenCalledTimes(1);
+    expect(open).not.toHaveBeenCalled();
+    expect(fetchSpy).not.toHaveBeenCalled();
+    expect(window.location.href).toBe(before);
+  } finally {
+    open.mockRestore();
+    vi.unstubAllGlobals();
+  }
+});

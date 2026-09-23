@@ -56,9 +56,13 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
 
 Borderless tonal card: `--hk-surface` fill, `--hk-radius-card` (12), 16px padding,
 16px rhythm between header, rows and action; zero enabled border/outline on any
-element (keyboard focus rings excepted). All type, colour, radius and spacing come
-from `--hk-*` tokens, so light, dark and the warm (`cozy`) palette work unchanged.
-Forced colors adds a card outline and control borders.
+element (keyboard focus rings excepted). Type sizes, colours, radii and the main
+spacing rhythm come from `--hk-*` tokens, so light, dark and the warm (`cozy`)
+palette work unchanged; a few small geometry values (2px row gaps, the Pick
+capsule padding, the Details toggle's optical margin, line heights and the 44px
+target) are literal. In forced-colors mode (Windows High Contrast) the card and
+controls deliberately gain system-colour outlines, because tonal fills disappear
+there; this is an accessibility exception to the borderless rule.
 
 ## Fixture and proof
 
