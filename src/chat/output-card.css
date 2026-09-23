@@ -15,8 +15,9 @@
 .harso-kit .hkc-output-card-title { font-size: var(--hk-text-title); font-weight: 600; line-height: 1.35; }
 .harso-kit .hkc-output-card-subtitle { font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
 
-.harso-kit .hkc-output-card-rows { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-3); }
-.harso-kit .hkc-output-card-row { display: flex; align-items: flex-start; gap: var(--hk-space-3); min-width: 0; }
+.harso-kit .hkc-output-card-rows { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-4); }
+/* Baseline alignment puts the trailing value on the label line's baseline (first baseline of the main column). */
+.harso-kit .hkc-output-card-row { display: flex; align-items: baseline; gap: var(--hk-space-3); min-width: 0; }
 .harso-kit .hkc-output-card-row-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .harso-kit .hkc-output-card-row-line { display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--hk-space-2); row-gap: 2px; min-width: 0; }
 .harso-kit .hkc-output-card-row-label { min-width: 0; font-size: var(--hk-text-body); font-weight: 600; line-height: 1.4; }
