@@ -7,6 +7,8 @@ for (const route of chatRoutes) for (const appearance of ["light", "dark"] as co
     const example = await openChat(page, route, 1440, appearance);
     const scan = await new AxeBuilder({ page }).include('[data-testid="live-example"]').analyze();
     expect(scan.violations.filter(violation => violation.impact === "serious" || violation.impact === "critical")).toEqual([]);
+    // aria-prohibited-attr on a label-only generic element lands in "incomplete", which the filter above never sees.
+    expect([...scan.violations, ...scan.incomplete].filter(result => result.id === "aria-prohibited-attr").flatMap(result => result.nodes.map(node => node.html)).filter(html => /hkc-message-(actions|branches)/.test(html))).toEqual([]);
     for (const button of await example.getByRole("button").all()) await expect(button).toHaveAccessibleName(/\S/);
     for (const input of await example.locator("textarea").all()) await expect(input).toHaveAccessibleName(/\S/);
     if (route === "chat-thread" || route === "chat-composer") await expect(example.locator("textarea")).toHaveCount(1);
