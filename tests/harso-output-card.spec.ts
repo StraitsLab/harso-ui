@@ -4,6 +4,7 @@ import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 
 // WEV-1851 S1: display-only inline output card. Fixture content and callbacks are simulated.
+// The card renders no actions (choices go through the native question card); overflow is one View-all row.
 const fixture = "/preview/output-card.html";
 const screens = resolve(process.cwd(), ".lane/screens");
 const card = (page: Page) => page.locator(".hkc-output-card");
@@ -28,7 +29,7 @@ async function geometry(page: Page) {
 }
 
 for (const mode of ["light", "dark"] as const) {
-  test(`flights ${mode}: approved inline card at 420px, axe clean, 44px action, no overlap`, async ({ page }) => {
+  test(`flights ${mode}: display-only inline card at 420px, axe clean, no action, no overlap`, async ({ page }) => {
     await page.setViewportSize({ width: 420, height: 720 });
     await page.goto(`${fixture}?mode=${mode}`);
     await expect(page.locator(".harso-kit")).toHaveAttribute("data-mode", mode);
@@ -49,13 +50,9 @@ for (const mode of ["light", "dark"] as const) {
     const probe = await page.evaluate(color => { const el = document.createElement("i"); el.style.color = color; document.body.append(el); const c = getComputedStyle(el).color; el.remove(); return c; }, surface);
     expect(g.background).toBe(probe);
 
-    const action = region.getByRole("button", { name: "Choose SQ 638" });
-    const box = (await action.boundingBox())!;
-    expect(box.width).toBeGreaterThanOrEqual(44);
-    expect(box.height).toBeGreaterThanOrEqual(44);
-    const cardBox = (await card(page).boundingBox())!;
-    expect(box.x - cardBox.x).toBeCloseTo(16, 0);
-    expect(cardBox.x + cardBox.width - (box.x + box.width)).toBeCloseTo(16, 0);
+    // Display-only: the S0 example's reply action renders nothing; Details is the only control.
+    await expect(region.getByRole("button")).toHaveText(["Details"]);
+    await expect(region.getByText(/Choose|Not available/)).toHaveCount(0);
     const details = (await region.getByRole("button", { name: "Details" }).boundingBox())!;
     expect(details.width).toBeGreaterThanOrEqual(44);
     expect(details.height).toBeGreaterThanOrEqual(44);
@@ -67,9 +64,6 @@ for (const mode of ["light", "dark"] as const) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 
     expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
-
-    await action.click();
-    expect((await callbacks(page)).replies).toEqual(["Choose SQ 638 on 12 Oct (Singapore Airlines, dep 08:35)."]);
 
     await mkdir(screens, { recursive: true });
     await card(page).screenshot({ path: resolve(screens, `flights-${mode}-420-card.png`) });
@@ -110,7 +104,7 @@ for (const [doc, mode] of [["failed", "light"], ["spending", "dark"]] as const) 
     await page.goto(`${fixture}?doc=${doc}&mode=${mode}`);
     await expect(card(page)).toHaveAttribute("data-fallback", "true");
     await expect(card(page).getByRole("listitem")).toHaveCount(0);
-    await expect(card(page).getByRole("button", { name: /Try again|Choose/ })).toHaveCount(0);
+    await expect(card(page).getByRole("button", { name: /Try again|Choose|View all/ })).toHaveCount(0);
     await expect(card(page).locator(".hkc-output-card-fallback")).toBeVisible();
     expect(await card(page).innerText()).not.toMatch(/[{}"]|"kind"/);
     const g = await geometry(page);
@@ -127,11 +121,41 @@ test("warm palette and forced colors keep the card legible and bounded", async (
   await page.goto(`${fixture}?palette=cozy`);
   expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
   await page.emulateMedia({ forcedColors: "active" });
-  await expect(page.getByRole("button", { name: "Choose SQ 638" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Details" })).toBeVisible();
   expect((await geometry(page)).overlaps).toEqual([]);
   await mkdir(screens, { recursive: true });
   await card(page).screenshot({ path: resolve(screens, "flights-cozy-forced-colors-420-card.png") });
 });
+
+for (const mode of ["light", "dark"] as const) {
+  test(`more ${mode}: seven rows show three plus one quiet View all 7 row that calls the host`, async ({ page }) => {
+    await page.setViewportSize({ width: 420, height: 720 });
+    await page.goto(`${fixture}?doc=more&mode=${mode}`);
+    const region = page.getByRole("region", { name: "Flights to Tokyo" });
+    await expect(region.getByRole("listitem")).toHaveCount(3);
+    const viewAll = region.getByRole("button", { name: "View all 7" });
+    await expect(viewAll).toBeVisible();
+    const g = await geometry(page);
+    expect(g.bordered).toEqual([]);
+    expect(g.overlaps).toEqual([]);
+    expect(g.outside).toEqual([]);
+    const box = (await viewAll.boundingBox())!;
+    const cardBox = (await card(page).boundingBox())!;
+    expect(box.height).toBeGreaterThanOrEqual(44);
+    // Full-width row inside the 16px padding: label on the row text edge, chevron on the values edge.
+    expect(box.x - cardBox.x).toBeCloseTo(16, 0);
+    expect(cardBox.x + cardBox.width - (box.x + box.width)).toBeCloseTo(16, 0);
+    const lastRow = (await region.getByRole("listitem").last().boundingBox())!;
+    expect(box.y).toBeGreaterThanOrEqual(lastRow.y + lastRow.height - .5);
+    expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+    await mkdir(screens, { recursive: true });
+    await card(page).screenshot({ path: resolve(screens, `more-${mode}-420-card.png`) });
+    await viewAll.focus();
+    await page.keyboard.press("Enter");
+    expect((await callbacks(page)).viewAllOpened).toBe(1);
+    await card(page).screenshot({ path: resolve(screens, `more-${mode}-420-card-focused.png`) });
+  });
+}
 
 test("narrow 320px: long rows wrap without horizontal overflow or overlap", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 720 });

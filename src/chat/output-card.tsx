@@ -1,11 +1,13 @@
 "use client";
 
+import { CaretRight } from "@phosphor-icons/react";
 import { useId, useRef, useState } from "react";
 import { Button } from "../primitives";
 import "./output-card.css";
 
 /*
  * WEV-1851 S1: display-only inline card for an agent `output-blocks.v1` document.
+ * The card only shows: choices go through the host's native question card, so it renders no actions.
  * Local copy of the subset this card reads. The contract is frozen elsewhere
  * (weave-cloud S0); the host validates the document before it reaches the kit.
  */
@@ -24,7 +26,7 @@ export interface HarsoOutputRow {
 
 export interface HarsoOutputRowsBlock { kind: "rows"; items: HarsoOutputRow[]; total_count?: number }
 
-/** `reply` is the only kind this card can hand to the host; every other kind renders disabled. */
+/** Still carried by the contract; this card renders no action of any kind (display-only). */
 export interface HarsoOutputActionSpec { kind: string; label: string; text?: string; [key: string]: unknown }
 
 export interface HarsoOutputActionBlock { kind: "action"; primary?: HarsoOutputActionSpec; secondary?: HarsoOutputActionSpec }
@@ -56,54 +58,38 @@ export const HARSO_OUTPUT_CARD_CAPS: Readonly<HarsoOutputCardCaps> = Object.free
 export interface HarsoOutputCardProps {
   document: HarsoOutputDocument;
   caps?: Partial<HarsoOutputCardCaps>;
-  /** Called with the action's `text` (never its label). The host decides prefill vs send. */
-  onReply: (text: string) => void;
+  /** Called when the person asks for every row; the host opens the full output view. */
+  onViewAll: () => void;
   /** When supplied, Details hands off to the host; otherwise Details discloses inline. */
   onOpenDetails?: () => void;
   className?: string;
 }
 
-const UNAVAILABLE_REASON = "Not available here yet";
-
 const isRows = (block: HarsoOutputBlock): block is HarsoOutputRowsBlock =>
   block.kind === "rows" && Array.isArray((block as HarsoOutputRowsBlock).items);
 const isAction = (block: HarsoOutputBlock): block is HarsoOutputActionBlock => block.kind === "action";
 
-/** Supported = only rows/action blocks, and no row field this card would otherwise drop silently. */
+/**
+ * Supported = only rows/action blocks, and no row field this card would otherwise drop silently.
+ * Action blocks are skipped unread. `total` counts every row the agent says exists, supplied or not.
+ */
 function readBlocks(blocks: HarsoOutputBlock[]) {
   const rows: HarsoOutputRow[] = [];
-  let action: HarsoOutputActionBlock | undefined;
+  let total = 0;
   for (const block of blocks) {
     if (isRows(block)) {
       if (block.items.some(row => row.status != null)) return undefined;
       rows.push(...block.items);
-    } else if (isAction(block)) {
-      action ??= block;
-    } else {
+      total += Math.max(block.items.length, Number.isInteger(block.total_count) ? block.total_count! : 0);
+    } else if (!isAction(block)) {
       return undefined;
     }
   }
-  return { rows, action };
+  return { rows, total };
 }
 
 function hasDetails(details: HarsoOutputDocumentDetails | undefined): details is HarsoOutputDocumentDetails {
   return !!details && [details.sources, details.assumptions, details.disclaimers].some(list => !!list?.length);
-}
-
-function CardAction({ block, onReply }: { block: HarsoOutputActionBlock; onReply: (text: string) => void }) {
-  const reasonId = useId();
-  const spec = block.primary ?? block.secondary;
-  if (!spec) return null;
-  const replyText = spec.kind === "reply" && typeof spec.text === "string" ? spec.text : undefined;
-  const available = replyText !== undefined;
-  return <div className="hkc-output-card-action">
-    <Button variant={block.primary ? "primary" : "secondary"} disabled={!available}
-      aria-describedby={available ? undefined : reasonId}
-      onClick={available ? () => onReply(replyText) : undefined}>
-      {spec.label}
-    </Button>
-    {!available && <p id={reasonId} className="hkc-output-card-reason">{UNAVAILABLE_REASON}</p>}
-  </div>;
 }
 
 function DetailsContent({ details }: { details: HarsoOutputDocumentDetails }) {
@@ -120,7 +106,7 @@ function DetailsContent({ details }: { details: HarsoOutputDocumentDetails }) {
   </>;
 }
 
-export function HarsoOutputCard({ document, caps, onReply, onOpenDetails, className = "" }: HarsoOutputCardProps) {
+export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, className = "" }: HarsoOutputCardProps) {
   const id = useId();
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -129,6 +115,8 @@ export function HarsoOutputCard({ document, caps, onReply, onOpenDetails, classN
   const details = hasDetails(document.details) ? document.details : undefined;
   const inlineDetails = details && !onOpenDetails;
   const shownRows = content ? content.rows.slice(0, Math.max(0, maxRows)) : [];
+  const hiddenRows = content ? content.total - shownRows.length : 0;
+  const viewAllLabel = document.more_label?.trim() || `View all ${content?.total}`;
   const titleId = `${id}-title`, detailsId = `${id}-details`;
 
   return <section className={`hkc-output-card ${className}`.trim()} aria-labelledby={titleId}
@@ -165,7 +153,8 @@ export function HarsoOutputCard({ document, caps, onReply, onOpenDetails, classN
             {row.trailing && <span className="hkc-output-card-row-value">{row.trailing}</span>}
           </li>)}
         </ul>}
-        {content.action && <CardAction block={content.action} onReply={onReply} />}
+        {hiddenRows > 0 && <Button variant="ghost" className="hkc-output-card-view-all" onClick={onViewAll}
+          trailingIcon={<CaretRight size={14} weight="bold" />}>{viewAllLabel}</Button>}
       </>
       : <p className="hkc-output-card-fallback">{document.fallback_text}</p>}
   </section>;

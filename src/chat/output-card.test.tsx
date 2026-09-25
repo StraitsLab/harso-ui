@@ -162,10 +162,19 @@ const spending: chat.HarsoOutputDocument = {
 };
 
 const renderCard = (props: Partial<chat.HarsoOutputCardProps> = {}) => {
-  const onReply = props.onReply ?? vi.fn();
-  const view = render(<div className="harso-kit"><chat.HarsoOutputCard document={flights} onReply={onReply} {...props} /></div>);
-  return { ...view, onReply, card: screen.getByRole("region", { name: (props.document ?? flights).header.title }) };
+  const onViewAll = props.onViewAll ?? vi.fn();
+  const view = render(<div className="harso-kit"><chat.HarsoOutputCard document={flights} onViewAll={onViewAll} {...props} /></div>);
+  return { ...view, onViewAll, card: screen.getByRole("region", { name: (props.document ?? flights).header.title }) };
 };
+const flightRows = (flights.blocks[0] as chat.HarsoOutputRowsBlock).items;
+const extraRows: chat.HarsoOutputRow[] = [
+  { label: "Scoot", secondary: "TR 808 · Dep 01:15", trailing: "S$298" },
+  { label: "Japan Airlines", trailing: "S$655" },
+  { label: "Delta", trailing: "S$590" },
+  { label: "United", trailing: "S$604" },
+];
+const withRows = (items: chat.HarsoOutputRow[], extra: Partial<chat.HarsoOutputRowsBlock> = {}, doc: Partial<chat.HarsoOutputDocument> = {}): chat.HarsoOutputDocument =>
+  ({ ...flights, ...doc, blocks: [{ kind: "rows", items, ...extra }, flights.blocks[1]] });
 
 test("Flights renders title, subtitle, three rows with values and exactly one Pick", () => {
   const { card } = renderCard();
@@ -185,28 +194,33 @@ test("Flights renders title, subtitle, three rows with values and exactly one Pi
   expect(within(card).queryByText(flights.fallback_text)).toBeNull();
 });
 
-test("pressing the action calls onReply once with the exact action text, never the label", () => {
-  const { card, onReply } = renderCard();
-  const actions = within(card).getAllByRole("button").filter(button => button.textContent !== "Details");
-  expect(actions).toHaveLength(1);
-  const action = within(card).getByRole("button", { name: "Choose SQ 638" });
-  expect(action).toHaveClass("hk-button--primary");
-  fireEvent.click(action);
-  expect(onReply).toHaveBeenCalledTimes(1);
-  expect(onReply).toHaveBeenCalledWith("Choose SQ 638 on 12 Oct (Singapore Airlines, dep 08:35).");
+test("display-only: a reply action (or any action) renders no button and no text, and never throws", () => {
+  const { card } = renderCard();
+  expect(within(card).getAllByRole("button").map(button => button.textContent)).toEqual(["Details"]);
+  expect(within(card).queryByText(/Choose SQ 638/)).toBeNull();
+  expect(within(card).queryByText("Not available here yet")).toBeNull();
+  expect(card.textContent).not.toContain("Choose");
+  cleanup();
+  const odd = { ...flights, details: undefined, blocks: [flights.blocks[0],
+    { kind: "action", primary: { kind: "open_url", label: "Open fares", url: "https://example.com/fares" }, secondary: { kind: "reply", label: "Try again", text: "again" } },
+    { kind: "action" }] };
+  const { card: second } = renderCard({ document: odd });
+  expect(within(second).queryAllByRole("button")).toHaveLength(0);
+  expect(second.textContent).not.toMatch(/Open fares|Try again|Not available/);
+  expect(within(second).getAllByRole("listitem")).toHaveLength(3);
 });
 
 test.each([["failed status", failed], ["spending numbers/visual", spending]] as const)("unsupported block (%s) shows fallback_text and no rows or actions", (_, document) => {
-  const onReply = vi.fn();
-  const { card } = renderCard({ document, onReply });
+  const onViewAll = vi.fn();
+  const { card } = renderCard({ document, onViewAll });
   expect(within(card).getByRole("heading", { name: document.header.title })).toBeVisible();
   expect(within(card).getByText(document.header.subtitle!)).toBeVisible();
   expect(within(card).getByText(document.fallback_text)).toBeVisible();
   expect(within(card).queryByRole("list")).toBeNull();
   expect(within(card).queryByRole("listitem")).toBeNull();
-  expect(within(card).queryByRole("button", { name: /Try again|Choose/ })).toBeNull();
-  expect(card.textContent).not.toMatch(/[{}[\]"]|kind|S\$1,160Dining/);
-  expect(onReply).not.toHaveBeenCalled();
+  expect(within(card).queryByRole("button", { name: /Try again|Choose|View all/ })).toBeNull();
+  expect(card.textContent).not.toMatch(/[{}[\]"]|kind|S\$1,160Dining|View all/);
+  expect(onViewAll).not.toHaveBeenCalled();
 });
 
 test("an unknown kind anywhere in blocks falls back, even after supported blocks", () => {
@@ -218,14 +232,58 @@ test("an unknown kind anywhere in blocks falls back, even after supported blocks
 });
 
 test("caps respected: four rows in, three out in order; caps override is honoured", () => {
-  const rows = flights.blocks[0] as chat.HarsoOutputRowsBlock;
-  const four = { ...flights, blocks: [{ ...rows, items: [...rows.items, { label: "Scoot", secondary: "TR 808 · Dep 01:15", trailing: "S$298" }] }, flights.blocks[1]] };
-  const { card, rerender, onReply } = renderCard({ document: four });
+  const four = withRows([...flightRows, extraRows[0]]);
+  const { card, rerender, onViewAll } = renderCard({ document: four });
   expect(chat.HARSO_OUTPUT_CARD_CAPS.maxRows).toBe(3);
   expect(within(card).getAllByRole("listitem").map(row => within(row).getAllByText(/./)[0].textContent)).toEqual(["Singapore Airlines", "ANA", "ZIPAIR"]);
   expect(within(card).queryByText("Scoot")).toBeNull();
-  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={four} onReply={onReply} caps={{ maxRows: 2 }} /></div>);
+  expect(within(card).getByRole("button", { name: "View all 4" })).toBeVisible();
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={four} onViewAll={onViewAll} caps={{ maxRows: 2 }} /></div>);
   expect(within(card).getAllByRole("listitem")).toHaveLength(2);
+  expect(within(card).getByRole("button", { name: "View all 4" })).toBeVisible();
+});
+
+test("7 rows with cap 3: three rows plus one View all 7 row that calls onViewAll, with no side effect of its own", () => {
+  const open = vi.spyOn(window, "open").mockImplementation(() => null);
+  const fetchSpy = vi.fn();
+  vi.stubGlobal("fetch", fetchSpy);
+  const before = window.location.href;
+  try {
+    const { card, onViewAll } = renderCard({ document: withRows([...flightRows, ...extraRows]) });
+    expect(within(card).getAllByRole("listitem")).toHaveLength(3);
+    const viewAll = within(card).getByRole("button", { name: "View all 7" });
+    expect(viewAll.closest("ul")).toBeNull();
+    expect(card.lastElementChild).toBe(viewAll);
+    fireEvent.click(viewAll);
+    expect(onViewAll).toHaveBeenCalledTimes(1);
+    expect(open).not.toHaveBeenCalled();
+    expect(fetchSpy).not.toHaveBeenCalled();
+    expect(window.location.href).toBe(before);
+  } finally {
+    open.mockRestore();
+    vi.unstubAllGlobals();
+  }
+});
+
+test.each([[1], [2], [3]])("%i supplied row(s) under the cap show no View all row", count => {
+  const { card } = renderCard({ document: withRows(flightRows.slice(0, count)) });
+  expect(within(card).getAllByRole("listitem")).toHaveLength(count);
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+  expect(card.textContent).not.toContain("View all");
+});
+
+test("View all counts the agent's total_count, not just supplied rows, and uses more_label when given", () => {
+  const { card, rerender, onViewAll } = renderCard({ document: withRows(flightRows, { total_count: 50 }) });
+  expect(within(card).getAllByRole("listitem")).toHaveLength(3);
+  expect(within(card).getByRole("button", { name: "View all 50" })).toBeVisible();
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={withRows(flightRows, { total_count: 50 }, { more_label: "View all 50 flights" })} onViewAll={onViewAll} /></div>);
+  expect(within(card).getByRole("button", { name: "View all 50 flights" })).toBeVisible();
+  // A total_count that agrees with the supplied rows adds nothing.
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={withRows(flightRows, { total_count: 3 }, { more_label: "View all flights" })} onViewAll={onViewAll} /></div>);
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+  // A total_count below the supplied rows never hides the supplied rows from the count.
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={withRows([...flightRows, ...extraRows], { total_count: 2 })} onViewAll={onViewAll} /></div>);
+  expect(within(card).getByRole("button", { name: "View all 7" })).toBeVisible();
 });
 
 test("no element in the card has a non-zero border width (computed style)", () => {
@@ -253,7 +311,7 @@ test("no element in the card has a non-zero border width (computed style)", () =
 
 test("Details discloses sources/disclaimers inline when onOpenDetails is omitted; Escape closes and restores focus", () => {
   const outer = vi.fn();
-  render(<div className="harso-kit" onKeyDown={outer}><chat.HarsoOutputCard document={flights} onReply={() => {}} /></div>);
+  render(<div className="harso-kit" onKeyDown={outer}><chat.HarsoOutputCard document={flights} onViewAll={() => {}} /></div>);
   const trigger = screen.getByRole("button", { name: "Details" });
   const region = document.getElementById(trigger.getAttribute("aria-controls")!)!;
   expect(trigger).toHaveAttribute("aria-expanded", "false");
@@ -273,30 +331,19 @@ test("Details discloses sources/disclaimers inline when onOpenDetails is omitted
 
 test("onOpenDetails hands Details to the host without an inline region; no details means no trigger", () => {
   const onOpenDetails = vi.fn();
-  const { rerender } = render(<chat.HarsoOutputCard document={flights} onReply={() => {}} onOpenDetails={onOpenDetails} />);
+  const { rerender } = render(<chat.HarsoOutputCard document={flights} onViewAll={() => {}} onOpenDetails={onOpenDetails} />);
   const trigger = screen.getByRole("button", { name: "Details" });
   expect(trigger).not.toHaveAttribute("aria-expanded");
   fireEvent.click(trigger);
   expect(onOpenDetails).toHaveBeenCalledTimes(1);
   expect(screen.queryByRole("region", { name: "Output details" })).toBeNull();
-  rerender(<chat.HarsoOutputCard document={{ ...flights, details: undefined }} onReply={() => {}} />);
+  rerender(<chat.HarsoOutputCard document={{ ...flights, details: undefined }} onViewAll={() => {}} />);
   expect(screen.queryByRole("button", { name: "Details" })).toBeNull();
-});
-
-test("non-reply actions render disabled with an accessible reason and never call onReply", () => {
-  const onReply = vi.fn();
-  const document = { ...flights, blocks: [flights.blocks[0], { kind: "action", primary: { kind: "open_url", label: "Open fares", url: "https://example.com/fares" } }] };
-  render(<chat.HarsoOutputCard document={document} onReply={onReply} />);
-  const button = screen.getByRole("button", { name: "Open fares" });
-  expect(button).toBeDisabled();
-  expect(button).toHaveAccessibleDescription("Not available here yet");
-  fireEvent.click(button);
-  expect(onReply).not.toHaveBeenCalled();
 });
 
 test("text is plain: markup-looking strings render literally, never as HTML", () => {
   const document = { ...flights, header: { title: "<b>Bold</b> & *stars*" }, fallback_text: "x", blocks: [{ kind: "rows", items: [{ label: "<img src=x onerror=alert(1)>", trailing: "**S$1**" }] }] };
-  const { container } = render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} onReply={() => {}} />);
+  const { container } = render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} onViewAll={() => {}} />);
   expect(screen.getByRole("heading", { name: "<b>Bold</b> & *stars*" })).toBeVisible();
   expect(screen.getByText("<img src=x onerror=alert(1)>")).toBeVisible();
   expect(screen.getByText("**S$1**")).toBeVisible();
@@ -306,41 +353,23 @@ test("text is plain: markup-looking strings render literally, never as HTML", ()
 test("a row status word (overdue/paid), even beyond the visible cap, falls back instead of dropping the assertion", () => {
   for (const status of ["overdue", "paid"] as const) {
     const document = { ...flights, blocks: [{ kind: "rows", items: [{ label: "Pacific Freight", trailing: "S$1" }, { label: "Hidden", status }] }, flights.blocks[1]] };
-    const { unmount } = render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} caps={{ maxRows: 1 }} onReply={() => {}} />);
+    const { unmount } = render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} caps={{ maxRows: 1 }} onViewAll={() => {}} />);
     expect(screen.getByText(flights.fallback_text)).toBeVisible();
     expect(screen.queryByRole("listitem")).toBeNull();
     unmount();
   }
 });
 
-test("every text sink is plain text: fallback, subtitle, action label and Details never become markup", () => {
+test("every text sink is plain text: fallback, subtitle, View-all label and Details never become markup", () => {
   const markup = "<img src=x onerror=alert(1)><b>x</b>";
   const fallbackDoc = { ...flights, header: { title: "T", subtitle: markup }, fallback_text: markup, blocks: [{ kind: "status", state: "failed" }] };
-  const first = render(<chat.HarsoOutputCard document={fallbackDoc as chat.HarsoOutputDocument} onReply={() => {}} />);
+  const first = render(<chat.HarsoOutputCard document={fallbackDoc as chat.HarsoOutputDocument} onViewAll={() => {}} />);
   expect(first.container.querySelector("img, b")).toBeNull();
   expect(screen.getAllByText(markup)).toHaveLength(2);
   first.unmount();
-  const actionDoc = { ...flights, blocks: [flights.blocks[0], { kind: "action", primary: { kind: "reply", label: markup, text: "t" } }], details: { disclaimers: [markup] } };
-  const second = render(<chat.HarsoOutputCard document={actionDoc as chat.HarsoOutputDocument} onReply={() => {}} />);
+  const moreDoc = { ...withRows([...flightRows, extraRows[0]], {}, { more_label: markup }), details: { disclaimers: [markup] } };
+  const second = render(<chat.HarsoOutputCard document={moreDoc} onViewAll={() => {}} />);
   fireEvent.click(screen.getByRole("button", { name: "Details" }));
   expect(second.container.querySelector("img, b")).toBeNull();
   expect(screen.getByRole("button", { name: markup })).toBeVisible();
-});
-
-test("the reply action performs no side effect of its own: no window.open, no fetch, no navigation", () => {
-  const open = vi.spyOn(window, "open").mockImplementation(() => null);
-  const fetchSpy = vi.fn();
-  vi.stubGlobal("fetch", fetchSpy);
-  const before = window.location.href;
-  try {
-    const { card, onReply } = renderCard();
-    fireEvent.click(within(card).getByRole("button", { name: "Choose SQ 638" }));
-    expect(onReply).toHaveBeenCalledTimes(1);
-    expect(open).not.toHaveBeenCalled();
-    expect(fetchSpy).not.toHaveBeenCalled();
-    expect(window.location.href).toBe(before);
-  } finally {
-    open.mockRestore();
-    vi.unstubAllGlobals();
-  }
 });
