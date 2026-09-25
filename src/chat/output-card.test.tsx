@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
 import cardStyles from "./output-card.css?raw";
@@ -492,4 +492,57 @@ test("numbers and text are plain text sinks: markup-looking strings render liter
   expect(container.querySelector("img, b, strong")).toBeNull();
   expect(screen.getAllByText(markup)).toHaveLength(2);
   expect(screen.getByText("<b>1</b>")).toBeVisible();
+});
+
+// Review F1: the ~4-line cap is a rendered clamp, not only a character budget. jsdom has no layout, so these tests
+// stand in the paragraph's measured heights and drive the ResizeObserver by hand; the browser spec measures for real.
+const cjkParagraph = "公共充电设施持续增加家庭充电费用较低。".repeat(8);
+function stubLayout(heights: { scroll: number; client: number }) {
+  let resize: ResizeObserverCallback = () => {};
+  vi.stubGlobal("ResizeObserver", class { constructor(callback: ResizeObserverCallback) { resize = callback; } observe() {} unobserve() {} disconnect() {} });
+  const scroll = vi.spyOn(HTMLElement.prototype, "scrollHeight", "get").mockImplementation(() => heights.scroll);
+  const client = vi.spyOn(HTMLElement.prototype, "clientHeight", "get").mockImplementation(() => heights.client);
+  return { resize: () => act(() => resize([], {} as ResizeObserver)), restore: () => { scroll.mockRestore(); client.mockRestore(); vi.unstubAllGlobals(); } };
+}
+
+test("text under the character budget that renders past the line cap is clamped and shows View all", () => {
+  const layout = stubLayout({ scroll: 147, client: 84 });
+  try {
+    expect(Array.from(cjkParagraph).length).toBeLessThan(chat.HARSO_OUTPUT_CARD_CAPS.maxTextChars);
+    const { card, onViewAll } = renderCard({ document: textDoc({ sections: [{ paragraphs: [cjkParagraph] }] }) });
+    const text = card.querySelector<HTMLElement>(".hkc-output-card-text")!;
+    // The whole run is in the DOM (no character cut); CSS clamps it to caps.maxTextLines.
+    expect(text.textContent).toBe(cjkParagraph);
+    expect(text.style.getPropertyValue("--hkc-output-card-text-lines")).toBe("4");
+    fireEvent.click(within(card).getByRole("button", { name: "View all" }));
+    expect(onViewAll).toHaveBeenCalledTimes(1);
+  } finally { layout.restore(); }
+});
+
+test("line cap follows width changes and the caps override; short complete text never gets View all", () => {
+  const heights = { scroll: 63, client: 63 };
+  const layout = stubLayout(heights);
+  try {
+    const document = textDoc({ sections: [{ paragraphs: [cjkParagraph] }] });
+    const { card, onViewAll, rerender } = renderCard({ document });
+    expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+    // Card narrows: the same text now overflows the clamp.
+    heights.scroll = 147; heights.client = 84;
+    layout.resize();
+    expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
+    // Card widens again: everything fits, the row goes away.
+    heights.scroll = 63; heights.client = 63;
+    layout.resize();
+    expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+    // caps.maxTextLines is runtime-overridable and reaches the rendered clamp.
+    rerender(<div className="harso-kit"><chat.HarsoOutputCard document={document} caps={{ maxTextLines: 2 }} onViewAll={onViewAll} /></div>);
+    expect(card.querySelector<HTMLElement>(".hkc-output-card-text")!.style.getPropertyValue("--hkc-output-card-text-lines")).toBe("2");
+    cleanup();
+    const { card: short } = renderCard({ document: textDoc({ sections: [{ paragraphs: ["Mostly yes, if you can charge at home."] }] }) });
+    expect(within(short).queryByRole("button", { name: /View all/ })).toBeNull();
+  } finally { layout.restore(); }
+});
+
+test("the text clamp is CSS line-clamp driven by the caps variable", () => {
+  expect(cardStyles).toMatch(/\.hkc-output-card-text \{[^}]*-webkit-line-clamp: var\(--hkc-output-card-text-lines, 4\)[^}]*overflow: hidden/);
 });

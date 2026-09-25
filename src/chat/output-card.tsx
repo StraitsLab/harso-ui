@@ -1,7 +1,7 @@
 "use client";
 
 import { CaretRight } from "@phosphor-icons/react";
-import { useId, useRef, useState } from "react";
+import { useId, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { Button } from "../primitives";
 import "./output-card.css";
 
@@ -59,13 +59,14 @@ export interface HarsoOutputDocument {
   fallback_text: string;
 }
 
-export interface HarsoOutputCardCaps { maxRows: number; maxNumbers: number; maxTextChars: number }
+export interface HarsoOutputCardCaps { maxRows: number; maxNumbers: number; maxTextChars: number; maxTextLines: number }
 
 /**
- * Approved inline rule (founder, 23 Sep): at most three rows, two key numbers (2-up) and ~4 lines of text
- * (the contract's "first ~180 characters") inline. Anything beyond is reached through the View-all row.
+ * Approved inline rule (founder, 23 Sep): at most three rows, two key numbers (2-up) and ~4 lines of text inline.
+ * Text is held by both the contract's "first ~180 characters" and a rendered line clamp (`maxTextLines`), because
+ * characters alone do not bound height across scripts and widths. Anything beyond is reached through the View-all row.
  */
-export const HARSO_OUTPUT_CARD_CAPS: Readonly<HarsoOutputCardCaps> = Object.freeze({ maxRows: 3, maxNumbers: 2, maxTextChars: 180 });
+export const HARSO_OUTPUT_CARD_CAPS: Readonly<HarsoOutputCardCaps> = Object.freeze({ maxRows: 3, maxNumbers: 2, maxTextChars: 180, maxTextLines: 4 });
 
 export interface HarsoOutputCardProps {
   document: HarsoOutputDocument;
@@ -148,6 +149,24 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps) {
   return { parts, total, hidden: total - shown, clamped };
 }
 
+/**
+ * Inline body text, clamped to `lines` rendered lines by CSS. Reports whether the clamp is hiding text,
+ * re-measured when the text, the line cap or the paragraph's width changes.
+ */
+function CardText({ text, lines, onClip }: { text: string; lines: number; onClip: (clipped: boolean) => void }) {
+  const node = useRef<HTMLParagraphElement>(null);
+  useLayoutEffect(() => {
+    const element = node.current;
+    if (!element) return;
+    const measure = () => onClip(element.scrollHeight > element.clientHeight + 1);
+    measure();
+    const observer = typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(measure);
+    observer?.observe(element);
+    return () => { observer?.disconnect(); onClip(false); };
+  }, [text, lines, onClip]);
+  return <p ref={node} className="hkc-output-card-text" style={{ "--hkc-output-card-text-lines": Math.max(1, lines) } as CSSProperties}>{text}</p>;
+}
+
 function hasDetails(details: HarsoOutputDocumentDetails | undefined): details is HarsoOutputDocumentDetails {
   return !!details && [details.sources, details.assumptions, details.disclaimers].some(list => !!list?.length);
 }
@@ -170,10 +189,12 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, clas
   const id = useId();
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
-  const content = readBlocks(document.blocks, { ...HARSO_OUTPUT_CARD_CAPS, ...caps });
+  const [textClipped, setTextClipped] = useState(false);
+  const limits = { ...HARSO_OUTPUT_CARD_CAPS, ...caps };
+  const content = readBlocks(document.blocks, limits);
   const details = hasDetails(document.details) ? document.details : undefined;
   const inlineDetails = details && !onOpenDetails;
-  const hasMore = !!content && (content.hidden > 0 || content.clamped);
+  const hasMore = !!content && (content.hidden > 0 || content.clamped || textClipped);
   const viewAllLabel = document.more_label?.trim() || (content?.hidden ? `View all ${content.total}` : "View all");
   const titleId = `${id}-title`, detailsId = `${id}-details`;
 
@@ -220,7 +241,7 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, clas
                 <span className="hkc-output-card-number-label">{number.label}</span>
               </li>)}
             </ul>
-            : <p key={partIndex} className="hkc-output-card-text">{part.text}</p>)}
+            : <CardText key={partIndex} text={part.text} lines={limits.maxTextLines} onClip={setTextClipped} />)}
         {hasMore && <Button variant="ghost" className="hkc-output-card-view-all" onClick={onViewAll}
           trailingIcon={<CaretRight size={14} weight="bold" />}>{viewAllLabel}</Button>}
       </>

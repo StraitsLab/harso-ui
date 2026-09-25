@@ -48,8 +48,12 @@
 }
 .harso-kit .hkc-output-card-number-label { font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
 
-/* Short text (06 Research brief · inline): plain body prose, held to ~4 lines by the card's character budget. */
-.harso-kit .hkc-output-card-text { font-size: var(--hk-text-body); line-height: 1.5; }
+/* Short text (06 Research brief · inline): plain body prose, clamped to caps.maxTextLines rendered lines
+   (set inline as --hkc-output-card-text-lines); the card shows View all whenever the clamp hides text. */
+.harso-kit .hkc-output-card-text {
+  font-size: var(--hk-text-body); line-height: 1.5;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: var(--hkc-output-card-text-lines, 4); overflow: hidden;
+}
 
 .harso-kit .hkc-output-card-fallback { font-size: var(--hk-text-body); line-height: 1.5; white-space: pre-line; }
 

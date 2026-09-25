@@ -230,6 +230,49 @@ for (const mode of ["light", "dark"] as const) {
   });
 }
 
+// Review F1: the ~4-line cap is a rendered clamp. Wide-script text under the character budget, a short control, and
+// the same card re-measured as the viewport narrows and widens.
+const textLines = (page: Page) => card(page).locator(".hkc-output-card-text").evaluate(node => {
+  const s = getComputedStyle(node);
+  return Math.round(node.getBoundingClientRect().height / parseFloat(s.lineHeight));
+});
+for (const mode of ["light", "dark"] as const) {
+  test(`text ${mode}: CJK prose under 180 characters clamps to 4 lines and offers View all; a short sentence does not`, async ({ page }) => {
+    await page.setViewportSize({ width: 420, height: 720 });
+    await page.goto(`${fixture}?doc=cjk&mode=${mode}`);
+    const region = page.getByRole("region", { name: "电动车值得买吗？" });
+    expect(await textLines(page)).toBe(4);
+    const viewAll = region.getByRole("button", { name: "View all", exact: true });
+    await expect(viewAll).toBeVisible();
+    const g = await geometry(page);
+    expect(g.overlaps).toEqual([]);
+    expect(g.outside).toEqual([]);
+    expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+    await viewAll.click();
+    expect((await callbacks(page)).viewAllOpened).toBe(1);
+    await mkdir(evidence, { recursive: true });
+    await card(page).screenshot({ path: resolve(evidence, `cjk-${mode}-420-card.png`) });
+    await page.goto(`${fixture}?doc=short&mode=${mode}`);
+    expect(await textLines(page)).toBe(1);
+    await expect(card(page).getByRole("button")).toHaveCount(0);
+  });
+}
+
+test("text: the clamp and the View-all row follow width changes", async ({ page }) => {
+  await page.setViewportSize({ width: 1200, height: 720 });
+  await page.goto(`${fixture}?doc=cjk`);
+  const viewAll = card(page).getByRole("button", { name: "View all", exact: true });
+  // Wide: the CJK paragraph fits under the clamp, so nothing is hidden and there is no View all.
+  expect(await textLines(page)).toBeLessThan(4);
+  await expect(viewAll).toHaveCount(0);
+  await page.setViewportSize({ width: 320, height: 720 });
+  await expect(viewAll).toBeVisible();
+  expect(await textLines(page)).toBe(4);
+  await page.setViewportSize({ width: 1200, height: 720 });
+  await expect(viewAll).toHaveCount(0);
+  expect(await textLines(page)).toBeLessThan(4);
+});
+
 test("reduced motion: numbers and text render identically (no animation on either)", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(`${fixture}?doc=numbers`);

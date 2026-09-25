@@ -20,8 +20,8 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
   `rows` blocks (with `total_count`), `numbers` blocks, `text` blocks, `more_label`,
   `details` and `fallback_text`. It performs **no
   validation** and imports nothing from weave-cloud or any JSON-schema library.
-- `caps?: Partial<{ maxRows: number; maxNumbers: number; maxTextChars: number }>` —
-  defaults to `HARSO_OUTPUT_CARD_CAPS` (`{ maxRows: 3, maxNumbers: 2, maxTextChars: 180 }`,
+- `caps?: Partial<{ maxRows: number; maxNumbers: number; maxTextChars: number; maxTextLines: number }>` —
+  defaults to `HARSO_OUTPUT_CARD_CAPS` (`{ maxRows: 3, maxNumbers: 2, maxTextChars: 180, maxTextLines: 4 }`,
   the approved inline rule: ≤ 3 rows, 2-up key numbers, ~4 lines of text).
 - `onViewAll()` — called once per press of the View-all row (rule 2). The card
   opens, fetches and sends nothing itself; the host shows the full output.
@@ -55,9 +55,12 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
    reader hears "S$4,280, Spent".
 4. **Text** (`text`): one plain body paragraph (14 regular). The inline text is the
    block's `summary`, else its paragraphs and bullets run together. It is cut at
-   `caps.maxTextChars` code points (backed off to a word boundary, then "…"),
-   which is ~4 lines at the card's width. The View-all row appears (with
-   `more_label`, else "View all") when the text was cut, when a `summary` stands in for
+   `caps.maxTextChars` code points (backed off to a word boundary, then "…"), and
+   CSS clamps what remains to `caps.maxTextLines` rendered lines, because characters
+   alone do not bound height across scripts (160 CJK characters are 7 lines at 420px)
+   or widths. The card measures the paragraph (and re-measures on resize), so the
+   View-all row appears (with `more_label`, else "View all") when the line clamp hides
+   text, when the text was cut, when a `summary` stands in for
    sections, when sections carry headings or bullets, or when a second text block
    follows. Section headings and bullets never render inline.
 5. Blocks render in the agent's order; budgets are shared across blocks of a kind.
@@ -106,7 +109,7 @@ HARSO_UI_PORT=<free port> npx playwright test tests/harso-output-card.spec.ts
 The Playwright spec shoots light + dark at 420px, runs Axe on the card, asserts
 zero borders, 12px radius, surface fill, ≥44px targets, no overlap, no action
 button, the View-all row (light + dark), key numbers and text (light + dark: sizes,
-2-up geometry, ≤ 4 text lines at 420px) and the fallback path. Not covered here:
+2-up geometry, ≤ 4 text lines at 420px, CJK text clamped to 4 lines with View all,
+a short sentence with none, and the clamp following width changes) and the fallback path. Not covered here:
 the host's inline-vs-page decision and full output view, transport, live data,
-visual/table/status blocks and installed-app acceptance. The text budget is
-characters, not measured lines, so a very narrow card may show a fifth line.
+visual/table/status blocks and installed-app acceptance.

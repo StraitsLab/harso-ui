@@ -242,7 +242,19 @@ const text: HarsoOutputDocument = {
   ] }] }],
   fallback_text: "Mostly yes, if you can charge at home or in your car park; home charging costs about half as much as public points."
 };
-const documents: Record<string, HarsoOutputDocument> = { flights, failed, spending, more, numbers, brief, text };
+// Synthetic: wide-script prose under the 180-character budget that still runs past four lines, so the line clamp holds it.
+const cjk: HarsoOutputDocument = {
+  header: { title: "电动车值得买吗？" },
+  blocks: [{ kind: "text", sections: [{ paragraphs: ["公共充电设施持续增加家庭充电费用较低。".repeat(8)] }] }],
+  fallback_text: "公共充电设施持续增加，家庭充电费用较低。"
+};
+// Synthetic: one short complete sentence; nothing is clipped, so no View all.
+const short: HarsoOutputDocument = {
+  header: { title: "Is an EV worth it now?" },
+  blocks: [{ kind: "text", sections: [{ paragraphs: ["Mostly yes, if you can charge at home."] }] }],
+  fallback_text: "Mostly yes, if you can charge at home."
+};
+const documents: Record<string, HarsoOutputDocument> = { flights, failed, spending, more, numbers, brief, text, cjk, short };
 
 const query = new URLSearchParams(location.search);
 
