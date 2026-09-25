@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 // @ts-expect-error - plain ESM script without type declarations
-import { checkPlaybook, lawErrors, projectSurface, schemaErrors, semanticErrors } from "../scripts/check-output-playbook.mjs";
+import { checkPlaybook, lawErrors, projectSurface, schemaErrors, semanticErrors, weekdayErrors } from "../scripts/check-output-playbook.mjs";
 import examplesFile from "../docs/agent/output-playbook.examples.json";
 import schemaFile from "../docs/agent/schema/output-blocks.v1.json";
 
@@ -62,6 +62,14 @@ describe("agent output playbook examples", () => {
     expect(allFindings(example)).toEqual([]);
     mutate(example);
     expect(allFindings(example).join("\n")).toMatch(expected);
+  });
+
+  test("catches a weekday that does not match its date", () => {
+    const year = Number((examplesFile as any).reference_date.slice(0, 4));
+    const example = byId("home-viewing");
+    expect(weekdayErrors(example, year)).toEqual([]);
+    example.document.header.title = "Viewing Sat 27 Sep · 11:00";
+    expect(weekdayErrors(example, year).join()).toMatch(/Sat 27 Sep is a Sun in 2026/);
   });
 
   test("the app surface follows the inline caps", () => {

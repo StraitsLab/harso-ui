@@ -321,6 +321,18 @@ export function lawErrors(example) {
   return errors;
 }
 
+/** Truth: a written weekday must match its date in the reference year ("Sun 27 Sep 2026", never "Sat 27 Sep"). */
+export function weekdayErrors(example, year) {
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const errors = [];
+  for (const [, day, date, month] of JSON.stringify(example).matchAll(/\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)[a-z]* (\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g)) {
+    const actual = DAYS[new Date(Date.UTC(year, MONTHS.indexOf(month), Number(date))).getUTCDay()];
+    if (actual !== day) errors.push(`truth: ${day} ${date} ${month} is a ${actual} in ${year}`);
+  }
+  return errors;
+}
+
 // ---------------------------------------------------------------------------------------------------------------
 export function checkPlaybook(file = EXAMPLES_PATH, schemaFile = SCHEMA_PATH) {
   const schemaText = readFileSync(schemaFile);
@@ -343,7 +355,9 @@ export function checkPlaybook(file = EXAMPLES_PATH, schemaFile = SCHEMA_PATH) {
     }
     if ((example.rationale ?? "").length > 200) report("rationale must be one line of at most 200 characters");
     if (!Array.isArray(example.components) || example.components.length === 0) report("components must list the catalogue components it covers");
-    if (example.kind !== "text" && (typeof example.says !== "string" || !example.says.trim())) report("says (the one chat sentence before the card) is required");
+    const standsAlone = example.document?.blocks?.some(block => block.kind === "status" && block.state === "failed");
+    if (example.kind !== "text" && typeof example.says !== "string") report("says (the one chat sentence before the card) is required");
+    if (example.kind !== "text" && typeof example.says === "string" && !example.says.trim() && !standsAlone) report("law 6: only a failed card stands alone; every other card follows one sentence");
     if (example.document) {
       const schemaFindings = schemaErrors(schema, example.document);
       schemaFindings.forEach(message => report(`schema ${message}`));
@@ -351,6 +365,9 @@ export function checkPlaybook(file = EXAMPLES_PATH, schemaFile = SCHEMA_PATH) {
     }
     lawErrors(example).forEach(message => report(message));
   }
+  const year = Number((playbook.reference_date ?? "").slice(0, 4));
+  if (!year) findings.push("playbook: reference_date (YYYY-MM-DD) is required so weekdays can be checked");
+  else for (const example of examples) weekdayErrors(example, year).forEach(message => findings.push(`example ${example.id}: ${message}`));
   const count = kind => examples.filter(example => example.kind === kind).length;
   if (examples.length < 80) findings.push(`playbook: ${examples.length} examples, need at least 80`);
   if (count("text") < 10) findings.push(`playbook: ${count("text")} plain-text examples, need at least 10`);

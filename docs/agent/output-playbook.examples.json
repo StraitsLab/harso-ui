@@ -1,5 +1,6 @@
 {
   "about": "Expected present_output documents for real requests. Each example is validated against the copied contract schema and the playbook laws by scripts/check-output-playbook.mjs. Figures, places and ids are illustrative: artifact, routine and Work Unit ids are placeholders in the uuid7 shape.",
+  "reference_date": "2026-09-26",
   "schema": {
     "path": "docs/agent/schema/output-blocks.v1.json",
     "source": "StraitsLab/weave-cloud packages/contracts/src/schemas/output-blocks.v1.json",
@@ -17,7 +18,8 @@
       "surface": "page",
       "components": [
         "F7 Spending summary",
-        "X1 Headline number"
+        "X1 Headline number",
+        "X5 Sources, assumptions, disclaimers"
       ],
       "rationale": "Numbers answer it in two seconds; the bar chart proves which week; categories wait on the page.",
       "document": {
@@ -108,7 +110,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "What's my net worth now?",
-      "says": "S$412,300, up S$9,800 since June.",
+      "says": "It has grown every month since June.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -181,7 +183,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "How's Apple stock doing today?",
-      "says": "Apple is up 1.8% today after the iPhone sales update.",
+      "says": "Apple rose on the iPhone sales update.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -259,7 +261,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "How's my portfolio this week?",
-      "says": "Down 0.6% this week; NVIDIA did most of the damage.",
+      "says": "A small dip this week; NVIDIA did most of the damage.",
       "surface": "page",
       "fresh": true,
       "components": [
@@ -272,7 +274,7 @@
         "major": 1,
         "header": {
           "title": "Portfolio",
-          "subtitle": "IBKR · as of 26 Sep close"
+          "subtitle": "IBKR · as of 25 Sep close"
         },
         "blocks": [
           {
@@ -321,7 +323,7 @@
         "details": {
           "sources": [
             {
-              "label": "IBKR positions, 26 Sep 2026 close"
+              "label": "IBKR positions, 25 Sep 2026 close"
             }
           ]
         },
@@ -333,7 +335,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "Which bills are due this week?",
-      "says": "Three are due; the electricity bill is already overdue.",
+      "says": "The electricity bill is already late.",
       "surface": "inline",
       "components": [
         "F10 Bill / subscription due",
@@ -385,7 +387,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "How much will Priya get if I send S$1,000 to India?",
-      "says": "She gets about ₹61,540; the fee is S$6.20.",
+      "says": "Wise is the cheapest way to send it today.",
       "surface": "inline",
       "components": [
         "F13 Money transfer quote"
@@ -396,7 +398,7 @@
         "major": 1,
         "header": {
           "title": "S$1,000 to Priya",
-          "subtitle": "Rate 1 SGD = 61.92 INR · arrives by Monday"
+          "subtitle": "Rate 1 SGD = 61.92 INR · arrives by Tuesday"
         },
         "blocks": [
           {
@@ -432,7 +434,7 @@
             "Rate is held for 24 hours once you start the transfer."
           ]
         },
-        "fallback_text": "Sending S$1,000: Priya gets about ₹61,540 at 61.92, fee S$6.20, arrives by Monday."
+        "fallback_text": "Sending S$1,000: Priya gets about ₹61,540 at 61.92, fee S$6.20, arrives by Tuesday."
       }
     },
     {
@@ -440,7 +442,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "What would my monthly payment be on a S$900k loan over 25 years at 3%?",
-      "says": "At 3% fixed, it costs about S$4,268 a month.",
+      "says": "Interest adds about 42% on top over the full term.",
       "surface": "inline",
       "components": [
         "F15 Loan / mortgage result",
@@ -565,7 +567,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "Am I over budget anywhere?",
-      "says": "Two categories are over; dining by the most.",
+      "says": "Dining is the one to watch.",
       "surface": "inline",
       "components": [
         "F8 Budget by category"
@@ -610,7 +612,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "Roughly what's my Singapore income tax for 2026?",
-      "says": "You'd owe about S$12,450 if your income stays the same.",
+      "says": "The slice above S$120,000 is taxed at 15%.",
       "surface": "inline",
       "components": [
         "F17 Tax estimate / refund"
@@ -714,7 +716,9 @@
       "surface": "inline",
       "components": [
         "S1 Product options",
-        "S10 Rating"
+        "S10 Rating",
+        "S2 Product grid / carousel (as rows)",
+        "X4 Item thumbnail (degraded: no row image)"
       ],
       "rationale": "Three options, one pick, price trailing, the trade-off on the secondary line; choosing goes through the question card.",
       "document": {
@@ -990,7 +994,7 @@
       "vertical": "shopping",
       "kind": "card",
       "request": "Tell me if the AirPods Pro drop below S$300.",
-      "says": "I'm watching three stores and will tell you here.",
+      "says": "Okay. I'll tell you here if it drops.",
       "surface": "inline",
       "components": [
         "S7 Price watch"
@@ -1045,7 +1049,7 @@
       "vertical": "shopping",
       "kind": "card",
       "request": "Where's my Uniqlo order?",
-      "says": "It's on the van now and should reach you by 6 pm.",
+      "says": "It's on the van now.",
       "surface": "inline",
       "components": [
         "S13 Delivery tracking",
@@ -1069,11 +1073,11 @@
               },
               {
                 "label": "Shipped",
-                "secondary": "Tue 23 Sep"
+                "secondary": "Wed 23 Sep"
               },
               {
                 "label": "Ordered",
-                "secondary": "Mon 22 Sep"
+                "secondary": "Tue 22 Sep"
               }
             ]
           },
@@ -1101,7 +1105,7 @@
       "vertical": "shopping",
       "kind": "card",
       "request": "Has Lazada refunded the headphones yet?",
-      "says": "Yes, S$129 landed on your card today.",
+      "says": "Yes, it's back on your card.",
       "surface": "inline",
       "components": [
         "S14 Return / refund status"
@@ -1141,7 +1145,7 @@
       "vertical": "shopping",
       "kind": "card",
       "request": "What's in my FairPrice cart and how much is it?",
-      "says": "S$86.40 with delivery; 14 items.",
+      "says": "It's ready to check out for Monday morning.",
       "surface": "inline",
       "components": [
         "S11 Cart / checkout summary",
@@ -1153,7 +1157,7 @@
         "major": 1,
         "header": {
           "title": "FairPrice cart",
-          "subtitle": "14 items · delivery Sat 9–11 am"
+          "subtitle": "14 items · delivery Mon 9–11 am"
         },
         "blocks": [
           {
@@ -1185,7 +1189,7 @@
             }
           ]
         },
-        "fallback_text": "FairPrice cart: 14 items, S$86.40 total including S$4.99 delivery on Saturday 9–11 am."
+        "fallback_text": "FairPrice cart: 14 items, S$86.40 total including S$4.99 delivery on Monday 9–11 am."
       }
     },
     {
@@ -1341,7 +1345,7 @@
       "vertical": "real_estate",
       "kind": "card",
       "request": "What's my condo at The Trilinq worth?",
-      "says": "About S$1.18M, in line with recent sales in the block.",
+      "says": "It's in line with recent sales in the development.",
       "surface": "inline",
       "components": [
         "R4 Price / value estimate"
@@ -1388,7 +1392,7 @@
       "vertical": "real_estate",
       "kind": "card",
       "request": "How much home can I afford on S$14k a month household income?",
-      "says": "Up to about S$1.17M, keeping repayments to 30% of income.",
+      "says": "That keeps repayments under 30% of your income.",
       "surface": "inline",
       "components": [
         "R8 Affordability"
@@ -1484,7 +1488,7 @@
       "vertical": "real_estate",
       "kind": "card",
       "request": "When's my viewing at The Clift?",
-      "says": "Saturday at 11 am, with Jasmine from ERA.",
+      "says": "It's tomorrow morning.",
       "surface": "inline",
       "components": [
         "R10 Viewing / open house"
@@ -1494,7 +1498,7 @@
         "kind": "output_blocks",
         "major": 1,
         "header": {
-          "title": "Viewing Sat 27 Sep · 11:00",
+          "title": "Viewing Sun 27 Sep · 11:00",
           "subtitle": "The Clift · 21 McCallum Street"
         },
         "blocks": [
@@ -1524,7 +1528,7 @@
             }
           ]
         },
-        "fallback_text": "Viewing at The Clift, 21 McCallum Street, on Sat 27 Sep at 11:00 with Jasmine Tan (ERA, 9123 4567)."
+        "fallback_text": "Viewing at The Clift, 21 McCallum Street, on Sun 27 Sep at 11:00 with Jasmine Tan (ERA, 9123 4567)."
       }
     },
     {
@@ -1656,7 +1660,7 @@
       "vertical": "jobs",
       "kind": "card",
       "request": "What does a senior data analyst earn in Singapore?",
-      "says": "Around S$7,800 a month is typical at that level.",
+      "says": "Most people are within about S$1,400 of the median.",
       "surface": "inline",
       "components": [
         "J3 Salary range / benchmark"
@@ -1702,7 +1706,7 @@
       "vertical": "jobs",
       "kind": "card",
       "request": "Where are my applications at?",
-      "says": "One interview next week; one rejection; one still quiet.",
+      "says": "The Grab interview is the one to prepare for.",
       "surface": "inline",
       "components": [
         "J5 Application status",
@@ -1722,7 +1726,7 @@
             "items": [
               {
                 "label": "Grab · Lead Product Designer",
-                "secondary": "Interview Thu 2 Oct"
+                "secondary": "Interview Thu 1 Oct"
               },
               {
                 "label": "Wise · Design Lead",
@@ -1742,7 +1746,7 @@
             }
           ]
         },
-        "fallback_text": "Applications: Grab interview Thu 2 Oct; Wise viewed, applied 12 Sep; Shopee not selected on 22 Sep."
+        "fallback_text": "Applications: Grab interview Thu 1 Oct; Wise viewed, applied 12 Sep; Shopee not selected on 22 Sep."
       }
     },
     {
@@ -2127,7 +2131,7 @@
       "vertical": "travel",
       "kind": "card",
       "request": "Is my flight on time?",
-      "says": "No. SQ 638 is 45 minutes late, but your connection is still safe.",
+      "says": "No, it's running late, but you have nothing to change.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -2180,7 +2184,7 @@
       "vertical": "travel",
       "kind": "card",
       "request": "Do I need a visa for Japan on a Singapore passport?",
-      "says": "No visa for a stay under 90 days.",
+      "says": "You're fine for a normal holiday.",
       "surface": "inline",
       "components": [
         "Visa / entry requirements"
@@ -2227,7 +2231,7 @@
       "vertical": "travel",
       "kind": "card",
       "request": "What should I pack for Tokyo next week?",
-      "says": "Pack layers and a light rain jacket; Tuesday looks wet.",
+      "says": "Pack layers and a light rain jacket; Wednesday looks wet.",
       "surface": "inline",
       "components": [
         "Packing list"
@@ -2238,7 +2242,7 @@
         "major": 1,
         "header": {
           "title": "Tokyo · 6 nights",
-          "subtitle": "14–22°C · rain likely Tue"
+          "subtitle": "14–22°C · rain likely Wed"
         },
         "blocks": [
           {
@@ -2263,7 +2267,7 @@
             }
           ]
         },
-        "fallback_text": "Pack for Tokyo (14–22°C, rain likely Tue): light layers, a jumper, rain jacket, walking shoes, Suica on your phone, Type A adapter."
+        "fallback_text": "Pack for Tokyo (14–22°C, rain likely Wed): light layers, a jumper, rain jacket, walking shoes, Suica on your phone, Type A adapter."
       }
     },
     {
@@ -2389,7 +2393,7 @@
       "vertical": "places",
       "kind": "card",
       "request": "How do I get to Jewel from here by train?",
-      "says": "About 42 minutes by MRT with one change.",
+      "says": "The MRT is quickest, with one change at Tanah Merah.",
       "surface": "inline",
       "components": [
         "Directions"
@@ -2447,7 +2451,7 @@
       "vertical": "places",
       "kind": "card",
       "request": "Somewhere nice for dinner in Tiong Bahru tonight for 4?",
-      "says": "Three have tables for four at 7:30.",
+      "says": "Merci Marcel is the best fit for a relaxed dinner.",
       "surface": "inline",
       "components": [
         "Place card",
@@ -2499,7 +2503,7 @@
       "vertical": "places",
       "kind": "card",
       "request": "What are the Botanic Gardens' hours?",
-      "says": "Open 5 am to midnight every day; the Orchid Garden closes at 7 pm.",
+      "says": "The gardens stay open late; the Orchid Garden closes earlier.",
       "surface": "inline",
       "components": [
         "Opening hours"
@@ -2510,7 +2514,7 @@
         "major": 1,
         "header": {
           "title": "Singapore Botanic Gardens",
-          "subtitle": "Open daily · free entry"
+          "subtitle": "Every day · gardens free"
         },
         "blocks": [
           {
@@ -2544,7 +2548,7 @@
       "vertical": "places",
       "kind": "card",
       "request": "Where are the nearest 24-hour clinics?",
-      "says": "Three are open all night within 15 minutes.",
+      "says": "Raffles Medical is closest and takes walk-ins.",
       "surface": "inline",
       "components": [
         "Map with pins",
@@ -2687,7 +2691,7 @@
       "vertical": "food",
       "kind": "card",
       "request": "How many calories in a plate of char kway teow?",
-      "says": "About 740 calories, and it's heavy on fat and salt.",
+      "says": "It's heavy on fat and salt.",
       "surface": "inline",
       "components": [
         "Nutrition"
@@ -2796,7 +2800,7 @@
       "vertical": "food",
       "kind": "card",
       "request": "Remind me in 12 minutes to take the bread out.",
-      "says": "Okay. I'll remind you at 19:42.",
+      "says": "Okay, I'll remind you.",
       "surface": "inline",
       "components": [
         "Cooking timer"
@@ -2836,7 +2840,7 @@
       "vertical": "weather",
       "kind": "card",
       "request": "What's the weather like this afternoon?",
-      "says": "Thunderstorms from about 3 pm; take an umbrella.",
+      "says": "Take an umbrella if you're out after lunch.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -2911,7 +2915,7 @@
       "vertical": "weather",
       "kind": "card",
       "request": "What's the weather in Tokyo next week?",
-      "says": "Mild and mostly dry, with rain on Tuesday.",
+      "says": "Mild and mostly dry, with rain on Wednesday.",
       "surface": "page",
       "fresh": true,
       "components": [
@@ -2930,37 +2934,37 @@
             "kind": "rows",
             "items": [
               {
-                "label": "Mon 13",
+                "label": "Tue 13",
                 "secondary": "Sunny",
                 "trailing": "15–22°"
               },
               {
-                "label": "Tue 14",
+                "label": "Wed 14",
                 "secondary": "Rain, 80%",
                 "trailing": "14–18°"
               },
               {
-                "label": "Wed 15",
+                "label": "Thu 15",
                 "secondary": "Cloudy",
                 "trailing": "14–20°"
               },
               {
-                "label": "Thu 16",
+                "label": "Fri 16",
                 "secondary": "Sunny",
                 "trailing": "15–23°"
               },
               {
-                "label": "Fri 17",
+                "label": "Sat 17",
                 "secondary": "Sunny",
                 "trailing": "16–23°"
               },
               {
-                "label": "Sat 18",
+                "label": "Sun 18",
                 "secondary": "Cloudy",
                 "trailing": "15–21°"
               },
               {
-                "label": "Sun 19",
+                "label": "Mon 19",
                 "secondary": "Showers, 40%",
                 "trailing": "14–19°"
               }
@@ -2974,7 +2978,7 @@
             }
           ]
         },
-        "fallback_text": "Tokyo 13–19 Oct: mostly 14–23°C, rain on Tue 14 (80%), showers possible Sun 19."
+        "fallback_text": "Tokyo 13–19 Oct: mostly 14–23°C, rain on Wed 14 (80%), showers possible Mon 19."
       }
     },
     {
@@ -2982,7 +2986,7 @@
       "vertical": "weather",
       "kind": "card",
       "request": "Is there any weather warning today?",
-      "says": "Yes, a heavy rain warning until 6 pm.",
+      "says": "Yes. Avoid low-lying roads this afternoon.",
       "surface": "inline",
       "components": [
         "Severe-weather alert"
@@ -2993,7 +2997,7 @@
         "major": 1,
         "header": {
           "title": "Heavy rain warning until 18:00",
-          "subtitle": "West and central · issued 13:40"
+          "subtitle": "West and central · NEA · issued 13:40"
         },
         "blocks": [
           {
@@ -3023,7 +3027,7 @@
       "vertical": "sports",
       "kind": "card",
       "request": "What was the Arsenal score?",
-      "says": "Arsenal won 2–1; Saka scored the winner in the 78th minute.",
+      "says": "Arsenal won it with Saka's goal in the 78th minute.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -3034,7 +3038,7 @@
         "kind": "output_blocks",
         "major": 1,
         "header": {
-          "title": "Arsenal 2–1 Chelsea",
+          "title": "Arsenal v Chelsea",
           "subtitle": "Full time · Premier League · as of 21:52"
         },
         "blocks": [
@@ -3168,7 +3172,7 @@
       "vertical": "sports",
       "kind": "card",
       "request": "When do Arsenal play next?",
-      "says": "Saturday at home to Spurs.",
+      "says": "A home derby is next.",
       "surface": "inline",
       "components": [
         "Fixture list"
@@ -3187,17 +3191,17 @@
             "items": [
               {
                 "label": "v Tottenham",
-                "secondary": "Sat 4 Oct · 19:30 · Emirates",
+                "secondary": "Sat 3 Oct · 19:30 · Emirates",
                 "trailing": "Home"
               },
               {
                 "label": "v PSV",
-                "secondary": "Wed 8 Oct · 03:00 · Champions League",
+                "secondary": "Thu 8 Oct · 03:00 · Champions League",
                 "trailing": "Away"
               },
               {
                 "label": "v Brighton",
-                "secondary": "Sun 19 Oct · 21:00",
+                "secondary": "Sun 18 Oct · 21:00",
                 "trailing": "Away"
               }
             ]
@@ -3210,7 +3214,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal next: v Tottenham Sat 4 Oct 19:30 (home); v PSV Wed 8 Oct 03:00 (away, Champions League); v Brighton Sun 19 Oct 21:00 (away)."
+        "fallback_text": "Arsenal next: v Tottenham Sat 3 Oct 19:30 (home); v PSV Thu 8 Oct 03:00 (away, Champions League); v Brighton Sun 18 Oct 21:00 (away)."
       }
     },
     {
@@ -3235,7 +3239,6 @@
         "blocks": [
           {
             "kind": "text",
-            "summary": "Trains are running normally again after a 2-hour power fault on the East–West line.",
             "sections": [
               {
                 "heading": "What happened",
@@ -3471,7 +3474,7 @@
       "vertical": "education",
       "kind": "card",
       "request": "How did I do on the chemistry quiz?",
-      "says": "8 of 10, and both misses were on moles.",
+      "says": "Good result; both misses were mole calculations.",
       "surface": "inline",
       "components": [
         "Quiz with feedback",
@@ -3508,7 +3511,7 @@
       "vertical": "education",
       "kind": "card",
       "request": "How's my Japanese going?",
-      "says": "You've kept a 12-day streak and you're 64% through N5.",
+      "says": "You're on track to finish N5 by November.",
       "surface": "inline",
       "components": [
         "Progress / streak",
@@ -3698,7 +3701,7 @@
       "vertical": "health",
       "kind": "card",
       "request": "How's my resting heart rate this month?",
-      "says": "It's drifted down to 58, which usually means better fitness.",
+      "says": "It's drifting down, which usually means better fitness.",
       "surface": "inline",
       "components": [
         "Metric trend"
@@ -3861,7 +3864,7 @@
         "major": 1,
         "header": {
           "title": "Today's medication",
-          "subtitle": "Fri 26 Sep"
+          "subtitle": "Sat 26 Sep"
         },
         "blocks": [
           {
@@ -3898,7 +3901,7 @@
       "vertical": "health",
       "kind": "card",
       "request": "I've had chest tightness and a sweaty feeling for 20 minutes.",
-      "says": "Please call 995 now.",
+      "says": "Those can be signs of a heart attack.",
       "surface": "inline",
       "components": [
         "Symptom check with disclaimer"
@@ -3909,12 +3912,12 @@
         "major": 1,
         "header": {
           "title": "Call 995 now",
-          "subtitle": "Chest tightness with sweating for 20 minutes"
+          "subtitle": "Chest tightness with sweating · 20 minutes"
         },
         "blocks": [
           {
             "kind": "text",
-            "summary": "These can be signs of a heart attack. Call 995 for an ambulance now; don't drive yourself.",
+            "summary": "Call 995 for an ambulance now. Don't drive yourself, and stay on the line with the operator.",
             "sections": [
               {
                 "bullets": [
@@ -3945,7 +3948,7 @@
       "vertical": "health",
       "kind": "card",
       "request": "Give me a 30-minute interval run.",
-      "says": "30 minutes, six hard efforts.",
+      "says": "Good for a weekday lunch break.",
       "surface": "inline",
       "components": [
         "Workout plan"
@@ -3993,7 +3996,7 @@
       "vertical": "productivity",
       "kind": "card",
       "request": "What's on my calendar tomorrow?",
-      "says": "Three meetings, and your afternoon is free after 2.",
+      "says": "Your afternoon is free after 2.",
       "surface": "inline",
       "components": [
         "Schedule / calendar"
@@ -4003,7 +4006,7 @@
         "kind": "output_blocks",
         "major": 1,
         "header": {
-          "title": "Tomorrow · Sat 27 Sep",
+          "title": "Tomorrow · Sun 27 Sep",
           "subtitle": "3 events"
         },
         "blocks": [
@@ -4067,21 +4070,21 @@
             "kind": "rows",
             "items": [
               {
-                "label": "Draft the rows states",
-                "secondary": "Mei · Tue 30 Sep"
+                "label": "Draft the row states",
+                "secondary": "Mei · Tue 29 Sep"
               },
               {
                 "label": "Check dark contrast",
-                "secondary": "Arjun · Wed 1 Oct"
+                "secondary": "Arjun · Wed 30 Sep"
               },
               {
                 "label": "Share the pane mock",
-                "secondary": "You · Fri 3 Oct"
+                "secondary": "You · Fri 2 Oct"
               }
             ]
           }
         ],
-        "fallback_text": "Design review 26 Sep: ship the rows card first; no reply buttons. Actions: Mei drafts row states (30 Sep), Arjun checks dark contrast (1 Oct), you share the pane mock (3 Oct)."
+        "fallback_text": "Design review 26 Sep: ship the rows card first; no reply buttons. Actions: Mei drafts row states (29 Sep), Arjun checks dark contrast (30 Sep), you share the pane mock (2 Oct)."
       }
     },
     {
@@ -4122,7 +4125,7 @@
       "vertical": "productivity",
       "kind": "card",
       "request": "What's left on the move?",
-      "says": "Three things left, and one of them is waiting on the landlord.",
+      "says": "Only the tenancy agreement is waiting on someone else.",
       "surface": "inline",
       "components": [
         "Kanban / status list",
@@ -4217,7 +4220,7 @@
       "vertical": "productivity",
       "kind": "card",
       "request": "Go through my inbox and file all the receipts.",
-      "says": "I've started; about 400 emails to go through.",
+      "says": "I've started; it runs in the background.",
       "surface": "inline",
       "components": [
         "Work status"
@@ -4305,7 +4308,7 @@
       "vertical": "documents",
       "kind": "card",
       "request": "Has everyone signed the NDA?",
-      "says": "Two of three have; Mei hasn't opened it yet.",
+      "says": "Mei is the one holding it up.",
       "surface": "inline",
       "components": [
         "Signature request preview"
@@ -4480,11 +4483,12 @@
       "vertical": "data",
       "kind": "card",
       "request": "How did the shop do in September?",
-      "says": "Revenue was up 12% on August, with the same number of orders.",
+      "says": "A strong month; every week beat the one before.",
       "surface": "inline",
       "components": [
         "KPI tiles",
-        "Bar chart"
+        "Bar chart",
+        "Sparkline (as number change)"
       ],
       "rationale": "Two KPIs and a 4-week bar chart; the busiest week is highlighted; filters are a follow-up question.",
       "document": {
@@ -4684,7 +4688,7 @@
       "vertical": "data",
       "kind": "card",
       "request": "What's our cash balance?",
-      "says": "S$126,400 at the last sync, which was yesterday evening.",
+      "says": "That's from yesterday evening; the DBS sync needs you to sign in again.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -5421,7 +5425,7 @@
       "vertical": "travel",
       "kind": "card",
       "request": "Any cheaper flights to Tokyo on 12 Oct?",
-      "says": "I couldn't check prices just now.",
+      "says": "",
       "surface": "inline",
       "components": [
         "Failed state"
@@ -5449,7 +5453,7 @@
       "vertical": "productivity",
       "kind": "card",
       "request": "Did the receipt filing finish?",
-      "says": "It stopped partway; your Gmail sign-in expired.",
+      "says": "",
       "surface": "inline",
       "components": [
         "Failed state",
@@ -5490,7 +5494,7 @@
       "vertical": "real_estate",
       "kind": "card",
       "request": "Any 3-room HDB in Bishan under S$500k?",
-      "says": "None right now; the cheapest is S$588k.",
+      "says": "Nothing fits right now.",
       "surface": "inline",
       "components": [
         "Empty state"
@@ -5577,7 +5581,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "What's my portfolio worth?",
-      "says": "About US$84,210 at Friday's close; markets are closed.",
+      "says": "Markets are closed, so this is Friday's close.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -5590,7 +5594,7 @@
         "major": 1,
         "header": {
           "title": "Portfolio",
-          "subtitle": "As of Fri 26 Sep close · markets closed"
+          "subtitle": "As of Fri 25 Sep close · markets closed"
         },
         "blocks": [
           {
@@ -5610,11 +5614,1032 @@
         "details": {
           "sources": [
             {
-              "label": "IBKR positions, 26 Sep 2026 close"
+              "label": "IBKR positions, 25 Sep 2026 close"
             }
           ]
         },
         "fallback_text": "Portfolio US$84,210 as of Friday's close, down 0.6% this week."
+      }
+    },
+    {
+      "id": "money-key-stats",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Give me DBS's key stats.",
+      "says": "Its dividend yield is the standout.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "F4 Key stats grid"
+      ],
+      "rationale": "Reference data is label → value rows on the page; the one judgement is in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "DBS Group · D05",
+          "subtitle": "SGX · as of 25 Sep close"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Price",
+                "trailing": "S$42.10"
+              },
+              {
+                "label": "P/E",
+                "trailing": "11.2"
+              },
+              {
+                "label": "Dividend yield",
+                "trailing": "5.6%"
+              },
+              {
+                "label": "Market cap",
+                "trailing": "S$119.6B"
+              },
+              {
+                "label": "52-week range",
+                "trailing": "S$34.80–43.25"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SGX market data, 25 Sep 2026 close"
+            }
+          ],
+          "disclaimers": [
+            "Not financial advice."
+          ]
+        },
+        "fallback_text": "DBS (D05) S$42.10 at the 25 Sep close: P/E 11.2, dividend yield 5.6%, market cap S$119.6B, 52-week range S$34.80–43.25."
+      }
+    },
+    {
+      "id": "money-stock-compare",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How have DBS, OCBC and UOB done this year?",
+      "says": "DBS is ahead, up 18% since January.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F5 Stock comparison"
+      ],
+      "rationale": "Three tickers over one period is a three-series line; the leader is named in the sentence and highlighted.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Singapore banks this year",
+          "subtitle": "Change since 2 Jan · as of 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "%",
+              "x_labels": [
+                "Jan",
+                "Mar",
+                "May",
+                "Jul",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "label": "DBS",
+                  "values": [
+                    "0",
+                    "5",
+                    "9",
+                    "14",
+                    "18"
+                  ]
+                },
+                {
+                  "label": "OCBC",
+                  "values": [
+                    "0",
+                    "3",
+                    "6",
+                    "9",
+                    "11"
+                  ]
+                },
+                {
+                  "label": "UOB",
+                  "values": [
+                    "0",
+                    "2",
+                    "4",
+                    "6",
+                    "8"
+                  ]
+                }
+              ],
+              "highlight_index": 4
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SGX closing prices, 2 Jan–26 Sep 2026"
+            }
+          ],
+          "disclaimers": [
+            "Price change only; dividends excluded."
+          ]
+        },
+        "fallback_text": "Since 2 January: DBS +18%, OCBC +11%, UOB +8%, as of 26 Sep."
+      }
+    },
+    {
+      "id": "money-quote-estimate",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What did the contractor quote for the bathroom?",
+      "says": "It's an all-in price, with no extras listed.",
+      "surface": "inline",
+      "components": [
+        "F12 Quote / estimate"
+      ],
+      "rationale": "The quote total and expiry are the two numbers; line items live in the PDF; accepting happens with the contractor.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Bathroom renovation quote",
+          "subtitle": "Ah Huat Renovation · Q-3318"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$14,800",
+                "label": "Total"
+              },
+              {
+                "value": "15 Oct",
+                "label": "Valid until"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open quote",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8d"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Quote PDF from your email, 22 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Ah Huat Renovation quoted S$14,800 for the bathroom (Q-3318), valid until 15 Oct. The PDF is in your Library."
+      }
+    },
+    {
+      "id": "money-transfer-tracking",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Has my transfer to Priya arrived?",
+      "says": "Not yet. It's with her bank now.",
+      "surface": "inline",
+      "components": [
+        "F14 Transfer / payment tracking"
+      ],
+      "rationale": "Steps as rows, newest first; the arrival date is the title because that is the question.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arrives by Tue 29 Sep",
+          "subtitle": "S$1,000 to Priya · Wise"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "With HDFC Bank",
+                "secondary": "Sent from Wise 26 Sep 10:20"
+              },
+              {
+                "label": "Converted to ₹61,540",
+                "secondary": "26 Sep 10:18"
+              },
+              {
+                "label": "Paid in",
+                "secondary": "26 Sep 10:05"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Track on Wise",
+              "url": "https://wise.com/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Wise transfer 88213401, 26 Sep 2026 10:20"
+            }
+          ]
+        },
+        "fallback_text": "Your S$1,000 transfer to Priya (₹61,540) left Wise on 26 Sep and is with HDFC Bank; it should arrive by Tue 29 Sep."
+      }
+    },
+    {
+      "id": "shop-buyers-guide",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "What's the best robot vacuum for a small HDB flat?",
+      "says": "The Roborock Q7 is the best fit for most small flats.",
+      "surface": "page",
+      "components": [
+        "S5 Buyer's guide"
+      ],
+      "rationale": "Top picks are rows with price; the why and the trade-offs are short sections on the page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Robot vacuums for a small flat",
+          "subtitle": "Under S$800 · 3 picks"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Why the Q7",
+                "bullets": [
+                  "Mops and vacuums in one pass.",
+                  "Maps rooms, so you can skip the bedroom.",
+                  "Quiet enough to run while you work."
+                ]
+              },
+              {
+                "heading": "Trade-offs",
+                "bullets": [
+                  "The Eufy is cheaper but can't mop.",
+                  "The Dreame empties itself but costs twice as much."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Roborock Q7 Max",
+                "secondary": "Vacuum and mop · 4.5★",
+                "trailing": "S$399",
+                "mark": "pick"
+              },
+              {
+                "label": "Eufy 11S",
+                "secondary": "Vacuum only · 4.3★",
+                "trailing": "S$229"
+              },
+              {
+                "label": "Dreame L10s",
+                "secondary": "Self-emptying · 4.6★",
+                "trailing": "S$799"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "RTINGS reviews and Lazada listings, Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Robot vacuums for a small flat: Roborock Q7 Max S$399 (pick, vacuums and mops); Eufy 11S S$229 (vacuum only); Dreame L10s S$799 (self-emptying)."
+      }
+    },
+    {
+      "id": "shop-deal",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Is the Nintendo Switch 2 deal at Shopee real?",
+      "says": "Yes, it's a real drop, but it ends tomorrow.",
+      "surface": "inline",
+      "components": [
+        "S8 Deal"
+      ],
+      "rationale": "The honest reference is the typical price in the subtitle, not a struck-through 'was' price.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Nintendo Switch 2 at S$589",
+          "subtitle": "Usually S$649 · ends Sun 27 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$",
+              "x_labels": [
+                "Jul",
+                "Aug",
+                "Sep",
+                "Now"
+              ],
+              "series": [
+                {
+                  "label": "Price",
+                  "values": [
+                    "649",
+                    "649",
+                    "649",
+                    "589"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "View on Shopee",
+              "url": "https://shopee.sg/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopee Mall and Courts price history, Jul–Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "The Nintendo Switch 2 is S$589 at Shopee until Sun 27 Sep, S$60 below its usual S$649."
+      }
+    },
+    {
+      "id": "shop-order-confirmed",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Did my Courts order go through?",
+      "says": "Yes, it went through.",
+      "surface": "inline",
+      "components": [
+        "S12 Order confirmation / receipt"
+      ],
+      "rationale": "Total and arrival are the two numbers; the receipt is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Order placed · Courts",
+          "subtitle": "Dyson V8 Origin · order 1044218"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$379",
+                "label": "Paid"
+              },
+              {
+                "value": "Wed 30 Sep",
+                "label": "Arrives"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open receipt",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8e"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Courts confirmation email, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Courts order 1044218 for the Dyson V8 Origin: S$379 paid, arriving Wed 30 Sep. Receipt in your Library."
+      }
+    },
+    {
+      "id": "home-price-history",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What has Blk 824 sold for before?",
+      "says": "Prices in the block rose about 12% in two years.",
+      "surface": "inline",
+      "components": [
+        "R5 Price history"
+      ],
+      "rationale": "Past sales as rows, newest first, price trailing; a chart would need more points than the block has.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Blk 824 Tampines St 81",
+          "subtitle": "3-room resale · last 2 years"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "#11 · 67 sqm",
+                "secondary": "Aug 2026",
+                "trailing": "S$542k"
+              },
+              {
+                "label": "#05 · 67 sqm",
+                "secondary": "Jan 2026",
+                "trailing": "S$515k"
+              },
+              {
+                "label": "#08 · 67 sqm",
+                "secondary": "Sep 2024",
+                "trailing": "S$485k"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "HDB resale transactions",
+              "url": "https://services2.hdb.gov.sg/webapp/BB33RTIS/"
+            }
+          ]
+        },
+        "fallback_text": "Blk 824 Tampines St 81 3-room resales: S$542k (Aug 2026), S$515k (Jan 2026), S$485k (Sep 2024)."
+      }
+    },
+    {
+      "id": "home-facts",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What are the facts on that condo?",
+      "says": "It's a 2013 condo with full facilities and 99-year lease.",
+      "surface": "page",
+      "components": [
+        "R6 Facts & features"
+      ],
+      "rationale": "Facts are a two-column reference table on the page only.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "The Trilinq · facts",
+          "subtitle": "Clementi · 755 units"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Fact"
+              },
+              {
+                "label": "Detail"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "Tenure",
+                  "99-year from 2013"
+                ]
+              },
+              {
+                "cells": [
+                  "Completed",
+                  "2017"
+                ]
+              },
+              {
+                "cells": [
+                  "Facilities",
+                  "Pool, gym, tennis"
+                ]
+              },
+              {
+                "cells": [
+                  "Nearest MRT",
+                  "Clementi · 12 min"
+                ]
+              },
+              {
+                "cells": [
+                  "Maintenance",
+                  "S$380 a month"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "URA and PropertyGuru project page, Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "The Trilinq: 99-year lease from 2013, completed 2017, pool, gym and tennis, 12 min to Clementi MRT, maintenance S$380 a month."
+      }
+    },
+    {
+      "id": "home-schools",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Which primary schools are within 1 km of Blk 824?",
+      "says": "Both count for Primary 1 priority.",
+      "surface": "inline",
+      "components": [
+        "R9 Schools / neighbourhood"
+      ],
+      "rationale": "Schools as rows with the distance trailing; the 1 km rule sits in Details, not on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Primary schools within 1 km",
+          "subtitle": "From Blk 824 Tampines St 81"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Tampines North Primary",
+                "secondary": "Co-ed",
+                "trailing": "0.4 km"
+              },
+              {
+                "label": "St Hilda's Primary",
+                "secondary": "Co-ed · SAP",
+                "trailing": "0.9 km"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "OneMap school query",
+              "url": "https://www.onemap.gov.sg/"
+            }
+          ],
+          "assumptions": [
+            "Distance is measured as the P1 registration rule measures it."
+          ]
+        },
+        "fallback_text": "Primary schools within 1 km of Blk 824 Tampines St 81: Tampines North Primary 0.4 km, St Hilda's Primary 0.9 km."
+      }
+    },
+    {
+      "id": "jobs-pipeline",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Where am I in the Grab process?",
+      "says": "You're through to the last step.",
+      "surface": "inline",
+      "components": [
+        "J6 Application pipeline (one job)"
+      ],
+      "rationale": "Steps as rows, the current one first with its date; done steps follow.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Grab · Lead Product Designer",
+          "subtitle": "Final round Thu 1 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Final round",
+                "secondary": "Thu 1 Oct · 3 interviews",
+                "trailing": "Next"
+              },
+              {
+                "label": "Portfolio review",
+                "secondary": "22 Sep",
+                "trailing": "Passed"
+              },
+              {
+                "label": "Recruiter call",
+                "secondary": "15 Sep",
+                "trailing": "Passed"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Grab Lead Product Designer: final round Thu 1 Oct; portfolio review (22 Sep) and recruiter call (15 Sep) passed."
+      }
+    },
+    {
+      "id": "jobs-interviews",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "What interviews do I have next week?",
+      "says": "Two, both on video.",
+      "surface": "inline",
+      "components": [
+        "J7 Interview schedule"
+      ],
+      "rationale": "Time and company are the rows; joining happens from the calendar invite, so no Join button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Interviews next week",
+          "subtitle": "28 Sep–2 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Grab · final round",
+                "secondary": "Thu 1 Oct · Google Meet",
+                "trailing": "15:00"
+              },
+              {
+                "label": "Wise · hiring manager",
+                "secondary": "Fri 2 Oct · Zoom",
+                "trailing": "10:00"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Interviews next week: Grab final round Thu 1 Oct 15:00 (Google Meet); Wise hiring manager Fri 2 Oct 10:00 (Zoom)."
+      }
+    },
+    {
+      "id": "jobs-alert",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Tell me when new design lead roles come up.",
+      "says": "Okay. I'll tell you here when one comes up.",
+      "surface": "inline",
+      "components": [
+        "J10 Job alert"
+      ],
+      "rationale": "A watch: status bound to the routine, the criteria as one row, one quiet Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Design lead roles",
+          "subtitle": "LinkedIn and MyCareersFuture"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every morning at 8:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000a8f"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Looking for",
+                "secondary": "Design lead · Singapore · S$10k+/mo"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000a8f",
+              "control": "pause"
+            }
+          }
+        ],
+        "fallback_text": "Watching LinkedIn and MyCareersFuture every morning for design lead roles in Singapore paying S$10k+ a month."
+      }
+    },
+    {
+      "id": "money-pay-bill",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Pay the SP Group bill.",
+      "says": "It's S$212.40. Paying needs your approval in DBS.",
+      "surface": "inline",
+      "components": [
+        "X7 Purchase / pay / apply / accept"
+      ],
+      "rationale": "The irreversible step is never a card button; the card links to the payee and the payment is approved there.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "SP Group electricity",
+          "subtitle": "Was due 21 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "S$212.40",
+                "secondary": "Account 93-1234567-8",
+                "trailing": "Overdue",
+                "status": "overdue"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Pay in DBS digibank",
+              "url": "https://www.dbs.com.sg/personal/digibank/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SP Group bill email, 1 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "SP Group bill S$212.40 was due 21 Sep. Pay it in DBS digibank; nothing has been paid yet."
+      }
+    },
+    {
+      "id": "data-area-trend",
+      "vertical": "data",
+      "kind": "card",
+      "request": "Show website visitors over the last 6 months.",
+      "says": "Traffic doubled after the June launch and has held.",
+      "surface": "inline",
+      "components": [
+        "Area chart",
+        "Line chart"
+      ],
+      "rationale": "Volume over time is a line; an area chart is the same data with more ink.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Website visitors",
+          "subtitle": "Monthly · Apr–Sep"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "visits",
+              "x_labels": [
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "label": "Visitors",
+                  "values": [
+                    "8200",
+                    "8900",
+                    "17400",
+                    "18100",
+                    "17800",
+                    "18600"
+                  ]
+                }
+              ],
+              "highlight_index": 2
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Plausible analytics, 1 Apr–25 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Monthly visitors: about 8,200–8,900 in Apr–May, then 17,400–18,600 from June's launch onward."
+      }
+    },
+    {
+      "id": "data-heatmap",
+      "vertical": "data",
+      "kind": "file",
+      "request": "When are my customers most active?",
+      "says": "Weekday lunchtimes are busiest, and Friday is the peak.",
+      "surface": "inline",
+      "components": [
+        "Heatmap"
+      ],
+      "rationale": "Day × hour is a heatmap, which the contract has no chart for; the image goes in a file and the answer is in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Orders by day and hour",
+          "subtitle": "Last 90 days"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a90",
+              "alt": "Heatmap of orders by weekday and hour, darkest at 12:00–13:00 on weekdays, peaking Friday",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open chart",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a91"
+            }
+          }
+        ],
+        "fallback_text": "Orders peak at 12:00–13:00 on weekdays, highest on Friday. The heatmap is in your Library."
+      }
+    },
+    {
+      "id": "travel-boarding-pass",
+      "vertical": "travel",
+      "kind": "file",
+      "request": "Get my boarding pass for SQ 638.",
+      "says": "It's in your Library; add it to Wallet for the gate.",
+      "surface": "inline",
+      "components": [
+        "Boarding pass / ticket"
+      ],
+      "rationale": "A boarding pass is a Wallet file, not a card block; the card shows seat and gate and downloads the pass.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "SQ 638 · Singapore to Tokyo",
+          "subtitle": "Mon 12 Oct · boards 07:55"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Seat",
+                "trailing": "31A"
+              },
+              {
+                "label": "Gate",
+                "secondary": "Check the screens after 06:30",
+                "trailing": "A12"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Add to Wallet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a92"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines check-in, 11 Oct 2026"
+            }
+          ]
+        },
+        "fallback_text": "SQ 638 boarding pass: Mon 12 Oct, boards 07:55, seat 31A, gate A12. The pass is in your Library."
+      }
+    },
+    {
+      "id": "text-flashcards",
+      "vertical": "education",
+      "kind": "text",
+      "request": "Quiz me on Japanese verbs.",
+      "reply": "Sure. First one: what does 食べる (taberu) mean?",
+      "surface": "text",
+      "components": [
+        "Flashcards"
+      ],
+      "rationale": "Recall runs one card at a time in the conversation; no flip component and no card per question.",
+      "document": null
+    },
+    {
+      "id": "text-filter",
+      "vertical": "data",
+      "kind": "text",
+      "request": "Just card spending, not cash.",
+      "reply": "Card spending in September was S$3,910, which is most of it. Want the categories again for cards only?",
+      "surface": "text",
+      "components": [
+        "Filters"
+      ],
+      "rationale": "A filter is a follow-up message, not chips on a card; re-present a card only if they ask for it.",
+      "document": null
+    },
+    {
+      "id": "file-statement",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Send me my DBS statement for August.",
+      "says": "Your August statement is in your Library.",
+      "surface": "inline",
+      "components": [
+        "F18 Statement / report file",
+        "X6 File deliverable"
+      ],
+      "rationale": "A statement is the bank's file; the card names the period and the two numbers people check, then opens it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "DBS statement · August",
+          "subtitle": "Multiplier account ··5521 · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$18,420",
+                "label": "Closing balance"
+              },
+              {
+                "value": "S$6,380",
+                "label": "Money out"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open statement",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a93"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a93"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS digibank e-statement, 1 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "DBS August statement for account ending 5521: closing balance S$18,420, S$6,380 out. The PDF is in your Library."
       }
     }
   ]
