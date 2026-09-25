@@ -1,5 +1,8 @@
 import { expect, test, type Locator } from "@playwright/test";
 
+// Each test owns its page and output files, so parallel mode lets CI spread this slow file across workers and shards.
+test.describe.configure({ mode: "parallel" });
+
 const families = [
   ["boardui:checkbox", "controls-examples", "ControlsExample", "Checkbox"],
   ["boardui:switch", "controls-examples", "ControlsExample", "Switch"],
