@@ -88,6 +88,11 @@ describe("agent output playbook examples", () => {
     ["plain text: markdown", "edu-glossary", (e: Example) => { e.document.blocks[0].items[0].label = "**P/E ratio**"; }, /markup/],
     ["surface: page declared inline", "money-spending-month", (e: Example) => { e.surface = "inline"; }, /surface/],
     ["data: chart without unit", "data-kpis", (e: Example) => { delete e.document.blocks[1].visual.unit; }, /unit/],
+    // B0 v4 reconciliation (lead ruling 2026-09-26: no donut; a proportion bar above sorted rows).
+    ["shares: not largest first", "data-channel-share", (e: Example) => { e.document.blocks[0].items.reverse(); }, /shares go largest first/],
+    ["shares: do not add up to 100%", "money-spending-month", (e: Example) => { e.document.blocks[2].items[0].secondary = "40%"; }, /shares add up to 113%/],
+    ["shares: a donut on the card", "data-channel-share", (e: Example) => { e.document.header.subtitle = "Donut by channel"; }, /no donut or pie/],
+    ["partial: a missing day sent as zero", "partial-days", (e: Example) => { e.document.blocks[0].visual.series[0].values[13] = "0"; }, /not in yet is null, never 0/],
   ])("catches %s", (_name, id, mutate, expected) => {
     const example = byId(id);
     expect(allFindings(example)).toEqual([]);
@@ -182,6 +187,19 @@ describe("agent output playbook examples", () => {
     const year = Number(REFERENCE.slice(0, 4));
     expect(weekdayErrors({ text: playbookMarkdown }, year)).toEqual([]);
     expect(weekdayErrors({ text: "As of Fri 26 Sep close" }, year).join()).toMatch(/Fri 26 Sep is a Sat/);
+  });
+
+  test("the playbook names every published v4 block master and cites a real example for each (B0 reconciliation)", () => {
+    const masters = ["header", "rows", "rowkinds", "numbers", "numbers4", "bar", "line", "share", "progress", "table", "text", "image", "map", "status", "action", "viewall", "details"];
+    const section = playbookMarkdown.split("## The blocks the app draws")[1].split("\n## ")[0];
+    const ids = new Set(playbook.examples.map(example => example.id));
+    for (const master of masters) {
+      const line = section.split("\n").find(row => row.startsWith(`| ${master} |`));
+      expect(line, master).toBeDefined();
+      const cited = [...line!.matchAll(/`([a-z0-9-]+)`/g)].map(match => match[1]).filter(id => id.includes("-"));
+      for (const id of cited) expect(ids.has(id), `${master} cites ${id}`).toBe(true);
+    }
+    expect(playbookMarkdown).toMatch(/Never a donut or pie/);
   });
 
   test("the app surface follows the inline caps", () => {

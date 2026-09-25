@@ -52,7 +52,7 @@ validates each one against the contract and these laws.
 
 | Request shape | Block sequence | Inline or page | Do not |
 |---|---|---|---|
-| **Money:** how did I spend | numbers(Left, Spent) → chart(bar, weeks, highlight the week you name) → rows(categories) | page | lead with Spent; bars without a unit |
+| **Money:** how did I spend | numbers(Left, Spent) → chart(bar, weeks, highlight the week you name) → rows(categories as shares, below) | page | lead with Spent; bars without a unit |
 | Balance / net worth / quote | numbers(value, change) → chart(line) | inline | a 15-field stats grid; "as of" missing |
 | Bills, invoices due | rows(payee, due date, amount, `overdue`/`paid`) | inline ≤3 | a table; a Pay button (use `open_url` to the payee) |
 | Loan / tax / affordability result | header(what it is) → numbers(result, companion) → details(assumptions) | inline | a donut; sliders (a file calculator if they ask to play) |
@@ -102,9 +102,39 @@ validates each one against the contract and these laws.
 | Compare plans | rows(plan, the one difference, price, pick) | inline | a 6-column grid on a phone |
 | Brief | text(summary, ≤3 sections) → action(open the document) | page | more than a page (make a document) |
 | **Data:** KPIs | numbers(metric, change) → chart(bar or line, highlight the named period) | inline | sparklines; filter chips |
-| Shares, ranking | chart(bar, sorted, highlight the leader) | inline | pie or donut |
+| Shares of a whole | rows(largest first: label, share % in secondary, amount trailing; they add up to the total) | inline ≤3 / page | a pie or donut; a bar chart of shares |
+| Ranking (not a whole) | chart(bar, sorted, highlight the leader) | inline | a pie or donut |
 | Breakdown | table(≤4 columns, total row last, numbers `align: end`) | page | more than 10 rows (use a sheet) |
 | Scatter, heatmap, big pivot | image in a file → action(open) | inline | pretending a line or bar chart shows it |
+
+## The blocks the app draws
+
+These are the 17 published block masters (Sketch page `Output blocks — v4 (10/10)`, iOS and macOS, light and dark).
+You send contract fields; the app picks the master. Where the design draws more than the contract can carry, send the
+workaround and nothing else: the app draws the richer form once the backend adds the field (gap in brackets).
+
+| Master | What you send | Example |
+|---|---|---|
+| header | `header.title` + `subtitle` (period, scope, "as of") | every card |
+| rows | `rows` with label, secondary, trailing; state word as text [G1]; one flat list [G2] | `money-bills-due` |
+| rowkinds | `mark: "pick"` on one row; no thumbnail [G7] or row link [G8] yet | `travel-flights` |
+| numbers | `numbers`, 2 items; a change is its own item [G3] | `money-net-worth` |
+| numbers4 | `numbers`, 3 items at most, page only [G21] | `data-sales-collections` |
+| bar | `chart: "bar"`, unit, `highlight_index` on the one you name; the caption is your sentence [G19] | `money-spending-month` |
+| line | `chart: "line"`; a real zero is `0`, a day not in yet is `null` | `data-sales-collections`, `partial-days` |
+| share | `rows`, largest first, share % in secondary, amount trailing, adding up to the total. The app draws the proportion bar above them [G18]. Never a donut or pie | `data-channel-share` |
+| progress | the budget goes in a number label ("Left of S$5,000") [G9] | `money-spending-month` |
+| table | `table`, ≤4 columns; a total is the last row, labelled Total [G4] | `data-table-small` |
+| text | `text` summary + sections; steps are numbered paragraphs [G5] | `docs-research-brief` |
+| image | `visual.image` with alt and aspect | `file-logo` |
+| map | `visual.map`, ≤12 places, `selected_place_id` for the pick | `travel-stay-areas` |
+| status | `status` state + detail + subject; timed steps go in rows [G16] | `prod-watch-reply` |
+| action | `action`, one primary, one quiet; never a reply | `file-logo` |
+| viewall | nothing extra: the app adds it past the inline caps; `more_label` names it | `money-spending-month` |
+| details | `details` sources, assumptions, disclaimers | `travel-flights` |
+
+The app also draws each master's loading, partial, stale, failed and empty states. You never send a loading card, and
+you choose none of their colours; the wording is yours (below).
 
 ## Files
 
@@ -144,8 +174,8 @@ progress, needs you, problem. You never choose red.
 | State | Say it like this | Blocks |
 |---|---|---|
 | Failed, recoverable | "Couldn't check flight prices" + what happened + what didn't change ("Nothing was booked.") | status(failed, detail); Retry only as `work_control` on a real Work Unit |
-| Partial | subtitle "3 of 4 stores checked"; name the gap in your sentence | the rows you have |
-| Stale | subtitle "As of Fri 25 Sep close · markets closed" | the last good value, still first |
+| Partial | subtitle "3 of 4 stores checked", "12 of 14 days reported"; name the gap in your sentence | the rows you have; a chart value not in yet is `null`, never `0` |
+| Stale | subtitle "As of Fri 25 Sep close · markets closed", or "As of 09:10 · couldn't refresh" when a refresh failed | the last good value, still first |
 | Empty | "No 3-room HDB in Bishan under S$500k" + the nearest useful fact | status(empty, detail) |
 | Working / watching / scheduled | "112 of about 400 checked", "since 9:40 AM", "rings at 19:42" | status + subject + one quiet control |
 | Row states | the word that fits: "Overdue", "Refunded", "Signed", "Not opened" | `status: overdue/paid` where they fit; otherwise the word goes in `trailing` or `secondary` until the contract adds meanings |
@@ -195,6 +225,7 @@ Harso's voice: calm system first, trusted colleague second.
   never about the current month. The fallback keeps every number, and drafted text word for word. Nothing says a live
   page opens in the app.
 - **Data:** charts state a unit; a complete list of amounts adds up to the total it sits under.
+- **Shares:** no donut or pie anywhere on a card; share rows go largest first and add up to 100%.
 - **Staleness:** every card and file declares `fresh`, and the checker holds a per-example verdict (`FRESH_EXAMPLES`)
   that the flag must match, so a time-sensitive answer cannot opt out whatever components it uses. Time-sensitive
   components and "right now" wording ("open now", "in stock", "currently") also force `fresh: true`. A fresh subtitle
@@ -211,5 +242,6 @@ are real (they are illustrative), and how the app draws the card. Those need a r
 last changed in commit `db2db1ab`, read at origin/main `7c899530`, sha256
 `470aa1aec345587faaa4004ee00a499f3044540dfbde1126ff130072fdd68f87`. The checker refuses a copy whose hash differs from
 the one recorded in the examples file, so a schema change has to be re-copied on purpose. Where the contract cannot
-express an example cleanly (row state meanings, grouped rows, delta, totals, ordered steps, as-of, row image or link),
-the workaround used above is the rule until the backend adds the field.
+express an example cleanly (row state meanings, grouped rows, delta, totals, ordered steps, as-of, row image or link,
+share bar, chart caption, timed status steps, a failed block's retry), the workaround used above is the rule until the
+backend adds the field. The gaps are numbered G1–G22 in the evidence file `catalogue-design/playbook/coverage.md`.

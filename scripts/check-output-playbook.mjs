@@ -255,7 +255,7 @@ export const FRESH_EXAMPLES = new Set([
   "places-dinner-options", "places-hours", "places-nearby-map", "food-menu", "weather-now", "weather-week",
   "weather-alert", "sports-score", "sports-standings", "sports-fixtures", "news-brief", "news-timeline",
   "news-headlines", "health-sleep", "docs-compare-plans", "data-stale", "empty-search", "partial-sources",
-  "stale-portfolio",
+  "partial-days", "stale-portfolio", "data-sales-collections",
 ]);
 /** "as of" followed by a clock time or a market close: a date alone does not say how old a price is. */
 const AS_OF = /\bas of\b[^·]*(?:\b\d{1,2}:\d{2}\b|\bclose\b)/i;
@@ -270,6 +270,7 @@ export function specificLink(url) {
 function reachesRest(action) {
   return [action?.primary, action?.secondary].some(verb => verb && (ARTIFACT_VERBS.has(verb.kind) || (verb.kind === "open_url" && specificLink(verb.url))));
 }
+const SHARE = /^(\d{1,3}(?:\.\d)?)%$/;
 const LIVE_PAGE_CLAIM = /\b(?:in the pane|locked pane|output pane|opens? (?:here|in harso|in the app)|runs? (?:here|in the app))\b/i;
 const unsigned = text => text.replace(/[−–-]/g, "-").replace(/^[+-]/, "").toLowerCase();
 const money = text => (/^S\$([\d,]+(?:\.\d+)?)$/.exec(text ?? "") ?? [])[1];
@@ -340,6 +341,7 @@ export function lawErrors(example) {
   for (const [path, text] of visibleStrings(document)) {
     if (MARKUP.test(text)) push("plain text", `${path} contains markup`);
     if (SOURCE_IN_TEXT.test(text)) push("law 5", `${path}: sources and links live in Details`);
+    if (/\b(?:donut|doughnut|pie chart)\b/i.test(text)) push("shares", `${path}: no donut or pie; shares are rows, largest first`);
   }
   if (example.says) {
     const said = norm(example.says);
@@ -357,10 +359,26 @@ export function lawErrors(example) {
         if (row.status && !(row.status in ROW_STATUS_MEANING)) push("state", `${here}: row status ${row.status} has no meaning`);
       }
     }
+    // Shares of a whole (lead ruling 2026-09-26: no donut; a proportion bar above sorted rows): a rows block whose
+    // every secondary is a bare percentage is a share list, sent largest first and adding up to 100%.
+    if (block.kind === "rows" && block.items.length > 1 && block.items.every(row => SHARE.test(row.secondary ?? ""))) {
+      const shares = block.items.map(row => Number(SHARE.exec(row.secondary)[1]));
+      if (shares.some((share, i) => i > 0 && share > shares[i - 1])) push("shares", `${here}: shares go largest first`);
+      const sum = shares.reduce((acc, share) => acc + share, 0);
+      if (!(block.total_count > block.items.length) && Math.abs(sum - 100) > Math.ceil(shares.length / 2)) push("shares", `${here}: shares add up to ${sum}%, not 100%; send every part or say what is left out`);
+    }
     if (block.kind === "table" && block.columns.length > CAPS.tableColumns) push("law 4", `${here}: at most ${CAPS.tableColumns} columns; a phone cannot show more`);
     if (block.kind === "table" && block.rows.length > CAPS.sentRows) push("law 4", `${here}: at most ${CAPS.sentRows} table rows; a longer table is a sheet`);
     if (block.kind === "table" && (block.total_count ?? 0) > block.rows.length && !reachesRest(action)) push("truth", `${here}: table rows beyond those sent must be reachable (a file, or a link to the source's own result page)`);
     if (block.kind === "visual" && block.visual.kind === "chart" && !block.visual.unit) push("data", `${here}: a chart states its unit`);
+    // Partial: "12 of 14 days reported" means exactly two points are not in yet, and those are null, never 0.
+    const reported = /\b(\d+) of (\d+) (?:days|weeks|months) reported\b/.exec(document.header.subtitle ?? "");
+    if (reported && block.kind === "visual" && block.visual.kind === "chart") {
+      const missing = Number(reported[2]) - Number(reported[1]);
+      for (const series of block.visual.series) {
+        if (series.values.filter(value => value === null).length !== missing) push("partial", `${here}: ${missing} point(s) not reported yet; a point not in yet is null, never 0`);
+      }
+    }
     if (block.kind === "status") {
       if (!(block.state in STATE_MEANING)) push("state", `${here}: state ${block.state} is outside the closed set`);
       if (block.state === "failed" && !block.detail) push("failure", `${here}: a failed card says what happened in detail`);
