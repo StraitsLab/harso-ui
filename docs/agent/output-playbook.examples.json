@@ -22,7 +22,7 @@
         "X1 Headline number",
         "X5 Sources, assumptions, disclaimers"
       ],
-      "rationale": "Numbers answer it in two seconds; the bar chart proves which week; every category, adding up to Spent, waits on the page.",
+      "rationale": "Numbers answer it; the bar chart proves which week; categories wait on the page as shares, largest first, adding up to Spent, which carries the total until rows have one (G24).",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -75,31 +75,28 @@
             "items": [
               {
                 "label": "Dining",
+                "secondary": "27%",
                 "trailing": "S$1,160"
               },
               {
+                "label": "Other",
+                "secondary": "25%",
+                "trailing": "S$1,080"
+              },
+              {
                 "label": "Groceries",
+                "secondary": "20%",
                 "trailing": "S$840"
               },
               {
                 "label": "Transport",
+                "secondary": "14%",
                 "trailing": "S$610"
               },
               {
                 "label": "Shopping",
+                "secondary": "14%",
                 "trailing": "S$590"
-              },
-              {
-                "label": "Bills",
-                "trailing": "S$520"
-              },
-              {
-                "label": "Other",
-                "trailing": "S$350"
-              },
-              {
-                "label": "Health",
-                "trailing": "S$210"
               }
             ]
           }
@@ -115,7 +112,7 @@
           ]
         },
         "more_label": "View all categories",
-        "fallback_text": "August: S$4,280 spent of S$5,000, S$720 left. Highest week 15–21 Aug (S$1,460). Dining S$1,160, Groceries S$840, Transport S$610, Shopping S$590, Bills S$520, Other S$350, Health S$210."
+        "fallback_text": "August: S$4,280 spent of S$5,000, S$720 left. Highest week 15–21 Aug (S$1,460). By category: Dining S$1,160 (27%), Other S$1,080 (25%), Groceries S$840 (20%), Transport S$610 (14%), Shopping S$590 (14%); total S$4,280."
       }
     },
     {
@@ -4762,10 +4759,9 @@
       "surface": "inline",
       "fresh": false,
       "components": [
-        "Bar chart",
-        "Pie / donut (as bar)"
+        "Bar chart"
       ],
-      "rationale": "Shares are a sorted bar chart, never a pie; the sentence names the leader and the chart highlights it.",
+      "rationale": "A ranking is a sorted bar with the leader highlighted; it is not a share of a whole, so no proportion view.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -4809,6 +4805,185 @@
           ]
         },
         "fallback_text": "Top sellers in August: linen shirt 412 units, chinos 236, tote bag 198, cap 121."
+      }
+    },
+    {
+      "id": "data-channel-share",
+      "vertical": "data",
+      "kind": "card",
+      "request": "Where did last month's revenue come from?",
+      "says": "Mostly the online store.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Pie / donut (as share rows)"
+      ],
+      "rationale": "Shares of a whole are rows, largest first, with the share and the amount; they add up to the total. Never a pie or donut.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Revenue by channel · August",
+          "subtitle": "1–31 Aug · S$48,200"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Online store",
+                "secondary": "60%",
+                "trailing": "S$28,900"
+              },
+              {
+                "label": "Instagram shop",
+                "secondary": "25%",
+                "trailing": "S$12,100"
+              },
+              {
+                "label": "Weekend markets",
+                "secondary": "15%",
+                "trailing": "S$7,200"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopify analytics, 1–31 Aug 2026"
+            }
+          ]
+        },
+        "fallback_text": "August revenue S$48,200: online store S$28,900 (60%), Instagram shop S$12,100 (25%), weekend markets S$7,200 (15%)."
+      }
+    },
+    {
+      "id": "data-sales-collections",
+      "vertical": "data",
+      "kind": "card",
+      "request": "Show sales for 1–14 Sep and who still owes us.",
+      "says": "Sales are up. Start with the three late invoices.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "KPI tiles",
+        "Line chart",
+        "X2 Domain state word on a row"
+      ],
+      "rationale": "Three figures earn the page; the line keeps the real zero on 7 Sep; the late invoices lead, oldest first, and the rest open in the accounting app.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "September sales",
+          "subtitle": "1–14 Sep · all customers · unpaid as of 10:30"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$22,100",
+                "label": "Revenue"
+              },
+              {
+                "value": "+17.6%",
+                "label": "vs previous 14 days"
+              },
+              {
+                "value": "S$5,350",
+                "label": "Unpaid · 5 invoices"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$",
+              "x_labels": [
+                "1 Sep",
+                "2 Sep",
+                "3 Sep",
+                "4 Sep",
+                "5 Sep",
+                "6 Sep",
+                "7 Sep",
+                "8 Sep",
+                "9 Sep",
+                "10 Sep",
+                "11 Sep",
+                "12 Sep",
+                "13 Sep",
+                "14 Sep"
+              ],
+              "series": [
+                {
+                  "label": "Revenue",
+                  "values": [
+                    "1400",
+                    "1700",
+                    "1300",
+                    "1900",
+                    "2100",
+                    "1500",
+                    "0",
+                    "1300",
+                    "1800",
+                    "2000",
+                    "1400",
+                    "1800",
+                    "2200",
+                    "1700"
+                  ]
+                }
+              ],
+              "highlight_index": 6
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Cedar Studio",
+                "secondary": "INV-101 · S$1,200",
+                "trailing": "9 days late"
+              },
+              {
+                "label": "Moss Café",
+                "secondary": "INV-106 · S$900",
+                "trailing": "6 days late"
+              },
+              {
+                "label": "Tern Goods",
+                "secondary": "INV-109 · S$1,600",
+                "trailing": "3 days late"
+              }
+            ],
+            "total_count": 5
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open unpaid invoices",
+              "url": "https://go.xero.com/AccountsReceivable/Search.aspx?invoiceStatus=INVOICESTATUS/AUTHORISED"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Xero sales and invoices, read 26 Sep 2026 10:30"
+            }
+          ],
+          "assumptions": [
+            "No sales on Mon 7 Sep: the shop was closed for stocktake."
+          ]
+        },
+        "fallback_text": "Sales 1–14 Sep: S$22,100, up 17.6% on the previous 14 days; no sales on 7 Sep. Unpaid S$5,350 across 5 invoices. Late: Cedar Studio S$1,200 (9 days), Moss Café S$900 (6 days), Tern Goods S$1,600 (3 days)."
       }
     },
     {
@@ -5795,6 +5970,87 @@
           ]
         },
         "fallback_text": "Sony Bravia 8 II 65\": Courts S$3,999 (pick), Challenger S$4,049, Harvey Norman S$4,099. Best Denki didn't respond."
+      }
+    },
+    {
+      "id": "partial-days",
+      "vertical": "data",
+      "kind": "card",
+      "request": "How have daily sales been over the last two weeks?",
+      "says": "Steady, apart from the Saturday the shop was closed. The last two days are still coming in.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Partial state",
+        "Line chart"
+      ],
+      "rationale": "Days not reported yet are null, never 0; the real zero stays 0 and is highlighted. The subtitle says how many days are in.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Daily sales · 13–26 Sep",
+          "subtitle": "12 of 14 days reported · as of 10:40"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$",
+              "x_labels": [
+                "13 Sep",
+                "14 Sep",
+                "15 Sep",
+                "16 Sep",
+                "17 Sep",
+                "18 Sep",
+                "19 Sep",
+                "20 Sep",
+                "21 Sep",
+                "22 Sep",
+                "23 Sep",
+                "24 Sep",
+                "25 Sep",
+                "26 Sep"
+              ],
+              "series": [
+                {
+                  "label": "Sales",
+                  "values": [
+                    "1500",
+                    "1700",
+                    "1300",
+                    "2000",
+                    "2100",
+                    "1600",
+                    "0",
+                    "1400",
+                    "1800",
+                    "2000",
+                    "1500",
+                    "1900",
+                    null,
+                    null
+                  ]
+                }
+              ],
+              "highlight_index": 6
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopify payouts, read 26 Sep 2026 10:40"
+            }
+          ],
+          "assumptions": [
+            "25 and 26 Sep are not reported yet, so they are left blank, not counted as zero."
+          ]
+        },
+        "fallback_text": "Daily sales 13–24 Sep: S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900. 25 and 26 Sep not reported yet."
       }
     },
     {
