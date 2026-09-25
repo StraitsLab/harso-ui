@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { KitProvider } from "../src/theme";
-import { HarsoOutputCard, type HarsoOutputDocument } from "../src/chat/output-card";
+import { HarsoOutputCard, type HarsoOutputDocument, type HarsoOutputRowsBlock } from "../src/chat/output-card";
 import "../src/primitives.css";
 
 // WEV-1851 S1 fixture. Documents are verbatim copies of the output-blocks.v1 draft examples;
-// all callbacks are simulated counters (no transport, no send).
+// all callbacks are simulated counters (no transport, no send). `doc=more` is synthetic.
 const flights: HarsoOutputDocument = {
   "header": {
     "title": "Flights to Tokyo",
@@ -160,7 +160,18 @@ const spending: HarsoOutputDocument = {
   },
   "fallback_text": "September spending: S$4,280 spent of S$5,000; S$720 left. Dining S$1,160, Groceries S$840, Transport S$610, Shopping S$590."
 };
-const documents: Record<string, HarsoOutputDocument> = { flights, failed, spending };
+// Synthetic (not an S0 example): seven supplied flights against the inline cap of three.
+const more: HarsoOutputDocument = {
+  ...flights,
+  blocks: [{ kind: "rows", items: [
+    ...(flights.blocks[0] as HarsoOutputRowsBlock).items,
+    { label: "Scoot", secondary: "TR 808 · Dep 01:15 · 7h 25m direct", trailing: "S$298" },
+    { label: "Japan Airlines", secondary: "JL 36 · Dep 06:10 · 7h 00m direct", trailing: "S$655" },
+    { label: "Delta", secondary: "DL 280 · Dep 10:05 · 7h 15m direct", trailing: "S$590" },
+    { label: "United", secondary: "UA 804 · Dep 11:40 · 7h 20m direct", trailing: "S$604" }
+  ] }]
+};
+const documents: Record<string, HarsoOutputDocument> = { flights, failed, spending, more };
 
 const query = new URLSearchParams(location.search);
 
@@ -168,17 +179,17 @@ function Fixture() {
   const [appearance] = useState<"light" | "dark">(query.get("mode") === "dark" ? "dark" : "light");
   const palette = query.get("palette") === "cozy" ? "cozy" : "clean";
   const document = documents[query.get("doc") ?? "flights"] ?? flights;
-  const [replies, setReplies] = useState<string[]>([]);
+  const [viewAllOpened, setViewAllOpened] = useState(0);
   const [detailsOpened, setDetailsOpened] = useState(0);
   return <KitProvider appearance={appearance} palette={palette} className="output-card-fixture">
     <main>
       <div className="output-card-transcript" data-testid="transcript">
         <p className="output-card-user">Flights to Tokyo on 12 Oct?</p>
         <p>Three direct options. SQ 638 has the best times for your morning start.</p>
-        <HarsoOutputCard document={document} onReply={text => setReplies(value => [...value, text])}
+        <HarsoOutputCard document={document} onViewAll={() => setViewAllOpened(value => value + 1)}
           onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} />
       </div>
-      <output aria-label="Fixture callbacks">{JSON.stringify({ replies, detailsOpened })}</output>
+      <output aria-label="Fixture callbacks">{JSON.stringify({ viewAllOpened, detailsOpened })}</output>
     </main>
   </KitProvider>;
 }
