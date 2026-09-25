@@ -1,0 +1,5621 @@
+{
+  "about": "Expected present_output documents for real requests. Each example is validated against the copied contract schema and the playbook laws by scripts/check-output-playbook.mjs. Figures, places and ids are illustrative: artifact, routine and Work Unit ids are placeholders in the uuid7 shape.",
+  "schema": {
+    "path": "docs/agent/schema/output-blocks.v1.json",
+    "source": "StraitsLab/weave-cloud packages/contracts/src/schemas/output-blocks.v1.json",
+    "source_commit": "db2db1abef7714f3117ce6cdfdf8fcdc468a0d09",
+    "read_at": "origin/main 7c8995307983084c96b08afe82ee1bd4fd7e02bf",
+    "sha256": "470aa1aec345587faaa4004ee00a499f3044540dfbde1126ff130072fdd68f87"
+  },
+  "examples": [
+    {
+      "id": "money-spending-month",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How did I do on spending in September?",
+      "says": "You stayed under budget. Week 3 was the high point, mostly dining.",
+      "surface": "page",
+      "components": [
+        "F7 Spending summary",
+        "X1 Headline number"
+      ],
+      "rationale": "Numbers answer it in two seconds; the bar chart proves which week; categories wait on the page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "September spending",
+          "subtitle": "1–30 Sep · all accounts"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$720",
+                "label": "Left of S$5,000"
+              },
+              {
+                "value": "S$4,280",
+                "label": "Spent"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "S$",
+              "x_labels": [
+                "1–7 Sep",
+                "8–14 Sep",
+                "15–21 Sep",
+                "22–30 Sep"
+              ],
+              "series": [
+                {
+                  "label": "Spent",
+                  "values": [
+                    "980",
+                    "1040",
+                    "1460",
+                    "800"
+                  ]
+                }
+              ],
+              "highlight_index": 2
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Dining",
+                "trailing": "S$1,160"
+              },
+              {
+                "label": "Groceries",
+                "trailing": "S$840"
+              },
+              {
+                "label": "Transport",
+                "trailing": "S$610"
+              },
+              {
+                "label": "Shopping",
+                "trailing": "S$590"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Linked accounts, synced 30 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Transfers between your own accounts are excluded."
+          ]
+        },
+        "more_label": "View all categories",
+        "fallback_text": "September: S$4,280 spent of S$5,000, S$720 left. Highest week 15–21 Sep (S$1,460). Dining S$1,160, Groceries S$840, Transport S$610, Shopping S$590."
+      }
+    },
+    {
+      "id": "money-net-worth",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What's my net worth now?",
+      "says": "S$412,300, up S$9,800 since June.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F1 Balance / net worth"
+      ],
+      "rationale": "One number and its movement; the line shows the trend; accounts are a follow-up, not a default.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Net worth",
+          "subtitle": "All linked accounts · as of 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$412,300",
+                "label": "Now"
+              },
+              {
+                "value": "+S$9,800",
+                "label": "Since June"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$k",
+              "x_labels": [
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "label": "Net worth",
+                  "values": [
+                    "402.5",
+                    "405.1",
+                    "408.9",
+                    "412.3"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS, CPF and IBKR balances, 26 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Property is excluded until you add a valuation."
+          ]
+        },
+        "fallback_text": "Net worth S$412,300 as of 26 Sep, up S$9,800 since June."
+      }
+    },
+    {
+      "id": "money-stock-quote",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How's Apple stock doing today?",
+      "says": "Apple is up 1.8% today after the iPhone sales update.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F3 Stock / crypto quote"
+      ],
+      "rationale": "Price and move first, the intraday line as proof; the why sits in the chat sentence, the vendor delay in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Apple · AAPL",
+          "subtitle": "Nasdaq · as of 14:32 ET"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "US$238.40",
+                "label": "Price"
+              },
+              {
+                "value": "+1.8%",
+                "label": "Today"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "US$",
+              "x_labels": [
+                "09:30",
+                "10:30",
+                "11:30",
+                "12:30",
+                "13:30",
+                "14:30"
+              ],
+              "series": [
+                {
+                  "label": "AAPL",
+                  "values": [
+                    "234.2",
+                    "235.9",
+                    "236.4",
+                    "237.1",
+                    "237.8",
+                    "238.4"
+                  ]
+                }
+              ],
+              "highlight_index": 5
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Nasdaq quote, 15-minute delay",
+              "url": "https://www.nasdaq.com/market-activity/stocks/aapl"
+            }
+          ],
+          "disclaimers": [
+            "Not financial advice."
+          ]
+        },
+        "fallback_text": "Apple (AAPL) US$238.40, up 1.8% today as of 14:32 ET."
+      }
+    },
+    {
+      "id": "money-portfolio",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How's my portfolio this week?",
+      "says": "Down 0.6% this week; NVIDIA did most of the damage.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "F2 Portfolio summary",
+        "F6 Watchlist / movers"
+      ],
+      "rationale": "Value and weekly move lead; holdings as rows with the move trailing; the full list lives on the page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Portfolio",
+          "subtitle": "IBKR · as of 26 Sep close"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "US$84,210",
+                "label": "Value"
+              },
+              {
+                "value": "−0.6%",
+                "label": "This week"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "NVIDIA",
+                "secondary": "NVDA · 120 shares",
+                "trailing": "−4.1%"
+              },
+              {
+                "label": "Microsoft",
+                "secondary": "MSFT · 40 shares",
+                "trailing": "+0.8%"
+              },
+              {
+                "label": "Vanguard S&P 500",
+                "secondary": "VOO · 60 shares",
+                "trailing": "+0.2%"
+              }
+            ],
+            "total_count": 9
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in IBKR",
+              "url": "https://www.interactivebrokers.com/portal"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "IBKR positions, 26 Sep 2026 close"
+            }
+          ]
+        },
+        "fallback_text": "Portfolio US$84,210, down 0.6% this week. NVIDIA −4.1%, Microsoft +0.8%, VOO +0.2%."
+      }
+    },
+    {
+      "id": "money-bills-due",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Which bills are due this week?",
+      "says": "Three are due; the electricity bill is already overdue.",
+      "surface": "inline",
+      "components": [
+        "F10 Bill / subscription due",
+        "X2 Domain state word"
+      ],
+      "rationale": "Overdue first with its state word; amounts trailing; three rows fit inline with no page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Bills due this week",
+          "subtitle": "22–28 Sep · S$486.40"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "SP Group electricity",
+                "secondary": "Was due 21 Sep",
+                "trailing": "S$212.40",
+                "status": "overdue"
+              },
+              {
+                "label": "Singtel Fibre",
+                "secondary": "Due 25 Sep · Autopay",
+                "trailing": "S$49.90"
+              },
+              {
+                "label": "Great Eastern",
+                "secondary": "Due 27 Sep · Autopay",
+                "trailing": "S$224.10"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail bill notices and DBS GIRO list, 22 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Bills this week: SP Group S$212.40 overdue since 21 Sep; Singtel S$49.90 on 25 Sep (autopay); Great Eastern S$224.10 on 27 Sep (autopay)."
+      }
+    },
+    {
+      "id": "money-transfer-quote",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How much will Priya get if I send S$1,000 to India?",
+      "says": "She gets about ₹61,540; the fee is S$6.20.",
+      "surface": "inline",
+      "components": [
+        "F13 Money transfer quote"
+      ],
+      "rationale": "Two numbers carry the answer (what arrives, what it costs); rate and timing live in the subtitle; the send happens at Wise.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "S$1,000 to Priya",
+          "subtitle": "Rate 1 SGD = 61.92 INR · arrives by Monday"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "₹61,540",
+                "label": "Priya gets"
+              },
+              {
+                "value": "S$6.20",
+                "label": "Fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Send with Wise",
+              "url": "https://wise.com/send"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Wise quote, 26 Sep 2026 10:05",
+              "url": "https://wise.com/"
+            }
+          ],
+          "assumptions": [
+            "Rate is held for 24 hours once you start the transfer."
+          ]
+        },
+        "fallback_text": "Sending S$1,000: Priya gets about ₹61,540 at 61.92, fee S$6.20, arrives by Monday."
+      }
+    },
+    {
+      "id": "money-mortgage",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What would my monthly payment be on a S$900k loan over 25 years at 3%?",
+      "says": "At 3% fixed, it costs about S$4,268 a month.",
+      "surface": "inline",
+      "components": [
+        "F15 Loan / mortgage result",
+        "R7 Monthly cost"
+      ],
+      "rationale": "The result is one number; interest total is its companion; inputs sit in Details so the card stays calm.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Monthly payment",
+          "subtitle": "S$900,000 · 25 years · 3.0% fixed"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$4,268",
+                "label": "Monthly"
+              },
+              {
+                "value": "S$380,371",
+                "label": "Total interest"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Fixed rate for the whole term.",
+            "Excludes property tax, insurance and fees."
+          ],
+          "disclaimers": [
+            "An estimate, not a loan offer."
+          ]
+        },
+        "fallback_text": "A S$900,000 loan over 25 years at 3.0% is about S$4,268 a month, S$380,371 interest in total."
+      }
+    },
+    {
+      "id": "money-amortization",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Show how that loan pays down over time.",
+      "says": "Half the balance is gone during year 15.",
+      "surface": "inline",
+      "components": [
+        "F16 Amortization / payoff"
+      ],
+      "rationale": "A line of balance by year is the thing itself; the full schedule is a sheet, not a 300-row table.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Loan balance by year",
+          "subtitle": "S$900,000 · 25 years · 3.0%"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$k",
+              "x_labels": [
+                "Year 0",
+                "Year 5",
+                "Year 10",
+                "Year 15",
+                "Year 20",
+                "Year 25"
+              ],
+              "series": [
+                {
+                  "label": "Balance",
+                  "values": [
+                    "900",
+                    "769.5",
+                    "618",
+                    "442",
+                    "237.5",
+                    "0"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Paid off by",
+                "trailing": "Sep 2051"
+              },
+              {
+                "label": "Total interest",
+                "trailing": "S$380,371"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download schedule",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000641"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Monthly payments of S$4,268, no prepayments."
+          ]
+        },
+        "fallback_text": "The S$900,000 loan falls below half during year 15 and is paid off in Sep 2051; total interest S$380,371. Schedule saved to Library."
+      }
+    },
+    {
+      "id": "money-budget-categories",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Am I over budget anywhere?",
+      "says": "Two categories are over; dining by the most.",
+      "surface": "inline",
+      "components": [
+        "F8 Budget by category"
+      ],
+      "rationale": "Only the categories that need attention, each with the overspend trailing; the rest is a follow-up.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Over budget in September",
+          "subtitle": "2 of 9 categories"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Dining",
+                "secondary": "S$1,160 of S$900",
+                "trailing": "S$260 over"
+              },
+              {
+                "label": "Shopping",
+                "secondary": "S$590 of S$500",
+                "trailing": "S$90 over"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Budget in Harso, synced 30 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Over budget in September: Dining S$1,160 of S$900 (S$260 over); Shopping S$590 of S$500 (S$90 over)."
+      }
+    },
+    {
+      "id": "money-tax-estimate",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Roughly what's my Singapore income tax for 2026?",
+      "says": "You'd owe about S$12,450 if your income stays the same.",
+      "surface": "inline",
+      "components": [
+        "F17 Tax estimate / refund"
+      ],
+      "rationale": "One signed figure and the effective rate; the working and caveats go to Details, not a table.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Income tax estimate",
+          "subtitle": "YA 2027 · chargeable income S$150,000"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$12,450",
+                "label": "Estimated tax"
+              },
+              {
+                "value": "8.3%",
+                "label": "Effective rate"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "IRAS resident tax rates",
+              "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-residency-and-tax-rates/individual-income-tax-rates"
+            }
+          ],
+          "assumptions": [
+            "Resident rates; reliefs already deducted."
+          ],
+          "disclaimers": [
+            "An estimate, not tax advice."
+          ]
+        },
+        "fallback_text": "Estimated Singapore income tax for YA 2027 on S$150,000 chargeable income: about S$12,450, an 8.3% effective rate."
+      }
+    },
+    {
+      "id": "money-invoice-sent",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Did Acme pay invoice INV-2041?",
+      "says": "Not yet. Acme hasn't paid, and it's past due.",
+      "surface": "inline",
+      "components": [
+        "F11 Invoice",
+        "X2 Domain state word"
+      ],
+      "rationale": "The answer is a state on one row; the amount trails; the reminder email is a separate approved send, not a card button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "INV-2041 · Acme Pte Ltd",
+          "subtitle": "Sent 1 Sep · due 20 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "S$8,400.00",
+                "secondary": "Due 20 Sep · 6 days late",
+                "trailing": "Unpaid",
+                "status": "overdue"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open invoice",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000007f9"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Xero, synced 26 Sep 2026 09:00"
+            }
+          ]
+        },
+        "fallback_text": "INV-2041 to Acme Pte Ltd, S$8,400.00, was due 20 Sep and is 6 days overdue."
+      }
+    },
+    {
+      "id": "shop-vacuum-options",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Find me a quiet stick vacuum under S$400.",
+      "says": "Three fit; the Dyson V8 is the quietest you can get at that price.",
+      "surface": "inline",
+      "components": [
+        "S1 Product options",
+        "S10 Rating"
+      ],
+      "rationale": "Three options, one pick, price trailing, the trade-off on the secondary line; choosing goes through the question card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Quiet stick vacuums under S$400",
+          "subtitle": "Sorted by noise"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Dyson V8 Origin",
+                "secondary": "72 dB · 40 min · 4.6★ (12k)",
+                "trailing": "S$379",
+                "mark": "pick"
+              },
+              {
+                "label": "Xiaomi G11",
+                "secondary": "74 dB · 60 min · 4.4★ (3k)",
+                "trailing": "S$299"
+              },
+              {
+                "label": "Samsung Jet 60",
+                "secondary": "76 dB · 40 min · 4.5★ (5k)",
+                "trailing": "S$349"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Courts, Lazada and Shopee listings, 26 Sep 2026"
+            },
+            {
+              "label": "RTINGS noise measurements"
+            }
+          ]
+        },
+        "fallback_text": "Quiet stick vacuums under S$400: Dyson V8 Origin S$379, 72 dB (pick); Xiaomi G11 S$299, 74 dB; Samsung Jet 60 S$349, 76 dB."
+      }
+    },
+    {
+      "id": "shop-product-detail",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Tell me more about the Dyson V8.",
+      "says": "It's the quietest in range and in stock at Courts.",
+      "surface": "page",
+      "components": [
+        "S3 Product detail",
+        "S9 Review summary"
+      ],
+      "rationale": "Photo first, then why it fits and what buyers say; offers are rows with the best price picked.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Dyson V8 Origin",
+          "subtitle": "S$379 at Courts · in stock"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
+              "alt": "Dyson V8 Origin stick vacuum, purple wand, front view",
+              "aspect": "4:3"
+            }
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Why it fits",
+                "bullets": [
+                  "Quietest under S$400 at 72 dB.",
+                  "40 minutes is enough for a 4-room flat.",
+                  "Wall dock keeps it out of the way."
+                ]
+              },
+              {
+                "heading": "What buyers say",
+                "bullets": [
+                  "Strong on hard floors and pet hair.",
+                  "Some mention the bin is small."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Courts",
+                "secondary": "Delivery Tue",
+                "trailing": "S$379",
+                "mark": "pick"
+              },
+              {
+                "label": "Lazada Dyson Store",
+                "secondary": "Delivery Thu",
+                "trailing": "S$389"
+              },
+              {
+                "label": "Shopee Mall",
+                "secondary": "Delivery Fri",
+                "trailing": "S$399"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Buy at Courts",
+              "url": "https://www.courts.com.sg/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Courts, Lazada, Shopee product pages, 26 Sep 2026"
+            },
+            {
+              "label": "Summarised from 12,394 reviews"
+            }
+          ]
+        },
+        "fallback_text": "Dyson V8 Origin: S$379 at Courts (in stock, delivery Tue); 72 dB, 40 min runtime. Buyers praise suction, some say the bin is small."
+      }
+    },
+    {
+      "id": "shop-compare-phones",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "iPhone 17 or Pixel 11 for photos?",
+      "says": "For photos, the Pixel wins on zoom; the iPhone on video.",
+      "surface": "page",
+      "components": [
+        "S4 Comparison"
+      ],
+      "rationale": "Four attributes across two products is a table on the page; the verdict lives in the sentence, not a score.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "iPhone 17 vs Pixel 11",
+          "subtitle": "Camera differences only"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Camera"
+              },
+              {
+                "label": "iPhone 17"
+              },
+              {
+                "label": "Pixel 11"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "Price",
+                  "S$1,299",
+                  "S$1,249"
+                ]
+              },
+              {
+                "cells": [
+                  "Zoom",
+                  "2x optical",
+                  "5x optical"
+                ]
+              },
+              {
+                "cells": [
+                  "Low light",
+                  "Very good",
+                  "Best in class"
+                ]
+              },
+              {
+                "cells": [
+                  "Video",
+                  "Best in class",
+                  "Good"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DXOMARK camera scores, Sep 2026"
+            },
+            {
+              "label": "Apple and Google spec pages"
+            }
+          ]
+        },
+        "fallback_text": "iPhone 17 (S$1,299) vs Pixel 11 (S$1,249): Pixel has 5x zoom and better low light; iPhone has better video."
+      }
+    },
+    {
+      "id": "shop-price-history",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Is S$379 a good price for the Dyson V8?",
+      "says": "Yes. That's the lowest in 90 days.",
+      "surface": "inline",
+      "components": [
+        "S6 Price history / insight"
+      ],
+      "rationale": "The verdict word leads the title; the line with today highlighted is the proof; no strike-through 'was' price.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "S$379 is low for this vacuum",
+          "subtitle": "Typical S$420–460 · last 90 days"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$",
+              "x_labels": [
+                "Jul",
+                "Aug",
+                "Early Sep",
+                "Today"
+              ],
+              "series": [
+                {
+                  "label": "Price",
+                  "values": [
+                    "449",
+                    "429",
+                    "419",
+                    "379"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Price tracking across Courts, Lazada, Shopee, Jul–Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "S$379 for the Dyson V8 Origin is the lowest in 90 days; it usually sells for S$420–460."
+      }
+    },
+    {
+      "id": "shop-price-watch",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Tell me if the AirPods Pro drop below S$300.",
+      "says": "I'm watching three stores and will tell you here.",
+      "surface": "inline",
+      "components": [
+        "S7 Price watch"
+      ],
+      "rationale": "A watch shows its live state bound to the routine and one quiet Pause; the target is a row, not a paragraph.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "AirPods Pro price watch",
+          "subtitle": "Apple, Lazada, Shopee"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "since 26 Sep",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000709"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Target",
+                "secondary": "Now S$339 at Lazada",
+                "trailing": "Under S$300"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000709",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Checks twice a day; stops after 31 Dec."
+          ]
+        },
+        "fallback_text": "Watching AirPods Pro at Apple, Lazada and Shopee; you'll hear here when it drops below S$300 (now S$339)."
+      }
+    },
+    {
+      "id": "shop-delivery",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Where's my Uniqlo order?",
+      "says": "It's on the van now and should reach you by 6 pm.",
+      "surface": "inline",
+      "components": [
+        "S13 Delivery tracking",
+        "X2 Domain state word"
+      ],
+      "rationale": "Arrival time is the answer and sits in the title; carrier link is the one action; no live van map.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arriving today by 6 pm",
+          "subtitle": "Uniqlo · order 88213 · Ninja Van"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Out for delivery",
+                "secondary": "Left the Tuas hub 08:12"
+              },
+              {
+                "label": "Shipped",
+                "secondary": "Tue 23 Sep"
+              },
+              {
+                "label": "Ordered",
+                "secondary": "Mon 22 Sep"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Track with Ninja Van",
+              "url": "https://www.ninjavan.co/en-sg/tracking"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Ninja Van tracking, 26 Sep 2026 09:40"
+            }
+          ]
+        },
+        "fallback_text": "Your Uniqlo order 88213 is out for delivery with Ninja Van and should arrive by 6 pm today."
+      }
+    },
+    {
+      "id": "shop-refund",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Has Lazada refunded the headphones yet?",
+      "says": "Yes, S$129 landed on your card today.",
+      "surface": "inline",
+      "components": [
+        "S14 Return / refund status"
+      ],
+      "rationale": "One row with the paid state word answers it; no timeline needed once it is done.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Refund for Sony WH-1000XM6",
+          "subtitle": "Lazada return 5521"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "S$129.00",
+                "secondary": "To Visa ··4417 on 26 Sep",
+                "trailing": "Refunded"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Lazada return 5521 and DBS card feed, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Lazada refunded S$129.00 for the Sony headphones to Visa ending 4417 on 26 Sep."
+      }
+    },
+    {
+      "id": "shop-cart-summary",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "What's in my FairPrice cart and how much is it?",
+      "says": "S$86.40 with delivery; 14 items.",
+      "surface": "inline",
+      "components": [
+        "S11 Cart / checkout summary",
+        "X3 Total row"
+      ],
+      "rationale": "Total and item count answer it; checking out happens at FairPrice, so the only action is the link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "FairPrice cart",
+          "subtitle": "14 items · delivery Sat 9–11 am"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$86.40",
+                "label": "Total"
+              },
+              {
+                "value": "S$4.99",
+                "label": "Delivery"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Check out",
+              "url": "https://www.fairprice.com.sg/cart"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "FairPrice cart, 26 Sep 2026 10:12"
+            }
+          ]
+        },
+        "fallback_text": "FairPrice cart: 14 items, S$86.40 total including S$4.99 delivery on Saturday 9–11 am."
+      }
+    },
+    {
+      "id": "home-listing-results",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Find 3-room HDB flats near an MRT in Tampines under S$600k.",
+      "says": "Seven match; the Tampines St 81 flat is the best value per square metre.",
+      "surface": "page",
+      "components": [
+        "R2 Listing results",
+        "R3 Map + listings"
+      ],
+      "rationale": "Where matters, so the map is the visual; three rows inline, the rest on the page via the portal link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "3-room HDB in Tampines",
+          "subtitle": "Under S$600k · ≤10 min to MRT"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "t81",
+                  "label": "Blk 824 Tampines St 81",
+                  "lat": "1.3496",
+                  "lon": "103.9368"
+                },
+                {
+                  "id": "t24",
+                  "label": "Blk 201 Tampines St 21",
+                  "lat": "1.3561",
+                  "lon": "103.9489"
+                },
+                {
+                  "id": "t45",
+                  "label": "Blk 457 Tampines St 42",
+                  "lat": "1.3589",
+                  "lon": "103.9542"
+                }
+              ],
+              "selected_place_id": "t81"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Blk 824 Tampines St 81",
+                "secondary": "67 sqm · 6 min to Tampines MRT",
+                "trailing": "S$548k",
+                "mark": "pick"
+              },
+              {
+                "label": "Blk 201 Tampines St 21",
+                "secondary": "68 sqm · 8 min to Tampines MRT",
+                "trailing": "S$575k"
+              },
+              {
+                "label": "Blk 457 Tampines St 42",
+                "secondary": "65 sqm · 9 min to Tampines East",
+                "trailing": "S$560k"
+              }
+            ],
+            "total_count": 7
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "See all 7 on PropertyGuru",
+              "url": "https://www.propertyguru.com.sg/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru listings, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "7 three-room HDB flats in Tampines under S$600k near MRT. Best value: Blk 824 Tampines St 81, 67 sqm, S$548k, 6 min walk."
+      }
+    },
+    {
+      "id": "home-listing-card",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Show me the Blk 824 flat.",
+      "says": "It's on the 9th floor and was listed 12 days ago.",
+      "surface": "inline",
+      "components": [
+        "R1 Listing card"
+      ],
+      "rationale": "Photo and price are the listing; facts are one subtitle line; viewing is booked with the agent, via the link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Blk 824 Tampines St 81",
+          "subtitle": "3-room · 67 sqm · #09 · 1998 lease"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
+              "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor",
+              "aspect": "4:3"
+            }
+          },
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$548k",
+                "label": "Asking"
+              },
+              {
+                "value": "S$8,179",
+                "label": "Per sqm"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "View listing",
+              "url": "https://www.propertyguru.com.sg/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru listing 24519877, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Blk 824 Tampines St 81, 3-room, 67 sqm, 9th floor, 1998 lease: asking S$548k (S$8,179 per sqm)."
+      }
+    },
+    {
+      "id": "home-value-estimate",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What's my condo at The Trilinq worth?",
+      "says": "About S$1.18M, in line with recent sales in the block.",
+      "surface": "inline",
+      "components": [
+        "R4 Price / value estimate"
+      ],
+      "rationale": "The estimate is the title; the range is its honest companion in the subtitle; not-an-appraisal lives in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "The Trilinq · 2 bed · 818 sqft",
+          "subtitle": "Recent sales S$1.12–1.24M"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1.18M",
+                "label": "Estimate"
+              },
+              {
+                "value": "S$1,443",
+                "label": "Per sqft"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "URA caveats, last 6 months",
+              "url": "https://www.ura.gov.sg/property-market-information/pmiResidentialTransactionSearch"
+            }
+          ],
+          "disclaimers": [
+            "An estimate from recent sales, not a valuation."
+          ]
+        },
+        "fallback_text": "Your 2-bed, 818 sqft unit at The Trilinq is worth about S$1.18M (S$1,443 psf); recent sales S$1.12–1.24M."
+      }
+    },
+    {
+      "id": "home-affordability",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "How much home can I afford on S$14k a month household income?",
+      "says": "Up to about S$1.17M, keeping repayments to 30% of income.",
+      "surface": "inline",
+      "components": [
+        "R8 Affordability"
+      ],
+      "rationale": "The ceiling is the answer; the monthly payment is the number people live with; the rules behind it go to Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "What you can afford",
+          "subtitle": "Household income S$14,000 a month"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1.17M",
+                "label": "Max price"
+              },
+              {
+                "value": "S$4,200",
+                "label": "Monthly"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Repayment kept to 30% of income, 4% stress-test rate, 30-year loan, 25% down payment.",
+            "No other debts."
+          ],
+          "disclaimers": [
+            "A guide, not a loan approval."
+          ]
+        },
+        "fallback_text": "On S$14,000 a month you can afford up to about S$1.17M, with a monthly payment around S$4,200."
+      }
+    },
+    {
+      "id": "home-rent-listings",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Any 1-bedroom rentals near Outram under S$3,500?",
+      "says": "Three are available from October.",
+      "surface": "inline",
+      "components": [
+        "R2 Listing results"
+      ],
+      "rationale": "Three rentals fit inline with rent trailing and the move-in date secondary; no map needed for one area.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "1-bed rentals near Outram",
+          "subtitle": "Under S$3,500 · from October"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "The Clift",
+                "secondary": "1 bed · 49 sqm · from 1 Oct",
+                "trailing": "S$3,300",
+                "mark": "pick"
+              },
+              {
+                "label": "Spottiswoode 18",
+                "secondary": "1 bed · 45 sqm · from 15 Oct",
+                "trailing": "S$3,450"
+              },
+              {
+                "label": "Pinnacle@Duxton",
+                "secondary": "1 bed · 50 sqm · from 1 Oct",
+                "trailing": "S$3,400"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "99.co rental listings, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "1-bed rentals near Outram under S$3,500: The Clift S$3,300 from 1 Oct (pick); Spottiswoode 18 S$3,450 from 15 Oct; Pinnacle@Duxton S$3,400 from 1 Oct."
+      }
+    },
+    {
+      "id": "home-viewing",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "When's my viewing at The Clift?",
+      "says": "Saturday at 11 am, with Jasmine from ERA.",
+      "surface": "inline",
+      "components": [
+        "R10 Viewing / open house"
+      ],
+      "rationale": "Date and address are the answer; directions leave for Maps, which does navigation better.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Viewing Sat 27 Sep · 11:00",
+          "subtitle": "The Clift · 21 McCallum Street"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Agent",
+                "secondary": "Jasmine Tan · ERA",
+                "trailing": "9123 4567"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Directions",
+              "url": "https://maps.apple.com/?q=21+McCallum+Street+Singapore"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Calendar invite from Jasmine Tan, 24 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Viewing at The Clift, 21 McCallum Street, on Sat 27 Sep at 11:00 with Jasmine Tan (ERA, 9123 4567)."
+      }
+    },
+    {
+      "id": "jobs-results",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Find product design lead roles in Singapore.",
+      "says": "Three strong matches; Grab pays the most.",
+      "surface": "inline",
+      "components": [
+        "J1 Job results"
+      ],
+      "rationale": "Title, company and place on two lines, salary trailing, one pick; applying is at the employer, never on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Product design lead roles",
+          "subtitle": "Singapore · posted this week"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Lead Product Designer",
+                "secondary": "Grab · Hybrid · 2 days ago",
+                "trailing": "S$11–14k/mo",
+                "mark": "pick"
+              },
+              {
+                "label": "Design Lead, Payments",
+                "secondary": "Wise · Hybrid · 4 days ago",
+                "trailing": "S$10–13k/mo"
+              },
+              {
+                "label": "Principal Designer",
+                "secondary": "Shopee · On-site · 5 days ago",
+                "trailing": "S$9–12k/mo"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LinkedIn and MyCareersFuture, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Product design lead roles in Singapore: Grab Lead Product Designer S$11–14k (pick); Wise Design Lead S$10–13k; Shopee Principal Designer S$9–12k."
+      }
+    },
+    {
+      "id": "jobs-posting",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Tell me about the Grab role.",
+      "says": "It's hybrid, reports to the Head of Design, and closes on 10 Oct.",
+      "surface": "page",
+      "components": [
+        "J2 Job posting",
+        "J9 Fit / match summary"
+      ],
+      "rationale": "Pay and deadline are the two numbers; what you'd do and where you fit are short sections; apply leaves for Grab.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Lead Product Designer · Grab",
+          "subtitle": "Hybrid · Singapore · full-time"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$11–14k",
+                "label": "Monthly"
+              },
+              {
+                "value": "10 Oct",
+                "label": "Apply by"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "What you'd do",
+                "bullets": [
+                  "Lead design for GrabPay checkout.",
+                  "Manage four designers.",
+                  "Own the payments design system."
+                ]
+              },
+              {
+                "heading": "Where you fit",
+                "bullets": [
+                  "You match: 8 years, fintech, team lead.",
+                  "Gap: no Bahasa Indonesia, listed as a plus."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Apply on Grab",
+              "url": "https://grab.careers/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Grab careers posting",
+              "url": "https://grab.careers/"
+            }
+          ]
+        },
+        "fallback_text": "Grab Lead Product Designer, hybrid Singapore, S$11–14k a month, apply by 10 Oct. You match on experience and fintech; Bahasa is a plus you lack."
+      }
+    },
+    {
+      "id": "jobs-salary",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "What does a senior data analyst earn in Singapore?",
+      "says": "Around S$7,800 a month is typical at that level.",
+      "surface": "inline",
+      "components": [
+        "J3 Salary range / benchmark"
+      ],
+      "rationale": "Median and range are the answer; the sample size and sources go to Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Senior data analyst pay",
+          "subtitle": "Singapore · most earn S$6,500–9,200 a month"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$7,800",
+                "label": "Median monthly"
+              },
+              {
+                "value": "S$94k",
+                "label": "Median yearly"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "MOM Occupational Wage Table 2025"
+            },
+            {
+              "label": "Glassdoor, 412 salaries, Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Senior data analysts in Singapore earn a median S$7,800 a month (S$94k a year); most earn S$6,500–9,200."
+      }
+    },
+    {
+      "id": "jobs-applications",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Where are my applications at?",
+      "says": "One interview next week; one rejection; one still quiet.",
+      "surface": "inline",
+      "components": [
+        "J5 Application status",
+        "X2 Domain state word"
+      ],
+      "rationale": "Each application is a row with its state word; interview date secondary; three rows need no page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Your applications",
+          "subtitle": "3 active this month"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Grab · Lead Product Designer",
+                "secondary": "Interview Thu 2 Oct"
+              },
+              {
+                "label": "Wise · Design Lead",
+                "secondary": "Applied 12 Sep · viewed"
+              },
+              {
+                "label": "Shopee · Principal Designer",
+                "secondary": "Not selected, 22 Sep"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LinkedIn applications and Gmail, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Applications: Grab interview Thu 2 Oct; Wise viewed, applied 12 Sep; Shopee not selected on 22 Sep."
+      }
+    },
+    {
+      "id": "jobs-offers",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Compare my two offers.",
+      "says": "Wise pays about S$8,400 more in year one; Grab gives more equity.",
+      "surface": "page",
+      "components": [
+        "J4 Offer comparison"
+      ],
+      "rationale": "Three money lines across two offers is a small table; totals row last; the choice stays with the person.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Grab vs Wise offer",
+          "subtitle": "First-year total compensation"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Pay"
+              },
+              {
+                "label": "Grab",
+                "align": "end"
+              },
+              {
+                "label": "Wise",
+                "align": "end"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "Base",
+                  "S$156,000",
+                  "S$168,000"
+                ]
+              },
+              {
+                "cells": [
+                  "Bonus",
+                  "S$15,600",
+                  "S$20,000"
+                ]
+              },
+              {
+                "cells": [
+                  "Equity (yr 1)",
+                  "S$30,000",
+                  "S$22,000"
+                ]
+              },
+              {
+                "cells": [
+                  "Total",
+                  "S$201,600",
+                  "S$210,000"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Equity at today's value, vesting evenly over 4 years."
+          ]
+        },
+        "fallback_text": "Offers, year one: Grab S$201,600 (base S$156k, bonus S$15.6k, equity S$30k); Wise S$210,000 (base S$168k, bonus S$20k, equity S$22k)."
+      }
+    },
+    {
+      "id": "travel-flights",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Flights to Tokyo on 12 Oct?",
+      "says": "Three direct options. SQ 638 has the best times for your morning start.",
+      "surface": "inline",
+      "components": [
+        "Flight options"
+      ],
+      "rationale": "Three fares, one pick, the trade-off on the secondary line; holding a seat is a question then an approval, never a card button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Flights to Tokyo",
+          "subtitle": "12 Oct · 1 adult · economy"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Singapore Airlines",
+                "secondary": "SQ 638 · 08:35 · 7h 05m direct",
+                "trailing": "S$612",
+                "mark": "pick"
+              },
+              {
+                "label": "ANA",
+                "secondary": "NH 842 · 22:30 · 6h 55m direct",
+                "trailing": "S$548"
+              },
+              {
+                "label": "ZIPAIR",
+                "secondary": "ZG 52 · 23:55 · 7h 10m direct",
+                "trailing": "S$326"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Flights, 26 Sep 2026 09:12"
+            }
+          ],
+          "disclaimers": [
+            "Fares change often. Nothing is booked until you confirm with the airline."
+          ]
+        },
+        "fallback_text": "Flights to Tokyo, 12 Oct: Singapore Airlines SQ 638 08:35 S$612 (pick); ANA NH 842 22:30 S$548; ZIPAIR ZG 52 23:55 S$326."
+      }
+    },
+    {
+      "id": "travel-stay-areas",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Where should I stay in Tokyo?",
+      "says": "I'd stay near Ueno. It fits your budget and has the easiest airport train.",
+      "surface": "inline",
+      "components": [
+        "Stay comparison",
+        "Map with pins"
+      ],
+      "rationale": "Areas are about place, so the map leads; three priced rows with one pick; no Explore button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Where to stay in Tokyo",
+          "subtitle": "October · 6 nights · S$2,000 room budget"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "ueno",
+                  "label": "Ueno",
+                  "lat": "35.7141",
+                  "lon": "139.7774"
+                },
+                {
+                  "id": "asakusa",
+                  "label": "Asakusa",
+                  "lat": "35.7148",
+                  "lon": "139.7967"
+                },
+                {
+                  "id": "shinjuku",
+                  "label": "Shinjuku",
+                  "lat": "35.6938",
+                  "lon": "139.7034"
+                }
+              ],
+              "selected_place_id": "ueno"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Ueno",
+                "secondary": "Skyliner to Narita in 41 min",
+                "trailing": "S$1,500–1,800",
+                "mark": "pick"
+              },
+              {
+                "label": "Asakusa",
+                "secondary": "Quiet at night, older hotels",
+                "trailing": "S$1,200–1,500"
+              },
+              {
+                "label": "Shinjuku",
+                "secondary": "Busiest, most choice",
+                "trailing": "S$1,800–2,200"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Booking.com price sample, 26 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Per stay for 6 nights, one room, before tax."
+          ]
+        },
+        "fallback_text": "Where to stay in Tokyo for 6 nights in October: Ueno S$1,500–1,800 (pick); Asakusa S$1,200–1,500; Shinjuku S$1,800–2,200."
+      }
+    },
+    {
+      "id": "travel-hotel-detail",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Tell me about Hotel Gracery Ueno.",
+      "says": "It's a 3-minute walk from the Skyliner and free to cancel until 9 Oct.",
+      "surface": "inline",
+      "components": [
+        "Single hotel / stay detail"
+      ],
+      "rationale": "Photo, then total and nightly price; the cancellation deadline is the fact people forget, so it is in the subtitle.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Hotel Gracery Ueno",
+          "subtitle": "12–18 Oct · 6 nights · free cancellation to 9 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000835",
+              "alt": "Hotel Gracery Ueno double room with a city view",
+              "aspect": "4:3"
+            }
+          },
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1,620",
+                "label": "Total"
+              },
+              {
+                "value": "S$270",
+                "label": "Per night"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "View on Booking.com",
+              "url": "https://www.booking.com/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Booking.com, 26 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Double room, 2 adults, taxes included."
+          ]
+        },
+        "fallback_text": "Hotel Gracery Ueno, 12–18 Oct: S$1,620 for 6 nights (S$270 a night), free cancellation until 9 Oct."
+      }
+    },
+    {
+      "id": "travel-itinerary",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Plan 4 days in Kyoto for me.",
+      "says": "Here's a calm 4-day plan, one area per day.",
+      "surface": "page",
+      "components": [
+        "Itinerary / day-by-day plan"
+      ],
+      "rationale": "The map shows how the days cluster; days are headed sections; the printable plan is a file for the trip.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Kyoto in 4 days",
+          "subtitle": "14–17 Oct · one area a day"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "d1",
+                  "label": "Higashiyama",
+                  "lat": "34.9967",
+                  "lon": "135.7850"
+                },
+                {
+                  "id": "d2",
+                  "label": "Arashiyama",
+                  "lat": "35.0094",
+                  "lon": "135.6668"
+                },
+                {
+                  "id": "d3",
+                  "label": "Fushimi Inari",
+                  "lat": "34.9671",
+                  "lon": "135.7727"
+                },
+                {
+                  "id": "d4",
+                  "label": "Nishiki and Gion",
+                  "lat": "35.0050",
+                  "lon": "135.7650"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Day 1 · Higashiyama",
+                "bullets": [
+                  "09:00 Kiyomizu-dera before the crowds",
+                  "12:30 Lunch on Ninenzaka",
+                  "16:00 Yasaka Shrine at dusk"
+                ]
+              },
+              {
+                "heading": "Day 2 · Arashiyama",
+                "bullets": [
+                  "08:30 Bamboo grove",
+                  "11:00 Tenryu-ji garden",
+                  "14:00 Hozu river boat"
+                ]
+              },
+              {
+                "heading": "Day 3 · Fushimi Inari",
+                "bullets": [
+                  "07:30 Walk the torii gates to Yotsutsuji",
+                  "13:00 Tofuku-ji"
+                ]
+              },
+              {
+                "heading": "Day 4 · Nishiki and Gion",
+                "bullets": [
+                  "10:00 Nishiki Market",
+                  "15:00 Tea at Ippodo",
+                  "18:00 Gion evening walk"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open plan",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000836"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Early starts to avoid crowds; trains and buses between areas."
+          ]
+        },
+        "fallback_text": "Kyoto, 14–17 Oct: Day 1 Higashiyama, Day 2 Arashiyama, Day 3 Fushimi Inari, Day 4 Nishiki and Gion. The full plan is in your Library."
+      }
+    },
+    {
+      "id": "travel-flight-status",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Is my flight on time?",
+      "says": "No. SQ 638 is 45 minutes late, but your connection is still safe.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Flight status / disruption"
+      ],
+      "rationale": "New time and gate are the answer and sit in the title and subtitle; old vs new is two rows; rebooking leaves for the airline.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "SQ 638 departs 09:20",
+          "subtitle": "Delayed 45 min · Gate B6 · as of 07:10"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Was",
+                "trailing": "08:35"
+              },
+              {
+                "label": "Now",
+                "secondary": "Gate changed from A12",
+                "trailing": "09:20 · B6"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Manage booking",
+              "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/your-booking/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines flight status, 26 Sep 2026 07:10"
+            }
+          ]
+        },
+        "fallback_text": "SQ 638 is delayed 45 min: now departs 09:20 from Gate B6 (was 08:35, Gate A12), as of 07:10."
+      }
+    },
+    {
+      "id": "travel-visa",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Do I need a visa for Japan on a Singapore passport?",
+      "says": "No visa for a stay under 90 days.",
+      "surface": "inline",
+      "components": [
+        "Visa / entry requirements"
+      ],
+      "rationale": "The verdict is the title; the three things to do before flying are bullets; the official source is linked in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Japan · Singapore passport",
+          "subtitle": "Visa-free up to 90 days"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Before you fly",
+                "bullets": [
+                  "Passport valid for your whole stay.",
+                  "Fill in Visit Japan Web for fast immigration.",
+                  "Return or onward ticket on hand."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Ministry of Foreign Affairs of Japan",
+              "url": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
+            }
+          ],
+          "disclaimers": [
+            "Rules can change; check before you fly."
+          ]
+        },
+        "fallback_text": "Singapore passport holders visit Japan visa-free for up to 90 days. Passport valid for the stay, Visit Japan Web, onward ticket."
+      }
+    },
+    {
+      "id": "travel-packing",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "What should I pack for Tokyo next week?",
+      "says": "Pack layers and a light rain jacket; Tuesday looks wet.",
+      "surface": "inline",
+      "components": [
+        "Packing list"
+      ],
+      "rationale": "A short grouped list, no tick-boxes; weather drives it and sits in the subtitle.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tokyo · 6 nights",
+          "subtitle": "14–22°C · rain likely Tue"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Light layers and one warm jumper",
+                  "Packable rain jacket",
+                  "Comfortable walking shoes",
+                  "Suica on your phone",
+                  "Type A plug adapter"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Japan Meteorological Agency forecast, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Pack for Tokyo (14–22°C, rain likely Tue): light layers, a jumper, rain jacket, walking shoes, Suica on your phone, Type A adapter."
+      }
+    },
+    {
+      "id": "travel-booking-confirmed",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Did the Gracery booking go through?",
+      "says": "Yes, it's confirmed and free to cancel until 9 Oct.",
+      "surface": "inline",
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "The reference and total are what people look for later; the confirmation PDF is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked · Hotel Gracery Ueno",
+          "subtitle": "Ref ABX-4471 · 12–18 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1,620",
+                "label": "Total"
+              },
+              {
+                "value": "6",
+                "label": "Nights"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open confirmation",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000837"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Booking.com confirmation email, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Hotel Gracery Ueno is booked, ref ABX-4471, 12–18 Oct, S$1,620 for 6 nights. Confirmation is in your Library."
+      }
+    },
+    {
+      "id": "places-cafe",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Is there a quiet cafe near me to work from?",
+      "says": "Apartment Coffee is 6 minutes away and quiet on weekdays.",
+      "surface": "inline",
+      "components": [
+        "Place card",
+        "Opening hours"
+      ],
+      "rationale": "Map for where, then one row per fact; open-now sits in the subtitle; Maps does the navigation.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Apartment Coffee",
+          "subtitle": "Cafe · open until 18:00 · 4.7★"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "apt",
+                  "label": "Apartment Coffee",
+                  "lat": "1.3031",
+                  "lon": "103.8587"
+                }
+              ],
+              "selected_place_id": "apt"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Address",
+                "secondary": "161 Lavender St · 6 min walk"
+              },
+              {
+                "label": "Good for",
+                "secondary": "Quiet weekdays, power at the bar"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Maps",
+              "url": "https://maps.apple.com/?q=Apartment+Coffee+Singapore"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Maps, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Apartment Coffee, 161 Lavender St, 6 min walk, open until 18:00, 4.7 stars; quiet on weekdays with power at the bar."
+      }
+    },
+    {
+      "id": "places-directions",
+      "vertical": "places",
+      "kind": "card",
+      "request": "How do I get to Jewel from here by train?",
+      "says": "About 42 minutes by MRT with one change.",
+      "surface": "inline",
+      "components": [
+        "Directions"
+      ],
+      "rationale": "Time is the title; legs are three rows; turn-by-turn belongs to Maps, so the primary action hands off.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "42 min to Jewel by MRT",
+          "subtitle": "From Tanjong Pagar · one change"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "East–West line to Tanah Merah",
+                "secondary": "10 stops",
+                "trailing": "24 min"
+              },
+              {
+                "label": "Change to Changi Airport line",
+                "secondary": "2 stops",
+                "trailing": "9 min"
+              },
+              {
+                "label": "Walk to Jewel",
+                "secondary": "From Changi Airport MRT",
+                "trailing": "5 min"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Directions in Maps",
+              "url": "https://maps.apple.com/?daddr=Jewel+Changi+Airport&dirflg=r"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SMRT journey planner, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Tanjong Pagar to Jewel by MRT: about 42 min. East–West line to Tanah Merah, change to the Changi Airport line, 5 min walk."
+      }
+    },
+    {
+      "id": "places-dinner-options",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Somewhere nice for dinner in Tiong Bahru tonight for 4?",
+      "says": "Three have tables for four at 7:30.",
+      "surface": "inline",
+      "components": [
+        "Place card",
+        "Reservation"
+      ],
+      "rationale": "Three options with one pick; booking a time is a question card then an approval, so the card has no Book button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Dinner in Tiong Bahru tonight",
+          "subtitle": "4 people · 7:30 pm"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Merci Marcel",
+                "secondary": "French · 4.5★ · table at 7:30",
+                "trailing": "S$$",
+                "mark": "pick"
+              },
+              {
+                "label": "Bincho",
+                "secondary": "Yakitori · 4.6★ · table at 7:45",
+                "trailing": "S$$$"
+              },
+              {
+                "label": "Tiong Bahru Bakery Diner",
+                "secondary": "Brunch-style · 4.3★ · table at 7:30",
+                "trailing": "S$$"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Chope and Google Maps availability, 26 Sep 2026 16:05"
+            }
+          ]
+        },
+        "fallback_text": "Tables for 4 in Tiong Bahru tonight: Merci Marcel 7:30 (pick); Bincho 7:45; Tiong Bahru Bakery Diner 7:30."
+      }
+    },
+    {
+      "id": "places-hours",
+      "vertical": "places",
+      "kind": "card",
+      "request": "What are the Botanic Gardens' hours?",
+      "says": "Open 5 am to midnight every day; the Orchid Garden closes at 7 pm.",
+      "surface": "inline",
+      "components": [
+        "Opening hours"
+      ],
+      "rationale": "Hours are two rows; the exception (Orchid Garden) is the only thing people get wrong.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Singapore Botanic Gardens",
+          "subtitle": "Open daily · free entry"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Gardens",
+                "trailing": "05:00–00:00"
+              },
+              {
+                "label": "National Orchid Garden",
+                "secondary": "Last entry 18:00 · S$15",
+                "trailing": "08:30–19:00"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "NParks",
+              "url": "https://www.nparks.gov.sg/sbg"
+            }
+          ]
+        },
+        "fallback_text": "Singapore Botanic Gardens: open daily 05:00 to midnight, free. National Orchid Garden 08:30–19:00, last entry 18:00, S$15."
+      }
+    },
+    {
+      "id": "places-nearby-map",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Where are the nearest 24-hour clinics?",
+      "says": "Three are open all night within 15 minutes.",
+      "surface": "inline",
+      "components": [
+        "Map with pins",
+        "Place card"
+      ],
+      "rationale": "Location is the question, so the map leads; distance trailing on each row.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "24-hour clinics near you",
+          "subtitle": "Open now"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "c1",
+                  "label": "Raffles Medical Holland V",
+                  "lat": "1.3113",
+                  "lon": "103.7960"
+                },
+                {
+                  "id": "c2",
+                  "label": "Fullerton Health Novena",
+                  "lat": "1.3203",
+                  "lon": "103.8436"
+                },
+                {
+                  "id": "c3",
+                  "label": "Parkway Shenton Bukit Timah",
+                  "lat": "1.3294",
+                  "lon": "103.8025"
+                }
+              ],
+              "selected_place_id": "c1"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Raffles Medical",
+                "secondary": "Holland Village · walk-in",
+                "trailing": "8 min",
+                "mark": "pick"
+              },
+              {
+                "label": "Fullerton Health",
+                "secondary": "Novena · walk-in",
+                "trailing": "12 min"
+              },
+              {
+                "label": "Parkway Shenton",
+                "secondary": "Bukit Timah · call first",
+                "trailing": "15 min"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "MOH clinic directory and Google Maps, 26 Sep 2026 23:10"
+            }
+          ]
+        },
+        "fallback_text": "24-hour clinics nearby: Raffles Medical Holland Village 8 min; Fullerton Health Novena 12 min; Parkway Shenton Bukit Timah 15 min (call first)."
+      }
+    },
+    {
+      "id": "food-recipe",
+      "vertical": "food",
+      "kind": "card",
+      "request": "Give me an easy chicken rice recipe for 4.",
+      "says": "This one takes about an hour, mostly hands-off.",
+      "surface": "page",
+      "components": [
+        "Recipe"
+      ],
+      "rationale": "Time and servings as numbers, then ingredients and method as sections; a photo is optional, not required.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Hainanese chicken rice",
+          "subtitle": "Serves 4 · mostly hands-off"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "60 min",
+                "label": "Total time"
+              },
+              {
+                "value": "4",
+                "label": "Serves"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Ingredients",
+                "bullets": [
+                  "1 whole chicken, about 1.5 kg",
+                  "2 cups jasmine rice",
+                  "6 cloves garlic, 5 slices ginger",
+                  "2 pandan leaves",
+                  "Chilli, lime, dark soy to serve"
+                ]
+              },
+              {
+                "heading": "Method",
+                "paragraphs": [
+                  "1. Poach the chicken in gently simmering water with ginger for 35 minutes, then plunge it into ice water.",
+                  "2. Fry the rice with garlic and a spoon of chicken fat, then cook it in the poaching stock with pandan.",
+                  "3. Slice the chicken and serve with the rice, chilli and dark soy."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Based on a standard home method; adjust salt to taste."
+          ]
+        },
+        "fallback_text": "Hainanese chicken rice for 4 in about 60 min: poach the chicken 35 min, ice it, cook garlic rice in the stock with pandan, serve with chilli and dark soy."
+      }
+    },
+    {
+      "id": "food-nutrition",
+      "vertical": "food",
+      "kind": "card",
+      "request": "How many calories in a plate of char kway teow?",
+      "says": "About 740 calories, and it's heavy on fat and salt.",
+      "surface": "inline",
+      "components": [
+        "Nutrition"
+      ],
+      "rationale": "Calories and protein as numbers; fat and sodium in rows because they are the reason to care.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Char kway teow · one plate",
+          "subtitle": "About 380 g"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Energy",
+                "secondary": "About a third of a day",
+                "trailing": "740 kcal"
+              },
+              {
+                "label": "Fat",
+                "secondary": "About half your daily limit",
+                "trailing": "38 g"
+              },
+              {
+                "label": "Sodium",
+                "secondary": "Over half your daily limit",
+                "trailing": "1,460 mg"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "HPB Energy and Nutrient Composition of Food",
+              "url": "https://focos.hpb.gov.sg/eservices/ENCF/"
+            }
+          ]
+        },
+        "fallback_text": "One plate of char kway teow (about 380 g) has around 740 kcal, 38 g fat and 1,460 mg sodium."
+      }
+    },
+    {
+      "id": "food-menu",
+      "vertical": "food",
+      "kind": "card",
+      "request": "What's good on the Burnt Ends menu?",
+      "says": "The sanger and the leeks are the ones people come back for.",
+      "surface": "inline",
+      "components": [
+        "Menu"
+      ],
+      "rationale": "Three highlights with price trailing; the full menu is the restaurant's own page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Burnt Ends · highlights",
+          "subtitle": "Modern barbecue · Dempsey"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Burnt Ends sanger",
+                "secondary": "Pulled pork, brioche, slaw",
+                "trailing": "S$28"
+              },
+              {
+                "label": "Leeks, hazelnut, brown butter",
+                "secondary": "Smoked over almond wood",
+                "trailing": "S$24"
+              },
+              {
+                "label": "Onion rings",
+                "secondary": "With smoked mayo",
+                "trailing": "S$18"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Full menu",
+              "url": "https://burntends.com.sg/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Burnt Ends menu and Google reviews, Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Burnt Ends highlights: the sanger S$28, leeks with hazelnut and brown butter S$24, onion rings S$18."
+      }
+    },
+    {
+      "id": "food-timer",
+      "vertical": "food",
+      "kind": "card",
+      "request": "Remind me in 12 minutes to take the bread out.",
+      "says": "Okay. I'll remind you at 19:42.",
+      "surface": "inline",
+      "components": [
+        "Cooking timer"
+      ],
+      "rationale": "A timer is a scheduled routine; the card shows the fixed time and one Pause, and never ticks.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Take the bread out",
+          "subtitle": "Reminder"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "scheduled",
+            "detail": "rings at 19:42",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000899"
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000899",
+              "control": "pause"
+            }
+          }
+        ],
+        "fallback_text": "Reminder set: take the bread out at 19:42."
+      }
+    },
+    {
+      "id": "weather-now",
+      "vertical": "weather",
+      "kind": "card",
+      "request": "What's the weather like this afternoon?",
+      "says": "Thunderstorms from about 3 pm; take an umbrella.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Current + forecast"
+      ],
+      "rationale": "Now and rain chance as numbers, the next hours as one line; no icon set, no range bars.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Singapore",
+          "subtitle": "Thunderstorms later · as of 12:05"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "31°",
+                "label": "Now"
+              },
+              {
+                "value": "70%",
+                "label": "Rain after 3 pm"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "°C",
+              "x_labels": [
+                "12:00",
+                "13:00",
+                "14:00",
+                "15:00",
+                "16:00",
+                "17:00"
+              ],
+              "series": [
+                {
+                  "label": "Temperature",
+                  "values": [
+                    "31",
+                    "32",
+                    "32",
+                    "28",
+                    "27",
+                    "27"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "NEA weather forecast",
+              "url": "https://www.nea.gov.sg/weather"
+            }
+          ]
+        },
+        "fallback_text": "Singapore, as of 12:05: 31°C now, thunderstorms from about 3 pm (70% chance), cooling to 27°C."
+      }
+    },
+    {
+      "id": "weather-week",
+      "vertical": "weather",
+      "kind": "card",
+      "request": "What's the weather in Tokyo next week?",
+      "says": "Mild and mostly dry, with rain on Tuesday.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Current + forecast"
+      ],
+      "rationale": "Seven days are rows with a range trailing; three show inline and the page has the rest.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tokyo next week",
+          "subtitle": "13–19 Oct · as of 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Mon 13",
+                "secondary": "Sunny",
+                "trailing": "15–22°"
+              },
+              {
+                "label": "Tue 14",
+                "secondary": "Rain, 80%",
+                "trailing": "14–18°"
+              },
+              {
+                "label": "Wed 15",
+                "secondary": "Cloudy",
+                "trailing": "14–20°"
+              },
+              {
+                "label": "Thu 16",
+                "secondary": "Sunny",
+                "trailing": "15–23°"
+              },
+              {
+                "label": "Fri 17",
+                "secondary": "Sunny",
+                "trailing": "16–23°"
+              },
+              {
+                "label": "Sat 18",
+                "secondary": "Cloudy",
+                "trailing": "15–21°"
+              },
+              {
+                "label": "Sun 19",
+                "secondary": "Showers, 40%",
+                "trailing": "14–19°"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Japan Meteorological Agency, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Tokyo 13–19 Oct: mostly 14–23°C, rain on Tue 14 (80%), showers possible Sun 19."
+      }
+    },
+    {
+      "id": "weather-alert",
+      "vertical": "weather",
+      "kind": "card",
+      "request": "Is there any weather warning today?",
+      "says": "Yes, a heavy rain warning until 6 pm.",
+      "surface": "inline",
+      "components": [
+        "Severe-weather alert"
+      ],
+      "rationale": "The warning and its end time are the title; what to do is one short summary; the authority is in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Heavy rain warning until 18:00",
+          "subtitle": "West and central · issued 13:40"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Flash floods are possible in low-lying areas. Avoid Bukit Timah Road and Dunearn Road until the rain eases."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "NEA heavy rain warning",
+              "url": "https://www.nea.gov.sg/weather"
+            }
+          ]
+        },
+        "fallback_text": "NEA heavy rain warning until 18:00 for the west and central areas; flash floods possible, avoid Bukit Timah and Dunearn Road."
+      }
+    },
+    {
+      "id": "sports-score",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "What was the Arsenal score?",
+      "says": "Arsenal won 2–1; Saka scored the winner in the 78th minute.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Scoreboard"
+      ],
+      "rationale": "The score is two key numbers and the winner is in the sentence; no scorer list inline, no live ticker, just an as-of time.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arsenal 2–1 Chelsea",
+          "subtitle": "Full time · Premier League · as of 21:52"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "2",
+                "label": "Arsenal"
+              },
+              {
+                "value": "1",
+                "label": "Chelsea"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Premier League match centre, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Arsenal 2–1 Chelsea, full time. Ødegaard 23', Palmer 55', Saka 78'."
+      }
+    },
+    {
+      "id": "sports-standings",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "Where's Arsenal in the table?",
+      "says": "Second, two points behind Liverpool.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Standings"
+      ],
+      "rationale": "Top three plus your team as rows inline; the full table is a four-column table on the page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Premier League table",
+          "subtitle": "After 6 games · as of 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Pos"
+              },
+              {
+                "label": "Team"
+              },
+              {
+                "label": "Played",
+                "align": "end"
+              },
+              {
+                "label": "Pts",
+                "align": "end"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "1",
+                  "Liverpool",
+                  "6",
+                  "16"
+                ]
+              },
+              {
+                "cells": [
+                  "2",
+                  "Arsenal",
+                  "6",
+                  "14"
+                ]
+              },
+              {
+                "cells": [
+                  "3",
+                  "Man City",
+                  "6",
+                  "13"
+                ]
+              },
+              {
+                "cells": [
+                  "4",
+                  "Chelsea",
+                  "6",
+                  "11"
+                ]
+              },
+              {
+                "cells": [
+                  "5",
+                  "Newcastle",
+                  "6",
+                  "10"
+                ]
+              }
+            ],
+            "total_count": 20
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Full table",
+              "url": "https://www.premierleague.com/tables"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Premier League, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Premier League after 6 games: 1 Liverpool 16, 2 Arsenal 14, 3 Man City 13, 4 Chelsea 11, 5 Newcastle 10."
+      }
+    },
+    {
+      "id": "sports-fixtures",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "When do Arsenal play next?",
+      "says": "Saturday at home to Spurs.",
+      "surface": "inline",
+      "components": [
+        "Fixture list"
+      ],
+      "rationale": "Next three fixtures with date secondary and home or away trailing; times in the person's time zone.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arsenal · next 3",
+          "subtitle": "Singapore time"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "v Tottenham",
+                "secondary": "Sat 4 Oct · 19:30 · Emirates",
+                "trailing": "Home"
+              },
+              {
+                "label": "v PSV",
+                "secondary": "Wed 8 Oct · 03:00 · Champions League",
+                "trailing": "Away"
+              },
+              {
+                "label": "v Brighton",
+                "secondary": "Sun 19 Oct · 21:00",
+                "trailing": "Away"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Arsenal fixtures, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Arsenal next: v Tottenham Sat 4 Oct 19:30 (home); v PSV Wed 8 Oct 03:00 (away, Champions League); v Brighton Sun 19 Oct 21:00 (away)."
+      }
+    },
+    {
+      "id": "news-brief",
+      "vertical": "news",
+      "kind": "card",
+      "request": "What's happening with the MRT breakdown?",
+      "says": "Service on the East–West line is back; LTA is investigating the power fault.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Story cluster (brief)"
+      ],
+      "rationale": "What happened and what is still unknown are two short sections; every outlet is behind Details, linked.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "East–West line disruption",
+          "subtitle": "As of 09:40 · 3 sources"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "summary": "Trains are running normally again after a 2-hour power fault on the East–West line.",
+            "sections": [
+              {
+                "heading": "What happened",
+                "bullets": [
+                  "A power fault stopped trains between Jurong East and Buona Vista from 06:50.",
+                  "Free bridging buses ran until service resumed at 09:15."
+                ]
+              },
+              {
+                "heading": "Still unclear",
+                "bullets": [
+                  "What caused the fault; LTA expects a report within a week."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LTA statement",
+              "url": "https://www.lta.gov.sg/content/ltagov/en/newsroom.html"
+            },
+            {
+              "label": "The Straits Times",
+              "url": "https://www.straitstimes.com/singapore/transport"
+            },
+            {
+              "label": "CNA",
+              "url": "https://www.channelnewsasia.com/singapore"
+            }
+          ]
+        },
+        "fallback_text": "East–West line: a power fault stopped trains between Jurong East and Buona Vista from 06:50; service resumed at 09:15. Cause under investigation."
+      }
+    },
+    {
+      "id": "news-timeline",
+      "vertical": "news",
+      "kind": "card",
+      "request": "How has the Grab–GoTo merger story developed?",
+      "says": "It went from rumour to signed deal in six weeks.",
+      "surface": "inline",
+      "components": [
+        "Story timeline"
+      ],
+      "rationale": "Newest first, date trailing, outlet secondary; three events are enough to understand the arc.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Grab–GoTo merger",
+          "subtitle": "3 key moments"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Deal signed, pending approval",
+                "secondary": "Reuters",
+                "trailing": "24 Sep"
+              },
+              {
+                "label": "Boards agree terms",
+                "secondary": "Bloomberg",
+                "trailing": "2 Sep"
+              },
+              {
+                "label": "Talks reported",
+                "secondary": "The Information",
+                "trailing": "14 Aug"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Reuters",
+              "url": "https://www.reuters.com/"
+            },
+            {
+              "label": "Bloomberg",
+              "url": "https://www.bloomberg.com/"
+            }
+          ]
+        },
+        "fallback_text": "Grab–GoTo: talks reported 14 Aug, boards agreed terms 2 Sep, deal signed pending approval 24 Sep."
+      }
+    },
+    {
+      "id": "news-headlines",
+      "vertical": "news",
+      "kind": "card",
+      "request": "Any big news this morning?",
+      "says": "Three stories worth knowing.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Story cluster (brief)",
+        "Source list"
+      ],
+      "rationale": "Three headlines as rows with the outlet secondary; no summaries of summaries; sources linked in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "This morning",
+          "subtitle": "Singapore · as of 08:00"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "MAS keeps the Singapore dollar policy unchanged",
+                "secondary": "Business Times"
+              },
+              {
+                "label": "East–West line fault delays morning commute",
+                "secondary": "CNA"
+              },
+              {
+                "label": "Fed signals one more rate cut this year",
+                "secondary": "Reuters"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Business Times",
+              "url": "https://www.businesstimes.com.sg/"
+            },
+            {
+              "label": "CNA",
+              "url": "https://www.channelnewsasia.com/"
+            },
+            {
+              "label": "Reuters",
+              "url": "https://www.reuters.com/"
+            }
+          ]
+        },
+        "fallback_text": "This morning: MAS holds SGD policy; East–West line fault delayed commuters; Fed signals one more cut this year."
+      }
+    },
+    {
+      "id": "edu-lesson",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Explain how compound interest works.",
+      "says": "Interest earns interest, so growth speeds up over time.",
+      "surface": "page",
+      "components": [
+        "Lesson",
+        "Line chart"
+      ],
+      "rationale": "One line chart shows the curve better than a paragraph; two short sections carry the idea.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Compound interest",
+          "subtitle": "S$10,000 at 5% a year"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$k",
+              "x_labels": [
+                "Yr 0",
+                "Yr 10",
+                "Yr 20",
+                "Yr 30"
+              ],
+              "series": [
+                {
+                  "label": "Compound",
+                  "values": [
+                    "10",
+                    "16.3",
+                    "26.5",
+                    "43.2"
+                  ]
+                },
+                {
+                  "label": "Simple",
+                  "values": [
+                    "10",
+                    "15",
+                    "20",
+                    "25"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "The idea",
+                "paragraphs": [
+                  "Each year's interest is added to the balance, so next year you earn interest on a bigger amount."
+                ]
+              },
+              {
+                "heading": "Why time matters",
+                "paragraphs": [
+                  "The gap between the two lines grows every year. After 30 years compounding gives S$43,200 against S$25,000."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Interest compounds once a year; no withdrawals."
+          ]
+        },
+        "fallback_text": "Compound interest: interest is added to the balance, so it earns interest too. S$10,000 at 5% becomes S$43,200 in 30 years, against S$25,000 with simple interest."
+      }
+    },
+    {
+      "id": "edu-quiz-result",
+      "vertical": "education",
+      "kind": "card",
+      "request": "How did I do on the chemistry quiz?",
+      "says": "8 of 10, and both misses were on moles.",
+      "surface": "inline",
+      "components": [
+        "Quiz with feedback",
+        "Progress / streak"
+      ],
+      "rationale": "Score and time as two numbers; what to study next is in the sentence; no confetti, no per-question list.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Chemistry quiz",
+          "subtitle": "Stoichiometry · 10 questions"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "8 of 10",
+                "label": "Score"
+              },
+              {
+                "value": "6 min",
+                "label": "Time"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Chemistry quiz: 8 of 10 in 6 minutes. Both misses were mole calculations."
+      }
+    },
+    {
+      "id": "edu-progress",
+      "vertical": "education",
+      "kind": "card",
+      "request": "How's my Japanese going?",
+      "says": "You've kept a 12-day streak and you're 64% through N5.",
+      "surface": "inline",
+      "components": [
+        "Progress / streak",
+        "Bar chart"
+      ],
+      "rationale": "Two numbers and a 7-day bar chart; the next lesson is a follow-up question, not a button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Japanese N5",
+          "subtitle": "Last 7 days"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "64%",
+                "label": "Through N5"
+              },
+              {
+                "value": "12 days",
+                "label": "Streak"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "min",
+              "x_labels": [
+                "Sat",
+                "Sun",
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri"
+              ],
+              "series": [
+                {
+                  "label": "Minutes",
+                  "values": [
+                    "15",
+                    "20",
+                    "10",
+                    "25",
+                    "15",
+                    "30",
+                    "20"
+                  ]
+                }
+              ],
+              "highlight_index": 5
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your study log in Harso"
+            }
+          ]
+        },
+        "fallback_text": "Japanese N5: 64% through, 12-day streak, 135 minutes this week, most on Thursday (30 min)."
+      }
+    },
+    {
+      "id": "edu-worked-example",
+      "vertical": "education",
+      "kind": "card",
+      "request": "How do I solve 2x + 6 = 14?",
+      "says": "x = 4. Here's each step.",
+      "surface": "inline",
+      "components": [
+        "Worked example"
+      ],
+      "rationale": "Three numbered steps in one section; plain text maths, no rendering engine needed.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Solve 2x + 6 = 14",
+          "subtitle": "Linear equation"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "1. Subtract 6 from both sides: 2x = 8.",
+                  "2. Divide both sides by 2: x = 4.",
+                  "3. Check: 2 × 4 + 6 = 14."
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "2x + 6 = 14: subtract 6 to get 2x = 8, divide by 2 to get x = 4; check 2 × 4 + 6 = 14."
+      }
+    },
+    {
+      "id": "edu-glossary",
+      "vertical": "education",
+      "kind": "card",
+      "request": "What do P/E, EPS and dividend yield mean?",
+      "says": "Three quick definitions.",
+      "surface": "inline",
+      "components": [
+        "Glossary"
+      ],
+      "rationale": "Term as label, one-line meaning as secondary; three rows fit inline.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Three investing terms"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "P/E ratio",
+                "secondary": "Share price divided by yearly earnings per share"
+              },
+              {
+                "label": "EPS",
+                "secondary": "A company's profit divided by its number of shares"
+              },
+              {
+                "label": "Dividend yield",
+                "secondary": "Yearly dividend as a percentage of the share price"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "P/E ratio: share price divided by earnings per share. EPS: profit divided by shares. Dividend yield: yearly dividend as a percentage of the share price."
+      }
+    },
+    {
+      "id": "edu-diagram",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Draw me the water cycle.",
+      "says": "Here it is, with the four stages labelled.",
+      "surface": "inline",
+      "components": [
+        "Diagram"
+      ],
+      "rationale": "The diagram is an image artifact; the card shows it large with Download as the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "The water cycle",
+          "subtitle": "Evaporation · condensation · precipitation · collection"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000008fd",
+              "alt": "Diagram of the water cycle: evaporation from the sea, clouds forming, rain over hills, rivers returning to the sea",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000008fd"
+            }
+          }
+        ],
+        "fallback_text": "The water cycle diagram (evaporation, condensation, precipitation, collection) is saved to your Library."
+      }
+    },
+    {
+      "id": "health-resting-hr",
+      "vertical": "health",
+      "kind": "card",
+      "request": "How's my resting heart rate this month?",
+      "says": "It's drifted down to 58, which usually means better fitness.",
+      "surface": "inline",
+      "components": [
+        "Metric trend"
+      ],
+      "rationale": "Latest and average as numbers, a line with the latest highlighted; the source device and disclaimer sit in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Resting heart rate",
+          "subtitle": "Last 4 weeks · Apple Watch"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "58 bpm",
+                "label": "This week"
+              },
+              {
+                "value": "61 bpm",
+                "label": "Average"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "bpm",
+              "x_labels": [
+                "1 Sep",
+                "8 Sep",
+                "15 Sep",
+                "22 Sep"
+              ],
+              "series": [
+                {
+                  "label": "Resting",
+                  "values": [
+                    "63",
+                    "62",
+                    "60",
+                    "58"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Apple Health, 26 Sep 2026"
+            }
+          ],
+          "disclaimers": [
+            "Not medical advice."
+          ]
+        },
+        "fallback_text": "Resting heart rate fell from 63 to 58 bpm over the last 4 weeks; average 61 bpm."
+      }
+    },
+    {
+      "id": "health-sleep",
+      "vertical": "health",
+      "kind": "card",
+      "request": "How did I sleep this week?",
+      "says": "Better than last week; Wednesday was the short night.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Metric trend",
+        "Bar chart"
+      ],
+      "rationale": "Average sleep as a number and a bar per night; the short night is highlighted because the sentence names it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sleep this week",
+          "subtitle": "Apple Watch · as of this morning"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "7h 12m",
+                "label": "Average"
+              },
+              {
+                "value": "+24 min",
+                "label": "vs last week"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "hours",
+              "x_labels": [
+                "Sat",
+                "Sun",
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri"
+              ],
+              "series": [
+                {
+                  "label": "Asleep",
+                  "values": [
+                    "7.8",
+                    "8.1",
+                    "7.2",
+                    "7.0",
+                    "5.6",
+                    "7.4",
+                    "7.3"
+                  ]
+                }
+              ],
+              "highlight_index": 4
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Apple Health, 26 Sep 2026"
+            }
+          ],
+          "disclaimers": [
+            "Not medical advice."
+          ]
+        },
+        "fallback_text": "Sleep this week averaged 7h 12m, 24 min more than last week. Wednesday was short at 5.6 hours."
+      }
+    },
+    {
+      "id": "health-meds",
+      "vertical": "health",
+      "kind": "card",
+      "request": "What medication do I take today?",
+      "says": "Two doses today; the morning one is done.",
+      "surface": "inline",
+      "components": [
+        "Medication schedule"
+      ],
+      "rationale": "Doses as rows with time trailing; logging a dose is a question card, not a Taken button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Today's medication",
+          "subtitle": "Fri 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Metformin 500 mg",
+                "secondary": "With breakfast · taken 08:10",
+                "trailing": "08:00"
+              },
+              {
+                "label": "Metformin 500 mg",
+                "secondary": "With dinner · due",
+                "trailing": "19:00"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your medication list in Apple Health"
+            }
+          ],
+          "disclaimers": [
+            "Follow your doctor's instructions if they differ."
+          ]
+        },
+        "fallback_text": "Today: Metformin 500 mg at 08:00 (taken 08:10) and 500 mg with dinner at 19:00."
+      }
+    },
+    {
+      "id": "health-symptom",
+      "vertical": "health",
+      "kind": "card",
+      "request": "I've had chest tightness and a sweaty feeling for 20 minutes.",
+      "says": "Please call 995 now.",
+      "surface": "inline",
+      "components": [
+        "Symptom check with disclaimer"
+      ],
+      "rationale": "Urgent care is the content, never a disclaimer: status needs-attention cannot stand alone, so the summary carries it untruncated.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Call 995 now",
+          "subtitle": "Chest tightness with sweating for 20 minutes"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "summary": "These can be signs of a heart attack. Call 995 for an ambulance now; don't drive yourself.",
+            "sections": [
+              {
+                "bullets": [
+                  "Stop what you're doing and sit down.",
+                  "If a doctor has said aspirin is safe for you, chew one 300 mg tablet.",
+                  "Unlock your door so help can get in."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Heart Foundation",
+              "url": "https://www.myheart.org.sg/"
+            }
+          ],
+          "disclaimers": [
+            "Harso is not a doctor. In an emergency always call 995."
+          ]
+        },
+        "fallback_text": "Chest tightness with sweating for 20 minutes can be a heart attack. Call 995 now, sit down, chew one 300 mg aspirin if a doctor has said it is safe for you, unlock your door."
+      }
+    },
+    {
+      "id": "health-workout",
+      "vertical": "health",
+      "kind": "card",
+      "request": "Give me a 30-minute interval run.",
+      "says": "30 minutes, six hard efforts.",
+      "surface": "inline",
+      "components": [
+        "Workout plan"
+      ],
+      "rationale": "Phases are rows with duration trailing; starting the workout belongs to the watch, not the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Interval run",
+          "subtitle": "30 min · 6 × 1 min hard"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Warm up",
+                "secondary": "Easy jog",
+                "trailing": "8 min"
+              },
+              {
+                "label": "6 × 1 min hard, 1 min easy",
+                "secondary": "Hard: breathing heavy but steady",
+                "trailing": "12 min"
+              },
+              {
+                "label": "Cool down",
+                "secondary": "Easy jog, then walk",
+                "trailing": "10 min"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "disclaimers": [
+            "Stop if you feel chest pain or dizziness."
+          ]
+        },
+        "fallback_text": "30-minute interval run: 8 min easy warm-up, 6 × (1 min hard, 1 min easy), 10 min cool-down."
+      }
+    },
+    {
+      "id": "prod-agenda",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "What's on my calendar tomorrow?",
+      "says": "Three meetings, and your afternoon is free after 2.",
+      "surface": "inline",
+      "components": [
+        "Schedule / calendar"
+      ],
+      "rationale": "Time trailing, place or people secondary; the free afternoon is in the sentence, not a fourth row.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tomorrow · Sat 27 Sep",
+          "subtitle": "3 events"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Design review",
+                "secondary": "Zoom · Mei, Arjun",
+                "trailing": "09:30"
+              },
+              {
+                "label": "Lunch with Sam",
+                "secondary": "Tiong Bahru Bakery",
+                "trailing": "12:00"
+              },
+              {
+                "label": "Viewing at The Clift",
+                "secondary": "21 McCallum St",
+                "trailing": "13:00"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Tomorrow: Design review 09:30 (Zoom), lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift 13:00. Free after 14:00."
+      }
+    },
+    {
+      "id": "prod-meeting-notes",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Summarise the design review and the action items.",
+      "says": "We agreed to ship the calm card first; three follow-ups.",
+      "surface": "page",
+      "components": [
+        "Meeting notes",
+        "Checklist / to-do"
+      ],
+      "rationale": "Decisions as a short summary, owners and due dates as rows; making them into tasks is a separate approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Design review",
+          "subtitle": "26 Sep · Mei, Arjun, you"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Decided",
+                "bullets": [
+                  "Ship the rows card before charts.",
+                  "Keep reply buttons off every card."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Draft the rows states",
+                "secondary": "Mei · Tue 30 Sep"
+              },
+              {
+                "label": "Check dark contrast",
+                "secondary": "Arjun · Wed 1 Oct"
+              },
+              {
+                "label": "Share the pane mock",
+                "secondary": "You · Fri 3 Oct"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Design review 26 Sep: ship the rows card first; no reply buttons. Actions: Mei drafts row states (30 Sep), Arjun checks dark contrast (1 Oct), you share the pane mock (3 Oct)."
+      }
+    },
+    {
+      "id": "prod-email-draft",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Draft a reply to Nichol saying Tuesday works.",
+      "says": "Here's a short draft; nothing is sent until you approve.",
+      "surface": "inline",
+      "components": [
+        "Email draft preview"
+      ],
+      "rationale": "The draft is text with the recipient in the subtitle; sending is a native approval, never a Send button on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Re: Lease viewing",
+          "subtitle": "To Nichol · draft"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Hi Nichol, Tuesday works for me. Shall we say 6:30 pm at the flat? Thanks, Abhi"
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Draft to Nichol: Tuesday works; suggest 6:30 pm at the flat. Not sent."
+      }
+    },
+    {
+      "id": "prod-tasks-status",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "What's left on the move?",
+      "says": "Three things left, and one of them is waiting on the landlord.",
+      "surface": "inline",
+      "components": [
+        "Kanban / status list",
+        "Checklist / to-do"
+      ],
+      "rationale": "Open items only, each with who or what it waits on; the done list is not the answer.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Moving to The Clift",
+          "subtitle": "5 of 8 done"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Sign the tenancy agreement",
+                "secondary": "Waiting on the landlord's signature"
+              },
+              {
+                "label": "Book movers",
+                "secondary": "Quotes from 2 of 3 companies"
+              },
+              {
+                "label": "Transfer SP Group account",
+                "secondary": "Do after 30 Sep"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Move to The Clift, 5 of 8 done. Left: tenancy agreement (waiting on landlord), book movers (2 of 3 quotes in), transfer SP Group account after 30 Sep."
+      }
+    },
+    {
+      "id": "prod-watch-reply",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Tell me when Nichol replies on WhatsApp. Until Friday is fine.",
+      "says": "Okay. I'll tell you here when she replies.",
+      "surface": "inline",
+      "components": [
+        "Reply watch"
+      ],
+      "rationale": "A watch is a status bound to the routine, one row for when it stops, and one quiet Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Reply from Nichol",
+          "subtitle": "WhatsApp"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "since 9:40 AM",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000961"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Stops after",
+                "trailing": "Fri 6 PM"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000961",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Notifies you here only; nothing is sent to Nichol."
+          ]
+        },
+        "fallback_text": "Watching WhatsApp for a reply from Nichol since 9:40 AM; stops after Friday 6 PM."
+      }
+    },
+    {
+      "id": "prod-work-running",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Go through my inbox and file all the receipts.",
+      "says": "I've started; about 400 emails to go through.",
+      "surface": "inline",
+      "components": [
+        "Work status"
+      ],
+      "rationale": "Long work is a Work Unit; the card shows its live state and one quiet Stop, bound to that unit.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Filing receipts from Gmail",
+          "subtitle": "About 400 emails"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "working",
+            "detail": "112 of about 400 checked",
+            "subject": {
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962"
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "work_control",
+              "label": "Stop",
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962",
+              "control": "cancel"
+            }
+          }
+        ],
+        "fallback_text": "Filing receipts from Gmail: 112 of about 400 emails checked so far."
+      }
+    },
+    {
+      "id": "docs-contract-summary",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "What should I watch for in this tenancy agreement?",
+      "says": "Two clauses need a look before you sign.",
+      "surface": "inline",
+      "components": [
+        "Contract summary with clauses"
+      ],
+      "rationale": "Term and rent as numbers would crowd it; the two clauses are the answer, each with its meaning secondary.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tenancy agreement · The Clift",
+          "subtitle": "2 years · S$3,300 a month"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Clause 4(c) · Auto-renewal",
+                "secondary": "Renews for a year unless you give 2 months' notice",
+                "trailing": "Review"
+              },
+              {
+                "label": "Clause 7 · Minor repairs",
+                "secondary": "You pay the first S$200 of every repair",
+                "trailing": "Review"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Tenancy agreement PDF you shared, pages 3 and 5"
+            }
+          ],
+          "disclaimers": [
+            "A summary, not legal advice."
+          ]
+        },
+        "fallback_text": "Tenancy agreement for The Clift, 2 years at S$3,300: review clause 4(c) auto-renewal (2 months' notice) and clause 7 (you pay the first S$200 of each repair)."
+      }
+    },
+    {
+      "id": "docs-signatures",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Has everyone signed the NDA?",
+      "says": "Two of three have; Mei hasn't opened it yet.",
+      "surface": "inline",
+      "components": [
+        "Signature request preview"
+      ],
+      "rationale": "Each signer is a row with a state word; the nudge is a separate send, so the card links to DocuSign only.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Mutual NDA · Straits Lab",
+          "subtitle": "2 of 3 signed"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "You",
+                "secondary": "24 Sep",
+                "trailing": "Signed"
+              },
+              {
+                "label": "Arjun Rao",
+                "secondary": "25 Sep",
+                "trailing": "Signed"
+              },
+              {
+                "label": "Mei Lin",
+                "secondary": "Sent 24 Sep",
+                "trailing": "Not opened"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in DocuSign",
+              "url": "https://app.docusign.com/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DocuSign envelope, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Mutual NDA: you and Arjun Rao signed; Mei Lin hasn't opened it since 24 Sep."
+      }
+    },
+    {
+      "id": "docs-compare-plans",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Which health insurance plan should I pick?",
+      "says": "Plan B covers the most for the premium.",
+      "surface": "inline",
+      "components": [
+        "Comparison"
+      ],
+      "rationale": "Inline comparison is rows with the one differentiator secondary and a pick; the full grid is the insurer's page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Integrated Shield plans",
+          "subtitle": "Age 35 · private hospital cover"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Great Eastern Supreme",
+                "secondary": "S$3,500 deductible · as-charged",
+                "trailing": "S$412/yr"
+              },
+              {
+                "label": "Prudential PRUShield A",
+                "secondary": "S$3,500 deductible · as-charged, panel bonus",
+                "trailing": "S$398/yr",
+                "mark": "pick"
+              },
+              {
+                "label": "AIA HealthShield Gold",
+                "secondary": "S$3,500 deductible · as-charged",
+                "trailing": "S$436/yr"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "MOH comparison of Integrated Shield Plans",
+              "url": "https://www.moh.gov.sg/"
+            }
+          ],
+          "disclaimers": [
+            "Premiums before MediShield Life; not financial advice."
+          ]
+        },
+        "fallback_text": "Integrated Shield plans for age 35: Prudential PRUShield A S$398/yr (pick); Great Eastern Supreme S$412/yr; AIA HealthShield Gold S$436/yr."
+      }
+    },
+    {
+      "id": "docs-research-brief",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Is it worth buying an EV in Singapore now?",
+      "says": "Mostly yes, if you can charge at home or in your car park.",
+      "surface": "page",
+      "components": [
+        "Report",
+        "Citation list"
+      ],
+      "rationale": "A short brief: summary, then two sections; sources behind Details; longer than that and it becomes a document.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "EVs in Singapore, 2026",
+          "subtitle": "Research brief"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "summary": "Charging is now broad but slow; the saving depends on charging near home.",
+            "sections": [
+              {
+                "heading": "Where things stand",
+                "paragraphs": [
+                  "Public chargers passed 15,000 points this year, most in HDB car parks. Fast chargers remain scarce outside big malls."
+                ]
+              },
+              {
+                "heading": "What it means for you",
+                "paragraphs": [
+                  "Public charging costs about S$0.60–0.75 per kWh against about S$0.35 at home. Check your car park's rollout date before you buy."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open as document",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000009c5"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LTA EV statistics",
+              "url": "https://www.lta.gov.sg/"
+            },
+            {
+              "label": "SP Group tariffs",
+              "url": "https://www.spgroup.com.sg/"
+            }
+          ]
+        },
+        "fallback_text": "EVs in Singapore 2026: 15,000+ public chargers, mostly in HDB car parks; fast chargers rare; public charging costs about twice home charging."
+      }
+    },
+    {
+      "id": "data-kpis",
+      "vertical": "data",
+      "kind": "card",
+      "request": "How did the shop do in September?",
+      "says": "Revenue was up 12% on August, with the same number of orders.",
+      "surface": "inline",
+      "components": [
+        "KPI tiles",
+        "Bar chart"
+      ],
+      "rationale": "Two KPIs and a 4-week bar chart; the busiest week is highlighted; filters are a follow-up question.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Shop · September",
+          "subtitle": "Shopify · all channels"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$48,200",
+                "label": "Revenue"
+              },
+              {
+                "value": "+12%",
+                "label": "vs August"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "S$k",
+              "x_labels": [
+                "1–7 Sep",
+                "8–14 Sep",
+                "15–21 Sep",
+                "22–30 Sep"
+              ],
+              "series": [
+                {
+                  "label": "Revenue",
+                  "values": [
+                    "10.4",
+                    "11.2",
+                    "12.9",
+                    "13.7"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopify analytics, 30 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "September revenue S$48,200, up 12% on August; weekly revenue rose to S$13.7k in the last week."
+      }
+    },
+    {
+      "id": "data-top-products",
+      "vertical": "data",
+      "kind": "card",
+      "request": "What were my top sellers last month?",
+      "says": "The linen shirt sold the most, by a wide margin.",
+      "surface": "inline",
+      "components": [
+        "Bar chart",
+        "Pie / donut (as bar)"
+      ],
+      "rationale": "Shares are a sorted bar chart, never a pie; the sentence names the leader and the chart highlights it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Top sellers · September",
+          "subtitle": "Units sold"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "units",
+              "x_labels": [
+                "Linen shirt",
+                "Chinos",
+                "Tote bag",
+                "Cap"
+              ],
+              "series": [
+                {
+                  "label": "Units",
+                  "values": [
+                    "412",
+                    "236",
+                    "198",
+                    "121"
+                  ]
+                }
+              ],
+              "highlight_index": 0
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopify, 1–30 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Top sellers in September: linen shirt 412 units, chinos 236, tote bag 198, cap 121."
+      }
+    },
+    {
+      "id": "data-table-small",
+      "vertical": "data",
+      "kind": "card",
+      "request": "Show me sales by region.",
+      "says": "Central leads; the East grew fastest.",
+      "surface": "page",
+      "components": [
+        "Table with totals",
+        "Pivot"
+      ],
+      "rationale": "Three regions by two measures is a small table with a total row; numbers right-aligned.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sales by region · Q3",
+          "subtitle": "Singapore stores"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Region"
+              },
+              {
+                "label": "Revenue",
+                "align": "end"
+              },
+              {
+                "label": "vs Q2",
+                "align": "end"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "Central",
+                  "S$182,400",
+                  "+4%"
+                ]
+              },
+              {
+                "cells": [
+                  "East",
+                  "S$96,300",
+                  "+18%"
+                ]
+              },
+              {
+                "cells": [
+                  "West",
+                  "S$71,900",
+                  "−2%"
+                ]
+              },
+              {
+                "cells": [
+                  "Total",
+                  "S$350,600",
+                  "+6%"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "POS export, 1 Jul–30 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Q3 sales: Central S$182,400 (+4%), East S$96,300 (+18%), West S$71,900 (−2%); total S$350,600 (+6%)."
+      }
+    },
+    {
+      "id": "data-stale",
+      "vertical": "data",
+      "kind": "card",
+      "request": "What's our cash balance?",
+      "says": "S$126,400 at the last sync, which was yesterday evening.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Balance / net worth",
+        "Stale state"
+      ],
+      "rationale": "Stale data says so in the subtitle with its time; nothing is hidden or coloured red.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Cash across accounts",
+          "subtitle": "As of 25 Sep, 18:00 · sync paused"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$126,400",
+                "label": "Balance"
+              },
+              {
+                "value": "3",
+                "label": "Accounts"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS and OCBC business accounts via Xero"
+            }
+          ],
+          "assumptions": [
+            "Sync paused because the DBS connection needs you to sign in again."
+          ]
+        },
+        "fallback_text": "Cash across 3 accounts was S$126,400 as of 25 Sep 18:00; the bank sync has been paused since then."
+      }
+    },
+    {
+      "id": "text-convert",
+      "vertical": "money",
+      "kind": "text",
+      "request": "What's 250 USD in SGD?",
+      "reply": "About S$322 at today's rate of 1.29.",
+      "surface": "text",
+      "components": [
+        "Currency conversion"
+      ],
+      "rationale": "One number answers it in a sentence; a card would repeat the sentence.",
+      "document": null
+    },
+    {
+      "id": "text-define",
+      "vertical": "education",
+      "kind": "text",
+      "request": "What does 'amortization' mean?",
+      "reply": "Paying off a loan in regular instalments, each covering some interest and some of the balance.",
+      "surface": "text",
+      "components": [
+        "Definition"
+      ],
+      "rationale": "A single definition is a sentence; a glossary card is for three or more terms.",
+      "document": null
+    },
+    {
+      "id": "text-yes-no",
+      "vertical": "places",
+      "kind": "text",
+      "request": "Is the Botanic Gardens free?",
+      "reply": "Yes, entry is free. Only the National Orchid Garden charges, S$15 for adults.",
+      "surface": "text",
+      "components": [
+        "Fact check"
+      ],
+      "rationale": "A yes/no with one qualifier is prose; nothing to show beyond the words.",
+      "document": null
+    },
+    {
+      "id": "text-time",
+      "vertical": "travel",
+      "kind": "text",
+      "request": "What time is it in Tokyo?",
+      "reply": "It's 3:40 pm in Tokyo, an hour ahead of you.",
+      "surface": "text",
+      "components": [
+        "Time zone"
+      ],
+      "rationale": "The answer is one time; a card adds chrome and nothing else.",
+      "document": null
+    },
+    {
+      "id": "text-advice",
+      "vertical": "health",
+      "kind": "text",
+      "request": "Should I stretch before or after running?",
+      "reply": "Warm up with easy jogging and leg swings before; save longer stretches for after, when your muscles are warm.",
+      "surface": "text",
+      "components": [
+        "Advice"
+      ],
+      "rationale": "Advice without data or options is a sentence or two, not a card.",
+      "document": null
+    },
+    {
+      "id": "text-acknowledge",
+      "vertical": "productivity",
+      "kind": "text",
+      "request": "Thanks, that's all for now.",
+      "reply": "Anytime.",
+      "surface": "text",
+      "components": [
+        "Acknowledgement"
+      ],
+      "rationale": "Conversation, not a result; never a card.",
+      "document": null
+    },
+    {
+      "id": "text-clarify-free",
+      "vertical": "shopping",
+      "kind": "text",
+      "request": "Get me a gift for my mum.",
+      "reply": "Happy to. What's your budget, and does she prefer things for the home or for herself?",
+      "surface": "text",
+      "components": [
+        "Clarifying question"
+      ],
+      "rationale": "Missing inputs are asked in words or the question card, never a speculative results card.",
+      "document": null
+    },
+    {
+      "id": "text-single-fact",
+      "vertical": "sports",
+      "kind": "text",
+      "request": "Who won the Singapore Grand Prix in 2024?",
+      "reply": "Lando Norris won it on 22 September 2024, ahead of Max Verstappen.",
+      "surface": "text",
+      "components": [
+        "Single fact"
+      ],
+      "rationale": "One fact with one detail is prose; a scoreboard is for scores.",
+      "document": null
+    },
+    {
+      "id": "text-rewrite",
+      "vertical": "documents",
+      "kind": "text",
+      "request": "Make this sentence friendlier: 'Your payment is late.'",
+      "reply": "\"Just a reminder that the payment slipped past its due date. Could you take a look when you have a moment?\"",
+      "surface": "text",
+      "components": [
+        "Rewrite"
+      ],
+      "rationale": "Rewritten text is the answer itself; wrapping it in a card adds a frame to copy out of.",
+      "document": null
+    },
+    {
+      "id": "text-math",
+      "vertical": "data",
+      "kind": "text",
+      "request": "What's 18% of 2,450?",
+      "reply": "441.",
+      "surface": "text",
+      "components": [
+        "Arithmetic"
+      ],
+      "rationale": "A single computed number needs no card; the sentence is the result.",
+      "document": null
+    },
+    {
+      "id": "text-cant",
+      "vertical": "money",
+      "kind": "text",
+      "request": "Move S$5,000 from DBS to my OCBC account.",
+      "reply": "I can't move money between banks. Nothing was changed. You can do it in DBS digibank under Pay & Transfer.",
+      "surface": "text",
+      "components": [
+        "Boundary"
+      ],
+      "rationale": "A refusal names the boundary in plain words; a failed card is only for work that was attempted.",
+      "document": null
+    },
+    {
+      "id": "text-weather-simple",
+      "vertical": "weather",
+      "kind": "text",
+      "request": "Do I need an umbrella today?",
+      "reply": "Yes. Thunderstorms are likely after 3 pm.",
+      "surface": "text",
+      "components": [
+        "Weather yes/no"
+      ],
+      "rationale": "A yes with the reason is enough; the forecast card is for when they ask for the forecast.",
+      "document": null
+    },
+    {
+      "id": "file-invoice-pdf",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Make an invoice for Acme: 20 hours of design at S$150.",
+      "says": "Invoice INV-2042 is ready and in your Library.",
+      "surface": "inline",
+      "components": [
+        "F11 Invoice",
+        "X6 File deliverable"
+      ],
+      "rationale": "The file is the deliverable; the card shows the amount due and opens the PDF; sending it is a separate approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "INV-2042 · Acme Pte Ltd",
+          "subtitle": "Due 26 Oct · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$3,270.00",
+                "label": "Amount due"
+              },
+              {
+                "value": "26 Oct",
+                "label": "Due"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open invoice",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download PDF",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "GST at 9% added to S$3,000.",
+            "Payment terms 30 days."
+          ]
+        },
+        "fallback_text": "Invoice INV-2042 to Acme Pte Ltd for 20 hours of design at S$150, S$3,270.00 including 9% GST, due 26 Oct. Saved to your Library."
+      }
+    },
+    {
+      "id": "file-expenses-sheet",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Put all my September expenses in a spreadsheet.",
+      "says": "All 142 transactions are in a sheet, one row each.",
+      "surface": "inline",
+      "components": [
+        "F9 Transactions list",
+        "Sheet"
+      ],
+      "rationale": "142 rows is a sheet, not a card; the card gives the total and opens the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "September expenses",
+          "subtitle": "142 transactions · XLSX"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$4,280",
+                "label": "Total"
+              },
+              {
+                "value": "142",
+                "label": "Transactions"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open sheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2a"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2a"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Linked accounts, synced 30 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "September expenses: 142 transactions totalling S$4,280, in a spreadsheet in your Library."
+      }
+    },
+    {
+      "id": "file-itinerary-pdf",
+      "vertical": "travel",
+      "kind": "file",
+      "request": "Make me a printable itinerary for Kyoto.",
+      "says": "It's a two-page PDF with a map and one page per two days.",
+      "surface": "inline",
+      "components": [
+        "Itinerary / day-by-day plan",
+        "Document (PDF)"
+      ],
+      "rationale": "Printable means a file; the card shows its first page and opens it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Kyoto itinerary",
+          "subtitle": "14–17 Oct · 2 pages · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2b",
+              "alt": "First page of the Kyoto itinerary: map of four areas and the Day 1 plan",
+              "aspect": "3:4"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open itinerary",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2c"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2c"
+            }
+          }
+        ],
+        "fallback_text": "Your Kyoto itinerary for 14–17 Oct is a 2-page PDF in your Library."
+      }
+    },
+    {
+      "id": "file-deck",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Turn the EV brief into 6 slides for Monday.",
+      "says": "Six slides, in PowerPoint and PDF.",
+      "surface": "inline",
+      "components": [
+        "Deck"
+      ],
+      "rationale": "A deck is a file; the card shows the title slide and opens the PDF for reading, PPTX for editing.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "EVs in Singapore, 2026",
+          "subtitle": "6 slides · PPTX and PDF"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2d",
+              "alt": "Title slide: EVs in Singapore, 2026, with a charger photo",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open slides",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2e"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download PowerPoint",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2f"
+            }
+          }
+        ],
+        "fallback_text": "The EV brief is now a 6-slide deck, in PowerPoint and PDF in your Library."
+      }
+    },
+    {
+      "id": "file-contract-docx",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Draft a simple freelance contract I can edit in Word.",
+      "says": "It's a 3-page Word document with the usual clauses.",
+      "surface": "inline",
+      "components": [
+        "Report",
+        "Document (DOCX)"
+      ],
+      "rationale": "Editable means DOCX; the card names what is inside in one section and downloads the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Freelance services agreement",
+          "subtitle": "3 pages · Word"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Scope, fees and payment terms",
+                  "IP transfers on payment",
+                  "Either side can end it with 14 days' notice"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download Word file",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a30"
+            },
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Preview",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a30"
+            }
+          }
+        ],
+        "details": {
+          "disclaimers": [
+            "A template, not legal advice. Have a lawyer check it for your case."
+          ]
+        },
+        "fallback_text": "A 3-page editable freelance agreement (scope, fees, IP on payment, 14 days' notice) is in your Library."
+      }
+    },
+    {
+      "id": "file-logo",
+      "vertical": "shopping",
+      "kind": "file",
+      "request": "Make a logo for my bakery, Crumb & Co.",
+      "says": "Here's a first direction.",
+      "surface": "inline",
+      "components": [
+        "Image deliverable"
+      ],
+      "rationale": "The image is the result; one Download; asking for another direction is a chat message, not a button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Crumb & Co logo",
+          "subtitle": "Direction 1 · wheat ear and ampersand"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31",
+              "alt": "Crumb & Co logo: a wheat ear forming an ampersand, warm brown on cream",
+              "aspect": "square"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31"
+            }
+          }
+        ],
+        "fallback_text": "Crumb & Co logo, direction 1: a wheat ear forming an ampersand. Saved to your Library."
+      }
+    },
+    {
+      "id": "file-resume",
+      "vertical": "jobs",
+      "kind": "file",
+      "request": "Tailor my CV for the Grab role.",
+      "says": "Your CV now leads with payments work and team leadership.",
+      "surface": "inline",
+      "components": [
+        "J8 Resume / cover letter"
+      ],
+      "rationale": "The document is the deliverable; the card lists what changed so it can be trusted without opening it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "CV · Grab Lead Product Designer",
+          "subtitle": "2 pages · PDF and Word"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Moved the payments redesign to the top",
+                  "Added team size and hiring to your current role",
+                  "Cut the 2016 agency role to one line"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open CV",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a32"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download Word file",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a33"
+            }
+          }
+        ],
+        "fallback_text": "Your CV is tailored for Grab: payments work first, team leadership added, older role shortened. PDF and Word in your Library."
+      }
+    },
+    {
+      "id": "file-lesson-handout",
+      "vertical": "education",
+      "kind": "file",
+      "request": "Make a worksheet on fractions for my 9-year-old.",
+      "says": "One page, 12 questions, answers on page 2.",
+      "surface": "inline",
+      "components": [
+        "Lesson handout"
+      ],
+      "rationale": "A worksheet is printed, so it is a PDF; the card shows page one.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Fractions worksheet",
+          "subtitle": "Primary 3 · 2 pages · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a34",
+              "alt": "Worksheet page 1: 12 fraction questions with pizza pictures",
+              "aspect": "3:4"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open worksheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a35"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a35"
+            }
+          }
+        ],
+        "fallback_text": "A 2-page fractions worksheet for Primary 3 (12 questions, answers on page 2) is in your Library."
+      }
+    },
+    {
+      "id": "file-data-export",
+      "vertical": "data",
+      "kind": "file",
+      "request": "Export last quarter's orders for my accountant.",
+      "says": "2,318 orders in a CSV, one row each.",
+      "surface": "inline",
+      "components": [
+        "Sheet",
+        "Pivot (as file)"
+      ],
+      "rationale": "Thousands of rows only make sense as a file; the card states size and total and downloads it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Q3 orders",
+          "subtitle": "1 Jul–30 Sep · CSV"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "2,318",
+                "label": "Orders"
+              },
+              {
+                "value": "S$350,600",
+                "label": "Revenue"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download CSV",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a36"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopify orders, 1 Jul–30 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Q3 orders export: 2,318 orders, S$350,600 revenue, as a CSV in your Library."
+      }
+    },
+    {
+      "id": "file-scatter",
+      "vertical": "data",
+      "kind": "file",
+      "request": "Is there a link between ad spend and sales by day?",
+      "says": "A loose link: more spend, more sales, but with big outliers.",
+      "surface": "inline",
+      "components": [
+        "Scatter (as file)"
+      ],
+      "rationale": "Scatter plots are not a card chart; the chart is an image in a file and the insight is in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Ad spend vs sales",
+          "subtitle": "Daily · Jul–Sep · 92 days"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a37",
+              "alt": "Scatter plot of daily ad spend against sales, loose upward trend with three high outliers",
+              "aspect": "4:3"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open analysis",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a38"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Correlation 0.41; not proof that ads caused sales."
+          ]
+        },
+        "fallback_text": "Daily ad spend vs sales, Jul–Sep: a loose positive link with three high outliers. The analysis is in your Library."
+      }
+    },
+    {
+      "id": "file-calculator-page",
+      "vertical": "real_estate",
+      "kind": "file",
+      "request": "Make me a calculator to compare renting and buying.",
+      "says": "It's a small page you can play with; it opens in the pane.",
+      "surface": "inline",
+      "components": [
+        "Live page (calculator)"
+      ],
+      "rationale": "A bespoke interactive tool no block covers is a locked live page; the card shows a poster and opens the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Rent vs buy calculator",
+          "subtitle": "Interactive page"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a39",
+              "alt": "Rent vs buy calculator: sliders for price, rent and years, with a break-even chart",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open calculator",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a3a"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Runs on your device only; nothing is sent anywhere."
+          ]
+        },
+        "fallback_text": "A rent vs buy calculator (price, rent, years, break-even) is in your Library."
+      }
+    },
+    {
+      "id": "fail-fares",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Any cheaper flights to Tokyo on 12 Oct?",
+      "says": "I couldn't check prices just now.",
+      "surface": "inline",
+      "components": [
+        "Failed state"
+      ],
+      "rationale": "Failed stands alone with what happened; retry is asking again, so no reply button; amber, never red.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Couldn't check flight prices",
+          "subtitle": "12 Oct · 1 adult · economy"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "failed",
+            "detail": "The fare site didn't respond. Nothing was booked."
+          }
+        ],
+        "fallback_text": "Couldn't check flight prices for 12 Oct: the fare site didn't respond. Nothing was booked."
+      }
+    },
+    {
+      "id": "fail-work-retry",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Did the receipt filing finish?",
+      "says": "It stopped partway; your Gmail sign-in expired.",
+      "surface": "inline",
+      "components": [
+        "Failed state",
+        "Work status"
+      ],
+      "rationale": "A failed Work Unit shows its state bound to the unit and one quiet Retry that acts on exactly that unit.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Filing receipts from Gmail",
+          "subtitle": "Stopped at 212 of about 400"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "failed",
+            "detail": "Gmail sign-in expired. 212 filed; nothing else changed.",
+            "subject": {
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962"
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "work_control",
+              "label": "Retry",
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962",
+              "control": "retry"
+            }
+          }
+        ],
+        "fallback_text": "Receipt filing stopped at 212 of about 400: Gmail sign-in expired. 212 were filed; nothing else changed."
+      }
+    },
+    {
+      "id": "empty-search",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Any 3-room HDB in Bishan under S$500k?",
+      "says": "None right now; the cheapest is S$588k.",
+      "surface": "inline",
+      "components": [
+        "Empty state"
+      ],
+      "rationale": "Empty says so plainly, with the nearest fact as the one next step; no blank card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "No 3-room HDB in Bishan under S$500k",
+          "subtitle": "Checked 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "empty",
+            "detail": "Cheapest listed now is S$588k"
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru and 99.co, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "No 3-room HDB flats in Bishan under S$500k right now; the cheapest listed is S$588k."
+      }
+    },
+    {
+      "id": "partial-sources",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Compare TV prices across the big stores.",
+      "says": "Three of four stores answered; Best Denki's site was down.",
+      "surface": "inline",
+      "components": [
+        "Partial state",
+        "S1 Product options"
+      ],
+      "rationale": "Partial is honest in the subtitle ('3 of 4 stores'); the rows show what is known; the gap is in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sony Bravia 8 II 65\"",
+          "subtitle": "3 of 4 stores checked"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Courts",
+                "secondary": "In stock · delivery Tue",
+                "trailing": "S$3,999",
+                "mark": "pick"
+              },
+              {
+                "label": "Harvey Norman",
+                "secondary": "In stock · delivery Thu",
+                "trailing": "S$4,099"
+              },
+              {
+                "label": "Challenger",
+                "secondary": "Pre-order · 10 Oct",
+                "trailing": "S$4,049"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Store websites, 26 Sep 2026 11:20"
+            }
+          ]
+        },
+        "fallback_text": "Sony Bravia 8 II 65\": Courts S$3,999 (pick), Challenger S$4,049, Harvey Norman S$4,099. Best Denki didn't respond."
+      }
+    },
+    {
+      "id": "stale-portfolio",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What's my portfolio worth?",
+      "says": "About US$84,210 at Friday's close; markets are closed.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Stale state",
+        "F2 Portfolio summary"
+      ],
+      "rationale": "Stale is stated with its time in the subtitle, not coloured; the value still leads.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Portfolio",
+          "subtitle": "As of Fri 26 Sep close · markets closed"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "US$84,210",
+                "label": "Value"
+              },
+              {
+                "value": "−0.6%",
+                "label": "This week"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "IBKR positions, 26 Sep 2026 close"
+            }
+          ]
+        },
+        "fallback_text": "Portfolio US$84,210 as of Friday's close, down 0.6% this week."
+      }
+    }
+  ]
+}
