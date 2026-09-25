@@ -102,7 +102,7 @@ validates each one against the contract and these laws.
 | Compare plans | rows(plan, the one difference, price, pick) | inline | a 6-column grid on a phone |
 | Brief | text(summary, ≤3 sections) → action(open the document) | page | more than a page (make a document) |
 | **Data:** KPIs | numbers(metric, change) → chart(bar or line, highlight the named period) | inline | sparklines; filter chips |
-| Shares of a whole | rows(largest first: label, share % in secondary, amount trailing; they add up to the total) | inline ≤3 / page | a pie or donut; a bar chart of shares |
+| Shares of a whole | rows(largest first: label, share % in secondary, amount trailing; they add up to the total) + the total in a number or the subtitle [G24] | inline ≤3 / page | a pie or donut; a bar chart of shares; a Total row inside the share rows |
 | Ranking (not a whole) | chart(bar, sorted, highlight the leader) | inline | a pie or donut |
 | Breakdown | table(≤4 columns, total row last, numbers `align: end`) | page | more than 10 rows (use a sheet) |
 | Scatter, heatmap, big pivot | image in a file → action(open) | inline | pretending a line or bar chart shows it |
@@ -122,7 +122,7 @@ workaround and nothing else: the app draws the richer form once the backend adds
 | numbers4 | `numbers`, 3 items at most, page only [G21] | `data-sales-collections` |
 | bar | `chart: "bar"`, unit, `highlight_index` on the one you name; the caption is your sentence [G19] | `money-spending-month` |
 | line | `chart: "line"`; a real zero is `0`, a day not in yet is `null` | `data-sales-collections`, `partial-days` |
-| share | `rows`, largest first, share % in secondary, amount trailing, adding up to the total. The app draws the proportion bar above them [G18]. Never a donut or pie | `data-channel-share` |
+| share | `rows`, largest first, share % in secondary, amount trailing, adding up to the total. The app draws the proportion bar above them [G18] and a Total row under them [G24]; until that field exists the total goes in a `numbers` item or `header.subtitle`, never as a share row. Never a donut or pie | `data-channel-share`, `money-spending-month` |
 | progress | the budget goes in a number label ("Left of S$5,000") [G9] | `money-spending-month` |
 | table | `table`, ≤4 columns; a total is the last row, labelled Total [G4] | `data-table-small` |
 | text | `text` summary + sections; steps are numbered paragraphs [G5] | `docs-research-brief` |
@@ -243,5 +243,5 @@ last changed in commit `db2db1ab`, read at origin/main `7c899530`, sha256
 `470aa1aec345587faaa4004ee00a499f3044540dfbde1126ff130072fdd68f87`. The checker refuses a copy whose hash differs from
 the one recorded in the examples file, so a schema change has to be re-copied on purpose. Where the contract cannot
 express an example cleanly (row state meanings, grouped rows, delta, totals, ordered steps, as-of, row image or link,
-share bar, chart caption, timed status steps, a failed block's retry), the workaround used above is the rule until the
-backend adds the field. The gaps are numbered G1–G22 in the evidence file `catalogue-design/playbook/coverage.md`.
+share bar, a share total, chart caption, timed status steps, a failed block's retry), the workaround used above is the rule until the
+backend adds the field. The gaps are numbered G1–G24 in the evidence file `catalogue-design/playbook/coverage.md`.

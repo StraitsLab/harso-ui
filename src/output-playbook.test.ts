@@ -72,7 +72,7 @@ describe("agent output playbook examples", () => {
     ["truth: draft paraphrased in the fallback", "prod-email-draft", (e: Example) => { e.document.fallback_text = "Draft to Nichol: Tuesday works. Not sent."; }, /word for word/],
     ["truth: fallback drops a number", "money-mortgage", (e: Example) => { e.document.fallback_text = "About S$4,268 a month."; }, /fallback_text leaves out/],
     ["truth: cart contents missing", "shop-cart-summary", (e: Example) => { e.document.blocks.splice(1, 1); }, /list the contents/],
-    ["data: categories do not add up to Spent", "money-spending-month", (e: Example) => { e.document.blocks[2].items.splice(4); }, /rows add up to S\$3200\.00, not the Spent of S\$4,280/],
+    ["data: categories do not add up to Spent", "money-spending-month", (e: Example) => { e.document.blocks[2].items.splice(4); }, /rows add up to S\$3690\.00, not the Spent of S\$4,280/],
     ["truth: live page promised in the pane", "file-calculator-page", (e: Example) => { e.says = "It opens in the pane."; }, /live pages do not open in the app yet/],
     ["turn: failed card with no final sentence", "fail-fares", (e: Example) => { e.says = ""; }, /ends the turn after present_output/],
     ["stale: freshness not declared", "money-mortgage", (e: Example) => { delete e.fresh; }, /declare fresh: true or false/],
@@ -91,6 +91,7 @@ describe("agent output playbook examples", () => {
     // B0 v4 reconciliation (lead ruling 2026-09-26: no donut; a proportion bar above sorted rows).
     ["shares: not largest first", "data-channel-share", (e: Example) => { e.document.blocks[0].items.reverse(); }, /shares go largest first/],
     ["shares: do not add up to 100%", "money-spending-month", (e: Example) => { e.document.blocks[2].items[0].secondary = "40%"; }, /shares add up to 113%/],
+    ["shares: a Total row sent as a share row (G24)", "money-spending-month", (e: Example) => { e.document.blocks[2].items.push({ label: "Total", secondary: "100%", trailing: "S$4,280" }); }, /shares go largest first/],
     ["shares: a donut on the card", "data-channel-share", (e: Example) => { e.document.header.subtitle = "Donut by channel"; }, /no donut or pie/],
     ["partial: a missing day sent as zero", "partial-days", (e: Example) => { e.document.blocks[0].visual.series[0].values[13] = "0"; }, /not in yet is null, never 0/],
   ])("catches %s", (_name, id, mutate, expected) => {
