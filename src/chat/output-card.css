@@ -35,6 +35,22 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Key numbers (Sketch 'Output/Light/Key numbers/2-up', 04 Spending · inline): value over label, left-aligned cells.
+   iOS 28 semibold value / 13 label map onto the kit's desktop scale as display (22) semibold / chrome (13) secondary. */
+.harso-kit .hkc-output-card-numbers {
+  list-style: none; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--hk-space-4);
+}
+.harso-kit .hkc-output-card-number { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.harso-kit .hkc-output-card-number-value {
+  font-size: var(--hk-text-display); font-weight: 600; line-height: 1.2;
+  font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+}
+.harso-kit .hkc-output-card-number-label { font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
+
+/* Short text (06 Research brief · inline): plain body prose, held to ~4 lines by the card's character budget. */
+.harso-kit .hkc-output-card-text { font-size: var(--hk-text-body); line-height: 1.5; }
+
 .harso-kit .hkc-output-card-fallback { font-size: var(--hk-text-body); line-height: 1.5; white-space: pre-line; }
 
 .harso-kit .hkc-output-card .hk-button { min-height: 44px; height: auto; border: 0; white-space: normal; }

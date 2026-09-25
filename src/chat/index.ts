@@ -23,7 +23,7 @@ export { HarsoArtifact, type HarsoArtifactProps, type HarsoArtifactMode } from "
 export { HarsoWorkResult, type HarsoWorkResultProps, type HarsoWorkStatus, type HarsoWorkStep, type HarsoWorkStepState, type HarsoWorkArtifact } from "./work-result";
 
 export { HarsoOutputDetail, type HarsoOutputDetailProps, type HarsoOutputAction, type HarsoOutputPreviewState } from "./output-detail";
-export { HarsoOutputCard, HARSO_OUTPUT_CARD_CAPS, type HarsoOutputCardProps, type HarsoOutputCardCaps, type HarsoOutputDocument, type HarsoOutputDocumentDetails, type HarsoOutputHeader, type HarsoOutputBlock, type HarsoOutputRowsBlock, type HarsoOutputRow, type HarsoOutputActionBlock, type HarsoOutputActionSpec, type HarsoOutputOtherBlock, type HarsoOutputSource } from "./output-card";
+export { HarsoOutputCard, HARSO_OUTPUT_CARD_CAPS, type HarsoOutputCardProps, type HarsoOutputCardCaps, type HarsoOutputDocument, type HarsoOutputDocumentDetails, type HarsoOutputHeader, type HarsoOutputBlock, type HarsoOutputRowsBlock, type HarsoOutputRow, type HarsoOutputNumbersBlock, type HarsoOutputNumber, type HarsoOutputTextBlock, type HarsoOutputTextSection, type HarsoOutputActionBlock, type HarsoOutputActionSpec, type HarsoOutputOtherBlock, type HarsoOutputSource } from "./output-card";
 
 // Lane 6: runtime
 export { HARSO_STREAM_VERSION, type HarsoEvent, type HarsoTransport } from "./runtime/stream-types";
