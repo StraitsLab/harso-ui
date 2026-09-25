@@ -7,6 +7,8 @@ export default defineConfig({
   testMatch: ["boundaryless-*.spec.ts", "harso-*.spec.ts"],
   workers: 4,
   timeout: process.env.CI ? 180_000 : 120_000,
+  // Bound a whole shard run so a stuck shard fails in minutes instead of running into the job limit.
+  globalTimeout: process.env.CI ? 25 * 60_000 : 0,
   reporter: "list",
   snapshotPathTemplate: "{testDir}/snapshots/{platform}/{arg}{ext}",
   use: { ...devices["Desktop Chrome"], channel: process.env.HARSO_UI_BROWSER === "chromium" ? undefined : "chrome", baseURL: `http://127.0.0.1:${port}`, viewport: { width: 1512, height: 1040 }, trace: "retain-on-failure" },

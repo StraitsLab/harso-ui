@@ -2,6 +2,9 @@ import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import catalogue from "../src/catalog.json" with { type: "json" };
 
+// Each test owns its page and output files, so parallel mode lets CI spread this slow file across workers and shards.
+test.describe.configure({ mode: "parallel" });
+
 for (const appearance of ["light", "dark"] as const) {
   for (const palette of ["clean", "cozy"] as const) {
     for (const width of [390, 1440]) {

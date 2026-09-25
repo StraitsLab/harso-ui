@@ -23,17 +23,25 @@ export function Persona({ state = "idle", variant = "obsidian", size = 128, paus
   const mode = useRef(playback);
   mode.current = playback;
   const previous = useRef<"playing" | "paused" | "stopped">("stopped");
+  const ready = useRef(false);
   const callbacks = useRef({ onReady, onPlay, onPause, onStop });
   callbacks.current = { onReady, onPlay, onPause, onStop };
+  // The CSS animation can start before the first frame callback, so whichever comes first reports readiness.
+  const reportReady = () => {
+    if (ready.current) return;
+    ready.current = true;
+    callbacks.current.onReady?.();
+  };
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       if (mode.current === "paused" && previous.current === "stopped") previous.current = "paused";
-      callbacks.current.onReady?.();
+      reportReady();
     });
     return () => {
       cancelAnimationFrame(frame);
       if (previous.current !== "stopped") callbacks.current.onStop?.();
       previous.current = "stopped";
+      ready.current = false;
     };
   }, []);
   useEffect(() => {
@@ -52,6 +60,7 @@ export function Persona({ state = "idle", variant = "obsidian", size = 128, paus
     onAnimationStart?.(event);
     if (event.target instanceof HTMLElement && event.target.classList.contains("hk-persona-motion") && playback !== "stopped" && previous.current !== playback) {
       previous.current = playback;
+      reportReady();
       if (playback === "playing") callbacks.current.onPlay?.();
     }
   }}><span className="hk-persona-motion" aria-hidden="true"><span className="hk-persona-layer" /><span className="hk-persona-layer" /><span className="hk-persona-layer" /></span></div>;

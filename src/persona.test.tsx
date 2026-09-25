@@ -56,6 +56,13 @@ describe("original Persona", () => {
     view.unmount();
     expect(stop).toHaveBeenCalledOnce();
   });
+  it("reports readiness before play when the CSS animation starts before the first frame", async () => {
+    const events: string[] = [];
+    render(<StrictMode><Persona onReady={() => events.push("ready")} onPlay={() => events.push("play")} /></StrictMode>);
+    fireEvent.animationStart(screen.getByRole("img").querySelector(".hk-persona-motion")!);
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    expect(events).toEqual(["ready", "play"]);
+  });
   it("does not invent play events for initially paused or sleeping visuals", () => {
     const play = vi.fn();
     const view = render(<Persona paused onPlay={play} />);
