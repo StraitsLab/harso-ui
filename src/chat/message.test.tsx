@@ -93,6 +93,19 @@ describe("Harso messages and MessageActions", () => {
     expect(screen.getByText("1 of 2")).toBeInTheDocument();
   });
 
+  test("action and branch bars are named groups, so their labels are permitted (axe aria-prohibited-attr)", async () => {
+    render(<Example />);
+    const user = within(screen.getByRole("article", { name: "You" }));
+    expect(user.getByRole("group", { name: "Message actions" })).toContainElement(user.getByRole("button", { name: "Edit message" }));
+    expect(within(screen.getByRole("article", { name: "Harso" })).getByRole("group", { name: "Message actions" })).toContainElement(screen.getByRole("button", { name: "Regenerate response" }));
+    fireEvent.click(user.getByRole("button", { name: "Edit message" }));
+    fireEvent.change(screen.getByRole("textbox", { name: "Edit your message" }), { target: { value: "Changed question" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save & send" }));
+    const branches = await screen.findByRole("group", { name: "Message branches" });
+    expect(branches).toContainElement(screen.getByRole("button", { name: "Previous branch" }));
+    expect(branches.closest('[role="group"][aria-label="Message actions"]')).not.toBeNull();
+  });
+
   test("shows a streaming cursor until the adapter finishes", async () => {
     render(<Example seed={[]} options={{ response: "First second third", tokenDelayMs: 150, reasoning: false }} />);
     fireEvent.change(screen.getByRole("textbox"), { target: { value: "Hello" } });

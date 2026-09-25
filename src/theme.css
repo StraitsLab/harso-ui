@@ -1,3 +1,8 @@
+/* The kit is the one font authority (brand: Instrument Sans for the interface, Geist Mono for evidence).
+   Consumers get both faces by importing @harso/ui/styles.css and must not declare their own font-family. */
+@import "@fontsource-variable/instrument-sans/wght.css";
+@import "@fontsource-variable/geist-mono/wght.css";
+
 .harso-kit {
   color-scheme: light;
   /* Boundaryless tokens — derived from the approved concept rendering
@@ -27,8 +32,8 @@
   --hk-inverse: #ffffff;
   --hk-glass: rgb(255 255 255 / .92);
   --hk-shadow: 0 14px 40px rgb(20 24 32 / .07), 0 1px 2px rgb(20 24 32 / .04);
-  --hk-font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-  --hk-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  --hk-font: "Instrument Sans Variable", sans-serif;
+  --hk-mono: "Geist Mono Variable", ui-monospace, monospace;
   /* Boundaryless v3 type scale (design/DIRECTION.md rule 4): 11 caps · 12 meta · 13 chrome · 14 body · 15 title · 22 display.
      Legacy names stay as aliases so consumers keep compiling; new code uses the v3 names. */
   --hk-text-caps: 11px;

@@ -23,7 +23,7 @@ export function HarsoMessageActions({ user = false, capabilities, copyToClipboar
   const feedback = useAuiState(state => state.message.metadata.submittedFeedback?.type);
   const speaking = useAuiState(state => state.message.speech !== undefined);
   return (
-    <ActionBarPrimitive.Root className="hkc-message-actions" hideWhenRunning={false} autohide="never" aria-label="Message actions">
+    <ActionBarPrimitive.Root className="hkc-message-actions" hideWhenRunning={false} autohide="never" role="group" aria-label="Message actions">
       <HarsoCopyAction copyToClipboard={copyToClipboard} />
       {user ? (can.edit && <ActionBarPrimitive.Edit aria-label="Edit message" title="Edit"><PencilSimple size={16} /></ActionBarPrimitive.Edit>) : <>
         {can.feedback && <ActionBarPrimitive.FeedbackPositive aria-label="Helpful" title="Helpful" aria-pressed={feedback === "positive"}><ThumbsUp size={16} /></ActionBarPrimitive.FeedbackPositive>}
@@ -31,7 +31,7 @@ export function HarsoMessageActions({ user = false, capabilities, copyToClipboar
         {can.regenerate && <ActionBarPrimitive.Reload aria-label="Regenerate response" title="Regenerate"><ArrowsClockwise size={16} /></ActionBarPrimitive.Reload>}
         {can.speech && (speaking ? <ActionBarPrimitive.StopSpeaking aria-label="Stop reading" title="Stop reading"><Stop size={16} /></ActionBarPrimitive.StopSpeaking> : <ActionBarPrimitive.Speak aria-label="Read aloud" title="Read aloud"><SpeakerHigh size={16} /></ActionBarPrimitive.Speak>)}
       </>}
-      {can.branches && <BranchPickerPrimitive.Root className="hkc-message-branches" hideWhenSingleBranch aria-label="Message branches">
+      {can.branches && <BranchPickerPrimitive.Root className="hkc-message-branches" hideWhenSingleBranch role="group" aria-label="Message branches">
         <BranchPickerPrimitive.Previous aria-label="Previous branch" title="Previous branch"><CaretLeft size={16} /></BranchPickerPrimitive.Previous>
         <span><BranchPickerPrimitive.Number /> of <BranchPickerPrimitive.Count /></span>
         <BranchPickerPrimitive.Next aria-label="Next branch" title="Next branch"><CaretRight size={16} /></BranchPickerPrimitive.Next>
