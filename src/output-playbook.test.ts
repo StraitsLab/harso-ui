@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 // @ts-expect-error - plain ESM script without type declarations
-import { checkPlaybook, checkPlaybookData, lawErrors, periodErrors, projectSurface, requestedPeriod, schemaErrors, semanticErrors, specificLink, TIME_SENSITIVE_COMPONENTS, weekdayErrors } from "../scripts/check-output-playbook.mjs";
+import { checkPlaybook, checkPlaybookData, FRESH_EXAMPLES, lawErrors, periodErrors, projectSurface, requestedPeriod, schemaErrors, semanticErrors, specificLink, TIME_SENSITIVE_COMPONENTS, weekdayErrors } from "../scripts/check-output-playbook.mjs";
 import playbookMarkdown from "../docs/agent/output-playbook.md?raw";
 import examplesFile from "../docs/agent/output-playbook.examples.json";
 import schemaFile from "../docs/agent/schema/output-blocks.v1.json";
@@ -77,6 +77,12 @@ describe("agent output playbook examples", () => {
     ["turn: failed card with no final sentence", "fail-fares", (e: Example) => { e.says = ""; }, /ends the turn after present_output/],
     ["stale: freshness not declared", "money-mortgage", (e: Example) => { delete e.fresh; }, /declare fresh: true or false/],
     ["truth: forecast outside next week (whole-file check)", "weather-week", (e: Example) => { e.document.header.subtitle = "13–19 Oct · as of 09:00"; }, /outside "next week"/],
+    // Review round 2 counterexamples: each returned zero findings before the fix.
+    ["stale: open-now clinics flagged not fresh", "places-nearby-map", (e: Example) => { e.fresh = false; e.document.header.subtitle = "Open now"; }, /verdict for places-nearby-map is true/],
+    ["stale: current menu prices flagged not fresh", "food-menu", (e: Example) => { e.fresh = false; }, /verdict for food-menu is true/],
+    ["stale: current premiums flagged not fresh (generic Comparison)", "docs-compare-plans", (e: Example) => { e.fresh = false; }, /verdict for docs-compare-plans is true/],
+    ["stale: a stable answer flagged fresh", "money-mortgage", (e: Example) => { e.fresh = true; e.document.header.subtitle += " · as of 10:00"; }, /verdict for money-mortgage is false/],
+    ["stale: right-now wording on a stable card", "shop-refund", (e: Example) => { e.says = "It's currently on your card."; }, /"currently" is true only right now/],
     ["voice: exclamation", "shop-delivery", (e: Example) => { e.says = "Great news!"; }, /voice/],
     ["voice: banned word", "docs-research-brief", (e: Example) => { e.document.blocks[0].summary = "Charging is now seamless."; }, /voice/],
     ["plain text: markdown", "edu-glossary", (e: Example) => { e.document.blocks[0].items[0].label = "**P/E ratio**"; }, /markup/],
@@ -115,6 +121,17 @@ describe("agent output playbook examples", () => {
     expect(periodErrors(example, REFERENCE).join()).toMatch(/2026-10-13 is outside "next week" \(2026-09-28 to 2026-10-04/);
   });
 
+  test("a dated 'as of' stamp is when the data was read, not the period (review round 2)", () => {
+    const example = byId("weather-week");
+    example.document.header.subtitle = "Mon 28 Sep–Sun 4 Oct · as of 26 Sep, 09:00";
+    expect(periodErrors(example, REFERENCE)).toEqual([]);
+    expect(fileFindings(example)).toEqual([]);
+    // The stamp is ignored, the period is not: a wrong week with a dated stamp is still caught.
+    example.document.header.subtitle = "Mon 5 Oct–Sun 11 Oct · as of 26 Sep, 09:00";
+    expect(periodErrors(example, REFERENCE).join()).toMatch(/2026-10-05 is outside "next week"/);
+    expect(periodErrors(example, REFERENCE).join()).not.toMatch(/2026-09-26 is outside/);
+  });
+
   test("catches a finished-month question about a month that has not ended", () => {
     const example = byId("money-spending-month");
     expect(periodErrors(example, REFERENCE)).toEqual([]);
@@ -130,6 +147,21 @@ describe("agent output playbook examples", () => {
     for (const example of cards.filter(item => item.components.some(name => TIME_SENSITIVE_COMPONENTS.has(name)))) {
       expect(example.fresh, example.id).toBe(true);
     }
+  });
+
+  test("freshness is decided per example, independent of the component list (review round 2)", () => {
+    const cards = playbook.examples.filter(example => example.kind !== "text");
+    for (const example of cards) expect(example.fresh, example.id).toBe(FRESH_EXAMPLES.has(example.id));
+    // The round-2 cases by name: current menu prices, current premiums, open-now clinics.
+    for (const id of ["food-menu", "docs-compare-plans", "places-nearby-map", "places-cafe", "places-hours", "shop-compare-phones", "jobs-posting", "empty-search"]) {
+      expect(FRESH_EXAMPLES.has(id), id).toBe(true);
+    }
+    // Some of them use only components outside TIME_SENSITIVE_COMPONENTS: the verdict list alone protects them.
+    expect(byId("docs-compare-plans").components.some(name => TIME_SENSITIVE_COMPONENTS.has(name))).toBe(false);
+    // An unknown id in the verdict list is a finding, so the list cannot rot.
+    const copy = structuredClone(examplesFile as any);
+    copy.examples = copy.examples.filter((item: Example) => item.id !== "food-menu");
+    expect(checkPlaybookData(copy, schema, SCHEMA_SHA256).findings.join()).toMatch(/FRESH_EXAMPLES names food-menu/);
   });
 
   test("links open a specific page, never a home page or a placeholder", () => {

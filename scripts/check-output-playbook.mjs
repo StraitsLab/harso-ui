@@ -221,9 +221,11 @@ const BANNED = /\b(?:seamless(?:ly)?|effortless(?:ly)?|magic(?:al)?|delve|superc
 const SOURCE_IN_TEXT = /(https?:\/\/|www\.|\bsource:|\baccording to\b)/i;
 const ARTIFACT_VERBS = new Set(["open_artifact", "download_artifact"]);
 /**
- * Catalogue components whose data goes stale (prices, quotes, availability, scores, weather, flights, balances, news).
- * An example that uses one must declare `fresh: true` and stamp the subtitle; `fresh` is required on every card and
- * file, so leaving it out, or setting it false, cannot exempt one of these.
+ * Catalogue components whose data goes stale (prices, quotes, availability, opening, scores, weather, flights,
+ * balances, news). An example that uses one must declare `fresh: true` and stamp the subtitle; `fresh` is required on
+ * every card and file, so leaving it out, or setting it false, cannot exempt one of these. This list is a floor, not the
+ * classification: a generic component (Comparison, Empty state) can carry current prices too, so the test pins the
+ * fresh verdict of every example by id, and LIVE_WORDS below catches an "open now" answer whatever its components.
  */
 export const TIME_SENSITIVE_COMPONENTS = new Set([
   "F1 Balance / net worth", "Balance / net worth", "F2 Portfolio summary", "F3 Stock / crypto quote", "F4 Key stats grid",
@@ -232,7 +234,28 @@ export const TIME_SENSITIVE_COMPONENTS = new Set([
   "S11 Cart / checkout summary", "S13 Delivery tracking", "R1 Listing card", "R2 Listing results", "R3 Map + listings",
   "J1 Job results", "Flight options", "Flight status / disruption", "Stay comparison", "Single hotel / stay detail",
   "Reservation", "Current + forecast", "Severe-weather alert", "Scoreboard", "Standings", "Fixture list",
-  "Story cluster (brief)", "Story timeline",
+  "Story cluster (brief)", "Story timeline", "Place card", "Opening hours", "Menu", "Map with pins",
+]);
+/** Words that assert something is true right now (open, in stock, listed): the answer is time-sensitive. */
+const LIVE_WORDS = /\b(?:open now|open until|closes at|in stock|sold out|right now|listed now|available now|seats? left|currently)\b/i;
+/** The acquisition stamp ("as of 26 Sep, 09:00") says when the data was read, not which dates the answer covers. */
+const AS_OF_STAMP = /\bas of\b[^·]*/gi;
+/**
+ * The freshness verdict for every example, decided by hand, one id at a time: these answers hold prices,
+ * availability, opening, quotes, scores, weather or news read today. Every other card and file is stable (a finished
+ * period, a calculation, a record, a plan). The checker compares each example's `fresh` flag with this list, so
+ * flipping a flag, or adding a time-sensitive example without deciding, is a finding whatever its components are.
+ */
+export const FRESH_EXAMPLES = new Set([
+  "money-net-worth", "money-stock-quote", "money-portfolio", "money-transfer-quote", "money-key-stats",
+  "money-stock-compare", "money-transfer-tracking", "shop-vacuum-options", "shop-product-detail",
+  "shop-compare-phones", "shop-price-history", "shop-price-watch", "shop-delivery", "shop-cart-summary",
+  "shop-buyers-guide", "shop-deal", "home-listing-results", "home-listing-card", "home-rent-listings", "jobs-results",
+  "jobs-posting", "travel-flights", "travel-stay-areas", "travel-hotel-detail", "travel-flight-status", "places-cafe",
+  "places-dinner-options", "places-hours", "places-nearby-map", "food-menu", "weather-now", "weather-week",
+  "weather-alert", "sports-score", "sports-standings", "sports-fixtures", "news-brief", "news-timeline",
+  "news-headlines", "health-sleep", "docs-compare-plans", "data-stale", "empty-search", "partial-sources",
+  "stale-portfolio",
 ]);
 /** "as of" followed by a clock time or a market close: a date alone does not say how old a price is. */
 const AS_OF = /\bas of\b[^·]*(?:\b\d{1,2}:\d{2}\b|\bclose\b)/i;
@@ -347,8 +370,11 @@ export function lawErrors(example) {
     if (![action?.primary, action?.secondary].some(verb => verb && ARTIFACT_VERBS.has(verb.kind))) push("file", "a file example opens or downloads the artifact");
   }
   if (typeof example.fresh !== "boolean") push("stale", "declare fresh: true or false (is the data time-sensitive?)");
+  else if (example.fresh !== FRESH_EXAMPLES.has(example.id)) push("stale", `fresh is ${example.fresh}, but the playbook's verdict for ${example.id} is ${FRESH_EXAMPLES.has(example.id)} (FRESH_EXAMPLES)`);
   const staleComponents = (example.components ?? []).filter(name => TIME_SENSITIVE_COMPONENTS.has(name));
   if (example.fresh !== true && staleComponents.length) push("stale", `${staleComponents.join(", ")} is time-sensitive, so fresh must be true`);
+  const liveText = [example.says ?? "", document.fallback_text, ...visibleStrings(document).map(([, text]) => text)].find(text => LIVE_WORDS.test(text));
+  if (example.fresh !== true && liveText) push("stale", `"${liveText.match(LIVE_WORDS)[0]}" is true only right now, so fresh must be true`);
   if (example.fresh === true && !AS_OF.test(document.header.subtitle ?? "")) push("stale", "time-sensitive data says \"as of HH:MM\" (or a market close) in the subtitle");
   for (const verb of [action?.primary, action?.secondary]) {
     if (verb?.kind === "open_url" && !specificLink(verb.url)) push("truth", `action "${verb.label}" opens a site's home page; link to the specific page`);
@@ -429,7 +455,8 @@ export function periodErrors(example, referenceDate) {
   const year = today.getUTCFullYear();
   const period = requestedPeriod(example.request ?? "", referenceDate);
   if (period && header) {
-    const text = `${header.title} ${header.subtitle ?? ""}`;
+    // Only the dates the answer covers count; the "as of" stamp is when the data was read (usually today).
+    const text = `${header.title} ${header.subtitle ?? ""}`.replace(AS_OF_STAMP, "");
     const dates = [];
     for (const [, first, second, month] of text.matchAll(/\b(\d{1,2})(?:[–-](\d{1,2}))? (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/g)) {
       for (const date of [first, second].filter(Boolean)) dates.push(new Date(Date.UTC(year, MONTH_NAMES.findIndex(name => name.startsWith(month)), Number(date))));
@@ -462,6 +489,7 @@ export function checkPlaybookData(playbook, schema, sha, schemaFile = SCHEMA_PAT
   if (playbook.schema?.sha256 !== sha) findings.push(`schema: ${schemaFile} sha256 ${sha} differs from the recorded ${playbook.schema?.sha256}`);
   const examples = playbook.examples ?? [];
   const ids = new Set();
+  for (const id of FRESH_EXAMPLES) if (!examples.some(example => example.id === id && example.kind !== "text")) findings.push(`playbook: FRESH_EXAMPLES names ${id}, which is not a card or file example`);
   for (const example of examples) {
     const where = `example ${example.id ?? "?"}`;
     const report = message => findings.push(`${where}: ${message}`);

@@ -150,9 +150,9 @@ progress, needs you, problem. You never choose red.
 | Working / watching / scheduled | "112 of about 400 checked", "since 9:40 AM", "rings at 19:42" | status + subject + one quiet control |
 | Row states | the word that fits: "Overdue", "Refunded", "Signed", "Not opened" | `status: overdue/paid` where they fit; otherwise the word goes in `trailing` or `secondary` until the contract adds meanings |
 
-Anything live or time-sensitive (prices, availability, quotes, balances, scores, fixtures, weather, flights, news)
-carries "as of HH:MM" in the subtitle, or "as of <day> close" for a market that is closed. A date alone does not say
-how old a price is.
+Anything live or time-sensitive (prices, availability, opening, quotes, balances, scores, fixtures, weather, flights,
+news) carries "as of HH:MM" in the subtitle, or "as of <day> close" for a market that is closed. That includes a
+menu's prices, a plan's premiums and an "open now" answer. A date alone does not say how old a price is.
 
 ## Dates
 
@@ -195,8 +195,11 @@ Harso's voice: calm system first, trusted colleague second.
   never about the current month. The fallback keeps every number, and drafted text word for word. Nothing says a live
   page opens in the app.
 - **Data:** charts state a unit; a complete list of amounts adds up to the total it sits under.
-- **Staleness:** every card and file declares `fresh`. Examples using a time-sensitive catalogue component must set it,
-  and a fresh subtitle carries "as of" with a clock time or a market close.
+- **Staleness:** every card and file declares `fresh`, and the checker holds a per-example verdict (`FRESH_EXAMPLES`)
+  that the flag must match, so a time-sensitive answer cannot opt out whatever components it uses. Time-sensitive
+  components and "right now" wording ("open now", "in stock", "currently") also force `fresh: true`. A fresh subtitle
+  carries "as of" with a clock time or a market close. The "as of" stamp is when the data was read; the date check
+  ignores it and checks only the dates the answer covers.
 
 What it cannot check: whether a link resolves or shows the promised results (nothing is fetched), whether the figures
 are real (they are illustrative), and how the app draws the card. Those need a reviewer, or a live run.

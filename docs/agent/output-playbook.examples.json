@@ -914,7 +914,7 @@
       "request": "iPhone 17 or Pixel 11 for photos?",
       "says": "For photos, the Pixel wins on zoom; the iPhone on video.",
       "surface": "page",
-      "fresh": false,
+      "fresh": true,
       "components": [
         "S4 Comparison"
       ],
@@ -924,7 +924,7 @@
         "major": 1,
         "header": {
           "title": "iPhone 17 vs Pixel 11",
-          "subtitle": "Camera differences only"
+          "subtitle": "Camera differences only · as of 10:05"
         },
         "blocks": [
           {
@@ -978,7 +978,7 @@
               "label": "DXOMARK camera scores, Sep 2026"
             },
             {
-              "label": "Apple and Google spec pages"
+              "label": "Apple and Google Singapore store prices, 26 Sep 2026 10:05"
             }
           ]
         },
@@ -1746,7 +1746,7 @@
       "request": "Tell me about the Grab role.",
       "says": "It's hybrid, reports to the Head of Design, and closes on 10 Oct.",
       "surface": "page",
-      "fresh": false,
+      "fresh": true,
       "components": [
         "J2 Job posting",
         "J9 Fit / match summary"
@@ -1757,7 +1757,7 @@
         "major": 1,
         "header": {
           "title": "Lead Product Designer · Grab",
-          "subtitle": "Hybrid · Singapore · full-time"
+          "subtitle": "Hybrid · Singapore · full-time · as of 08:30"
         },
         "blocks": [
           {
@@ -1805,7 +1805,7 @@
         "details": {
           "sources": [
             {
-              "label": "Grab careers posting",
+              "label": "Grab careers posting, 26 Sep 2026 08:30",
               "url": "https://grab.careers/"
             }
           ]
@@ -2499,7 +2499,7 @@
       "request": "Is there a quiet cafe near me to work from?",
       "says": "Apartment Coffee is 6 minutes away and quiet on weekdays.",
       "surface": "inline",
-      "fresh": false,
+      "fresh": true,
       "components": [
         "Place card",
         "Opening hours"
@@ -2510,7 +2510,7 @@
         "major": 1,
         "header": {
           "title": "Apartment Coffee",
-          "subtitle": "Cafe · open until 18:00 · 4.7★"
+          "subtitle": "Cafe · open until 18:00 · 4.7★ · as of 14:20"
         },
         "blocks": [
           {
@@ -2553,7 +2553,7 @@
         "details": {
           "sources": [
             {
-              "label": "Google Maps, 26 Sep 2026"
+              "label": "Google Maps, 26 Sep 2026 14:20"
             }
           ]
         },
@@ -2679,7 +2679,7 @@
       "request": "What are the Botanic Gardens' hours?",
       "says": "The gardens stay open late; the Orchid Garden closes earlier.",
       "surface": "inline",
-      "fresh": false,
+      "fresh": true,
       "components": [
         "Opening hours"
       ],
@@ -2689,7 +2689,7 @@
         "major": 1,
         "header": {
           "title": "Singapore Botanic Gardens",
-          "subtitle": "Every day · gardens free"
+          "subtitle": "Every day · gardens free · as of 09:00"
         },
         "blocks": [
           {
@@ -2710,7 +2710,7 @@
         "details": {
           "sources": [
             {
-              "label": "NParks",
+              "label": "NParks, 26 Sep 2026 09:00",
               "url": "https://www.nparks.gov.sg/sbg"
             }
           ]
@@ -2922,7 +2922,7 @@
       "request": "What's good on the Burnt Ends menu?",
       "says": "The sanger and the leeks are the ones people come back for.",
       "surface": "inline",
-      "fresh": false,
+      "fresh": true,
       "components": [
         "Menu"
       ],
@@ -2932,7 +2932,7 @@
         "major": 1,
         "header": {
           "title": "Burnt Ends · highlights",
-          "subtitle": "Modern barbecue · Dempsey"
+          "subtitle": "Modern barbecue · Dempsey · as of 10:00"
         },
         "blocks": [
           {
@@ -2967,7 +2967,7 @@
         "details": {
           "sources": [
             {
-              "label": "Burnt Ends menu and Google reviews, Sep 2026"
+              "label": "Burnt Ends menu and Google reviews, 26 Sep 2026 10:00"
             }
           ]
         },
@@ -4569,7 +4569,7 @@
       "request": "Which health insurance plan should I pick?",
       "says": "Plan B covers the most for the premium.",
       "surface": "inline",
-      "fresh": false,
+      "fresh": true,
       "components": [
         "Comparison"
       ],
@@ -4579,7 +4579,7 @@
         "major": 1,
         "header": {
           "title": "Integrated Shield plans",
-          "subtitle": "Age 35 · private hospital cover"
+          "subtitle": "Age 35 · private hospital cover · as of 10:30"
         },
         "blocks": [
           {
@@ -4607,7 +4607,7 @@
         "details": {
           "sources": [
             {
-              "label": "MOH comparison of Integrated Shield Plans",
+              "label": "MOH comparison of Integrated Shield Plans, 26 Sep 2026 10:30",
               "url": "https://www.moh.gov.sg/"
             }
           ],
@@ -5715,7 +5715,7 @@
       "request": "Any 3-room HDB in Bishan under S$500k?",
       "says": "Nothing fits right now.",
       "surface": "inline",
-      "fresh": false,
+      "fresh": true,
       "components": [
         "Empty state"
       ],
@@ -5725,7 +5725,7 @@
         "major": 1,
         "header": {
           "title": "No 3-room HDB in Bishan under S$500k",
-          "subtitle": "Checked 26 Sep"
+          "subtitle": "As of 10:50 · PropertyGuru and 99.co"
         },
         "blocks": [
           {
@@ -5737,7 +5737,7 @@
         "details": {
           "sources": [
             {
-              "label": "PropertyGuru and 99.co, 26 Sep 2026"
+              "label": "PropertyGuru and 99.co, 26 Sep 2026 10:50"
             }
           ]
         },
