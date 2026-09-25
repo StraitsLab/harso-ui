@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
 import cardStyles from "./output-card.css?raw";
@@ -372,4 +372,177 @@ test("every text sink is plain text: fallback, subtitle, View-all label and Deta
   fireEvent.click(screen.getByRole("button", { name: "Details" }));
   expect(second.container.querySelector("img, b")).toBeNull();
   expect(screen.getByRole("button", { name: markup })).toBeVisible();
+});
+
+// Packet 5a: key numbers and a short text block render as themselves.
+const spendingNumbers = spending.blocks[0] as chat.HarsoOutputNumbersBlock;
+const numbersDoc = (items: chat.HarsoOutputNumber[], extra: chat.HarsoOutputBlock[] = [], doc: Partial<chat.HarsoOutputDocument> = {}): chat.HarsoOutputDocument =>
+  ({ ...spending, more_label: undefined, ...doc, blocks: [{ kind: "numbers", items }, ...extra] });
+// Verbatim copy of the S0 example 05-research-brief (output-blocks.v1 draft).
+const brief: chat.HarsoOutputDocument = {
+  "header": { "title": "Singapore EV charging in 2026", "subtitle": "Research brief · September 2026" },
+  "blocks": [
+    {
+      "kind": "text",
+      "summary": "Public chargers passed 15,000, mostly in HDB car parks. Fast chargers are rare; charging at home costs about half.",
+      "sections": [
+        { "heading": "Where things stand", "paragraphs": ["Public chargers passed 15,000 points this year, most of them in HDB car parks. Coverage is now broad, but fast chargers remain scarce outside the big malls, so most drivers still top up slowly overnight."] },
+        { "heading": "What it means for you", "paragraphs": ["Expect around S$0.60–0.75 per kWh at public points, versus about S$0.35 at home. If you live in an HDB flat without a nearby charger, check the car park's rollout date before you buy."] },
+        { "heading": "Before you buy", "bullets": ["Check your car park's charger rollout date.", "Compare home and public per-kWh prices.", "Plan for slow overnight charging, not fast top-ups."] }
+      ]
+    },
+    { "kind": "action", "secondary": { "kind": "open_artifact", "label": "Open as document", "artifact": "artifact:018f22e2-7c00-7a13-8a13-0000000000b2" } }
+  ],
+  "more_label": "Read brief",
+  "fallback_text": "Singapore EV charging in 2026: 15,000+ public chargers, mostly HDB car parks; fast chargers rare; home charging about half the price."
+};
+const textDoc = (block: Omit<chat.HarsoOutputTextBlock, "kind">, doc: Partial<chat.HarsoOutputDocument> = {}): chat.HarsoOutputDocument =>
+  ({ ...brief, more_label: undefined, ...doc, blocks: [{ kind: "text", ...block }] });
+const longParagraph = "Home charging costs about half as much as public points, and most HDB car parks now have slow chargers. Fast chargers are still rare outside the big malls, so plan for overnight top-ups rather than quick stops. Grants for fast chargers continue into next year.";
+
+test("two key numbers render as figures (value then label, one list item each), not as fallback text", () => {
+  const { card } = renderCard({ document: numbersDoc(spendingNumbers.items.slice(0, 2)) });
+  expect(card).not.toHaveAttribute("data-fallback");
+  expect(within(card).queryByText(spending.fallback_text)).toBeNull();
+  const figures = within(within(card).getByRole("list")).getAllByRole("listitem");
+  expect(figures.map(figure => figure.textContent)).toEqual(["S$4,280Spent", "S$720Left"]);
+  for (const [figure, value, label] of [[0, "S$4,280", "Spent"], [1, "S$720", "Left"]] as const) {
+    const valueNode = within(figures[figure]).getByText(value);
+    expect(valueNode).toHaveClass("hkc-output-card-number-value");
+    // Screen-reader order = visual order: the value is read first, then its label, inside the same item.
+    expect(valueNode.nextElementSibling).toBe(within(figures[figure]).getByText(label));
+  }
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test("a third key number stays off the card and counts toward View all N, with rows sharing the count", () => {
+  const { card, onViewAll, rerender } = renderCard({ document: numbersDoc(spendingNumbers.items) });
+  expect(within(card).getAllByRole("listitem").map(item => item.textContent)).toEqual(["S$4,280Spent", "S$720Left"]);
+  expect(within(card).queryByText("S$5,000")).toBeNull();
+  const viewAll = within(card).getByRole("button", { name: "View all 3" });
+  fireEvent.click(viewAll);
+  expect(onViewAll).toHaveBeenCalledTimes(1);
+  // Two numbers + four rows: the numbers are all shown, one row is hidden.
+  const rows = (spending.blocks[2] as chat.HarsoOutputRowsBlock);
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={numbersDoc(spendingNumbers.items.slice(0, 2), [rows])} onViewAll={onViewAll} /></div>);
+  expect(within(card).getAllByRole("list")).toHaveLength(2);
+  expect(within(card).getByRole("button", { name: "View all 6" })).toBeVisible();
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={numbersDoc(spendingNumbers.items, [rows], { more_label: "View all transactions" })} onViewAll={onViewAll} /></div>);
+  expect(within(card).getByRole("button", { name: "View all transactions" })).toBeVisible();
+  // A caps override is honoured for numbers too.
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={numbersDoc(spendingNumbers.items)} caps={{ maxNumbers: 3 }} onViewAll={onViewAll} /></div>);
+  expect(within(card).getAllByRole("listitem")).toHaveLength(3);
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test("short complete text renders as body prose with no View all", () => {
+  const { card } = renderCard({ document: textDoc({ sections: [{ paragraphs: ["Mostly yes, if you can charge at home."] }] }) });
+  expect(card).not.toHaveAttribute("data-fallback");
+  const text = within(card).getByText("Mostly yes, if you can charge at home.");
+  expect(text.tagName).toBe("P");
+  expect(text).toHaveClass("hkc-output-card-text");
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test("long text clamps to the inline budget on a word boundary and shows View all", () => {
+  const { card, onViewAll } = renderCard({ document: textDoc({ sections: [{ paragraphs: [longParagraph] }] }) });
+  const text = card.querySelector(".hkc-output-card-text")!;
+  expect(Array.from(text.textContent!).length).toBeLessThanOrEqual(chat.HARSO_OUTPUT_CARD_CAPS.maxTextChars + 1);
+  expect(text.textContent).toMatch(/\S…$/);
+  expect(longParagraph.startsWith(text.textContent!.slice(0, -1))).toBe(true);
+  expect(longParagraph[text.textContent!.length - 1]).toBe(" ");
+  fireEvent.click(within(card).getByRole("button", { name: "View all" }));
+  expect(onViewAll).toHaveBeenCalledTimes(1);
+});
+
+test("the research brief shows its summary inline, and Read brief because the sections live off the card", () => {
+  const { card } = renderCard({ document: brief });
+  expect(within(card).getByText((brief.blocks[0] as chat.HarsoOutputTextBlock).summary!)).toBeVisible();
+  expect(within(card).queryByText("Where things stand")).toBeNull();
+  expect(within(card).queryByText(/Check your car park/)).toBeNull();
+  expect(within(card).getByRole("button", { name: "Read brief" })).toBeVisible();
+  expect(within(card).queryByRole("button", { name: /Open as document/ })).toBeNull();
+  // Headings or bullets also continue off the card even when the prose itself fits.
+  cleanup();
+  const { card: second } = renderCard({ document: textDoc({ sections: [{ heading: "Before you buy", bullets: ["Check the rollout date."] }] }) });
+  expect(within(second).getByText("Check the rollout date.")).toBeVisible();
+  expect(within(second).getByRole("button", { name: "View all" })).toBeVisible();
+});
+
+test("numbers and text keep agent order with rows and still fall back on any unsupported kind", () => {
+  const rows = { kind: "rows", items: flightRows.slice(0, 1) } as chat.HarsoOutputRowsBlock;
+  const mixed = { ...flights, details: undefined, blocks: [{ kind: "text", sections: [{ paragraphs: ["Short lead."] }] }, spendingNumbers, rows] } as chat.HarsoOutputDocument;
+  const { card } = renderCard({ document: { ...mixed, blocks: [mixed.blocks[0], { kind: "numbers", items: spendingNumbers.items.slice(0, 2) }, rows] } });
+  const order = [...card.querySelectorAll(".hkc-output-card-text, .hkc-output-card-numbers, .hkc-output-card-rows")].map(node => node.className);
+  expect(order).toEqual(["hkc-output-card-text", "hkc-output-card-numbers", "hkc-output-card-rows"]);
+  cleanup();
+  for (const other of [{ kind: "table", columns: [], rows: [] }, { kind: "status", state: "failed" }, { kind: "visual", visual: {} }]) {
+    const { card: fallback, unmount } = renderCard({ document: { ...mixed, blocks: [...mixed.blocks, other] } });
+    expect(fallback).toHaveAttribute("data-fallback", "true");
+    expect(within(fallback).getByText(flights.fallback_text)).toBeVisible();
+    expect(fallback.querySelector(".hkc-output-card-numbers, .hkc-output-card-text, .hkc-output-card-rows")).toBeNull();
+    unmount();
+  }
+});
+
+test("numbers and text are plain text sinks: markup-looking strings render literally", () => {
+  const markup = "<img src=x onerror=alert(1)><b>x</b>";
+  const document = { ...spending, details: undefined, blocks: [{ kind: "numbers", items: [{ value: "<b>1</b>", label: markup }, { value: "**2**", label: "y" }] }, { kind: "text", summary: markup, sections: [{ paragraphs: ["z"] }] }] };
+  const { container } = render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} onViewAll={() => {}} />);
+  expect(container.querySelector("img, b, strong")).toBeNull();
+  expect(screen.getAllByText(markup)).toHaveLength(2);
+  expect(screen.getByText("<b>1</b>")).toBeVisible();
+});
+
+// Review F1: the ~4-line cap is a rendered clamp, not only a character budget. jsdom has no layout, so these tests
+// stand in the paragraph's measured heights and drive the ResizeObserver by hand; the browser spec measures for real.
+const cjkParagraph = "公共充电设施持续增加家庭充电费用较低。".repeat(8);
+function stubLayout(heights: { scroll: number; client: number }) {
+  let resize: ResizeObserverCallback = () => {};
+  vi.stubGlobal("ResizeObserver", class { constructor(callback: ResizeObserverCallback) { resize = callback; } observe() {} unobserve() {} disconnect() {} });
+  const scroll = vi.spyOn(HTMLElement.prototype, "scrollHeight", "get").mockImplementation(() => heights.scroll);
+  const client = vi.spyOn(HTMLElement.prototype, "clientHeight", "get").mockImplementation(() => heights.client);
+  return { resize: () => act(() => resize([], {} as ResizeObserver)), restore: () => { scroll.mockRestore(); client.mockRestore(); vi.unstubAllGlobals(); } };
+}
+
+test("text under the character budget that renders past the line cap is clamped and shows View all", () => {
+  const layout = stubLayout({ scroll: 147, client: 84 });
+  try {
+    expect(Array.from(cjkParagraph).length).toBeLessThan(chat.HARSO_OUTPUT_CARD_CAPS.maxTextChars);
+    const { card, onViewAll } = renderCard({ document: textDoc({ sections: [{ paragraphs: [cjkParagraph] }] }) });
+    const text = card.querySelector<HTMLElement>(".hkc-output-card-text")!;
+    // The whole run is in the DOM (no character cut); CSS clamps it to caps.maxTextLines.
+    expect(text.textContent).toBe(cjkParagraph);
+    expect(text.style.getPropertyValue("--hkc-output-card-text-lines")).toBe("4");
+    fireEvent.click(within(card).getByRole("button", { name: "View all" }));
+    expect(onViewAll).toHaveBeenCalledTimes(1);
+  } finally { layout.restore(); }
+});
+
+test("line cap follows width changes and the caps override; short complete text never gets View all", () => {
+  const heights = { scroll: 63, client: 63 };
+  const layout = stubLayout(heights);
+  try {
+    const document = textDoc({ sections: [{ paragraphs: [cjkParagraph] }] });
+    const { card, onViewAll, rerender } = renderCard({ document });
+    expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+    // Card narrows: the same text now overflows the clamp.
+    heights.scroll = 147; heights.client = 84;
+    layout.resize();
+    expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
+    // Card widens again: everything fits, the row goes away.
+    heights.scroll = 63; heights.client = 63;
+    layout.resize();
+    expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+    // caps.maxTextLines is runtime-overridable and reaches the rendered clamp.
+    rerender(<div className="harso-kit"><chat.HarsoOutputCard document={document} caps={{ maxTextLines: 2 }} onViewAll={onViewAll} /></div>);
+    expect(card.querySelector<HTMLElement>(".hkc-output-card-text")!.style.getPropertyValue("--hkc-output-card-text-lines")).toBe("2");
+    cleanup();
+    const { card: short } = renderCard({ document: textDoc({ sections: [{ paragraphs: ["Mostly yes, if you can charge at home."] }] }) });
+    expect(within(short).queryByRole("button", { name: /View all/ })).toBeNull();
+  } finally { layout.restore(); }
+});
+
+test("the text clamp is CSS line-clamp driven by the caps variable", () => {
+  expect(cardStyles).toMatch(/\.hkc-output-card-text \{[^}]*-webkit-line-clamp: var\(--hkc-output-card-text-lines, 4\)[^}]*overflow: hidden/);
 });

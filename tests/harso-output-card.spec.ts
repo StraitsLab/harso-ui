@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 
-// WEV-1851 S1: display-only inline output card. Fixture content and callbacks are simulated.
+// WEV-1851 S1 + packet 5a: display-only inline output card. Fixture content and callbacks are simulated.
 // The card renders no actions (choices go through the native question card); overflow is one View-all row.
 const fixture = "/preview/output-card.html";
 const screens = resolve(process.cwd(), ".lane/screens");
@@ -164,4 +164,122 @@ test("narrow 320px: long rows wrap without horizontal overflow or overlap", asyn
   expect(g.overlaps).toEqual([]);
   expect(g.outside).toEqual([]);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+// Packet 5a: key numbers and a short text block render as themselves (light + dark evidence in .lane/evidence).
+const evidence = resolve(process.cwd(), ".lane/evidence");
+for (const mode of ["light", "dark"] as const) {
+  test(`numbers ${mode}: two key figures inline, the third behind the View-all row, axe clean`, async ({ page }) => {
+    await page.setViewportSize({ width: 420, height: 720 });
+    await page.goto(`${fixture}?doc=numbers&mode=${mode}`);
+    const region = page.getByRole("region", { name: "September spending" });
+    await expect(card(page)).not.toHaveAttribute("data-fallback", "true");
+    await expect(region.getByRole("listitem")).toHaveText(["S$4,280Spent", "S$720Left"]);
+    await expect(region.getByText("S$5,000")).toHaveCount(0);
+    const viewAll = region.getByRole("button", { name: "View all transactions" });
+    await expect(viewAll).toBeVisible();
+    const cells = await card(page).locator(".hkc-output-card-number").evaluateAll(nodes => nodes.map(node => {
+      const [value, label] = [...node.children].map(child => { const r = child.getBoundingClientRect(); const s = getComputedStyle(child); return { top: r.top, bottom: r.bottom, left: r.left, size: s.fontSize, weight: s.fontWeight, color: s.color }; });
+      return { value, label, left: node.getBoundingClientRect().left };
+    }));
+    expect(cells).toHaveLength(2);
+    for (const cell of cells) {
+      expect(cell.value.size).toBe("22px");
+      expect(cell.value.weight).toBe("600");
+      expect(cell.label.size).toBe("13px");
+      expect(cell.label.top).toBeGreaterThanOrEqual(cell.value.bottom - .5);
+      expect(cell.label.color).not.toBe(cell.value.color);
+    }
+    // Side by side on one line (2-up), left cell first.
+    expect(cells[1].left).toBeGreaterThan(cells[0].left);
+    expect(Math.abs(cells[0].value.top - cells[1].value.top)).toBeLessThanOrEqual(.5);
+    const g = await geometry(page);
+    expect(g.bordered).toEqual([]);
+    expect(g.overlaps).toEqual([]);
+    expect(g.outside).toEqual([]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+    await viewAll.click();
+    expect((await callbacks(page)).viewAllOpened).toBe(1);
+    await mkdir(evidence, { recursive: true });
+    await card(page).screenshot({ path: resolve(evidence, `numbers-${mode}-420-card.png`) });
+  });
+
+  test(`text ${mode}: summary and long prose stay within ~4 lines with the View-all row, axe clean`, async ({ page }) => {
+    await page.setViewportSize({ width: 420, height: 720 });
+    for (const [doc, name, more] of [["brief", "Singapore EV charging in 2026", "Read brief"], ["text", "Is an EV worth it now?", "View all"]] as const) {
+      await page.goto(`${fixture}?doc=${doc}&mode=${mode}`);
+      const region = page.getByRole("region", { name });
+      await expect(card(page)).not.toHaveAttribute("data-fallback", "true");
+      const text = card(page).locator(".hkc-output-card-text");
+      await expect(text).toBeVisible();
+      const lines = await text.evaluate(node => { const s = getComputedStyle(node); return node.getBoundingClientRect().height / parseFloat(s.lineHeight); });
+      expect(Math.round(lines)).toBeGreaterThanOrEqual(2);
+      expect(Math.round(lines)).toBeLessThanOrEqual(4);
+      expect(await text.evaluate(node => getComputedStyle(node).fontSize)).toBe("14px");
+      await expect(region.getByRole("button", { name: more, exact: true })).toBeVisible();
+      await expect(region.getByText("Where things stand")).toHaveCount(0);
+      const g = await geometry(page);
+      expect(g.bordered).toEqual([]);
+      expect(g.overlaps).toEqual([]);
+      expect(g.outside).toEqual([]);
+      expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+      await mkdir(evidence, { recursive: true });
+      await card(page).screenshot({ path: resolve(evidence, `${doc}-${mode}-420-card.png`) });
+    }
+  });
+}
+
+// Review F1: the ~4-line cap is a rendered clamp. Wide-script text under the character budget, a short control, and
+// the same card re-measured as the viewport narrows and widens.
+const textLines = (page: Page) => card(page).locator(".hkc-output-card-text").evaluate(node => {
+  const s = getComputedStyle(node);
+  return Math.round(node.getBoundingClientRect().height / parseFloat(s.lineHeight));
+});
+for (const mode of ["light", "dark"] as const) {
+  test(`text ${mode}: CJK prose under 180 characters clamps to 4 lines and offers View all; a short sentence does not`, async ({ page }) => {
+    await page.setViewportSize({ width: 420, height: 720 });
+    await page.goto(`${fixture}?doc=cjk&mode=${mode}`);
+    const region = page.getByRole("region", { name: "电动车值得买吗？" });
+    expect(await textLines(page)).toBe(4);
+    const viewAll = region.getByRole("button", { name: "View all", exact: true });
+    await expect(viewAll).toBeVisible();
+    const g = await geometry(page);
+    expect(g.overlaps).toEqual([]);
+    expect(g.outside).toEqual([]);
+    expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+    await viewAll.click();
+    expect((await callbacks(page)).viewAllOpened).toBe(1);
+    await mkdir(evidence, { recursive: true });
+    await card(page).screenshot({ path: resolve(evidence, `cjk-${mode}-420-card.png`) });
+    await page.goto(`${fixture}?doc=short&mode=${mode}`);
+    expect(await textLines(page)).toBe(1);
+    await expect(card(page).getByRole("button")).toHaveCount(0);
+  });
+}
+
+test("text: the clamp and the View-all row follow width changes", async ({ page }) => {
+  await page.setViewportSize({ width: 1200, height: 720 });
+  await page.goto(`${fixture}?doc=cjk`);
+  const viewAll = card(page).getByRole("button", { name: "View all", exact: true });
+  // Wide: the CJK paragraph fits under the clamp, so nothing is hidden and there is no View all.
+  expect(await textLines(page)).toBeLessThan(4);
+  await expect(viewAll).toHaveCount(0);
+  await page.setViewportSize({ width: 320, height: 720 });
+  await expect(viewAll).toBeVisible();
+  expect(await textLines(page)).toBe(4);
+  await page.setViewportSize({ width: 1200, height: 720 });
+  await expect(viewAll).toHaveCount(0);
+  expect(await textLines(page)).toBeLessThan(4);
+});
+
+test("reduced motion: numbers and text render identically (no animation on either)", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(`${fixture}?doc=numbers`);
+  const animated = await card(page).evaluate(root => [root, ...root.querySelectorAll("*")].filter(node => {
+    const s = getComputedStyle(node);
+    return s.animationName !== "none" || (s.transitionDuration.split(",").some(d => parseFloat(d) > 0) && !node.closest("button"));
+  }).map(node => node.className));
+  expect(animated).toEqual([]);
+  await expect(card(page).getByRole("listitem")).toHaveCount(2);
 });

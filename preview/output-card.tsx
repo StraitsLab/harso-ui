@@ -171,7 +171,90 @@ const more: HarsoOutputDocument = {
     { label: "United", secondary: "UA 804 · Dep 11:40 · 7h 20m direct", trailing: "S$604" }
   ] }]
 };
-const documents: Record<string, HarsoOutputDocument> = { flights, failed, spending, more };
+// Synthetic: the Spending example without its chart and rows (charts render in a later packet), so the key numbers show.
+// Three numbers against the 2-up cap: Spent and Left inline, Budget behind View all transactions.
+const numbers: HarsoOutputDocument = { ...spending, blocks: [spending.blocks[0]] };
+// Verbatim copy of the S0 example 05-research-brief.
+const brief: HarsoOutputDocument = {
+  "header": {
+    "title": "Singapore EV charging in 2026",
+    "subtitle": "Research brief · September 2026"
+  },
+  "blocks": [
+    {
+      "kind": "text",
+      "summary": "Public chargers passed 15,000, mostly in HDB car parks. Fast chargers are rare; charging at home costs about half.",
+      "sections": [
+        {
+          "heading": "Where things stand",
+          "paragraphs": [
+            "Public chargers passed 15,000 points this year, most of them in HDB car parks. Coverage is now broad, but fast chargers remain scarce outside the big malls, so most drivers still top up slowly overnight."
+          ]
+        },
+        {
+          "heading": "What it means for you",
+          "paragraphs": [
+            "Expect around S$0.60–0.75 per kWh at public points, versus about S$0.35 at home. If you live in an HDB flat without a nearby charger, check the car park's rollout date before you buy."
+          ]
+        },
+        {
+          "heading": "Before you buy",
+          "bullets": [
+            "Check your car park's charger rollout date.",
+            "Compare home and public per-kWh prices.",
+            "Plan for slow overnight charging, not fast top-ups."
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "action",
+      "secondary": {
+        "kind": "open_artifact",
+        "label": "Open as document",
+        "artifact": "artifact:018f22e2-7c00-7a13-8a13-0000000000b2"
+      }
+    }
+  ],
+  "more_label": "Read brief",
+  "details": {
+    "sources": [
+      {
+        "label": "LTA EV charging statistics (placeholder)",
+        "url": "https://www.lta.gov.sg/"
+      },
+      {
+        "label": "SP Group tariff page (placeholder)",
+        "url": "https://www.spgroup.com.sg/"
+      }
+    ],
+    "disclaimers": [
+      "Figures are illustrative in this design test and are not verified."
+    ]
+  },
+  "fallback_text": "Singapore EV charging in 2026: 15,000+ public chargers, mostly HDB car parks; fast chargers rare; home charging about half the price."
+};
+// Synthetic: one long paragraph, no summary, so the card clamps it and offers View all.
+const text: HarsoOutputDocument = {
+  header: { title: "Is an EV worth it now?", subtitle: "Singapore · September 2026" },
+  blocks: [{ kind: "text", sections: [{ paragraphs: [
+    "Mostly yes, if you can charge at home or in your car park. Home charging costs about half as much as public points, and most HDB car parks now have slow chargers. Fast chargers are still rare outside the big malls, so plan for overnight top-ups rather than quick stops."
+  ] }] }],
+  fallback_text: "Mostly yes, if you can charge at home or in your car park; home charging costs about half as much as public points."
+};
+// Synthetic: wide-script prose under the 180-character budget that still runs past four lines, so the line clamp holds it.
+const cjk: HarsoOutputDocument = {
+  header: { title: "电动车值得买吗？" },
+  blocks: [{ kind: "text", sections: [{ paragraphs: ["公共充电设施持续增加家庭充电费用较低。".repeat(8)] }] }],
+  fallback_text: "公共充电设施持续增加，家庭充电费用较低。"
+};
+// Synthetic: one short complete sentence; nothing is clipped, so no View all.
+const short: HarsoOutputDocument = {
+  header: { title: "Is an EV worth it now?" },
+  blocks: [{ kind: "text", sections: [{ paragraphs: ["Mostly yes, if you can charge at home."] }] }],
+  fallback_text: "Mostly yes, if you can charge at home."
+};
+const documents: Record<string, HarsoOutputDocument> = { flights, failed, spending, more, numbers, brief, text, cjk, short };
 
 const query = new URLSearchParams(location.search);
 
