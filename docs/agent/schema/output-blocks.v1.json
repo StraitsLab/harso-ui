@@ -1,0 +1,904 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weave.cloud/contracts/output-blocks/v1",
+  "title": "Harso output blocks v1 (PROPOSED DRAFT, not in registry)",
+  "$comment": "PROPOSAL ONLY. Agent-authored structured result. The agent chooses and orders blocks; the app owns all styling, inline-vs-page, and live state. Plain text only (no markdown, no HTML). Numbers are decimal strings so the document stays inside the conversation JCS subset (safe integers only; contracts.py conversation_jcs). Rules a JSON Schema cannot express (one visual, action last, pick uniqueness, status binding, series/cell arity, 16384-byte canonical bound) live in the semantic validator, as in tools/contracts.py. Keywords are restricted to the set tools/mobile_schema_codegen.py already compiles to Swift/TypeScript; new patterns need adding to FROZEN_PATTERNS.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/document"
+    }
+  ],
+  "$defs": {
+    "uuid7": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "artifact_uri": {
+      "type": "string",
+      "maxLength": 45,
+      "pattern": "^artifact:[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "https_url": {
+      "type": "string",
+      "minLength": 9,
+      "maxLength": 2048,
+      "pattern": "^https://[A-Za-z0-9.-]+(?::[0-9]+)?(?:/[^\\s]*)?$"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "decimal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 24,
+      "pattern": "^-?[0-9]{1,15}(\\.[0-9]{1,6})?$"
+    },
+    "latitude": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 11,
+      "pattern": "^-?[0-9]{1,2}(\\.[0-9]{1,7})?$"
+    },
+    "longitude": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12,
+      "pattern": "^-?[0-9]{1,3}(\\.[0-9]{1,7})?$"
+    },
+    "line12": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line16": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line24": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 24,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line28": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 28,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line40": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line48": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line60": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line80": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line200": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line280": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "line600": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600,
+      "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
+    },
+    "state": {
+      "enum": [
+        "working",
+        "needs_you",
+        "ready",
+        "needs_attention",
+        "stopped_by_you",
+        "failed",
+        "watching",
+        "scheduled",
+        "empty"
+      ]
+    },
+    "row_status": {
+      "enum": [
+        "overdue",
+        "paid"
+      ]
+    },
+    "header": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/line60"
+        },
+        "subtitle": {
+          "$ref": "#/$defs/line80"
+        }
+      }
+    },
+    "place": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "lat",
+        "lon"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/line40"
+        },
+        "lat": {
+          "$ref": "#/$defs/latitude"
+        },
+        "lon": {
+          "$ref": "#/$defs/longitude"
+        }
+      }
+    },
+    "map": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "places"
+      ],
+      "properties": {
+        "kind": {
+          "const": "map"
+        },
+        "places": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/place"
+          }
+        },
+        "selected_place_id": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "artifact",
+        "alt"
+      ],
+      "properties": {
+        "kind": {
+          "const": "image"
+        },
+        "artifact": {
+          "$ref": "#/$defs/artifact_uri"
+        },
+        "alt": {
+          "$ref": "#/$defs/line200"
+        },
+        "aspect": {
+          "enum": [
+            "square",
+            "4:3",
+            "16:9",
+            "3:4"
+          ]
+        }
+      }
+    },
+    "video": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "artifact",
+        "alt"
+      ],
+      "properties": {
+        "kind": {
+          "const": "video"
+        },
+        "artifact": {
+          "$ref": "#/$defs/artifact_uri"
+        },
+        "alt": {
+          "$ref": "#/$defs/line200"
+        },
+        "poster": {
+          "$ref": "#/$defs/artifact_uri"
+        }
+      }
+    },
+    "series": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "values"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/line24"
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 31,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/decimal"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "chart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "chart",
+        "x_labels",
+        "series"
+      ],
+      "properties": {
+        "kind": {
+          "const": "chart"
+        },
+        "chart": {
+          "enum": [
+            "bar",
+            "line"
+          ]
+        },
+        "unit": {
+          "$ref": "#/$defs/line12"
+        },
+        "x_labels": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 31,
+          "items": {
+            "$ref": "#/$defs/line16"
+          }
+        },
+        "series": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/series"
+          }
+        },
+        "highlight_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 30
+        }
+      }
+    },
+    "visual_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "visual"
+      ],
+      "properties": {
+        "kind": {
+          "const": "visual"
+        },
+        "visual": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/map"
+            },
+            {
+              "$ref": "#/$defs/image"
+            },
+            {
+              "$ref": "#/$defs/video"
+            },
+            {
+              "$ref": "#/$defs/chart"
+            }
+          ]
+        }
+      }
+    },
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/line48"
+        },
+        "secondary": {
+          "$ref": "#/$defs/line80"
+        },
+        "trailing": {
+          "$ref": "#/$defs/line24"
+        },
+        "mark": {
+          "const": "pick"
+        },
+        "status": {
+          "$ref": "#/$defs/row_status"
+        }
+      }
+    },
+    "rows_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "items"
+      ],
+      "properties": {
+        "kind": {
+          "const": "rows"
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 50,
+          "items": {
+            "$ref": "#/$defs/row"
+          }
+        },
+        "total_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "number": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "label"
+      ],
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/line12"
+        },
+        "label": {
+          "$ref": "#/$defs/line24"
+        }
+      }
+    },
+    "numbers_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "items"
+      ],
+      "properties": {
+        "kind": {
+          "const": "numbers"
+        },
+        "items": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/number"
+          }
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "heading": {
+          "$ref": "#/$defs/line60"
+        },
+        "paragraphs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/line600"
+          }
+        },
+        "bullets": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/line200"
+          }
+        }
+      }
+    },
+    "text_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "sections"
+      ],
+      "properties": {
+        "kind": {
+          "const": "text"
+        },
+        "summary": {
+          "$ref": "#/$defs/line280"
+        },
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        }
+      }
+    },
+    "column": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/line24"
+        },
+        "align": {
+          "enum": [
+            "start",
+            "end"
+          ]
+        }
+      }
+    },
+    "table_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cells"
+      ],
+      "properties": {
+        "cells": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/line40"
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/row_status"
+        }
+      }
+    },
+    "table_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "columns",
+        "rows"
+      ],
+      "properties": {
+        "kind": {
+          "const": "table"
+        },
+        "columns": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/column"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 50,
+          "items": {
+            "$ref": "#/$defs/table_row"
+          }
+        },
+        "total_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        }
+      }
+    },
+    "subject_work_unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_unit_id"
+      ],
+      "properties": {
+        "work_unit_id": {
+          "$ref": "#/$defs/uuid7"
+        }
+      }
+    },
+    "subject_routine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "routine_id"
+      ],
+      "properties": {
+        "routine_id": {
+          "$ref": "#/$defs/uuid7"
+        }
+      }
+    },
+    "status_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "state"
+      ],
+      "properties": {
+        "kind": {
+          "const": "status"
+        },
+        "state": {
+          "$ref": "#/$defs/state"
+        },
+        "detail": {
+          "$ref": "#/$defs/line80"
+        },
+        "subject": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/subject_work_unit"
+            },
+            {
+              "$ref": "#/$defs/subject_routine"
+            }
+          ]
+        }
+      }
+    },
+    "action_reply": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "label",
+        "text"
+      ],
+      "properties": {
+        "kind": {
+          "const": "reply"
+        },
+        "label": {
+          "$ref": "#/$defs/line28"
+        },
+        "text": {
+          "$ref": "#/$defs/line200"
+        }
+      }
+    },
+    "action_open_url": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "label",
+        "url"
+      ],
+      "properties": {
+        "kind": {
+          "const": "open_url"
+        },
+        "label": {
+          "$ref": "#/$defs/line28"
+        },
+        "url": {
+          "$ref": "#/$defs/https_url"
+        }
+      }
+    },
+    "action_work_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "label",
+        "work_unit_id",
+        "control"
+      ],
+      "properties": {
+        "kind": {
+          "const": "work_control"
+        },
+        "label": {
+          "$ref": "#/$defs/line28"
+        },
+        "work_unit_id": {
+          "$ref": "#/$defs/uuid7"
+        },
+        "control": {
+          "enum": [
+            "cancel",
+            "retry",
+            "dismiss"
+          ]
+        }
+      }
+    },
+    "action_routine_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "label",
+        "routine_id",
+        "control"
+      ],
+      "properties": {
+        "kind": {
+          "const": "routine_control"
+        },
+        "label": {
+          "$ref": "#/$defs/line28"
+        },
+        "routine_id": {
+          "$ref": "#/$defs/uuid7"
+        },
+        "control": {
+          "enum": [
+            "pause",
+            "resume"
+          ]
+        }
+      }
+    },
+    "action": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/action_reply"
+        },
+        {
+          "$ref": "#/$defs/action_open_url"
+        },
+        {
+          "$ref": "#/$defs/action_open_artifact"
+        },
+        {
+          "$ref": "#/$defs/action_download_artifact"
+        },
+        {
+          "$ref": "#/$defs/action_work_control"
+        },
+        {
+          "$ref": "#/$defs/action_routine_control"
+        }
+      ]
+    },
+    "action_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "minProperties": 2,
+      "properties": {
+        "kind": {
+          "const": "action"
+        },
+        "primary": {
+          "$ref": "#/$defs/action"
+        },
+        "secondary": {
+          "$ref": "#/$defs/action"
+        }
+      }
+    },
+    "block": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/visual_block"
+        },
+        {
+          "$ref": "#/$defs/rows_block"
+        },
+        {
+          "$ref": "#/$defs/numbers_block"
+        },
+        {
+          "$ref": "#/$defs/text_block"
+        },
+        {
+          "$ref": "#/$defs/table_block"
+        },
+        {
+          "$ref": "#/$defs/status_block"
+        },
+        {
+          "$ref": "#/$defs/action_block"
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/line80"
+        },
+        "url": {
+          "$ref": "#/$defs/https_url"
+        }
+      }
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/line200"
+          }
+        },
+        "disclaimers": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/line200"
+          }
+        }
+      }
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "major",
+        "header",
+        "blocks",
+        "fallback_text"
+      ],
+      "properties": {
+        "kind": {
+          "const": "output_blocks"
+        },
+        "major": {
+          "const": 1
+        },
+        "header": {
+          "$ref": "#/$defs/header"
+        },
+        "blocks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/block"
+          }
+        },
+        "details": {
+          "$ref": "#/$defs/details"
+        },
+        "more_label": {
+          "$ref": "#/$defs/line28"
+        },
+        "fallback_text": {
+          "$ref": "#/$defs/line600"
+        }
+      }
+    },
+    "action_open_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "label",
+        "artifact"
+      ],
+      "properties": {
+        "kind": {
+          "const": "open_artifact"
+        },
+        "label": {
+          "$ref": "#/$defs/line28"
+        },
+        "artifact": {
+          "$ref": "#/$defs/artifact_uri"
+        }
+      }
+    },
+    "action_download_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "label",
+        "artifact"
+      ],
+      "properties": {
+        "kind": {
+          "const": "download_artifact"
+        },
+        "label": {
+          "$ref": "#/$defs/line28"
+        },
+        "artifact": {
+          "$ref": "#/$defs/artifact_uri"
+        }
+      }
+    }
+  }
+}
