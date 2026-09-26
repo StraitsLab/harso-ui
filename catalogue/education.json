@@ -85,6 +85,138 @@
       }
     },
     {
+      "id": "edu-lesson-notes",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Explain chapter 4 of my biology notes.",
+      "says": "The short version: light makes the energy, the Calvin cycle spends it.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Lesson"
+      ],
+      "rationale": "A lesson from the person's own file: summary first, one section per stage, the file behind Details and one Open action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Photosynthesis",
+          "subtitle": "Chapter 4 · Biology notes, pages 31–38"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "summary": "Plants turn light, water and carbon dioxide into sugar and oxygen, in two stages inside the chloroplast.",
+            "sections": [
+              {
+                "heading": "Stage 1: light reactions",
+                "paragraphs": [
+                  "In the thylakoid membranes, chlorophyll absorbs light and splits water. Oxygen is released, and the energy is stored in two carriers, ATP and NADPH."
+                ]
+              },
+              {
+                "heading": "Stage 2: the Calvin cycle",
+                "paragraphs": [
+                  "In the stroma, the plant uses that ATP and NADPH to fix carbon dioxide into a three-carbon sugar. Six turns of the cycle make one glucose."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open notes",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000c20"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Biology notes.pdf, pages 31–38"
+            }
+          ]
+        },
+        "fallback_text": "Photosynthesis (chapter 4, pages 31–38): plants turn light, water and carbon dioxide into sugar and oxygen. Stage 1, the light reactions in the thylakoids, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2, the Calvin cycle in the stroma, spends it to fix carbon dioxide into sugar; six turns make one glucose."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Chapter 4",
+            "subtitle": "Biology notes.pdf"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading pages 31–38 of your notes",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c03"
+              }
+            }
+          ],
+          "fallback_text": "Reading chapter 4 (pages 31–38) of your biology notes."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Photosynthesis",
+            "subtitle": "Pages 31–36 read · 37–38 are photos I couldn't read"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "summary": "Plants turn light, water and carbon dioxide into sugar and oxygen, in two stages inside the chloroplast.",
+              "sections": [
+                {
+                  "heading": "Stage 1: light reactions",
+                  "paragraphs": [
+                    "In the thylakoid membranes, chlorophyll absorbs light and splits water. Oxygen is released, and the energy is stored in two carriers, ATP and NADPH."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open notes",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000c20"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Biology notes.pdf, pages 31–36"
+              }
+            ]
+          },
+          "fallback_text": "Photosynthesis, from pages 31–36 (pages 37–38 are photos I couldn't read): stage 1, the light reactions, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2 is on the unread pages."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't open your biology notes",
+            "subtitle": "Biology notes.pdf"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF is password-protected. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't open Biology notes.pdf: it is password-protected. Nothing was changed."
+        }
+      }
+    },
+    {
       "id": "edu-quiz-result",
       "vertical": "education",
       "kind": "card",
@@ -120,6 +252,87 @@
           }
         ],
         "fallback_text": "Chemistry quiz: 8 of 10 in 6 minutes. Both misses were mole calculations."
+      },
+      "states": {
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Chemistry quiz",
+            "subtitle": "Stoichiometry · stopped after 7 of 10"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "5 of 7",
+                  "label": "Score"
+                },
+                {
+                  "value": "4 min",
+                  "label": "Time"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Chemistry quiz, stopped after 7 of 10 questions: 5 of 7 right in 4 min. Questions 8 to 10 are still open."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No chemistry quiz yet",
+            "subtitle": "Stoichiometry"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Ask me to quiz you and I'll keep the score here"
+            }
+          ],
+          "fallback_text": "You haven't taken a chemistry quiz with me yet. Ask me to quiz you and I'll keep the score."
+        }
+      }
+    },
+    {
+      "id": "edu-quiz-review",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Which questions did I get wrong on the chemistry quiz?",
+      "says": "Both slip at the same step: grams to moles.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Quiz with feedback"
+      ],
+      "rationale": "The misses as rows: the question, what they said against the answer, the state word; no per-question card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Chemistry quiz: 2 to review",
+          "subtitle": "Stoichiometry · 8 of 10 right"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Q4 · Moles in 18 g of water",
+                "secondary": "You said 18 · answer 1 mol",
+                "trailing": "Not quite"
+              },
+              {
+                "label": "Q7 · Mass of 0.5 mol of CO₂",
+                "secondary": "You said 44 g · answer 22 g",
+                "trailing": "Not quite"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Two to review from the chemistry quiz (8 of 10 right). Q4, moles in 18 g of water: you said 18, the answer is 1 mol. Q7, mass of 0.5 mol of CO₂: you said 44 g, the answer is 22 g."
       }
     },
     {
@@ -197,6 +410,24 @@
           ]
         },
         "fallback_text": "Japanese N5: 64% through, streak of 12 days, 135 minutes this week, most on Thursday (30 min)."
+      },
+      "states": {
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Japanese N5",
+            "subtitle": "Last 7 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No study logged since Fri 18 Sep"
+            }
+          ],
+          "fallback_text": "No Japanese study logged in the last 7 days; the last session was Fri 18 Sep. You are 64% through N5."
+        }
       }
     },
     {
@@ -233,6 +464,42 @@
           }
         ],
         "fallback_text": "2x + 6 = 14: subtract 6 to get 2x = 8, divide by 2 to get x = 4; check 2 × 4 + 6 = 14."
+      }
+    },
+    {
+      "id": "edu-worked-circle",
+      "vertical": "education",
+      "kind": "card",
+      "request": "How do I find the area of a circle with a 5 cm radius?",
+      "says": "About 78.5 cm².",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Worked example"
+      ],
+      "rationale": "Numbered steps in one section, powers and π as plain Unicode; the answer is the last step.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Area of a circle",
+          "subtitle": "Radius 5 cm · π ≈ 3.14"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "1. The area of a circle is π × r².",
+                  "2. Square the radius: 5² = 25.",
+                  "3. Multiply by π: 25 × 3.14 ≈ 78.5, so the area is about 78.5 cm²."
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Area of a circle with a 5 cm radius: area = π × r²; 5² = 25; 25 × 3.14 ≈ 78.5 cm²."
       }
     },
     {
@@ -276,6 +543,63 @@
       }
     },
     {
+      "id": "edu-glossary-insurance",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Explain the terms on my car insurance renewal.",
+      "says": "Excess and NCD are the two that change what you pay.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Glossary"
+      ],
+      "rationale": "Five terms, so the card shows three and View all opens the rest; each definition is one line.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Five car insurance terms",
+          "subtitle": "From your renewal letter"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Excess",
+                "secondary": "What you pay yourself on each claim before the insurer pays"
+              },
+              {
+                "label": "No-claim discount (NCD)",
+                "secondary": "Discount for years without a claim; a claim can reduce it"
+              },
+              {
+                "label": "Named driver",
+                "secondary": "Someone else allowed to drive, listed on the policy"
+              },
+              {
+                "label": "Sum insured",
+                "secondary": "The most the insurer pays out for the car"
+              },
+              {
+                "label": "Windscreen cover",
+                "secondary": "Glass repairs that don't touch your NCD"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your car insurance renewal letter, page 2"
+            }
+          ]
+        },
+        "more_label": "View all 5 terms",
+        "fallback_text": "Excess: what you pay on each claim before the insurer pays. No-claim discount (NCD): discount for claim-free years; a claim can reduce it. Named driver: someone else allowed to drive. Sum insured: the most the insurer pays for the car. Windscreen cover: glass repairs that don't touch your NCD."
+      }
+    },
+    {
       "id": "edu-diagram",
       "vertical": "education",
       "kind": "card",
@@ -314,6 +638,43 @@
           }
         ],
         "fallback_text": "The water cycle diagram (evaporation, condensation, precipitation, collection) is saved to your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The water cycle",
+            "subtitle": "Diagram · 16:9"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Drawing the diagram",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c01"
+              }
+            }
+          ],
+          "fallback_text": "Drawing the water cycle diagram."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't draw the diagram",
+            "subtitle": "The water cycle"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The image didn't render. Nothing was saved to your Library."
+            }
+          ],
+          "fallback_text": "Couldn't draw the water cycle diagram: the image didn't render. Nothing was saved to your Library."
+        }
       }
     },
     {
@@ -373,6 +734,43 @@
           }
         ],
         "fallback_text": "A 2-page fractions worksheet for Primary 3 (12 questions, answers on page 2) is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Fractions worksheet",
+            "subtitle": "Primary 3 · PDF"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing 12 questions and the answer page",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c02"
+              }
+            }
+          ],
+          "fallback_text": "Making a 2-page fractions worksheet for Primary 3."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't make the worksheet",
+            "subtitle": "Fractions · Primary 3"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF didn't finish. Nothing was saved to your Library."
+            }
+          ],
+          "fallback_text": "Couldn't make the fractions worksheet: the PDF didn't finish. Nothing was saved to your Library."
+        }
       }
     },
     {
@@ -387,6 +785,94 @@
       ],
       "rationale": "Recall runs one card at a time in the conversation; no flip component and no card per question.",
       "document": null
+    },
+    {
+      "id": "file-flashcards-deck",
+      "vertical": "education",
+      "kind": "file",
+      "request": "Make me flashcards for the 20 JLPT N5 verbs I got wrong.",
+      "says": "The deck is in your Library; say quiz me when you want to practise.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Flashcards"
+      ],
+      "rationale": "The deck is a file (a flip card was rejected); three sample cards show what's inside and practice runs as question cards.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "JLPT N5 verbs",
+          "subtitle": "20 cards · Anki deck"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "食べる",
+                "secondary": "taberu · to eat"
+              },
+              {
+                "label": "飲む",
+                "secondary": "nomu · to drink"
+              },
+              {
+                "label": "待つ",
+                "secondary": "matsu · to wait"
+              }
+            ],
+            "total_count": 20
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download deck",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000c21"
+            }
+          }
+        ],
+        "more_label": "View all 20 cards",
+        "fallback_text": "A 20-card deck of the JLPT N5 verbs you missed is in your Library, for example 食べる (taberu, to eat), 飲む (nomu, to drink), 待つ (matsu, to wait)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "JLPT N5 verbs",
+            "subtitle": "Anki deck"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Making 20 cards from your misses",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c04"
+              }
+            }
+          ],
+          "fallback_text": "Making a 20-card deck of the JLPT N5 verbs you missed."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't make the deck",
+            "subtitle": "JLPT N5 verbs"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The deck file didn't finish. Nothing was saved to your Library."
+            }
+          ],
+          "fallback_text": "Couldn't make the JLPT N5 flashcard deck: the file didn't finish. Nothing was saved to your Library."
+        }
+      }
     }
   ]
 }

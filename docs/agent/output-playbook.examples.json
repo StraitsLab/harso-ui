@@ -109,6 +109,8 @@
     "news-timeline",
     "news-headlines",
     "health-sleep",
+    "health-steps-week",
+    "health-meds-taken",
     "docs-compare-plans",
     "data-stale",
     "partial-days",
@@ -5354,6 +5356,138 @@
       }
     },
     {
+      "id": "edu-lesson-notes",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Explain chapter 4 of my biology notes.",
+      "says": "The short version: light makes the energy, the Calvin cycle spends it.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Lesson"
+      ],
+      "rationale": "A lesson from the person's own file: summary first, one section per stage, the file behind Details and one Open action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Photosynthesis",
+          "subtitle": "Chapter 4 · Biology notes, pages 31–38"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "summary": "Plants turn light, water and carbon dioxide into sugar and oxygen, in two stages inside the chloroplast.",
+            "sections": [
+              {
+                "heading": "Stage 1: light reactions",
+                "paragraphs": [
+                  "In the thylakoid membranes, chlorophyll absorbs light and splits water. Oxygen is released, and the energy is stored in two carriers, ATP and NADPH."
+                ]
+              },
+              {
+                "heading": "Stage 2: the Calvin cycle",
+                "paragraphs": [
+                  "In the stroma, the plant uses that ATP and NADPH to fix carbon dioxide into a three-carbon sugar. Six turns of the cycle make one glucose."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open notes",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000c20"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Biology notes.pdf, pages 31–38"
+            }
+          ]
+        },
+        "fallback_text": "Photosynthesis (chapter 4, pages 31–38): plants turn light, water and carbon dioxide into sugar and oxygen. Stage 1, the light reactions in the thylakoids, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2, the Calvin cycle in the stroma, spends it to fix carbon dioxide into sugar; six turns make one glucose."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Chapter 4",
+            "subtitle": "Biology notes.pdf"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading pages 31–38 of your notes",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c03"
+              }
+            }
+          ],
+          "fallback_text": "Reading chapter 4 (pages 31–38) of your biology notes."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Photosynthesis",
+            "subtitle": "Pages 31–36 read · 37–38 are photos I couldn't read"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "summary": "Plants turn light, water and carbon dioxide into sugar and oxygen, in two stages inside the chloroplast.",
+              "sections": [
+                {
+                  "heading": "Stage 1: light reactions",
+                  "paragraphs": [
+                    "In the thylakoid membranes, chlorophyll absorbs light and splits water. Oxygen is released, and the energy is stored in two carriers, ATP and NADPH."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open notes",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000c20"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Biology notes.pdf, pages 31–36"
+              }
+            ]
+          },
+          "fallback_text": "Photosynthesis, from pages 31–36 (pages 37–38 are photos I couldn't read): stage 1, the light reactions, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2 is on the unread pages."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't open your biology notes",
+            "subtitle": "Biology notes.pdf"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF is password-protected. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't open Biology notes.pdf: it is password-protected. Nothing was changed."
+        }
+      }
+    },
+    {
       "id": "edu-quiz-result",
       "vertical": "education",
       "kind": "card",
@@ -5389,6 +5523,87 @@
           }
         ],
         "fallback_text": "Chemistry quiz: 8 of 10 in 6 minutes. Both misses were mole calculations."
+      },
+      "states": {
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Chemistry quiz",
+            "subtitle": "Stoichiometry · stopped after 7 of 10"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "5 of 7",
+                  "label": "Score"
+                },
+                {
+                  "value": "4 min",
+                  "label": "Time"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Chemistry quiz, stopped after 7 of 10 questions: 5 of 7 right in 4 min. Questions 8 to 10 are still open."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No chemistry quiz yet",
+            "subtitle": "Stoichiometry"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Ask me to quiz you and I'll keep the score here"
+            }
+          ],
+          "fallback_text": "You haven't taken a chemistry quiz with me yet. Ask me to quiz you and I'll keep the score."
+        }
+      }
+    },
+    {
+      "id": "edu-quiz-review",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Which questions did I get wrong on the chemistry quiz?",
+      "says": "Both slip at the same step: grams to moles.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Quiz with feedback"
+      ],
+      "rationale": "The misses as rows: the question, what they said against the answer, the state word; no per-question card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Chemistry quiz: 2 to review",
+          "subtitle": "Stoichiometry · 8 of 10 right"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Q4 · Moles in 18 g of water",
+                "secondary": "You said 18 · answer 1 mol",
+                "trailing": "Not quite"
+              },
+              {
+                "label": "Q7 · Mass of 0.5 mol of CO₂",
+                "secondary": "You said 44 g · answer 22 g",
+                "trailing": "Not quite"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Two to review from the chemistry quiz (8 of 10 right). Q4, moles in 18 g of water: you said 18, the answer is 1 mol. Q7, mass of 0.5 mol of CO₂: you said 44 g, the answer is 22 g."
       }
     },
     {
@@ -5466,6 +5681,24 @@
           ]
         },
         "fallback_text": "Japanese N5: 64% through, streak of 12 days, 135 minutes this week, most on Thursday (30 min)."
+      },
+      "states": {
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Japanese N5",
+            "subtitle": "Last 7 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No study logged since Fri 18 Sep"
+            }
+          ],
+          "fallback_text": "No Japanese study logged in the last 7 days; the last session was Fri 18 Sep. You are 64% through N5."
+        }
       }
     },
     {
@@ -5502,6 +5735,42 @@
           }
         ],
         "fallback_text": "2x + 6 = 14: subtract 6 to get 2x = 8, divide by 2 to get x = 4; check 2 × 4 + 6 = 14."
+      }
+    },
+    {
+      "id": "edu-worked-circle",
+      "vertical": "education",
+      "kind": "card",
+      "request": "How do I find the area of a circle with a 5 cm radius?",
+      "says": "About 78.5 cm².",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Worked example"
+      ],
+      "rationale": "Numbered steps in one section, powers and π as plain Unicode; the answer is the last step.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Area of a circle",
+          "subtitle": "Radius 5 cm · π ≈ 3.14"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "1. The area of a circle is π × r².",
+                  "2. Square the radius: 5² = 25.",
+                  "3. Multiply by π: 25 × 3.14 ≈ 78.5, so the area is about 78.5 cm²."
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Area of a circle with a 5 cm radius: area = π × r²; 5² = 25; 25 × 3.14 ≈ 78.5 cm²."
       }
     },
     {
@@ -5545,6 +5814,63 @@
       }
     },
     {
+      "id": "edu-glossary-insurance",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Explain the terms on my car insurance renewal.",
+      "says": "Excess and NCD are the two that change what you pay.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Glossary"
+      ],
+      "rationale": "Five terms, so the card shows three and View all opens the rest; each definition is one line.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Five car insurance terms",
+          "subtitle": "From your renewal letter"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Excess",
+                "secondary": "What you pay yourself on each claim before the insurer pays"
+              },
+              {
+                "label": "No-claim discount (NCD)",
+                "secondary": "Discount for years without a claim; a claim can reduce it"
+              },
+              {
+                "label": "Named driver",
+                "secondary": "Someone else allowed to drive, listed on the policy"
+              },
+              {
+                "label": "Sum insured",
+                "secondary": "The most the insurer pays out for the car"
+              },
+              {
+                "label": "Windscreen cover",
+                "secondary": "Glass repairs that don't touch your NCD"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your car insurance renewal letter, page 2"
+            }
+          ]
+        },
+        "more_label": "View all 5 terms",
+        "fallback_text": "Excess: what you pay on each claim before the insurer pays. No-claim discount (NCD): discount for claim-free years; a claim can reduce it. Named driver: someone else allowed to drive. Sum insured: the most the insurer pays for the car. Windscreen cover: glass repairs that don't touch your NCD."
+      }
+    },
+    {
       "id": "edu-diagram",
       "vertical": "education",
       "kind": "card",
@@ -5583,6 +5909,43 @@
           }
         ],
         "fallback_text": "The water cycle diagram (evaporation, condensation, precipitation, collection) is saved to your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The water cycle",
+            "subtitle": "Diagram · 16:9"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Drawing the diagram",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c01"
+              }
+            }
+          ],
+          "fallback_text": "Drawing the water cycle diagram."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't draw the diagram",
+            "subtitle": "The water cycle"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The image didn't render. Nothing was saved to your Library."
+            }
+          ],
+          "fallback_text": "Couldn't draw the water cycle diagram: the image didn't render. Nothing was saved to your Library."
+        }
       }
     },
     {
@@ -5642,6 +6005,43 @@
           }
         ],
         "fallback_text": "A 2-page fractions worksheet for Primary 3 (12 questions, answers on page 2) is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Fractions worksheet",
+            "subtitle": "Primary 3 · PDF"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing 12 questions and the answer page",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c02"
+              }
+            }
+          ],
+          "fallback_text": "Making a 2-page fractions worksheet for Primary 3."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't make the worksheet",
+            "subtitle": "Fractions · Primary 3"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF didn't finish. Nothing was saved to your Library."
+            }
+          ],
+          "fallback_text": "Couldn't make the fractions worksheet: the PDF didn't finish. Nothing was saved to your Library."
+        }
       }
     },
     {
@@ -5656,6 +6056,94 @@
       ],
       "rationale": "Recall runs one card at a time in the conversation; no flip component and no card per question.",
       "document": null
+    },
+    {
+      "id": "file-flashcards-deck",
+      "vertical": "education",
+      "kind": "file",
+      "request": "Make me flashcards for the 20 JLPT N5 verbs I got wrong.",
+      "says": "The deck is in your Library; say quiz me when you want to practise.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Flashcards"
+      ],
+      "rationale": "The deck is a file (a flip card was rejected); three sample cards show what's inside and practice runs as question cards.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "JLPT N5 verbs",
+          "subtitle": "20 cards · Anki deck"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "食べる",
+                "secondary": "taberu · to eat"
+              },
+              {
+                "label": "飲む",
+                "secondary": "nomu · to drink"
+              },
+              {
+                "label": "待つ",
+                "secondary": "matsu · to wait"
+              }
+            ],
+            "total_count": 20
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download deck",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000c21"
+            }
+          }
+        ],
+        "more_label": "View all 20 cards",
+        "fallback_text": "A 20-card deck of the JLPT N5 verbs you missed is in your Library, for example 食べる (taberu, to eat), 飲む (nomu, to drink), 待つ (matsu, to wait)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "JLPT N5 verbs",
+            "subtitle": "Anki deck"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Making 20 cards from your misses",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c04"
+              }
+            }
+          ],
+          "fallback_text": "Making a 20-card deck of the JLPT N5 verbs you missed."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't make the deck",
+            "subtitle": "JLPT N5 verbs"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The deck file didn't finish. Nothing was saved to your Library."
+            }
+          ],
+          "fallback_text": "Couldn't make the JLPT N5 flashcard deck: the file didn't finish. Nothing was saved to your Library."
+        }
+      }
     },
     {
       "id": "health-resting-hr",
@@ -5728,6 +6216,153 @@
           ]
         },
         "fallback_text": "Resting heart rate fell from 63 to 58 bpm between 1 and 26 Sep; average 61 bpm."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Resting heart rate",
+            "subtitle": "1–26 Sep · Apple Watch"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading Apple Health",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c05"
+              }
+            }
+          ],
+          "fallback_text": "Reading your resting heart rate for 1–26 Sep from Apple Health."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Resting heart rate",
+            "subtitle": "1–26 Sep · 3 of 4 weeks reported"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "58 bpm",
+                  "label": "This week"
+                },
+                {
+                  "value": "61 bpm",
+                  "label": "Average"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "line",
+                "unit": "bpm",
+                "x_labels": [
+                  "1 Sep",
+                  "8 Sep",
+                  "15 Sep",
+                  "22 Sep"
+                ],
+                "series": [
+                  {
+                    "label": "Resting",
+                    "values": [
+                      "63",
+                      "62",
+                      null,
+                      "58"
+                    ]
+                  }
+                ],
+                "highlight_index": 3
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Apple Health, 26 Sep 2026"
+              }
+            ],
+            "disclaimers": [
+              "Not medical advice."
+            ]
+          },
+          "fallback_text": "Resting heart rate, 3 of 4 weeks reported (no readings the week of 15 Sep): 63, 62, then 58 bpm this week; average 61 bpm."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Resting heart rate",
+            "subtitle": "As of Tue 22 Sep 07:10 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "60 bpm",
+                  "label": "Latest"
+                },
+                {
+                  "value": "62 bpm",
+                  "label": "Average"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Apple Health, 22 Sep 2026 07:10"
+              }
+            ],
+            "disclaimers": [
+              "Not medical advice."
+            ]
+          },
+          "fallback_text": "Resting heart rate as of Tue 22 Sep 07:10 (couldn't refresh): latest 60 bpm, average 62 bpm."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No resting heart rate this month",
+            "subtitle": "1–26 Sep · Apple Watch"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "It needs the watch worn while you're still, such as overnight"
+            }
+          ],
+          "fallback_text": "No resting heart rate recorded 1–26 Sep. It needs the watch worn while you're still, such as overnight."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your heart rate",
+            "subtitle": "Apple Health"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Apple Health didn't respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your resting heart rate: Apple Health didn't respond. Nothing was changed."
+        }
       }
     },
     {
@@ -5808,6 +6443,392 @@
           ]
         },
         "fallback_text": "Sleep this week averaged 7h 12m, 24 min more than last week. Wednesday was short at 5.6 hours."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sleep this week",
+            "subtitle": "Last 7 nights · Apple Watch"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 7 nights from Apple Health",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c06"
+              }
+            }
+          ],
+          "fallback_text": "Reading the last 7 nights of sleep from Apple Health."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sleep this week",
+            "subtitle": "6 of 7 nights · last night not synced · as of 07:30"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "7h 11m",
+                  "label": "Average, 6 nights"
+                },
+                {
+                  "value": "5h 36m",
+                  "label": "Shortest, Wed"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "bar",
+                "unit": "hours",
+                "x_labels": [
+                  "Sat",
+                  "Sun",
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri"
+                ],
+                "series": [
+                  {
+                    "label": "Asleep",
+                    "values": [
+                      "7.8",
+                      "8.1",
+                      "7.2",
+                      "7.0",
+                      "5.6",
+                      "7.4",
+                      null
+                    ]
+                  }
+                ],
+                "highlight_index": 4
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Apple Health, 26 Sep 2026 07:30"
+              }
+            ],
+            "disclaimers": [
+              "Not medical advice."
+            ]
+          },
+          "fallback_text": "Sleep, 6 of 7 nights reported (last night hasn't synced): average 7h 11m; shortest 5h 36m on Wednesday."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sleep this week",
+            "subtitle": "As of Fri 25 Sep 07:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "7h 10m",
+                  "label": "Average"
+                },
+                {
+                  "value": "5h 36m",
+                  "label": "Shortest, Wed"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Apple Health, 25 Sep 2026 07:30"
+              }
+            ],
+            "disclaimers": [
+              "Not medical advice."
+            ]
+          },
+          "fallback_text": "Sleep for the 7 nights to Fri 25 Sep (couldn't refresh this morning): average 7h 10m; shortest 5h 36m on Wednesday."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No sleep recorded",
+            "subtitle": "Last 7 nights · Apple Watch · as of 07:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No nights in the last 7; wear your watch to bed to track sleep"
+            }
+          ],
+          "fallback_text": "No sleep recorded in the last 7 nights. Wear your watch to bed to track sleep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your sleep",
+            "subtitle": "Apple Health"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Apple Health didn't share sleep data. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your sleep: Apple Health didn't share sleep data. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "health-steps-week",
+      "vertical": "health",
+      "kind": "card",
+      "request": "How many steps have I done this week?",
+      "says": "Wednesday was your best day at 10,250.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Metric trend",
+        "Bar chart"
+      ],
+      "rationale": "The week so far as one total and a bar per day; Sunday is null (not in yet), the day the sentence names is highlighted.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Steps this week",
+          "subtitle": "Mon 21–Sat 26 Sep · as of 18:40"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "46,210",
+                "label": "Steps so far"
+              },
+              {
+                "value": "8,400",
+                "label": "Weekday average"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "steps",
+              "x_labels": [
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri",
+                "Sat",
+                "Sun"
+              ],
+              "series": [
+                {
+                  "label": "Steps",
+                  "values": [
+                    "9120",
+                    "7480",
+                    "10250",
+                    "6310",
+                    "8840",
+                    "4210",
+                    null
+                  ]
+                }
+              ],
+              "highlight_index": 2
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Apple Health, 26 Sep 2026 18:40"
+            }
+          ],
+          "disclaimers": [
+            "Not medical advice."
+          ]
+        },
+        "fallback_text": "Steps this week so far (Mon 21 to Sat 26 Sep, as of 18:40): 46,210. Weekday average 8,400. Mon 9,120, Tue 7,480, Wed 10,250, Thu 6,310, Fri 8,840, Sat 4,210 so far."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Steps this week",
+            "subtitle": "Mon 21–Sun 27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading Apple Health",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c07"
+              }
+            }
+          ],
+          "fallback_text": "Reading this week's steps from Apple Health."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Steps this week",
+            "subtitle": "Mon–Thu synced · Fri and today not yet · as of 18:40"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "33,160",
+                  "label": "Steps, Mon–Thu"
+                },
+                {
+                  "value": "8,290",
+                  "label": "Daily average"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "bar",
+                "unit": "steps",
+                "x_labels": [
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Sat",
+                  "Sun"
+                ],
+                "series": [
+                  {
+                    "label": "Steps",
+                    "values": [
+                      "9120",
+                      "7480",
+                      "10250",
+                      "6310",
+                      null,
+                      null,
+                      null
+                    ]
+                  }
+                ],
+                "highlight_index": 2
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Apple Health, 26 Sep 2026 18:40"
+              }
+            ],
+            "disclaimers": [
+              "Not medical advice."
+            ]
+          },
+          "fallback_text": "Steps Mon 21 to Thu 24 Sep: 33,160, a daily average of 8,290. Friday and today haven't synced; Sunday is still to come."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Steps this week",
+            "subtitle": "As of Fri 25 Sep 23:50 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "42,000",
+                  "label": "Steps, Mon–Fri"
+                },
+                {
+                  "value": "8,400",
+                  "label": "Weekday average"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Apple Health, 25 Sep 2026 23:50"
+              }
+            ],
+            "disclaimers": [
+              "Not medical advice."
+            ]
+          },
+          "fallback_text": "Steps this week as of Fri 25 Sep 23:50 (couldn't refresh today): 42,000 Mon to Fri, a weekday average of 8,400."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No steps this week",
+            "subtitle": "Mon 21–Sun 27 Sep · as of 18:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Your phone and watch recorded no steps since Mon 21 Sep"
+            }
+          ],
+          "fallback_text": "No steps recorded since Mon 21 Sep, as of 18:40. Check that Motion & Fitness is on for your phone."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your steps",
+            "subtitle": "Apple Health"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Apple Health didn't respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read this week's steps: Apple Health didn't respond. Nothing was changed."
+        }
       }
     },
     {
@@ -5857,6 +6878,129 @@
           ]
         },
         "fallback_text": "Today: Metformin 500 mg at 08:00 (taken 08:10) and 500 mg with dinner at 19:00."
+      },
+      "states": {
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No medication list yet",
+            "subtitle": "Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Add your medicines in Apple Health and I can read them"
+            }
+          ],
+          "fallback_text": "You have no medication list in Apple Health yet. Add your medicines there and I can read today's doses."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your medication list",
+            "subtitle": "Apple Health"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Apple Health didn't share your medications. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your medication list: Apple Health didn't share it. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "health-meds-taken",
+      "vertical": "health",
+      "kind": "card",
+      "request": "Have I taken everything today?",
+      "says": "Only the bedtime Atorvastatin is left.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Medication schedule"
+      ],
+      "rationale": "Doses as rows with the state word trailing; the reminder routine is the subject, so Pause is its one control. Logging a dose is a question card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "2 of 3 taken",
+          "subtitle": "Sat 26 Sep · as of 20:15"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "scheduled",
+            "detail": "Next reminder at 22:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c10"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Metformin 500 mg",
+                "secondary": "With breakfast · taken 08:10",
+                "trailing": "Taken"
+              },
+              {
+                "label": "Metformin 500 mg",
+                "secondary": "With dinner · taken 19:20",
+                "trailing": "Taken"
+              },
+              {
+                "label": "Atorvastatin 20 mg",
+                "secondary": "At bedtime",
+                "trailing": "Due 22:00"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "routine_control",
+              "label": "Pause reminders",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c10",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your medication log in Apple Health"
+            }
+          ],
+          "disclaimers": [
+            "Follow your doctor's instructions if they differ."
+          ]
+        },
+        "fallback_text": "2 of 3 taken today, Sat 26 Sep (as of 20:15): Metformin 500 mg at breakfast (08:10) and dinner (19:20). Atorvastatin 20 mg is due at bedtime, 22:00; the reminder is set."
+      },
+      "states": {
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check today's doses",
+            "subtitle": "Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Apple Health didn't share your medication log. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't check today's doses: Apple Health didn't share your medication log. Nothing was changed. Your reminders still run."
+        }
       }
     },
     {
@@ -5905,6 +7049,89 @@
           ]
         },
         "fallback_text": "Chest tightness with sweating for 20 minutes can be a heart attack. Call 995 now, sit down, chew one 300 mg aspirin if a doctor has said it is safe for you, unlock your door."
+      },
+      "states": {
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Call 995 now",
+            "subtitle": "Chest tightness with sweating · 20 minutes"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "summary": "Chest tightness with sweating can be a heart attack. Call 995 for an ambulance now.",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Don't drive yourself. Sit down and unlock your door so help can get in."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The first-aid guide didn't load. The advice above still stands."
+            }
+          ],
+          "details": {
+            "disclaimers": [
+              "Harso is not a doctor. In an emergency always call 995."
+            ]
+          },
+          "fallback_text": "Chest tightness with sweating can be a heart attack. Call 995 for an ambulance now. Don't drive yourself; sit down and unlock your door. The first-aid guide didn't load."
+        }
+      }
+    },
+    {
+      "id": "health-symptom-sore-throat",
+      "vertical": "health",
+      "kind": "card",
+      "request": "I've had a sore throat for two days but no fever.",
+      "says": "This usually clears up on its own within a week.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Symptom check with disclaimer"
+      ],
+      "rationale": "Not urgent, so the likely cause leads and the signs that change that are bullets; limits and sources behind Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Most likely a viral sore throat",
+          "subtitle": "2 days · no fever"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "summary": "Rest, drink plenty, and use lozenges or paracetamol for the pain. If breathing becomes hard, go to A&E or call 995.",
+            "sections": [
+              {
+                "heading": "See a GP if",
+                "bullets": [
+                  "It lasts more than a week",
+                  "Swallowing becomes hard or you can't drink",
+                  "A fever above 38°C starts"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "HealthHub Singapore, sore throat",
+              "url": "https://www.healthhub.sg/a-z/diseases-and-conditions/sore-throat"
+            }
+          ],
+          "disclaimers": [
+            "Harso is not a doctor."
+          ]
+        },
+        "fallback_text": "Two days of sore throat without fever is most likely viral. Rest, drink plenty, use lozenges or paracetamol. See a GP if it lasts more than a week, swallowing becomes hard, or a fever above 38°C starts. Go to A&E or call 995 if breathing becomes hard."
       }
     },
     {
@@ -5954,6 +7181,55 @@
           ]
         },
         "fallback_text": "30-minute interval run: 8 min easy warm-up, 6 × (1 min hard, 1 min easy), 10 min cool-down."
+      }
+    },
+    {
+      "id": "health-workout-strength",
+      "vertical": "health",
+      "kind": "card",
+      "request": "Plan a 20-minute bodyweight workout for tomorrow morning.",
+      "says": "No equipment needed; the circuit is the part that counts.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Workout plan"
+      ],
+      "rationale": "Three phases as rows, duration trailing, summing to the total in the subtitle; starting it belongs to the watch.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Bodyweight workout",
+          "subtitle": "Sun 27 Sep · 20 min · no equipment"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Warm up",
+                "secondary": "Marching on the spot, arm circles",
+                "trailing": "4 min"
+              },
+              {
+                "label": "3 rounds: squats, push-ups, lunges",
+                "secondary": "10 of each, 30 s rest between rounds",
+                "trailing": "13 min"
+              },
+              {
+                "label": "Cool down",
+                "secondary": "Stretch hips, chest and calves",
+                "trailing": "3 min"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "disclaimers": [
+            "Stop if you feel chest pain or dizziness."
+          ]
+        },
+        "fallback_text": "20-minute bodyweight workout for Sun 27 Sep: 4 min warm-up (marching, arm circles), 13 min of 3 rounds of 10 squats, 10 push-ups and 10 lunges with 30 s rest, 3 min cool-down stretches."
       }
     },
     {
