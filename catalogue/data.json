@@ -864,7 +864,7 @@
             "No sales on Mon 7 Sep: the shop was closed for stocktake."
           ]
         },
-        "fallback_text": "Sales 1–14 Sep: S$22,100, up 17.6% on the previous 14 days; no sales on 7 Sep. Unpaid S$5,350 across 5 invoices. Late: Cedar Studio S$1,200 (9 days), Moss Café S$900 (6 days), Tern Goods S$1,600 (3 days)."
+        "fallback_text": "Sales 1–14 Sep: S$22,100, up 17.6% on the previous 14 days. Daily (S$): 1,400, 1,700, 1,300, 1,900, 2,100, 1,500, 0 on Mon 7 Sep (closed), 1,300, 1,800, 2,000, 1,400, 1,800, 2,200, 1,700. Unpaid S$5,350 across 5 invoices. Late: Cedar Studio S$1,200 (9 days), Moss Café S$900 (6 days), Tern Goods S$1,600 (3 days)."
       },
       "states": {
         "loading": {
@@ -964,7 +964,7 @@
               "No sales on Mon 7 Sep: the shop was closed for stocktake."
             ]
           },
-          "fallback_text": "Sales 1–14 Sep: S$22,100, up 17.6% on the previous 14 days; no sales on 7 Sep. Unpaid invoices are not read yet."
+          "fallback_text": "Sales 1–14 Sep: S$22,100, up 17.6% on the previous 14 days. Daily (S$): 1,400, 1,700, 1,300, 1,900, 2,100, 1,500, 0 on Mon 7 Sep (closed), 1,300, 1,800, 2,000, 1,400, 1,800, 2,200, 1,700. Unpaid invoices are not read yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1074,7 +1074,7 @@
               }
             ]
           },
-          "fallback_text": "As of 25 Sep 17:00 (couldn’t refresh): sales 1–14 Sep S$22,100, up 17.6% on the previous 14 days; no sales on 7 Sep. Unpaid S$6,150 across 6 invoices. Late: Cedar Studio S$1,200 (9 days), Moss Café S$900 (6 days), Tern Goods S$1,600 (3 days)."
+          "fallback_text": "As of 25 Sep 17:00 (couldn’t refresh): sales 1–14 Sep S$22,100, up 17.6% on the previous 14 days. Daily (S$): 1,400, 1,700, 1,300, 1,900, 2,100, 1,500, 0 on Mon 7 Sep (closed), 1,300, 1,800, 2,000, 1,400, 1,800, 2,200, 1,700. Unpaid S$6,150 across 6 invoices. Late: Cedar Studio S$1,200 (9 days), Moss Café S$900 (6 days), Tern Goods S$1,600 (3 days)."
         },
         "empty": {
           "kind": "output_blocks",
@@ -2066,7 +2066,7 @@
             }
           ]
         },
-        "fallback_text": "Monthly visitors: about 8,200–8,900 in Apr–May, then 17,400–18,600 from June's launch onward."
+        "fallback_text": "Monthly visitors: 8,200 in April, 8,900 in May, 17,400 in June after the launch, 18,100 in July, 17,800 in August and 18,600 in September to 25 Sep."
       },
       "states": {
         "loading": {
