@@ -397,7 +397,9 @@ const hostileMedia: HarsoOutputDocument = {
   ],
   fallback_text: "Hostile media probe."
 };
-const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide,
+// Synthetic: a block kind the card does not draw, so the whole card falls back to its text.
+const unknown: HarsoOutputDocument = { ...failed, blocks: [{ kind: "hologram", payload: { raw: true } }] };
+const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide,
   status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
 
 /* Fixture media host: artifacts are local drawings, map tiles a drawn street grid per tile (deterministic, offline:
