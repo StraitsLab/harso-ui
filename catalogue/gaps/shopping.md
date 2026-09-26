@@ -67,4 +67,5 @@ email, so I can't say whether it went through. Check Courts before you order aga
 
 ## Renderer gaps (lead visual gate)
 Visual acceptance is deferred to the lead's catalogue-wide pass (ruling 2026-09-26). At round 2, 122 of 186 cards per
-theme still fall back because charts/tables (PR #11) and actions + linked sources (P5d) have not landed.
+theme still fall back because charts/tables (PR #11) and actions + linked sources (P5d) have not landed. With the
+marketplace examples it is 164 of 270 per theme; each new example falls back only in its status and action cards (6 of 12).
