@@ -194,7 +194,7 @@ test("Flights renders title, subtitle, three rows with values and exactly one Pi
   expect(within(card).queryByText(flights.fallback_text)).toBeNull();
 });
 
-test("display-only: a reply action (or any action) renders no button and no text, and never throws", () => {
+test("with no host callbacks no action draws (a reply never does): no button, no text, never throws", () => {
   const { card } = renderCard();
   expect(within(card).getAllByRole("button").map(button => button.textContent)).toEqual(["Details"]);
   expect(within(card).queryByText(/Choose SQ 638/)).toBeNull();

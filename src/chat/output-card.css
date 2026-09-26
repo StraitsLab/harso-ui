@@ -1,6 +1,6 @@
 /* WEV-1851 S1: approved inline Flights card (Sketch 'iOS — Inline results' 01, founder 23 Sep).
    Borderless tonal card: surface fill, radius 12, no stroke; compact header; <=3 rows, then one quiet View-all row.
-   Display-only: no reply/choose action (choices go through the native question card).
+   Actions only open a link or a file or control the work shown; never reply/choose (the native question card does).
    Desktop type scale uses the kit tokens only (title 15 · body 14 · chrome 13 · meta 12). */
 .harso-kit .hkc-output-card {
   display: flex; flex-direction: column; gap: var(--hk-space-4);
@@ -73,6 +73,26 @@
   background: var(--hk-line);
 }
 
+/* Actions (packet 5d, B0 action master): always last, after an inset hairline. Primary filled, secondary quiet. The
+   inline phone card stacks them full width with 44px targets; a pane wide enough (the 420 desktop pane and up) sets
+   them as a right-aligned pair, primary at the trailing edge, with 32px pills (the desktop floor is 28). Labels are
+   the agent's, one line, cut with an ellipsis; the button's name is the whole label. */
+.harso-kit .hkc-output-card-actions { position: relative; container: hkc-output-actions / inline-size; padding-top: var(--hk-space-3); }
+.harso-kit .hkc-output-card-actions::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--hk-line); }
+.harso-kit .hkc-output-card-actions-row { display: flex; flex-direction: column; gap: var(--hk-space-2); }
+.harso-kit .hkc-output-card .hk-button.hkc-output-card-action { width: 100%; min-width: 0; min-height: 44px; padding-inline: var(--hk-space-4); font-size: var(--hk-text-body); }
+.harso-kit .hkc-output-card-action-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@container hkc-output-actions (min-width: 348px) {
+  /* A pair that cannot share one line wraps (primary stays on top, right-aligned) before either label is cut. */
+  .harso-kit .hkc-output-card-actions-row { flex-direction: row-reverse; flex-wrap: wrap; justify-content: flex-start; align-items: center; }
+  .harso-kit .hkc-output-card .hk-button.hkc-output-card-action { width: auto; max-width: 100%; flex: 0 1 auto; min-height: 32px; padding-block: 5px; font-size: var(--hk-text-chrome); }
+}
+@media (pointer: coarse) { .harso-kit .hkc-output-card .hk-button.hkc-output-card-action { min-height: 44px; } }
+
+/* A source with a url opens through the host; it reads as a link in the Details list. */
+.harso-kit .hkc-output-card-source-link { color: var(--hk-ink); text-decoration: underline; text-decoration-color: var(--hk-faint); text-underline-offset: 3px; border-radius: 2px; }
+.harso-kit .hkc-output-card-source-link:hover { text-decoration-color: currentColor; }
+
 .harso-kit .hkc-output-card-details-toggle { flex: 0 0 auto; min-width: 44px; margin: -10px -8px 0 0; padding-inline: var(--hk-space-2); font-size: var(--hk-text-chrome); }
 .harso-kit .hkc-output-card-details { display: flex; flex-direction: column; gap: var(--hk-space-2); font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
 .harso-kit .hkc-output-card-details[hidden] { display: none; }
@@ -83,4 +103,8 @@
   .harso-kit .hkc-output-card .hk-button { border: 1px solid ButtonText; }
   .harso-kit .hkc-output-card .hk-button:disabled { border-color: GrayText; color: GrayText; }
   .harso-kit .hkc-output-card-pick { outline: 1px solid CanvasText; }
+  .harso-kit .hkc-output-card-actions::before { background: CanvasText; }
+  /* The kit's filled button maps fill and label to one system colour here; the primary becomes a Highlight pill. */
+  .harso-kit .hkc-output-card .hk-button--primary.hkc-output-card-action { forced-color-adjust: none; background: Highlight; color: HighlightText; border-color: Highlight; }
+  .harso-kit .hkc-output-card-source-link { color: LinkText; }
 }

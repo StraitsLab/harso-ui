@@ -10,7 +10,6 @@ afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 const host: chat.HarsoOutputMediaHost = {
   resolveArtifact: artifact => `https://files.test/${artifact.slice(9)}`,
-  onOpenArtifact: vi.fn(),
   mapTile: (z, x, y) => `https://tile.test/${z}/${x}/${y}.png`
 };
 const tokyo: chat.HarsoOutputBlock = { kind: "visual", visual: { kind: "map", selected_place_id: "ueno", places: [

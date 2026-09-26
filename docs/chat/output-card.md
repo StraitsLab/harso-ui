@@ -1,6 +1,6 @@
 # HarsoOutputCard
 
-Display-only inline card for an agent **output document** (`output-blocks.v1`,
+Inline card for an agent **output document** (`output-blocks.v1`,
 draft contract frozen in weave-cloud packet S0). First slice: the founder-approved
 **Flights** inline card (Sketch `iOS — Inline results` 01, light + dark). Exported
 from `@harso/ui` with `HarsoOutputCardProps`, `HarsoOutputDocument` and the block
@@ -11,6 +11,11 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
   document={validatedDocument}          // host already validated against output-blocks.v1
   onViewAll={openOutputPage}            // the host opens the full output view
   onOpenDetails={openOutputPage}        // optional; omit to disclose Details inline
+  onOpenUrl={openExternal}              // optional; each action kind needs its own callback, or it is not drawn
+  onOpenArtifact={openInViewer}
+  onDownloadArtifact={saveFile}
+  onWorkControl={(control, workUnitId) => controlWork(workUnitId, control)}
+  onRoutineControl={(control, routineId) => controlRoutine(routineId, control)}
 />
 ```
 
@@ -27,8 +32,12 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
   opens, fetches and sends nothing itself; the host shows the full output.
 - `onOpenDetails?()` — if supplied, the Details control hands off to the host (e.g.
   a full output page). If omitted and `document.details` has content, Details is a
-  local nonmodal disclosure listing sources, assumptions and disclaimers as plain
-  text (source URLs are not linked in this slice).
+  local nonmodal disclosure listing sources, assumptions and disclaimers. A source
+  with an `https` url is a link through `onOpenUrl` (see rule 6); the rest is plain text.
+- `onOpenUrl?(url)`, `onOpenArtifact?(artifact)`, `onDownloadArtifact?(artifact)`,
+  `onWorkControl?(control, workUnitId)`, `onRoutineControl?(control, routineId)` — the
+  host acts; the kit never navigates, fetches or saves. `onOpenArtifact` is also the
+  video poster's open (it replaced `media.onOpenArtifact`; a video without it falls back).
 - `className?: string`.
 
 ## Rendering rules
@@ -64,14 +73,28 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
    sections, when sections carry headings or bullets, or when a second text block
    follows. Section headings and bullets never render inline.
 5. Blocks render in the agent's order; budgets are shared across blocks of a kind.
-6. **No actions.** The card is display-only: choices go through the host's
-   native question card. `action` blocks (including the contract's still-carried
-   `reply`) are accepted and render nothing — no button, no text — and never
-   fall back or throw.
-7. **Fallback:** if any block is not `rows`/`numbers`/`text`/`action` (visual,
-   table, status, unknown), or a row carries `status` (Overdue/Paid, not styled
-   yet), the card renders the header plus `fallback_text` as plain text and
-   **nothing else from blocks** — no rows, numbers or text, no View-all row, never raw JSON.
+6. **Open and download actions through the host.** The `action` block draws last,
+   after View all and an inset hairline: `primary` as a filled button, `secondary` as
+   a quiet one, in that order whatever the object's key order (a lone secondary
+   stays quiet). Kinds and callbacks: `open_url` → `onOpenUrl(url)`, `open_artifact`
+   → `onOpenArtifact(artifact)`, `download_artifact` → `onDownloadArtifact(artifact)`,
+   `work_control` → `onWorkControl(control, work_unit_id)`, `routine_control` →
+   `onRoutineControl(control, routine_id)`. An action is **not drawn** (never a dead
+   button) when the host did not supply its callback, or its target is not what the
+   contract allows (`https` url, `artifact:` URI, a known control with its id).
+   `reply` is never drawn: choices go through the host's native question card.
+   Layout: stacked full width with 44px targets on the 390 inline card; a
+   right-aligned pair (primary at the trailing edge, 32px, ≥ 28 on desktop) when the
+   card's content box is ≥ 348px (the 420 pane and wider). Labels are the agent's,
+   one line, cut with an ellipsis; the button's accessible name and `title` are the
+   whole label. Linked sources in Details are `<a href>` links whose activation
+   (click, modified click, Enter, middle click) is cancelled and handed to `onOpenUrl`.
+   The browser's own "Open link in new tab" menu is the host's to route (e.g. an
+   Electron `setWindowOpenHandler`); the kit does not replace the context menu.
+7. **Fallback:** if any block is a kind the card cannot draw, or a row carries `status`
+   (Overdue/Paid, not styled yet), the card renders the header plus `fallback_text` as
+   plain text and **nothing else from blocks** — no rows, numbers or text, no View-all
+   row, no actions, never raw JSON.
 8. Plain text only: no markdown, no HTML; React escaping is the only processing.
 9. Accessibility: `section` named by the title; rows and key numbers are `ul/li`; Pick is text, not
    colour-only; Escape inside an open disclosure closes it and returns focus to
@@ -86,7 +109,8 @@ spacing rhythm come from `--hk-*` tokens, so light, dark and the warm (`cozy`)
 palette work unchanged; a few small geometry values (2px row gaps, the Pick
 capsule padding, the Details toggle's optical margin, line heights and the 44px
 target) are literal. In forced-colors mode (Windows High Contrast) the card and
-controls deliberately gain system-colour outlines, because tonal fills disappear
+controls deliberately gain system-colour outlines (the action hairline is
+`CanvasText`, source links `LinkText`), because tonal fills disappear
 there; this is an accessibility exception to the borderless rule.
 
 ## Fixture and proof
@@ -98,17 +122,21 @@ of three). `doc=numbers` is the Spending example's numbers block alone (charts
 render in a later packet). `doc=brief` is S0 example 05; `doc=text` is a synthetic
 long paragraph with no summary. Query:
 `doc=flights|failed|spending|more|numbers|brief|text`, `mode=dark`,
-`palette=cozy`, `hostDetails=1`.
+`palette=cozy`, `hostDetails=1`. Packet 5d adds `doc=invoice|directions|work|longactions|rtlactions`,
+`without=url,open,download,work,routine` (leave those host callbacks out) and records
+every callback in the `actions` list of the Fixture callbacks output. The catalogue
+gallery (`#/catalogue/<vertical>`) passes callbacks that log to the console and flash
+"Would open …" under the card, so reviewers can press every action.
 
 ```sh
 npm run check
 npm test -- src/chat/output-card.test.tsx
-HARSO_UI_PORT=<free port> npx playwright test tests/harso-output-card.spec.ts
+HARSO_UI_PORT=<free port> npx playwright test tests/harso-output-card.spec.ts tests/harso-output-actions.spec.ts
 ```
 
 The Playwright spec shoots light + dark at 420px, runs Axe on the card, asserts
-zero borders, 12px radius, surface fill, ≥44px targets, no overlap, no action
-button, the View-all row (light + dark), key numbers and text (light + dark: sizes,
+zero borders, 12px radius, surface fill, ≥44px targets, no overlap, no reply
+button (actions: `tests/harso-output-actions.spec.ts` at 390/420, light/dark, forced colours), the View-all row (light + dark), key numbers and text (light + dark: sizes,
 2-up geometry, ≤ 4 text lines at 420px, CJK text clamped to 4 lines with View all,
 a short sentence with none, and the clamp following width changes) and the fallback path. Not covered here:
 the host's inline-vs-page decision and full output view, transport, live data,

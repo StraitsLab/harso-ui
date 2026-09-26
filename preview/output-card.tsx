@@ -410,10 +410,35 @@ const worldMaps: Record<string, HarsoOutputDocument> = {
   longpick: mapOf("A long name beside a neighbour", [{ id: "a", label: "W".repeat(40), lat: "1.3000", lon: "103.8000" }, { id: "b", label: "Other", lat: "1.3000", lon: "103.8200" }]),
   poles: mapOf("Svalbard and the Ross Sea", [{ id: "n", label: "Longyearbyen", lat: "78.2232", lon: "15.6267" }, { id: "s", label: "McMurdo", lat: "-77.8419", lon: "166.6863" }])
 };
+// Packet 5d: actions and linked sources. Verbatim catalogue examples (file-invoice-pdf, places-directions,
+// prod-work-running, money-portfolio + a linked source from news-brief), and synthetic schema-maximum labels (line28).
+const invoice: HarsoOutputDocument = { kind: "output_blocks", major: 1, header: { title: "INV-2042 · Acme Pte Ltd", subtitle: "Due 26 Oct · PDF" },
+  blocks: [{ kind: "numbers", items: [{ value: "S$3,270.00", label: "Amount due" }, { value: "26 Oct", label: "Due" }] },
+    { kind: "action", primary: { kind: "open_artifact", label: "Open invoice", artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29" },
+      secondary: { kind: "download_artifact", label: "Download PDF", artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29" } }],
+  fallback_text: "Invoice INV-2042 to Acme Pte Ltd for 20 hours of design at S$150, S$3,270.00 including 9% GST, due 26 Oct. Saved to your Library." };
+const directions: HarsoOutputDocument = { kind: "output_blocks", major: 1, header: { title: "42 min to Jewel by MRT", subtitle: "From Tanjong Pagar · one change" },
+  blocks: [{ kind: "rows", items: [{ label: "East–West line to Tanah Merah", secondary: "10 stops", trailing: "24 min" }, { label: "Change to Changi Airport line", secondary: "2 stops", trailing: "9 min" }, { label: "Walk to Jewel", secondary: "From Changi Airport MRT", trailing: "5 min" }] },
+    { kind: "action", primary: { kind: "open_url", label: "Directions in Maps", url: "https://maps.apple.com/?daddr=Jewel+Changi+Airport&dirflg=r" } }],
+  details: { sources: [{ label: "SMRT journey planner, 26 Sep 2026" }, { label: "LTA statement", url: "https://www.lta.gov.sg/content/ltagov/en/newsroom.html" }] },
+  fallback_text: "Tanjong Pagar to Jewel by MRT: about 42 min. East–West line to Tanah Merah, change to the Changi Airport line, 5 min walk." };
+const workRunning: HarsoOutputDocument = { kind: "output_blocks", major: 1, header: { title: "Filing receipts from Gmail", subtitle: "About 400 emails" },
+  blocks: [{ kind: "status", state: "working", detail: "112 of about 400 checked", subject: { work_unit_id: "0192a3b4-5c6d-7e8f-9a0b-000000000962" } },
+    { kind: "action", secondary: { kind: "work_control", label: "Stop", work_unit_id: "0192a3b4-5c6d-7e8f-9a0b-000000000962", control: "cancel" } }],
+  fallback_text: "Filing receipts from Gmail: 112 of about 400 emails checked so far." };
+const longActions: HarsoOutputDocument = { header: { title: "Longest labels" },
+  blocks: [{ kind: "text", sections: [{ paragraphs: ["Two actions at the schema's 28-character maximum."] }] },
+    { kind: "action", primary: { kind: "open_url", label: "W".repeat(28), url: "https://example.com/a" },
+      secondary: { kind: "download_artifact", label: "长".repeat(28), artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29" } }],
+  fallback_text: "Longest labels." };
+const rtlActions: HarsoOutputDocument = { header: { title: "مرحبا بالعالم" },
+  blocks: [{ kind: "text", sections: [{ paragraphs: ["مرحبا بالعالم"] }] },
+    { kind: "action", primary: { kind: "open_url", label: "افتح في الخرائط", url: "https://example.com/b" }, secondary: { kind: "reply", label: "Choose", text: "Choose" } }],
+  fallback_text: "RTL labels." };
 // Synthetic: a block kind the card does not draw, so the whole card falls back to its text.
 const unknown: HarsoOutputDocument = { ...failed, blocks: [{ kind: "hologram", payload: { raw: true } }] };
 const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide,
-  ...worldMaps, status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
+  ...worldMaps, invoice, directions, work: workRunning, longactions: longActions, rtlactions: rtlActions, status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
 
 /* Fixture media host: artifacts are local drawings, map tiles a drawn street grid per tile (deterministic, offline:
    the browser suite never calls openstreetmap.org). `?imgfail=1` serves a missing image; `?imgslow=1` never resolves. */
@@ -433,10 +458,9 @@ const tile = (z: number, x: number, y: number) => {
 };
 // `?net=1` serves artifacts and tiles over HTTP paths the browser suite routes (fulfils, aborts or holds), so real
 // transport failure and recovery are exercised, not a host-injected state. `?generation=` changes every tile URL.
-const mediaHost = (onOpen: (artifact: string) => void): HarsoOutputMediaHost => ({
+const mediaHost = (): HarsoOutputMediaHost => ({
   resolveArtifact: artifact => query.has("imgfail") ? "/preview/missing-image.png" : query.has("imgslow") ? "/__never__/slow.png"
     : query.has("net") ? `/__media__/${artifact.slice(9)}` : ART[artifact.slice(9)],
-  onOpenArtifact: onOpen,
   mapTile: query.has("net") ? (z, x, y) => `/__tiles__/${query.get("generation") ?? 0}/${z}/${x}/${y}.svg` : tile
 });
 // Per-block state for B0 state crops: ?state=partial etc. The B0 master copy for each kind (data.js).
@@ -475,17 +499,29 @@ function Fixture() {
   const blockStates = blockState && blockState !== "ready"
     ? { 0: { state: blockState, ...STATE_COPY[doc]?.[blockState], onRetry: blockState === "failed" ? () => setRetried(value => value + 1) : undefined } } : undefined;
   const [detailsOpened, setDetailsOpened] = useState(0);
+  // Every host callback the card can call, recorded in order (`opened` keeps the video tests' artifact list).
+  // `?without=url,open,download,work,routine` leaves those callbacks out, as a host that cannot act on them would.
   const [opened, setOpened] = useState<string[]>([]);
-  const [media] = useState(() => mediaHost(artifact => setOpened(list => [...list, artifact])));
+  const [actions, setActions] = useState<string[]>([]);
+  const [media] = useState(mediaHost);
+  const log = (entry: string) => setActions(list => [...list, entry]);
+  const without = new Set((query.get("without") ?? "").split(","));
+  const host = {
+    onOpenUrl: without.has("url") ? undefined : (url: string) => log(`open_url ${url}`),
+    onOpenArtifact: without.has("open") ? undefined : (artifact: string) => { setOpened(list => [...list, artifact]); log(`open_artifact ${artifact}`); },
+    onDownloadArtifact: without.has("download") ? undefined : (artifact: string) => log(`download_artifact ${artifact}`),
+    onWorkControl: without.has("work") ? undefined : (control: string, id: string) => log(`work_control ${control} ${id}`),
+    onRoutineControl: without.has("routine") ? undefined : (control: string, id: string) => log(`routine_control ${control} ${id}`)
+  };
   return <KitProvider appearance={appearance} palette={palette} className="output-card-fixture" style={query.has("width") ? { maxWidth: `${Number(query.get("width"))}px` } : undefined}>
     <main>
       <div className="output-card-transcript" data-testid="transcript">
         <p className="output-card-user">Flights to Tokyo on 12 Oct?</p>
         <p>Three direct options. SQ 638 has the best times for your morning start.</p>
         <HarsoOutputCard document={document} onViewAll={() => setViewAllOpened(value => value + 1)}
-          onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} />
+          onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} {...host} />
       </div>
-      <output aria-label="Fixture callbacks">{JSON.stringify({ viewAllOpened, detailsOpened, retried, opened })}</output>
+      <output aria-label="Fixture callbacks">{JSON.stringify({ viewAllOpened, detailsOpened, retried, opened, actions })}</output>
     </main>
   </KitProvider>;
 }

@@ -32,8 +32,6 @@ export type HarsoOutputMedia = HarsoOutputMap | HarsoOutputImage | HarsoOutputVi
 export interface HarsoOutputMediaHost {
   /** An `artifact:` URI to a URL the host serves (image, video, poster); undefined when it has none. */
   resolveArtifact?: (artifact: string) => string | undefined;
-  /** Opens a file (the video) in the host's viewer. Without it the poster is not a control. */
-  onOpenArtifact?: (artifact: string) => void;
   /** OpenStreetMap raster tile URL for zoom/x/y. Without it a map block falls back to text: pins on nothing is not a map. */
   mapTile?: (z: number, x: number, y: number) => string;
 }
@@ -157,16 +155,19 @@ export function HarsoOutputProgressView({ progress }: { progress: HarsoOutputPro
 
 // ---- media ----
 
-const ARTIFACT = /^artifact:[0-9a-f-]{36}$/;
-/** The image, video or map this card can draw, or undefined (the card then falls back to text). */
-export function readMedia(block: AnyBlock, host: HarsoOutputMediaHost): HarsoOutputMedia | undefined {
+export const ARTIFACT = /^artifact:[0-9a-f-]{36}$/;
+/**
+ * The image, video or map this card can draw, or undefined (the card then falls back to text). A video needs
+ * `canOpen` (the card's `onOpenArtifact`): its poster is only a way to open the file.
+ */
+export function readMedia(block: AnyBlock, host: HarsoOutputMediaHost, canOpen = false): HarsoOutputMedia | undefined {
   if (block.kind !== "visual") return undefined;
   const visual = (block as { visual?: { kind?: string } }).visual as HarsoOutputMedia | undefined;
   if (!visual) return undefined;
   if (visual.kind === "image" || visual.kind === "video") {
     // No way to show the file (or, for a video, to open it) without the host: fall back rather than draw a dead frame.
     const ok = ARTIFACT.test(visual.artifact ?? "") && typeof visual.alt === "string" && !!host.resolveArtifact?.(visual.artifact)
-      && (visual.kind === "image" || !!host.onOpenArtifact);
+      && (visual.kind === "image" || canOpen);
     return ok ? visual : undefined;
   }
   if (visual.kind === "map") {
@@ -263,7 +264,7 @@ export function duration(seconds: number) {
 }
 
 /** A poster frame with its duration that opens the file in the host; never an inline player. */
-export function HarsoOutputVideoView({ video, host }: { video: HarsoOutputVideo; host: HarsoOutputMediaHost }) {
+export function HarsoOutputVideoView({ video, host, onOpen }: { video: HarsoOutputVideo; host: HarsoOutputMediaHost; onOpen: (artifact: string) => void }) {
   const loads = useLoads();
   const frame = useRef<HTMLButtonElement>(null);
   useSettleComplete(frame, loads);
@@ -288,7 +289,7 @@ export function HarsoOutputVideoView({ video, host }: { video: HarsoOutputVideo;
   }, [src, attempt]);
   const time = length?.src === src ? length.text : undefined;
   const file = loads.phase(fileKey), picture = poster ? loads.phase(poster) : undefined;
-  const open = () => host.onOpenArtifact?.(video.artifact);
+  const open = () => onOpen(video.artifact);
   // Nothing to show in the frame: the poster failed, or there is no poster and the file itself didn't load. Opening
   // the file stays available beside Try again (the host's viewer may still reach it).
   if (picture === "failed" || (!poster && file === "failed")) return <MediaFailed

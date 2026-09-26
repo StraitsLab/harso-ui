@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { KitProvider } from "../src";
 import { Button } from "../src/primitives";
-import { HarsoOutputCard, type HarsoOutputBlock, type HarsoOutputCardCaps, type HarsoOutputDocument, type HarsoOutputTextBlock } from "../src/chat/output-card";
+import { HarsoOutputCard, type HarsoOutputBlock, type HarsoOutputCardCaps, type HarsoOutputCardProps, type HarsoOutputDocument, type HarsoOutputTextBlock } from "../src/chat/output-card";
 import index from "../catalogue/index.json";
 import "./catalogue-gallery.css";
 
@@ -36,11 +36,17 @@ export function catalogueRouteFromHash(): { vertical?: string; mode: string } | 
 
 /** No inline budget: every row and number, and the text unclipped (the line cap is a CSS clamp, so a finite number). */
 const UNCAPPED: HarsoOutputCardCaps = { maxRows: Infinity, maxNumbers: Infinity, maxTextChars: Infinity, maxTextLines: 10_000 };
+const withoutCount = (block: HarsoOutputBlock): HarsoOutputBlock => {
+  if (!("total_count" in block)) return block;
+  const { total_count: _, ...rest } = block as HarsoOutputBlock & { total_count?: number };
+  return rest as HarsoOutputBlock;
+};
 const isText = (block: HarsoOutputBlock): block is HarsoOutputTextBlock => block.kind === "text" && Array.isArray((block as HarsoOutputTextBlock).sections);
 
 /**
  * The whole answer for View all, drawn by the same card with its inline caps lifted. The card draws one text run, so
  * every text block's words (summary, headings, paragraphs, bullets, in order) become that one run, word for word.
+ * It holds every row the agent sent; rows it only counted (`total_count`) are reached through the answer's action.
  */
 function wholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
   const words = document.blocks.filter(isText).flatMap(block => [
@@ -48,14 +54,37 @@ function wholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
     ...block.sections.flatMap(section => [...(section.heading ? [section.heading] : []), ...section.paragraphs ?? [], ...section.bullets ?? []]),
   ]);
   const firstText = document.blocks.findIndex(isText);
-  const blocks = document.blocks.flatMap((block, index): HarsoOutputBlock[] => !isText(block) ? [block]
+  const blocks = document.blocks.flatMap((block, index): HarsoOutputBlock[] => !isText(block) ? [withoutCount(block)]
     : index === firstText ? [{ kind: "text", sections: [{ paragraphs: words }] }] : []);
   return { ...document, blocks };
+}
+
+type Host = Pick<HarsoOutputCardProps, "onOpenUrl" | "onOpenArtifact" | "onDownloadArtifact" | "onWorkControl" | "onRoutineControl">;
+/**
+ * The gallery stands in for the app: every action a reviewer presses is logged and flashed as what the app would do.
+ * Nothing opens, downloads or controls anything here.
+ */
+function galleryHost(say: (text: string) => void): Host {
+  const tell = (text: string) => { console.info(`[catalogue] ${text}`); say(text); };
+  return {
+    onOpenUrl: url => tell(`Would open ${url}`),
+    onOpenArtifact: artifact => tell(`Would open ${artifact}`),
+    onDownloadArtifact: artifact => tell(`Would download ${artifact}`),
+    onWorkControl: (control, id) => tell(`Would ${control} work ${id}`),
+    onRoutineControl: (control, id) => tell(`Would ${control} routine ${id}`)
+  };
 }
 
 /** The card as the chat shows it; View all opens the whole answer in place, Show less or Escape closes it. */
 function Answer({ example, document }: { example: CatalogueExample; document: HarsoOutputDocument | null }) {
   const [open, setOpen] = useState(false);
+  const [flash, setFlash] = useState("");
+  const [host] = useState(() => galleryHost(setFlash));
+  useEffect(() => {
+    if (!flash) return;
+    const timer = setTimeout(() => setFlash(""), 2400);
+    return () => clearTimeout(timer);
+  }, [flash]);
   const cell = useRef<HTMLDivElement>(null);
   const returnFocus = useRef(false);
   useLayoutEffect(() => {
@@ -69,10 +98,11 @@ function Answer({ example, document }: { example: CatalogueExample; document: Ha
     {open
       ? <div className="hkl-cat-full" role="region" aria-label={`${document.header.title}, full answer`} tabIndex={-1}
         onKeyDown={event => { if (event.key === "Escape") { event.stopPropagation(); close(); } }}>
-        <HarsoOutputCard document={wholeAnswer(document)} caps={UNCAPPED} onViewAll={close} />
+        <HarsoOutputCard document={wholeAnswer(document)} caps={UNCAPPED} onViewAll={close} {...host} />
         <Button variant="ghost" size="small" className="hkl-cat-less" onClick={close}>Show less</Button>
       </div>
-      : <HarsoOutputCard document={document} onViewAll={() => setOpen(true)} />}
+      : <HarsoOutputCard document={document} onViewAll={() => setOpen(true)} {...host} />}
+    <p className="hkl-cat-flash" role="status">{flash}</p>
   </div>;
 }
 
