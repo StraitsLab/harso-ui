@@ -26,7 +26,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.preview.json",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "check": "npm run typecheck && npm test && npm run build"
+    "tokens": "node scripts/gen-tokens.mjs",
+    "check": "node scripts/gen-tokens.mjs --check && npm run typecheck && npm test && npm run build"
   },
   "peerDependencies": {
     "react": "^19.2.0",
