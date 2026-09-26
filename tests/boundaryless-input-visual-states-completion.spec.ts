@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { moduleSource, routeSource } from "./helpers/module-source";
 
 async function localSpeechEvents(page: Page) {
   await page.addInitScript(() => {
@@ -29,7 +30,7 @@ async function localSpeechEvents(page: Page) {
 }
 
 async function mountSpeechStates(page: Page) {
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
@@ -54,7 +55,7 @@ for (const appearance of ["light", "dark"] as const) for (const palette of ["cle
   test(`INPUT VISUAL ${appearance} ${palette} ${width} runtime composer and mocked speech states`, async ({ page }, testInfo) => {
     const mutation = process.env.INPUT_VISUAL_MUTATION;
     if (mutation === "accent") await page.route("**/primitives.css*", async route => {
-      const response = await route.fetch();
+      const response = await routeSource(route);
       const body = await response.text();
       expect(body).toContain("background: var(--hk-accent); color: var(--hk-inverse); animation: hk-speech-pulse");
       await route.fulfill({ response, body: body.replace("background: var(--hk-accent); color: var(--hk-inverse); animation: hk-speech-pulse", "background: transparent; color: var(--hk-inverse); animation: hk-speech-pulse") });

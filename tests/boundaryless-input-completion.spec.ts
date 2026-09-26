@@ -1,8 +1,9 @@
 import { test, expect, type Page, type Locator } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 async function mountExample(page: Page, component: string) {
   await page.goto("/#boardui:input");
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   expect(reactUrl).toBeTruthy(); expect(domUrl).toBeTruthy();
@@ -250,7 +251,7 @@ test("CALENDAR mounted empty/disabled recovers events, inbox and actions", async
 
 async function mountControlled(page: Page, component: "FileUpload" | "Calendar" | "MeetingScheduler" | "MonthPanel") {
   await page.goto("/#boardui:calendar");
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];

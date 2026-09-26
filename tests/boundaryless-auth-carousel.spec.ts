@@ -1,11 +1,12 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { moduleSource } from "./helpers/module-source";
 
 // The gallery now demonstrates sign-in. Mount the carousel explicitly so its
 // keyboard/forced-color contract remains tested independently of gallery choice.
 test.beforeEach(async ({ page }) => {
   await page.goto("/#boardui:auth-card");
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
