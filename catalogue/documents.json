@@ -1,0 +1,349 @@
+{
+  "vertical": "documents",
+  "fresh": [
+    "docs-compare-plans"
+  ],
+  "examples": [
+    {
+      "id": "docs-contract-summary",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "What should I watch for in this tenancy agreement?",
+      "says": "Two clauses need a look before you sign.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Contract summary with clauses"
+      ],
+      "rationale": "Term and rent as numbers would crowd it; the two clauses are the answer, each with its meaning secondary.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tenancy agreement · The Clift",
+          "subtitle": "2 years · S$3,300 a month"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Clause 4(c) · Auto-renewal",
+                "secondary": "Renews for a year unless you give 2 months' notice",
+                "trailing": "Review"
+              },
+              {
+                "label": "Clause 7 · Minor repairs",
+                "secondary": "You pay the first S$200 of every repair",
+                "trailing": "Review"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Tenancy agreement PDF you shared, pages 3 and 5"
+            }
+          ],
+          "disclaimers": [
+            "A summary, not legal advice."
+          ]
+        },
+        "fallback_text": "Tenancy agreement for The Clift, 2 years at S$3,300: review clause 4(c) auto-renewal (2 months' notice) and clause 7 (you pay the first S$200 of each repair)."
+      }
+    },
+    {
+      "id": "docs-signatures",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Has everyone signed the NDA?",
+      "says": "Mei is the one holding it up.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Signature request preview"
+      ],
+      "rationale": "Each signer is a row with a state word; the nudge is a separate send, so the card links to DocuSign only.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Mutual NDA · Straits Lab",
+          "subtitle": "2 of 3 signed"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "You",
+                "secondary": "24 Sep",
+                "trailing": "Signed"
+              },
+              {
+                "label": "Arjun Rao",
+                "secondary": "25 Sep",
+                "trailing": "Signed"
+              },
+              {
+                "label": "Mei Lin",
+                "secondary": "Sent 24 Sep",
+                "trailing": "Not opened"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in DocuSign",
+              "url": "https://app.docusign.com/documents"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DocuSign envelope, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Mutual NDA: you and Arjun Rao signed; Mei Lin hasn't opened it since 24 Sep."
+      }
+    },
+    {
+      "id": "docs-compare-plans",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Which health insurance plan should I pick?",
+      "says": "Plan B covers the most for the premium.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Comparison"
+      ],
+      "rationale": "Inline comparison is rows with the one differentiator secondary and a pick; the full grid is the insurer's page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Integrated Shield plans",
+          "subtitle": "Age 35 · private hospital cover · as of 10:30"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Great Eastern Supreme",
+                "secondary": "S$3,500 deductible · as-charged",
+                "trailing": "S$412/yr"
+              },
+              {
+                "label": "Prudential PRUShield A",
+                "secondary": "S$3,500 deductible · as-charged, panel bonus",
+                "trailing": "S$398/yr",
+                "mark": "pick"
+              },
+              {
+                "label": "AIA HealthShield Gold",
+                "secondary": "S$3,500 deductible · as-charged",
+                "trailing": "S$436/yr"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "MOH comparison of Integrated Shield Plans, 26 Sep 2026 10:30",
+              "url": "https://www.moh.gov.sg/"
+            }
+          ],
+          "disclaimers": [
+            "Premiums before MediShield Life; not financial advice."
+          ]
+        },
+        "fallback_text": "Integrated Shield plans for age 35: Prudential PRUShield A S$398/yr (pick); Great Eastern Supreme S$412/yr; AIA HealthShield Gold S$436/yr."
+      }
+    },
+    {
+      "id": "docs-research-brief",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Is it worth buying an EV in Singapore now?",
+      "says": "Mostly yes, if you can charge at home or in your car park.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Report",
+        "Citation list"
+      ],
+      "rationale": "A short brief: summary, then two sections; sources behind Details; longer than that and it becomes a document.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "EVs in Singapore, 2026",
+          "subtitle": "Research brief"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "summary": "Charging is now broad but slow; the saving depends on charging near home.",
+            "sections": [
+              {
+                "heading": "Where things stand",
+                "paragraphs": [
+                  "Public chargers passed 15,000 points this year, most in HDB car parks. Fast chargers remain scarce outside big malls."
+                ]
+              },
+              {
+                "heading": "What it means for you",
+                "paragraphs": [
+                  "Public charging costs about S$0.60–0.75 per kWh against about S$0.35 at home. Check your car park's rollout date before you buy."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open as document",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000009c5"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LTA EV statistics",
+              "url": "https://www.lta.gov.sg/"
+            },
+            {
+              "label": "SP Group tariffs",
+              "url": "https://www.spgroup.com.sg/"
+            }
+          ]
+        },
+        "fallback_text": "EVs in Singapore 2026: 15,000+ public chargers, mostly in HDB car parks; fast chargers rare; public charging costs about twice home charging."
+      }
+    },
+    {
+      "id": "text-rewrite",
+      "vertical": "documents",
+      "kind": "text",
+      "request": "Make this sentence friendlier: 'Your payment is late.'",
+      "reply": "\"Just a reminder that the payment slipped past its due date. Could you take a look when you have a moment?\"",
+      "surface": "text",
+      "components": [
+        "Rewrite"
+      ],
+      "rationale": "Rewritten text is the answer itself; wrapping it in a card adds a frame to copy out of.",
+      "document": null
+    },
+    {
+      "id": "file-deck",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Turn the EV brief into 6 slides for Monday.",
+      "says": "Six slides, in PowerPoint and PDF.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Deck"
+      ],
+      "rationale": "A deck is a file; the card shows the title slide and opens the PDF for reading, PPTX for editing.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "EVs in Singapore, 2026",
+          "subtitle": "6 slides · PPTX and PDF"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2d",
+              "alt": "Title slide: EVs in Singapore, 2026, with a charger photo",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open slides",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2e"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download PowerPoint",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2f"
+            }
+          }
+        ],
+        "fallback_text": "The EV brief is now a 6-slide deck, in PowerPoint and PDF in your Library."
+      }
+    },
+    {
+      "id": "file-contract-docx",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Draft a simple freelance contract I can edit in Word.",
+      "says": "It's a 3-page Word document with the usual clauses.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Report",
+        "Document (DOCX)"
+      ],
+      "rationale": "Editable means DOCX; the card names what is inside in one section and downloads the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Freelance services agreement",
+          "subtitle": "3 pages · Word"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Scope, fees and payment terms",
+                  "IP transfers on payment",
+                  "Either side can end it with 14 days' notice"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download Word file",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a30"
+            },
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Preview",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a30"
+            }
+          }
+        ],
+        "details": {
+          "disclaimers": [
+            "A template, not legal advice. Have a lawyer check it for your case."
+          ]
+        },
+        "fallback_text": "A 3-page editable freelance agreement (scope, fees, IP on payment, 14 days' notice) is in your Library."
+      }
+    }
+  ]
+}

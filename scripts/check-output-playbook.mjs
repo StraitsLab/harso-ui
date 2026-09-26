@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Checks docs/agent/output-playbook.examples.json:
+// Checks docs/agent/output-playbook.examples.json (generated from catalogue/ by scripts/build-catalogue.mjs):
 //   1. every document is valid against the copied output-blocks.v1 schema (a minimal validator for exactly the
 //      keyword subset that schema uses; an unknown keyword throws, so a schema change cannot pass silently);
 //   2. the structural rules the schema cannot express, ported from weave-cloud packages/contracts/tools/contracts.py
@@ -7,11 +7,13 @@
 //   3. the playbook laws (row/number caps, one primary action, no reply buttons, no styling, closed state meanings,
 //      sources in Details, the card never repeats the chat sentence, Harso voice).
 // No dependency: node:fs, node:path, node:crypto, node:url only.
+//   4. the playbook file is not stale against catalogue/ (checked only for the default file).
 // Usage: node scripts/check-output-playbook.mjs [examples.json]   (exit 0 = clean, 1 = findings)
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { buildPlaybook } from "./build-catalogue.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const SCHEMA_PATH = resolve(ROOT, "docs/agent/schema/output-blocks.v1.json");
@@ -202,10 +204,9 @@ export function semanticErrors(document) {
 
 // ---------------------------------------------------------------------------------------------------------------
 // 3. Playbook laws (docs/agent/output-playbook.md). Each message names the law it enforces.
-export const VERTICALS = [
-  "money", "shopping", "real_estate", "jobs", "travel", "places", "food", "weather", "sports", "news",
-  "education", "health", "productivity", "documents", "data",
-];
+const PLAYBOOK = JSON.parse(readFileSync(EXAMPLES_PATH, "utf8"));
+/** The verticals, in catalogue order (catalogue/index.json). */
+export const VERTICALS = PLAYBOOK.verticals;
 export const EXAMPLE_KINDS = ["card", "file", "text"];
 /** Ratified 2026-09-25: every state the agent asserts means one of four things; the app owns the colour. */
 export const MEANINGS = ["done", "in progress", "needs you", "problem"];
@@ -222,41 +223,27 @@ const SOURCE_IN_TEXT = /(https?:\/\/|www\.|\bsource:|\baccording to\b)/i;
 const ARTIFACT_VERBS = new Set(["open_artifact", "download_artifact"]);
 /**
  * Catalogue components whose data goes stale (prices, quotes, availability, opening, scores, weather, flights,
- * balances, news). An example that uses one must declare `fresh: true` and stamp the subtitle; `fresh` is required on
- * every card and file, so leaving it out, or setting it false, cannot exempt one of these. This list is a floor, not the
- * classification: a generic component (Comparison, Empty state) can carry current prices too, so the test pins the
- * fresh verdict of every example by id, and LIVE_WORDS below catches an "open now" answer whatever its components.
+ * balances, news), listed in catalogue/index.json. An example that uses one must declare `fresh: true` and stamp the
+ * subtitle; `fresh` is required on every card and file, so leaving it out, or setting it false, cannot exempt one of
+ * these. This list is a floor, not the classification: a generic component (Comparison, Empty state) can carry current
+ * prices too, so each vertical file pins the fresh verdict of its examples by id, and LIVE_WORDS below catches an
+ * "open now" answer whatever its components.
  */
-export const TIME_SENSITIVE_COMPONENTS = new Set([
-  "F1 Balance / net worth", "Balance / net worth", "F2 Portfolio summary", "F3 Stock / crypto quote", "F4 Key stats grid",
-  "F5 Stock comparison", "F6 Watchlist / movers", "F13 Money transfer quote", "F14 Transfer / payment tracking",
-  "S1 Product options", "S3 Product detail", "S5 Buyer's guide", "S6 Price history / insight", "S7 Price watch", "S8 Deal",
-  "S11 Cart / checkout summary", "S13 Delivery tracking", "R1 Listing card", "R2 Listing results", "R3 Map + listings",
-  "J1 Job results", "Flight options", "Flight status / disruption", "Stay comparison", "Single hotel / stay detail",
-  "Reservation", "Current + forecast", "Severe-weather alert", "Scoreboard", "Standings", "Fixture list",
-  "Story cluster (brief)", "Story timeline", "Place card", "Opening hours", "Menu", "Map with pins",
-]);
+export const TIME_SENSITIVE_COMPONENTS = new Set(PLAYBOOK.time_sensitive_components);
 /** Words that assert something is true right now (open, in stock, listed): the answer is time-sensitive. */
 const LIVE_WORDS = /\b(?:open now|open until|closes at|in stock|sold out|right now|listed now|available now|seats? left|currently)\b/i;
 /** The acquisition stamp ("as of 26 Sep, 09:00") says when the data was read, not which dates the answer covers. */
 const AS_OF_STAMP = /\bas of\b[^·]*/gi;
 /**
- * The freshness verdict for every example, decided by hand, one id at a time: these answers hold prices,
- * availability, opening, quotes, scores, weather or news read today. Every other card and file is stable (a finished
- * period, a calculation, a record, a plan). The checker compares each example's `fresh` flag with this list, so
- * flipping a flag, or adding a time-sensitive example without deciding, is a finding whatever its components are.
+ * The freshness verdict for every example, decided by hand, one id at a time, in each vertical file's "fresh" list:
+ * these answers hold prices, availability, opening, quotes, scores, weather or news read today. Every other card and
+ * file is stable (a finished period, a calculation, a record, a plan). The checker compares each example's `fresh`
+ * flag with this list, so flipping a flag, or adding a time-sensitive example without deciding, is a finding whatever
+ * its components are.
  */
-export const FRESH_EXAMPLES = new Set([
-  "money-net-worth", "money-stock-quote", "money-portfolio", "money-transfer-quote", "money-key-stats",
-  "money-stock-compare", "money-transfer-tracking", "shop-vacuum-options", "shop-product-detail",
-  "shop-compare-phones", "shop-price-history", "shop-price-watch", "shop-delivery", "shop-cart-summary",
-  "shop-buyers-guide", "shop-deal", "home-listing-results", "home-listing-card", "home-rent-listings", "jobs-results",
-  "jobs-posting", "travel-flights", "travel-stay-areas", "travel-hotel-detail", "travel-flight-status", "places-cafe",
-  "places-dinner-options", "places-hours", "places-nearby-map", "food-menu", "weather-now", "weather-week",
-  "weather-alert", "sports-score", "sports-standings", "sports-fixtures", "news-brief", "news-timeline",
-  "news-headlines", "health-sleep", "docs-compare-plans", "data-stale", "empty-search", "partial-sources",
-  "partial-days", "stale-portfolio", "data-sales-collections",
-]);
+export const FRESH_EXAMPLES = new Set(PLAYBOOK.fresh);
+/** A state of an example (loading, partial...) is drawn from its own document, validated like the main one. */
+export const STATES = ["loading", "partial", "stale", "empty", "failed"];
 /** "as of" followed by a clock time or a market close: a date alone does not say how old a price is. */
 const AS_OF = /\bas of\b[^·]*(?:\b\d{1,2}:\d{2}\b|\bclose\b)/i;
 /** Reserved documentation domains are never a real destination. */
@@ -308,7 +295,8 @@ export function projectSurface(document) {
   return page ? "page" : "inline";
 }
 
-export function lawErrors(example) {
+/** `verdicts` are the playbook's lists; a check of another file passes that file's lists. */
+export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensitive: TIME_SENSITIVE_COMPONENTS }) {
   const errors = [];
   const push = (law, message) => errors.push(`${law}: ${message}`);
   const document = example.document;
@@ -388,8 +376,8 @@ export function lawErrors(example) {
     if (![action?.primary, action?.secondary].some(verb => verb && ARTIFACT_VERBS.has(verb.kind))) push("file", "a file example opens or downloads the artifact");
   }
   if (typeof example.fresh !== "boolean") push("stale", "declare fresh: true or false (is the data time-sensitive?)");
-  else if (example.fresh !== FRESH_EXAMPLES.has(example.id)) push("stale", `fresh is ${example.fresh}, but the playbook's verdict for ${example.id} is ${FRESH_EXAMPLES.has(example.id)} (FRESH_EXAMPLES)`);
-  const staleComponents = (example.components ?? []).filter(name => TIME_SENSITIVE_COMPONENTS.has(name));
+  else if (example.fresh !== verdicts.fresh.has(example.id)) push("stale", `fresh is ${example.fresh}, but the playbook's verdict for ${example.id} is ${verdicts.fresh.has(example.id)} (the vertical's "fresh" list)`);
+  const staleComponents = (example.components ?? []).filter(name => verdicts.timeSensitive.has(name));
   if (example.fresh !== true && staleComponents.length) push("stale", `${staleComponents.join(", ")} is time-sensitive, so fresh must be true`);
   const liveText = [example.says ?? "", document.fallback_text, ...visibleStrings(document).map(([, text]) => text)].find(text => LIVE_WORDS.test(text));
   if (example.fresh !== true && liveText) push("stale", `"${liveText.match(LIVE_WORDS)[0]}" is true only right now, so fresh must be true`);
@@ -498,7 +486,10 @@ export function periodErrors(example, referenceDate) {
 export function checkPlaybook(file = EXAMPLES_PATH, schemaFile = SCHEMA_PATH) {
   const schemaText = readFileSync(schemaFile);
   const sha = createHash("sha256").update(schemaText).digest("hex");
-  return checkPlaybookData(JSON.parse(readFileSync(file, "utf8")), JSON.parse(schemaText.toString("utf8")), sha, schemaFile);
+  const text = readFileSync(file, "utf8");
+  const result = checkPlaybookData(JSON.parse(text), JSON.parse(schemaText.toString("utf8")), sha, schemaFile);
+  if (file === EXAMPLES_PATH && text !== buildPlaybook()) result.findings.unshift("catalogue: docs/agent/output-playbook.examples.json is stale; run node scripts/build-catalogue.mjs");
+  return result;
 }
 
 /** The same checks on already-parsed data; `sha` is the sha256 of the schema file's bytes. */
@@ -506,14 +497,16 @@ export function checkPlaybookData(playbook, schema, sha, schemaFile = SCHEMA_PAT
   const findings = [];
   if (playbook.schema?.sha256 !== sha) findings.push(`schema: ${schemaFile} sha256 ${sha} differs from the recorded ${playbook.schema?.sha256}`);
   const examples = playbook.examples ?? [];
+  const verticals = playbook.verticals ?? [];
+  const verdicts = { fresh: new Set(playbook.fresh ?? []), timeSensitive: new Set(playbook.time_sensitive_components ?? []) };
   const ids = new Set();
-  for (const id of FRESH_EXAMPLES) if (!examples.some(example => example.id === id && example.kind !== "text")) findings.push(`playbook: FRESH_EXAMPLES names ${id}, which is not a card or file example`);
+  for (const id of verdicts.fresh) if (!examples.some(example => example.id === id && example.kind !== "text")) findings.push(`playbook: the fresh list names ${id}, which is not a card or file example`);
   for (const example of examples) {
     const where = `example ${example.id ?? "?"}`;
     const report = message => findings.push(`${where}: ${message}`);
     if (!/^[a-z0-9][a-z0-9-]*$/.test(example.id ?? "") || ids.has(example.id)) report("id must be unique kebab-case");
     ids.add(example.id);
-    if (!VERTICALS.includes(example.vertical)) report(`vertical must be one of ${VERTICALS.join(", ")}`);
+    if (!verticals.includes(example.vertical)) report(`vertical must be one of ${verticals.join(", ")}`);
     if (!EXAMPLE_KINDS.includes(example.kind)) report(`kind must be one of ${EXAMPLE_KINDS.join(", ")}`);
     for (const field of ["request", "rationale"]) {
       if (typeof example[field] !== "string" || !example[field].trim() || /\n/.test(example[field])) report(`${field} must be one non-empty line`);
@@ -522,12 +515,20 @@ export function checkPlaybookData(playbook, schema, sha, schemaFile = SCHEMA_PAT
     if (!Array.isArray(example.components) || example.components.length === 0) report("components must list the catalogue components it covers");
     // present_output never ends a turn: the model calls it, then ends with one sentence (weave-api output_blocks.py).
     if (example.kind !== "text" && (typeof example.says !== "string" || !example.says.trim())) report("turn: says (the one sentence that ends the turn after present_output) is required, failed cards included");
-    if (example.document) {
-      const schemaFindings = schemaErrors(schema, example.document);
-      schemaFindings.forEach(message => report(`schema ${message}`));
-      if (schemaFindings.length === 0) semanticErrors(example.document).forEach(message => report(`contract ${message}`));
+    const documents = example.document ? [["", example.document]] : [];
+    if (example.states !== undefined) {
+      if (example.kind === "text" || !example.states || typeof example.states !== "object" || Array.isArray(example.states) || !Object.keys(example.states).length) report("states: a card or file example's states are a map of state name to document");
+      else for (const [name, document] of Object.entries(example.states)) {
+        if (!STATES.includes(name)) report(`states: ${name} is not one of ${STATES.join(", ")}`);
+        documents.push([`states.${name} `, document]);
+      }
     }
-    lawErrors(example).forEach(message => report(message));
+    for (const [prefix, document] of documents) {
+      const schemaFindings = schemaErrors(schema, document);
+      schemaFindings.forEach(message => report(`${prefix}schema ${message}`));
+      if (schemaFindings.length === 0) semanticErrors(document).forEach(message => report(`${prefix}contract ${message}`));
+    }
+    lawErrors(example, verdicts).forEach(message => report(message));
   }
   const year = Number((playbook.reference_date ?? "").slice(0, 4));
   if (!year) findings.push("playbook: reference_date (YYYY-MM-DD) is required so weekdays can be checked");
@@ -539,7 +540,7 @@ export function checkPlaybookData(playbook, schema, sha, schemaFile = SCHEMA_PAT
   if (examples.length < 80) findings.push(`playbook: ${examples.length} examples, need at least 80`);
   if (count("text") < 10) findings.push(`playbook: ${count("text")} plain-text examples, need at least 10`);
   if (count("file") < 10) findings.push(`playbook: ${count("file")} file examples, need at least 10`);
-  for (const vertical of VERTICALS) {
+  for (const vertical of verticals) {
     if (!examples.some(example => example.vertical === vertical && example.kind === "card")) findings.push(`playbook: no card example for ${vertical}`);
   }
   return { findings, examples: examples.length, text: count("text"), file: count("file"), card: count("card"), schemaSha256: sha };

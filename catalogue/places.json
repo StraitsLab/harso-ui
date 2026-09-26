@@ -1,0 +1,330 @@
+{
+  "vertical": "places",
+  "fresh": [
+    "places-cafe",
+    "places-dinner-options",
+    "places-hours",
+    "places-nearby-map"
+  ],
+  "examples": [
+    {
+      "id": "places-cafe",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Is there a quiet cafe near me to work from?",
+      "says": "Apartment Coffee is 6 minutes away and quiet on weekdays.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Place card",
+        "Opening hours"
+      ],
+      "rationale": "Map for where, then one row per fact; open-now sits in the subtitle; Maps does the navigation.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Apartment Coffee",
+          "subtitle": "Cafe · open until 18:00 · 4.7★ · as of 14:20"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "apt",
+                  "label": "Apartment Coffee",
+                  "lat": "1.3031",
+                  "lon": "103.8587"
+                }
+              ],
+              "selected_place_id": "apt"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Address",
+                "secondary": "161 Lavender St · 6 min walk"
+              },
+              {
+                "label": "Good for",
+                "secondary": "Quiet weekdays, power at the bar"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Maps",
+              "url": "https://maps.apple.com/?q=Apartment+Coffee+Singapore"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Maps, 26 Sep 2026 14:20"
+            }
+          ]
+        },
+        "fallback_text": "Apartment Coffee, 161 Lavender St, 6 min walk, open until 18:00, 4.7 stars; quiet on weekdays with power at the bar."
+      }
+    },
+    {
+      "id": "places-directions",
+      "vertical": "places",
+      "kind": "card",
+      "request": "How do I get to Jewel from here by train?",
+      "says": "The MRT is quickest, with one change at Tanah Merah.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Directions"
+      ],
+      "rationale": "Time is the title; legs are three rows; turn-by-turn belongs to Maps, so the primary action hands off.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "42 min to Jewel by MRT",
+          "subtitle": "From Tanjong Pagar · one change"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "East–West line to Tanah Merah",
+                "secondary": "10 stops",
+                "trailing": "24 min"
+              },
+              {
+                "label": "Change to Changi Airport line",
+                "secondary": "2 stops",
+                "trailing": "9 min"
+              },
+              {
+                "label": "Walk to Jewel",
+                "secondary": "From Changi Airport MRT",
+                "trailing": "5 min"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Directions in Maps",
+              "url": "https://maps.apple.com/?daddr=Jewel+Changi+Airport&dirflg=r"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SMRT journey planner, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Tanjong Pagar to Jewel by MRT: about 42 min. East–West line to Tanah Merah, change to the Changi Airport line, 5 min walk."
+      }
+    },
+    {
+      "id": "places-dinner-options",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Somewhere nice for dinner in Tiong Bahru tonight for 4?",
+      "says": "Merci Marcel is the best fit for a relaxed dinner.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Place card",
+        "Reservation"
+      ],
+      "rationale": "Three options with one pick; booking a time is a question card then an approval, so the card has no Book button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Dinner in Tiong Bahru tonight",
+          "subtitle": "4 people · 7:30 pm · as of 16:05"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Merci Marcel",
+                "secondary": "French · 4.5★ · table at 7:30",
+                "trailing": "S$$",
+                "mark": "pick"
+              },
+              {
+                "label": "Bincho",
+                "secondary": "Yakitori · 4.6★ · table at 7:45",
+                "trailing": "S$$$"
+              },
+              {
+                "label": "Tiong Bahru Bakery Diner",
+                "secondary": "Brunch-style · 4.3★ · table at 7:30",
+                "trailing": "S$$"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Chope and Google Maps availability, 26 Sep 2026 16:05"
+            }
+          ]
+        },
+        "fallback_text": "Tables for 4 in Tiong Bahru tonight: Merci Marcel 7:30 (pick); Bincho 7:45; Tiong Bahru Bakery Diner 7:30."
+      }
+    },
+    {
+      "id": "places-hours",
+      "vertical": "places",
+      "kind": "card",
+      "request": "What are the Botanic Gardens' hours?",
+      "says": "The gardens stay open late; the Orchid Garden closes earlier.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Opening hours"
+      ],
+      "rationale": "Hours are two rows; the exception (Orchid Garden) is the only thing people get wrong.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Singapore Botanic Gardens",
+          "subtitle": "Every day · gardens free · as of 09:00"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Gardens",
+                "trailing": "05:00–00:00"
+              },
+              {
+                "label": "National Orchid Garden",
+                "secondary": "Last entry 18:00 · S$15",
+                "trailing": "08:30–19:00"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "NParks, 26 Sep 2026 09:00",
+              "url": "https://www.nparks.gov.sg/sbg"
+            }
+          ]
+        },
+        "fallback_text": "Singapore Botanic Gardens: open daily 05:00 to midnight, free. National Orchid Garden 08:30–19:00, last entry 18:00, S$15."
+      }
+    },
+    {
+      "id": "places-nearby-map",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Where are the nearest 24-hour clinics?",
+      "says": "Raffles Medical is closest and takes walk-ins.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Map with pins",
+        "Place card"
+      ],
+      "rationale": "Location is the question, so the map leads; distance trailing on each row.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "24-hour clinics near you",
+          "subtitle": "Open now · as of 23:10"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "c1",
+                  "label": "Raffles Medical Holland V",
+                  "lat": "1.3113",
+                  "lon": "103.7960"
+                },
+                {
+                  "id": "c2",
+                  "label": "Fullerton Health Novena",
+                  "lat": "1.3203",
+                  "lon": "103.8436"
+                },
+                {
+                  "id": "c3",
+                  "label": "Parkway Shenton Bukit Timah",
+                  "lat": "1.3294",
+                  "lon": "103.8025"
+                }
+              ],
+              "selected_place_id": "c1"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Raffles Medical",
+                "secondary": "Holland Village · walk-in",
+                "trailing": "8 min",
+                "mark": "pick"
+              },
+              {
+                "label": "Fullerton Health",
+                "secondary": "Novena · walk-in",
+                "trailing": "12 min"
+              },
+              {
+                "label": "Parkway Shenton",
+                "secondary": "Bukit Timah · call first",
+                "trailing": "15 min"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "MOH clinic directory and Google Maps, 26 Sep 2026 23:10"
+            }
+          ]
+        },
+        "fallback_text": "24-hour clinics nearby: Raffles Medical Holland Village 8 min; Fullerton Health Novena 12 min; Parkway Shenton Bukit Timah 15 min (call first)."
+      }
+    },
+    {
+      "id": "text-yes-no",
+      "vertical": "places",
+      "kind": "text",
+      "request": "Is the Botanic Gardens free?",
+      "reply": "Yes, entry is free. Only the National Orchid Garden charges, S$15 for adults.",
+      "surface": "text",
+      "components": [
+        "Fact check"
+      ],
+      "rationale": "A yes/no with one qualifier is prose; nothing to show beyond the words.",
+      "document": null
+    }
+  ]
+}

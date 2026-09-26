@@ -1,0 +1,652 @@
+{
+  "vertical": "real_estate",
+  "fresh": [
+    "home-listing-results",
+    "home-listing-card",
+    "home-rent-listings",
+    "empty-search"
+  ],
+  "examples": [
+    {
+      "id": "home-listing-results",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Find 3-room HDB flats near an MRT in Tampines under S$600k.",
+      "says": "Seven match; the Tampines St 81 flat is the best value per square metre.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "R2 Listing results",
+        "R3 Map + listings"
+      ],
+      "rationale": "Where matters, so the map is the visual; all seven results are sent, three show inline and the page has the rest.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "3-room HDB in Tampines",
+          "subtitle": "Under S$600k · ≤10 min to MRT · as of 09:30"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "t81",
+                  "label": "Blk 824 Tampines St 81",
+                  "lat": "1.3496",
+                  "lon": "103.9368"
+                },
+                {
+                  "id": "t24",
+                  "label": "Blk 201 Tampines St 21",
+                  "lat": "1.3561",
+                  "lon": "103.9489"
+                },
+                {
+                  "id": "t45",
+                  "label": "Blk 457 Tampines St 42",
+                  "lat": "1.3589",
+                  "lon": "103.9542"
+                },
+                {
+                  "id": "t83",
+                  "label": "Blk 866 Tampines St 83",
+                  "lat": "1.3530",
+                  "lon": "103.9330"
+                },
+                {
+                  "id": "t11",
+                  "label": "Blk 115 Tampines St 11",
+                  "lat": "1.3470",
+                  "lon": "103.9470"
+                },
+                {
+                  "id": "t34",
+                  "label": "Blk 395 Tampines Ave 7",
+                  "lat": "1.3575",
+                  "lon": "103.9392"
+                },
+                {
+                  "id": "t86",
+                  "label": "Blk 881 Tampines St 84",
+                  "lat": "1.3540",
+                  "lon": "103.9310"
+                }
+              ],
+              "selected_place_id": "t81"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Blk 824 Tampines St 81",
+                "secondary": "67 sqm · 6 min to Tampines MRT",
+                "trailing": "S$548k",
+                "mark": "pick"
+              },
+              {
+                "label": "Blk 201 Tampines St 21",
+                "secondary": "68 sqm · 8 min to Tampines MRT",
+                "trailing": "S$575k"
+              },
+              {
+                "label": "Blk 457 Tampines St 42",
+                "secondary": "65 sqm · 9 min to Tampines East",
+                "trailing": "S$560k"
+              },
+              {
+                "label": "Blk 866 Tampines St 83",
+                "secondary": "67 sqm · 7 min to Tampines MRT",
+                "trailing": "S$585k"
+              },
+              {
+                "label": "Blk 115 Tampines St 11",
+                "secondary": "64 sqm · 10 min to Tampines MRT",
+                "trailing": "S$538k"
+              },
+              {
+                "label": "Blk 395 Tampines Ave 7",
+                "secondary": "66 sqm · 9 min to Tampines West",
+                "trailing": "S$559k"
+              },
+              {
+                "label": "Blk 881 Tampines St 84",
+                "secondary": "65 sqm · 8 min to Tampines West",
+                "trailing": "S$592k"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru and HDB Flat Portal listings, 26 Sep 2026 09:30"
+            }
+          ],
+          "assumptions": [
+            "Best value is asking price per square metre."
+          ]
+        },
+        "fallback_text": "7 three-room HDB flats in Tampines under S$600k near MRT: Blk 824 St 81 S$548k, 67 sqm (best value); Blk 201 St 21 S$575k; Blk 457 St 42 S$560k; Blk 866 St 83 S$585k; Blk 115 St 11 S$538k; Blk 395 Ave 7 S$559k; Blk 881 St 84 S$592k."
+      }
+    },
+    {
+      "id": "home-listing-card",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Show me the Blk 824 flat.",
+      "says": "It's on the 9th floor and was listed 12 days ago.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R1 Listing card"
+      ],
+      "rationale": "Photo and price are the listing; facts are one subtitle line; viewing is booked with the agent, via the link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Blk 824 Tampines St 81",
+          "subtitle": "3-room · 67 sqm · #09 · 1998 lease · as of 09:30"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
+              "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor",
+              "aspect": "4:3"
+            }
+          },
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$548k",
+                "label": "Asking"
+              },
+              {
+                "value": "S$8,179",
+                "label": "Per sqm"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "View listing",
+              "url": "https://www.propertyguru.com.sg/listing/24519877"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru listing 24519877, 26 Sep 2026 09:30"
+            }
+          ]
+        },
+        "fallback_text": "Blk 824 Tampines St 81, 3-room, 67 sqm, 9th floor, 1998 lease: asking S$548k (S$8,179 per sqm)."
+      }
+    },
+    {
+      "id": "home-value-estimate",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What's my condo at The Trilinq worth?",
+      "says": "It's in line with recent sales in the development.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R4 Price / value estimate"
+      ],
+      "rationale": "The estimate is the title; the range is its honest companion in the subtitle; not-an-appraisal lives in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "The Trilinq · 2 bed · 818 sqft",
+          "subtitle": "Recent sales S$1.12–1.24M"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1.18M",
+                "label": "Estimate"
+              },
+              {
+                "value": "S$1,443",
+                "label": "Per sqft"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "URA caveats, last 6 months",
+              "url": "https://www.ura.gov.sg/property-market-information/pmiResidentialTransactionSearch"
+            }
+          ],
+          "disclaimers": [
+            "An estimate from recent sales, not a valuation."
+          ]
+        },
+        "fallback_text": "Your 2-bed, 818 sqft unit at The Trilinq is worth about S$1.18M (S$1,443 psf); recent sales S$1.12–1.24M."
+      }
+    },
+    {
+      "id": "home-affordability",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "How much home can I afford on S$14k a month household income?",
+      "says": "That keeps repayments under 30% of your income.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R8 Affordability"
+      ],
+      "rationale": "The ceiling is the answer; the monthly payment is the number people live with; the rules behind it go to Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "What you can afford",
+          "subtitle": "Household income S$14,000 a month"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1.17M",
+                "label": "Max price"
+              },
+              {
+                "value": "S$4,200",
+                "label": "Monthly"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Repayment kept to 30% of income, 4% stress-test rate, 30-year loan, 25% down payment.",
+            "No other debts."
+          ],
+          "disclaimers": [
+            "A guide, not a loan approval."
+          ]
+        },
+        "fallback_text": "On S$14,000 a month you can afford up to about S$1.17M, with a monthly payment around S$4,200."
+      }
+    },
+    {
+      "id": "home-rent-listings",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Any 1-bedroom rentals near Outram under S$3,500?",
+      "says": "Three are available from October.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R2 Listing results"
+      ],
+      "rationale": "Three rentals fit inline with rent trailing and the move-in date secondary; no map needed for one area.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "1-bed rentals near Outram",
+          "subtitle": "Under S$3,500 · from October · as of 09:40"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "The Clift",
+                "secondary": "1 bed · 49 sqm · from 1 Oct",
+                "trailing": "S$3,300",
+                "mark": "pick"
+              },
+              {
+                "label": "Spottiswoode 18",
+                "secondary": "1 bed · 45 sqm · from 15 Oct",
+                "trailing": "S$3,450"
+              },
+              {
+                "label": "Pinnacle@Duxton",
+                "secondary": "1 bed · 50 sqm · from 1 Oct",
+                "trailing": "S$3,400"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "99.co rental listings, 26 Sep 2026 09:40"
+            }
+          ]
+        },
+        "fallback_text": "1-bed rentals near Outram under S$3,500: The Clift S$3,300 from 1 Oct (pick); Spottiswoode 18 S$3,450 from 15 Oct; Pinnacle@Duxton S$3,400 from 1 Oct."
+      }
+    },
+    {
+      "id": "home-viewing",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "When's my viewing at The Clift?",
+      "says": "It's tomorrow morning.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R10 Viewing / open house"
+      ],
+      "rationale": "Date and address are the answer; directions leave for Maps, which does navigation better.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Viewing Sun 27 Sep · 11:00",
+          "subtitle": "The Clift · 21 McCallum Street"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Agent",
+                "secondary": "Jasmine Tan · ERA",
+                "trailing": "9123 4567"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Directions",
+              "url": "https://maps.apple.com/?q=21+McCallum+Street+Singapore"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Calendar invite from Jasmine Tan, 24 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Viewing at The Clift, 21 McCallum Street, on Sun 27 Sep at 11:00 with Jasmine Tan (ERA, 9123 4567)."
+      }
+    },
+    {
+      "id": "file-calculator-page",
+      "vertical": "real_estate",
+      "kind": "file",
+      "request": "Make me a calculator to compare renting and buying.",
+      "says": "It's a small page you can play with in your browser; it's in your Library.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Live page (calculator)"
+      ],
+      "rationale": "No block covers a what-if tool, so it is a page file; until live pages ship it opens outside the app, so the card claims nothing more.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Rent vs buy calculator",
+          "subtitle": "Interactive page · HTML"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a39",
+              "alt": "Rent vs buy calculator: sliders for price, rent and years, with a break-even chart",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download page",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a3a"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Starts at a 25% down payment, 3.0% mortgage rate and 3% yearly rent rise; change them on the page."
+          ]
+        },
+        "fallback_text": "A rent vs buy calculator (price, rent, years, break-even) is saved as a page in your Library; download it and open it in your browser."
+      }
+    },
+    {
+      "id": "empty-search",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Any 3-room HDB in Bishan under S$500k?",
+      "says": "Nothing fits right now.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Empty state"
+      ],
+      "rationale": "Empty says so plainly, with the nearest fact as the one next step; no blank card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "No 3-room HDB in Bishan under S$500k",
+          "subtitle": "As of 10:50 · PropertyGuru and 99.co"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "empty",
+            "detail": "Cheapest listed now is S$588k"
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru and 99.co, 26 Sep 2026 10:50"
+            }
+          ]
+        },
+        "fallback_text": "No 3-room HDB flats in Bishan under S$500k right now; the cheapest listed is S$588k."
+      }
+    },
+    {
+      "id": "home-price-history",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What has Blk 824 sold for before?",
+      "says": "Prices in the block rose about 12% in two years.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R5 Price history"
+      ],
+      "rationale": "Past sales as rows, newest first, price trailing; a chart would need more points than the block has.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Blk 824 Tampines St 81",
+          "subtitle": "3-room resale · last 2 years"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "#11 · 67 sqm",
+                "secondary": "Aug 2026",
+                "trailing": "S$542k"
+              },
+              {
+                "label": "#05 · 67 sqm",
+                "secondary": "Jan 2026",
+                "trailing": "S$515k"
+              },
+              {
+                "label": "#08 · 67 sqm",
+                "secondary": "Sep 2024",
+                "trailing": "S$485k"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "HDB resale transactions",
+              "url": "https://services2.hdb.gov.sg/webapp/BB33RTIS/"
+            }
+          ]
+        },
+        "fallback_text": "Blk 824 Tampines St 81 3-room resales: S$542k (Aug 2026), S$515k (Jan 2026), S$485k (Sep 2024)."
+      }
+    },
+    {
+      "id": "home-facts",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What are the facts on that condo?",
+      "says": "It's a 2013 condo with full facilities and 99-year lease.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "R6 Facts & features"
+      ],
+      "rationale": "Facts are a two-column reference table on the page only.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "The Trilinq · facts",
+          "subtitle": "Clementi · 755 units"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Fact"
+              },
+              {
+                "label": "Detail"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "Tenure",
+                  "99-year from 2013"
+                ]
+              },
+              {
+                "cells": [
+                  "Completed",
+                  "2017"
+                ]
+              },
+              {
+                "cells": [
+                  "Facilities",
+                  "Pool, gym, tennis"
+                ]
+              },
+              {
+                "cells": [
+                  "Nearest MRT",
+                  "Clementi · 12 min"
+                ]
+              },
+              {
+                "cells": [
+                  "Maintenance",
+                  "S$380 a month"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "URA and PropertyGuru project page, Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "The Trilinq: 99-year lease from 2013, completed 2017, pool, gym and tennis, 12 min to Clementi MRT, maintenance S$380 a month."
+      }
+    },
+    {
+      "id": "home-schools",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Which primary schools are within 1 km of Blk 824?",
+      "says": "Both count for Primary 1 priority.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R9 Schools / neighbourhood"
+      ],
+      "rationale": "Schools as rows with the distance trailing; the 1 km rule sits in Details, not on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Primary schools within 1 km",
+          "subtitle": "From Blk 824 Tampines St 81"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Tampines North Primary",
+                "secondary": "Co-ed",
+                "trailing": "0.4 km"
+              },
+              {
+                "label": "St Hilda's Primary",
+                "secondary": "Co-ed · SAP",
+                "trailing": "0.9 km"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "OneMap school query",
+              "url": "https://www.onemap.gov.sg/"
+            }
+          ],
+          "assumptions": [
+            "Distance is measured as the P1 registration rule measures it."
+          ]
+        },
+        "fallback_text": "Primary schools within 1 km of Blk 824 Tampines St 81: Tampines North Primary 0.4 km, St Hilda's Primary 0.9 km."
+      }
+    }
+  ]
+}

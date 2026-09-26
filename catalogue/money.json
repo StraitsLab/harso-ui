@@ -1,0 +1,1440 @@
+{
+  "vertical": "money",
+  "fresh": [
+    "money-net-worth",
+    "money-stock-quote",
+    "money-portfolio",
+    "money-transfer-quote",
+    "money-key-stats",
+    "money-stock-compare",
+    "money-transfer-tracking",
+    "stale-portfolio"
+  ],
+  "examples": [
+    {
+      "id": "money-spending-month",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How did I do on spending in August?",
+      "says": "You stayed under budget. Week 3 was the high point, mostly dining.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "F7 Spending summary",
+        "X1 Headline number",
+        "X5 Sources, assumptions, disclaimers"
+      ],
+      "rationale": "Numbers answer it; the bar chart proves which week; categories wait on the page as shares, largest first, adding up to Spent, which carries the total until rows have one (G24).",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "August spending",
+          "subtitle": "1–31 Aug · all accounts"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$720",
+                "label": "Left of S$5,000"
+              },
+              {
+                "value": "S$4,280",
+                "label": "Spent"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "S$",
+              "x_labels": [
+                "1–7 Aug",
+                "8–14 Aug",
+                "15–21 Aug",
+                "22–31 Aug"
+              ],
+              "series": [
+                {
+                  "label": "Spent",
+                  "values": [
+                    "980",
+                    "1040",
+                    "1460",
+                    "800"
+                  ]
+                }
+              ],
+              "highlight_index": 2
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Dining",
+                "secondary": "27%",
+                "trailing": "S$1,160"
+              },
+              {
+                "label": "Other",
+                "secondary": "25%",
+                "trailing": "S$1,080"
+              },
+              {
+                "label": "Groceries",
+                "secondary": "20%",
+                "trailing": "S$840"
+              },
+              {
+                "label": "Transport",
+                "secondary": "14%",
+                "trailing": "S$610"
+              },
+              {
+                "label": "Shopping",
+                "secondary": "14%",
+                "trailing": "S$590"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Linked accounts, synced 1 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Transfers between your own accounts are excluded."
+          ]
+        },
+        "more_label": "View all categories",
+        "fallback_text": "August: S$4,280 spent of S$5,000, S$720 left. Highest week 15–21 Aug (S$1,460). By category: Dining S$1,160 (27%), Other S$1,080 (25%), Groceries S$840 (20%), Transport S$610 (14%), Shopping S$590 (14%); total S$4,280."
+      }
+    },
+    {
+      "id": "money-net-worth",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What's my net worth now?",
+      "says": "It has grown every month since June.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F1 Balance / net worth"
+      ],
+      "rationale": "One number and its movement; the line shows the trend; accounts are a follow-up, not a default.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Net worth",
+          "subtitle": "All linked accounts · as of 09:00"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$412,300",
+                "label": "Now"
+              },
+              {
+                "value": "+S$9,800",
+                "label": "Since June"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$k",
+              "x_labels": [
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "label": "Net worth",
+                  "values": [
+                    "402.5",
+                    "405.1",
+                    "408.9",
+                    "412.3"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS, CPF and IBKR balances, 26 Sep 2026 09:00"
+            }
+          ],
+          "assumptions": [
+            "Property is excluded until you add a valuation."
+          ]
+        },
+        "fallback_text": "Net worth S$412,300 as of 09:00 on 26 Sep, up S$9,800 since June."
+      }
+    },
+    {
+      "id": "money-stock-quote",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How's Apple stock doing?",
+      "says": "Apple rose on Friday after the iPhone sales update.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F3 Stock / crypto quote"
+      ],
+      "rationale": "Price and move first, the intraday line as proof; the why sits in the chat sentence, the vendor delay in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Apple · AAPL",
+          "subtitle": "Nasdaq · as of Fri 25 Sep close"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "US$238.40",
+                "label": "Close"
+              },
+              {
+                "value": "+1.8%",
+                "label": "Friday"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "US$",
+              "x_labels": [
+                "10:00",
+                "11:00",
+                "12:00",
+                "13:00",
+                "14:00",
+                "16:00"
+              ],
+              "series": [
+                {
+                  "label": "AAPL",
+                  "values": [
+                    "234.2",
+                    "235.9",
+                    "236.4",
+                    "237.1",
+                    "237.8",
+                    "238.4"
+                  ]
+                }
+              ],
+              "highlight_index": 5
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Nasdaq closing price, 25 Sep 2026",
+              "url": "https://www.nasdaq.com/market-activity/stocks/aapl"
+            }
+          ],
+          "disclaimers": [
+            "Not financial advice."
+          ]
+        },
+        "fallback_text": "Apple (AAPL) closed at US$238.40 on Friday 25 Sep, up 1.8%. Markets reopen Monday."
+      }
+    },
+    {
+      "id": "money-portfolio",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How's my portfolio this week?",
+      "says": "A small dip this week; NVIDIA did most of the damage.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "F2 Portfolio summary",
+        "F6 Watchlist / movers"
+      ],
+      "rationale": "Value and weekly move lead; all nine holdings as rows, biggest move first; three inline, the rest on the page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Portfolio",
+          "subtitle": "IBKR · as of 25 Sep close"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "US$84,210",
+                "label": "Value"
+              },
+              {
+                "value": "−0.6%",
+                "label": "This week"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "NVIDIA",
+                "secondary": "NVDA · 120 shares",
+                "trailing": "−4.1%"
+              },
+              {
+                "label": "Tesla",
+                "secondary": "TSLA · 30 shares",
+                "trailing": "−2.6%"
+              },
+              {
+                "label": "Alphabet",
+                "secondary": "GOOGL · 45 shares",
+                "trailing": "+1.2%"
+              },
+              {
+                "label": "Microsoft",
+                "secondary": "MSFT · 40 shares",
+                "trailing": "+0.8%"
+              },
+              {
+                "label": "Apple",
+                "secondary": "AAPL · 50 shares",
+                "trailing": "+0.6%"
+              },
+              {
+                "label": "Amazon",
+                "secondary": "AMZN · 35 shares",
+                "trailing": "−0.4%"
+              },
+              {
+                "label": "Vanguard S&P 500",
+                "secondary": "VOO · 60 shares",
+                "trailing": "+0.2%"
+              },
+              {
+                "label": "iShares Core MSCI World",
+                "secondary": "IWDA · 110 shares",
+                "trailing": "+0.1%"
+              },
+              {
+                "label": "US Treasury bills",
+                "secondary": "BIL · 80 shares",
+                "trailing": "0.0%"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in IBKR",
+              "url": "https://www.interactivebrokers.com/portal"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "IBKR positions, 25 Sep 2026 close"
+            }
+          ]
+        },
+        "fallback_text": "Portfolio US$84,210, down 0.6% this week (25 Sep close). NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%, VOO +0.2%, IWDA +0.1%, BIL 0.0%."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Portfolio",
+            "subtitle": "IBKR · reading positions"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 9 holdings",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000971"
+              }
+            }
+          ],
+          "fallback_text": "Reading your IBKR positions."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Portfolio",
+            "subtitle": "6 of 9 holdings read · as of 25 Sep close"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "NVIDIA",
+                  "secondary": "NVDA · 120 shares",
+                  "trailing": "−4.1%"
+                },
+                {
+                  "label": "Tesla",
+                  "secondary": "TSLA · 30 shares",
+                  "trailing": "−2.6%"
+                },
+                {
+                  "label": "Alphabet",
+                  "secondary": "GOOGL · 45 shares",
+                  "trailing": "+1.2%"
+                },
+                {
+                  "label": "Microsoft",
+                  "secondary": "MSFT · 40 shares",
+                  "trailing": "+0.8%"
+                },
+                {
+                  "label": "Apple",
+                  "secondary": "AAPL · 50 shares",
+                  "trailing": "+0.6%"
+                },
+                {
+                  "label": "Amazon",
+                  "secondary": "AMZN · 35 shares",
+                  "trailing": "−0.4%"
+                }
+              ],
+              "total_count": 9
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "IBKR positions, 25 Sep 2026 close"
+              }
+            ]
+          },
+          "fallback_text": "6 of 9 holdings read (25 Sep close): NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%. The value waits for the other three."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Portfolio",
+            "subtitle": "As of Fri 25 Sep close · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "US$84,210",
+                  "label": "Value"
+                },
+                {
+                  "value": "−0.6%",
+                  "label": "This week"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "IBKR positions, 25 Sep 2026 close"
+              }
+            ]
+          },
+          "fallback_text": "Portfolio US$84,210 as of Friday 25 Sep close, down 0.6% this week. Couldn’t refresh."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No holdings in this account",
+            "subtitle": "IBKR · as of 25 Sep close"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The account holds cash only"
+            }
+          ],
+          "fallback_text": "No holdings in this IBKR account as of 25 Sep close; it holds cash only."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your portfolio",
+            "subtitle": "IBKR"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "IBKR didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your IBKR portfolio: IBKR didn’t respond. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "money-bills-due",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Which bills are due this week?",
+      "says": "The electricity bill is already late.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F10 Bill / subscription due",
+        "X2 Domain state word"
+      ],
+      "rationale": "Overdue first with its state word; amounts trailing; three rows fit inline with no page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Bills due this week",
+          "subtitle": "21–27 Sep · S$486.40"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "SP Group electricity",
+                "secondary": "Was due 21 Sep",
+                "trailing": "S$212.40",
+                "status": "overdue"
+              },
+              {
+                "label": "Singtel Fibre",
+                "secondary": "Due 25 Sep · Autopay",
+                "trailing": "S$49.90"
+              },
+              {
+                "label": "Great Eastern",
+                "secondary": "Due 27 Sep · Autopay",
+                "trailing": "S$224.10"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail bill notices and DBS GIRO list, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Bills this week: SP Group S$212.40 overdue since 21 Sep; Singtel S$49.90 on 25 Sep (autopay); Great Eastern S$224.10 on 27 Sep (autopay)."
+      }
+    },
+    {
+      "id": "money-transfer-quote",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How much will Priya get if I send S$1,000 to India?",
+      "says": "Wise is the cheapest way to send it today.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F13 Money transfer quote"
+      ],
+      "rationale": "Two numbers carry the answer (what arrives, what it costs); rate and timing live in the subtitle; the send happens at Wise.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "S$1,000 to Priya",
+          "subtitle": "1 SGD = 61.92 INR · arrives by Tuesday · as of 10:05"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "₹61,540",
+                "label": "Priya gets"
+              },
+              {
+                "value": "S$6.20",
+                "label": "Fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Send with Wise",
+              "url": "https://wise.com/send"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Wise quote, 26 Sep 2026 10:05",
+              "url": "https://wise.com/"
+            }
+          ],
+          "assumptions": [
+            "Rate is held for 24 hours once you start the transfer."
+          ]
+        },
+        "fallback_text": "Sending S$1,000: Priya gets about ₹61,540 at 61.92, fee S$6.20, arrives by Tuesday."
+      }
+    },
+    {
+      "id": "money-mortgage",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What would my monthly payment be on a S$900k loan over 25 years at 3%?",
+      "says": "Interest adds about 42% on top over the full term.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F15 Loan / mortgage result",
+        "R7 Monthly cost"
+      ],
+      "rationale": "The result is one number; interest total is its companion; inputs sit in Details so the card stays calm.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Monthly payment",
+          "subtitle": "S$900,000 · 25 years · 3.0% fixed"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$4,268",
+                "label": "Monthly"
+              },
+              {
+                "value": "S$380,371",
+                "label": "Total interest"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Fixed rate for the whole term.",
+            "Excludes property tax, insurance and fees."
+          ],
+          "disclaimers": [
+            "An estimate, not a loan offer."
+          ]
+        },
+        "fallback_text": "A S$900,000 loan over 25 years at 3.0% is about S$4,268 a month, S$380,371 interest in total."
+      }
+    },
+    {
+      "id": "money-amortization",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Show how that loan pays down over time.",
+      "says": "Half the balance is gone during year 15.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F16 Amortization / payoff"
+      ],
+      "rationale": "A line of balance by year is the thing itself; the full schedule is a sheet, not a 300-row table.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Loan balance by year",
+          "subtitle": "S$900,000 · 25 years · 3.0%"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$k",
+              "x_labels": [
+                "Year 0",
+                "Year 5",
+                "Year 10",
+                "Year 15",
+                "Year 20",
+                "Year 25"
+              ],
+              "series": [
+                {
+                  "label": "Balance",
+                  "values": [
+                    "900",
+                    "769.5",
+                    "618",
+                    "442",
+                    "237.5",
+                    "0"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Paid off by",
+                "trailing": "Sep 2051"
+              },
+              {
+                "label": "Total interest",
+                "trailing": "S$380,371"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download schedule",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000641"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Monthly payments of S$4,268, no prepayments."
+          ]
+        },
+        "fallback_text": "The S$900,000 loan falls below half during year 15 and is paid off in Sep 2051; total interest S$380,371. Schedule saved to Library."
+      }
+    },
+    {
+      "id": "money-budget-categories",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Am I over budget anywhere?",
+      "says": "Dining is the one to watch.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F8 Budget by category"
+      ],
+      "rationale": "Only the categories that need attention, each with the overspend trailing; the rest is a follow-up.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Over budget this month",
+          "subtitle": "1–26 Sep · 2 of 9 categories"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Dining",
+                "secondary": "S$1,160 of S$900",
+                "trailing": "S$260 over"
+              },
+              {
+                "label": "Shopping",
+                "secondary": "S$590 of S$500",
+                "trailing": "S$90 over"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Budget in Harso, synced 26 Sep 2026 08:00"
+            }
+          ]
+        },
+        "fallback_text": "Over budget so far in September (1–26 Sep): Dining S$1,160 of S$900 (S$260 over); Shopping S$590 of S$500 (S$90 over)."
+      }
+    },
+    {
+      "id": "money-tax-estimate",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Roughly what's my Singapore income tax for 2026?",
+      "says": "The slice above S$120,000 is taxed at 15%.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F17 Tax estimate / refund"
+      ],
+      "rationale": "One signed figure and the effective rate; the working and caveats go to Details, not a table.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Income tax estimate",
+          "subtitle": "YA 2027 · chargeable income S$150,000"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$12,450",
+                "label": "Estimated tax"
+              },
+              {
+                "value": "8.3%",
+                "label": "Effective rate"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "IRAS resident tax rates",
+              "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-residency-and-tax-rates/individual-income-tax-rates"
+            }
+          ],
+          "assumptions": [
+            "Resident rates; reliefs already deducted."
+          ],
+          "disclaimers": [
+            "An estimate, not tax advice."
+          ]
+        },
+        "fallback_text": "Estimated Singapore income tax for YA 2027 on S$150,000 chargeable income: about S$12,450, an 8.3% effective rate."
+      }
+    },
+    {
+      "id": "money-invoice-sent",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Did Acme pay invoice INV-2041?",
+      "says": "Not yet. Acme hasn't paid, and it's past due.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F11 Invoice",
+        "X2 Domain state word"
+      ],
+      "rationale": "The answer is a state on one row; the amount trails; the reminder email is a separate approved send, not a card button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "INV-2041 · Acme Pte Ltd",
+          "subtitle": "Sent 1 Sep · due 20 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "S$8,400.00",
+                "secondary": "Due 20 Sep · 6 days late",
+                "trailing": "Unpaid",
+                "status": "overdue"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open invoice",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000007f9"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Xero, synced 26 Sep 2026 09:00"
+            }
+          ]
+        },
+        "fallback_text": "INV-2041 to Acme Pte Ltd, S$8,400.00, was due 20 Sep and is 6 days overdue."
+      }
+    },
+    {
+      "id": "text-convert",
+      "vertical": "money",
+      "kind": "text",
+      "request": "What's 250 USD in SGD?",
+      "reply": "About S$322 at today's rate of 1.29.",
+      "surface": "text",
+      "components": [
+        "Currency conversion"
+      ],
+      "rationale": "One number answers it in a sentence; a card would repeat the sentence.",
+      "document": null
+    },
+    {
+      "id": "text-cant",
+      "vertical": "money",
+      "kind": "text",
+      "request": "Move S$5,000 from DBS to my OCBC account.",
+      "reply": "I can't move money between banks. Nothing was changed. You can do it in DBS digibank under Pay & Transfer.",
+      "surface": "text",
+      "components": [
+        "Boundary"
+      ],
+      "rationale": "A refusal names the boundary in plain words; a failed card is only for work that was attempted.",
+      "document": null
+    },
+    {
+      "id": "file-invoice-pdf",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Make an invoice for Acme: 20 hours of design at S$150.",
+      "says": "Invoice INV-2042 is ready and in your Library.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F11 Invoice",
+        "X6 File deliverable"
+      ],
+      "rationale": "The file is the deliverable; the card shows the amount due and opens the PDF; sending it is a separate approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "INV-2042 · Acme Pte Ltd",
+          "subtitle": "Due 26 Oct · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$3,270.00",
+                "label": "Amount due"
+              },
+              {
+                "value": "26 Oct",
+                "label": "Due"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open invoice",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download PDF",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "GST at 9% added to S$3,000.",
+            "Payment terms 30 days."
+          ]
+        },
+        "fallback_text": "Invoice INV-2042 to Acme Pte Ltd for 20 hours of design at S$150, S$3,270.00 including 9% GST, due 26 Oct. Saved to your Library."
+      }
+    },
+    {
+      "id": "file-expenses-sheet",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Put all my August expenses in a spreadsheet.",
+      "says": "All 142 transactions are in a sheet, one row each.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F9 Transactions list",
+        "Sheet"
+      ],
+      "rationale": "142 rows is a sheet, not a card; the card gives the total and opens the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "August expenses",
+          "subtitle": "142 transactions · XLSX"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$4,280",
+                "label": "Total"
+              },
+              {
+                "value": "142",
+                "label": "Transactions"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open sheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2a"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2a"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Linked accounts, synced 1 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "August expenses: 142 transactions totalling S$4,280, in a spreadsheet in your Library."
+      }
+    },
+    {
+      "id": "stale-portfolio",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What's my portfolio worth?",
+      "says": "Markets are closed, so this is Friday's close.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Stale state",
+        "F2 Portfolio summary"
+      ],
+      "rationale": "Stale is stated with its time in the subtitle, not coloured; the value still leads.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Portfolio",
+          "subtitle": "As of Fri 25 Sep close · markets closed"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "US$84,210",
+                "label": "Value"
+              },
+              {
+                "value": "−0.6%",
+                "label": "This week"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "IBKR positions, 25 Sep 2026 close"
+            }
+          ]
+        },
+        "fallback_text": "Portfolio US$84,210 as of Friday's close, down 0.6% this week."
+      }
+    },
+    {
+      "id": "money-key-stats",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Give me DBS's key stats.",
+      "says": "Its dividend yield is the standout.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "F4 Key stats grid"
+      ],
+      "rationale": "Reference data is label → value rows on the page; the one judgement is in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "DBS Group · D05",
+          "subtitle": "SGX · as of 25 Sep close"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Price",
+                "trailing": "S$42.10"
+              },
+              {
+                "label": "P/E",
+                "trailing": "11.2"
+              },
+              {
+                "label": "Dividend yield",
+                "trailing": "5.6%"
+              },
+              {
+                "label": "Market cap",
+                "trailing": "S$119.6B"
+              },
+              {
+                "label": "52-week range",
+                "trailing": "S$34.80–43.25"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SGX market data, 25 Sep 2026 close"
+            }
+          ],
+          "disclaimers": [
+            "Not financial advice."
+          ]
+        },
+        "fallback_text": "DBS (D05) S$42.10 at the 25 Sep close: P/E 11.2, dividend yield 5.6%, market cap S$119.6B, 52-week range S$34.80–43.25."
+      }
+    },
+    {
+      "id": "money-stock-compare",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How have DBS, OCBC and UOB done this year?",
+      "says": "DBS is ahead, up 18% since January.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F5 Stock comparison"
+      ],
+      "rationale": "Three tickers over one period is a three-series line; the leader is named in the sentence and highlighted.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Singapore banks this year",
+          "subtitle": "Change since 2 Jan · as of 25 Sep close"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "%",
+              "x_labels": [
+                "Jan",
+                "Mar",
+                "May",
+                "Jul",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "label": "DBS",
+                  "values": [
+                    "0",
+                    "5",
+                    "9",
+                    "14",
+                    "18"
+                  ]
+                },
+                {
+                  "label": "OCBC",
+                  "values": [
+                    "0",
+                    "3",
+                    "6",
+                    "9",
+                    "11"
+                  ]
+                },
+                {
+                  "label": "UOB",
+                  "values": [
+                    "0",
+                    "2",
+                    "4",
+                    "6",
+                    "8"
+                  ]
+                }
+              ],
+              "highlight_index": 4
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SGX closing prices, 2 Jan–25 Sep 2026"
+            }
+          ],
+          "disclaimers": [
+            "Price change only; dividends excluded."
+          ]
+        },
+        "fallback_text": "Since 2 January: DBS +18%, OCBC +11%, UOB +8%, as of the 25 Sep close."
+      }
+    },
+    {
+      "id": "money-quote-estimate",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What did the contractor quote for the bathroom?",
+      "says": "It's an all-in price, with no extras listed.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F12 Quote / estimate"
+      ],
+      "rationale": "The quote total and expiry are the two numbers; line items live in the PDF; accepting happens with the contractor.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Bathroom renovation quote",
+          "subtitle": "Ah Huat Renovation · Q-3318"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$14,800",
+                "label": "Total"
+              },
+              {
+                "value": "15 Oct",
+                "label": "Valid until"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open quote",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8d"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Quote PDF from your email, 22 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Ah Huat Renovation quoted S$14,800 for the bathroom (Q-3318), valid until 15 Oct. The PDF is in your Library."
+      }
+    },
+    {
+      "id": "money-transfer-tracking",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Has my transfer to Priya arrived?",
+      "says": "Not yet. It's with her bank now.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F14 Transfer / payment tracking"
+      ],
+      "rationale": "Steps as rows, newest first; the arrival date is the title because that is the question.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arrives by Tue 29 Sep",
+          "subtitle": "S$1,000 to Priya · Wise · as of 10:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "With HDFC Bank",
+                "secondary": "Sent from Wise 26 Sep 10:20"
+              },
+              {
+                "label": "Converted to ₹61,540",
+                "secondary": "26 Sep 10:18"
+              },
+              {
+                "label": "Paid in",
+                "secondary": "26 Sep 10:05"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Track on Wise",
+              "url": "https://wise.com/activity"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Wise transfer 88213401, 26 Sep 2026 10:20"
+            }
+          ]
+        },
+        "fallback_text": "Your S$1,000 transfer to Priya (₹61,540) left Wise on 26 Sep and is with HDFC Bank; it should arrive by Tue 29 Sep."
+      }
+    },
+    {
+      "id": "money-pay-bill",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Pay the SP Group bill.",
+      "says": "It's S$212.40. Paying needs your approval in DBS.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "X7 Purchase / pay / apply / accept"
+      ],
+      "rationale": "The irreversible step is never a card button; the card links to the payee and the payment is approved there.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "SP Group electricity",
+          "subtitle": "Was due 21 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "S$212.40",
+                "secondary": "Account 93-1234567-8",
+                "trailing": "Overdue",
+                "status": "overdue"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Pay in DBS digibank",
+              "url": "https://www.dbs.com.sg/personal/digibank/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SP Group bill email, 1 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "SP Group bill S$212.40 was due 21 Sep. Pay it in DBS digibank; nothing has been paid yet."
+      }
+    },
+    {
+      "id": "file-statement",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Send me my DBS statement for August.",
+      "says": "Your August statement is in your Library.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F18 Statement / report file",
+        "X6 File deliverable"
+      ],
+      "rationale": "A statement is the bank's file; the card names the period and the two numbers people check, then opens it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "DBS statement · August",
+          "subtitle": "Multiplier account ··5521 · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$18,420",
+                "label": "Closing balance"
+              },
+              {
+                "value": "S$6,380",
+                "label": "Money out"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open statement",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a93"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a93"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS digibank e-statement, 1 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "DBS August statement for account ending 5521: closing balance S$18,420, S$6,380 out. The PDF is in your Library."
+      }
+    }
+  ]
+}
