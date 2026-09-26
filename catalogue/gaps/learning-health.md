@@ -56,6 +56,13 @@ No state is invented to fill the grid.
 | K11 Symptom check | n/a: advice must not wait; an urgent answer never shows a loading card | n/a | n/a: advice does not age | n/a | yes `health-symptom` (guide failed, 995 still first) |
 
 Loading states exist only where the agent reads something slow (a file, Apple Health, the study log) or makes a file.
+Exempt under the lead's ruling (2026-09-26): immutable artifacts (a made diagram, worksheet or deck is whole or
+absent, and does not age) and words-only answers (worked example, general glossary, definition, advice, recall
+flashcards, workout plan, symptom advice). No state documents in this lane follow a side-effecting action: every failed
+state is a read or a file that did not finish, so "Nothing was changed" / "Nothing was saved" is known, not guessed.
+The only control (`health-meds-taken` Pause reminders) has no failure example here; its outcome copy belongs to the
+routine-control renderer. Renderer findings (figures drawn as paragraphs, actions skipped) are listed above as gaps,
+not blocks.
 
 ## Decided on purpose (no gap)
 

@@ -5467,7 +5467,7 @@
               }
             ]
           },
-          "fallback_text": "Photosynthesis, from pages 31–36 (pages 37–38 are photos I couldn't read): stage 1, the light reactions, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2 is on the unread pages."
+          "fallback_text": "Photosynthesis, from pages 31–36 (pages 37–38 are photos I couldn't read): stage 1, the light reactions in the thylakoid membranes, where chlorophyll absorbs light, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2 is on the unread pages."
         },
         "stale": {
           "kind": "output_blocks",
@@ -5722,7 +5722,7 @@
             ]
           }
         ],
-        "fallback_text": "2 to review from the chemistry quiz (8 of 10 right). Q4, moles in 18 g of water: you said 18, the answer is 1 mol. Q7, mass of 0.5 mol of CO₂: you said 44 g, the answer is 22 g."
+        "fallback_text": "2 to review from the chemistry quiz (8 of 10 right), both not quite. Q4, moles in 18 g of water: you said 18, the answer is 1 mol. Q7, mass of 0.5 mol of CO₂: you said 44 g, the answer is 22 g."
       }
     },
     {
@@ -6058,7 +6058,7 @@
             ]
           }
         ],
-        "fallback_text": "P/E ratio: share price divided by earnings per share. EPS: profit divided by shares. Dividend yield: yearly dividend as a percentage of the share price."
+        "fallback_text": "P/E ratio: share price divided by yearly earnings per share. EPS: a company's profit divided by its number of shares. Dividend yield: yearly dividend as a percentage of the share price."
       }
     },
     {
@@ -6115,7 +6115,7 @@
           ]
         },
         "more_label": "View all 5 terms",
-        "fallback_text": "Excess: what you pay on each claim before the insurer pays. No-claim discount (NCD): discount for claim-free years; a claim can reduce it. Named driver: someone else allowed to drive. Sum insured: the most the insurer pays for the car. Windscreen cover: glass repairs that don't touch your NCD."
+        "fallback_text": "Excess: what you pay yourself on each claim before the insurer pays. No-claim discount (NCD): discount for years without a claim; a claim can reduce it. Named driver: someone else allowed to drive, listed on the policy. Sum insured: the most the insurer pays out for the car. Windscreen cover: glass repairs that don't touch your NCD."
       },
       "states": {
         "loading": {
@@ -7265,7 +7265,7 @@
             "Follow your doctor's instructions if they differ."
           ]
         },
-        "fallback_text": "2 of 3 taken today, Sat 26 Sep, as of 20:15: Metformin 500 mg at 08:10 and 19:20. Atorvastatin 20 mg is due at 22:00; I'll remind you then."
+        "fallback_text": "2 of 3 taken today, Sat 26 Sep, as of 20:15: Metformin 500 mg with breakfast, taken 08:10, and with dinner, taken 19:20. Atorvastatin 20 mg at bedtime is due at 22:00; I'll remind you then."
       },
       "states": {
         "loading": {
@@ -7321,7 +7321,7 @@
               "Follow your doctor's instructions if they differ."
             ]
           },
-          "fallback_text": "Sat 26 Sep, as of 20:15, 2 of 3 medicines read: Metformin 500 mg taken at 08:10 and 19:20. Atorvastatin 20 mg is logged in another app I can't read, so check it there before you take it."
+          "fallback_text": "Sat 26 Sep, as of 20:15, 2 of 3 medicines read: Metformin 500 mg with breakfast, taken 08:10, and with dinner, taken 19:20. Atorvastatin 20 mg is logged in another app I can't read, so check it there before you take it."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7362,7 +7362,7 @@
               "Follow your doctor's instructions if they differ."
             ]
           },
-          "fallback_text": "As of 18:00 on Sat 26 Sep (couldn't refresh, so doses logged since then don't show): 1 of 3 taken, Metformin 500 mg at 08:10. Metformin 500 mg with dinner was due at 19:00 and Atorvastatin 20 mg is due at 22:00. Check your log before taking a dose again."
+          "fallback_text": "As of 18:00 on Sat 26 Sep (couldn't refresh, so doses logged since then don't show): 1 of 3 taken, Metformin 500 mg with breakfast at 08:10. Metformin 500 mg with dinner was due at 19:00 and Atorvastatin 20 mg at bedtime is due at 22:00. Check your log before taking a dose again."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7427,7 +7427,7 @@
             "Harso is not a doctor. In an emergency always call 995."
           ]
         },
-        "fallback_text": "Chest tightness with sweating for 20 minutes can be a heart attack. Call 995 now, sit down, chew one 300 mg aspirin if a doctor has said it is safe for you, unlock your door."
+        "fallback_text": "Chest tightness with sweating for 20 minutes can be a heart attack. Call 995 for an ambulance now. Don't drive yourself, and stay on the line with the operator. Stop what you're doing and sit down. If a doctor has said aspirin is safe for you, chew one 300 mg tablet. Unlock your door so help can get in."
       },
       "states": {
         "failed": {
@@ -7559,7 +7559,7 @@
             "Stop if you feel chest pain or dizziness."
           ]
         },
-        "fallback_text": "30-minute interval run: 8 min easy warm-up, 12 min of 6 × (1 min hard, 1 min easy), 10 min cool-down."
+        "fallback_text": "30-minute interval run: warm up 8 min, easy jog. Then 12 min of 6 × 1 min hard, 1 min easy; hard means breathing heavy but steady. Cool down 10 min, easy jog, then walk."
       }
     },
     {
@@ -7608,7 +7608,7 @@
             "Stop if you feel chest pain or dizziness."
           ]
         },
-        "fallback_text": "20-minute bodyweight workout for Sun 27 Sep: 4 min warm-up (marching, arm circles), 13 min of 3 rounds of 10 squats, 10 push-ups and 10 lunges with 30 s rest, 3 min cool-down stretches."
+        "fallback_text": "20-minute bodyweight workout for Sun 27 Sep, no equipment: warm up 4 min, marching on the spot and arm circles. Then 13 min, 3 rounds of squats, push-ups and lunges, 10 of each, 30 s rest between rounds. Cool down 3 min: stretch hips, chest and calves."
       }
     },
     {

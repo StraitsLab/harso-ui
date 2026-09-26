@@ -843,7 +843,7 @@
             "Follow your doctor's instructions if they differ."
           ]
         },
-        "fallback_text": "2 of 3 taken today, Sat 26 Sep, as of 20:15: Metformin 500 mg at 08:10 and 19:20. Atorvastatin 20 mg is due at 22:00; I'll remind you then."
+        "fallback_text": "2 of 3 taken today, Sat 26 Sep, as of 20:15: Metformin 500 mg with breakfast, taken 08:10, and with dinner, taken 19:20. Atorvastatin 20 mg at bedtime is due at 22:00; I'll remind you then."
       },
       "states": {
         "loading": {
@@ -899,7 +899,7 @@
               "Follow your doctor's instructions if they differ."
             ]
           },
-          "fallback_text": "Sat 26 Sep, as of 20:15, 2 of 3 medicines read: Metformin 500 mg taken at 08:10 and 19:20. Atorvastatin 20 mg is logged in another app I can't read, so check it there before you take it."
+          "fallback_text": "Sat 26 Sep, as of 20:15, 2 of 3 medicines read: Metformin 500 mg with breakfast, taken 08:10, and with dinner, taken 19:20. Atorvastatin 20 mg is logged in another app I can't read, so check it there before you take it."
         },
         "stale": {
           "kind": "output_blocks",
@@ -940,7 +940,7 @@
               "Follow your doctor's instructions if they differ."
             ]
           },
-          "fallback_text": "As of 18:00 on Sat 26 Sep (couldn't refresh, so doses logged since then don't show): 1 of 3 taken, Metformin 500 mg at 08:10. Metformin 500 mg with dinner was due at 19:00 and Atorvastatin 20 mg is due at 22:00. Check your log before taking a dose again."
+          "fallback_text": "As of 18:00 on Sat 26 Sep (couldn't refresh, so doses logged since then don't show): 1 of 3 taken, Metformin 500 mg with breakfast at 08:10. Metformin 500 mg with dinner was due at 19:00 and Atorvastatin 20 mg at bedtime is due at 22:00. Check your log before taking a dose again."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1005,7 +1005,7 @@
             "Harso is not a doctor. In an emergency always call 995."
           ]
         },
-        "fallback_text": "Chest tightness with sweating for 20 minutes can be a heart attack. Call 995 now, sit down, chew one 300 mg aspirin if a doctor has said it is safe for you, unlock your door."
+        "fallback_text": "Chest tightness with sweating for 20 minutes can be a heart attack. Call 995 for an ambulance now. Don't drive yourself, and stay on the line with the operator. Stop what you're doing and sit down. If a doctor has said aspirin is safe for you, chew one 300 mg tablet. Unlock your door so help can get in."
       },
       "states": {
         "failed": {
@@ -1137,7 +1137,7 @@
             "Stop if you feel chest pain or dizziness."
           ]
         },
-        "fallback_text": "30-minute interval run: 8 min easy warm-up, 12 min of 6 × (1 min hard, 1 min easy), 10 min cool-down."
+        "fallback_text": "30-minute interval run: warm up 8 min, easy jog. Then 12 min of 6 × 1 min hard, 1 min easy; hard means breathing heavy but steady. Cool down 10 min, easy jog, then walk."
       }
     },
     {
@@ -1186,7 +1186,7 @@
             "Stop if you feel chest pain or dizziness."
           ]
         },
-        "fallback_text": "20-minute bodyweight workout for Sun 27 Sep: 4 min warm-up (marching, arm circles), 13 min of 3 rounds of 10 squats, 10 push-ups and 10 lunges with 30 s rest, 3 min cool-down stretches."
+        "fallback_text": "20-minute bodyweight workout for Sun 27 Sep, no equipment: warm up 4 min, marching on the spot and arm circles. Then 13 min, 3 rounds of squats, push-ups and lunges, 10 of each, 30 s rest between rounds. Cool down 3 min: stretch hips, chest and calves."
       }
     },
     {
