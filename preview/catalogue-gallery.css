@@ -17,3 +17,5 @@
 .hkl-cat-reply { margin: 0; padding: var(--hk-space-3) var(--hk-space-4); font-size: var(--hk-text-body); line-height: 1.5; }
 .hkl-cat-full { display: flex; flex-direction: column; align-items: flex-start; gap: var(--hk-space-2); border-radius: var(--hk-radius-card); }
 .hkl-cat-full > .hkc-output-card { align-self: stretch; }
+/* What an action would do in the app (the gallery never opens anything); empty until a reviewer presses one. */
+.hkl-cat-flash { margin: 0; padding-inline: var(--hk-space-1); color: var(--hk-secondary); font-size: var(--hk-text-meta); line-height: 1.4; overflow-wrap: anywhere; }

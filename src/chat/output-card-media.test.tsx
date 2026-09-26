@@ -23,13 +23,12 @@ const clip = { kind: "visual", visual: { kind: "video", artifact: "artifact:0192
 
 const host: chat.HarsoOutputMediaHost = {
   resolveArtifact: artifact => `https://files.test/${artifact.slice(9)}`,
-  onOpenArtifact: vi.fn(),
   mapTile: (z, x, y) => `https://tile.test/${z}/${x}/${y}.png`
 };
 const doc = (blocks: chat.HarsoOutputBlock[], extra: Partial<chat.HarsoOutputDocument> = {}): chat.HarsoOutputDocument =>
   ({ kind: "output_blocks", major: 1, header: { title: "Card" }, blocks, fallback_text: "FALLBACK", ...extra });
 const renderDoc = (document: chat.HarsoOutputDocument, props: Partial<chat.HarsoOutputCardProps> = {}) => {
-  render(<div className="harso-kit"><chat.HarsoOutputCard document={document} onViewAll={() => {}} media={host} {...props} /></div>);
+  render(<div className="harso-kit"><chat.HarsoOutputCard document={document} onViewAll={() => {}} media={host} onOpenArtifact={vi.fn()} {...props} /></div>);
   return screen.getByRole("region", { name: document.header.title });
 };
 
@@ -169,7 +168,7 @@ test("an image, video or map the host cannot supply falls back to text instead o
     expect(card).toHaveAttribute("data-fallback", "true");
     cleanup();
   }
-  const noOpen = renderDoc(doc([clip]), { media: { resolveArtifact: host.resolveArtifact } });
+  const noOpen = renderDoc(doc([clip]), { onOpenArtifact: undefined });
   expect(noOpen).toHaveAttribute("data-fallback", "true");
 });
 
@@ -177,7 +176,7 @@ test("an image, video or map the host cannot supply falls back to text instead o
 
 test("video: a poster frame that opens the file in the host; no inline player", () => {
   const onOpen = vi.fn();
-  const card = renderDoc(doc([clip]), { media: { ...host, onOpenArtifact: onOpen } });
+  const card = renderDoc(doc([clip]), { onOpenArtifact: onOpen });
   expect(card.querySelector("video")).toBeNull();
   const poster = within(card).getByRole("button", { name: "Open video: Walkthrough of the new kitchen" });
   expect(poster.querySelector("img")).toHaveAttribute("src", "https://files.test/0192a3b4-5c6d-7e8f-9a0b-000000000b02");
@@ -312,8 +311,8 @@ function renderVideo(document: chat.HarsoOutputDocument, props: Partial<chat.Har
   const create = window.document.createElement.bind(window.document), probes: HTMLVideoElement[] = [];
   vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
   vi.spyOn(window.document, "createElement").mockImplementation(((tag: string) => { const element = create(tag); if (tag === "video") probes.push(element as HTMLVideoElement); return element; }) as typeof window.document.createElement);
-  const view = render(<div className="harso-kit"><chat.HarsoOutputCard document={document} onViewAll={() => {}} media={host} {...props} /></div>);
-  const rerender = (next: chat.HarsoOutputDocument) => view.rerender(<div className="harso-kit"><chat.HarsoOutputCard document={next} onViewAll={() => {}} media={host} {...props} /></div>);
+  const view = render(<div className="harso-kit"><chat.HarsoOutputCard document={document} onViewAll={() => {}} media={host} onOpenArtifact={vi.fn()} {...props} /></div>);
+  const rerender = (next: chat.HarsoOutputDocument) => view.rerender(<div className="harso-kit"><chat.HarsoOutputCard document={next} onViewAll={() => {}} media={host} onOpenArtifact={vi.fn()} {...props} /></div>);
   const metadata = async (probe: HTMLVideoElement, seconds: number) => { Object.defineProperty(probe, "duration", { value: seconds, configurable: true }); await act(async () => { probe.onloadedmetadata?.(new Event("loadedmetadata")); }); };
   return { view, probes, rerender, metadata };
 }
@@ -390,7 +389,7 @@ test("F2 map: Try again reloads the same tiles; some tiles failing is partial wi
 
 test("F2 video: a failed preview says so, with Try again and a separate Open video that still opens the file", () => {
   const onOpen = vi.fn();
-  const { view, probes } = renderVideo(video(1), { media: { ...host, onOpenArtifact: onOpen } });
+  const { view, probes } = renderVideo(video(1), { onOpenArtifact: onOpen });
   fireEvent.error(view.container.querySelector(".hkc-output-video img")!);
   act(() => { probes[0].onerror?.(new Event("error")); });
   expect(view.container.querySelector(".hkc-output-block-failed-message")!.textContent).toBe("Couldn’t load the video preview");
