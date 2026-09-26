@@ -3,7 +3,8 @@ import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
 import { duration, frameMap, readProgress, readSteps } from "./output-card-media";
 
-afterEach(cleanup);
+// Restore spies even when a test fails part-way, so a leaked createElement spy never nests into the next test.
+afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 // Verbatim blocks from docs/agent/output-playbook.examples.json: prod-watch-reply, prod-work-running, fail-fares,
 // empty-search, money-spending-month (numbers), travel-stay-areas (map), file-logo (image).
@@ -298,4 +299,189 @@ test("hostile text renders literally in status, steps, alt, pin labels and progr
   ]));
   expect(card.querySelectorAll("img:not(.hkc-output-map-tile)")).toHaveLength(0);
   expect(within(card).getAllByText(markup, { exact: false }).length).toBeGreaterThanOrEqual(3);
+});
+
+// ---- rework round 1 (fix base 2410dad): each load belongs to its own URL; real load failures show; maps hold every
+// place; progress keeps the card's caps. Variants per class in .lane/rework-r1.md.
+
+const id = (n: number) => `artifact:0192a3b4-5c6d-7e8f-9a0b-${String(n).padStart(12, "0")}`;
+const video = (n: number, poster = true) => doc([{ kind: "visual", visual: { kind: "video", artifact: id(n), alt: `Clip ${n}`, ...(poster ? { poster: id(n + 100) } : {}) } } as chat.HarsoOutputBlock]);
+const url = (artifact: string) => `https://files.test/${artifact.slice(9)}`;
+/** Renders with a spy on the metadata probes the video view creates (one per file and attempt). */
+function renderVideo(document: chat.HarsoOutputDocument, props: Partial<chat.HarsoOutputCardProps> = {}) {
+  const create = window.document.createElement.bind(window.document), probes: HTMLVideoElement[] = [];
+  vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
+  vi.spyOn(window.document, "createElement").mockImplementation(((tag: string) => { const element = create(tag); if (tag === "video") probes.push(element as HTMLVideoElement); return element; }) as typeof window.document.createElement);
+  const view = render(<div className="harso-kit"><chat.HarsoOutputCard document={document} onViewAll={() => {}} media={host} {...props} /></div>);
+  const rerender = (next: chat.HarsoOutputDocument) => view.rerender(<div className="harso-kit"><chat.HarsoOutputCard document={next} onViewAll={() => {}} media={host} {...props} /></div>);
+  const metadata = async (probe: HTMLVideoElement, seconds: number) => { Object.defineProperty(probe, "duration", { value: seconds, configurable: true }); await act(async () => { probe.onloadedmetadata?.(new Event("loadedmetadata")); }); };
+  return { view, probes, rerender, metadata };
+}
+
+test("F1 video: a new file shows no length until its own metadata arrives; the old file's late metadata is dropped", async () => {
+  const { probes, rerender, metadata } = renderVideo(video(1));
+  await metadata(probes[0], 95);
+  expect(screen.getByRole("button", { name: "Open video: Clip 1, 1:35" })).toBeVisible();
+  rerender(video(2));
+  expect(screen.getByRole("button", { name: "Open video: Clip 2" })).toBeVisible();
+  expect(document.querySelector(".hkc-output-video-length")).toBeNull();
+  await metadata(probes[0], 30);
+  expect(screen.getByRole("button", { name: "Open video: Clip 2" })).toBeVisible();
+  await metadata(probes.at(-1)!, 62);
+  expect(screen.getByRole("button", { name: "Open video: Clip 2, 1:02" })).toBeVisible();
+  vi.restoreAllMocks();
+});
+
+test("F1 video: a failed poster does not keep the next file's poster from drawing", () => {
+  const { view, rerender } = renderVideo(video(1));
+  fireEvent.error(view.container.querySelector(".hkc-output-video img")!);
+  expect(view.container.querySelector(".hkc-output-block-failed")).not.toBeNull();
+  rerender(video(2));
+  expect(view.container.querySelector(".hkc-output-video img")).toHaveAttribute("src", url(id(102)));
+  expect(view.container.querySelector(".hkc-output-block-failed")).toBeNull();
+  vi.restoreAllMocks();
+});
+
+test("F1 image (control): a replaced picture starts loading again rather than inheriting ready", () => {
+  const image = (n: number) => doc([{ kind: "visual", visual: { kind: "image", artifact: id(n), alt: `Image ${n}` } } as chat.HarsoOutputBlock]);
+  const view = render(<chat.HarsoOutputCard document={image(1)} onViewAll={() => {}} media={host} />);
+  fireEvent.load(screen.getByRole("img"));
+  expect(view.container.querySelector(".hkc-output-media")).toHaveAttribute("data-state", "ready");
+  view.rerender(<chat.HarsoOutputCard document={image(2)} onViewAll={() => {}} media={host} />);
+  expect(view.container.querySelector(".hkc-output-media")).toHaveAttribute("data-state", "loading");
+});
+
+const tilesOf = (root: ParentNode) => [...root.querySelectorAll<HTMLImageElement>("img.hkc-output-map-tile")];
+test("F1 + F2 map: tiles that failed leave a failed map with Try again; new tile URLs start fresh and draw when they load", () => {
+  let generation = 0;
+  const tiled: chat.HarsoOutputMediaHost = { ...host, mapTile: (z, x, y) => `https://tile.test/${generation}/${z}/${x}/${y}.png` };
+  const view = render(<chat.HarsoOutputCard document={doc([tokyo])} onViewAll={() => {}} media={tiled} />);
+  const map = () => view.container.querySelector(".hkc-output-map")!;
+  expect(map()).toHaveAttribute("data-state", "loading");
+  expect(map()).toHaveAttribute("aria-busy", "true");
+  for (const tile of tilesOf(view.container)) fireEvent.error(tile);
+  expect(view.container.querySelector(".hkc-output-block-failed-message")!.textContent).toBe("Couldn’t load the map");
+  expect(view.container.querySelector(".hkc-output-block-failed-reason")!.textContent).toBe("Ueno (selected), Asakusa, Shinjuku");
+  expect(view.container.querySelector(".hkc-output-map-pin")).toBeNull();
+  generation = 1;
+  view.rerender(<chat.HarsoOutputCard document={doc([tokyo])} onViewAll={() => {}} media={{ ...tiled }} />);
+  expect(map()).toHaveAttribute("data-state", "loading");
+  const fresh = tilesOf(view.container);
+  expect(fresh.every(tile => tile.src.includes("/1/") && tile.dataset.state === "loading")).toBe(true);
+  for (const tile of fresh) fireEvent.load(tile);
+  expect(map()).toHaveAttribute("data-state", "ready");
+  expect(tilesOf(view.container).every(tile => tile.dataset.state === "ready")).toBe(true);
+});
+
+test("F2 map: Try again reloads the same tiles; some tiles failing is partial with a note, not ready", () => {
+  const view = render(<chat.HarsoOutputCard document={doc([tokyo])} onViewAll={() => {}} media={host} />);
+  const first = tilesOf(view.container);
+  for (const tile of first) fireEvent.error(tile);
+  fireEvent.click(screen.getByRole("button", { name: "Try again" }));
+  const again = tilesOf(view.container);
+  expect(again.map(tile => tile.src)).toEqual(first.map(tile => tile.src));
+  expect(again.some(tile => first.includes(tile))).toBe(false);
+  fireEvent.error(again[0]);
+  for (const tile of again.slice(1)) fireEvent.load(tile);
+  expect(view.container.querySelector(".hkc-output-map")).toHaveAttribute("data-state", "partial");
+  expect(screen.getByText("Part of the map didn’t load")).toBeVisible();
+  expect(view.container.querySelectorAll(".hkc-output-map-pin")).toHaveLength(3);
+});
+
+test("F2 video: a failed preview says so, with Try again and a separate Open video that still opens the file", () => {
+  const onOpen = vi.fn();
+  const { view, probes } = renderVideo(video(1), { media: { ...host, onOpenArtifact: onOpen } });
+  fireEvent.error(view.container.querySelector(".hkc-output-video img")!);
+  act(() => { probes[0].onerror?.(new Event("error")); });
+  expect(view.container.querySelector(".hkc-output-block-failed-message")!.textContent).toBe("Couldn’t load the video preview");
+  fireEvent.click(screen.getByRole("button", { name: "Open video" }));
+  expect(onOpen).toHaveBeenCalledExactlyOnceWith(id(1));
+  fireEvent.click(screen.getByRole("button", { name: "Try again" }));
+  const poster = view.container.querySelector(".hkc-output-video img")!;
+  expect(view.container.querySelector(".hkc-output-video")).toHaveAttribute("data-state", "loading");
+  expect(probes.length).toBe(2);
+  fireEvent.load(poster);
+  expect(view.container.querySelector(".hkc-output-video")).toHaveAttribute("data-state", "ready");
+  vi.restoreAllMocks();
+});
+
+test("F2 video: with no poster, a file that doesn't load is failed; metadata failing under a good poster only drops the length", () => {
+  const bare = renderVideo(video(1, false));
+  expect(bare.view.container.querySelector(".hkc-output-video")).toHaveAttribute("data-state", "loading");
+  act(() => { bare.probes[0].onerror?.(new Event("error")); });
+  expect(bare.view.container.querySelector(".hkc-output-block-failed-message")!.textContent).toBe("Couldn’t load the video");
+  cleanup(); vi.restoreAllMocks();
+  const posterOk = renderVideo(video(1));
+  fireEvent.load(posterOk.view.container.querySelector(".hkc-output-video img")!);
+  act(() => { posterOk.probes[0].onerror?.(new Event("error")); });
+  expect(screen.getByRole("button", { name: "Open video: Clip 1" })).toHaveAttribute("data-state", "ready");
+  vi.restoreAllMocks();
+});
+
+const place = (id: string, lat: string, lon: string, label = id) => ({ id, label, lat, lon });
+test.each([
+  ["two continents", [place("ny", "40.7128", "-74.006"), place("sg", "1.3521", "103.8198")]],
+  ["three continents", [place("lon", "51.5072", "-0.1276"), place("syd", "-33.8688", "151.2093"), place("la", "34.0522", "-118.2437")]],
+  ["the dateline", [place("east", "0", "179.9"), place("west", "0", "-179.9")]],
+  ["the dateline with a third place", [place("t", "-16.8", "179.9"), place("v", "-17.2", "-179.9"), place("apia", "-13.83", "-171.76")]],
+  ["one city", [place("ueno", "35.7141", "139.7774"), place("asakusa", "35.7148", "139.7967")]]
+] as const)("F3 frameMap holds every place across %s inside the plane at 320×173 and 480×260", (_, places) => {
+  for (const [width, height] of [[320, 173], [480, 260]]) {
+    const frame = frameMap([...places], width, height);
+    expect(frame.fits).not.toBe(false);
+    for (const pin of frame.pins) {
+      expect(pin.x).toBeGreaterThanOrEqual(10); expect(pin.x).toBeLessThanOrEqual(width - 10);
+      expect(pin.y).toBeGreaterThanOrEqual(10); expect(pin.y).toBeLessThanOrEqual(height - 10);
+    }
+  }
+  // The dateline pair sits together: a few pixels apart, not a world apart.
+  if (places[0].id === "east") expect(Math.abs(frameMap([...places], 320, 173).pins[0].x - frameMap([...places], 320, 173).pins[1].x)).toBeLessThan(250);
+});
+
+test("F3 places no still map can hold are said and listed, never clipped off a plane", () => {
+  // Svalbard and McMurdo fit the 480 pane but not the 320 one; at 84.5° north and south nothing holds them (jsdom lays out at 480).
+  expect(frameMap([place("n", "78.2232", "15.6267"), place("s", "-77.8419", "166.6863")], 480, 260).fits).toBe(true);
+  expect(frameMap([place("n", "78.2232", "15.6267"), place("s", "-77.8419", "166.6863")], 320, 173).fits).toBe(false);
+  const poles = { kind: "visual", visual: { kind: "map", places: [place("n", "84.5", "15.6267", "Longyearbyen"), place("s", "-84.5", "166.6863", "McMurdo")], selected_place_id: "s" } } as chat.HarsoOutputBlock;
+  const card = renderDoc(doc([poles]));
+  expect(card.querySelector(".hkc-output-map-plane")).toBeNull();
+  expect(within(card).getByText("Too far apart to show on one map")).toBeVisible();
+  expect(card.querySelector(".hkc-output-map-places")!.textContent).toBe("LongyearbyenMcMurdo (selected)");
+});
+
+test("F3 the pick is named inside the plane even when a 40-character label fits beside no pin", () => {
+  const long = { kind: "visual", visual: { kind: "map", places: [place("a", "1.3", "103.8", "W".repeat(40)), place("b", "1.3", "103.82", "Other")], selected_place_id: "a" } } as chat.HarsoOutputBlock;
+  const card = renderDoc(doc([long]));
+  const label = card.querySelector<HTMLElement>(".hkc-output-map-label[data-selected]")!;
+  expect(label.textContent).toBe("W".repeat(40));
+  const left = parseFloat(label.style.left), top = parseFloat(label.style.top), width = parseFloat(label.style.width);
+  expect(left).toBeGreaterThanOrEqual(4); expect(left + width).toBeLessThanOrEqual(480 - 4); expect(top).toBeGreaterThanOrEqual(4);
+});
+
+test.each([[0, 0, "View all 2"], [1, 1, "View all 2"], [2, 0, null]] as const)("F4 progress under maxNumbers=%s: the bar only when both numbers fit the cap, else %s number(s)", (max, numbers, more) => {
+  const card = renderDoc(doc([budget]), { caps: { maxNumbers: max } });
+  expect(!!within(card).queryByRole("meter")).toBe(max >= 2);
+  expect(card.querySelectorAll(".hkc-output-card-number")).toHaveLength(numbers);
+  if (more) expect(within(card).getByRole("button", { name: more })).toBeVisible();
+  else expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test.each(["loading", "empty", "failed"] as const)("F4 progress %s shows no data, so it counts nothing toward View all", state => {
+  const card = renderDoc(doc([budget]), { blockStates: { 0: { state, message: "Probe" } } });
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test.each(["partial", "stale"] as const)("F4 progress %s draws both numbers, so nothing is hidden (control)", state => {
+  const card = renderDoc(doc([budget]), { blockStates: { 0: { state, message: "Probe" } } });
+  expect(within(card).getByRole("meter")).toBeVisible();
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test("F4 a loading bar spends none of the cap: the numbers after it still draw", () => {
+  const card = renderDoc(doc([budget, { kind: "numbers", items: [{ value: "12", label: "Days left" }, { value: "S$60", label: "A day" }] }]), { blockStates: { 0: { state: "loading" } } });
+  expect([...card.querySelectorAll(".hkc-output-card-number-value")].map(node => node.textContent)).toEqual(["12", "S$60"]);
+  cleanup();
+  const ready = renderDoc(doc([budget, { kind: "numbers", items: [{ value: "12", label: "Days left" }] }]));
+  expect(ready.querySelectorAll(".hkc-output-card-number")).toHaveLength(0);
+  expect(within(ready).getByRole("button", { name: "View all 3" })).toBeVisible();
 });

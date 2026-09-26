@@ -171,11 +171,14 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
     if (media) { parts.push({ kind: "media", media, state }); continue; }
     if (isNumbers(block)) {
       const progress = readProgress(block.items);
-      if (progress) {
-        // Both figures are on the bar's lines; they spend the key-number budget like any two numbers.
-        numberBudget = Math.max(0, numberBudget - 2);
-        total += 2;
-        shown += withoutData(state) ? 0 : 2;
+      // The bar is two key numbers drawn richer: it needs room for both under the number cap (else they draw as
+      // numbers, sliced and counted below), and like every block it counts nothing while it has no data.
+      if (progress && (withoutData(state) || numberBudget >= 2)) {
+        if (!withoutData(state)) {
+          numberBudget -= 2;
+          total += 2;
+          shown += 2;
+        }
         parts.push({ kind: "progress", progress, state });
         continue;
       }

@@ -235,3 +235,128 @@ for (const width of [320, 420]) {
     expect(await axe(page)).toEqual([]);
   });
 }
+
+// ---- rework round 1 (fix base 2410dad): real transport, world maps, text children, fixed aspect ----
+
+/** Every text child of the new blocks, measured: nothing past the card's content edge, nothing collapsed to zero width. */
+async function textInside(page: Page) {
+  return card(page).evaluate(root => {
+    const cardBox = root.getBoundingClientRect();
+    return [...root.querySelectorAll(".hkc-output-status-step-label, .hkc-output-status-step-time, .hkc-output-status-word, .hkc-output-status-detail, .hkc-output-progress-label, .hkc-output-progress-value, .hkc-output-progress-note, .hkc-output-map-label, .hkc-output-map-places li, .hkc-output-block-failed-text > *, .hkc-output-block-note")]
+      .map(node => ({ text: node.textContent!.slice(0, 24), box: node.getBoundingClientRect(), scroll: node.scrollWidth > node.clientWidth + 1 && getComputedStyle(node).textOverflow !== "ellipsis" }))
+      .filter(({ box, scroll }) => box.width < 1 || box.left < cardBox.left - .5 || box.right > cardBox.right + .5 || scroll)
+      .map(({ text, box }) => `${text} @${Math.round(box.left)}–${Math.round(box.right)} (card ${Math.round(cardBox.left)}–${Math.round(cardBox.right)})`);
+  });
+}
+
+const DRAWN = `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><rect width="256" height="256" fill="#ecebe6"/></svg>`;
+const POSTER = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360"><rect width="640" height="360" fill="#d9d2c5"/></svg>`;
+
+for (const mode of ["light", "dark"] as const) {
+  test(`map ${mode}: real tile loads: held is loading, all aborted is failed with the places named, Try again with the network back draws it; some aborted is partial`, async ({ page }) => {
+    let serve: "hold" | "abort" | "ok" | "half" = "hold";
+    await page.route("**/__tiles__/**", route => {
+      if (serve === "hold") return;
+      // "half": tiles in even columns fail (the plane spans at least two columns at 512).
+      if (serve === "abort" || (serve === "half" && Number(/\/(\d+)\/\d+\.svg$/.exec(route.request().url())![1]) % 2 === 0)) return route.abort();
+      return route.fulfill({ contentType: "image/svg+xml", body: DRAWN });
+    });
+    await open(page, `doc=map&net=1&mode=${mode}&width=512`);
+    const map = card(page).locator(".hkc-output-map");
+    await expect(map).toHaveAttribute("data-state", "loading");
+    await expect(map).toHaveAttribute("aria-busy", "true");
+    serve = "abort";
+    await open(page, `doc=map&net=1&mode=${mode}&width=512&generation=1`);
+    const failed = card(page).locator(".hkc-output-block-failed");
+    await expect(failed.locator(".hkc-output-block-failed-message")).toHaveText("Couldn’t load the map");
+    await expect(failed.locator(".hkc-output-block-failed-reason")).toHaveText("Ueno (selected), Asakusa, Shinjuku");
+    await expect(card(page).locator(".hkc-output-map-pin")).toHaveCount(0);
+    expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
+    expect(await axe(page)).toEqual([]);
+    serve = "ok";
+    await failed.getByRole("button", { name: "Try again" }).click();
+    await expect(map).toHaveAttribute("data-state", "ready");
+    expect(await card(page).locator("img.hkc-output-map-tile").evaluateAll(nodes => nodes.every(node => (node as HTMLImageElement).naturalWidth > 0 && getComputedStyle(node).visibility === "visible"))).toBe(true);
+    await expect(card(page).locator(".hkc-output-map-pin")).toHaveCount(3);
+    serve = "half";
+    await open(page, `doc=map&net=1&mode=${mode}&width=512&generation=2`);
+    await expect(map).toHaveAttribute("data-state", "partial");
+    await expect(card(page).getByText("Part of the map didn’t load")).toBeVisible();
+    for (const ratio of await contrast(page, ".hkc-output-block-note", "color")) expect(ratio).toBeGreaterThanOrEqual(4.5);
+    expect(await axe(page)).toEqual([]);
+  });
+
+  test(`video ${mode}: real poster and file failures show failed with Try again and Open video; the network back draws the poster`, async ({ page }) => {
+    let serve: "abort" | "ok" = "abort";
+    await page.route("**/__media__/**", route => serve === "abort" ? route.abort()
+      : route.request().url().endsWith("b02") ? route.fulfill({ contentType: "image/svg+xml", body: POSTER }) : route.abort());
+    await open(page, `doc=video&net=1&mode=${mode}&width=512`);
+    const failed = card(page).locator(".hkc-output-block-failed");
+    await expect(failed.locator(".hkc-output-block-failed-message")).toHaveText("Couldn’t load the video preview");
+    await expect(failed.locator(".hkc-output-block-failed-reason")).toHaveText("Walkthrough of the new kitchen");
+    await failed.getByRole("button", { name: "Open video" }).click();
+    expect((await callbacks(page)).opened).toEqual(["artifact:0192a3b4-5c6d-7e8f-9a0b-000000000b01"]);
+    for (const button of await failed.getByRole("button").all()) expect((await button.boundingBox())!.height).toBeGreaterThanOrEqual(28);
+    for (const ratio of await contrast(page, ".hkc-output-block-failed-reason, .hkc-output-block-failed-message", "color")) expect(ratio).toBeGreaterThanOrEqual(4.5);
+    expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
+    expect(await axe(page)).toEqual([]);
+    serve = "ok";
+    await failed.getByRole("button", { name: "Try again" }).click();
+    const poster = card(page).getByRole("button", { name: "Open video: Walkthrough of the new kitchen" });
+    await expect(poster).toHaveAttribute("data-state", "ready");
+    expect(await poster.locator("img").evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+    await expect(poster.locator(".hkc-output-video-length")).toHaveCount(0);
+  });
+
+  test(`map ${mode}: continents, the dateline and a long pick keep every pin and the pick's name inside the plane; poles too far apart are listed`, async ({ page }) => {
+    for (const [doc, width, pins] of [["world", 320, 2], ["world", 512, 2], ["continents", 320, 3], ["dateline", 320, 3], ["dateline", 512, 3], ["longpick", 320, 2], ["longpick", 512, 2]] as const) {
+      await open(page, `doc=${doc}&mode=${mode}&width=${width}`, width + 48);
+      const plane = card(page).locator(".hkc-output-map-plane");
+      const planeBox = (await plane.boundingBox())!;
+      const boxes = await plane.locator(".hkc-output-map-pin, .hkc-output-map-label[data-selected]").evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().toJSON()));
+      expect(await plane.locator(".hkc-output-map-pin").count(), `${doc}@${width}`).toBe(pins);
+      expect(await plane.locator(".hkc-output-map-label[data-selected]").count(), `${doc}@${width}`).toBe(1);
+      for (const box of boxes) {
+        expect(box.left, `${doc}@${width}`).toBeGreaterThanOrEqual(planeBox.x); expect(box.right, `${doc}@${width}`).toBeLessThanOrEqual(planeBox.x + planeBox.width);
+        expect(box.top, `${doc}@${width}`).toBeGreaterThanOrEqual(planeBox.y); expect(box.bottom, `${doc}@${width}`).toBeLessThanOrEqual(planeBox.y + planeBox.height);
+      }
+      // The pick's name is whole, or (only a label wider than the plane allows, e.g. 40 × "W") ellipsised at the
+      // widest capsule the plane takes; its full name is always in the Places list.
+      const pick = await plane.locator(".hkc-output-map-label[data-selected]").evaluate(node => ({ clipped: node.scrollWidth > node.clientWidth + .5, width: node.getBoundingClientRect().width }));
+      if (pick.clipped) expect(pick.width, `${doc}@${width}`).toBeGreaterThanOrEqual(planeBox.width - 24.5);
+      if (doc !== "longpick") expect(pick.clipped, `${doc}@${width}`).toBe(false);
+      expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
+      expect(await textInside(page)).toEqual([]);
+    }
+    await open(page, `doc=poles&mode=${mode}&width=320`, 368);
+    await expect(card(page).locator(".hkc-output-map-plane")).toHaveCount(0);
+    await expect(card(page).getByText("Too far apart to show on one map")).toBeVisible();
+    await expect(card(page).locator(".hkc-output-map-places li")).toHaveText(["Longyearbyen (selected)", "McMurdo"]);
+    expect(await textInside(page)).toEqual([]);
+    expect(await axe(page)).toEqual([]);
+  });
+
+  for (const [aspect, ratio] of [["square", 1], ["4:3", 4 / 3], ["16:9", 16 / 9], ["3:4", 3 / 4]] as const) test(`image ${mode} ${aspect}: the measured frame keeps its aspect at 320, 420 and 512, loading and ready`, async ({ page }) => {
+    for (const width of [320, 420, 512]) {
+      for (const slow of [true, false]) {
+        await open(page, `doc=image&aspect=${aspect}&mode=${mode}&width=${width}${slow ? "&imgslow=1" : ""}`, width + 48);
+        const frame = card(page).locator(".hkc-output-media");
+        await expect(frame).toHaveAttribute("data-state", slow ? "loading" : "ready");
+        const box = (await frame.boundingBox())!;
+        expect(box.width / box.height, `${aspect}@${width}`).toBeCloseTo(ratio, 2);
+        expect(box.height).toBeLessThanOrEqual(480.5);
+      }
+    }
+  });
+}
+
+for (const width of [320, 420]) {
+  test(`schema-maximum text at ${width}px (light and dark): every text child of status steps and progress stays inside the card`, async ({ page }) => {
+    for (const mode of ["light", "dark"] as const) {
+      await open(page, `doc=hostilemedia&mode=${mode}&width=${width}`, width + 48);
+      expect(await textInside(page)).toEqual([]);
+      expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    }
+  });
+}

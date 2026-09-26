@@ -16,9 +16,11 @@
 .harso-kit .hkc-output-status-detail { color: var(--hk-secondary); font-variant-numeric: tabular-nums; min-width: 0; }
 .harso-kit .hkc-output-status-steps { list-style: none; margin: 0; padding: 0; }
 .harso-kit .hkc-output-status-step {
-  position: relative; display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; column-gap: var(--hk-space-3);
+  position: relative; display: grid; grid-template-columns: 16px minmax(0, 1fr) fit-content(50%); align-items: center; column-gap: var(--hk-space-3);
   min-height: 32px;
 }
+/* Both text columns wrap inside the card at any schema length (label 48, time 24); the time takes at most half. */
+.harso-kit :is(.hkc-output-status-step-label, .hkc-output-status-step-time, .hkc-output-status-detail, .hkc-output-progress-head > span, .hkc-output-progress-note) { min-width: 0; overflow-wrap: anywhere; }
 /* The rail in from the status line (B0 connector, muted: these are steps still to come). */
 /* Rail and ring are marks that carry meaning ("still to come"): ink at 50% over the card keeps them >= 3:1 in every palette. */
 .harso-kit .hkc-output-status-step::before { content: ""; position: absolute; left: 7px; top: -8px; height: calc(50% + 3px); width: 2px; background: color-mix(in srgb, var(--hk-ink) 50%, var(--hk-surface)); }
@@ -38,7 +40,8 @@
 
 /* Image and video poster: a fixed-aspect frame on the work tone, radius 12; a calm shimmer while loading. */
 .harso-kit .hkc-output-media {
-  position: relative; display: block; width: 100%; aspect-ratio: var(--hkc-media-aspect, 4 / 3); max-height: 480px;
+  /* At most 480 tall: the width shrinks with it, so the frame keeps its aspect (a cap on height alone would not). */
+  position: relative; display: block; width: 100%; max-width: calc(480px * var(--hkc-media-aspect, 4 / 3)); aspect-ratio: var(--hkc-media-aspect, 4 / 3);
   margin: 0; padding: 0; border: 0; border-radius: var(--hk-radius-card); overflow: hidden;
   background: var(--hk-field-tint); color: inherit; font: inherit;
 }
@@ -67,7 +70,19 @@
 
 /* Map: a still OSM tile plane (no live map), radius 12; pins 10px, the pick 14px in ink; label capsules;
    attribution chip bottom-left in secondary on the overlay (>= 4.5:1). */
-.harso-kit .hkc-output-map { position: relative; margin: 0; min-width: 0; }
+.harso-kit .hkc-output-map { display: flex; flex-direction: column; gap: 10px; margin: 0; min-width: 0; }
+.harso-kit .hkc-output-map-frame { position: relative; }
+.harso-kit .hkc-output-map[data-state="loading"] .hkc-output-map-tile { opacity: 0; }
+.harso-kit .hkc-output-map[data-state="loading"] .hkc-output-map-plane::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--hk-surface) 55%, transparent) 50%, transparent 70%);
+  background-size: 220% 100%; animation: hkc-media-shimmer 1.6s linear infinite;
+}
+/* A tile that didn't load leaves the plane's own tone, never a broken-image glyph. */
+.harso-kit .hkc-output-map-tile[data-state="failed"] { visibility: hidden; }
+.harso-kit .hkc-output-map-places { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-2); font-size: var(--hk-text-body); line-height: 20px; overflow-wrap: anywhere; }
+/* Try again beside another action (Open video) in a failed media block. */
+.harso-kit .hkc-output-media-actions { display: flex; flex-wrap: wrap; gap: var(--hk-space-2); }
 .harso-kit .hkc-output-map-plane { position: relative; width: 100%; overflow: hidden; border-radius: var(--hk-radius-card); background: var(--hk-field-tint); }
 .harso-kit .hkc-output-map-tile { position: absolute; width: 256px; height: 256px; max-width: none; user-select: none; }
 .harso-kit[data-mode="dark"] .hkc-output-map-tile { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) saturate(.3); }
@@ -102,7 +117,7 @@
 .harso-kit .hkc-output-skeleton--progress span:nth-child(3) { width: 50%; margin-block: 4px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .harso-kit .hkc-output-media[data-state="loading"]::after { animation: none; background: none; }
+  .harso-kit .hkc-output-media[data-state="loading"]::after, .harso-kit .hkc-output-map[data-state="loading"] .hkc-output-map-plane::after { animation: none; background: none; }
   .harso-kit .hkc-output-media[data-state="ready"] .hkc-output-media-img { animation: none; }
 }
 @media (forced-colors: active) {

@@ -1,7 +1,7 @@
 "use client";
 
-import { Play, WarningCircle } from "@phosphor-icons/react";
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { Info, Play, WarningCircle } from "@phosphor-icons/react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
 import { Button } from "../primitives";
 import "./output-card-media.css";
 
@@ -180,8 +180,52 @@ export function readMedia(block: AnyBlock, host: HarsoOutputMediaHost): HarsoOut
 
 const ASPECT = { square: 1, "4:3": 4 / 3, "16:9": 16 / 9, "3:4": 3 / 4 } as const;
 
+type Phase = "loading" | "ready" | "failed";
+/**
+ * What the browser made of each URL this block loads (picture, poster, video file, map tile), keyed by the URL and
+ * the Try again attempt. A new URL starts at loading; nothing one URL did carries over to another. Elements carry
+ * `key={loads.key(url)}` so a replaced source is a new element whose late events cannot land on the next one.
+ */
+function useLoads() {
+  const [attempt, setAttempt] = useState(0);
+  const [phases, setPhases] = useState<Readonly<Record<string, Phase>>>({});
+  const key = (url: string) => `${attempt} ${url}`;
+  return {
+    attempt, key,
+    phase: (url: string): Phase => phases[key(url)] ?? "loading",
+    settle: (url: string, phase: Phase) => { const at = key(url); setPhases(all => all[at] === phase ? all : { ...all, [at]: phase }); },
+    retry: () => { setAttempt(value => value + 1); setPhases({}); }
+  };
+}
+type Loads = ReturnType<typeof useLoads>;
+
+/** An `<img data-load>` already decoded (or failed) before React attached its listeners never fires again: read it. */
+function useSettleComplete(root: RefObject<HTMLElement | null>, loads: Loads) {
+  useLayoutEffect(() => {
+    root.current?.querySelectorAll<HTMLImageElement>("img[data-load]").forEach(img => {
+      const url = img.dataset.load!;
+      if (img.complete && loads.phase(url) === "loading") loads.settle(url, img.naturalWidth > 0 ? "ready" : "failed");
+    });
+  });
+}
+
+/** B0 failed frame for a load the card itself made: amber glyph, what failed, the item, Try again (+ another action). */
+function MediaFailed({ message, reason, onRetry, children }: { message: string; reason: string; onRetry: () => void; children?: ReactNode }) {
+  return <div className="hkc-output-block-failed" data-state="failed">
+    <WarningCircle className="hkc-output-block-failed-glyph" size={16} weight="bold" aria-hidden="true" />
+    <div className="hkc-output-block-failed-text">
+      <p className="hkc-output-block-failed-message">{message}</p>
+      <p className="hkc-output-block-failed-reason">{reason}</p>
+      <div className="hkc-output-media-actions">
+        <Button variant="quiet" className="hkc-output-block-retry" onClick={onRetry}>Try again</Button>
+        {children}
+      </div>
+    </div>
+  </div>;
+}
+
 function useWidth(fallback: number) {
-  const node = useRef<HTMLDivElement>(null);
+  const node = useRef<HTMLElement>(null);
   const [width, setWidth] = useState(fallback);
   useLayoutEffect(() => {
     const element = node.current;
@@ -197,31 +241,17 @@ function useWidth(fallback: number) {
 
 /** Fixed aspect frame; a shimmer until the picture arrives; a failed state with a working Try again if it doesn't. */
 export function HarsoOutputImageView({ image, host }: { image: HarsoOutputImage; host: HarsoOutputMediaHost }) {
-  const src = host.resolveArtifact?.(image.artifact);
-  // Phase belongs to one source: a new src starts loading again without an effect racing a fast (cached) load.
-  const [load, setLoad] = useState<{ src?: string; phase: "loading" | "ready" | "failed" }>({ src, phase: "loading" });
-  const phase = load.src === src ? load.phase : "loading";
-  const setPhase = (next: "loading" | "ready" | "failed") => setLoad({ src, phase: next });
-  const [attempt, setAttempt] = useState(0);
-  const img = useRef<HTMLImageElement>(null);
-  // An image already decoded before React attached its listener (memory cache, data URI) never fires load again.
-  useLayoutEffect(() => {
-    const node = img.current;
-    if (node?.complete && phase === "loading") setLoad({ src, phase: node.naturalWidth > 0 ? "ready" : "failed" });
-  });
-  if (phase === "failed") return <div className="hkc-output-block-failed" data-state="failed">
-    <WarningCircle className="hkc-output-block-failed-glyph" size={16} weight="bold" aria-hidden="true" />
-    <div className="hkc-output-block-failed-text">
-      <p className="hkc-output-block-failed-message">Couldn’t load the image</p>
-      <p className="hkc-output-block-failed-reason">{image.alt}</p>
-      <Button variant="quiet" className="hkc-output-block-retry" onClick={() => { setAttempt(value => value + 1); setPhase("loading"); }}>Try again</Button>
-    </div>
-  </div>;
+  const src = host.resolveArtifact?.(image.artifact) ?? "";
+  const loads = useLoads();
+  const frame = useRef<HTMLDivElement>(null);
+  useSettleComplete(frame, loads);
+  const phase = loads.phase(src);
+  if (phase === "failed") return <MediaFailed message="Couldn’t load the image" reason={image.alt} onRetry={loads.retry} />;
   const aspect = ASPECT[image.aspect ?? "4:3"] ?? ASPECT["4:3"];
-  return <div className="hkc-output-media" data-state={phase} aria-busy={phase === "loading" || undefined}
+  return <div ref={frame} className="hkc-output-media" data-state={phase} aria-busy={phase === "loading" || undefined}
     style={{ "--hkc-media-aspect": aspect } as CSSProperties}>
-    <img key={attempt} ref={img} className="hkc-output-media-img" src={src} alt={image.alt} decoding="async" draggable={false}
-      onLoad={() => setPhase("ready")} onError={() => setPhase("failed")} />
+    <img key={loads.key(src)} data-load={src} className="hkc-output-media-img" src={src} alt={image.alt} decoding="async" draggable={false}
+      onLoad={() => loads.settle(src, "ready")} onError={() => loads.settle(src, "failed")} />
   </div>;
 }
 
@@ -234,10 +264,15 @@ export function duration(seconds: number) {
 
 /** A poster frame with its duration that opens the file in the host; never an inline player. */
 export function HarsoOutputVideoView({ video, host }: { video: HarsoOutputVideo; host: HarsoOutputMediaHost }) {
-  const [length, setLength] = useState<string>();
-  const [posterFailed, setPosterFailed] = useState(false);
-  const src = host.resolveArtifact?.(video.artifact);
+  const loads = useLoads();
+  const frame = useRef<HTMLButtonElement>(null);
+  useSettleComplete(frame, loads);
+  const src = host.resolveArtifact?.(video.artifact) ?? "";
   const poster = video.poster ? host.resolveArtifact?.(video.poster) : undefined;
+  // The length belongs to the file it was read from: another file shows none until its own metadata arrives.
+  const [length, setLength] = useState<{ src: string; text?: string }>();
+  const { attempt, settle } = loads;
+  const fileKey = `file ${src}`;
   useEffect(() => {
     // Read only the file's metadata for its length; nothing plays and nothing is attached to the page.
     if (!src || typeof document === "undefined") return;
@@ -245,44 +280,70 @@ export function HarsoOutputVideoView({ video, host }: { video: HarsoOutputVideo;
     let live = true;
     probe.preload = "metadata";
     probe.muted = true;
-    probe.onloadedmetadata = () => { if (live) setLength(duration(probe.duration)); };
+    probe.onloadedmetadata = () => { if (!live) return; setLength({ src, text: duration(probe.duration) }); settle(fileKey, "ready"); };
+    probe.onerror = () => { if (live) settle(fileKey, "failed"); };
     probe.src = src;
-    return () => { live = false; probe.onloadedmetadata = null; probe.removeAttribute("src"); probe.load?.(); };
-  }, [src]);
-  const open = host.onOpenArtifact;
-  const body = <>
-    {poster && !posterFailed ? <img className="hkc-output-media-img" src={poster} alt="" draggable={false} onError={() => setPosterFailed(true)} /> : null}
-    {open && <span className="hkc-output-video-play" aria-hidden="true"><Play size={18} weight="fill" /></span>}
-    {length && <span className="hkc-output-video-length" aria-hidden="true">{length}</span>}
-  </>;
-  const style = { "--hkc-media-aspect": ASPECT["16:9"] } as CSSProperties;
-  const name = `${video.alt}${length ? `, ${length}` : ""}`;
-  return open
-    ? <button type="button" className="hkc-output-media hkc-output-video" style={style} aria-label={`Open video: ${name}`} onClick={() => open(video.artifact)}>{body}</button>
-    : <div className="hkc-output-media hkc-output-video" style={style} role="img" aria-label={`Video: ${name}`}>{body}</div>;
+    return () => { live = false; probe.onloadedmetadata = probe.onerror = null; probe.removeAttribute("src"); probe.load?.(); };
+    // `settle` is keyed to this attempt; a Try again (new attempt) reads the file again.
+  }, [src, attempt]);
+  const time = length?.src === src ? length.text : undefined;
+  const file = loads.phase(fileKey), picture = poster ? loads.phase(poster) : undefined;
+  const open = () => host.onOpenArtifact?.(video.artifact);
+  // Nothing to show in the frame: the poster failed, or there is no poster and the file itself didn't load. Opening
+  // the file stays available beside Try again (the host's viewer may still reach it).
+  if (picture === "failed" || (!poster && file === "failed")) return <MediaFailed
+    message={picture === "failed" ? "Couldn’t load the video preview" : "Couldn’t load the video"} reason={video.alt} onRetry={loads.retry}>
+    <Button variant="quiet" className="hkc-output-block-retry" onClick={open}>Open video</Button>
+  </MediaFailed>;
+  const phase = (picture ?? file) === "loading" ? "loading" : "ready";
+  return <button ref={frame} type="button" className="hkc-output-media hkc-output-video" data-state={phase} aria-busy={phase === "loading" || undefined}
+    style={{ "--hkc-media-aspect": ASPECT["16:9"] } as CSSProperties} aria-label={`Open video: ${video.alt}${time ? `, ${time}` : ""}`} onClick={open}>
+    {poster && <img key={loads.key(poster)} data-load={poster} className="hkc-output-media-img" src={poster} alt="" draggable={false}
+      onLoad={() => loads.settle(poster, "ready")} onError={() => loads.settle(poster, "failed")} />}
+    <span className="hkc-output-video-play" aria-hidden="true"><Play size={18} weight="fill" /></span>
+    {time && <span className="hkc-output-video-length" aria-hidden="true">{time}</span>}
+  </button>;
 }
 
 // ---- map ----
 
-const TILE = 256, PAD = 36, MIN_ZOOM = 2, MAX_ZOOM = 15;
+const TILE = 256, PAD = 36, PIN_ROOM = 10, MAX_ZOOM = 15;
 const project = (lat: number, lon: number, zoom: number) => {
   const size = TILE * 2 ** zoom, sin = Math.sin(lat * Math.PI / 180);
   return { x: (lon + 180) / 360 * size, y: (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)) * size };
 };
 
-/** The highest zoom at which every place fits inside the frame with room for its pin. */
-export function frameMap(places: HarsoOutputPlace[], width: number, height: number) {
-  const points = places.slice(0, 12).map(place => ({ lat: Number(place.lat), lon: Number(place.lon) }));
-  let zoom = MAX_ZOOM;
-  for (; zoom > MIN_ZOOM; zoom--) {
-    const xy = points.map(point => project(point.lat, point.lon, zoom));
-    const spanX = Math.max(...xy.map(p => p.x)) - Math.min(...xy.map(p => p.x)), spanY = Math.max(...xy.map(p => p.y)) - Math.min(...xy.map(p => p.y));
-    if (spanX <= width - 2 * PAD && spanY <= height - 2 * PAD) break;
+/**
+ * Longitudes moved into one run without the widest empty stretch of the globe inside it, so places either side of the
+ * dateline (179.9 and -179.9) sit together rather than a world apart. Tiles wrap, so a longitude past 180 still draws.
+ */
+function unwrap(lons: number[]) {
+  const sorted = [...lons].sort((a, b) => a - b);
+  // The empty stretch across the dateline, then each gap between neighbours; the widest one is left outside the run.
+  let gap = sorted[0] + 360 - sorted[sorted.length - 1], cut: number | undefined;
+  for (let index = 1; index < sorted.length; index++) {
+    if (sorted[index] - sorted[index - 1] > gap) { gap = sorted[index] - sorted[index - 1]; cut = sorted[index]; }
   }
-  const xy = points.map(point => project(point.lat, point.lon, zoom));
+  return cut === undefined ? lons : lons.map(lon => lon < cut ? lon + 360 : lon);
+}
+
+/**
+ * The highest zoom at which every place fits inside the frame with room for its pin (down to the whole world).
+ * `fits` is false when even the whole world can't hold them all inside this frame: the card then says so rather than
+ * clip a place off the plane.
+ */
+export function frameMap(places: HarsoOutputPlace[], width: number, height: number) {
+  const lats = places.slice(0, 12).map(place => Number(place.lat)), lons = unwrap(places.slice(0, 12).map(place => Number(place.lon)));
+  const at = (zoom: number) => lats.map((lat, index) => project(lat, lons[index], zoom));
+  const span = (xy: { x: number; y: number }[], axis: "x" | "y") => Math.max(...xy.map(p => p[axis])) - Math.min(...xy.map(p => p[axis]));
+  const within = (zoom: number, pad: number) => { const xy = at(zoom); return span(xy, "x") <= width - 2 * pad && span(xy, "y") <= height - 2 * pad; };
+  let zoom = MAX_ZOOM;
+  while (zoom > 0 && !within(zoom, PAD)) zoom--;
+  const fits = within(zoom, PAD) || within(zoom, PIN_ROOM);
+  const xy = at(zoom);
   const cx = (Math.max(...xy.map(p => p.x)) + Math.min(...xy.map(p => p.x))) / 2, cy = (Math.max(...xy.map(p => p.y)) + Math.min(...xy.map(p => p.y))) / 2;
   const left = cx - width / 2, top = cy - height / 2;
-  return { zoom, left, top, pins: xy.map(p => ({ x: p.x - left, y: p.y - top })) };
+  return { zoom, left, top, fits, pins: xy.map(p => ({ x: p.x - left, y: p.y - top })) };
 }
 
 const LABEL = 12;
@@ -302,6 +363,8 @@ function labelWidth(text: string, strong: boolean) {
 /** A still map: OSM tiles when the host lends them, ≤12 pins, the pick larger and labelled first, attribution kept. */
 export function HarsoOutputMapView({ map, host }: { map: HarsoOutputMap; host: HarsoOutputMediaHost }) {
   const [node, width] = useWidth(480);
+  const loads = useLoads();
+  useSettleComplete(node, loads);
   // Labels are measured in the web font: lay them out again once it has loaded.
   const [, setFonts] = useState(0);
   useEffect(() => {
@@ -314,6 +377,12 @@ export function HarsoOutputMapView({ map, host }: { map: HarsoOutputMap; host: H
   const places = map.places.slice(0, 12);
   const frame = frameMap(places, width, height);
   const selected = places.findIndex(place => place.id === map.selected_place_id);
+  const named = (place: HarsoOutputPlace, index: number) => `${place.label}${index === selected ? " (selected)" : ""}`;
+  // Places no single still map can hold at this size (far north and far south together): say so and list them.
+  if (!frame.fits) return <figure ref={node} className="hkc-output-map" aria-label="Map" data-state="unframed">
+    <p className="hkc-output-block-note"><Info size={14} weight="bold" aria-hidden="true" />Too far apart to show on one map</p>
+    <ul className="hkc-output-map-places">{places.map((place, index) => <li key={index}>{named(place, index)}</li>)}</ul>
+  </figure>;
   const tiles: { key: string; src: string; x: number; y: number }[] = [];
   {
     const count = 2 ** frame.zoom;
@@ -324,6 +393,13 @@ export function HarsoOutputMapView({ map, host }: { map: HarsoOutputMap; host: H
       }
     }
   }
+  // The plane is only as true as its tiles: loading until they arrive, a note if some didn't, failed if none did.
+  const phases = tiles.map(tile => loads.phase(tile.src));
+  const failedTiles = phases.filter(phase => phase === "failed").length;
+  const phase = phases.includes("loading") ? "loading" : failedTiles && failedTiles === tiles.length ? "failed" : failedTiles ? "partial" : "ready";
+  if (phase === "failed") return <figure ref={node} className="hkc-output-map" aria-label="Map">
+    <MediaFailed message="Couldn’t load the map" reason={places.map(named).join(", ")} onRetry={loads.retry} />
+  </figure>;
   // Labels: the pick first, then in order, while they fit inside the frame without touching.
   const indexes = places.map((_, index) => index);
   const order = selected >= 0 ? [selected, ...indexes.filter(index => index !== selected)] : indexes;
@@ -333,9 +409,16 @@ export function HarsoOutputMapView({ map, host }: { map: HarsoOutputMap; host: H
   const boxes: Box[] = [];
   const pinBoxes = frame.pins.map((pin, index) => { const r = index === selected ? 9 : 7; return { left: pin.x - r, right: pin.x + r, top: pin.y - r, bottom: pin.y + r }; });
   const inside = (box: Omit<Box, "index">) => box.left >= 4 && box.right <= width - 4 && box.top >= 4 && box.bottom <= height - 34;
+  const overlaps = (box: Omit<Box, "index">, other: Omit<Box, "index">) => box.right > other.left && box.left < other.right && box.bottom > other.top && box.top < other.bottom;
   const clear = (box: Omit<Box, "index">, index: number) => inside(box)
     && boxes.every(other => box.right + 4 <= other.left || box.left >= other.right + 4 || box.bottom + 2 <= other.top || box.top >= other.bottom + 2)
-    && pinBoxes.every((other, at) => at === index || box.right <= other.left || box.left >= other.right || box.bottom <= other.top || box.top >= other.bottom);
+    && pinBoxes.every((other, at) => at === index || !overlaps(box, other));
+  // Slid into the plane (inside the 4px margin, above the attribution): how the pick stays named near an edge.
+  const clamp = (box: Omit<Box, "index">) => {
+    const w = box.right - box.left, h = box.bottom - box.top;
+    const left = Math.max(4, Math.min(box.left, width - 4 - w)), top = Math.max(4, Math.min(box.top, height - 34 - h));
+    return { left, right: left + w, top, bottom: top + h };
+  };
   for (const index of order) {
     const pin = frame.pins[index], w = Math.min(labelWidth(places[index].label, index === selected), width - 24), gap = index === selected ? 11 : 9;
     const right = { left: pin.x + gap, right: pin.x + gap + w, top: pin.y - 11, bottom: pin.y + 11 };
@@ -343,23 +426,29 @@ export function HarsoOutputMapView({ map, host }: { map: HarsoOutputMap; host: H
     const above = { left: pin.x - w / 2, right: pin.x + w / 2, top: pin.y - gap - 22, bottom: pin.y - gap };
     const below = { left: pin.x - w / 2, right: pin.x + w / 2, top: pin.y + gap, bottom: pin.y + gap + 22 };
     const sides = pin.x > width * .7 ? [left, right, above, below] : [right, left, above, below];
-    // The pick is always named: when no side is clear of other pins it may cover them (it is drawn on top).
-    const found = sides.find(box => clear(box, index)) ?? (index === selected ? sides.find(inside) : undefined);
+    // The pick is always named: clear of other pins if it can be, else over them (it is drawn on top), else slid into
+    // the plane, keeping off its own pin where any slid position allows.
+    const found = sides.find(box => clear(box, index)) ?? (index === selected
+      ? sides.find(inside) ?? sides.map(clamp).find(box => !overlaps(box, pinBoxes[index])) ?? clamp(above) : undefined);
     if (found) boxes.push({ index, ...found });
   }
   const pinOrder = [...indexes].sort((a, b) => (a === selected ? 1 : 0) - (b === selected ? 1 : 0));
-  return <figure className="hkc-output-map" aria-label="Map">
-    <div ref={node} className="hkc-output-map-plane" style={{ height }} aria-hidden="true">
-      {tiles.map(tile => <img key={tile.key} className="hkc-output-map-tile" src={tile.src} alt="" draggable={false}
-        style={{ left: tile.x, top: tile.y }} onError={event => { event.currentTarget.style.visibility = "hidden"; }} />)}
+  return <figure ref={node} className="hkc-output-map" aria-label="Map" data-state={phase} aria-busy={phase === "loading" || undefined}>
+    <div className="hkc-output-map-frame">
+    <div className="hkc-output-map-plane" style={{ height }} aria-hidden="true">
+      {tiles.map(tile => <img key={`${loads.key(tile.src)} @${tile.key}`} data-load={tile.src} className="hkc-output-map-tile" src={tile.src} alt="" draggable={false}
+        data-state={loads.phase(tile.src)} style={{ left: tile.x, top: tile.y }}
+        onLoad={() => loads.settle(tile.src, "ready")} onError={() => loads.settle(tile.src, "failed")} />)}
       {pinOrder.map(index => <span key={index} className="hkc-output-map-pin" data-selected={index === selected || undefined}
         style={{ left: frame.pins[index].x, top: frame.pins[index].y }} />)}
       {boxes.map(box => <span key={box.index} className="hkc-output-map-label" data-selected={box.index === selected || undefined}
         style={{ left: box.left, top: box.top, width: box.right - box.left }}>{places[box.index].label}</span>)}
     </div>
     <small className="hkc-output-map-attribution">© OpenStreetMap contributors</small>
+    </div>
+    {phase === "partial" && <p className="hkc-output-block-note"><Info size={14} weight="bold" aria-hidden="true" />Part of the map didn’t load</p>}
     <ul className="hk-sr-only" aria-label="Places">
-      {places.map((place, index) => <li key={index}>{place.label}{index === selected ? " (selected)" : ""}</li>)}
+      {places.map((place, index) => <li key={index}>{named(place, index)}</li>)}
     </ul>
   </figure>;
 }

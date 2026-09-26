@@ -391,16 +391,29 @@ const hostileMedia: HarsoOutputDocument = {
   header: { title: "长长长长长长长长长长长长长长长长长长长长", subtitle: "مرحبا بالعالم · 🙂" },
   blocks: [
     { kind: "status", state: "watching", detail: hostileWord.slice(0, 80) },
-    { kind: "rows", items: [{ label: "长长长长长长长长长长长长长长长长长长长长长长长长", trailing: "星期五 18:00" }, { label: "مرحبا بالعالم", trailing: "🙂🙂🙂" }] },
+    // Schema maxima: label line48, trailing line24 (Latin with no break, CJK, RTL).
+    { kind: "rows", items: [{ label: "长长长长长长长长长长长长长长长长长长长长长长长长", trailing: "星期五 18:00" }, { label: "مرحبا بالعالم", trailing: "🙂🙂🙂" },
+      { label: "W".repeat(48), trailing: "W".repeat(24) }, { label: "Stops after", trailing: "星".repeat(24) }, { label: "Ends", trailing: "مرحبا بالعالم مرحبا بال" }] },
     { kind: "numbers", items: [{ value: "S$987,654,321", label: `${hostileWord.slice(0, 40)} of S$1,000,000,000` }, { value: "S$12,345,679", label: "Left" }] },
     { kind: "visual", visual: { kind: "map", selected_place_id: "a", places: [{ id: "a", label: hostileWord.slice(0, 40), lat: "1.3000", lon: "103.8000" }, { id: "b", label: "长长长长长长长长长长长长", lat: "1.3010", lon: "103.8012" }, { id: "c", label: "مرحبا بالعالم 🙂", lat: "1.2990", lon: "103.7990" }] } }
   ],
   fallback_text: "Hostile media probe."
 };
+// Synthetic maps at the edges of the world: two continents, the dateline, a pick with a 40-character label beside
+// another pin, and two places no single still map can hold at a narrow pane.
+const mapOf = (title: string, places: { id: string; label: string; lat: string; lon: string }[], selected = places[0].id): HarsoOutputDocument =>
+  ({ header: { title }, blocks: [{ kind: "visual", visual: { kind: "map", places, selected_place_id: selected } }], fallback_text: title });
+const worldMaps: Record<string, HarsoOutputDocument> = {
+  world: mapOf("New York and Singapore", [{ id: "ny", label: "New York", lat: "40.7128", lon: "-74.0060" }, { id: "sg", label: "Singapore", lat: "1.3521", lon: "103.8198" }]),
+  continents: mapOf("London, Sydney, Los Angeles", [{ id: "lon", label: "London", lat: "51.5072", lon: "-0.1276" }, { id: "syd", label: "Sydney", lat: "-33.8688", lon: "151.2093" }, { id: "la", label: "Los Angeles", lat: "34.0522", lon: "-118.2437" }], "syd"),
+  dateline: mapOf("Either side of the dateline", [{ id: "east", label: "Taveuni", lat: "-16.8", lon: "179.9" }, { id: "west", label: "Vanua Balavu", lat: "-17.2", lon: "-179.9" }, { id: "apia", label: "Apia", lat: "-13.83", lon: "-171.76" }]),
+  longpick: mapOf("A long name beside a neighbour", [{ id: "a", label: "W".repeat(40), lat: "1.3000", lon: "103.8000" }, { id: "b", label: "Other", lat: "1.3000", lon: "103.8200" }]),
+  poles: mapOf("Svalbard and the Ross Sea", [{ id: "n", label: "Longyearbyen", lat: "78.2232", lon: "15.6267" }, { id: "s", label: "McMurdo", lat: "-77.8419", lon: "166.6863" }])
+};
 // Synthetic: a block kind the card does not draw, so the whole card falls back to its text.
 const unknown: HarsoOutputDocument = { ...failed, blocks: [{ kind: "hologram", payload: { raw: true } }] };
 const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide,
-  status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
+  ...worldMaps, status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
 
 /* Fixture media host: artifacts are local drawings, map tiles a drawn street grid per tile (deterministic, offline:
    the browser suite never calls openstreetmap.org). `?imgfail=1` serves a missing image; `?imgslow=1` never resolves. */
@@ -418,10 +431,13 @@ const tile = (z: number, x: number, y: number) => {
     + `<path d="M0 96H256M0 208H256M72 0V256M184 0V256" stroke="#ffffff" stroke-width="6"/>`
     + `<path d="M0 150H256" stroke="#d3dde3" stroke-width="10"/>`, 256, 256);
 };
+// `?net=1` serves artifacts and tiles over HTTP paths the browser suite routes (fulfils, aborts or holds), so real
+// transport failure and recovery are exercised, not a host-injected state. `?generation=` changes every tile URL.
 const mediaHost = (onOpen: (artifact: string) => void): HarsoOutputMediaHost => ({
-  resolveArtifact: artifact => query.has("imgfail") ? "/preview/missing-image.png" : query.has("imgslow") ? "/__never__/slow.png" : ART[artifact.slice(9)],
+  resolveArtifact: artifact => query.has("imgfail") ? "/preview/missing-image.png" : query.has("imgslow") ? "/__never__/slow.png"
+    : query.has("net") ? `/__media__/${artifact.slice(9)}` : ART[artifact.slice(9)],
   onOpenArtifact: onOpen,
-  mapTile: tile
+  mapTile: query.has("net") ? (z, x, y) => `/__tiles__/${query.get("generation") ?? 0}/${z}/${x}/${y}.svg` : tile
 });
 // Per-block state for B0 state crops: ?state=partial etc. The B0 master copy for each kind (data.js).
 const STATE_COPY: Record<string, Record<string, Omit<HarsoOutputBlockState, "state">>> = {
@@ -442,6 +458,8 @@ const PARTIAL: Record<string, HarsoOutputDocument> = {
 };
 
 const query = new URLSearchParams(location.search);
+// Image aspect override for the geometry test: ?aspect=3:4 etc.
+if (query.has("aspect")) (b0Image.blocks[0] as { visual: { aspect?: string } }).visual.aspect = query.get("aspect")!;
 
 function Fixture() {
   const [appearance] = useState<"light" | "dark">(query.get("mode") === "dark" ? "dark" : "light");
