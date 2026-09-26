@@ -6656,7 +6656,7 @@
         "major": 1,
         "header": {
           "title": "Shop · August",
-          "subtitle": "Shopify · all channels"
+          "subtitle": "Average sales a day, by week · all channels"
         },
         "blocks": [
           {
@@ -6677,7 +6677,7 @@
             "visual": {
               "kind": "chart",
               "chart": "bar",
-              "unit": "S$ a day",
+              "unit": "S$",
               "x_labels": [
                 "1–7 Aug",
                 "8–14 Aug",
@@ -6714,7 +6714,7 @@
           "major": 1,
           "header": {
             "title": "Shop · August",
-            "subtitle": "Shopify · reading orders"
+            "subtitle": "Average sales a day · reading orders"
           },
           "blocks": [
             {
@@ -6733,7 +6733,7 @@
           "major": 1,
           "header": {
             "title": "Shop · August",
-            "subtitle": "3 of 4 weeks reported · Shopify"
+            "subtitle": "Average sales a day · 3 of 4 weeks reported"
           },
           "blocks": [
             {
@@ -6754,7 +6754,7 @@
               "visual": {
                 "kind": "chart",
                 "chart": "bar",
-                "unit": "S$ a day",
+                "unit": "S$",
                 "x_labels": [
                   "1–7 Aug",
                   "8–14 Aug",
@@ -6793,7 +6793,7 @@
           "major": 1,
           "header": {
             "title": "No orders in August",
-            "subtitle": "Shopify · all channels"
+            "subtitle": "All channels"
           },
           "blocks": [
             {
@@ -7817,7 +7817,7 @@
         "major": 1,
         "header": {
           "title": "Online store · August",
-          "subtitle": "Average a day by week · online store only"
+          "subtitle": "Average sales a day, by week · online store only"
         },
         "blocks": [
           {
@@ -7838,7 +7838,7 @@
             "visual": {
               "kind": "chart",
               "chart": "bar",
-              "unit": "S$ a day",
+              "unit": "S$",
               "x_labels": [
                 "1–7 Aug",
                 "8–14 Aug",
