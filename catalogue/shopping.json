@@ -44,18 +44,18 @@
             "items": [
               {
                 "label": "Dyson V8 Origin",
-                "secondary": "72 dB · 40 min · rated 4.6",
+                "secondary": "72 dB · 40 min · rated 4.6/5",
                 "trailing": "S$379",
                 "mark": "pick"
               },
               {
                 "label": "Xiaomi G11",
-                "secondary": "74 dB · 60 min · rated 4.4",
+                "secondary": "74 dB · 60 min · rated 4.4/5",
                 "trailing": "S$299"
               },
               {
                 "label": "Samsung Jet 60",
-                "secondary": "76 dB · 40 min · rated 4.5",
+                "secondary": "76 dB · 40 min · rated 4.5/5",
                 "trailing": "S$349"
               }
             ]
@@ -74,7 +74,7 @@
             }
           ]
         },
-        "fallback_text": "Quiet stick vacuums under S$400: Dyson V8 Origin S$379, 72 dB, 40 min, rated 4.6 (pick); Xiaomi G11 S$299, 74 dB, 60 min, rated 4.4; Samsung Jet 60 S$349, 76 dB, 40 min, rated 4.5."
+        "fallback_text": "Quiet stick vacuums under S$400: Dyson V8 Origin S$379, 72 dB, 40 min, rated 4.6/5 (pick); Xiaomi G11 S$299, 74 dB, 60 min, rated 4.4/5; Samsung Jet 60 S$349, 76 dB, 40 min, rated 4.5/5."
       },
       "states": {
         "loading": {
@@ -109,13 +109,13 @@
               "items": [
                 {
                   "label": "Dyson V8 Origin",
-                  "secondary": "72 dB · 40 min · rated 4.6",
+                  "secondary": "72 dB · 40 min · rated 4.6/5",
                   "trailing": "S$379",
                   "mark": "pick"
                 },
                 {
                   "label": "Xiaomi G11",
-                  "secondary": "74 dB · 60 min · rated 4.4",
+                  "secondary": "74 dB · 60 min · rated 4.4/5",
                   "trailing": "S$299"
                 }
               ]
@@ -143,18 +143,18 @@
               "items": [
                 {
                   "label": "Dyson V8 Origin",
-                  "secondary": "72 dB · 40 min · rated 4.6",
+                  "secondary": "72 dB · 40 min · rated 4.6/5",
                   "trailing": "S$379",
                   "mark": "pick"
                 },
                 {
                   "label": "Xiaomi G11",
-                  "secondary": "74 dB · 60 min · rated 4.4",
+                  "secondary": "74 dB · 60 min · rated 4.4/5",
                   "trailing": "S$299"
                 },
                 {
                   "label": "Samsung Jet 60",
-                  "secondary": "76 dB · 40 min · rated 4.5",
+                  "secondary": "76 dB · 40 min · rated 4.5/5",
                   "trailing": "S$349"
                 }
               ]
@@ -173,17 +173,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No stick vacuum under 70 dB for S$400",
+            "title": "No quiet stick vacuum in stock under S$400",
             "subtitle": "Courts, Lazada, Shopee · as of 10:05"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The quietest under S$400 is the Dyson V8 at 72 dB"
+              "detail": "Courts restocks the Dyson V8 Origin on Mon 5 Oct"
             }
           ],
-          "fallback_text": "No stick vacuum under 70 dB costs under S$400 at Courts, Lazada or Shopee (10:05). The quietest under S$400 is the Dyson V8 Origin at 72 dB."
+          "fallback_text": "None of the quiet stick vacuums under S$400 is in stock at Courts, Lazada or Shopee (10:05). Courts restocks the Dyson V8 Origin on Mon 5 Oct."
         },
         "failed": {
           "kind": "output_blocks",
@@ -196,10 +196,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "None of the 3 stores answered. Nothing was bought."
+              "detail": "None of the 3 stores answered. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't check vacuum prices: None of the 3 stores answered. Nothing was bought."
+          "fallback_text": "Couldn't check vacuum prices: None of the 3 stores answered. Ask me again in a few minutes."
         }
       }
     },
@@ -222,7 +222,7 @@
         "major": 1,
         "header": {
           "title": "Road running shoes under S$200",
-          "subtitle": "Top 7 of 24 · men's 42 · as of 11:40"
+          "subtitle": "Top 7 of 24 · men's EU 42 · as of 11:40"
         },
         "blocks": [
           {
@@ -230,38 +230,38 @@
             "items": [
               {
                 "label": "ASICS Novablast 5",
-                "secondary": "Cushioned daily trainer · rated 4.7",
+                "secondary": "Cushioned daily trainer · rated 4.7/5",
                 "trailing": "S$189",
                 "mark": "pick"
               },
               {
                 "label": "Nike Pegasus 42",
-                "secondary": "Daily trainer · rated 4.6",
+                "secondary": "Daily trainer · rated 4.6/5",
                 "trailing": "S$179"
               },
               {
                 "label": "Brooks Ghost 17",
-                "secondary": "Soft, stable · rated 4.6",
+                "secondary": "Soft, stable · rated 4.6/5",
                 "trailing": "S$199"
               },
               {
                 "label": "Hoka Clifton 10",
-                "secondary": "Max cushion · rated 4.5",
+                "secondary": "Max cushion · rated 4.5/5",
                 "trailing": "S$199"
               },
               {
                 "label": "New Balance 880 v15",
-                "secondary": "Wide fit · rated 4.5",
+                "secondary": "Wide fit · rated 4.5/5",
                 "trailing": "S$185"
               },
               {
                 "label": "Adidas Adizero SL 2",
-                "secondary": "Light, fast · rated 4.4",
+                "secondary": "Light, fast · rated 4.4/5",
                 "trailing": "S$159"
               },
               {
                 "label": "Puma Velocity Nitro 4",
-                "secondary": "Budget daily · rated 4.4",
+                "secondary": "Budget daily · rated 4.4/5",
                 "trailing": "S$149"
               }
             ]
@@ -285,7 +285,7 @@
             }
           ]
         },
-        "fallback_text": "24 road running shoes under S$200 in men's 42 (11:40). Top 7: ASICS Novablast 5 S$189 (pick), Nike Pegasus 42 S$179, Brooks Ghost 17 S$199, Hoka Clifton 10 S$199, New Balance 880 v15 S$185, Adidas Adizero SL 2 S$159, Puma Velocity Nitro 4 S$149."
+        "fallback_text": "24 road running shoes under S$200 in men's EU 42 (11:40). Top 7: ASICS Novablast 5 S$189 (pick), Nike Pegasus 42 S$179, Brooks Ghost 17 S$199, Hoka Clifton 10 S$199, New Balance 880 v15 S$185, Adidas Adizero SL 2 S$159, Puma Velocity Nitro 4 S$149."
       },
       "states": {
         "loading": {
@@ -293,26 +293,26 @@
           "major": 1,
           "header": {
             "title": "Road running shoes under S$200",
-            "subtitle": "Men's 42"
+            "subtitle": "Men's EU 42"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Checking stock in size 42 at 3 stores",
+              "detail": "Checking stock at 3 stores",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b0d"
               }
             }
           ],
-          "fallback_text": "Checking stock in size 42 at 3 stores."
+          "fallback_text": "Checking stock at 3 stores."
         },
         "partial": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Road running shoes under S$200",
-            "subtitle": "1 of 3 stores checked · men's 42 · as of 11:40"
+            "subtitle": "1 of 3 stores checked · men's EU 42 · as of 11:40"
           },
           "blocks": [
             {
@@ -320,23 +320,23 @@
               "items": [
                 {
                   "label": "ASICS Novablast 5",
-                  "secondary": "Cushioned daily trainer · rated 4.7",
+                  "secondary": "Cushioned daily trainer · rated 4.7/5",
                   "trailing": "S$189",
                   "mark": "pick"
                 },
                 {
                   "label": "Nike Pegasus 42",
-                  "secondary": "Daily trainer · rated 4.6",
+                  "secondary": "Daily trainer · rated 4.6/5",
                   "trailing": "S$179"
                 },
                 {
                   "label": "Brooks Ghost 17",
-                  "secondary": "Soft, stable · rated 4.6",
+                  "secondary": "Soft, stable · rated 4.6/5",
                   "trailing": "S$199"
                 },
                 {
                   "label": "Hoka Clifton 10",
-                  "secondary": "Max cushion · rated 4.5",
+                  "secondary": "Max cushion · rated 4.5/5",
                   "trailing": "S$199"
                 }
               ]
@@ -357,39 +357,39 @@
               }
             ]
           },
-          "fallback_text": "1 of 3 stores checked (11:40): Running Lab has 9 in men's 42 under S$200. Top 4: ASICS Novablast 5 S$189 (pick), Nike Pegasus 42 S$179, Brooks Ghost 17 S$199, Hoka Clifton 10 S$199."
+          "fallback_text": "1 of 3 stores checked (11:40): Running Lab has 9 in men's EU 42 under S$200. Top 4: ASICS Novablast 5 S$189 (pick), Nike Pegasus 42 S$179, Brooks Ghost 17 S$199, Hoka Clifton 10 S$199."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No road shoes in men's 42 under S$200",
+            "title": "No road shoes in EU 42 under S$200",
             "subtitle": "Running Lab, Lazada, Shopee · as of 11:40"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Size 42.5 has 11 under S$200"
+              "detail": "11 models fit in EU 42.5 under S$200"
             }
           ],
-          "fallback_text": "No road running shoes in men's 42 under S$200 at Running Lab, Lazada or Shopee (11:40). Size 42.5 has 11."
+          "fallback_text": "No road running shoes in men's EU 42 under S$200 at Running Lab, Lazada or Shopee (11:40). 11 models fit in EU 42.5."
         },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Couldn't check running shoes",
-            "subtitle": "Men's 42"
+            "subtitle": "Men's EU 42"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "The stores didn't answer. Nothing was bought."
+              "detail": "The stores didn't answer. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't check running shoes: The stores didn't answer. Nothing was bought."
+          "fallback_text": "Couldn't check running shoes: The stores didn't answer. Ask me again in a few minutes."
         }
       }
     },
@@ -419,18 +419,18 @@
             "items": [
               {
                 "label": "Courts",
-                "secondary": "In stock · delivery Tue",
+                "secondary": "In stock · delivery Tue 29 Sep",
                 "trailing": "S$3,999",
                 "mark": "pick"
               },
               {
                 "label": "Harvey Norman",
-                "secondary": "In stock · delivery Thu",
+                "secondary": "In stock · delivery Thu 1 Oct",
                 "trailing": "S$4,099"
               },
               {
                 "label": "Challenger",
-                "secondary": "Pre-order · 10 Oct",
+                "secondary": "Pre-order · Sat 10 Oct",
                 "trailing": "S$4,049"
               }
             ]
@@ -444,6 +444,82 @@
           ]
         },
         "fallback_text": "Sony Bravia 8 II 65\": Courts S$3,999 (pick), Challenger S$4,049, Harvey Norman S$4,099. Best Denki didn't respond."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sony Bravia 8 II 65\"",
+            "subtitle": "Courts, Harvey Norman, Challenger, Best Denki"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 4 stores",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b11"
+              }
+            }
+          ],
+          "fallback_text": "Checking 4 stores."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sony Bravia 8 II 65\"",
+            "subtitle": "As of 09:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Courts",
+                  "secondary": "In stock · delivery Tue 29 Sep",
+                  "trailing": "S$3,999",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Harvey Norman",
+                  "secondary": "In stock · delivery Thu 1 Oct",
+                  "trailing": "S$4,099"
+                },
+                {
+                  "label": "Challenger",
+                  "secondary": "Pre-order · Sat 10 Oct",
+                  "trailing": "S$4,049"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Store websites, 26 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:00 (couldn't refresh): Sony Bravia 8 II 65\": Courts S$3,999 (pick), Challenger S$4,049, Harvey Norman S$4,099."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't compare TV prices",
+            "subtitle": "Sony Bravia 8 II 65\""
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "None of the 4 stores answered. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't compare TV prices: None of the 4 stores answered. Ask me again in a few minutes."
+        }
       }
     },
     {
@@ -676,10 +752,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "The stores didn't answer. Nothing was bought."
+              "detail": "The stores didn't answer. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't check the Dyson V8: The stores didn't answer. Nothing was bought."
+          "fallback_text": "Couldn't check the Dyson V8: The stores didn't answer. Ask me again in a few minutes."
         }
       }
     },
@@ -737,7 +813,7 @@
             "A summary of what buyers wrote, not a test."
           ]
         },
-        "fallback_text": "Sony WH-1000XM6, rated 4.6 from 8,210 reviews. Liked: noise cancelling on buses and planes, 30 hours per charge, clear calls in wind. Some mention: pressure after 4 hours, no longer folds flat, S$549 is high next to the XM5."
+        "fallback_text": "Sony WH-1000XM6, rated 4.6/5 from 8,210 reviews. Liked: noise cancelling on buses and planes, 30 hours per charge, clear calls in wind. Some mention: pressure after 4 hours, no longer folds flat, S$549 is high next to the XM5."
       },
       "states": {
         "loading": {
@@ -1018,7 +1094,7 @@
               }
             ]
           },
-          "fallback_text": "Prices as of 08:40 (couldn't refresh): iPhone 17 S$1,299, Pixel 11 S$1,249. Pixel has 5x optical zoom and better night photos; iPhone films 4K at 120 fps."
+          "fallback_text": "Prices as of 08:40 (couldn't refresh): iPhone 17 (S$1,299) vs Pixel 11 (S$1,249): Pixel has 5x optical zoom (iPhone 2x) and better night photos; iPhone films 4K at 120 fps (Pixel 60 fps)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1742,18 +1818,18 @@
             "items": [
               {
                 "label": "Roborock Q7 Max",
-                "secondary": "Vacuum and mop · rated 4.5",
+                "secondary": "Vacuum and mop · rated 4.5/5",
                 "trailing": "S$399",
                 "mark": "pick"
               },
               {
                 "label": "Eufy 11S",
-                "secondary": "Vacuum only · rated 4.3",
+                "secondary": "Vacuum only · rated 4.3/5",
                 "trailing": "S$229"
               },
               {
                 "label": "Dreame L10s",
-                "secondary": "Self-emptying · rated 4.6",
+                "secondary": "Self-emptying · rated 4.6/5",
                 "trailing": "S$799"
               }
             ]
@@ -1766,7 +1842,7 @@
             }
           ]
         },
-        "fallback_text": "Robot vacuums for a small flat: Roborock Q7 Max S$399 (pick, vacuums and mops, rated 4.5); Eufy 11S S$229 (vacuum only, rated 4.3); Dreame L10s S$799 (self-emptying, rated 4.6)."
+        "fallback_text": "Robot vacuums for a small flat: Roborock Q7 Max S$399 (pick, vacuums and mops, rated 4.5/5); Eufy 11S S$229 (vacuum only, rated 4.3/5); Dreame L10s S$799 (self-emptying, rated 4.6/5)."
       },
       "states": {
         "loading": {
@@ -1801,18 +1877,18 @@
               "items": [
                 {
                   "label": "Roborock Q7 Max",
-                  "secondary": "Vacuum and mop · rated 4.5",
+                  "secondary": "Vacuum and mop · rated 4.5/5",
                   "trailing": "S$399",
                   "mark": "pick"
                 },
                 {
                   "label": "Eufy 11S",
-                  "secondary": "Vacuum only · rated 4.3",
+                  "secondary": "Vacuum only · rated 4.3/5",
                   "trailing": "S$229"
                 },
                 {
                   "label": "Dreame L10s",
-                  "secondary": "Self-emptying · rated 4.6",
+                  "secondary": "Self-emptying · rated 4.6/5",
                   "trailing": "S$799"
                 }
               ]
@@ -2206,10 +2282,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Your email didn't answer. Nothing was ordered or paid."
+              "detail": "Couldn't reach your email. Nothing was ordered or paid."
             }
           ],
-          "fallback_text": "Couldn't check your Courts order: Your email didn't answer. Nothing was ordered or paid."
+          "fallback_text": "Couldn't check your Courts order: Couldn't reach your email. Nothing was ordered or paid."
         }
       }
     },
@@ -2446,7 +2522,7 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Out for delivery",
+            "title": "Arriving today",
             "subtitle": "IKEA · as of 08:00 · couldn't refresh"
           },
           "blocks": [
@@ -2479,7 +2555,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:00 (couldn't refresh): IKEA order SG4471902 was out for delivery from 07:55."
+          "fallback_text": "As of 08:00 (couldn't refresh): IKEA order SG4471902 was out for delivery from 07:55, due today. Ordered Sun 20 Sep."
         },
         "failed": {
           "kind": "output_blocks",
