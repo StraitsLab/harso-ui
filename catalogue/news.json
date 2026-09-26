@@ -3,7 +3,9 @@
   "fresh": [
     "news-brief",
     "news-timeline",
-    "news-headlines"
+    "news-headlines",
+    "news-sources",
+    "news-brief-haze"
   ],
   "examples": [
     {
@@ -17,7 +19,7 @@
       "components": [
         "Story cluster (brief)"
       ],
-      "rationale": "What happened and what is still unknown are two short sections; every outlet is behind Details, linked.",
+      "rationale": "What happened and what is still unknown are two short sections; every outlet is named in Details.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -48,20 +50,336 @@
         "details": {
           "sources": [
             {
-              "label": "LTA statement",
-              "url": "https://www.lta.gov.sg/content/ltagov/en/newsroom.html"
+              "label": "LTA statement, 26 Sep 2026"
             },
             {
-              "label": "The Straits Times",
-              "url": "https://www.straitstimes.com/singapore/transport"
+              "label": "The Straits Times, 26 Sep 2026"
             },
             {
-              "label": "CNA",
-              "url": "https://www.channelnewsasia.com/singapore"
+              "label": "CNA, 26 Sep 2026"
             }
           ]
         },
-        "fallback_text": "East–West line: a power fault stopped trains between Jurong East and Buona Vista from 06:50; service resumed at 09:15. Cause under investigation."
+        "fallback_text": "East–West line, as of 09:40 (3 sources): a power fault stopped trains between Jurong East and Buona Vista from 06:50; free bridging buses ran until service resumed at 09:15. The cause is still unclear; LTA expects a report within a week."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "East–West line disruption",
+            "subtitle": "Reading 3 sources"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading LTA, The Straits Times and CNA",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0030"
+              }
+            }
+          ],
+          "fallback_text": "Reading what LTA, The Straits Times and CNA say about the East–West line."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "East–West line disruption",
+            "subtitle": "2 of 3 sources read · as of 09:40"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "What happened",
+                  "bullets": [
+                    "A power fault stopped trains between Jurong East and Buona Vista from 06:50."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LTA statement, 26 Sep 2026"
+              },
+              {
+                "label": "The Straits Times, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "East–West line (2 of 3 sources read, as of 09:40): a power fault stopped trains between Jurong East and Buona Vista from 06:50."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "East–West line disruption",
+            "subtitle": "As of 08:10 · couldn’t refresh · 3 sources"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "What happened",
+                  "bullets": [
+                    "A power fault stopped trains between Jurong East and Buona Vista from 06:50.",
+                    "Free bridging buses are running."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LTA statement, 26 Sep 2026"
+              },
+              {
+                "label": "The Straits Times, 26 Sep 2026"
+              },
+              {
+                "label": "CNA, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "East–West line, as of 08:10 (couldn’t refresh; 3 sources): a power fault stopped trains between Jurong East and Buona Vista from 06:50; free bridging buses are running."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No MRT breakdown reported",
+            "subtitle": "LTA, Straits Times, CNA · as of 09:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "None of the 3 sources reports an MRT breakdown today"
+            }
+          ],
+          "fallback_text": "None of LTA, The Straits Times or CNA reports an MRT breakdown today, as of 09:40."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the news",
+            "subtitle": "East–West line"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The news sites didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read the news on the East–West line: the news sites didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "news-brief-haze",
+      "vertical": "news",
+      "kind": "card",
+      "request": "Catch me up on the haze.",
+      "says": "It's unhealthy this morning, so keep the run indoors.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Story cluster (brief)"
+      ],
+      "rationale": "What happened, what to do and what is unknown as three short sections; the PSI is a figure, not a paragraph.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Haze over Singapore",
+          "subtitle": "PSI and outlook · as of 08:00 · 3 sources"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "What happened",
+                "bullets": [
+                  "The 24-hour PSI reached 112 overnight, in the unhealthy range.",
+                  "Hotspots in Sumatra rose after two dry weeks; winds carry the smoke east."
+                ]
+              },
+              {
+                "heading": "What to do",
+                "bullets": [
+                  "Cut long outdoor exercise until the PSI is under 100.",
+                  "An N95 mask helps if you are outdoors for hours."
+                ]
+              },
+              {
+                "heading": "Still unclear",
+                "bullets": [
+                  "Whether the winds shift before the weekend; NEA updates at 12:00."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "NEA haze update",
+              "url": "https://www.haze.gov.sg/"
+            },
+            {
+              "label": "The Straits Times, 26 Sep 2026"
+            },
+            {
+              "label": "ASEAN Specialised Meteorological Centre hotspot update, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Haze, as of 08:00 (3 sources): the 24-hour PSI reached 112 overnight (unhealthy) as Sumatra hotspots rose after two dry weeks, with winds carrying the smoke east. Cut long outdoor exercise until it is under 100; an N95 helps for long stretches outdoors. Whether winds shift before the weekend is unclear; NEA updates at 12:00."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Haze over Singapore",
+            "subtitle": "Reading 3 sources"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading NEA, The Straits Times and ASMC",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0034"
+              }
+            }
+          ],
+          "fallback_text": "Reading the latest on the haze."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Haze over Singapore",
+            "subtitle": "PSI and outlook · 2 of 3 sources read · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "What happened",
+                  "bullets": [
+                    "The 24-hour PSI reached 112 overnight, in the unhealthy range."
+                  ]
+                },
+                {
+                  "heading": "What to do",
+                  "bullets": [
+                    "Cut long outdoor exercise until the PSI is under 100.",
+                    "An N95 mask helps if you are outdoors for hours."
+                  ]
+                },
+                {
+                  "heading": "Still unclear",
+                  "bullets": [
+                    "Whether the winds shift before the weekend; NEA updates at 12:00."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NEA haze update",
+                "url": "https://www.haze.gov.sg/"
+              },
+              {
+                "label": "The Straits Times, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Haze, as of 08:00 (2 of 3 sources read; ASMC’s hotspot update didn’t load): the 24-hour PSI reached 112 overnight (unhealthy). Cut long outdoor exercise until it is under 100; an N95 helps for long stretches outdoors. Whether winds shift before the weekend is unclear; NEA updates at 12:00."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Haze over Singapore",
+            "subtitle": "As of 05:00 · couldn’t refresh · 3 sources"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "What happened",
+                  "bullets": [
+                    "The 24-hour PSI reached 104 overnight, in the unhealthy range."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NEA haze update",
+                "url": "https://www.haze.gov.sg/"
+              },
+              {
+                "label": "The Straits Times, 26 Sep 2026"
+              },
+              {
+                "label": "ASEAN Specialised Meteorological Centre hotspot update, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Haze, as of 05:00 (couldn’t refresh; 3 sources): the 24-hour PSI reached 104 overnight, in the unhealthy range."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No haze reported",
+            "subtitle": "Singapore · NEA · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "NEA reports no haze over Singapore this morning"
+            }
+          ],
+          "fallback_text": "NEA reports no haze over Singapore this morning, as of 08:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the haze update",
+            "subtitle": "Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "NEA and the news sites didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read the haze update: NEA and the news sites didn’t respond."
+        }
       }
     },
     {
@@ -69,13 +387,13 @@
       "vertical": "news",
       "kind": "card",
       "request": "How has the Grab–GoTo merger story developed?",
-      "says": "It went from rumour to signed deal in six weeks.",
+      "says": "The most recent turn here is January’s snag over Telkomsel’s stake.",
       "surface": "inline",
       "fresh": true,
       "components": [
         "Story timeline"
       ],
-      "rationale": "Newest first, date trailing, outlet secondary; three events are enough to understand the arc.",
+      "rationale": "Newest first, date trailing, outlet secondary; each row’s article is in Details in row order.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -88,19 +406,19 @@
             "kind": "rows",
             "items": [
               {
-                "label": "Deal signed, pending approval",
-                "secondary": "Reuters",
-                "trailing": "24 Sep"
+                "label": "Deal hits snag over Telkomsel stake",
+                "secondary": "The Straits Times",
+                "trailing": "23 Jan 2026"
               },
               {
-                "label": "Boards agree terms",
-                "secondary": "Bloomberg",
-                "trailing": "2 Sep"
+                "label": "Jakarta backs the merger",
+                "secondary": "The Business Times",
+                "trailing": "12 Nov 2025"
               },
               {
-                "label": "Talks reported",
-                "secondary": "The Information",
-                "trailing": "14 Aug"
+                "label": "Jakarta confirms merger talks",
+                "secondary": "The Business Times",
+                "trailing": "7 Nov 2025"
               }
             ]
           }
@@ -108,16 +426,158 @@
         "details": {
           "sources": [
             {
-              "label": "Reuters",
-              "url": "https://www.reuters.com/"
+              "label": "The Straits Times, 23 Jan 2026",
+              "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
             },
             {
-              "label": "Bloomberg",
-              "url": "https://www.bloomberg.com/"
+              "label": "The Business Times, 12 Nov 2025",
+              "url": "https://www.businesstimes.com.sg/international/asean/indonesia-government-backs-planned-merger-grab-and-goto-sources"
+            },
+            {
+              "label": "The Business Times, 7 Nov 2025",
+              "url": "https://www.businesstimes.com.sg/companies-markets/indonesia-discussing-plan-merger-grab-and-goto-official"
             }
           ]
         },
-        "fallback_text": "Grab–GoTo: talks reported 14 Aug, boards agreed terms 2 Sep, deal signed pending approval 24 Sep."
+        "fallback_text": "Grab–GoTo, 3 key moments as of 08:00: Indonesia confirmed merger talks 7 Nov 2025 (The Business Times); the government backed the merger 12 Nov 2025 (The Business Times); the deal hit a snag over Telkomsel’s stake 23 Jan 2026 (The Straits Times)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab–GoTo merger",
+            "subtitle": "Tracing the story"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 3 articles",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0033"
+              }
+            }
+          ],
+          "fallback_text": "Tracing the Grab–GoTo story."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab–GoTo merger",
+            "subtitle": "2 of 3 articles read · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Jakarta backs the merger",
+                  "secondary": "The Business Times",
+                  "trailing": "12 Nov 2025"
+                },
+                {
+                  "label": "Jakarta confirms merger talks",
+                  "secondary": "The Business Times",
+                  "trailing": "7 Nov 2025"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "The Business Times, 12 Nov 2025",
+                "url": "https://www.businesstimes.com.sg/international/asean/indonesia-government-backs-planned-merger-grab-and-goto-sources"
+              },
+              {
+                "label": "The Business Times, 7 Nov 2025",
+                "url": "https://www.businesstimes.com.sg/companies-markets/indonesia-discussing-plan-merger-grab-and-goto-official"
+              }
+            ]
+          },
+          "fallback_text": "Grab–GoTo, as of 08:00 (2 of 3 articles read; The Straits Times article didn’t load): Indonesia confirmed merger talks 7 Nov 2025; the government backed the merger 12 Nov 2025 (both The Business Times)."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab–GoTo merger",
+            "subtitle": "As of 25 Sep, 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Deal hits snag over Telkomsel stake",
+                  "secondary": "The Straits Times",
+                  "trailing": "23 Jan 2026"
+                },
+                {
+                  "label": "Jakarta backs the merger",
+                  "secondary": "The Business Times",
+                  "trailing": "12 Nov 2025"
+                },
+                {
+                  "label": "Jakarta confirms merger talks",
+                  "secondary": "The Business Times",
+                  "trailing": "7 Nov 2025"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "The Straits Times, 23 Jan 2026",
+                "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
+              },
+              {
+                "label": "The Business Times, 12 Nov 2025",
+                "url": "https://www.businesstimes.com.sg/international/asean/indonesia-government-backs-planned-merger-grab-and-goto-sources"
+              },
+              {
+                "label": "The Business Times, 7 Nov 2025",
+                "url": "https://www.businesstimes.com.sg/companies-markets/indonesia-discussing-plan-merger-grab-and-goto-official"
+              }
+            ]
+          },
+          "fallback_text": "Grab–GoTo, as of 25 Sep 08:00, couldn’t refresh: Indonesia confirmed merger talks 7 Nov 2025 (The Business Times); the government backed the merger 12 Nov 2025 (The Business Times); the deal hit a snag over Telkomsel’s stake 23 Jan 2026 (The Straits Times)."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No coverage in 2 outlets",
+            "subtitle": "Grab–GoTo merger · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Neither The Straits Times nor The Business Times has covered it"
+            }
+          ],
+          "fallback_text": "Neither of the 2 outlets checked (The Straits Times, The Business Times) has covered a Grab–GoTo merger, as of 08:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t trace the story",
+            "subtitle": "Grab–GoTo merger"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The news sites didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t trace the Grab–GoTo story: the news sites didn’t respond."
+        }
       }
     },
     {
@@ -132,7 +592,7 @@
         "Story cluster (brief)",
         "Source list"
       ],
-      "rationale": "Three headlines as rows with the outlet secondary; no summaries of summaries; sources linked in Details.",
+      "rationale": "Three headlines as rows with the outlet secondary; no summaries of summaries; each front page read is named in Details.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -162,20 +622,327 @@
         "details": {
           "sources": [
             {
-              "label": "Business Times",
-              "url": "https://www.businesstimes.com.sg/"
+              "label": "Business Times front page, 26 Sep 2026 08:00"
             },
             {
-              "label": "CNA",
-              "url": "https://www.channelnewsasia.com/"
+              "label": "CNA front page, 26 Sep 2026 08:00"
             },
             {
-              "label": "Reuters",
-              "url": "https://www.reuters.com/"
+              "label": "Reuters front page, 26 Sep 2026 08:00"
             }
           ]
         },
-        "fallback_text": "This morning: MAS holds SGD policy; East–West line fault delayed commuters; Fed signals one more cut this year."
+        "fallback_text": "This morning in Singapore (as of 08:00): MAS keeps the Singapore dollar policy unchanged (Business Times); East–West line fault delays the morning commute (CNA); Fed signals one more rate cut this year (Reuters)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "This morning",
+            "subtitle": "Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 3 front pages",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0031"
+              }
+            }
+          ],
+          "fallback_text": "Reading this morning’s front pages."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "This morning",
+            "subtitle": "Singapore · 2 of 3 front pages read · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "MAS keeps the Singapore dollar policy unchanged",
+                  "secondary": "Business Times"
+                },
+                {
+                  "label": "East–West line fault delays morning commute",
+                  "secondary": "CNA"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Business Times front page, 26 Sep 2026 08:00"
+              },
+              {
+                "label": "CNA front page, 26 Sep 2026 08:00"
+              }
+            ]
+          },
+          "fallback_text": "This morning in Singapore (as of 08:00; 2 of 3 front pages read, Reuters didn’t load): MAS keeps the Singapore dollar policy unchanged (Business Times); East–West line fault delays the morning commute (CNA)."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "This morning",
+            "subtitle": "Singapore · as of 07:15 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "MAS keeps the Singapore dollar policy unchanged",
+                  "secondary": "Business Times"
+                },
+                {
+                  "label": "East–West line fault delays morning commute",
+                  "secondary": "CNA"
+                },
+                {
+                  "label": "Fed signals one more rate cut this year",
+                  "secondary": "Reuters"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Business Times front page, 26 Sep 2026 07:15"
+              },
+              {
+                "label": "CNA front page, 26 Sep 2026 07:15"
+              },
+              {
+                "label": "Reuters front page, 26 Sep 2026 07:15"
+              }
+            ]
+          },
+          "fallback_text": "This morning in Singapore (as of 07:15, couldn’t refresh): MAS keeps the Singapore dollar policy unchanged (Business Times); East–West line fault delays the morning commute (CNA); Fed signals one more rate cut this year (Reuters)."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the news",
+            "subtitle": "Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The news sites didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read this morning’s news: the news sites didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "news-sources",
+      "vertical": "news",
+      "kind": "card",
+      "request": "Who's reporting on the Grab–GoTo deal?",
+      "says": "Two Singapore papers had it the same day; the Indonesian follow-up came three days later.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Source list"
+      ],
+      "rationale": "When the outlets are the answer: outlet, headline, date; each article is in Details in row order because a row cannot open one.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Grab–GoTo deal · who’s reporting",
+          "subtitle": "3 outlets · 2026 · as of 08:00"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "The Straits Times",
+                "secondary": "Grab takeover deal for Gojek parent GoTo hits snag",
+                "trailing": "23 Jan"
+              },
+              {
+                "label": "The Business Times",
+                "secondary": "Grab-GoTo deal hits snag caused by state-backed holder’s stake",
+                "trailing": "23 Jan"
+              },
+              {
+                "label": "Fintech News Indonesia",
+                "secondary": "Grab-GoTo deal stalls over Telkomsel stake",
+                "trailing": "26 Jan"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "The Straits Times, 23 Jan 2026",
+              "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
+            },
+            {
+              "label": "The Business Times, 23 Jan 2026",
+              "url": "https://www.businesstimes.com.sg/international/asean/grab-goto-deal-hits-snag-caused-state-backed-holders-stake"
+            },
+            {
+              "label": "Fintech News Indonesia, 26 Jan 2026",
+              "url": "https://fintechnews.id/109256/fintech/grab-goto-deal-telkomsel-stake/"
+            }
+          ]
+        },
+        "fallback_text": "3 outlets reporting the Grab–GoTo snag in 2026 (as of 08:00): The Straits Times, 23 Jan, Grab takeover deal for Gojek parent GoTo hits snag; The Business Times, 23 Jan, Grab-GoTo deal hits snag caused by state-backed holder’s stake; Fintech News Indonesia, 26 Jan, Grab-GoTo deal stalls over Telkomsel stake."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab–GoTo deal · who’s reporting",
+            "subtitle": "Searching news"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Searching 40 outlets",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0032"
+              }
+            }
+          ],
+          "fallback_text": "Searching 40 news outlets for the Grab–GoTo deal."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab–GoTo deal · who’s reporting",
+            "subtitle": "31 of 40 outlets searched · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Straits Times",
+                  "secondary": "Grab takeover deal for Gojek parent GoTo hits snag",
+                  "trailing": "23 Jan"
+                },
+                {
+                  "label": "The Business Times",
+                  "secondary": "Grab-GoTo deal hits snag caused by state-backed holder’s stake",
+                  "trailing": "23 Jan"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "The Straits Times, 23 Jan 2026",
+                "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
+              },
+              {
+                "label": "The Business Times, 23 Jan 2026",
+                "url": "https://www.businesstimes.com.sg/international/asean/grab-goto-deal-hits-snag-caused-state-backed-holders-stake"
+              }
+            ]
+          },
+          "fallback_text": "Reporting the Grab–GoTo snag (as of 08:00; 31 of 40 outlets searched): The Straits Times, 23 Jan, Grab takeover deal for Gojek parent GoTo hits snag; The Business Times, 23 Jan, Grab-GoTo deal hits snag caused by state-backed holder’s stake."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab–GoTo deal · who’s reporting",
+            "subtitle": "As of 25 Sep, 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Straits Times",
+                  "secondary": "Grab takeover deal for Gojek parent GoTo hits snag",
+                  "trailing": "23 Jan"
+                },
+                {
+                  "label": "The Business Times",
+                  "secondary": "Grab-GoTo deal hits snag caused by state-backed holder’s stake",
+                  "trailing": "23 Jan"
+                },
+                {
+                  "label": "Fintech News Indonesia",
+                  "secondary": "Grab-GoTo deal stalls over Telkomsel stake",
+                  "trailing": "26 Jan"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "The Straits Times, 23 Jan 2026",
+                "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
+              },
+              {
+                "label": "The Business Times, 23 Jan 2026",
+                "url": "https://www.businesstimes.com.sg/international/asean/grab-goto-deal-hits-snag-caused-state-backed-holders-stake"
+              },
+              {
+                "label": "Fintech News Indonesia, 26 Jan 2026",
+                "url": "https://fintechnews.id/109256/fintech/grab-goto-deal-telkomsel-stake/"
+              }
+            ]
+          },
+          "fallback_text": "Reporting the Grab–GoTo snag (as of 25 Sep 08:00, couldn’t refresh): The Straits Times, 23 Jan, Grab takeover deal for Gojek parent GoTo hits snag; The Business Times, 23 Jan, Grab-GoTo deal hits snag caused by state-backed holder’s stake; Fintech News Indonesia, 26 Jan, Grab-GoTo deal stalls over Telkomsel stake."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No coverage in 40 outlets",
+            "subtitle": "Grab–GoTo deal · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "None of the 40 outlets searched has covered it"
+            }
+          ],
+          "fallback_text": "None of the 40 news outlets searched has reported on the Grab–GoTo deal, as of 08:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t search the news",
+            "subtitle": "Grab–GoTo deal"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The news search didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t search the news for the Grab–GoTo deal: the search didn’t respond."
+        }
       }
     }
   ]
