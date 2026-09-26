@@ -50,13 +50,16 @@
         "details": {
           "sources": [
             {
-              "label": "LTA statement, 26 Sep 2026"
+              "label": "LTA statement, 26 Sep 2026",
+              "url": "https://www.lta.gov.sg/content/ltagov/en/newsroom.html"
             },
             {
-              "label": "The Straits Times, 26 Sep 2026"
+              "label": "The Straits Times, 26 Sep 2026",
+              "url": "https://www.straitstimes.com/singapore/transport"
             },
             {
-              "label": "CNA, 26 Sep 2026"
+              "label": "CNA, 26 Sep 2026",
+              "url": "https://www.channelnewsasia.com/"
             }
           ]
         },
@@ -105,10 +108,12 @@
           "details": {
             "sources": [
               {
-                "label": "LTA statement, 26 Sep 2026"
+                "label": "LTA statement, 26 Sep 2026",
+                "url": "https://www.lta.gov.sg/content/ltagov/en/newsroom.html"
               },
               {
-                "label": "The Straits Times, 26 Sep 2026"
+                "label": "The Straits Times, 26 Sep 2026",
+                "url": "https://www.straitstimes.com/singapore/transport"
               }
             ]
           },
@@ -138,13 +143,16 @@
           "details": {
             "sources": [
               {
-                "label": "LTA statement, 26 Sep 2026"
+                "label": "LTA statement, 26 Sep 2026",
+                "url": "https://www.lta.gov.sg/content/ltagov/en/newsroom.html"
               },
               {
-                "label": "The Straits Times, 26 Sep 2026"
+                "label": "The Straits Times, 26 Sep 2026",
+                "url": "https://www.straitstimes.com/singapore/transport"
               },
               {
-                "label": "CNA, 26 Sep 2026"
+                "label": "CNA, 26 Sep 2026",
+                "url": "https://www.channelnewsasia.com/"
               }
             ]
           },
