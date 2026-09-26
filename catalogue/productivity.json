@@ -1,0 +1,331 @@
+{
+  "vertical": "productivity",
+  "fresh": [],
+  "examples": [
+    {
+      "id": "prod-agenda",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "What's on my calendar tomorrow?",
+      "says": "Your afternoon is free after 2.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Schedule / calendar"
+      ],
+      "rationale": "Time trailing, place or people secondary; the free afternoon is in the sentence, not a fourth row.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tomorrow · Sun 27 Sep",
+          "subtitle": "3 events"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Design review",
+                "secondary": "Zoom · Mei, Arjun",
+                "trailing": "09:30"
+              },
+              {
+                "label": "Lunch with Sam",
+                "secondary": "Tiong Bahru Bakery",
+                "trailing": "12:00"
+              },
+              {
+                "label": "Viewing at The Clift",
+                "secondary": "21 McCallum St",
+                "trailing": "13:00"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Tomorrow: Design review 09:30 (Zoom), lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift 13:00. Free after 14:00."
+      }
+    },
+    {
+      "id": "prod-meeting-notes",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Summarise the design review and the action items.",
+      "says": "We agreed to ship the calm card first; three follow-ups.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Meeting notes",
+        "Checklist / to-do"
+      ],
+      "rationale": "Decisions as a short summary, owners and due dates as rows; making them into tasks is a separate approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Design review",
+          "subtitle": "26 Sep · Mei, Arjun, you"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Decided",
+                "bullets": [
+                  "Ship the rows card before charts.",
+                  "Keep reply buttons off every card."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Draft the row states",
+                "secondary": "Mei · Tue 29 Sep"
+              },
+              {
+                "label": "Check dark contrast",
+                "secondary": "Arjun · Wed 30 Sep"
+              },
+              {
+                "label": "Share the pane mock",
+                "secondary": "You · Fri 2 Oct"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Design review 26 Sep: ship the rows card first; no reply buttons. Actions: Mei drafts row states (29 Sep), Arjun checks dark contrast (30 Sep), you share the pane mock (2 Oct)."
+      }
+    },
+    {
+      "id": "prod-email-draft",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Draft a reply to Nichol saying Tuesday works.",
+      "says": "Here's a short draft; nothing is sent until you approve.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Email draft preview"
+      ],
+      "rationale": "The draft is the deliverable, so the card and the fallback both carry it word for word; sending is an approval, never a card button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Re: Lease viewing",
+          "subtitle": "To Nichol · draft"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Hi Nichol, Tuesday works for me. Shall we say 6:30 pm at the flat? Thanks, Abhi"
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Draft to Nichol, not sent. Re: Lease viewing. Hi Nichol, Tuesday works for me. Shall we say 6:30 pm at the flat? Thanks, Abhi"
+      }
+    },
+    {
+      "id": "prod-tasks-status",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "What's left on the move?",
+      "says": "Only the tenancy agreement is waiting on someone else.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Kanban / status list",
+        "Checklist / to-do"
+      ],
+      "rationale": "Open items only, each with who or what it waits on; the done list is not the answer.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Moving to The Clift",
+          "subtitle": "5 of 8 done"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Sign the tenancy agreement",
+                "secondary": "Waiting on the landlord's signature"
+              },
+              {
+                "label": "Book movers",
+                "secondary": "Quotes from 2 of 3 companies"
+              },
+              {
+                "label": "Transfer SP Group account",
+                "secondary": "Do after 30 Sep"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Move to The Clift, 5 of 8 done. Left: tenancy agreement (waiting on landlord), book movers (2 of 3 quotes in), transfer SP Group account after 30 Sep."
+      }
+    },
+    {
+      "id": "prod-watch-reply",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Tell me when Nichol replies on WhatsApp. Until Friday is fine.",
+      "says": "Okay. I'll tell you here when she replies.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Reply watch"
+      ],
+      "rationale": "A watch is a status bound to the routine, one row for when it stops, and one quiet Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Reply from Nichol",
+          "subtitle": "WhatsApp"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "since 9:40 AM",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000961"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Stops after",
+                "trailing": "Fri 6 PM"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000961",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Notifies you here only; nothing is sent to Nichol."
+          ]
+        },
+        "fallback_text": "Watching WhatsApp for a reply from Nichol since 9:40 AM; stops after Friday 6 PM."
+      }
+    },
+    {
+      "id": "prod-work-running",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Go through my inbox and file all the receipts.",
+      "says": "I've started; it runs in the background.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Work status"
+      ],
+      "rationale": "Long work is a Work Unit; the card shows its live state and one quiet Stop, bound to that unit.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Filing receipts from Gmail",
+          "subtitle": "About 400 emails"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "working",
+            "detail": "112 of about 400 checked",
+            "subject": {
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962"
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "work_control",
+              "label": "Stop",
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962",
+              "control": "cancel"
+            }
+          }
+        ],
+        "fallback_text": "Filing receipts from Gmail: 112 of about 400 emails checked so far."
+      }
+    },
+    {
+      "id": "text-acknowledge",
+      "vertical": "productivity",
+      "kind": "text",
+      "request": "Thanks, that's all for now.",
+      "reply": "Anytime.",
+      "surface": "text",
+      "components": [
+        "Acknowledgement"
+      ],
+      "rationale": "Conversation, not a result; never a card.",
+      "document": null
+    },
+    {
+      "id": "fail-work-retry",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Did the receipt filing finish?",
+      "says": "It stopped partway. Sign back in to Gmail, then retry.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Failed state",
+        "Work status"
+      ],
+      "rationale": "A failed Work Unit shows its state bound to the unit and one quiet Retry that acts on exactly that unit.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Filing receipts from Gmail",
+          "subtitle": "Stopped at 212 of about 400"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "failed",
+            "detail": "Gmail sign-in expired. 212 filed; nothing else changed.",
+            "subject": {
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962"
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "work_control",
+              "label": "Retry",
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962",
+              "control": "retry"
+            }
+          }
+        ],
+        "fallback_text": "Receipt filing stopped at 212 of about 400: Gmail sign-in expired. 212 were filed; nothing else changed."
+      }
+    }
+  ]
+}

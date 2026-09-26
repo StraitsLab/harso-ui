@@ -1,0 +1,320 @@
+{
+  "vertical": "health",
+  "fresh": [
+    "health-sleep"
+  ],
+  "examples": [
+    {
+      "id": "health-resting-hr",
+      "vertical": "health",
+      "kind": "card",
+      "request": "How's my resting heart rate this month?",
+      "says": "It's drifting down, which usually means better fitness.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Metric trend"
+      ],
+      "rationale": "Latest and average as numbers, a line with the latest highlighted; the source device and disclaimer sit in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Resting heart rate",
+          "subtitle": "1–26 Sep · Apple Watch"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "58 bpm",
+                "label": "This week"
+              },
+              {
+                "value": "61 bpm",
+                "label": "Average"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "bpm",
+              "x_labels": [
+                "1 Sep",
+                "8 Sep",
+                "15 Sep",
+                "22 Sep"
+              ],
+              "series": [
+                {
+                  "label": "Resting",
+                  "values": [
+                    "63",
+                    "62",
+                    "60",
+                    "58"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Apple Health, 26 Sep 2026"
+            }
+          ],
+          "disclaimers": [
+            "Not medical advice."
+          ]
+        },
+        "fallback_text": "Resting heart rate fell from 63 to 58 bpm between 1 and 26 Sep; average 61 bpm."
+      }
+    },
+    {
+      "id": "health-sleep",
+      "vertical": "health",
+      "kind": "card",
+      "request": "How did I sleep over the last week?",
+      "says": "Better than last week; Wednesday was the short night.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Metric trend",
+        "Bar chart"
+      ],
+      "rationale": "Average sleep as a number and a bar per night; the short night is highlighted because the sentence names it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sleep this week",
+          "subtitle": "Last 7 nights · Apple Watch · as of 07:30"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "7h 12m",
+                "label": "Average"
+              },
+              {
+                "value": "+24 min",
+                "label": "vs last week"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "hours",
+              "x_labels": [
+                "Sat",
+                "Sun",
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri"
+              ],
+              "series": [
+                {
+                  "label": "Asleep",
+                  "values": [
+                    "7.8",
+                    "8.1",
+                    "7.2",
+                    "7.0",
+                    "5.6",
+                    "7.4",
+                    "7.3"
+                  ]
+                }
+              ],
+              "highlight_index": 4
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Apple Health, 26 Sep 2026 07:30"
+            }
+          ],
+          "disclaimers": [
+            "Not medical advice."
+          ]
+        },
+        "fallback_text": "Sleep this week averaged 7h 12m, 24 min more than last week. Wednesday was short at 5.6 hours."
+      }
+    },
+    {
+      "id": "health-meds",
+      "vertical": "health",
+      "kind": "card",
+      "request": "What medication do I take today?",
+      "says": "Two doses today; the morning one is done.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Medication schedule"
+      ],
+      "rationale": "Doses as rows with time trailing; logging a dose is a question card, not a Taken button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Today's medication",
+          "subtitle": "Sat 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Metformin 500 mg",
+                "secondary": "With breakfast · taken 08:10",
+                "trailing": "08:00"
+              },
+              {
+                "label": "Metformin 500 mg",
+                "secondary": "With dinner · due",
+                "trailing": "19:00"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your medication list in Apple Health"
+            }
+          ],
+          "disclaimers": [
+            "Follow your doctor's instructions if they differ."
+          ]
+        },
+        "fallback_text": "Today: Metformin 500 mg at 08:00 (taken 08:10) and 500 mg with dinner at 19:00."
+      }
+    },
+    {
+      "id": "health-symptom",
+      "vertical": "health",
+      "kind": "card",
+      "request": "I've had chest tightness and a sweaty feeling for 20 minutes.",
+      "says": "Those can be signs of a heart attack.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Symptom check with disclaimer"
+      ],
+      "rationale": "Urgent care is the content, never a disclaimer: status needs-attention cannot stand alone, so the summary carries it untruncated.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Call 995 now",
+          "subtitle": "Chest tightness with sweating · 20 minutes"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "summary": "Call 995 for an ambulance now. Don't drive yourself, and stay on the line with the operator.",
+            "sections": [
+              {
+                "bullets": [
+                  "Stop what you're doing and sit down.",
+                  "If a doctor has said aspirin is safe for you, chew one 300 mg tablet.",
+                  "Unlock your door so help can get in."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Heart Foundation",
+              "url": "https://www.myheart.org.sg/"
+            }
+          ],
+          "disclaimers": [
+            "Harso is not a doctor. In an emergency always call 995."
+          ]
+        },
+        "fallback_text": "Chest tightness with sweating for 20 minutes can be a heart attack. Call 995 now, sit down, chew one 300 mg aspirin if a doctor has said it is safe for you, unlock your door."
+      }
+    },
+    {
+      "id": "health-workout",
+      "vertical": "health",
+      "kind": "card",
+      "request": "Give me a 30-minute interval run.",
+      "says": "Good for a weekday lunch break.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Workout plan"
+      ],
+      "rationale": "Phases are rows with duration trailing; starting the workout belongs to the watch, not the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Interval run",
+          "subtitle": "30 min · 6 × 1 min hard"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Warm up",
+                "secondary": "Easy jog",
+                "trailing": "8 min"
+              },
+              {
+                "label": "6 × 1 min hard, 1 min easy",
+                "secondary": "Hard: breathing heavy but steady",
+                "trailing": "12 min"
+              },
+              {
+                "label": "Cool down",
+                "secondary": "Easy jog, then walk",
+                "trailing": "10 min"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "disclaimers": [
+            "Stop if you feel chest pain or dizziness."
+          ]
+        },
+        "fallback_text": "30-minute interval run: 8 min easy warm-up, 6 × (1 min hard, 1 min easy), 10 min cool-down."
+      }
+    },
+    {
+      "id": "text-advice",
+      "vertical": "health",
+      "kind": "text",
+      "request": "Should I stretch before or after running?",
+      "reply": "Warm up with easy jogging and leg swings before; save longer stretches for after, when your muscles are warm.",
+      "surface": "text",
+      "components": [
+        "Advice"
+      ],
+      "rationale": "Advice without data or options is a sentence or two, not a card.",
+      "document": null
+    }
+  ]
+}

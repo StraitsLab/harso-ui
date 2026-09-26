@@ -1,0 +1,488 @@
+{
+  "vertical": "jobs",
+  "fresh": [
+    "jobs-results",
+    "jobs-posting"
+  ],
+  "examples": [
+    {
+      "id": "jobs-results",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Find product design lead roles in Singapore.",
+      "says": "Three strong matches; Grab pays the most.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "J1 Job results"
+      ],
+      "rationale": "Title, company and place on two lines, salary trailing, one pick; applying is at the employer, never on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Product design lead roles",
+          "subtitle": "Singapore · posted this week · as of 08:30"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Lead Product Designer",
+                "secondary": "Grab · Hybrid · 2 days ago",
+                "trailing": "S$11–14k/mo",
+                "mark": "pick"
+              },
+              {
+                "label": "Design Lead, Payments",
+                "secondary": "Wise · Hybrid · 4 days ago",
+                "trailing": "S$10–13k/mo"
+              },
+              {
+                "label": "Principal Designer",
+                "secondary": "Shopee · On-site · 5 days ago",
+                "trailing": "S$9–12k/mo"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LinkedIn and MyCareersFuture, 26 Sep 2026 08:30"
+            }
+          ]
+        },
+        "fallback_text": "Product design lead roles in Singapore: Grab Lead Product Designer S$11–14k (pick); Wise Design Lead S$10–13k; Shopee Principal Designer S$9–12k."
+      }
+    },
+    {
+      "id": "jobs-posting",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Tell me about the Grab role.",
+      "says": "It's hybrid, reports to the Head of Design, and closes on 10 Oct.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "J2 Job posting",
+        "J9 Fit / match summary"
+      ],
+      "rationale": "Pay and deadline are the two numbers; what you'd do and where you fit are short sections; apply leaves for Grab.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Lead Product Designer · Grab",
+          "subtitle": "Hybrid · Singapore · full-time · as of 08:30"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$11–14k",
+                "label": "Monthly"
+              },
+              {
+                "value": "10 Oct",
+                "label": "Apply by"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "What you'd do",
+                "bullets": [
+                  "Lead design for GrabPay checkout.",
+                  "Manage four designers.",
+                  "Own the payments design system."
+                ]
+              },
+              {
+                "heading": "Where you fit",
+                "bullets": [
+                  "You match: 8 years, fintech, team lead.",
+                  "Gap: no Bahasa Indonesia, listed as a plus."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Apply on Grab",
+              "url": "https://grab.careers/jobs/lead-product-designer-singapore"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Grab careers posting, 26 Sep 2026 08:30",
+              "url": "https://grab.careers/"
+            }
+          ]
+        },
+        "fallback_text": "Grab Lead Product Designer, hybrid Singapore, S$11–14k a month, apply by 10 Oct. You match on experience and fintech; Bahasa is a plus you lack."
+      }
+    },
+    {
+      "id": "jobs-salary",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "What does a senior data analyst earn in Singapore?",
+      "says": "Most people are within about S$1,400 of the median.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J3 Salary range / benchmark"
+      ],
+      "rationale": "Median and range are the answer; the sample size and sources go to Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Senior data analyst pay",
+          "subtitle": "Singapore · most earn S$6,500–9,200 a month"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$7,800",
+                "label": "Median monthly"
+              },
+              {
+                "value": "S$94k",
+                "label": "Median yearly"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "MOM Occupational Wage Table 2025"
+            },
+            {
+              "label": "Glassdoor, 412 salaries, Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Senior data analysts in Singapore earn a median S$7,800 a month (S$94k a year); most earn S$6,500–9,200."
+      }
+    },
+    {
+      "id": "jobs-applications",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Where are my applications at?",
+      "says": "The Grab interview is the one to prepare for.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J5 Application status",
+        "X2 Domain state word"
+      ],
+      "rationale": "Each application is a row with its state word; interview date secondary; three rows need no page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Your applications",
+          "subtitle": "3 active this month"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Grab · Lead Product Designer",
+                "secondary": "Interview Thu 1 Oct"
+              },
+              {
+                "label": "Wise · Design Lead",
+                "secondary": "Applied 12 Sep · viewed"
+              },
+              {
+                "label": "Shopee · Principal Designer",
+                "secondary": "Not selected, 22 Sep"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LinkedIn applications and Gmail, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Applications: Grab interview Thu 1 Oct; Wise viewed, applied 12 Sep; Shopee not selected on 22 Sep."
+      }
+    },
+    {
+      "id": "jobs-offers",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Compare my two offers.",
+      "says": "Wise pays about S$8,400 more in year one; Grab gives more equity.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "J4 Offer comparison"
+      ],
+      "rationale": "Three money lines across two offers is a small table; totals row last; the choice stays with the person.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Grab vs Wise offer",
+          "subtitle": "First-year total compensation"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Pay"
+              },
+              {
+                "label": "Grab",
+                "align": "end"
+              },
+              {
+                "label": "Wise",
+                "align": "end"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "Base",
+                  "S$156,000",
+                  "S$168,000"
+                ]
+              },
+              {
+                "cells": [
+                  "Bonus",
+                  "S$15,600",
+                  "S$20,000"
+                ]
+              },
+              {
+                "cells": [
+                  "Equity (yr 1)",
+                  "S$30,000",
+                  "S$22,000"
+                ]
+              },
+              {
+                "cells": [
+                  "Total",
+                  "S$201,600",
+                  "S$210,000"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Equity at today's value, vesting evenly over 4 years."
+          ]
+        },
+        "fallback_text": "Offers, year one: Grab S$201,600 (base S$156k, bonus S$15.6k, equity S$30k); Wise S$210,000 (base S$168k, bonus S$20k, equity S$22k)."
+      }
+    },
+    {
+      "id": "file-resume",
+      "vertical": "jobs",
+      "kind": "file",
+      "request": "Tailor my CV for the Grab role.",
+      "says": "Your CV now leads with payments work and team leadership.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J8 Resume / cover letter"
+      ],
+      "rationale": "The document is the deliverable; the card lists what changed so it can be trusted without opening it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "CV · Grab Lead Product Designer",
+          "subtitle": "2 pages · PDF and Word"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Moved the payments redesign to the top",
+                  "Added team size and hiring to your current role",
+                  "Cut the 2016 agency role to one line"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open CV",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a32"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download Word file",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a33"
+            }
+          }
+        ],
+        "fallback_text": "Your CV is tailored for Grab: payments work first, team leadership added, older role shortened. PDF and Word in your Library."
+      }
+    },
+    {
+      "id": "jobs-pipeline",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Where am I in the Grab process?",
+      "says": "You're through to the last step.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J6 Application pipeline (one job)"
+      ],
+      "rationale": "Steps as rows, the current one first with its date; done steps follow.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Grab · Lead Product Designer",
+          "subtitle": "Final round Thu 1 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Final round",
+                "secondary": "Thu 1 Oct · 3 interviews",
+                "trailing": "Next"
+              },
+              {
+                "label": "Portfolio review",
+                "secondary": "22 Sep",
+                "trailing": "Passed"
+              },
+              {
+                "label": "Recruiter call",
+                "secondary": "15 Sep",
+                "trailing": "Passed"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Grab Lead Product Designer: final round Thu 1 Oct; portfolio review (22 Sep) and recruiter call (15 Sep) passed."
+      }
+    },
+    {
+      "id": "jobs-interviews",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "What interviews do I have next week?",
+      "says": "Two, both on video.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J7 Interview schedule"
+      ],
+      "rationale": "Time and company are the rows; joining happens from the calendar invite, so no Join button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Interviews next week",
+          "subtitle": "28 Sep–2 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Grab · final round",
+                "secondary": "Thu 1 Oct · Google Meet",
+                "trailing": "15:00"
+              },
+              {
+                "label": "Wise · hiring manager",
+                "secondary": "Fri 2 Oct · Zoom",
+                "trailing": "10:00"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Interviews next week: Grab final round Thu 1 Oct 15:00 (Google Meet); Wise hiring manager Fri 2 Oct 10:00 (Zoom)."
+      }
+    },
+    {
+      "id": "jobs-alert",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Tell me when new design lead roles come up.",
+      "says": "Okay. I'll tell you here when one comes up.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J10 Job alert"
+      ],
+      "rationale": "A watch: status bound to the routine, the criteria as one row, one quiet Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Design lead roles",
+          "subtitle": "LinkedIn and MyCareersFuture"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every morning at 8:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000a8f"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Looking for",
+                "secondary": "Design lead · Singapore · S$10k+/mo"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000a8f",
+              "control": "pause"
+            }
+          }
+        ],
+        "fallback_text": "Watching LinkedIn and MyCareersFuture every morning for design lead roles in Singapore paying S$10k+ a month."
+      }
+    }
+  ]
+}

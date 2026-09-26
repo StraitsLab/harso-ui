@@ -1,0 +1,392 @@
+{
+  "vertical": "education",
+  "fresh": [],
+  "examples": [
+    {
+      "id": "edu-lesson",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Explain how compound interest works.",
+      "says": "Interest earns interest, so growth speeds up over time.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Lesson",
+        "Line chart"
+      ],
+      "rationale": "One line chart shows the curve better than a paragraph; two short sections carry the idea.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Compound interest",
+          "subtitle": "S$10,000 at 5% a year"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$k",
+              "x_labels": [
+                "Yr 0",
+                "Yr 10",
+                "Yr 20",
+                "Yr 30"
+              ],
+              "series": [
+                {
+                  "label": "Compound",
+                  "values": [
+                    "10",
+                    "16.3",
+                    "26.5",
+                    "43.2"
+                  ]
+                },
+                {
+                  "label": "Simple",
+                  "values": [
+                    "10",
+                    "15",
+                    "20",
+                    "25"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "The idea",
+                "paragraphs": [
+                  "Each year's interest is added to the balance, so next year you earn interest on a bigger amount."
+                ]
+              },
+              {
+                "heading": "Why time matters",
+                "paragraphs": [
+                  "The gap between the two lines grows every year. After 30 years compounding gives S$43,200 against S$25,000."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Interest compounds once a year; no withdrawals."
+          ]
+        },
+        "fallback_text": "Compound interest: interest is added to the balance, so it earns interest too. S$10,000 at 5% becomes S$43,200 in 30 years, against S$25,000 with simple interest."
+      }
+    },
+    {
+      "id": "edu-quiz-result",
+      "vertical": "education",
+      "kind": "card",
+      "request": "How did I do on the chemistry quiz?",
+      "says": "Good result; both misses were mole calculations.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Quiz with feedback",
+        "Progress / streak"
+      ],
+      "rationale": "Score and time as two numbers; what to study next is in the sentence; no confetti, no per-question list.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Chemistry quiz",
+          "subtitle": "Stoichiometry · 10 questions"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "8 of 10",
+                "label": "Score"
+              },
+              {
+                "value": "6 min",
+                "label": "Time"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Chemistry quiz: 8 of 10 in 6 minutes. Both misses were mole calculations."
+      }
+    },
+    {
+      "id": "edu-progress",
+      "vertical": "education",
+      "kind": "card",
+      "request": "How's my Japanese going?",
+      "says": "You're on track to finish N5 by November.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Progress / streak",
+        "Bar chart"
+      ],
+      "rationale": "Two numbers and a 7-day bar chart; the next lesson is a follow-up question, not a button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Japanese N5",
+          "subtitle": "Last 7 days"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "64%",
+                "label": "Through N5"
+              },
+              {
+                "value": "12 days",
+                "label": "Streak"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "min",
+              "x_labels": [
+                "Sat",
+                "Sun",
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri"
+              ],
+              "series": [
+                {
+                  "label": "Minutes",
+                  "values": [
+                    "15",
+                    "20",
+                    "10",
+                    "25",
+                    "15",
+                    "30",
+                    "20"
+                  ]
+                }
+              ],
+              "highlight_index": 5
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your study log in Harso"
+            }
+          ]
+        },
+        "fallback_text": "Japanese N5: 64% through, streak of 12 days, 135 minutes this week, most on Thursday (30 min)."
+      }
+    },
+    {
+      "id": "edu-worked-example",
+      "vertical": "education",
+      "kind": "card",
+      "request": "How do I solve 2x + 6 = 14?",
+      "says": "x = 4. Here's each step.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Worked example"
+      ],
+      "rationale": "Three numbered steps in one section; plain text maths, no rendering engine needed.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Solve 2x + 6 = 14",
+          "subtitle": "Linear equation"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "1. Subtract 6 from both sides: 2x = 8.",
+                  "2. Divide both sides by 2: x = 4.",
+                  "3. Check: 2 × 4 + 6 = 14."
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "2x + 6 = 14: subtract 6 to get 2x = 8, divide by 2 to get x = 4; check 2 × 4 + 6 = 14."
+      }
+    },
+    {
+      "id": "edu-glossary",
+      "vertical": "education",
+      "kind": "card",
+      "request": "What do P/E, EPS and dividend yield mean?",
+      "says": "Three quick definitions.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Glossary"
+      ],
+      "rationale": "Term as label, one-line meaning as secondary; three rows fit inline.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Three investing terms"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "P/E ratio",
+                "secondary": "Share price divided by yearly earnings per share"
+              },
+              {
+                "label": "EPS",
+                "secondary": "A company's profit divided by its number of shares"
+              },
+              {
+                "label": "Dividend yield",
+                "secondary": "Yearly dividend as a percentage of the share price"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "P/E ratio: share price divided by earnings per share. EPS: profit divided by shares. Dividend yield: yearly dividend as a percentage of the share price."
+      }
+    },
+    {
+      "id": "edu-diagram",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Draw me the water cycle.",
+      "says": "Here it is, with the four stages labelled.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Diagram"
+      ],
+      "rationale": "The diagram is an image artifact; the card shows it large with Download as the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "The water cycle",
+          "subtitle": "Evaporation · condensation · precipitation · collection"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000008fd",
+              "alt": "Diagram of the water cycle: evaporation from the sea, clouds forming, rain over hills, rivers returning to the sea",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000008fd"
+            }
+          }
+        ],
+        "fallback_text": "The water cycle diagram (evaporation, condensation, precipitation, collection) is saved to your Library."
+      }
+    },
+    {
+      "id": "text-define",
+      "vertical": "education",
+      "kind": "text",
+      "request": "What does 'amortization' mean?",
+      "reply": "Paying off a loan in regular instalments, each covering some interest and some of the balance.",
+      "surface": "text",
+      "components": [
+        "Definition"
+      ],
+      "rationale": "A single definition is a sentence; a glossary card is for three or more terms.",
+      "document": null
+    },
+    {
+      "id": "file-lesson-handout",
+      "vertical": "education",
+      "kind": "file",
+      "request": "Make a worksheet on fractions for my 9-year-old.",
+      "says": "One page, 12 questions, answers on page 2.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Lesson handout"
+      ],
+      "rationale": "A worksheet is printed, so it is a PDF; the card shows page one.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Fractions worksheet",
+          "subtitle": "Primary 3 · 2 pages · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a34",
+              "alt": "Worksheet page 1: 12 fraction questions with pizza pictures",
+              "aspect": "3:4"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open worksheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a35"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a35"
+            }
+          }
+        ],
+        "fallback_text": "A 2-page fractions worksheet for Primary 3 (12 questions, answers on page 2) is in your Library."
+      }
+    },
+    {
+      "id": "text-flashcards",
+      "vertical": "education",
+      "kind": "text",
+      "request": "Quiz me on Japanese verbs.",
+      "reply": "Sure. First one: what does 食べる (taberu) mean?",
+      "surface": "text",
+      "components": [
+        "Flashcards"
+      ],
+      "rationale": "Recall runs one card at a time in the conversation; no flip component and no card per question.",
+      "document": null
+    }
+  ]
+}
