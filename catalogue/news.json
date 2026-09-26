@@ -5,7 +5,8 @@
     "news-timeline",
     "news-headlines",
     "news-sources",
-    "news-brief-haze"
+    "news-brief-haze",
+    "news-digest-tech"
   ],
   "examples": [
     {
@@ -942,6 +943,219 @@
             }
           ],
           "fallback_text": "Couldn’t search the news for the Grab–GoTo deal: the search didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "news-digest-tech",
+      "vertical": "news",
+      "kind": "card",
+      "request": "Every morning at 7, send me the 5 tech stories I care about.",
+      "says": "Here’s this morning’s tech digest.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Story cluster (brief)",
+        "Source list"
+      ],
+      "rationale": "One digest per run: five headlines with the outlet, each article in Details in row order; still bound to the routine with one Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tech this morning",
+          "subtitle": "Sat 26 Sep · 5 stories · as of 07:00"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every day at 07:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a07"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "OpenAI agents posted 53 user images online",
+                "secondary": "TechCrunch · 25 Sep"
+              },
+              {
+                "label": "Copilot gets a coding tool and always-on agent",
+                "secondary": "Reuters · 25 Sep"
+              },
+              {
+                "label": "Akamai signs US$11.6b cloud deal with Anthropic",
+                "secondary": "The Straits Times · 25 Sep"
+              },
+              {
+                "label": "Google to test its AI chips in orbit",
+                "secondary": "TechSpot · 25 Sep"
+              },
+              {
+                "label": "StarHub in talks to buy M1 from Keppel",
+                "secondary": "TNGlobal · 25 Sep"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a07",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "TechCrunch, 25 Sep 2026",
+              "url": "https://techcrunch.com/2026/09/25/unsecured-openai-agents-posted-53-user-images-on-the-internet-without-the-labs-knowledge/"
+            },
+            {
+              "label": "Reuters, 25 Sep 2026",
+              "url": "https://www.reuters.com/technology/microsoft-revamps-copilot-with-code-generation-agentic-ai-tools-2026-09-25/"
+            },
+            {
+              "label": "The Straits Times, 25 Sep 2026",
+              "url": "https://www.straitstimes.com/business/akamai-signs-14-8-billion-cloud-deal-with-anthropic-grants-warrant-for-up-to-5-stake"
+            },
+            {
+              "label": "TechSpot, 25 Sep 2026",
+              "url": "https://www.techspot.com/news/113989-google-launching-ai-chips-space-see-if-they.html"
+            },
+            {
+              "label": "TNGlobal, 25 Sep 2026",
+              "url": "https://technode.global/2026/09/25/singapore-telco-merger-m1-starhub-keppel/"
+            }
+          ]
+        },
+        "fallback_text": "Tech this morning, Sat 26 Sep, 5 stories as of 07:00: OpenAI agents posted 53 user images online (TechCrunch, 25 Sep); Copilot gets a coding tool and always-on agent (Reuters, 25 Sep); Akamai signs US$11.6b cloud deal with Anthropic (The Straits Times, 25 Sep); Google to test its AI chips in orbit (TechSpot, 25 Sep); StarHub in talks to buy M1 from Keppel (TNGlobal, 25 Sep). Next digest every day at 07:00; you can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tech this morning",
+            "subtitle": "Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing tech this morning, Sat 26 Sep",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a08"
+              }
+            }
+          ],
+          "fallback_text": "Writing tech this morning, Sat 26 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tech this morning",
+            "subtitle": "Sat 26 Sep · 4 of 5 stories · as of 07:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every day at 07:00",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a07"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "OpenAI agents posted 53 user images online",
+                  "secondary": "TechCrunch · 25 Sep"
+                },
+                {
+                  "label": "Akamai signs US$11.6b cloud deal with Anthropic",
+                  "secondary": "The Straits Times · 25 Sep"
+                },
+                {
+                  "label": "Google to test its AI chips in orbit",
+                  "secondary": "TechSpot · 25 Sep"
+                },
+                {
+                  "label": "StarHub in talks to buy M1 from Keppel",
+                  "secondary": "TNGlobal · 25 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a07",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "TechCrunch, 25 Sep 2026",
+                "url": "https://techcrunch.com/2026/09/25/unsecured-openai-agents-posted-53-user-images-on-the-internet-without-the-labs-knowledge/"
+              },
+              {
+                "label": "The Straits Times, 25 Sep 2026",
+                "url": "https://www.straitstimes.com/business/akamai-signs-14-8-billion-cloud-deal-with-anthropic-grants-warrant-for-up-to-5-stake"
+              },
+              {
+                "label": "TechSpot, 25 Sep 2026",
+                "url": "https://www.techspot.com/news/113989-google-launching-ai-chips-space-see-if-they.html"
+              },
+              {
+                "label": "TNGlobal, 25 Sep 2026",
+                "url": "https://technode.global/2026/09/25/singapore-telco-merger-m1-starhub-keppel/"
+              }
+            ]
+          },
+          "fallback_text": "Tech this morning, Sat 26 Sep, 4 of 5 stories as of 07:00: OpenAI agents posted 53 user images online (TechCrunch, 25 Sep); Akamai signs US$11.6b cloud deal with Anthropic (The Straits Times, 25 Sep); Google to test its AI chips in orbit (TechSpot, 25 Sep); StarHub in talks to buy M1 from Keppel (TNGlobal, 25 Sep). A fifth story is paywalled at Reuters, so it is left out. Next digest every day at 07:00; you can pause it."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No new tech stories",
+            "subtitle": "Sat 26 Sep · as of 07:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing new on your topics since yesterday’s digest"
+            }
+          ],
+          "fallback_text": "No new tech stories on Sat 26 Sep as of 07:00: nothing new on your topics since yesterday’s digest. The next one is tomorrow at 07:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t write today’s tech digest",
+            "subtitle": "Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The news sites didn’t respond. I’ll try again tomorrow at 07:00"
+            }
+          ],
+          "fallback_text": "Couldn’t write today’s tech digest, Sat 26 Sep: the news sites didn’t respond. I’ll try again tomorrow at 07:00."
         }
       }
     }

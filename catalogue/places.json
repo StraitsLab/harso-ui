@@ -6,7 +6,8 @@
     "places-hours",
     "places-nearby-map",
     "places-card-photo",
-    "places-table-booked"
+    "places-table-booked",
+    "places-aircon-pros"
   ],
   "examples": [
     {
@@ -1526,6 +1527,206 @@
       ],
       "rationale": "A yes/no with one qualifier is prose; nothing to show beyond the words.",
       "document": null
+    },
+    {
+      "id": "places-aircon-pros",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Find aircon servicing near me in Tampines and compare a few.",
+      "says": "CoolBreeze is the pick: well reviewed, certified and mid-priced.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Place card",
+        "Comparison"
+      ],
+      "rationale": "Three firms, one pick: rating, reviews, certification and phone on the line, the price trailing. What a directory blocked is said, not hidden.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Aircon servicing near Tampines",
+          "subtitle": "3 firms · general service, wall unit · as of 11:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "CoolBreeze Aircon",
+                "secondary": "4.8★ · 1,240 reviews · NEA cert · 6123 4567",
+                "trailing": "S$30/unit",
+                "mark": "pick"
+              },
+              {
+                "label": "Tampines Aircon Care",
+                "secondary": "4.6★ · 310 reviews · NEA cert · 8123 4567",
+                "trailing": "S$25/unit"
+              },
+              {
+                "label": "FrostLine Engineering",
+                "secondary": "4.9★ · 85 reviews · not NEA-listed · 9123 4568",
+                "trailing": "S$40/unit"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Maps reviews, 26 Sep 2026 11:20"
+            },
+            {
+              "label": "Carousell services listings, 26 Sep 2026 11:20"
+            },
+            {
+              "label": "NEA list of certified residential aircon technicians, Nov 2025"
+            }
+          ],
+          "assumptions": [
+            "Price is each firm’s listed general service for one wall unit; a chemical wash costs more.",
+            "Nothing is booked; call or ask me to message the one you choose."
+          ]
+        },
+        "fallback_text": "Aircon servicing near Tampines, 3 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Aircon servicing near Tampines",
+            "subtitle": "General service, wall unit"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Searching aircon servicing near Tampines, general service, wall unit",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a05"
+              }
+            }
+          ],
+          "fallback_text": "Searching aircon servicing near Tampines, general service, wall unit."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Aircon servicing near Tampines",
+            "subtitle": "2 firms · Carousell blocked · as of 11:20"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "CoolBreeze Aircon",
+                  "secondary": "4.8★ · 1,240 reviews · NEA cert · 6123 4567",
+                  "trailing": "S$30/unit",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Tampines Aircon Care",
+                  "secondary": "4.6★ · 310 reviews · NEA cert · 8123 4567",
+                  "trailing": "S$25/unit"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Maps reviews, 26 Sep 2026 11:20; Carousell blocked the search"
+              }
+            ],
+            "assumptions": [
+              "Price is each firm’s listed general service for one wall unit; a chemical wash costs more.",
+              "Nothing is booked; call or ask me to message the one you choose."
+            ]
+          },
+          "fallback_text": "Aircon servicing near Tampines, 2 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit. Carousell blocked my search, so firms listed only there are missing."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Aircon servicing near Tampines",
+            "subtitle": "3 firms · general service, wall unit · as of 09:05 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "CoolBreeze Aircon",
+                  "secondary": "4.8★ · 1,240 reviews · NEA cert · 6123 4567",
+                  "trailing": "S$30/unit",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Tampines Aircon Care",
+                  "secondary": "4.6★ · 310 reviews · NEA cert · 8123 4567",
+                  "trailing": "S$25/unit"
+                },
+                {
+                  "label": "FrostLine Engineering",
+                  "secondary": "4.9★ · 85 reviews · not NEA-listed · 9123 4568",
+                  "trailing": "S$40/unit"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Maps reviews, 26 Sep 2026 09:05"
+              },
+              {
+                "label": "Carousell services listings, 26 Sep 2026 09:05"
+              }
+            ],
+            "assumptions": [
+              "Price is each firm’s listed general service for one wall unit; a chemical wash costs more.",
+              "Nothing is booked; call or ask me to message the one you choose."
+            ]
+          },
+          "fallback_text": "As of 09:05 (couldn’t refresh; prices may have changed): aircon servicing near Tampines, 3 firms, general service, wall unit: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No aircon servicing found near Tampines",
+            "subtitle": "General service · as of 11:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Neither directory searched lists a firm within 5 km"
+            }
+          ],
+          "fallback_text": "No aircon servicing found near Tampines for general service, as of 11:20: neither directory searched (Google Maps, Carousell) lists a firm within 5 km."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t search for aircon servicing",
+            "subtitle": "Tampines"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Maps and Carousell didn’t respond. Ask me again in a few minutes"
+            }
+          ],
+          "fallback_text": "Couldn’t search for aircon servicing near Tampines: Google Maps and Carousell didn’t respond. Ask me again in a few minutes."
+        }
+      }
     }
   ]
 }
