@@ -218,7 +218,7 @@ test("map: OSM tiles framing every place, the selected pin larger and labelled, 
 });
 
 test("map frames every place inside the plane with room for its pin, at the closest zoom that fits", () => {
-  const places = (tokyo as { visual: chat.HarsoOutputMap }).visual.places;
+  const places = (tokyo as unknown as { visual: chat.HarsoOutputMap }).visual.places;
   const frame = frameMap(places, 480, 260);
   for (const pin of frame.pins) {
     expect(pin.x).toBeGreaterThanOrEqual(36); expect(pin.x).toBeLessThanOrEqual(480 - 36);

@@ -138,7 +138,8 @@ export function readProgress(items: Number_[]): HarsoOutputProgress | undefined 
 /** B0 progress: "<used label> · <used> of <target>", a 6px track, then "86% used · S$720 left" (or "Over by S$350"). */
 export function HarsoOutputProgressView({ progress }: { progress: HarsoOutputProgress }) {
   const percent = Math.round(progress.ratio * 100);
-  const plain = (label: string) => label.trim().replace(/\s+of\s+\S+$/, "");
+  // Drop only the " of <target>" the agent wrote to carry the target (G9); "Spent of budget" is the agent's own words.
+  const plain = (label: string) => { const text = label.trim(), tail = ` of ${progress.target}`; return text.endsWith(tail) ? text.slice(0, -tail.length).trimEnd() : text; };
   const usedWord = plain(progress.used.label), restWord = plain(progress.rest.label).toLowerCase();
   const note = progress.over ? `${percent}% used · over by ${progress.over}` : `${percent}% used · ${progress.rest.value} ${restWord}`;
   return <div className="hkc-output-progress">
@@ -196,10 +197,18 @@ function useWidth(fallback: number) {
 
 /** Fixed aspect frame; a shimmer until the picture arrives; a failed state with a working Try again if it doesn't. */
 export function HarsoOutputImageView({ image, host }: { image: HarsoOutputImage; host: HarsoOutputMediaHost }) {
-  const [phase, setPhase] = useState<"loading" | "ready" | "failed">("loading");
-  const [attempt, setAttempt] = useState(0);
   const src = host.resolveArtifact?.(image.artifact);
-  useEffect(() => setPhase("loading"), [src]);
+  // Phase belongs to one source: a new src starts loading again without an effect racing a fast (cached) load.
+  const [load, setLoad] = useState<{ src?: string; phase: "loading" | "ready" | "failed" }>({ src, phase: "loading" });
+  const phase = load.src === src ? load.phase : "loading";
+  const setPhase = (next: "loading" | "ready" | "failed") => setLoad({ src, phase: next });
+  const [attempt, setAttempt] = useState(0);
+  const img = useRef<HTMLImageElement>(null);
+  // An image already decoded before React attached its listener (memory cache, data URI) never fires load again.
+  useLayoutEffect(() => {
+    const node = img.current;
+    if (node?.complete && phase === "loading") setLoad({ src, phase: node.naturalWidth > 0 ? "ready" : "failed" });
+  });
   if (phase === "failed") return <div className="hkc-output-block-failed" data-state="failed">
     <WarningCircle className="hkc-output-block-failed-glyph" size={16} weight="bold" aria-hidden="true" />
     <div className="hkc-output-block-failed-text">
@@ -211,7 +220,7 @@ export function HarsoOutputImageView({ image, host }: { image: HarsoOutputImage;
   const aspect = ASPECT[image.aspect ?? "4:3"] ?? ASPECT["4:3"];
   return <div className="hkc-output-media" data-state={phase} aria-busy={phase === "loading" || undefined}
     style={{ "--hkc-media-aspect": aspect } as CSSProperties}>
-    <img key={attempt} className="hkc-output-media-img" src={src} alt={image.alt} decoding="async" draggable={false}
+    <img key={attempt} ref={img} className="hkc-output-media-img" src={src} alt={image.alt} decoding="async" draggable={false}
       onLoad={() => setPhase("ready")} onError={() => setPhase("failed")} />
   </div>;
 }
@@ -285,7 +294,7 @@ function labelWidth(text: string, strong: boolean) {
   }
   if (measurer) {
     measurer.font = `${strong ? 500 : 400} ${LABEL}px "Instrument Sans Variable", sans-serif`;
-    return Math.ceil(measurer.measureText(text).width) + 14;
+    return Math.ceil(measurer.measureText(text).width) + 16;
   }
   return Math.ceil(Array.from(text).reduce((width, char) => width + LABEL * (/[\u1100-\u115f\u2e80-\ua4cf\uac00-\ud7a3\uf900-\ufaff\uff00-\uff60]|\p{Extended_Pictographic}/u.test(char) ? 1 : .6), 0)) + 14;
 }
@@ -293,7 +302,15 @@ function labelWidth(text: string, strong: boolean) {
 /** A still map: OSM tiles when the host lends them, ≤12 pins, the pick larger and labelled first, attribution kept. */
 export function HarsoOutputMapView({ map, host }: { map: HarsoOutputMap; host: HarsoOutputMediaHost }) {
   const [node, width] = useWidth(480);
-  const height = Math.round(width * 13 / 24);
+  // Labels are measured in the web font: lay them out again once it has loaded.
+  const [, setFonts] = useState(0);
+  useEffect(() => {
+    let live = true;
+    globalThis.document?.fonts?.ready.then(() => { if (live) setFonts(value => value + 1); });
+    return () => { live = false; };
+  }, []);
+  // B0: 260 at the 480 pane; never under the 160 compact map, so a narrow pane still reads as a map.
+  const height = Math.max(160, Math.round(width * 13 / 24));
   const places = map.places.slice(0, 12);
   const frame = frameMap(places, width, height);
   const selected = places.findIndex(place => place.id === map.selected_place_id);
@@ -310,13 +327,25 @@ export function HarsoOutputMapView({ map, host }: { map: HarsoOutputMap; host: H
   // Labels: the pick first, then in order, while they fit inside the frame without touching.
   const indexes = places.map((_, index) => index);
   const order = selected >= 0 ? [selected, ...indexes.filter(index => index !== selected)] : indexes;
-  const boxes: { index: number; left: number; right: number; top: number; bottom: number; flip: boolean }[] = [];
+  // Each label tries beside its pin (the side with more room first), then above, then below; a label that fits nowhere
+  // is left off the plane (the place is still pinned and listed for screen readers and in the rows).
+  type Box = { index: number; left: number; right: number; top: number; bottom: number };
+  const boxes: Box[] = [];
+  const pinBoxes = frame.pins.map((pin, index) => { const r = index === selected ? 9 : 7; return { left: pin.x - r, right: pin.x + r, top: pin.y - r, bottom: pin.y + r }; });
+  const inside = (box: Omit<Box, "index">) => box.left >= 4 && box.right <= width - 4 && box.top >= 4 && box.bottom <= height - 34;
+  const clear = (box: Omit<Box, "index">, index: number) => inside(box)
+    && boxes.every(other => box.right + 4 <= other.left || box.left >= other.right + 4 || box.bottom + 2 <= other.top || box.top >= other.bottom + 2)
+    && pinBoxes.every((other, at) => at === index || box.right <= other.left || box.left >= other.right || box.bottom <= other.top || box.top >= other.bottom);
   for (const index of order) {
     const pin = frame.pins[index], w = Math.min(labelWidth(places[index].label, index === selected), width - 24), gap = index === selected ? 11 : 9;
-    const flip = pin.x > width * .7;
-    const box = { index, flip, left: flip ? pin.x - gap - w : pin.x + gap, right: flip ? pin.x - gap : pin.x + gap + w, top: pin.y - 11, bottom: pin.y + 11 };
-    const inside = box.left >= 4 && box.right <= width - 4 && box.top >= 4 && box.bottom <= height - 34;
-    if (inside && boxes.every(other => box.right + 4 <= other.left || box.left >= other.right + 4 || box.bottom + 2 <= other.top || box.top >= other.bottom + 2)) boxes.push(box);
+    const right = { left: pin.x + gap, right: pin.x + gap + w, top: pin.y - 11, bottom: pin.y + 11 };
+    const left = { left: pin.x - gap - w, right: pin.x - gap, top: pin.y - 11, bottom: pin.y + 11 };
+    const above = { left: pin.x - w / 2, right: pin.x + w / 2, top: pin.y - gap - 22, bottom: pin.y - gap };
+    const below = { left: pin.x - w / 2, right: pin.x + w / 2, top: pin.y + gap, bottom: pin.y + gap + 22 };
+    const sides = pin.x > width * .7 ? [left, right, above, below] : [right, left, above, below];
+    // The pick is always named: when no side is clear of other pins it may cover them (it is drawn on top).
+    const found = sides.find(box => clear(box, index)) ?? (index === selected ? sides.find(inside) : undefined);
+    if (found) boxes.push({ index, ...found });
   }
   const pinOrder = [...indexes].sort((a, b) => (a === selected ? 1 : 0) - (b === selected ? 1 : 0));
   return <figure className="hkc-output-map" aria-label="Map">

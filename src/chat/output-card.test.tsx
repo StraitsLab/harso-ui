@@ -221,7 +221,7 @@ test("the failed example draws the failed status in amber with its detail, and n
   expect(within(card).queryByRole("button")).toBeNull();
 });
 
-test.each([["unknown status state", { ...failed, blocks: [{ kind: "status", state: "exploded" }] }]] as const)("unsupported block (%s) shows fallback_text and no rows or actions", (_, document) => {
+test.each([["unknown status state", { ...failed, blocks: [{ kind: "status", state: "exploded" }] } as chat.HarsoOutputDocument]])("unsupported block (%s) shows fallback_text and no rows or actions", (_, document) => {
   const onViewAll = vi.fn();
   const { card } = renderCard({ document, onViewAll });
   expect(within(card).getByRole("heading", { name: document.header.title })).toBeVisible();
