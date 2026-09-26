@@ -28769,7 +28769,7 @@
       "vertical": "comms",
       "kind": "card",
       "request": "What in my inbox actually needs me today?",
-      "says": "Three threads need you; the tax bill is the one with a deadline.",
+      "says": "Three threads need you: reply to Mrs Tan by Mon 28 Sep and pay IRAS by Wed 30 Sep.",
       "surface": "page",
       "fresh": false,
       "components": [
@@ -28790,7 +28790,7 @@
             "items": [
               {
                 "label": "Mrs Tan",
-                "secondary": "Lease renewal · wants Tue or Wed",
+                "secondary": "Lease renewal · wants Tue 29 or Wed 30 Sep",
                 "trailing": "Reply by Mon 28 Sep"
               },
               {
@@ -28825,7 +28825,7 @@
             "Needs you = a question to you, a deadline, or someone you often reply to"
           ]
         },
-        "fallback_text": "Inbox, Sat 26 Sep, last 24 h: 3 need you, 9 FYI, 6 receipts. Needs you: Mrs Tan, lease renewal, wants Tue or Wed, reply by Mon 28 Sep; IRAS, property tax bill, GIRO not set up, pay by Wed 30 Sep; Sam Lee, Tokyo trip restaurants, asked Thu 24 Sep, waiting 2 days. The 9 FYI and 6 receipts are in Gmail.",
+        "fallback_text": "Inbox, Sat 26 Sep, last 24 h: 3 need you, 9 FYI, 6 receipts. Needs you: Mrs Tan, lease renewal, wants Tue 29 or Wed 30 Sep, reply by Mon 28 Sep; IRAS, property tax bill, GIRO not set up, pay by Wed 30 Sep; Sam Lee, Tokyo trip restaurants, asked Thu 24 Sep, waiting 2 days. The 9 FYI and 6 receipts are in Gmail.",
         "more_label": "View needs you"
       },
       "states": {
@@ -28861,7 +28861,7 @@
               "items": [
                 {
                   "label": "Mrs Tan",
-                  "secondary": "Lease renewal · wants Tue or Wed",
+                  "secondary": "Lease renewal · wants Tue 29 or Wed 30 Sep",
                   "trailing": "Reply by Mon 28 Sep"
                 },
                 {
@@ -28887,7 +28887,7 @@
               }
             ]
           },
-          "fallback_text": "Inbox, Sat 26 Sep, as of 08:05, 12 of 18 read, 2 need you so far: Mrs Tan, lease renewal, wants Tue or Wed, reply by Mon 28 Sep; IRAS, property tax bill, GIRO not set up, pay by Wed 30 Sep. Still reading the other 6."
+          "fallback_text": "Inbox, Sat 26 Sep, as of 08:05, 12 of 18 read, 2 need you so far: Mrs Tan, lease renewal, wants Tue 29 or Wed 30 Sep, reply by Mon 28 Sep; IRAS, property tax bill, GIRO not set up, pay by Wed 30 Sep. Still reading the other 6."
         },
         "stale": {
           "kind": "output_blocks",
@@ -28902,7 +28902,7 @@
               "items": [
                 {
                   "label": "Mrs Tan",
-                  "secondary": "Lease renewal · wants Tue or Wed",
+                  "secondary": "Lease renewal · wants Tue 29 or Wed 30 Sep",
                   "trailing": "Reply by Mon 28 Sep"
                 },
                 {
@@ -28937,7 +28937,7 @@
               "Needs you = a question to you, a deadline, or someone you often reply to"
             ]
           },
-          "fallback_text": "As of 08:00 (couldn't refresh, so a reply since then won't show). Inbox, Sat 26 Sep, last 24 h: 3 need you, 9 FYI, 6 receipts. Needs you: Mrs Tan, lease renewal, wants Tue or Wed, reply by Mon 28 Sep; IRAS, property tax bill, GIRO not set up, pay by Wed 30 Sep; Sam Lee, Tokyo trip restaurants, asked Thu 24 Sep, waiting 2 days. The 9 FYI and 6 receipts are in Gmail.",
+          "fallback_text": "As of 08:00 (couldn't refresh, so a reply since then won't show). Inbox, Sat 26 Sep, last 24 h: 3 need you, 9 FYI, 6 receipts. Needs you: Mrs Tan, lease renewal, wants Tue 29 or Wed 30 Sep, reply by Mon 28 Sep; IRAS, property tax bill, GIRO not set up, pay by Wed 30 Sep; Sam Lee, Tokyo trip restaurants, asked Thu 24 Sep, waiting 2 days. The 9 FYI and 6 receipts are in Gmail.",
           "more_label": "View needs you"
         },
         "empty": {
@@ -28967,10 +28967,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Gmail sign-in expired. Nothing was changed."
+              "detail": "Gmail sign-in expired. Nothing was changed. Sign in again, then ask me."
             }
           ],
-          "fallback_text": "The Gmail sign-in expired, so I couldn't read your inbox for the last 24 h. Nothing was changed."
+          "fallback_text": "The Gmail sign-in expired, so I couldn't read your inbox for the last 24 h. Nothing was changed. Sign in again, then ask me."
         }
       }
     },
@@ -29125,10 +29125,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No email from Mrs Tan in Gmail"
+              "detail": "No email from Mrs Tan in Gmail. Tell me her address to write fresh."
             }
           ],
-          "fallback_text": "To Mrs Tan: there's no email from her about the lease renewal in your Gmail, so there's nothing to reply to yet. Nothing was sent."
+          "fallback_text": "To Mrs Tan: there's no email from her about the lease renewal in your Gmail, so there's nothing to reply to yet. Nothing was sent. Tell me her address to write fresh."
         },
         "failed": {
           "kind": "output_blocks",
@@ -29141,10 +29141,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Gmail sign-in expired. Nothing was sent."
+              "detail": "Gmail sign-in expired. Nothing was sent. Sign in again, then ask me."
             }
           ],
-          "fallback_text": "The Gmail sign-in expired, so I couldn't draft the reply to Mrs Tan on the lease renewal. Nothing was sent."
+          "fallback_text": "The Gmail sign-in expired, so I couldn't draft the reply to Mrs Tan on the lease renewal. Nothing was sent. Sign in again, then ask me."
         }
       }
     },
@@ -29249,6 +29249,14 @@
                   "trailing": "Not in yet"
                 }
               ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Sent in Gmail",
+                "url": "https://mail.google.com/mail/u/0/#sent"
+              }
             }
           ],
           "details": {
@@ -29317,10 +29325,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The draft was deleted before it was sent. Nothing was sent."
+              "detail": "The draft was deleted before sending. Nothing was sent. Ask me to redraft it."
             }
           ],
-          "fallback_text": "Not sent: the trip restaurants draft to Sam Lee was deleted before it was sent. Nothing was sent."
+          "fallback_text": "Not sent: the trip restaurants draft to Sam Lee was deleted before it was sent. Nothing was sent. Ask me to redraft it."
         },
         "failed": {
           "kind": "output_blocks",
@@ -29358,7 +29366,7 @@
         "major": 1,
         "header": {
           "title": "Waiting on replies",
-          "subtitle": "3 threads · oldest first · nudge after 7 days"
+          "subtitle": "3 threads · oldest first · nudge after 10 days"
         },
         "blocks": [
           {
@@ -29390,7 +29398,7 @@
             }
           ]
         },
-        "fallback_text": "Waiting on replies, 3 threads, oldest first, nudge after 7 days: Rao & Co, chartered accountants, ITR documents, asked Mon 14 Sep, waiting 12 days, past the nudge point; Prestige Estates, parking allotment letter, asked Fri 18 Sep, waiting 8 days; Kumar Interiors, revised kitchen quote, asked Tue 22 Sep, waiting 4 days."
+        "fallback_text": "Waiting on replies, 3 threads, oldest first, nudge after 10 days: Rao & Co, chartered accountants, ITR documents, asked Mon 14 Sep, waiting 12 days, past the nudge point; Prestige Estates, parking allotment letter, asked Fri 18 Sep, waiting 8 days; Kumar Interiors, revised kitchen quote, asked Tue 22 Sep, waiting 4 days."
       },
       "states": {
         "loading": {
@@ -29444,14 +29452,14 @@
               }
             ]
           },
-          "fallback_text": "Waiting on replies, 2 found so far, oldest first, as of 09:00: Rao & Co, chartered accountants, ITR documents, asked Mon 14 Sep, waiting 12 days; Prestige Estates, parking allotment letter, asked Fri 18 Sep, waiting 8 days. Still reading older threads."
+          "fallback_text": "Waiting on replies, 2 found so far, oldest first, as of 09:00: Rao & Co, chartered accountants, ITR documents, asked Mon 14 Sep, waiting 12 days, past the nudge point; Prestige Estates, parking allotment letter, asked Fri 18 Sep, waiting 8 days. Still reading older threads."
         },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Waiting on replies",
-            "subtitle": "3 threads · oldest first · as of Thu 24 Sep 20:00 · couldn't refresh"
+            "subtitle": "3 threads · oldest first · as of Fri 25 Sep 20:00 · couldn't refresh"
           },
           "blocks": [
             {
@@ -29460,18 +29468,18 @@
                 {
                   "label": "Rao & Co, chartered accountants",
                   "secondary": "ITR documents · asked Mon 14 Sep",
-                  "trailing": "Waiting 12 days",
+                  "trailing": "Waiting 11 days",
                   "status": "overdue"
                 },
                 {
                   "label": "Prestige Estates",
                   "secondary": "Parking allotment letter · asked Fri 18 Sep",
-                  "trailing": "Waiting 8 days"
+                  "trailing": "Waiting 7 days"
                 },
                 {
                   "label": "Kumar Interiors",
                   "secondary": "Revised kitchen quote · asked Tue 22 Sep",
-                  "trailing": "Waiting 4 days"
+                  "trailing": "Waiting 3 days"
                 }
               ]
             }
@@ -29479,11 +29487,11 @@
           "details": {
             "sources": [
               {
-                "label": "Gmail Sent with no reply, 26 Sep 2026 09:00"
+                "label": "Gmail Sent with no reply, 25 Sep 2026 20:00"
               }
             ]
           },
-          "fallback_text": "As of Thu 24 Sep 20:00 (couldn't refresh, so a reply since then won't show). Waiting on replies, 3 threads, oldest first, nudge after 7 days: Rao & Co, chartered accountants, ITR documents, asked Mon 14 Sep, waiting 12 days, past the nudge point; Prestige Estates, parking allotment letter, asked Fri 18 Sep, waiting 8 days; Kumar Interiors, revised kitchen quote, asked Tue 22 Sep, waiting 4 days."
+          "fallback_text": "As of Fri 25 Sep 20:00 (couldn't refresh, so a reply since then won't show): waiting on replies, 3 threads, oldest first, nudge after 10 days: Rao & Co, chartered accountants, ITR documents, asked Mon 14 Sep, waiting 11 days, past the nudge point; Prestige Estates, parking allotment letter, asked Fri 18 Sep, waiting 7 days; Kumar Interiors, revised kitchen quote, asked Tue 22 Sep, waiting 3 days."
         },
         "empty": {
           "kind": "output_blocks",
@@ -29512,10 +29520,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Gmail didn't respond. Nothing was sent."
+              "detail": "Gmail didn't respond. Nothing was sent. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't check your replies: Gmail didn't respond, so I couldn't read Gmail Sent to see who you're waiting on. Nothing was sent."
+          "fallback_text": "Couldn't check your replies: Gmail didn't respond, so I couldn't read Gmail Sent to see who you're waiting on. Nothing was sent. Ask me again in a few minutes."
         }
       }
     },
@@ -29600,10 +29608,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Gmail sign-in expired. Nothing was sent."
+              "detail": "Gmail sign-in expired. Nothing was sent. Sign in again, then ask me."
             }
           ],
-          "fallback_text": "The Gmail sign-in expired, so I couldn't draft the backyard bid nudge to Dave Ortiz, Green Acre. Nothing was sent."
+          "fallback_text": "The Gmail sign-in expired, so I couldn't draft the backyard bid nudge to Dave Ortiz, Green Acre. Nothing was sent. Sign in again, then ask me."
         }
       }
     },
@@ -29863,10 +29871,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Gmail didn't respond. Nothing was archived."
+              "detail": "Gmail didn't respond. Nothing was archived. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't make the Gmail clean-up plan: Gmail didn't respond. Nothing was archived or unsubscribed."
+          "fallback_text": "Couldn't make the Gmail clean-up plan: Gmail didn't respond. Nothing was archived or unsubscribed. Ask me again in a few minutes."
         }
       }
     },
@@ -30309,10 +30317,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Gmail didn't respond. No file was made."
+              "detail": "Gmail didn't respond. No file was made. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't make the photography inquiries sheet: Gmail didn't respond. No file was made."
+          "fallback_text": "Couldn't make the photography inquiries sheet: Gmail didn't respond. No file was made. Ask me again in a few minutes."
         }
       }
     },
@@ -30396,10 +30404,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Your Mac is offline, so Messages can't be used. Nothing was sent."
+              "detail": "Your Mac is offline. Nothing was sent. Wake your Mac or connect it, then ask me."
             }
           ],
-          "fallback_text": "Couldn't draft the text to Priya on iMessage: your Mac is offline, so Messages can't be used to say you're running late. Nothing was sent."
+          "fallback_text": "Couldn't draft the text to Priya on iMessage: your Mac is offline, so Messages can't be used to say you're running late. Nothing was sent. Wake your Mac or connect it, then ask me."
         }
       }
     },
@@ -30555,7 +30563,7 @@
       "vertical": "comms",
       "kind": "card",
       "request": "Call the salon and book a trim Saturday.",
-      "says": "Booked for 11:00 on Saturday; you pay at the salon.",
+      "says": "Booked for 11:00 am on Sat 3 Oct; you pay at the salon.",
       "surface": "inline",
       "fresh": false,
       "components": [
@@ -30670,17 +30678,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Saturday is full · Kim Robinson",
-            "subtitle": "Trim · Sat 3 Oct"
+            "title": "Sat 3 Oct is full · Kim Robinson",
+            "subtitle": "Trim"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Nearest is Sun 4 Oct at 2:00 pm. Nothing was booked."
+              "detail": "Nearest is Sun 4 Oct at 2:00 pm. Nothing was booked. Say yes and I'll book it."
             }
           ],
-          "fallback_text": "Saturday is full at Kim Robinson: no trim free on Sat 3 Oct. The nearest is Sun 4 Oct at 2:00 pm. Nothing was booked."
+          "fallback_text": "Sat 3 Oct is full at Kim Robinson: no trim free that day. The nearest is Sun 4 Oct at 2:00 pm. Nothing was booked. Say yes and I'll book it."
         },
         "failed": {
           "kind": "output_blocks",
@@ -30693,10 +30701,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Rang 30 seconds at 15:20, no voicemail. Nothing was booked."
+              "detail": "No pickup at 15:20. Nothing was booked. Say yes and I'll call again at 16:00."
             }
           ],
-          "fallback_text": "No answer at Kim Robinson when I called at 15:20 to book a trim on Sat 3 Oct: it rang for 30 seconds with no voicemail. Nothing was booked."
+          "fallback_text": "No answer at Kim Robinson when I called at 15:20 to book a trim on Sat 3 Oct: it rang for 30 seconds with no voicemail. Nothing was booked. Say yes and I'll call again at 16:00."
         }
       }
     },
@@ -30836,10 +30844,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Google Calendar sign-in expired. Nothing was sent."
+              "detail": "Google Calendar sign-in expired. Nothing was sent. Sign in again, then ask me."
             }
           ],
-          "fallback_text": "The Google Calendar sign-in expired, so I couldn't draft the Maya turns 6 invite to 12 families. Nothing was sent."
+          "fallback_text": "The Google Calendar sign-in expired, so I couldn't draft the Maya turns 6 invite to 12 families. Nothing was sent. Sign in again, then ask me."
         }
       }
     },
@@ -30874,12 +30882,12 @@
               },
               {
                 "label": "Aarav's family",
-                "secondary": "Not replied · invite opened",
+                "secondary": "Not replied · invited by email",
                 "trailing": "Invited Thu 24 Sep"
               },
               {
                 "label": "The Wongs",
-                "secondary": "Not replied · invite not opened",
+                "secondary": "Not replied · invited by email",
                 "trailing": "Invited Thu 24 Sep"
               }
             ],
@@ -30901,7 +30909,7 @@
             }
           ]
         },
-        "fallback_text": "Maya turns 6 RSVPs, Sun 11 Oct, 12 families: 7 yes, 2 no, 3 not replied. Not replied: the Lims, invited by text, invited Thu 24 Sep; Aarav's family, invite opened, invited Thu 24 Sep; the Wongs, invite not opened, invited Thu 24 Sep. Replies are due Mon 5 Oct.",
+        "fallback_text": "Maya turns 6 RSVPs, Sun 11 Oct, 12 families: 7 yes, 2 no, 3 not replied. Not replied: the Lims, invited by text, invited Thu 24 Sep; Aarav's family, invited by email, invited Thu 24 Sep; the Wongs, invited by email, invited Thu 24 Sep. Replies are due Mon 5 Oct.",
         "more_label": "View not replied"
       },
       "states": {
@@ -30971,12 +30979,12 @@
                 },
                 {
                   "label": "Aarav's family",
-                  "secondary": "Not replied · invite opened",
+                  "secondary": "Not replied · invited by email",
                   "trailing": "Invited Thu 24 Sep"
                 },
                 {
                   "label": "The Wongs",
-                  "secondary": "Not replied · invite not opened",
+                  "secondary": "Not replied · invited by email",
                   "trailing": "Invited Thu 24 Sep"
                 }
               ],
@@ -30994,11 +31002,11 @@
           "details": {
             "sources": [
               {
-                "label": "Google Calendar event guests, 26 Sep 2026 17:00"
+                "label": "Google Calendar event guests, 26 Sep 2026 09:10"
               }
             ]
           },
-          "fallback_text": "As of 09:10 (couldn't refresh, so a reply since then won't show). Maya turns 6 RSVPs, Sun 11 Oct, 12 families: 7 yes, 2 no, 3 not replied. Not replied: the Lims, invited by text, invited Thu 24 Sep; Aarav's family, invite opened, invited Thu 24 Sep; the Wongs, invite not opened, invited Thu 24 Sep. Replies are due Mon 5 Oct.",
+          "fallback_text": "As of 09:10 (couldn't refresh, so a reply since then won't show). Maya turns 6 RSVPs, Sun 11 Oct, 12 families: 7 yes, 2 no, 3 not replied. Not replied: the Lims, invited by text, invited Thu 24 Sep; Aarav's family, invited by email, invited Thu 24 Sep; the Wongs, invited by email, invited Thu 24 Sep. Replies are due Mon 5 Oct.",
           "more_label": "View not replied"
         },
         "empty": {
@@ -31028,10 +31036,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Google Calendar didn't respond. Nothing was sent."
+              "detail": "Google Calendar didn't respond. Nothing was sent. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Google Calendar didn't respond, so I couldn't read the RSVPs for Maya turns 6. Nothing was sent."
+          "fallback_text": "Google Calendar didn't respond, so I couldn't read the RSVPs for Maya turns 6. Nothing was sent. Ask me again in a few minutes."
         }
       }
     },

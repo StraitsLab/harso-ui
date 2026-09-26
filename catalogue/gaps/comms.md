@@ -13,9 +13,9 @@ the playbook's.
 | comms-inbox-brief | E1 | prod-launch-status | Group counts in the subtitle; needs-you threads as rows, deadline trailing; Gmail link |
 | comms-reply-draft | E2 | prod-email-draft-team | Reply to Mrs Tan, greeting / body / sign-off; tone source in Details |
 | comms-email-sent | K1 (sent receipt, and failed = couldn't confirm) | places-table-booked | Thread, sent-from and reply watch as rows; thread link |
-| comms-waiting-on | E3 (India) | money-bills-due | Waiting threads oldest first; the one past the nudge point is `overdue` |
+| comms-waiting-on | E3 (India) | money-bills-due | Waiting threads oldest first; the one past the 10-day nudge point is `overdue`, said as "past the nudge point" in every fallback |
 | comms-nudge-draft | E3 (US) | prod-email-draft | Nudge to the landscaper, one paragraph |
-| comms-cleanup-plan | E4 proposal | shop-cart-summary | Emails to archive and unsubscribes as numbers; senders as rows; all 32 in a sheet |
+| comms-cleanup-plan | E4 proposal | delivery-cart-review (proposal, then the yes; its states) + money-portfolio (ready: numbers, rows, one secondary action) | Emails to archive and unsubscribes as numbers; top 5 senders as rows; all 32 in a sheet via one secondary action. Stale keeps that action: pattern gap P1 |
 | comms-cleanup-done | E4 receipt | shop-order-confirmed | Archived and unsubscribed as numbers; Gmail archive link |
 | comms-alert-fired | E5 | weather-alert | The school's email as the paragraph; who and when in the header |
 | comms-leads-sheet | E6 | file-expenses-sheet | Inquiry count and not-replied count; open or download the sheet |
@@ -24,7 +24,7 @@ the playbook's.
 | comms-whatsapp-cant | K2 WhatsApp (W7) | text-cant | Words only: can't send WhatsApp yet, nothing sent, the text to paste |
 | comms-call-outcome | K3 (booked; failed = no answer) | places-table-booked | Answered by, agreed, next step as rows; transcript file |
 | comms-invite-draft | K4 invite | prod-email-draft-team | The party invite to 12 families; the Calendar event link |
-| comms-rsvp-tracker | K4 RSVPs | prod-launch-status | Yes / no / not replied counts in the subtitle; not-replied families as rows |
+| comms-rsvp-tracker | K4 RSVPs | prod-launch-status (empty: money-bills-due/empty) | Yes / no / not replied counts in the subtitle; not-replied families as rows with how they were invited (Calendar reports replies only, not opens) |
 
 Two journeys share a pattern wherever they look the same on screen: every draft (E2, E3 nudge, K2, K4) is the email
 draft, and every done receipt (K1, K3) is the booking receipt.
@@ -38,6 +38,12 @@ draft, and every done receipt (K1, K3) is the booking receipt.
   "Nothing was sent" is said only where nothing was ever sent.
 - Archive is never delete: the plan and the receipt both say archived mail stays in All Mail.
 - "Read" is said only when Messages reports it; a sent-but-not-delivered text says so and gives the likely reason.
+  Google Calendar reports a guest's reply (yes / no / maybe / none), not whether the invite was opened, so the RSVP card
+  never says "opened".
+- Every failed card, and every empty card that leaves the request undone, says the next step in `status.detail` and the
+  fallback: sign in again then ask, ask again in a few minutes, wake the Mac, or say yes to a named retry. A retry that
+  would repeat a write (call, send) waits for a yes.
+- A stale card's rows, source and fallback describe one observation time.
 - The fallback carries every drawn fact and every header scope in every state (the lane audit `.lane/gen/parity.py`,
   the delivery lane's audit reused, 0 findings), and every recovery in the fallback is in `status.detail` too.
 - No example is time-sensitive (no prices, availability or quotes read live), so none is in the `fresh` list. The one
@@ -56,7 +62,16 @@ draft, and every done receipt (K1, K3) is the booking receipt.
 | Call outcome (K3) | comms-call-outcome | Transcript quotes per speaker; a live listen-in state | Transcript is a file; outcome as rows | None proposed: the transcript is a file |
 | WhatsApp (K2, W7) | comms-whatsapp-cant | No send path yet | Words only (text-cant pattern) with the text to paste | None: a capability, not a field |
 
-No pattern gap: every journey moment in the brief had an existing pattern that shows it honestly.
+## Pattern gaps (lead decides)
+
+| # | Example / state | What is missing | Nearest pattern used |
+|---|---|---|---|
+| P1 | comms-cleanup-plan stale | No example draws a stale card with numbers, rows and one action. The checker requires the 27 senders not shown to stay reachable, so the stale card keeps the sheet link | money-portfolio/ready's shape, restamped as stale |
+
+States a source doesn't draw take their shape from a named sibling: comms-inbox-brief and comms-rsvp-tracker empty
+(money-bills-due/empty), comms-reply-draft empty (prod-email-draft/empty), comms-text-read partial
+(delivery-tracking/partial). `.lane/gen/shapes.py` checks every state against its named source, including which action
+slot is filled.
 
 ## States drawn per example
 
