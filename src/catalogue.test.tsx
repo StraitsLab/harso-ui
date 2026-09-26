@@ -185,7 +185,7 @@ describe("catalogue gallery overflow and routes", () => {
     const direct = render(<CataloguePage vertical="money" mode={mode} />);
     const frames = [...direct.container.querySelectorAll(".hkl-cat-frame")].slice(0, 4).map(frame => frame.getAttribute("data-mode"));
     expect(frames).toEqual(["light", "light", "dark", "dark"]);
-  });
+  }, 60_000); // renders the full money page twice; grew past vitest's 5 s default as examples landed (CI static red since 14:34Z)
 });
 
 describe("catalogue gallery", () => {
