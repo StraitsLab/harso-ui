@@ -25,6 +25,10 @@ the contact sheets. That is why every fallback here carries each number the char
 75 of 163 documents (main answers plus states) fall back this way. The fix is the output-card renderer lanes (charts,
 status, media), not new examples.
 
+The same card skips `action` blocks unread (`src/chat/output-card.tsx:114-116`, `:145`), so `file-flashcards-deck`'s
+Download deck and `health-meds-taken`'s Pause reminders do not draw on the sheets either. The documents carry them;
+the renderer lane draws them.
+
 ## Decided on purpose (no gap)
 
 - Flashcards: the deck is a file (`file-flashcards-deck`), practice is the question card one card at a time
