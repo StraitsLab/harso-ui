@@ -154,7 +154,8 @@ function textWidth(text: string, size = AXIS, weight = 500) {
   }
   if (measurer) {
     measurer.font = `${weight} ${size}px "Instrument Sans Variable", sans-serif`;
-    return Math.ceil(measurer.measureText(text).width) + 1;
+    // Canvas cannot apply tabular-nums; tabular digits are at most ~4% wider in Instrument Sans.
+    return Math.ceil(measurer.measureText(text).width * 1.04) + 1;
   }
   return Array.from(text).reduce((width, char) => width + size * (/[\u1100-\u115f\u2e80-\ua4cf\uac00-\ud7a3\uf900-\ufaff\ufe30-\ufe4f\uff00-\uff60\uffe0-\uffe6]|\p{Extended_Pictographic}/u.test(char) ? 1 : .6), 0);
 }
@@ -268,7 +269,7 @@ function BarChart({ chart, width }: { chart: HarsoOutputChart; width: number }) 
         {h >= .5 && <path d={barPath(x, down ? zero : end, barWidth, h, down)} className={strong ? "hkc-chart-mark hkc-chart-mark--strong" : "hkc-chart-mark"} data-index={index} />}
         {strong && (() => {
           // Centred on its bar, but never past the plot's edges (a first or last bar in a narrow pane).
-          const text = formatValue(value, chart.unit), half = textWidth(text) / 2;
+          const text = formatValue(value, chart.unit), half = textWidth(text) / 2 + 2; // +2: canvas ignores tabular-nums
           const labelX = Math.min(f.plotWidth - half, Math.max(half, center(index)));
           return <text x={labelX} y={down ? end + LINE_HEIGHT : end - 5} textAnchor="middle" className="hkc-chart-value">{text}</text>;
         })()}
