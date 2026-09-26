@@ -1,0 +1,2277 @@
+{
+  "vertical": "comms",
+  "fresh": [],
+  "examples": [
+    {
+      "id": "comms-inbox-brief",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "What in my inbox actually needs me today?",
+      "says": "Three threads need you; the tax bill is the one with a deadline.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Inbox brief",
+        "X2 Domain state word"
+      ],
+      "rationale": "Counts per group in the subtitle, the needs-you threads as rows with their deadline trailing; FYI and receipts stay in Gmail.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Inbox · Sat 26 Sep",
+          "subtitle": "Last 24 h · 3 need you · 9 FYI · 6 receipts"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Mrs Tan",
+                "secondary": "Lease renewal · wants Tue or Wed",
+                "trailing": "Reply by Mon 28 Sep"
+              },
+              {
+                "label": "IRAS",
+                "secondary": "Property tax bill · GIRO not set up",
+                "trailing": "Pay by Wed 30 Sep"
+              },
+              {
+                "label": "Sam Lee",
+                "secondary": "Tokyo trip restaurants · asked Thu 24 Sep",
+                "trailing": "Waiting 2 days"
+              }
+            ],
+            "total_count": 18
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open inbox in Gmail",
+              "url": "https://mail.google.com/mail/u/0/#inbox"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail inbox, 25 Sep 2026 08:00 to 26 Sep 2026 08:00"
+            }
+          ],
+          "assumptions": [
+            "Needs you = a question to you, a deadline, or someone you often reply to"
+          ]
+        },
+        "fallback_text": "Inbox, Sat 26 Sep, last 24 h: 3 need you, 9 FYI, 6 receipts. Needs you: Mrs Tan, lease renewal, wants Tue or Wed, reply by Mon 28 Sep; IRAS, property tax bill, GIRO not set up, pay by Wed 30 Sep; Sam Lee, Tokyo trip restaurants, asked Thu 24 Sep, waiting 2 days. The 9 FYI and 6 receipts are in Gmail.",
+        "more_label": "View needs you"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Inbox · Sat 26 Sep",
+            "subtitle": "Gmail · last 24 h"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the last 24 h of your Gmail inbox for Sat 26 Sep",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a0001"
+              }
+            }
+          ],
+          "fallback_text": "Reading the last 24 h of your Gmail inbox for Sat 26 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Inbox · Sat 26 Sep",
+            "subtitle": "12 of 18 read · 2 need you so far · as of 08:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Mrs Tan",
+                  "secondary": "Lease renewal · wants Tue or Wed",
+                  "trailing": "Reply by Mon 28 Sep"
+                },
+                {
+                  "label": "IRAS",
+                  "secondary": "Property tax bill · GIRO not set up",
+                  "trailing": "Pay by Wed 30 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open inbox in Gmail",
+                "url": "https://mail.google.com/mail/u/0/#inbox"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail inbox, 26 Sep 2026 08:05; 6 threads still loading"
+              }
+            ]
+          },
+          "fallback_text": "Inbox, Sat 26 Sep, as of 08:05, 12 of 18 read, 2 need you so far: Mrs Tan, lease renewal, wants Tue or Wed, reply by Mon 28 Sep; IRAS, property tax bill, GIRO not set up, pay by Wed 30 Sep. Still reading the other 6."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Inbox · Sat 26 Sep",
+            "subtitle": "Last 24 h · 3 need you · 9 FYI · 6 receipts · as of 08:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Mrs Tan",
+                  "secondary": "Lease renewal · wants Tue or Wed",
+                  "trailing": "Reply by Mon 28 Sep"
+                },
+                {
+                  "label": "IRAS",
+                  "secondary": "Property tax bill · GIRO not set up",
+                  "trailing": "Pay by Wed 30 Sep"
+                },
+                {
+                  "label": "Sam Lee",
+                  "secondary": "Tokyo trip restaurants · asked Thu 24 Sep",
+                  "trailing": "Waiting 2 days"
+                }
+              ],
+              "total_count": 18
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open inbox in Gmail",
+                "url": "https://mail.google.com/mail/u/0/#inbox"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail inbox, 25 Sep 2026 08:00 to 26 Sep 2026 08:00"
+              }
+            ],
+            "assumptions": [
+              "Needs you = a question to you, a deadline, or someone you often reply to"
+            ]
+          },
+          "fallback_text": "As of 08:00 (couldn't refresh, so a reply since then won't show). Inbox, Sat 26 Sep, last 24 h: 3 need you, 9 FYI, 6 receipts. Needs you: Mrs Tan, lease renewal, wants Tue or Wed, reply by Mon 28 Sep; IRAS, property tax bill, GIRO not set up, pay by Wed 30 Sep; Sam Lee, Tokyo trip restaurants, asked Thu 24 Sep, waiting 2 days. The 9 FYI and 6 receipts are in Gmail.",
+          "more_label": "View needs you"
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing needs you today",
+            "subtitle": "Last 24 h · 9 FYI · 6 receipts · as of 08:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No thread asks you something or has a deadline"
+            }
+          ],
+          "fallback_text": "Nothing needs you today, Sat 26 Sep, as of 08:05: in the last 24 h no thread asks you something or has a deadline. 9 FYI and 6 receipts are in Gmail."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your inbox",
+            "subtitle": "Gmail · last 24 h"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "The Gmail sign-in expired, so I couldn't read your inbox for the last 24 h. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "comms-reply-draft",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Draft a reply to Mrs Tan saying Tuesday 6:30 works for the lease renewal.",
+      "says": "It's in your Gmail drafts, in your usual tone. Send it?",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Email draft preview"
+      ],
+      "rationale": "The draft word for word with its recipient; the tone source in Details; sending is the approval that follows, never a button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Lease renewal · reply",
+          "subtitle": "To Mrs Tan · draft"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Dear Mrs Tan,",
+                  "Tuesday 29 Sep at 6:30 pm works for me. I'll bring the signed renewal form and a cheque for the deposit top-up.",
+                  "Best regards, Abhi"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open Gmail drafts",
+              "url": "https://mail.google.com/mail/u/0/#drafts"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Written in the tone of your last 20 sent emails to Mrs Tan"
+          ]
+        },
+        "fallback_text": "Draft to Mrs Tan, not sent. Lease renewal reply. Dear Mrs Tan, Tuesday 29 Sep at 6:30 pm works for me. I'll bring the signed renewal form and a cheque for the deposit top-up. Best regards, Abhi"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lease renewal · reply",
+            "subtitle": "To Mrs Tan · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Drafting a reply to Mrs Tan on the lease renewal",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a0002"
+              }
+            }
+          ],
+          "fallback_text": "Drafting a reply to Mrs Tan on the lease renewal."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lease renewal · reply",
+            "subtitle": "To Mrs Tan · draft · her form didn't open"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Dear Mrs Tan,",
+                    "Tuesday 29 Sep at 6:30 pm works for me. I'll bring the signed renewal form and a cheque for the deposit top-up.",
+                    "Best regards, Abhi"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Gmail drafts",
+                "url": "https://mail.google.com/mail/u/0/#drafts"
+              }
+            }
+          ],
+          "details": {
+            "assumptions": [
+              "Written in the tone of your last 20 sent emails to Mrs Tan"
+            ]
+          },
+          "fallback_text": "Draft to Mrs Tan, not sent; her form didn't open, so the reply doesn't mention its terms. Lease renewal reply. Dear Mrs Tan, Tuesday 29 Sep at 6:30 pm works for me. I'll bring the signed renewal form and a cheque for the deposit top-up. Best regards, Abhi"
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lease renewal · reply",
+            "subtitle": "To Mrs Tan · draft as of 09:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Dear Mrs Tan,",
+                    "Tuesday 29 Sep at 6:30 pm works for me. I'll bring the signed renewal form and a cheque for the deposit top-up.",
+                    "Best regards, Abhi"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Gmail drafts",
+                "url": "https://mail.google.com/mail/u/0/#drafts"
+              }
+            }
+          ],
+          "details": {
+            "assumptions": [
+              "Written in the tone of your last 20 sent emails to Mrs Tan"
+            ]
+          },
+          "fallback_text": "As saved at 09:40 (couldn't re-read Gmail). Draft to Mrs Tan, not sent. Lease renewal reply. Dear Mrs Tan, Tuesday 29 Sep at 6:30 pm works for me. I'll bring the signed renewal form and a cheque for the deposit top-up. Best regards, Abhi"
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lease renewal · reply",
+            "subtitle": "To Mrs Tan"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No email from Mrs Tan in Gmail"
+            }
+          ],
+          "fallback_text": "To Mrs Tan: there's no email from her about the lease renewal in your Gmail, so there's nothing to reply to yet. Nothing was sent."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't draft the reply",
+            "subtitle": "To Mrs Tan · lease renewal"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired. Nothing was sent."
+            }
+          ],
+          "fallback_text": "The Gmail sign-in expired, so I couldn't draft the reply to Mrs Tan on the lease renewal. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "comms-email-sent",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Yes, send the email to Sam about trip restaurants.",
+      "says": "Sent. I'll tell you when she replies.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Sent receipt",
+        "Uncertain send"
+      ],
+      "rationale": "After the yes: the thread it landed in, when it went, and the reply watch as rows; a send that may have landed is never 'not sent'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sent · Trip restaurants",
+          "subtitle": "To Sam Lee · Sat 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Thread",
+                "secondary": "Tokyo trip, 9–13 Oct",
+                "trailing": "3 messages"
+              },
+              {
+                "label": "Sent from",
+                "secondary": "Your Gmail",
+                "trailing": "10:14"
+              },
+              {
+                "label": "Reply watch",
+                "secondary": "I'll tell you here when Sam answers",
+                "trailing": "Until Fri 2 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open thread in Gmail",
+              "url": "https://mail.google.com/mail/u/0/#sent/19a2c4f7e3b1d0aa"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail Sent, 26 Sep 2026 10:14"
+            }
+          ]
+        },
+        "fallback_text": "Sent to Sam Lee on Sat 26 Sep at 10:14; sent from your Gmail: trip restaurants, in the Tokyo trip, 9–13 Oct thread (3 messages). Reply watch: I'll tell you here when Sam answers, until Fri 2 Oct."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sending to Sam Lee",
+            "subtitle": "Trip restaurants"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Sending the trip restaurants email to Sam Lee from your Gmail",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a0003"
+              }
+            }
+          ],
+          "fallback_text": "Sending the trip restaurants email to Sam Lee from your Gmail."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sent · Trip restaurants",
+            "subtitle": "To Sam Lee · Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sent from",
+                  "secondary": "Your Gmail",
+                  "trailing": "10:14"
+                },
+                {
+                  "label": "Thread",
+                  "secondary": "Gmail hasn't put it in its thread yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail send reply, 26 Sep 2026 10:14"
+              }
+            ]
+          },
+          "fallback_text": "Sent to Sam Lee on Sat 26 Sep at 10:14; sent from your Gmail: trip restaurants. Gmail hasn't put it in its thread yet, so the thread is not in yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sent · Trip restaurants",
+            "subtitle": "To Sam Lee · Sat 26 Sep · as of 10:14 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Thread",
+                  "secondary": "Tokyo trip, 9–13 Oct",
+                  "trailing": "3 messages"
+                },
+                {
+                  "label": "Sent from",
+                  "secondary": "Your Gmail",
+                  "trailing": "10:14"
+                },
+                {
+                  "label": "Reply watch",
+                  "secondary": "I'll tell you here when Sam answers",
+                  "trailing": "Until Fri 2 Oct"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open thread in Gmail",
+                "url": "https://mail.google.com/mail/u/0/#sent/19a2c4f7e3b1d0aa"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail Sent, 26 Sep 2026 10:14"
+              }
+            ]
+          },
+          "fallback_text": "As of 10:14 (couldn't refresh, so a reply since then won't show). Sent to Sam Lee on Sat 26 Sep at 10:14; sent from your Gmail: trip restaurants, in the Tokyo trip, 9–13 Oct thread (3 messages). Reply watch: I'll tell you here when Sam answers, until Fri 2 Oct."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Not sent · Trip restaurants",
+            "subtitle": "To Sam Lee"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The draft was deleted before it was sent. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Not sent: the trip restaurants draft to Sam Lee was deleted before it was sent. Nothing was sent."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm it sent",
+            "subtitle": "To Sam Lee · Trip restaurants"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail didn't answer. I'll check Sent before trying again."
+            }
+          ],
+          "fallback_text": "I couldn't confirm the trip restaurants email to Sam Lee went out: Gmail didn't answer after it was sent at 10:14, so it may or may not have gone. I'll check Sent before trying again. That way Sam doesn't get it twice."
+        }
+      }
+    },
+    {
+      "id": "comms-waiting-on",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Who am I still waiting to hear back from?",
+      "says": "Rao & Co is the one to nudge first; shall I draft it?",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Waiting-on list",
+        "X2 Domain state word"
+      ],
+      "rationale": "Oldest first with its wait trailing; the one past the nudge point carries the needs-you state; nudging is a draft, then a yes.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Waiting on replies",
+          "subtitle": "3 threads · oldest first · nudge after 7 days"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Rao & Co, chartered accountants",
+                "secondary": "ITR documents · asked Mon 14 Sep",
+                "trailing": "Waiting 12 days",
+                "status": "overdue"
+              },
+              {
+                "label": "Prestige Estates",
+                "secondary": "Parking allotment letter · asked Fri 18 Sep",
+                "trailing": "Waiting 8 days"
+              },
+              {
+                "label": "Kumar Interiors",
+                "secondary": "Revised kitchen quote · asked Tue 22 Sep",
+                "trailing": "Waiting 4 days"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail Sent with no reply, 26 Sep 2026 09:00"
+            }
+          ]
+        },
+        "fallback_text": "Waiting on replies, 3 threads, oldest first, nudge after 7 days: Rao & Co, chartered accountants, ITR documents, asked Mon 14 Sep, waiting 12 days, past the nudge point; Prestige Estates, parking allotment letter, asked Fri 18 Sep, waiting 8 days; Kumar Interiors, revised kitchen quote, asked Tue 22 Sep, waiting 4 days."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Waiting on replies",
+            "subtitle": "Gmail Sent"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your Gmail Sent for threads waiting on replies",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a0004"
+              }
+            }
+          ],
+          "fallback_text": "Reading your Gmail Sent for threads waiting on replies."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Waiting on replies",
+            "subtitle": "2 found so far · oldest first · as of 09:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Rao & Co, chartered accountants",
+                  "secondary": "ITR documents · asked Mon 14 Sep",
+                  "trailing": "Waiting 12 days",
+                  "status": "overdue"
+                },
+                {
+                  "label": "Prestige Estates",
+                  "secondary": "Parking allotment letter · asked Fri 18 Sep",
+                  "trailing": "Waiting 8 days"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail Sent, 26 Sep 2026 09:00; older threads still loading"
+              }
+            ]
+          },
+          "fallback_text": "Waiting on replies, 2 found so far, oldest first, as of 09:00: Rao & Co, chartered accountants, ITR documents, asked Mon 14 Sep, waiting 12 days; Prestige Estates, parking allotment letter, asked Fri 18 Sep, waiting 8 days. Still reading older threads."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Waiting on replies",
+            "subtitle": "3 threads · oldest first · as of Thu 24 Sep 20:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Rao & Co, chartered accountants",
+                  "secondary": "ITR documents · asked Mon 14 Sep",
+                  "trailing": "Waiting 12 days",
+                  "status": "overdue"
+                },
+                {
+                  "label": "Prestige Estates",
+                  "secondary": "Parking allotment letter · asked Fri 18 Sep",
+                  "trailing": "Waiting 8 days"
+                },
+                {
+                  "label": "Kumar Interiors",
+                  "secondary": "Revised kitchen quote · asked Tue 22 Sep",
+                  "trailing": "Waiting 4 days"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail Sent with no reply, 26 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "As of Thu 24 Sep 20:00 (couldn't refresh, so a reply since then won't show). Waiting on replies, 3 threads, oldest first, nudge after 7 days: Rao & Co, chartered accountants, ITR documents, asked Mon 14 Sep, waiting 12 days, past the nudge point; Prestige Estates, parking allotment letter, asked Fri 18 Sep, waiting 8 days; Kumar Interiors, revised kitchen quote, asked Tue 22 Sep, waiting 4 days."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Not waiting on anyone",
+            "subtitle": "Gmail Sent · last 30 days · as of 09:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Every email you sent in 30 days has a reply"
+            }
+          ],
+          "fallback_text": "Not waiting on anyone as of 09:00: every email in your Gmail Sent from the last 30 days has a reply."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check your replies",
+            "subtitle": "Gmail Sent"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail didn't respond. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn't check your replies: Gmail didn't respond, so I couldn't read Gmail Sent to see who you're waiting on. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "comms-nudge-draft",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Draft a nudge to the landscaper about the bid if he hasn't replied.",
+      "says": "He hasn't replied in 8 days, so here's a short nudge. Send it?",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Email draft preview",
+        "Follow-up nudge"
+      ],
+      "rationale": "The nudge word for word and who it goes to; nothing is sent until the yes that follows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Backyard bid · nudge",
+          "subtitle": "To Dave Ortiz, Green Acre · draft"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Hi Dave, just checking in on the backyard bid we talked about on 18 Sep. We'd like to decide by Fri 2 Oct, so a rough number is fine for now. Thanks, Abhi"
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Draft to Dave Ortiz, Green Acre, not sent. Backyard bid nudge. Hi Dave, just checking in on the backyard bid we talked about on 18 Sep. We'd like to decide by Fri 2 Oct, so a rough number is fine for now. Thanks, Abhi"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Backyard bid · nudge",
+            "subtitle": "To Dave Ortiz, Green Acre · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Drafting the backyard bid nudge to Dave Ortiz, Green Acre",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a0005"
+              }
+            }
+          ],
+          "fallback_text": "Drafting the backyard bid nudge to Dave Ortiz, Green Acre."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Backyard bid · nudge",
+            "subtitle": "To Dave Ortiz, Green Acre"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Dave replied on Thu 24 Sep, so no nudge is needed"
+            }
+          ],
+          "fallback_text": "No backyard bid nudge needed to Dave Ortiz, Green Acre: he replied on Thu 24 Sep. Nothing was sent."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't draft the nudge",
+            "subtitle": "To Dave Ortiz, Green Acre"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired. Nothing was sent."
+            }
+          ],
+          "fallback_text": "The Gmail sign-in expired, so I couldn't draft the backyard bid nudge to Dave Ortiz, Green Acre. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "comms-cleanup-plan",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Archive promos and unsubscribe from lists I never open.",
+      "says": "That's the plan; shall I go ahead?",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Clean-up proposal",
+        "Proposal before approval"
+      ],
+      "rationale": "What will happen as two numbers, the biggest senders as rows with what happens to each; the full list is a sheet; then the yes.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Clean-up plan · Gmail",
+          "subtitle": "Top 5 of 32 senders · none opened in 6 months"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "1,240",
+                "label": "Emails to archive"
+              },
+              {
+                "value": "18",
+                "label": "Unsubscribes"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Lazada",
+                "secondary": "212 emails · one-click unsubscribe",
+                "trailing": "Archive, unsubscribe"
+              },
+              {
+                "label": "Zalora",
+                "secondary": "180 emails · one-click unsubscribe",
+                "trailing": "Archive, unsubscribe"
+              },
+              {
+                "label": "Grab promos",
+                "secondary": "140 emails · receipts kept",
+                "trailing": "Archive only"
+              },
+              {
+                "label": "Klook",
+                "secondary": "96 emails · unsubscribe on its web page",
+                "trailing": "Archive, unsubscribe"
+              },
+              {
+                "label": "Agoda",
+                "secondary": "88 emails · unsubscribe on its web page",
+                "trailing": "Archive, unsubscribe"
+              }
+            ],
+            "total_count": 32
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open all 32 senders",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c0a0f02"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail, 26 Mar to 26 Sep 2026, read 10:30"
+            }
+          ],
+          "assumptions": [
+            "Archive only: nothing is deleted; archived mail stays in All Mail",
+            "Receipts, bookings and bank mail are kept"
+          ]
+        },
+        "fallback_text": "Gmail clean-up plan, top 5 of 32 senders, none opened in 6 months: archive 1,240 emails and unsubscribe from 18. Lazada 212 emails, one-click unsubscribe, archive, unsubscribe; Zalora 180 emails, one-click unsubscribe, archive, unsubscribe; Grab promos 140 emails, receipts kept, archive only; Klook 96 emails, unsubscribe on its web page, archive, unsubscribe; Agoda 88 emails, unsubscribe on its web page, archive, unsubscribe. Nothing is deleted. Nothing changes until you say yes.",
+        "more_label": "View top 5 senders"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Clean-up plan · Gmail",
+            "subtitle": "Senders you never open"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Finding senders you never open in Gmail for the clean-up plan",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a0006"
+              }
+            }
+          ],
+          "fallback_text": "Finding senders you never open in Gmail for the clean-up plan."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Clean-up plan · Gmail",
+            "subtitle": "Top 2 of 14 senders so far · 3 of 6 months read"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "520",
+                  "label": "Emails to archive"
+                },
+                {
+                  "value": "9",
+                  "label": "Unsubscribes"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Lazada",
+                  "secondary": "212 emails · one-click unsubscribe",
+                  "trailing": "Archive, unsubscribe"
+                },
+                {
+                  "label": "Zalora",
+                  "secondary": "180 emails · one-click unsubscribe",
+                  "trailing": "Archive, unsubscribe"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail, 26 Jun to 26 Sep 2026; older mail still loading"
+              }
+            ]
+          },
+          "fallback_text": "Gmail clean-up plan so far, top 2 of 14 senders so far, 3 of 6 months read: archive 520 emails and unsubscribe from 9. Lazada 212 emails, one-click unsubscribe, archive, unsubscribe; Zalora 180 emails, one-click unsubscribe, archive, unsubscribe. I'll finish the count before asking you."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Clean-up plan · Gmail",
+            "subtitle": "Top 5 of 32 senders · as of 10:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "1,240",
+                  "label": "Emails to archive"
+                },
+                {
+                  "value": "18",
+                  "label": "Unsubscribes"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Lazada",
+                  "secondary": "212 emails · one-click unsubscribe",
+                  "trailing": "Archive, unsubscribe"
+                },
+                {
+                  "label": "Zalora",
+                  "secondary": "180 emails · one-click unsubscribe",
+                  "trailing": "Archive, unsubscribe"
+                },
+                {
+                  "label": "Grab promos",
+                  "secondary": "140 emails · receipts kept",
+                  "trailing": "Archive only"
+                },
+                {
+                  "label": "Klook",
+                  "secondary": "96 emails · unsubscribe on its web page",
+                  "trailing": "Archive, unsubscribe"
+                },
+                {
+                  "label": "Agoda",
+                  "secondary": "88 emails · unsubscribe on its web page",
+                  "trailing": "Archive, unsubscribe"
+                }
+              ],
+              "total_count": 32
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open all 32 senders",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c0a0f02"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail, 26 Mar to 26 Sep 2026, read 10:30"
+              }
+            ],
+            "assumptions": [
+              "Archive only: nothing is deleted; archived mail stays in All Mail",
+              "Receipts, bookings and bank mail are kept"
+            ]
+          },
+          "fallback_text": "As of 10:30 (couldn't refresh, so the counts may have grown). Gmail clean-up plan, top 5 of 32 senders, none opened in 6 months: archive 1,240 emails and unsubscribe from 18. Lazada 212 emails, one-click unsubscribe, archive, unsubscribe; Zalora 180 emails, one-click unsubscribe, archive, unsubscribe; Grab promos 140 emails, receipts kept, archive only; Klook 96 emails, unsubscribe on its web page, archive, unsubscribe; Agoda 88 emails, unsubscribe on its web page, archive, unsubscribe. Nothing is deleted. Nothing changes until you say yes.",
+          "more_label": "View top 5 senders"
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing to clean up",
+            "subtitle": "Gmail · last 6 months"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "You open every list you get at least now and then"
+            }
+          ],
+          "fallback_text": "Nothing to clean up in Gmail for the last 6 months: you open every list you get at least now and then. Nothing was changed."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't make the clean-up plan",
+            "subtitle": "Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail didn't respond. Nothing was archived."
+            }
+          ],
+          "fallback_text": "Couldn't make the Gmail clean-up plan: Gmail didn't respond. Nothing was archived or unsubscribed."
+        }
+      }
+    },
+    {
+      "id": "comms-cleanup-done",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Yes, clean it up.",
+      "says": "Done. Two lists need their own web page to unsubscribe.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Clean-up receipt"
+      ],
+      "rationale": "After the yes: what was archived and how many unsubscribes were confirmed as the two numbers; the archive is one link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Cleaned up · Gmail",
+          "subtitle": "32 senders · Sat 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "1,240",
+                "label": "Archived"
+              },
+              {
+                "value": "16 of 18",
+                "label": "Unsubscribed"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open archive in Gmail",
+              "url": "https://mail.google.com/mail/u/0/#label/Harso+clean-up"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail and list-unsubscribe replies, 26 Sep 2026 10:41"
+            }
+          ]
+        },
+        "fallback_text": "Gmail cleaned up on Sat 26 Sep across 32 senders: 1,240 emails archived (still in All Mail, nothing deleted) and 16 of 18 unsubscribed. Klook and Agoda unsubscribe on their own web pages; I can open them for you."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cleaning up Gmail",
+            "subtitle": "32 senders"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Cleaning up Gmail: archiving mail from 32 senders",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a0007"
+              }
+            }
+          ],
+          "fallback_text": "Cleaning up Gmail: archiving mail from 32 senders."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cleaned up · Gmail",
+            "subtitle": "32 senders · Sat 26 Sep · as of 10:41"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "1,240",
+                  "label": "Archived"
+                },
+                {
+                  "value": "Not known",
+                  "label": "Unsubscribed"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open archive in Gmail",
+                "url": "https://mail.google.com/mail/u/0/#label/Harso+clean-up"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail, 26 Sep 2026 10:41; unsubscribe replies still coming in"
+              }
+            ]
+          },
+          "fallback_text": "Gmail cleaned up on Sat 26 Sep across 32 senders, as of 10:41: 1,240 emails archived (still in All Mail, nothing deleted). Unsubscribed: not known yet; the lists haven't all confirmed."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cleaned up · Gmail",
+            "subtitle": "32 senders · Sat 26 Sep · as of 10:41 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "1,240",
+                  "label": "Archived"
+                },
+                {
+                  "value": "16 of 18",
+                  "label": "Unsubscribed"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open archive in Gmail",
+                "url": "https://mail.google.com/mail/u/0/#label/Harso+clean-up"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail and list-unsubscribe replies, 26 Sep 2026 10:41"
+              }
+            ]
+          },
+          "fallback_text": "As of 10:41 (couldn't refresh). Gmail cleaned up on Sat 26 Sep across 32 senders: 1,240 emails archived (still in All Mail, nothing deleted) and 16 of 18 unsubscribed. Klook and Agoda unsubscribe on their own web pages; I can open them for you."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing was archived",
+            "subtitle": "32 senders · Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Those 32 senders had no mail left in the inbox"
+            }
+          ],
+          "fallback_text": "Nothing was archived on Sat 26 Sep: those 32 senders had no mail left in the inbox."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the clean-up",
+            "subtitle": "32 senders · Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail stopped answering. I'll check what's archived before trying again."
+            }
+          ],
+          "fallback_text": "I couldn't confirm the Gmail clean-up of 32 senders: Gmail stopped answering partway, so some mail may be archived. I'll check what's archived before trying again. Nothing was deleted."
+        }
+      }
+    },
+    {
+      "id": "comms-alert-fired",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Tell me the moment the school emails about tryouts.",
+      "says": "The school just wrote: sign-up closes Wed 30 Sep.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Alert fired",
+        "Email alert"
+      ],
+      "rationale": "The alert is the answer: who wrote and when in the header, the facts to act on as one paragraph, the ended watch in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tryouts email from Raffles Girls' Primary",
+          "subtitle": "Netball CCA · Sat 26 Sep · arrived 14:02"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Tryouts are Sat 3 Oct, 8:30 am at the school field, for P3 to P6. Bring sports shoes and a water bottle. Sign-up closes Wed 30 Sep in Parents Gateway."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Email from Raffles Girls' Primary, 26 Sep 2026 14:02"
+            }
+          ],
+          "assumptions": [
+            "The watch for this email ended with this match; nothing was replied to"
+          ]
+        },
+        "fallback_text": "Tryouts email from Raffles Girls' Primary, netball CCA, Sat 26 Sep, arrived 14:02: Tryouts are Sat 3 Oct, 8:30 am at the school field, for P3 to P6. Bring sports shoes and a water bottle. Sign-up closes Wed 30 Sep in Parents Gateway. The watch ended with this match; nothing was replied to."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tryouts email from Raffles Girls' Primary",
+            "subtitle": "Netball CCA · arrived 14:02"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading tryouts email, Raffles Girls' Primary, netball CCA, arrived 14:02",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a0008"
+              }
+            }
+          ],
+          "fallback_text": "Reading tryouts email, Raffles Girls' Primary, netball CCA, arrived 14:02."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tryouts email from Raffles Girls' Primary",
+            "subtitle": "Netball CCA · Sat 26 Sep · arrived 14:02 · the PDF didn't open"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Tryouts are Sat 3 Oct for P3 to P6. The time and what to bring are in the attached PDF, which didn't open."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Email from Raffles Girls' Primary, 26 Sep 2026 14:02"
+              }
+            ],
+            "assumptions": [
+              "The watch for this email ended with this match; nothing was replied to"
+            ]
+          },
+          "fallback_text": "Tryouts email from Raffles Girls' Primary, netball CCA, Sat 26 Sep, arrived 14:02: tryouts are Sat 3 Oct for P3 to P6. The time and what to bring are in the attached PDF; the PDF didn't open, so read it in Gmail."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't open the tryouts email",
+            "subtitle": "Raffles Girls' Primary · Sat 26 Sep · arrived 14:02"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired. Open it in Gmail; the watch ended."
+            }
+          ],
+          "fallback_text": "A tryouts email from Raffles Girls' Primary on Sat 26 Sep, arrived 14:02, but the Gmail sign-in expired, so I couldn't open it. Open it in Gmail; the watch ended."
+        }
+      }
+    },
+    {
+      "id": "comms-leads-sheet",
+      "vertical": "comms",
+      "kind": "file",
+      "request": "Put every photography inquiry from my email into a sheet.",
+      "says": "Every inquiry since July is in a sheet, newest first.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Lead extraction",
+        "Sheet (XLSX/CSV)"
+      ],
+      "rationale": "23 rows is a sheet, not a card; the card counts them, names the ones waiting on you, and opens the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Photography inquiries",
+          "subtitle": "1 Jul to 26 Sep · 23 inquiries · XLSX"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "23",
+                "label": "Inquiries"
+              },
+              {
+                "value": "6",
+                "label": "Not replied"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open sheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c0a0f06"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c0a0f06"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail inquiries and contact-form emails, 1 Jul to 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Photography inquiries, 1 Jul to 26 Sep: 23 inquiries in a spreadsheet (XLSX) in your Library, one row each with name, email, date, shoot type and budget; 6 are not replied."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Photography inquiries",
+            "subtitle": "1 Jul to 26 Sep · XLSX"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading photography inquiries in Gmail, 1 Jul to 26 Sep, into an XLSX",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a0009"
+              }
+            }
+          ],
+          "fallback_text": "Reading photography inquiries in Gmail, 1 Jul to 26 Sep, into an XLSX."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Photography inquiries",
+            "subtitle": "1 Aug to 26 Sep · 2 of 3 months · XLSX"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "15",
+                  "label": "Inquiries so far"
+                },
+                {
+                  "value": "4",
+                  "label": "Not replied"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open sheet",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c0a0f07"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail, 1 Aug to 26 Sep 2026; July didn't load"
+              }
+            ]
+          },
+          "fallback_text": "Photography inquiries, 1 Aug to 26 Sep, 2 of 3 months: 15 inquiries so far in a spreadsheet (XLSX) in your Library; 4 are not replied. July's mail didn't load, so its inquiries are not in it."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No photography inquiries",
+            "subtitle": "1 Jul to 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No email matched, so no sheet was made"
+            }
+          ],
+          "fallback_text": "No photography inquiries in your Gmail from 1 Jul to 26 Sep: no email matched, so no sheet was made."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't make the sheet",
+            "subtitle": "Photography inquiries"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail didn't respond. No file was made."
+            }
+          ],
+          "fallback_text": "Couldn't make the photography inquiries sheet: Gmail didn't respond. No file was made."
+        }
+      }
+    },
+    {
+      "id": "comms-text-draft",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Text my wife I'll be 20 minutes late.",
+      "says": "Here's the text. Send it from your Mac's Messages?",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Message draft preview"
+      ],
+      "rationale": "The text word for word with who gets it and how; sending is the approval that follows, never a button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Running late",
+          "subtitle": "To Priya · iMessage · draft"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Running about 20 min late, stuck on the PIE. Start dinner without me. Be home by 7:50."
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Draft text to Priya by iMessage, not sent. Running late. Running about 20 min late, stuck on the PIE. Start dinner without me. Be home by 7:50."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Running late",
+            "subtitle": "To Priya · iMessage · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Drafting the running late text to Priya on iMessage",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a000a"
+              }
+            }
+          ],
+          "fallback_text": "Drafting the running late text to Priya on iMessage."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Running late",
+            "subtitle": "To Priya"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No Priya in your contacts. Tell me her number."
+            }
+          ],
+          "fallback_text": "To Priya: I found no Priya in your contacts, so there's no running late text to send yet. Tell me her number. Nothing was sent."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't draft the text",
+            "subtitle": "To Priya · iMessage"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Your Mac is offline, so Messages can't be used. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn't draft the text to Priya on iMessage: your Mac is offline, so Messages can't be used to say you're running late. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "comms-text-read",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Did Priya get my text?",
+      "says": "Yes, she's read it.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Message status",
+        "X2 Domain state word"
+      ],
+      "rationale": "Steps as rows, the latest first with its time; 'read' is said only when Messages reports it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Priya read it",
+          "subtitle": "Running late · iMessage · Sat 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Read",
+                "secondary": "Priya",
+                "trailing": "18:07"
+              },
+              {
+                "label": "Delivered",
+                "secondary": "Priya's iPhone",
+                "trailing": "18:05"
+              },
+              {
+                "label": "Sent",
+                "secondary": "From your Mac",
+                "trailing": "18:05"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Running late text to Priya by iMessage, Sat 26 Sep: read by Priya at 18:07; delivered to Priya's iPhone at 18:05; sent from your Mac at 18:05."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Running late",
+            "subtitle": "To Priya · iMessage"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking Messages for the running late text to Priya on iMessage",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a000b"
+              }
+            }
+          ],
+          "fallback_text": "Checking Messages for the running late text to Priya on iMessage."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sent, not delivered yet",
+            "subtitle": "Running late · iMessage · Sat 26 Sep · as of 18:06"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sent",
+                  "secondary": "From your Mac",
+                  "trailing": "18:05"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Running late text to Priya by iMessage, Sat 26 Sep, as of 18:06: sent from your Mac at 18:05, not delivered yet. Her phone may be off."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Priya read it",
+            "subtitle": "Running late · iMessage · Sat 26 Sep · as of 18:07 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Read",
+                  "secondary": "Priya",
+                  "trailing": "18:07"
+                },
+                {
+                  "label": "Delivered",
+                  "secondary": "Priya's iPhone",
+                  "trailing": "18:05"
+                },
+                {
+                  "label": "Sent",
+                  "secondary": "From your Mac",
+                  "trailing": "18:05"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "As of 18:07 (couldn't refresh; your Mac went offline). Running late text to Priya by iMessage, Sat 26 Sep: read by Priya at 18:07; delivered to Priya's iPhone at 18:05; sent from your Mac at 18:05."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm it sent",
+            "subtitle": "Running late · to Priya"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Mac went offline mid-send. I'll check Messages before trying again."
+            }
+          ],
+          "fallback_text": "I couldn't confirm the running late text to Priya was sent: your Mac went offline mid-send, so it may or may not have gone. I'll check Messages before trying again. That way she doesn't get it twice."
+        }
+      }
+    },
+    {
+      "id": "comms-whatsapp-cant",
+      "vertical": "comms",
+      "kind": "text",
+      "request": "WhatsApp the building committee group that the lift is fixed.",
+      "reply": "I can't send WhatsApp messages yet, so nothing was sent. You can paste this into the group: The lift at Block 12 is fixed and running again.",
+      "surface": "text",
+      "components": [
+        "Boundary"
+      ],
+      "rationale": "Sending on WhatsApp isn't built yet: name the boundary, say nothing was sent, and give the words to paste.",
+      "document": null
+    },
+    {
+      "id": "comms-call-outcome",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Call the salon and book a trim Saturday.",
+      "says": "Booked for 11:00 on Saturday; you pay at the salon.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Call outcome",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the call: who answered, what was agreed and what happens next as rows; the transcript is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked by phone · Kim Robinson",
+          "subtitle": "Trim · Sat 3 Oct · 11:00 am"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Answered by",
+                "secondary": "Mei Ling, front desk",
+                "trailing": "15:20, 3 min"
+              },
+              {
+                "label": "Agreed",
+                "secondary": "Trim with Jason, pay at the salon",
+                "trailing": "S$68"
+              },
+              {
+                "label": "Next step",
+                "secondary": "They'll text a reminder",
+                "trailing": "Fri 2 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open transcript",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c0a0f08"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Harso call to Kim Robinson, 26 Sep 2026 15:20"
+            }
+          ],
+          "assumptions": [
+            "Harso said it was calling for you at the start of the call"
+          ]
+        },
+        "fallback_text": "Booked by phone at Kim Robinson: trim on Sat 3 Oct at 11:00 am. Answered by Mei Ling, front desk, at 15:20, 3 min; agreed: trim with Jason, pay at the salon, S$68; next step, they'll text a reminder on Fri 2 Oct. The transcript is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Calling Kim Robinson",
+            "subtitle": "Trim · Sat 3 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Calling Kim Robinson to book a trim on Sat 3 Oct",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a000c"
+              }
+            }
+          ],
+          "fallback_text": "Calling Kim Robinson to book a trim on Sat 3 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked by phone · Kim Robinson",
+            "subtitle": "Trim · Sat 3 Oct · 11:00 am"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Answered by",
+                  "secondary": "Mei Ling, front desk",
+                  "trailing": "15:20, 3 min"
+                },
+                {
+                  "label": "Price",
+                  "secondary": "Not said on the call",
+                  "trailing": "Not known"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open transcript",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c0a0f08"
+              }
+            }
+          ],
+          "fallback_text": "Booked by phone at Kim Robinson: trim on Sat 3 Oct at 11:00 am. Answered by Mei Ling, front desk, at 15:20, 3 min. The price was not said on the call, so it's not known. The transcript is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Saturday is full · Kim Robinson",
+            "subtitle": "Trim · Sat 3 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nearest is Sun 4 Oct at 2:00 pm. Nothing was booked."
+            }
+          ],
+          "fallback_text": "Saturday is full at Kim Robinson: no trim free on Sat 3 Oct. The nearest is Sun 4 Oct at 2:00 pm. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No answer at Kim Robinson",
+            "subtitle": "Trim · Sat 3 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Rang 30 seconds at 15:20, no voicemail. Nothing was booked."
+            }
+          ],
+          "fallback_text": "No answer at Kim Robinson when I called at 15:20 to book a trim on Sat 3 Oct: it rang for 30 seconds with no voicemail. Nothing was booked."
+        }
+      }
+    },
+    {
+      "id": "comms-invite-draft",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Draft the invite for Maya's birthday and send it to her class parents.",
+      "says": "Here's the invite for 12 families. Send it?",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Invite draft preview"
+      ],
+      "rationale": "The invite word for word with how many get it and how; replies come back on the invite, so no form is needed.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Maya turns 6",
+          "subtitle": "To 12 families · Google Calendar invite · draft"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Hi everyone,",
+                  "Maya turns 6. Join us on Sun 11 Oct, 3 to 5 pm, at the Bishan Park playground, pavilion 2. Cake, games and a bubble show; the food is vegetarian and nut-free.",
+                  "Please reply Yes or No on the invite by Mon 5 Oct. Abhi and Priya"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open event in Calendar",
+              "url": "https://calendar.google.com/calendar/u/0/r/eventedit/bWF5YS02dGgtYmlydGhkYXk"
+            }
+          }
+        ],
+        "fallback_text": "Draft Google Calendar invite to 12 families, not sent. Maya turns 6. Hi everyone, Maya turns 6. Join us on Sun 11 Oct, 3 to 5 pm, at the Bishan Park playground, pavilion 2. Cake, games and a bubble show; the food is vegetarian and nut-free. Please reply Yes or No on the invite by Mon 5 Oct. Abhi and Priya"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Maya turns 6",
+            "subtitle": "To 12 families · Google Calendar invite · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Drafting the Maya turns 6 invite to 12 families as a Google Calendar invite",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a000d"
+              }
+            }
+          ],
+          "fallback_text": "Drafting the Maya turns 6 invite to 12 families as a Google Calendar invite."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Maya turns 6",
+            "subtitle": "To 11 of 12 families · Google Calendar invite · draft · no email for the Lims"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Hi everyone,",
+                    "Maya turns 6. Join us on Sun 11 Oct, 3 to 5 pm, at the Bishan Park playground, pavilion 2. Cake, games and a bubble show; the food is vegetarian and nut-free.",
+                    "Please reply Yes or No on the invite by Mon 5 Oct. Abhi and Priya"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open event in Calendar",
+                "url": "https://calendar.google.com/calendar/u/0/r/eventedit/bWF5YS02dGgtYmlydGhkYXk"
+              }
+            }
+          ],
+          "fallback_text": "Draft Google Calendar invite to 11 of 12 families, not sent; I found no email for the Lims. Maya turns 6. Hi everyone, Maya turns 6. Join us on Sun 11 Oct, 3 to 5 pm, at the Bishan Park playground, pavilion 2. Cake, games and a bubble show; the food is vegetarian and nut-free. Please reply Yes or No on the invite by Mon 5 Oct. Abhi and Priya"
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Maya turns 6",
+            "subtitle": "To 12 families · Google Calendar invite · draft as of 16:10 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Hi everyone,",
+                    "Maya turns 6. Join us on Sun 11 Oct, 3 to 5 pm, at the Bishan Park playground, pavilion 2. Cake, games and a bubble show; the food is vegetarian and nut-free.",
+                    "Please reply Yes or No on the invite by Mon 5 Oct. Abhi and Priya"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open event in Calendar",
+                "url": "https://calendar.google.com/calendar/u/0/r/eventedit/bWF5YS02dGgtYmlydGhkYXk"
+              }
+            }
+          ],
+          "fallback_text": "As saved at 16:10 (couldn't re-read Calendar). Draft Google Calendar invite to 12 families, not sent. Maya turns 6. Hi everyone, Maya turns 6. Join us on Sun 11 Oct, 3 to 5 pm, at the Bishan Park playground, pavilion 2. Cake, games and a bubble show; the food is vegetarian and nut-free. Please reply Yes or No on the invite by Mon 5 Oct. Abhi and Priya"
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't draft the invite",
+            "subtitle": "Maya turns 6 · 12 families"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Nothing was sent."
+            }
+          ],
+          "fallback_text": "The Google Calendar sign-in expired, so I couldn't draft the Maya turns 6 invite to 12 families. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "comms-rsvp-tracker",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Who's coming to Maya's party?",
+      "says": "Seven families are in; three haven't answered yet.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "RSVP tracker",
+        "X2 Domain state word"
+      ],
+      "rationale": "Counts in the subtitle, the ones who haven't answered as rows; the whole guest list is the Calendar event's, reached by its link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Maya turns 6 · RSVPs",
+          "subtitle": "Sun 11 Oct · 12 families · 7 yes · 2 no · 3 not replied"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "The Lims",
+                "secondary": "Not replied · invited by text",
+                "trailing": "Invited Thu 24 Sep"
+              },
+              {
+                "label": "Aarav's family",
+                "secondary": "Not replied · invite opened",
+                "trailing": "Invited Thu 24 Sep"
+              },
+              {
+                "label": "The Wongs",
+                "secondary": "Not replied · invite not opened",
+                "trailing": "Invited Thu 24 Sep"
+              }
+            ],
+            "total_count": 12
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open event in Calendar",
+              "url": "https://calendar.google.com/calendar/u/0/r/eventedit/bWF5YS02dGgtYmlydGhkYXk"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Calendar event guests, 26 Sep 2026 17:00"
+            }
+          ]
+        },
+        "fallback_text": "Maya turns 6 RSVPs, Sun 11 Oct, 12 families: 7 yes, 2 no, 3 not replied. Not replied: the Lims, invited by text, invited Thu 24 Sep; Aarav's family, invite opened, invited Thu 24 Sep; the Wongs, invite not opened, invited Thu 24 Sep. Replies are due Mon 5 Oct.",
+        "more_label": "View not replied"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Maya turns 6 · RSVPs",
+            "subtitle": "Sun 11 Oct · Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading RSVPs for Maya turns 6, Sun 11 Oct, in Google Calendar",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c0a000e"
+              }
+            }
+          ],
+          "fallback_text": "Reading RSVPs for Maya turns 6, Sun 11 Oct, in Google Calendar."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Maya turns 6 · RSVPs",
+            "subtitle": "Sun 11 Oct · 11 of 12 families read · 1 not replied so far"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Lims",
+                  "secondary": "Not replied · invited by text",
+                  "trailing": "Invited Thu 24 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open event in Calendar",
+                "url": "https://calendar.google.com/calendar/u/0/r/eventedit/bWF5YS02dGgtYmlydGhkYXk"
+              }
+            }
+          ],
+          "fallback_text": "Maya turns 6 RSVPs, Sun 11 Oct, 11 of 12 families read, 1 not replied so far: the Lims, invited by text, invited Thu 24 Sep. The Wongs' reply hasn't loaded."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Maya turns 6 · RSVPs",
+            "subtitle": "Sun 11 Oct · 12 families · 3 not replied · as of 09:10 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Lims",
+                  "secondary": "Not replied · invited by text",
+                  "trailing": "Invited Thu 24 Sep"
+                },
+                {
+                  "label": "Aarav's family",
+                  "secondary": "Not replied · invite opened",
+                  "trailing": "Invited Thu 24 Sep"
+                },
+                {
+                  "label": "The Wongs",
+                  "secondary": "Not replied · invite not opened",
+                  "trailing": "Invited Thu 24 Sep"
+                }
+              ],
+              "total_count": 12
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open event in Calendar",
+                "url": "https://calendar.google.com/calendar/u/0/r/eventedit/bWF5YS02dGgtYmlydGhkYXk"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar event guests, 26 Sep 2026 17:00"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:10 (couldn't refresh, so a reply since then won't show). Maya turns 6 RSVPs, Sun 11 Oct, 12 families: 7 yes, 2 no, 3 not replied. Not replied: the Lims, invited by text, invited Thu 24 Sep; Aarav's family, invite opened, invited Thu 24 Sep; the Wongs, invite not opened, invited Thu 24 Sep. Replies are due Mon 5 Oct.",
+          "more_label": "View not replied"
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Everyone has replied",
+            "subtitle": "Maya turns 6 · Sun 11 Oct · 12 families"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "9 yes, 3 no; nobody left to chase"
+            }
+          ],
+          "fallback_text": "Everyone has replied for Maya turns 6 on Sun 11 Oct: of 12 families, 9 yes and 3 no, so nobody is left to chase."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read the RSVPs",
+            "subtitle": "Maya turns 6 · Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar didn't respond. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Google Calendar didn't respond, so I couldn't read the RSVPs for Maya turns 6. Nothing was sent."
+        }
+      }
+    }
+  ]
+}
