@@ -6,8 +6,8 @@
 //      output_blocks_semantic (one block per kind, action last, one pick, arity, status subject, links, 16 KiB);
 //   3. the playbook laws (row/number caps, one primary action, no reply buttons, no styling, closed state meanings,
 //      sources in Details, the card never repeats the chat sentence, Harso voice).
-// No dependency: node:fs, node:path, node:crypto, node:url only.
 //   4. the playbook file is not stale against catalogue/ (checked only for the default file).
+// No dependency: node:fs, node:path, node:crypto, node:url and ./build-catalogue.mjs only.
 // Usage: node scripts/check-output-playbook.mjs [examples.json]   (exit 0 = clean, 1 = findings)
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";

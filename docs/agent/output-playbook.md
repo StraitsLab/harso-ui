@@ -229,9 +229,10 @@ Harso's voice: calm system first, trusted colleague second.
 - **Data:** charts state a unit; a complete list of amounts adds up to the total it sits under.
 - **Shares:** no donut or pie anywhere on a card; share rows go largest first and add up to 100%.
 - **Staleness:** every card and file declares `fresh`, and each vertical file holds a per-example verdict (its
-  `fresh` list; time-sensitive components are listed in `catalogue/index.json`) that the flag must match, so a time-sensitive answer cannot opt out whatever components it uses. Time-sensitive
-  components and "right now" wording ("open now", "in stock", "currently") also force `fresh: true`. A fresh subtitle
-  carries "as of" with a clock time or a market close. The "as of" stamp is when the data was read; the date check
+  `fresh` list; time-sensitive components are listed in `catalogue/index.json`) that the flag must match, so a
+  time-sensitive answer cannot opt out whatever components it uses. Time-sensitive components and "right now" wording
+  ("open now", "in stock", "currently") also force `fresh: true`. A fresh subtitle carries "as of" with a clock time or
+  a market close. The "as of" stamp is when the data was read; the date check
   ignores it and checks only the dates the answer covers.
 
 What it cannot check: whether a link resolves or shows the promised results (nothing is fetched), whether the figures

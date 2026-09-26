@@ -32,8 +32,9 @@ try {
   for (const vertical of chosen) {
     for (const mode of ["light", "dark"]) {
       const page = await browser.newPage({ viewport: { width: 1760, height: 1000 }, colorScheme: mode, reducedMotion: "reduce" });
+      page.setDefaultTimeout(120_000); // the first load compiles the whole preview; shared hosts are slow
       const errors = [];
-      // The gallery has no favicon; every other failed request or console error fails the sheet.
+      // The gallery has no favicon; any other console error (a failed request included) fails the sheet.
       const favicon = message => message.location().url.endsWith("/favicon.ico");
       page.on("console", message => { if (message.type() === "error" && !favicon(message)) errors.push(message.text()); });
       page.on("pageerror", error => errors.push(error.message));
