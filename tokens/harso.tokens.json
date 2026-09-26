@@ -1,0 +1,108 @@
+{
+  "$description": "Harso design values: the one source. scripts/gen-tokens.mjs writes the token blocks of src/theme.css and tokens/generated/HarsoTokens.swift and HarsoTokens.kt from this file; edit here, then run npm run tokens. Keys are the CSS name after --hk-. A value is one string for every appearance, or all four appearances spelled out. Colour values are #rrggbb, rgb(r g b / a), {role} (another role), or {role} / n% (that role at n% opacity).",
+  "appearances": ["light", "dark", "cozy", "darkCozy"],
+  "color": {
+    "$description": "Boundaryless tokens, derived from the approved concept rendering (codex generated_images/01a06fa5…/call_PHmmdfdu3TmtaQuMw1I0ySuK.png). Dark tertiary is >=4.5:1 on the 8% active tint (Axe: the desktop Work row reads its meta on the selected tint). Fields and the active row are one tonal step of ink below whatever they sit on.",
+    "canvas": { "light": "#fafafb", "dark": "#131518", "cozy": "#fbf9f5", "darkCozy": "#1a1815" },
+    "canvas-deep": { "light": "#f2f4f8", "dark": "#0e1013", "cozy": "#f4f0e8", "darkCozy": "#141210" },
+    "panel": { "light": "#f4f5f7", "dark": "#17191d", "cozy": "#f5f2ec", "darkCozy": "#1e1c18" },
+    "surface": { "light": "#ffffff", "dark": "#1c1f24", "cozy": "#fffefb", "darkCozy": "#232019" },
+    "hover": { "light": "#eef0f3", "dark": "#262a31", "cozy": "#efebe4", "darkCozy": "#2e2a23" },
+    "ink": { "light": "#1f2226", "dark": "#f2f3f5", "cozy": "#2a2622", "darkCozy": "#f3ede3" },
+    "secondary": { "light": "#5b6067", "dark": "#a5aab3", "cozy": "#66605a", "darkCozy": "#b3aa9c" },
+    "tertiary": { "light": "#646a73", "dark": "#979da6", "cozy": "#68625b", "darkCozy": "#a2998c" },
+    "faint": { "light": "#a9aeb5", "dark": "#666c76", "cozy": "#b3aca3", "darkCozy": "#6f675c" },
+    "line": { "light": "#e6e8ec", "dark": "#262a30", "cozy": "#e8e3db", "darkCozy": "#2e2a24" },
+    "line-strong": { "light": "#d6d9df", "dark": "#343941", "cozy": "#d9d3c9", "darkCozy": "#3b362e" },
+    "control-line": { "light": "{ink} / 32%", "dark": "{ink} / 40%", "cozy": "{ink} / 32%", "darkCozy": "{ink} / 40%" },
+    "accent": { "light": "#1d63c8", "dark": "#6ea8ff", "cozy": "#2f6e53", "darkCozy": "#8fcbaf" },
+    "accent-mark": { "light": "#3d8bf5", "dark": "#6ea8ff", "cozy": "#3f8a6a", "darkCozy": "#8fcbaf" },
+    "accent-soft": { "light": "#dce8fb", "dark": "#1f2f47", "cozy": "#dcefe5", "darkCozy": "#223a30" },
+    "positive": { "light": "#206636", "dark": "#6cc78a", "cozy": "#206636", "darkCozy": "#6cc78a" },
+    "positive-mark": { "light": "#3f9a5c", "dark": "#6cc78a", "cozy": "#3f9a5c", "darkCozy": "#6cc78a" },
+    "attention": { "light": "#9a5b00", "dark": "#f4b95f", "cozy": "#9a5b00", "darkCozy": "#f4b95f" },
+    "attention-mark": { "light": "#f0a23a", "dark": "#f4b95f", "cozy": "#f0a23a", "darkCozy": "#f4b95f" },
+    "negative": { "light": "#b93427", "dark": "#ff7b73", "cozy": "#b93427", "darkCozy": "#ff7b73" },
+    "negative-mark": { "light": "#d4483f", "dark": "#ff7b73", "cozy": "#d4483f", "darkCozy": "#ff7b73" },
+    "inverse": { "light": "#ffffff", "dark": "#131518", "cozy": "#ffffff", "darkCozy": "#1a1815" },
+    "glass": { "light": "rgb(255 255 255 / .92)", "dark": "rgb(28 31 36 / .92)", "cozy": "rgb(255 254 251 / .92)", "darkCozy": "rgb(35 32 25 / .92)" },
+    "field-tint": { "light": "{ink} / 5%", "dark": "{ink} / 8%", "cozy": "{ink} / 5%", "darkCozy": "{ink} / 8%" },
+    "field-tint-hover": { "light": "{ink} / 8%", "dark": "{ink} / 12%", "cozy": "{ink} / 8%", "darkCozy": "{ink} / 12%" },
+    "active-tint": { "light": "{ink} / 5%", "dark": "{ink} / 8%", "cozy": "{ink} / 5%", "darkCozy": "{ink} / 8%" }
+  },
+  "tint": {
+    "$description": "The eight Sea Glass R12 colourways as the person's tint (Grayscale is the default), the way macOS accent colour works. A tint replaces only accent, accent-mark and accent-soft. Copied from weave-cloud packages/ui/src/tints.css at a6caf1190cb42a5dc1a6d005d698a2117da2911d; the desktop keeps that file for now.",
+    "grayscale": { "light": { "accent": "#1f2226", "accent-mark": "#5b6067", "accent-soft": "#ececec" }, "dark": { "accent": "#f2f3f5", "accent-mark": "#a5aab3", "accent-soft": "#37393d" } },
+    "jade": { "light": { "accent": "#01795b", "accent-mark": "#309878", "accent-soft": "#e2f0ea" }, "dark": { "accent": "#52b694", "accent-mark": "#118565", "accent-soft": "#283e3b" } },
+    "ruby": { "light": { "accent": "#b33c5c", "accent-mark": "#d9607c", "accent-soft": "#f9e3e6" }, "dark": { "accent": "#f27692", "accent-mark": "#c34b6a", "accent-soft": "#462d36" } },
+    "amber": { "light": { "accent": "#a35801", "accent-mark": "#c77323", "accent-soft": "#fbece1" }, "dark": { "accent": "#ea9449", "accent-mark": "#b16001", "accent-soft": "#49392f" } },
+    "citrine": { "light": { "accent": "#7d6b05", "accent-mark": "#9e8706", "accent-soft": "#f6f2e2" }, "dark": { "accent": "#c6ad2f", "accent-mark": "#877406", "accent-soft": "#43412f" } },
+    "lagoon": { "light": { "accent": "#077586", "accent-mark": "#1195aa", "accent-soft": "#e1f0f4" }, "dark": { "accent": "#41b4c9", "accent-mark": "#088193", "accent-soft": "#263e47" } },
+    "blue": { "light": { "accent": "#2e67b5", "accent-mark": "#4f89da", "accent-soft": "#e0eaf8" }, "dark": { "accent": "#65a1f3", "accent-mark": "#3b75c4", "accent-soft": "#27364c" } },
+    "violet": { "light": { "accent": "#824fb6", "accent-mark": "#a370da", "accent-soft": "#ede6f8" }, "dark": { "accent": "#bb88f3", "accent-mark": "#905dc4", "accent-soft": "#39314b" } }
+  },
+  "shadow": {
+    "$description": "Raised and floating surfaces (CSS only).",
+    "shadow": { "light": "0 14px 40px rgb(20 24 32 / .07), 0 1px 2px rgb(20 24 32 / .04)", "dark": "0 14px 40px rgb(0 0 0 / .35), 0 1px 2px rgb(0 0 0 / .3)", "cozy": "0 14px 40px rgb(20 24 32 / .07), 0 1px 2px rgb(20 24 32 / .04)", "darkCozy": "0 14px 40px rgb(0 0 0 / .35), 0 1px 2px rgb(0 0 0 / .3)" },
+    "shadow-float": { "light": "0 6px 24px rgb(20 24 32 / .10)", "dark": "0 6px 24px rgb(0 0 0 / .40)", "cozy": "0 6px 24px rgb(20 24 32 / .10)", "darkCozy": "0 6px 24px rgb(0 0 0 / .40)" }
+  },
+  "font": {
+    "$description": "The kit is the one font authority: Instrument Sans for the interface, Geist Mono for evidence (CSS only; theme.css imports both faces).",
+    "font": "\"Instrument Sans Variable\", sans-serif",
+    "mono": "\"Geist Mono Variable\", ui-monospace, monospace"
+  },
+  "type": {
+    "$description": "Boundaryless v3 type scale (design/DIRECTION.md rule 4): 11 caps · 12 meta · 13 chrome · 14 body · 15 title · 22 display.",
+    "text-caps": "11px",
+    "text-meta": "12px",
+    "text-chrome": "13px",
+    "text-body": "14px",
+    "text-title": "15px",
+    "text-display": "22px",
+    "caps-tracking": ".06em"
+  },
+  "radius": {
+    "$description": "v3 radius system (rule 5): 8 rows/buttons · 12 cards · 16 composer/bubbles · pill.",
+    "radius-row": "8px",
+    "radius-control": "8px",
+    "radius-card": "12px",
+    "radius-composer": "16px",
+    "radius-pill": "999px"
+  },
+  "indicator": {
+    "$description": "v3 indicators (rule 3) and icon stroke (rule 6) (CSS only).",
+    "dot": "5px",
+    "ring": "16px",
+    "stroke": "1.5"
+  },
+  "space": {
+    "$description": "Spacing steps on a 4px grid.",
+    "space-1": "4px",
+    "space-2": "8px",
+    "space-3": "12px",
+    "space-4": "16px",
+    "space-6": "24px",
+    "space-8": "32px",
+    "space-12": "48px",
+    "space-16": "64px"
+  },
+  "motion": {
+    "$description": "Motion (CSS only; reduced motion zeroes the durations in theme.css).",
+    "fast": "120ms",
+    "reveal": "240ms",
+    "ease": "cubic-bezier(.2, .7, .2, 1)"
+  },
+  "alias": {
+    "$description": "Legacy names kept so consumers keep compiling; new code uses the v3 names (CSS only). Borderless: surfaces separate by tonal step; the only stroke token left is the inset list hairline.",
+    "dark": "{ink}",
+    "hairline": "{line}",
+    "text-xs": "{text-meta}",
+    "text-sm": "{text-chrome}",
+    "text-label": "{text-chrome}",
+    "text-base": "{text-body}",
+    "text-md": "{text-body}",
+    "text-input": "{text-body}",
+    "text-user": "{text-body}",
+    "text-heading": "{text-display}"
+  }
+}

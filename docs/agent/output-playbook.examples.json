@@ -1,4 +1,5 @@
 {
+  "generated_from": "catalogue/ by scripts/build-catalogue.mjs; edit the catalogue files, never this file",
   "about": "Expected present_output documents for real requests. \"says\" is the one sentence that ends the turn after the present_output call; the app decides where it appears. \"fresh\" says whether the data is time-sensitive. Dates are relative to reference_date. Figures, places, links and ids are illustrative: artifact, routine and Work Unit ids are placeholders in the uuid7 shape. Each example is validated against the copied contract schema and the playbook laws by scripts/check-output-playbook.mjs.",
   "reference_date": "2026-09-26",
   "schema": {
@@ -8,6 +9,111 @@
     "read_at": "origin/main 7c8995307983084c96b08afe82ee1bd4fd7e02bf",
     "sha256": "470aa1aec345587faaa4004ee00a499f3044540dfbde1126ff130072fdd68f87"
   },
+  "time_sensitive_components": [
+    "F1 Balance / net worth",
+    "Balance / net worth",
+    "F2 Portfolio summary",
+    "F3 Stock / crypto quote",
+    "F4 Key stats grid",
+    "F5 Stock comparison",
+    "F6 Watchlist / movers",
+    "F13 Money transfer quote",
+    "F14 Transfer / payment tracking",
+    "S1 Product options",
+    "S3 Product detail",
+    "S5 Buyer's guide",
+    "S6 Price history / insight",
+    "S7 Price watch",
+    "S8 Deal",
+    "S11 Cart / checkout summary",
+    "S13 Delivery tracking",
+    "R1 Listing card",
+    "R2 Listing results",
+    "R3 Map + listings",
+    "J1 Job results",
+    "Flight options",
+    "Flight status / disruption",
+    "Stay comparison",
+    "Single hotel / stay detail",
+    "Reservation",
+    "Current + forecast",
+    "Severe-weather alert",
+    "Scoreboard",
+    "Standings",
+    "Fixture list",
+    "Story cluster (brief)",
+    "Story timeline",
+    "Place card",
+    "Opening hours",
+    "Menu",
+    "Map with pins"
+  ],
+  "verticals": [
+    "money",
+    "shopping",
+    "real_estate",
+    "jobs",
+    "travel",
+    "places",
+    "food",
+    "weather",
+    "sports",
+    "news",
+    "education",
+    "health",
+    "productivity",
+    "documents",
+    "data"
+  ],
+  "fresh": [
+    "money-net-worth",
+    "money-stock-quote",
+    "money-portfolio",
+    "money-transfer-quote",
+    "money-key-stats",
+    "money-stock-compare",
+    "money-transfer-tracking",
+    "stale-portfolio",
+    "shop-vacuum-options",
+    "shop-product-detail",
+    "shop-compare-phones",
+    "shop-price-history",
+    "shop-price-watch",
+    "shop-delivery",
+    "shop-cart-summary",
+    "shop-buyers-guide",
+    "shop-deal",
+    "partial-sources",
+    "home-listing-results",
+    "home-listing-card",
+    "home-rent-listings",
+    "empty-search",
+    "jobs-results",
+    "jobs-posting",
+    "travel-flights",
+    "travel-stay-areas",
+    "travel-hotel-detail",
+    "travel-flight-status",
+    "places-cafe",
+    "places-dinner-options",
+    "places-hours",
+    "places-nearby-map",
+    "food-menu",
+    "weather-now",
+    "weather-week",
+    "weather-alert",
+    "sports-score",
+    "sports-standings",
+    "sports-fixtures",
+    "news-brief",
+    "news-timeline",
+    "news-headlines",
+    "health-sleep",
+    "docs-compare-plans",
+    "data-stale",
+    "partial-days",
+    "data-sales-collections"
+  ],
   "examples": [
     {
       "id": "money-spending-month",
@@ -367,6 +473,143 @@
           ]
         },
         "fallback_text": "Portfolio US$84,210, down 0.6% this week (25 Sep close). NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%, VOO +0.2%, IWDA +0.1%, BIL 0.0%."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Portfolio",
+            "subtitle": "IBKR · reading positions"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 9 holdings",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000971"
+              }
+            }
+          ],
+          "fallback_text": "Reading your IBKR positions."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Portfolio",
+            "subtitle": "6 of 9 holdings read · as of 25 Sep close"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "NVIDIA",
+                  "secondary": "NVDA · 120 shares",
+                  "trailing": "−4.1%"
+                },
+                {
+                  "label": "Tesla",
+                  "secondary": "TSLA · 30 shares",
+                  "trailing": "−2.6%"
+                },
+                {
+                  "label": "Alphabet",
+                  "secondary": "GOOGL · 45 shares",
+                  "trailing": "+1.2%"
+                },
+                {
+                  "label": "Microsoft",
+                  "secondary": "MSFT · 40 shares",
+                  "trailing": "+0.8%"
+                },
+                {
+                  "label": "Apple",
+                  "secondary": "AAPL · 50 shares",
+                  "trailing": "+0.6%"
+                },
+                {
+                  "label": "Amazon",
+                  "secondary": "AMZN · 35 shares",
+                  "trailing": "−0.4%"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "IBKR positions, 25 Sep 2026 close"
+              }
+            ]
+          },
+          "fallback_text": "6 of 9 holdings read (25 Sep close): NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%. The value waits for the other three."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Portfolio",
+            "subtitle": "As of Fri 25 Sep close · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "US$84,210",
+                  "label": "Value"
+                },
+                {
+                  "value": "−0.6%",
+                  "label": "This week"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "IBKR positions, 25 Sep 2026 close"
+              }
+            ]
+          },
+          "fallback_text": "Portfolio US$84,210 as of Friday 25 Sep close, down 0.6% this week. Couldn’t refresh."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No holdings in this account",
+            "subtitle": "IBKR · as of 25 Sep close"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The account holds cash only"
+            }
+          ],
+          "fallback_text": "No holdings in this IBKR account as of 25 Sep close; it holds cash only."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your portfolio",
+            "subtitle": "IBKR"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "IBKR didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your IBKR portfolio: IBKR didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -751,6 +994,549 @@
           ]
         },
         "fallback_text": "INV-2041 to Acme Pte Ltd, S$8,400.00, was due 20 Sep and is 6 days overdue."
+      }
+    },
+    {
+      "id": "text-convert",
+      "vertical": "money",
+      "kind": "text",
+      "request": "What's 250 USD in SGD?",
+      "reply": "About S$322 at today's rate of 1.29.",
+      "surface": "text",
+      "components": [
+        "Currency conversion"
+      ],
+      "rationale": "One number answers it in a sentence; a card would repeat the sentence.",
+      "document": null
+    },
+    {
+      "id": "text-cant",
+      "vertical": "money",
+      "kind": "text",
+      "request": "Move S$5,000 from DBS to my OCBC account.",
+      "reply": "I can't move money between banks. Nothing was changed. You can do it in DBS digibank under Pay & Transfer.",
+      "surface": "text",
+      "components": [
+        "Boundary"
+      ],
+      "rationale": "A refusal names the boundary in plain words; a failed card is only for work that was attempted.",
+      "document": null
+    },
+    {
+      "id": "file-invoice-pdf",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Make an invoice for Acme: 20 hours of design at S$150.",
+      "says": "Invoice INV-2042 is ready and in your Library.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F11 Invoice",
+        "X6 File deliverable"
+      ],
+      "rationale": "The file is the deliverable; the card shows the amount due and opens the PDF; sending it is a separate approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "INV-2042 · Acme Pte Ltd",
+          "subtitle": "Due 26 Oct · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$3,270.00",
+                "label": "Amount due"
+              },
+              {
+                "value": "26 Oct",
+                "label": "Due"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open invoice",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download PDF",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "GST at 9% added to S$3,000.",
+            "Payment terms 30 days."
+          ]
+        },
+        "fallback_text": "Invoice INV-2042 to Acme Pte Ltd for 20 hours of design at S$150, S$3,270.00 including 9% GST, due 26 Oct. Saved to your Library."
+      }
+    },
+    {
+      "id": "file-expenses-sheet",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Put all my August expenses in a spreadsheet.",
+      "says": "All 142 transactions are in a sheet, one row each.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F9 Transactions list",
+        "Sheet"
+      ],
+      "rationale": "142 rows is a sheet, not a card; the card gives the total and opens the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "August expenses",
+          "subtitle": "142 transactions · XLSX"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$4,280",
+                "label": "Total"
+              },
+              {
+                "value": "142",
+                "label": "Transactions"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open sheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2a"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2a"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Linked accounts, synced 1 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "August expenses: 142 transactions totalling S$4,280, in a spreadsheet in your Library."
+      }
+    },
+    {
+      "id": "stale-portfolio",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What's my portfolio worth?",
+      "says": "Markets are closed, so this is Friday's close.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Stale state",
+        "F2 Portfolio summary"
+      ],
+      "rationale": "Stale is stated with its time in the subtitle, not coloured; the value still leads.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Portfolio",
+          "subtitle": "As of Fri 25 Sep close · markets closed"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "US$84,210",
+                "label": "Value"
+              },
+              {
+                "value": "−0.6%",
+                "label": "This week"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "IBKR positions, 25 Sep 2026 close"
+            }
+          ]
+        },
+        "fallback_text": "Portfolio US$84,210 as of Friday's close, down 0.6% this week."
+      }
+    },
+    {
+      "id": "money-key-stats",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Give me DBS's key stats.",
+      "says": "Its dividend yield is the standout.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "F4 Key stats grid"
+      ],
+      "rationale": "Reference data is label → value rows on the page; the one judgement is in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "DBS Group · D05",
+          "subtitle": "SGX · as of 25 Sep close"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Price",
+                "trailing": "S$42.10"
+              },
+              {
+                "label": "P/E",
+                "trailing": "11.2"
+              },
+              {
+                "label": "Dividend yield",
+                "trailing": "5.6%"
+              },
+              {
+                "label": "Market cap",
+                "trailing": "S$119.6B"
+              },
+              {
+                "label": "52-week range",
+                "trailing": "S$34.80–43.25"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SGX market data, 25 Sep 2026 close"
+            }
+          ],
+          "disclaimers": [
+            "Not financial advice."
+          ]
+        },
+        "fallback_text": "DBS (D05) S$42.10 at the 25 Sep close: P/E 11.2, dividend yield 5.6%, market cap S$119.6B, 52-week range S$34.80–43.25."
+      }
+    },
+    {
+      "id": "money-stock-compare",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How have DBS, OCBC and UOB done this year?",
+      "says": "DBS is ahead, up 18% since January.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F5 Stock comparison"
+      ],
+      "rationale": "Three tickers over one period is a three-series line; the leader is named in the sentence and highlighted.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Singapore banks this year",
+          "subtitle": "Change since 2 Jan · as of 25 Sep close"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "%",
+              "x_labels": [
+                "Jan",
+                "Mar",
+                "May",
+                "Jul",
+                "Sep"
+              ],
+              "series": [
+                {
+                  "label": "DBS",
+                  "values": [
+                    "0",
+                    "5",
+                    "9",
+                    "14",
+                    "18"
+                  ]
+                },
+                {
+                  "label": "OCBC",
+                  "values": [
+                    "0",
+                    "3",
+                    "6",
+                    "9",
+                    "11"
+                  ]
+                },
+                {
+                  "label": "UOB",
+                  "values": [
+                    "0",
+                    "2",
+                    "4",
+                    "6",
+                    "8"
+                  ]
+                }
+              ],
+              "highlight_index": 4
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SGX closing prices, 2 Jan–25 Sep 2026"
+            }
+          ],
+          "disclaimers": [
+            "Price change only; dividends excluded."
+          ]
+        },
+        "fallback_text": "Since 2 January: DBS +18%, OCBC +11%, UOB +8%, as of the 25 Sep close."
+      }
+    },
+    {
+      "id": "money-quote-estimate",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What did the contractor quote for the bathroom?",
+      "says": "It's an all-in price, with no extras listed.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F12 Quote / estimate"
+      ],
+      "rationale": "The quote total and expiry are the two numbers; line items live in the PDF; accepting happens with the contractor.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Bathroom renovation quote",
+          "subtitle": "Ah Huat Renovation · Q-3318"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$14,800",
+                "label": "Total"
+              },
+              {
+                "value": "15 Oct",
+                "label": "Valid until"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open quote",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8d"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Quote PDF from your email, 22 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Ah Huat Renovation quoted S$14,800 for the bathroom (Q-3318), valid until 15 Oct. The PDF is in your Library."
+      }
+    },
+    {
+      "id": "money-transfer-tracking",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Has my transfer to Priya arrived?",
+      "says": "Not yet. It's with her bank now.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F14 Transfer / payment tracking"
+      ],
+      "rationale": "Steps as rows, newest first; the arrival date is the title because that is the question.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arrives by Tue 29 Sep",
+          "subtitle": "S$1,000 to Priya · Wise · as of 10:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "With HDFC Bank",
+                "secondary": "Sent from Wise 26 Sep 10:20"
+              },
+              {
+                "label": "Converted to ₹61,540",
+                "secondary": "26 Sep 10:18"
+              },
+              {
+                "label": "Paid in",
+                "secondary": "26 Sep 10:05"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Track on Wise",
+              "url": "https://wise.com/activity"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Wise transfer 88213401, 26 Sep 2026 10:20"
+            }
+          ]
+        },
+        "fallback_text": "Your S$1,000 transfer to Priya (₹61,540) left Wise on 26 Sep and is with HDFC Bank; it should arrive by Tue 29 Sep."
+      }
+    },
+    {
+      "id": "money-pay-bill",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Pay the SP Group bill.",
+      "says": "It's S$212.40. Paying needs your approval in DBS.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "X7 Purchase / pay / apply / accept"
+      ],
+      "rationale": "The irreversible step is never a card button; the card links to the payee and the payment is approved there.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "SP Group electricity",
+          "subtitle": "Was due 21 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "S$212.40",
+                "secondary": "Account 93-1234567-8",
+                "trailing": "Overdue",
+                "status": "overdue"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Pay in DBS digibank",
+              "url": "https://www.dbs.com.sg/personal/digibank/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SP Group bill email, 1 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "SP Group bill S$212.40 was due 21 Sep. Pay it in DBS digibank; nothing has been paid yet."
+      }
+    },
+    {
+      "id": "file-statement",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Send me my DBS statement for August.",
+      "says": "Your August statement is in your Library.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F18 Statement / report file",
+        "X6 File deliverable"
+      ],
+      "rationale": "A statement is the bank's file; the card names the period and the two numbers people check, then opens it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "DBS statement · August",
+          "subtitle": "Multiplier account ··5521 · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$18,420",
+                "label": "Closing balance"
+              },
+              {
+                "value": "S$6,380",
+                "label": "Money out"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open statement",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a93"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a93"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS digibank e-statement, 1 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "DBS August statement for account ending 5521: closing balance S$18,420, S$6,380 out. The PDF is in your Library."
       }
     },
     {
@@ -1302,6 +2088,302 @@
       }
     },
     {
+      "id": "text-clarify-free",
+      "vertical": "shopping",
+      "kind": "text",
+      "request": "Get me a gift for my mum.",
+      "reply": "Happy to. What's your budget, and does she prefer things for the home or for herself?",
+      "surface": "text",
+      "components": [
+        "Clarifying question"
+      ],
+      "rationale": "Missing inputs are asked in words or the question card, never a speculative results card.",
+      "document": null
+    },
+    {
+      "id": "file-logo",
+      "vertical": "shopping",
+      "kind": "file",
+      "request": "Make a logo for my bakery, Crumb & Co.",
+      "says": "Here's a first direction.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Image deliverable"
+      ],
+      "rationale": "The image is the result; one Download; asking for another direction is a chat message, not a button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Crumb & Co logo",
+          "subtitle": "Direction 1 · wheat ear and ampersand"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31",
+              "alt": "Crumb & Co logo: a wheat ear forming an ampersand, warm brown on cream",
+              "aspect": "square"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31"
+            }
+          }
+        ],
+        "fallback_text": "Crumb & Co logo, direction 1: a wheat ear forming an ampersand. Saved to your Library."
+      }
+    },
+    {
+      "id": "partial-sources",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Compare TV prices across the big stores.",
+      "says": "Three of four stores answered; Best Denki's site was down.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Partial state",
+        "S1 Product options"
+      ],
+      "rationale": "Partial is honest in the subtitle ('3 of 4 stores'); the rows show what is known; the gap is in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sony Bravia 8 II 65\"",
+          "subtitle": "3 of 4 stores checked · as of 11:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Courts",
+                "secondary": "In stock · delivery Tue",
+                "trailing": "S$3,999",
+                "mark": "pick"
+              },
+              {
+                "label": "Harvey Norman",
+                "secondary": "In stock · delivery Thu",
+                "trailing": "S$4,099"
+              },
+              {
+                "label": "Challenger",
+                "secondary": "Pre-order · 10 Oct",
+                "trailing": "S$4,049"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Store websites, 26 Sep 2026 11:20"
+            }
+          ]
+        },
+        "fallback_text": "Sony Bravia 8 II 65\": Courts S$3,999 (pick), Challenger S$4,049, Harvey Norman S$4,099. Best Denki didn't respond."
+      }
+    },
+    {
+      "id": "shop-buyers-guide",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "What's the best robot vacuum for a small HDB flat?",
+      "says": "The Roborock Q7 is the best fit for most small flats.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S5 Buyer's guide"
+      ],
+      "rationale": "Top picks are rows with price; the why and the trade-offs are short sections on the page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Robot vacuums for a small flat",
+          "subtitle": "Under S$800 · 3 picks · as of 10:15"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Why the Q7",
+                "bullets": [
+                  "Mops and vacuums in one pass.",
+                  "Maps rooms, so you can skip the bedroom.",
+                  "Quiet enough to run while you work."
+                ]
+              },
+              {
+                "heading": "Trade-offs",
+                "bullets": [
+                  "The Eufy is cheaper but can't mop.",
+                  "The Dreame empties itself but costs twice as much."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Roborock Q7 Max",
+                "secondary": "Vacuum and mop · 4.5★",
+                "trailing": "S$399",
+                "mark": "pick"
+              },
+              {
+                "label": "Eufy 11S",
+                "secondary": "Vacuum only · 4.3★",
+                "trailing": "S$229"
+              },
+              {
+                "label": "Dreame L10s",
+                "secondary": "Self-emptying · 4.6★",
+                "trailing": "S$799"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "RTINGS reviews and Lazada listings, checked 26 Sep 2026 10:15"
+            }
+          ]
+        },
+        "fallback_text": "Robot vacuums for a small flat: Roborock Q7 Max S$399 (pick, vacuums and mops); Eufy 11S S$229 (vacuum only); Dreame L10s S$799 (self-emptying)."
+      }
+    },
+    {
+      "id": "shop-deal",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Is the Nintendo Switch 2 deal at Shopee real?",
+      "says": "Yes, it's a real drop, but it ends tomorrow.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S8 Deal"
+      ],
+      "rationale": "The honest reference is the typical price in the subtitle, not a struck-through 'was' price.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Nintendo Switch 2 at S$589",
+          "subtitle": "Usually S$649 · ends Sun 27 Sep · as of 10:40"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$",
+              "x_labels": [
+                "Jul",
+                "Aug",
+                "Sep",
+                "Now"
+              ],
+              "series": [
+                {
+                  "label": "Price",
+                  "values": [
+                    "649",
+                    "649",
+                    "649",
+                    "589"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "View on Shopee",
+              "url": "https://shopee.sg/nintendo-switch-2-console"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopee Mall and Courts price history, Jul–Sep 2026, checked 26 Sep 10:40"
+            }
+          ]
+        },
+        "fallback_text": "The Nintendo Switch 2 is S$589 at Shopee until Sun 27 Sep, S$60 below its usual S$649."
+      }
+    },
+    {
+      "id": "shop-order-confirmed",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Did my Courts order go through?",
+      "says": "Yes, it went through.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "S12 Order confirmation / receipt"
+      ],
+      "rationale": "Total and arrival are the two numbers; the receipt is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Order placed · Courts",
+          "subtitle": "Dyson V8 Origin · order 1044218"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$379",
+                "label": "Paid"
+              },
+              {
+                "value": "Wed 30 Sep",
+                "label": "Arrives"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open receipt",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8e"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Courts confirmation email, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Courts order 1044218 for the Dyson V8 Origin: S$379 paid, arriving Wed 30 Sep. Receipt in your Library."
+      }
+    },
+    {
       "id": "home-listing-results",
       "vertical": "real_estate",
       "kind": "card",
@@ -1685,6 +2767,264 @@
       }
     },
     {
+      "id": "file-calculator-page",
+      "vertical": "real_estate",
+      "kind": "file",
+      "request": "Make me a calculator to compare renting and buying.",
+      "says": "It's a small page you can play with in your browser; it's in your Library.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Live page (calculator)"
+      ],
+      "rationale": "No block covers a what-if tool, so it is a page file; until live pages ship it opens outside the app, so the card claims nothing more.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Rent vs buy calculator",
+          "subtitle": "Interactive page · HTML"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a39",
+              "alt": "Rent vs buy calculator: sliders for price, rent and years, with a break-even chart",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download page",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a3a"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Starts at a 25% down payment, 3.0% mortgage rate and 3% yearly rent rise; change them on the page."
+          ]
+        },
+        "fallback_text": "A rent vs buy calculator (price, rent, years, break-even) is saved as a page in your Library; download it and open it in your browser."
+      }
+    },
+    {
+      "id": "empty-search",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Any 3-room HDB in Bishan under S$500k?",
+      "says": "Nothing fits right now.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Empty state"
+      ],
+      "rationale": "Empty says so plainly, with the nearest fact as the one next step; no blank card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "No 3-room HDB in Bishan under S$500k",
+          "subtitle": "As of 10:50 · PropertyGuru and 99.co"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "empty",
+            "detail": "Cheapest listed now is S$588k"
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru and 99.co, 26 Sep 2026 10:50"
+            }
+          ]
+        },
+        "fallback_text": "No 3-room HDB flats in Bishan under S$500k right now; the cheapest listed is S$588k."
+      }
+    },
+    {
+      "id": "home-price-history",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What has Blk 824 sold for before?",
+      "says": "Prices in the block rose about 12% in two years.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R5 Price history"
+      ],
+      "rationale": "Past sales as rows, newest first, price trailing; a chart would need more points than the block has.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Blk 824 Tampines St 81",
+          "subtitle": "3-room resale · last 2 years"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "#11 · 67 sqm",
+                "secondary": "Aug 2026",
+                "trailing": "S$542k"
+              },
+              {
+                "label": "#05 · 67 sqm",
+                "secondary": "Jan 2026",
+                "trailing": "S$515k"
+              },
+              {
+                "label": "#08 · 67 sqm",
+                "secondary": "Sep 2024",
+                "trailing": "S$485k"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "HDB resale transactions",
+              "url": "https://services2.hdb.gov.sg/webapp/BB33RTIS/"
+            }
+          ]
+        },
+        "fallback_text": "Blk 824 Tampines St 81 3-room resales: S$542k (Aug 2026), S$515k (Jan 2026), S$485k (Sep 2024)."
+      }
+    },
+    {
+      "id": "home-facts",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What are the facts on that condo?",
+      "says": "It's a 2013 condo with full facilities and 99-year lease.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "R6 Facts & features"
+      ],
+      "rationale": "Facts are a two-column reference table on the page only.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "The Trilinq · facts",
+          "subtitle": "Clementi · 755 units"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Fact"
+              },
+              {
+                "label": "Detail"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "Tenure",
+                  "99-year from 2013"
+                ]
+              },
+              {
+                "cells": [
+                  "Completed",
+                  "2017"
+                ]
+              },
+              {
+                "cells": [
+                  "Facilities",
+                  "Pool, gym, tennis"
+                ]
+              },
+              {
+                "cells": [
+                  "Nearest MRT",
+                  "Clementi · 12 min"
+                ]
+              },
+              {
+                "cells": [
+                  "Maintenance",
+                  "S$380 a month"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "URA and PropertyGuru project page, Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "The Trilinq: 99-year lease from 2013, completed 2017, pool, gym and tennis, 12 min to Clementi MRT, maintenance S$380 a month."
+      }
+    },
+    {
+      "id": "home-schools",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Which primary schools are within 1 km of Blk 824?",
+      "says": "Both count for Primary 1 priority.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R9 Schools / neighbourhood"
+      ],
+      "rationale": "Schools as rows with the distance trailing; the 1 km rule sits in Details, not on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Primary schools within 1 km",
+          "subtitle": "From Blk 824 Tampines St 81"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Tampines North Primary",
+                "secondary": "Co-ed",
+                "trailing": "0.4 km"
+              },
+              {
+                "label": "St Hilda's Primary",
+                "secondary": "Co-ed · SAP",
+                "trailing": "0.9 km"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "OneMap school query",
+              "url": "https://www.onemap.gov.sg/"
+            }
+          ],
+          "assumptions": [
+            "Distance is measured as the P1 registration rule measures it."
+          ]
+        },
+        "fallback_text": "Primary schools within 1 km of Blk 824 Tampines St 81: Tampines North Primary 0.4 km, St Hilda's Primary 0.9 km."
+      }
+    },
+    {
       "id": "jobs-results",
       "vertical": "jobs",
       "kind": "card",
@@ -1979,6 +3319,188 @@
           ]
         },
         "fallback_text": "Offers, year one: Grab S$201,600 (base S$156k, bonus S$15.6k, equity S$30k); Wise S$210,000 (base S$168k, bonus S$20k, equity S$22k)."
+      }
+    },
+    {
+      "id": "file-resume",
+      "vertical": "jobs",
+      "kind": "file",
+      "request": "Tailor my CV for the Grab role.",
+      "says": "Your CV now leads with payments work and team leadership.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J8 Resume / cover letter"
+      ],
+      "rationale": "The document is the deliverable; the card lists what changed so it can be trusted without opening it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "CV · Grab Lead Product Designer",
+          "subtitle": "2 pages · PDF and Word"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Moved the payments redesign to the top",
+                  "Added team size and hiring to your current role",
+                  "Cut the 2016 agency role to one line"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open CV",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a32"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download Word file",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a33"
+            }
+          }
+        ],
+        "fallback_text": "Your CV is tailored for Grab: payments work first, team leadership added, older role shortened. PDF and Word in your Library."
+      }
+    },
+    {
+      "id": "jobs-pipeline",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Where am I in the Grab process?",
+      "says": "You're through to the last step.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J6 Application pipeline (one job)"
+      ],
+      "rationale": "Steps as rows, the current one first with its date; done steps follow.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Grab · Lead Product Designer",
+          "subtitle": "Final round Thu 1 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Final round",
+                "secondary": "Thu 1 Oct · 3 interviews",
+                "trailing": "Next"
+              },
+              {
+                "label": "Portfolio review",
+                "secondary": "22 Sep",
+                "trailing": "Passed"
+              },
+              {
+                "label": "Recruiter call",
+                "secondary": "15 Sep",
+                "trailing": "Passed"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Grab Lead Product Designer: final round Thu 1 Oct; portfolio review (22 Sep) and recruiter call (15 Sep) passed."
+      }
+    },
+    {
+      "id": "jobs-interviews",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "What interviews do I have next week?",
+      "says": "Two, both on video.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J7 Interview schedule"
+      ],
+      "rationale": "Time and company are the rows; joining happens from the calendar invite, so no Join button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Interviews next week",
+          "subtitle": "28 Sep–2 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Grab · final round",
+                "secondary": "Thu 1 Oct · Google Meet",
+                "trailing": "15:00"
+              },
+              {
+                "label": "Wise · hiring manager",
+                "secondary": "Fri 2 Oct · Zoom",
+                "trailing": "10:00"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Interviews next week: Grab final round Thu 1 Oct 15:00 (Google Meet); Wise hiring manager Fri 2 Oct 10:00 (Zoom)."
+      }
+    },
+    {
+      "id": "jobs-alert",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Tell me when new design lead roles come up.",
+      "says": "Okay. I'll tell you here when one comes up.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J10 Job alert"
+      ],
+      "rationale": "A watch: status bound to the routine, the criteria as one row, one quiet Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Design lead roles",
+          "subtitle": "LinkedIn and MyCareersFuture"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every morning at 8:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000a8f"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Looking for",
+                "secondary": "Design lead · Singapore · S$10k+/mo"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000a8f",
+              "control": "pause"
+            }
+          }
+        ],
+        "fallback_text": "Watching LinkedIn and MyCareersFuture every morning for design lead roles in Singapore paying S$10k+ a month."
       }
     },
     {
@@ -2490,6 +4012,148 @@
       }
     },
     {
+      "id": "text-time",
+      "vertical": "travel",
+      "kind": "text",
+      "request": "What time is it in Tokyo?",
+      "reply": "It's 3:40 pm in Tokyo, an hour ahead of you.",
+      "surface": "text",
+      "components": [
+        "Time zone"
+      ],
+      "rationale": "The answer is one time; a card adds chrome and nothing else.",
+      "document": null
+    },
+    {
+      "id": "file-itinerary-pdf",
+      "vertical": "travel",
+      "kind": "file",
+      "request": "Make me a printable itinerary for Kyoto.",
+      "says": "It's a two-page PDF with a map and one page per two days.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Itinerary / day-by-day plan",
+        "Document (PDF)"
+      ],
+      "rationale": "Printable means a file; the card shows its first page and opens it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Kyoto itinerary",
+          "subtitle": "14–17 Oct · 2 pages · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2b",
+              "alt": "First page of the Kyoto itinerary: map of four areas and the Day 1 plan",
+              "aspect": "3:4"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open itinerary",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2c"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2c"
+            }
+          }
+        ],
+        "fallback_text": "Your Kyoto itinerary for 14–17 Oct is a 2-page PDF in your Library."
+      }
+    },
+    {
+      "id": "fail-fares",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Any cheaper flights to Tokyo on 12 Oct?",
+      "says": "I couldn't reach the fare site just now; ask me again in a few minutes.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Failed state"
+      ],
+      "rationale": "The card says what failed and that nothing was booked; the final sentence says what to do next; no reply button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Couldn't check flight prices",
+          "subtitle": "12 Oct · 1 adult · economy"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "failed",
+            "detail": "The fare site didn't respond. Nothing was booked."
+          }
+        ],
+        "fallback_text": "Couldn't check flight prices for 12 Oct: the fare site didn't respond. Nothing was booked."
+      }
+    },
+    {
+      "id": "travel-boarding-pass",
+      "vertical": "travel",
+      "kind": "file",
+      "request": "Get my boarding pass for SQ 638.",
+      "says": "It's in your Library; add it to Wallet for the gate.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Boarding pass / ticket"
+      ],
+      "rationale": "A boarding pass is a Wallet file, not a card block; the card shows seat and gate and downloads the pass.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "SQ 638 · Singapore to Tokyo",
+          "subtitle": "Mon 28 Sep · boards 07:55 · Terminal 3"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Seat",
+                "trailing": "31A"
+              },
+              {
+                "label": "Gate",
+                "secondary": "Shown on the day, after 06:30",
+                "trailing": "Not yet"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Add to Wallet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a92"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines check-in, 26 Sep 2026 10:15"
+            }
+          ]
+        },
+        "fallback_text": "SQ 638 boarding pass: Mon 28 Sep, boards 07:55 at Terminal 3, seat 31A; the gate is shown on the day. The pass is in your Library."
+      }
+    },
+    {
       "id": "places-cafe",
       "vertical": "places",
       "kind": "card",
@@ -2794,6 +4458,19 @@
         },
         "fallback_text": "24-hour clinics nearby: Raffles Medical Holland Village 8 min; Fullerton Health Novena 12 min; Parkway Shenton Bukit Timah 15 min (call first)."
       }
+    },
+    {
+      "id": "text-yes-no",
+      "vertical": "places",
+      "kind": "text",
+      "request": "Is the Botanic Gardens free?",
+      "reply": "Yes, entry is free. Only the National Orchid Garden charges, S$15 for adults.",
+      "surface": "text",
+      "components": [
+        "Fact check"
+      ],
+      "rationale": "A yes/no with one qualifier is prose; nothing to show beyond the words.",
+      "document": null
     },
     {
       "id": "food-recipe",
@@ -3201,6 +4878,19 @@
       }
     },
     {
+      "id": "text-weather-simple",
+      "vertical": "weather",
+      "kind": "text",
+      "request": "Do I need an umbrella today?",
+      "reply": "Yes. Thunderstorms are likely after 3 pm.",
+      "surface": "text",
+      "components": [
+        "Weather yes/no"
+      ],
+      "rationale": "A yes with the reason is enough; the forecast card is for when they ask for the forecast.",
+      "document": null
+    },
+    {
       "id": "sports-score",
       "vertical": "sports",
       "kind": "card",
@@ -3395,6 +5085,19 @@
         },
         "fallback_text": "Arsenal next: v Tottenham Sat 3 Oct 19:30 (home); v PSV Thu 8 Oct 03:00 (away, Champions League); v Brighton Sun 18 Oct 21:00 (away)."
       }
+    },
+    {
+      "id": "text-single-fact",
+      "vertical": "sports",
+      "kind": "text",
+      "request": "Who won the Singapore Grand Prix in 2024?",
+      "reply": "Lando Norris won it on 22 September 2024, ahead of Max Verstappen.",
+      "surface": "text",
+      "components": [
+        "Single fact"
+      ],
+      "rationale": "One fact with one detail is prose; a scoreboard is for scores.",
+      "document": null
     },
     {
       "id": "news-brief",
@@ -3883,6 +5586,78 @@
       }
     },
     {
+      "id": "text-define",
+      "vertical": "education",
+      "kind": "text",
+      "request": "What does 'amortization' mean?",
+      "reply": "Paying off a loan in regular instalments, each covering some interest and some of the balance.",
+      "surface": "text",
+      "components": [
+        "Definition"
+      ],
+      "rationale": "A single definition is a sentence; a glossary card is for three or more terms.",
+      "document": null
+    },
+    {
+      "id": "file-lesson-handout",
+      "vertical": "education",
+      "kind": "file",
+      "request": "Make a worksheet on fractions for my 9-year-old.",
+      "says": "One page, 12 questions, answers on page 2.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Lesson handout"
+      ],
+      "rationale": "A worksheet is printed, so it is a PDF; the card shows page one.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Fractions worksheet",
+          "subtitle": "Primary 3 · 2 pages · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a34",
+              "alt": "Worksheet page 1: 12 fraction questions with pizza pictures",
+              "aspect": "3:4"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open worksheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a35"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a35"
+            }
+          }
+        ],
+        "fallback_text": "A 2-page fractions worksheet for Primary 3 (12 questions, answers on page 2) is in your Library."
+      }
+    },
+    {
+      "id": "text-flashcards",
+      "vertical": "education",
+      "kind": "text",
+      "request": "Quiz me on Japanese verbs.",
+      "reply": "Sure. First one: what does 食べる (taberu) mean?",
+      "surface": "text",
+      "components": [
+        "Flashcards"
+      ],
+      "rationale": "Recall runs one card at a time in the conversation; no flip component and no card per question.",
+      "document": null
+    },
+    {
       "id": "health-resting-hr",
       "vertical": "health",
       "kind": "card",
@@ -4182,6 +5957,19 @@
       }
     },
     {
+      "id": "text-advice",
+      "vertical": "health",
+      "kind": "text",
+      "request": "Should I stretch before or after running?",
+      "reply": "Warm up with easy jogging and leg swings before; save longer stretches for after, when your muscles are warm.",
+      "surface": "text",
+      "components": [
+        "Advice"
+      ],
+      "rationale": "Advice without data or options is a sentence or two, not a card.",
+      "document": null
+    },
+    {
       "id": "prod-agenda",
       "vertical": "productivity",
       "kind": "card",
@@ -4452,6 +6240,61 @@
       }
     },
     {
+      "id": "text-acknowledge",
+      "vertical": "productivity",
+      "kind": "text",
+      "request": "Thanks, that's all for now.",
+      "reply": "Anytime.",
+      "surface": "text",
+      "components": [
+        "Acknowledgement"
+      ],
+      "rationale": "Conversation, not a result; never a card.",
+      "document": null
+    },
+    {
+      "id": "fail-work-retry",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Did the receipt filing finish?",
+      "says": "It stopped partway. Sign back in to Gmail, then retry.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Failed state",
+        "Work status"
+      ],
+      "rationale": "A failed Work Unit shows its state bound to the unit and one quiet Retry that acts on exactly that unit.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Filing receipts from Gmail",
+          "subtitle": "Stopped at 212 of about 400"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "failed",
+            "detail": "Gmail sign-in expired. 212 filed; nothing else changed.",
+            "subject": {
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962"
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "work_control",
+              "label": "Retry",
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962",
+              "control": "retry"
+            }
+          }
+        ],
+        "fallback_text": "Receipt filing stopped at 212 of about 400: Gmail sign-in expired. 212 were filed; nothing else changed."
+      }
+    },
+    {
       "id": "docs-contract-summary",
       "vertical": "documents",
       "kind": "card",
@@ -4676,6 +6519,120 @@
           ]
         },
         "fallback_text": "EVs in Singapore 2026: 15,000+ public chargers, mostly in HDB car parks; fast chargers rare; public charging costs about twice home charging."
+      }
+    },
+    {
+      "id": "text-rewrite",
+      "vertical": "documents",
+      "kind": "text",
+      "request": "Make this sentence friendlier: 'Your payment is late.'",
+      "reply": "\"Just a reminder that the payment slipped past its due date. Could you take a look when you have a moment?\"",
+      "surface": "text",
+      "components": [
+        "Rewrite"
+      ],
+      "rationale": "Rewritten text is the answer itself; wrapping it in a card adds a frame to copy out of.",
+      "document": null
+    },
+    {
+      "id": "file-deck",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Turn the EV brief into 6 slides for Monday.",
+      "says": "Six slides, in PowerPoint and PDF.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Deck"
+      ],
+      "rationale": "A deck is a file; the card shows the title slide and opens the PDF for reading, PPTX for editing.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "EVs in Singapore, 2026",
+          "subtitle": "6 slides · PPTX and PDF"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2d",
+              "alt": "Title slide: EVs in Singapore, 2026, with a charger photo",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open slides",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2e"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download PowerPoint",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2f"
+            }
+          }
+        ],
+        "fallback_text": "The EV brief is now a 6-slide deck, in PowerPoint and PDF in your Library."
+      }
+    },
+    {
+      "id": "file-contract-docx",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Draft a simple freelance contract I can edit in Word.",
+      "says": "It's a 3-page Word document with the usual clauses.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Report",
+        "Document (DOCX)"
+      ],
+      "rationale": "Editable means DOCX; the card names what is inside in one section and downloads the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Freelance services agreement",
+          "subtitle": "3 pages · Word"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Scope, fees and payment terms",
+                  "IP transfers on payment",
+                  "Either side can end it with 14 days' notice"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download Word file",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a30"
+            },
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Preview",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a30"
+            }
+          }
+        ],
+        "details": {
+          "disclaimers": [
+            "A template, not legal advice. Have a lawyer check it for your case."
+          ]
+        },
+        "fallback_text": "A 3-page editable freelance agreement (scope, fees, IP on payment, 14 days' notice) is in your Library."
       }
     },
     {
@@ -5113,123 +7070,6 @@
       }
     },
     {
-      "id": "text-convert",
-      "vertical": "money",
-      "kind": "text",
-      "request": "What's 250 USD in SGD?",
-      "reply": "About S$322 at today's rate of 1.29.",
-      "surface": "text",
-      "components": [
-        "Currency conversion"
-      ],
-      "rationale": "One number answers it in a sentence; a card would repeat the sentence.",
-      "document": null
-    },
-    {
-      "id": "text-define",
-      "vertical": "education",
-      "kind": "text",
-      "request": "What does 'amortization' mean?",
-      "reply": "Paying off a loan in regular instalments, each covering some interest and some of the balance.",
-      "surface": "text",
-      "components": [
-        "Definition"
-      ],
-      "rationale": "A single definition is a sentence; a glossary card is for three or more terms.",
-      "document": null
-    },
-    {
-      "id": "text-yes-no",
-      "vertical": "places",
-      "kind": "text",
-      "request": "Is the Botanic Gardens free?",
-      "reply": "Yes, entry is free. Only the National Orchid Garden charges, S$15 for adults.",
-      "surface": "text",
-      "components": [
-        "Fact check"
-      ],
-      "rationale": "A yes/no with one qualifier is prose; nothing to show beyond the words.",
-      "document": null
-    },
-    {
-      "id": "text-time",
-      "vertical": "travel",
-      "kind": "text",
-      "request": "What time is it in Tokyo?",
-      "reply": "It's 3:40 pm in Tokyo, an hour ahead of you.",
-      "surface": "text",
-      "components": [
-        "Time zone"
-      ],
-      "rationale": "The answer is one time; a card adds chrome and nothing else.",
-      "document": null
-    },
-    {
-      "id": "text-advice",
-      "vertical": "health",
-      "kind": "text",
-      "request": "Should I stretch before or after running?",
-      "reply": "Warm up with easy jogging and leg swings before; save longer stretches for after, when your muscles are warm.",
-      "surface": "text",
-      "components": [
-        "Advice"
-      ],
-      "rationale": "Advice without data or options is a sentence or two, not a card.",
-      "document": null
-    },
-    {
-      "id": "text-acknowledge",
-      "vertical": "productivity",
-      "kind": "text",
-      "request": "Thanks, that's all for now.",
-      "reply": "Anytime.",
-      "surface": "text",
-      "components": [
-        "Acknowledgement"
-      ],
-      "rationale": "Conversation, not a result; never a card.",
-      "document": null
-    },
-    {
-      "id": "text-clarify-free",
-      "vertical": "shopping",
-      "kind": "text",
-      "request": "Get me a gift for my mum.",
-      "reply": "Happy to. What's your budget, and does she prefer things for the home or for herself?",
-      "surface": "text",
-      "components": [
-        "Clarifying question"
-      ],
-      "rationale": "Missing inputs are asked in words or the question card, never a speculative results card.",
-      "document": null
-    },
-    {
-      "id": "text-single-fact",
-      "vertical": "sports",
-      "kind": "text",
-      "request": "Who won the Singapore Grand Prix in 2024?",
-      "reply": "Lando Norris won it on 22 September 2024, ahead of Max Verstappen.",
-      "surface": "text",
-      "components": [
-        "Single fact"
-      ],
-      "rationale": "One fact with one detail is prose; a scoreboard is for scores.",
-      "document": null
-    },
-    {
-      "id": "text-rewrite",
-      "vertical": "documents",
-      "kind": "text",
-      "request": "Make this sentence friendlier: 'Your payment is late.'",
-      "reply": "\"Just a reminder that the payment slipped past its due date. Could you take a look when you have a moment?\"",
-      "surface": "text",
-      "components": [
-        "Rewrite"
-      ],
-      "rationale": "Rewritten text is the answer itself; wrapping it in a card adds a frame to copy out of.",
-      "document": null
-    },
-    {
       "id": "text-math",
       "vertical": "data",
       "kind": "text",
@@ -5241,431 +7081,6 @@
       ],
       "rationale": "A single computed number needs no card; the sentence is the result.",
       "document": null
-    },
-    {
-      "id": "text-cant",
-      "vertical": "money",
-      "kind": "text",
-      "request": "Move S$5,000 from DBS to my OCBC account.",
-      "reply": "I can't move money between banks. Nothing was changed. You can do it in DBS digibank under Pay & Transfer.",
-      "surface": "text",
-      "components": [
-        "Boundary"
-      ],
-      "rationale": "A refusal names the boundary in plain words; a failed card is only for work that was attempted.",
-      "document": null
-    },
-    {
-      "id": "text-weather-simple",
-      "vertical": "weather",
-      "kind": "text",
-      "request": "Do I need an umbrella today?",
-      "reply": "Yes. Thunderstorms are likely after 3 pm.",
-      "surface": "text",
-      "components": [
-        "Weather yes/no"
-      ],
-      "rationale": "A yes with the reason is enough; the forecast card is for when they ask for the forecast.",
-      "document": null
-    },
-    {
-      "id": "file-invoice-pdf",
-      "vertical": "money",
-      "kind": "file",
-      "request": "Make an invoice for Acme: 20 hours of design at S$150.",
-      "says": "Invoice INV-2042 is ready and in your Library.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "F11 Invoice",
-        "X6 File deliverable"
-      ],
-      "rationale": "The file is the deliverable; the card shows the amount due and opens the PDF; sending it is a separate approval.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "INV-2042 · Acme Pte Ltd",
-          "subtitle": "Due 26 Oct · PDF"
-        },
-        "blocks": [
-          {
-            "kind": "numbers",
-            "items": [
-              {
-                "value": "S$3,270.00",
-                "label": "Amount due"
-              },
-              {
-                "value": "26 Oct",
-                "label": "Due"
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "open_artifact",
-              "label": "Open invoice",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29"
-            },
-            "secondary": {
-              "kind": "download_artifact",
-              "label": "Download PDF",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a29"
-            }
-          }
-        ],
-        "details": {
-          "assumptions": [
-            "GST at 9% added to S$3,000.",
-            "Payment terms 30 days."
-          ]
-        },
-        "fallback_text": "Invoice INV-2042 to Acme Pte Ltd for 20 hours of design at S$150, S$3,270.00 including 9% GST, due 26 Oct. Saved to your Library."
-      }
-    },
-    {
-      "id": "file-expenses-sheet",
-      "vertical": "money",
-      "kind": "file",
-      "request": "Put all my August expenses in a spreadsheet.",
-      "says": "All 142 transactions are in a sheet, one row each.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "F9 Transactions list",
-        "Sheet"
-      ],
-      "rationale": "142 rows is a sheet, not a card; the card gives the total and opens the file.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "August expenses",
-          "subtitle": "142 transactions · XLSX"
-        },
-        "blocks": [
-          {
-            "kind": "numbers",
-            "items": [
-              {
-                "value": "S$4,280",
-                "label": "Total"
-              },
-              {
-                "value": "142",
-                "label": "Transactions"
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "open_artifact",
-              "label": "Open sheet",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2a"
-            },
-            "secondary": {
-              "kind": "download_artifact",
-              "label": "Download",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2a"
-            }
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "Linked accounts, synced 1 Sep 2026"
-            }
-          ]
-        },
-        "fallback_text": "August expenses: 142 transactions totalling S$4,280, in a spreadsheet in your Library."
-      }
-    },
-    {
-      "id": "file-itinerary-pdf",
-      "vertical": "travel",
-      "kind": "file",
-      "request": "Make me a printable itinerary for Kyoto.",
-      "says": "It's a two-page PDF with a map and one page per two days.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "Itinerary / day-by-day plan",
-        "Document (PDF)"
-      ],
-      "rationale": "Printable means a file; the card shows its first page and opens it.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Kyoto itinerary",
-          "subtitle": "14–17 Oct · 2 pages · PDF"
-        },
-        "blocks": [
-          {
-            "kind": "visual",
-            "visual": {
-              "kind": "image",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2b",
-              "alt": "First page of the Kyoto itinerary: map of four areas and the Day 1 plan",
-              "aspect": "3:4"
-            }
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "open_artifact",
-              "label": "Open itinerary",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2c"
-            },
-            "secondary": {
-              "kind": "download_artifact",
-              "label": "Download",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2c"
-            }
-          }
-        ],
-        "fallback_text": "Your Kyoto itinerary for 14–17 Oct is a 2-page PDF in your Library."
-      }
-    },
-    {
-      "id": "file-deck",
-      "vertical": "documents",
-      "kind": "file",
-      "request": "Turn the EV brief into 6 slides for Monday.",
-      "says": "Six slides, in PowerPoint and PDF.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "Deck"
-      ],
-      "rationale": "A deck is a file; the card shows the title slide and opens the PDF for reading, PPTX for editing.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "EVs in Singapore, 2026",
-          "subtitle": "6 slides · PPTX and PDF"
-        },
-        "blocks": [
-          {
-            "kind": "visual",
-            "visual": {
-              "kind": "image",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2d",
-              "alt": "Title slide: EVs in Singapore, 2026, with a charger photo",
-              "aspect": "16:9"
-            }
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "open_artifact",
-              "label": "Open slides",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2e"
-            },
-            "secondary": {
-              "kind": "download_artifact",
-              "label": "Download PowerPoint",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2f"
-            }
-          }
-        ],
-        "fallback_text": "The EV brief is now a 6-slide deck, in PowerPoint and PDF in your Library."
-      }
-    },
-    {
-      "id": "file-contract-docx",
-      "vertical": "documents",
-      "kind": "file",
-      "request": "Draft a simple freelance contract I can edit in Word.",
-      "says": "It's a 3-page Word document with the usual clauses.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "Report",
-        "Document (DOCX)"
-      ],
-      "rationale": "Editable means DOCX; the card names what is inside in one section and downloads the file.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Freelance services agreement",
-          "subtitle": "3 pages · Word"
-        },
-        "blocks": [
-          {
-            "kind": "text",
-            "sections": [
-              {
-                "bullets": [
-                  "Scope, fees and payment terms",
-                  "IP transfers on payment",
-                  "Either side can end it with 14 days' notice"
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "download_artifact",
-              "label": "Download Word file",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a30"
-            },
-            "secondary": {
-              "kind": "open_artifact",
-              "label": "Preview",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a30"
-            }
-          }
-        ],
-        "details": {
-          "disclaimers": [
-            "A template, not legal advice. Have a lawyer check it for your case."
-          ]
-        },
-        "fallback_text": "A 3-page editable freelance agreement (scope, fees, IP on payment, 14 days' notice) is in your Library."
-      }
-    },
-    {
-      "id": "file-logo",
-      "vertical": "shopping",
-      "kind": "file",
-      "request": "Make a logo for my bakery, Crumb & Co.",
-      "says": "Here's a first direction.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "Image deliverable"
-      ],
-      "rationale": "The image is the result; one Download; asking for another direction is a chat message, not a button.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Crumb & Co logo",
-          "subtitle": "Direction 1 · wheat ear and ampersand"
-        },
-        "blocks": [
-          {
-            "kind": "visual",
-            "visual": {
-              "kind": "image",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31",
-              "alt": "Crumb & Co logo: a wheat ear forming an ampersand, warm brown on cream",
-              "aspect": "square"
-            }
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "download_artifact",
-              "label": "Download",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31"
-            }
-          }
-        ],
-        "fallback_text": "Crumb & Co logo, direction 1: a wheat ear forming an ampersand. Saved to your Library."
-      }
-    },
-    {
-      "id": "file-resume",
-      "vertical": "jobs",
-      "kind": "file",
-      "request": "Tailor my CV for the Grab role.",
-      "says": "Your CV now leads with payments work and team leadership.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "J8 Resume / cover letter"
-      ],
-      "rationale": "The document is the deliverable; the card lists what changed so it can be trusted without opening it.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "CV · Grab Lead Product Designer",
-          "subtitle": "2 pages · PDF and Word"
-        },
-        "blocks": [
-          {
-            "kind": "text",
-            "sections": [
-              {
-                "bullets": [
-                  "Moved the payments redesign to the top",
-                  "Added team size and hiring to your current role",
-                  "Cut the 2016 agency role to one line"
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "open_artifact",
-              "label": "Open CV",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a32"
-            },
-            "secondary": {
-              "kind": "download_artifact",
-              "label": "Download Word file",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a33"
-            }
-          }
-        ],
-        "fallback_text": "Your CV is tailored for Grab: payments work first, team leadership added, older role shortened. PDF and Word in your Library."
-      }
-    },
-    {
-      "id": "file-lesson-handout",
-      "vertical": "education",
-      "kind": "file",
-      "request": "Make a worksheet on fractions for my 9-year-old.",
-      "says": "One page, 12 questions, answers on page 2.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "Lesson handout"
-      ],
-      "rationale": "A worksheet is printed, so it is a PDF; the card shows page one.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Fractions worksheet",
-          "subtitle": "Primary 3 · 2 pages · PDF"
-        },
-        "blocks": [
-          {
-            "kind": "visual",
-            "visual": {
-              "kind": "image",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a34",
-              "alt": "Worksheet page 1: 12 fraction questions with pizza pictures",
-              "aspect": "3:4"
-            }
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "open_artifact",
-              "label": "Open worksheet",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a35"
-            },
-            "secondary": {
-              "kind": "download_artifact",
-              "label": "Download",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a35"
-            }
-          }
-        ],
-        "fallback_text": "A 2-page fractions worksheet for Primary 3 (12 questions, answers on page 2) is in your Library."
-      }
     },
     {
       "id": "file-data-export",
@@ -5767,212 +7182,6 @@
       }
     },
     {
-      "id": "file-calculator-page",
-      "vertical": "real_estate",
-      "kind": "file",
-      "request": "Make me a calculator to compare renting and buying.",
-      "says": "It's a small page you can play with in your browser; it's in your Library.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "Live page (calculator)"
-      ],
-      "rationale": "No block covers a what-if tool, so it is a page file; until live pages ship it opens outside the app, so the card claims nothing more.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Rent vs buy calculator",
-          "subtitle": "Interactive page · HTML"
-        },
-        "blocks": [
-          {
-            "kind": "visual",
-            "visual": {
-              "kind": "image",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a39",
-              "alt": "Rent vs buy calculator: sliders for price, rent and years, with a break-even chart",
-              "aspect": "16:9"
-            }
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "download_artifact",
-              "label": "Download page",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a3a"
-            }
-          }
-        ],
-        "details": {
-          "assumptions": [
-            "Starts at a 25% down payment, 3.0% mortgage rate and 3% yearly rent rise; change them on the page."
-          ]
-        },
-        "fallback_text": "A rent vs buy calculator (price, rent, years, break-even) is saved as a page in your Library; download it and open it in your browser."
-      }
-    },
-    {
-      "id": "fail-fares",
-      "vertical": "travel",
-      "kind": "card",
-      "request": "Any cheaper flights to Tokyo on 12 Oct?",
-      "says": "I couldn't reach the fare site just now; ask me again in a few minutes.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "Failed state"
-      ],
-      "rationale": "The card says what failed and that nothing was booked; the final sentence says what to do next; no reply button.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Couldn't check flight prices",
-          "subtitle": "12 Oct · 1 adult · economy"
-        },
-        "blocks": [
-          {
-            "kind": "status",
-            "state": "failed",
-            "detail": "The fare site didn't respond. Nothing was booked."
-          }
-        ],
-        "fallback_text": "Couldn't check flight prices for 12 Oct: the fare site didn't respond. Nothing was booked."
-      }
-    },
-    {
-      "id": "fail-work-retry",
-      "vertical": "productivity",
-      "kind": "card",
-      "request": "Did the receipt filing finish?",
-      "says": "It stopped partway. Sign back in to Gmail, then retry.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "Failed state",
-        "Work status"
-      ],
-      "rationale": "A failed Work Unit shows its state bound to the unit and one quiet Retry that acts on exactly that unit.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Filing receipts from Gmail",
-          "subtitle": "Stopped at 212 of about 400"
-        },
-        "blocks": [
-          {
-            "kind": "status",
-            "state": "failed",
-            "detail": "Gmail sign-in expired. 212 filed; nothing else changed.",
-            "subject": {
-              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962"
-            }
-          },
-          {
-            "kind": "action",
-            "secondary": {
-              "kind": "work_control",
-              "label": "Retry",
-              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000962",
-              "control": "retry"
-            }
-          }
-        ],
-        "fallback_text": "Receipt filing stopped at 212 of about 400: Gmail sign-in expired. 212 were filed; nothing else changed."
-      }
-    },
-    {
-      "id": "empty-search",
-      "vertical": "real_estate",
-      "kind": "card",
-      "request": "Any 3-room HDB in Bishan under S$500k?",
-      "says": "Nothing fits right now.",
-      "surface": "inline",
-      "fresh": true,
-      "components": [
-        "Empty state"
-      ],
-      "rationale": "Empty says so plainly, with the nearest fact as the one next step; no blank card.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "No 3-room HDB in Bishan under S$500k",
-          "subtitle": "As of 10:50 · PropertyGuru and 99.co"
-        },
-        "blocks": [
-          {
-            "kind": "status",
-            "state": "empty",
-            "detail": "Cheapest listed now is S$588k"
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "PropertyGuru and 99.co, 26 Sep 2026 10:50"
-            }
-          ]
-        },
-        "fallback_text": "No 3-room HDB flats in Bishan under S$500k right now; the cheapest listed is S$588k."
-      }
-    },
-    {
-      "id": "partial-sources",
-      "vertical": "shopping",
-      "kind": "card",
-      "request": "Compare TV prices across the big stores.",
-      "says": "Three of four stores answered; Best Denki's site was down.",
-      "surface": "inline",
-      "fresh": true,
-      "components": [
-        "Partial state",
-        "S1 Product options"
-      ],
-      "rationale": "Partial is honest in the subtitle ('3 of 4 stores'); the rows show what is known; the gap is in the sentence.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Sony Bravia 8 II 65\"",
-          "subtitle": "3 of 4 stores checked · as of 11:20"
-        },
-        "blocks": [
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "Courts",
-                "secondary": "In stock · delivery Tue",
-                "trailing": "S$3,999",
-                "mark": "pick"
-              },
-              {
-                "label": "Harvey Norman",
-                "secondary": "In stock · delivery Thu",
-                "trailing": "S$4,099"
-              },
-              {
-                "label": "Challenger",
-                "secondary": "Pre-order · 10 Oct",
-                "trailing": "S$4,049"
-              }
-            ]
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "Store websites, 26 Sep 2026 11:20"
-            }
-          ]
-        },
-        "fallback_text": "Sony Bravia 8 II 65\": Courts S$3,999 (pick), Challenger S$4,049, Harvey Norman S$4,099. Best Denki didn't respond."
-      }
-    },
-    {
       "id": "partial-days",
       "vertical": "data",
       "kind": "card",
@@ -6051,848 +7260,6 @@
           ]
         },
         "fallback_text": "Daily sales 13–24 Sep: S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900. 25 and 26 Sep not reported yet."
-      }
-    },
-    {
-      "id": "stale-portfolio",
-      "vertical": "money",
-      "kind": "card",
-      "request": "What's my portfolio worth?",
-      "says": "Markets are closed, so this is Friday's close.",
-      "surface": "inline",
-      "fresh": true,
-      "components": [
-        "Stale state",
-        "F2 Portfolio summary"
-      ],
-      "rationale": "Stale is stated with its time in the subtitle, not coloured; the value still leads.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Portfolio",
-          "subtitle": "As of Fri 25 Sep close · markets closed"
-        },
-        "blocks": [
-          {
-            "kind": "numbers",
-            "items": [
-              {
-                "value": "US$84,210",
-                "label": "Value"
-              },
-              {
-                "value": "−0.6%",
-                "label": "This week"
-              }
-            ]
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "IBKR positions, 25 Sep 2026 close"
-            }
-          ]
-        },
-        "fallback_text": "Portfolio US$84,210 as of Friday's close, down 0.6% this week."
-      }
-    },
-    {
-      "id": "money-key-stats",
-      "vertical": "money",
-      "kind": "card",
-      "request": "Give me DBS's key stats.",
-      "says": "Its dividend yield is the standout.",
-      "surface": "page",
-      "fresh": true,
-      "components": [
-        "F4 Key stats grid"
-      ],
-      "rationale": "Reference data is label → value rows on the page; the one judgement is in the sentence.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "DBS Group · D05",
-          "subtitle": "SGX · as of 25 Sep close"
-        },
-        "blocks": [
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "Price",
-                "trailing": "S$42.10"
-              },
-              {
-                "label": "P/E",
-                "trailing": "11.2"
-              },
-              {
-                "label": "Dividend yield",
-                "trailing": "5.6%"
-              },
-              {
-                "label": "Market cap",
-                "trailing": "S$119.6B"
-              },
-              {
-                "label": "52-week range",
-                "trailing": "S$34.80–43.25"
-              }
-            ]
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "SGX market data, 25 Sep 2026 close"
-            }
-          ],
-          "disclaimers": [
-            "Not financial advice."
-          ]
-        },
-        "fallback_text": "DBS (D05) S$42.10 at the 25 Sep close: P/E 11.2, dividend yield 5.6%, market cap S$119.6B, 52-week range S$34.80–43.25."
-      }
-    },
-    {
-      "id": "money-stock-compare",
-      "vertical": "money",
-      "kind": "card",
-      "request": "How have DBS, OCBC and UOB done this year?",
-      "says": "DBS is ahead, up 18% since January.",
-      "surface": "inline",
-      "fresh": true,
-      "components": [
-        "F5 Stock comparison"
-      ],
-      "rationale": "Three tickers over one period is a three-series line; the leader is named in the sentence and highlighted.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Singapore banks this year",
-          "subtitle": "Change since 2 Jan · as of 25 Sep close"
-        },
-        "blocks": [
-          {
-            "kind": "visual",
-            "visual": {
-              "kind": "chart",
-              "chart": "line",
-              "unit": "%",
-              "x_labels": [
-                "Jan",
-                "Mar",
-                "May",
-                "Jul",
-                "Sep"
-              ],
-              "series": [
-                {
-                  "label": "DBS",
-                  "values": [
-                    "0",
-                    "5",
-                    "9",
-                    "14",
-                    "18"
-                  ]
-                },
-                {
-                  "label": "OCBC",
-                  "values": [
-                    "0",
-                    "3",
-                    "6",
-                    "9",
-                    "11"
-                  ]
-                },
-                {
-                  "label": "UOB",
-                  "values": [
-                    "0",
-                    "2",
-                    "4",
-                    "6",
-                    "8"
-                  ]
-                }
-              ],
-              "highlight_index": 4
-            }
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "SGX closing prices, 2 Jan–25 Sep 2026"
-            }
-          ],
-          "disclaimers": [
-            "Price change only; dividends excluded."
-          ]
-        },
-        "fallback_text": "Since 2 January: DBS +18%, OCBC +11%, UOB +8%, as of the 25 Sep close."
-      }
-    },
-    {
-      "id": "money-quote-estimate",
-      "vertical": "money",
-      "kind": "card",
-      "request": "What did the contractor quote for the bathroom?",
-      "says": "It's an all-in price, with no extras listed.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "F12 Quote / estimate"
-      ],
-      "rationale": "The quote total and expiry are the two numbers; line items live in the PDF; accepting happens with the contractor.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Bathroom renovation quote",
-          "subtitle": "Ah Huat Renovation · Q-3318"
-        },
-        "blocks": [
-          {
-            "kind": "numbers",
-            "items": [
-              {
-                "value": "S$14,800",
-                "label": "Total"
-              },
-              {
-                "value": "15 Oct",
-                "label": "Valid until"
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "secondary": {
-              "kind": "open_artifact",
-              "label": "Open quote",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8d"
-            }
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "Quote PDF from your email, 22 Sep 2026"
-            }
-          ]
-        },
-        "fallback_text": "Ah Huat Renovation quoted S$14,800 for the bathroom (Q-3318), valid until 15 Oct. The PDF is in your Library."
-      }
-    },
-    {
-      "id": "money-transfer-tracking",
-      "vertical": "money",
-      "kind": "card",
-      "request": "Has my transfer to Priya arrived?",
-      "says": "Not yet. It's with her bank now.",
-      "surface": "inline",
-      "fresh": true,
-      "components": [
-        "F14 Transfer / payment tracking"
-      ],
-      "rationale": "Steps as rows, newest first; the arrival date is the title because that is the question.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Arrives by Tue 29 Sep",
-          "subtitle": "S$1,000 to Priya · Wise · as of 10:20"
-        },
-        "blocks": [
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "With HDFC Bank",
-                "secondary": "Sent from Wise 26 Sep 10:20"
-              },
-              {
-                "label": "Converted to ₹61,540",
-                "secondary": "26 Sep 10:18"
-              },
-              {
-                "label": "Paid in",
-                "secondary": "26 Sep 10:05"
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "secondary": {
-              "kind": "open_url",
-              "label": "Track on Wise",
-              "url": "https://wise.com/activity"
-            }
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "Wise transfer 88213401, 26 Sep 2026 10:20"
-            }
-          ]
-        },
-        "fallback_text": "Your S$1,000 transfer to Priya (₹61,540) left Wise on 26 Sep and is with HDFC Bank; it should arrive by Tue 29 Sep."
-      }
-    },
-    {
-      "id": "shop-buyers-guide",
-      "vertical": "shopping",
-      "kind": "card",
-      "request": "What's the best robot vacuum for a small HDB flat?",
-      "says": "The Roborock Q7 is the best fit for most small flats.",
-      "surface": "page",
-      "fresh": true,
-      "components": [
-        "S5 Buyer's guide"
-      ],
-      "rationale": "Top picks are rows with price; the why and the trade-offs are short sections on the page.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Robot vacuums for a small flat",
-          "subtitle": "Under S$800 · 3 picks · as of 10:15"
-        },
-        "blocks": [
-          {
-            "kind": "text",
-            "sections": [
-              {
-                "heading": "Why the Q7",
-                "bullets": [
-                  "Mops and vacuums in one pass.",
-                  "Maps rooms, so you can skip the bedroom.",
-                  "Quiet enough to run while you work."
-                ]
-              },
-              {
-                "heading": "Trade-offs",
-                "bullets": [
-                  "The Eufy is cheaper but can't mop.",
-                  "The Dreame empties itself but costs twice as much."
-                ]
-              }
-            ]
-          },
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "Roborock Q7 Max",
-                "secondary": "Vacuum and mop · 4.5★",
-                "trailing": "S$399",
-                "mark": "pick"
-              },
-              {
-                "label": "Eufy 11S",
-                "secondary": "Vacuum only · 4.3★",
-                "trailing": "S$229"
-              },
-              {
-                "label": "Dreame L10s",
-                "secondary": "Self-emptying · 4.6★",
-                "trailing": "S$799"
-              }
-            ]
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "RTINGS reviews and Lazada listings, checked 26 Sep 2026 10:15"
-            }
-          ]
-        },
-        "fallback_text": "Robot vacuums for a small flat: Roborock Q7 Max S$399 (pick, vacuums and mops); Eufy 11S S$229 (vacuum only); Dreame L10s S$799 (self-emptying)."
-      }
-    },
-    {
-      "id": "shop-deal",
-      "vertical": "shopping",
-      "kind": "card",
-      "request": "Is the Nintendo Switch 2 deal at Shopee real?",
-      "says": "Yes, it's a real drop, but it ends tomorrow.",
-      "surface": "inline",
-      "fresh": true,
-      "components": [
-        "S8 Deal"
-      ],
-      "rationale": "The honest reference is the typical price in the subtitle, not a struck-through 'was' price.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Nintendo Switch 2 at S$589",
-          "subtitle": "Usually S$649 · ends Sun 27 Sep · as of 10:40"
-        },
-        "blocks": [
-          {
-            "kind": "visual",
-            "visual": {
-              "kind": "chart",
-              "chart": "line",
-              "unit": "S$",
-              "x_labels": [
-                "Jul",
-                "Aug",
-                "Sep",
-                "Now"
-              ],
-              "series": [
-                {
-                  "label": "Price",
-                  "values": [
-                    "649",
-                    "649",
-                    "649",
-                    "589"
-                  ]
-                }
-              ],
-              "highlight_index": 3
-            }
-          },
-          {
-            "kind": "action",
-            "secondary": {
-              "kind": "open_url",
-              "label": "View on Shopee",
-              "url": "https://shopee.sg/nintendo-switch-2-console"
-            }
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "Shopee Mall and Courts price history, Jul–Sep 2026, checked 26 Sep 10:40"
-            }
-          ]
-        },
-        "fallback_text": "The Nintendo Switch 2 is S$589 at Shopee until Sun 27 Sep, S$60 below its usual S$649."
-      }
-    },
-    {
-      "id": "shop-order-confirmed",
-      "vertical": "shopping",
-      "kind": "card",
-      "request": "Did my Courts order go through?",
-      "says": "Yes, it went through.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "S12 Order confirmation / receipt"
-      ],
-      "rationale": "Total and arrival are the two numbers; the receipt is the one action.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Order placed · Courts",
-          "subtitle": "Dyson V8 Origin · order 1044218"
-        },
-        "blocks": [
-          {
-            "kind": "numbers",
-            "items": [
-              {
-                "value": "S$379",
-                "label": "Paid"
-              },
-              {
-                "value": "Wed 30 Sep",
-                "label": "Arrives"
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "secondary": {
-              "kind": "open_artifact",
-              "label": "Open receipt",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8e"
-            }
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "Courts confirmation email, 26 Sep 2026"
-            }
-          ]
-        },
-        "fallback_text": "Courts order 1044218 for the Dyson V8 Origin: S$379 paid, arriving Wed 30 Sep. Receipt in your Library."
-      }
-    },
-    {
-      "id": "home-price-history",
-      "vertical": "real_estate",
-      "kind": "card",
-      "request": "What has Blk 824 sold for before?",
-      "says": "Prices in the block rose about 12% in two years.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "R5 Price history"
-      ],
-      "rationale": "Past sales as rows, newest first, price trailing; a chart would need more points than the block has.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Blk 824 Tampines St 81",
-          "subtitle": "3-room resale · last 2 years"
-        },
-        "blocks": [
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "#11 · 67 sqm",
-                "secondary": "Aug 2026",
-                "trailing": "S$542k"
-              },
-              {
-                "label": "#05 · 67 sqm",
-                "secondary": "Jan 2026",
-                "trailing": "S$515k"
-              },
-              {
-                "label": "#08 · 67 sqm",
-                "secondary": "Sep 2024",
-                "trailing": "S$485k"
-              }
-            ]
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "HDB resale transactions",
-              "url": "https://services2.hdb.gov.sg/webapp/BB33RTIS/"
-            }
-          ]
-        },
-        "fallback_text": "Blk 824 Tampines St 81 3-room resales: S$542k (Aug 2026), S$515k (Jan 2026), S$485k (Sep 2024)."
-      }
-    },
-    {
-      "id": "home-facts",
-      "vertical": "real_estate",
-      "kind": "card",
-      "request": "What are the facts on that condo?",
-      "says": "It's a 2013 condo with full facilities and 99-year lease.",
-      "surface": "page",
-      "fresh": false,
-      "components": [
-        "R6 Facts & features"
-      ],
-      "rationale": "Facts are a two-column reference table on the page only.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "The Trilinq · facts",
-          "subtitle": "Clementi · 755 units"
-        },
-        "blocks": [
-          {
-            "kind": "table",
-            "columns": [
-              {
-                "label": "Fact"
-              },
-              {
-                "label": "Detail"
-              }
-            ],
-            "rows": [
-              {
-                "cells": [
-                  "Tenure",
-                  "99-year from 2013"
-                ]
-              },
-              {
-                "cells": [
-                  "Completed",
-                  "2017"
-                ]
-              },
-              {
-                "cells": [
-                  "Facilities",
-                  "Pool, gym, tennis"
-                ]
-              },
-              {
-                "cells": [
-                  "Nearest MRT",
-                  "Clementi · 12 min"
-                ]
-              },
-              {
-                "cells": [
-                  "Maintenance",
-                  "S$380 a month"
-                ]
-              }
-            ]
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "URA and PropertyGuru project page, Sep 2026"
-            }
-          ]
-        },
-        "fallback_text": "The Trilinq: 99-year lease from 2013, completed 2017, pool, gym and tennis, 12 min to Clementi MRT, maintenance S$380 a month."
-      }
-    },
-    {
-      "id": "home-schools",
-      "vertical": "real_estate",
-      "kind": "card",
-      "request": "Which primary schools are within 1 km of Blk 824?",
-      "says": "Both count for Primary 1 priority.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "R9 Schools / neighbourhood"
-      ],
-      "rationale": "Schools as rows with the distance trailing; the 1 km rule sits in Details, not on the card.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Primary schools within 1 km",
-          "subtitle": "From Blk 824 Tampines St 81"
-        },
-        "blocks": [
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "Tampines North Primary",
-                "secondary": "Co-ed",
-                "trailing": "0.4 km"
-              },
-              {
-                "label": "St Hilda's Primary",
-                "secondary": "Co-ed · SAP",
-                "trailing": "0.9 km"
-              }
-            ]
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "OneMap school query",
-              "url": "https://www.onemap.gov.sg/"
-            }
-          ],
-          "assumptions": [
-            "Distance is measured as the P1 registration rule measures it."
-          ]
-        },
-        "fallback_text": "Primary schools within 1 km of Blk 824 Tampines St 81: Tampines North Primary 0.4 km, St Hilda's Primary 0.9 km."
-      }
-    },
-    {
-      "id": "jobs-pipeline",
-      "vertical": "jobs",
-      "kind": "card",
-      "request": "Where am I in the Grab process?",
-      "says": "You're through to the last step.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "J6 Application pipeline (one job)"
-      ],
-      "rationale": "Steps as rows, the current one first with its date; done steps follow.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Grab · Lead Product Designer",
-          "subtitle": "Final round Thu 1 Oct"
-        },
-        "blocks": [
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "Final round",
-                "secondary": "Thu 1 Oct · 3 interviews",
-                "trailing": "Next"
-              },
-              {
-                "label": "Portfolio review",
-                "secondary": "22 Sep",
-                "trailing": "Passed"
-              },
-              {
-                "label": "Recruiter call",
-                "secondary": "15 Sep",
-                "trailing": "Passed"
-              }
-            ]
-          }
-        ],
-        "fallback_text": "Grab Lead Product Designer: final round Thu 1 Oct; portfolio review (22 Sep) and recruiter call (15 Sep) passed."
-      }
-    },
-    {
-      "id": "jobs-interviews",
-      "vertical": "jobs",
-      "kind": "card",
-      "request": "What interviews do I have next week?",
-      "says": "Two, both on video.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "J7 Interview schedule"
-      ],
-      "rationale": "Time and company are the rows; joining happens from the calendar invite, so no Join button.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Interviews next week",
-          "subtitle": "28 Sep–2 Oct"
-        },
-        "blocks": [
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "Grab · final round",
-                "secondary": "Thu 1 Oct · Google Meet",
-                "trailing": "15:00"
-              },
-              {
-                "label": "Wise · hiring manager",
-                "secondary": "Fri 2 Oct · Zoom",
-                "trailing": "10:00"
-              }
-            ]
-          }
-        ],
-        "fallback_text": "Interviews next week: Grab final round Thu 1 Oct 15:00 (Google Meet); Wise hiring manager Fri 2 Oct 10:00 (Zoom)."
-      }
-    },
-    {
-      "id": "jobs-alert",
-      "vertical": "jobs",
-      "kind": "card",
-      "request": "Tell me when new design lead roles come up.",
-      "says": "Okay. I'll tell you here when one comes up.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "J10 Job alert"
-      ],
-      "rationale": "A watch: status bound to the routine, the criteria as one row, one quiet Pause.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "Design lead roles",
-          "subtitle": "LinkedIn and MyCareersFuture"
-        },
-        "blocks": [
-          {
-            "kind": "status",
-            "state": "watching",
-            "detail": "every morning at 8:00",
-            "subject": {
-              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000a8f"
-            }
-          },
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "Looking for",
-                "secondary": "Design lead · Singapore · S$10k+/mo"
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "secondary": {
-              "kind": "routine_control",
-              "label": "Pause",
-              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000a8f",
-              "control": "pause"
-            }
-          }
-        ],
-        "fallback_text": "Watching LinkedIn and MyCareersFuture every morning for design lead roles in Singapore paying S$10k+ a month."
-      }
-    },
-    {
-      "id": "money-pay-bill",
-      "vertical": "money",
-      "kind": "card",
-      "request": "Pay the SP Group bill.",
-      "says": "It's S$212.40. Paying needs your approval in DBS.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "X7 Purchase / pay / apply / accept"
-      ],
-      "rationale": "The irreversible step is never a card button; the card links to the payee and the payment is approved there.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "SP Group electricity",
-          "subtitle": "Was due 21 Sep"
-        },
-        "blocks": [
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "S$212.40",
-                "secondary": "Account 93-1234567-8",
-                "trailing": "Overdue",
-                "status": "overdue"
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "open_url",
-              "label": "Pay in DBS digibank",
-              "url": "https://www.dbs.com.sg/personal/digibank/"
-            }
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "SP Group bill email, 1 Sep 2026"
-            }
-          ]
-        },
-        "fallback_text": "SP Group bill S$212.40 was due 21 Sep. Pay it in DBS digibank; nothing has been paid yet."
       }
     },
     {
@@ -6999,72 +7366,6 @@
       }
     },
     {
-      "id": "travel-boarding-pass",
-      "vertical": "travel",
-      "kind": "file",
-      "request": "Get my boarding pass for SQ 638.",
-      "says": "It's in your Library; add it to Wallet for the gate.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "Boarding pass / ticket"
-      ],
-      "rationale": "A boarding pass is a Wallet file, not a card block; the card shows seat and gate and downloads the pass.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "SQ 638 · Singapore to Tokyo",
-          "subtitle": "Mon 28 Sep · boards 07:55 · Terminal 3"
-        },
-        "blocks": [
-          {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "Seat",
-                "trailing": "31A"
-              },
-              {
-                "label": "Gate",
-                "secondary": "Shown on the day, after 06:30",
-                "trailing": "Not yet"
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "download_artifact",
-              "label": "Add to Wallet",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a92"
-            }
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "Singapore Airlines check-in, 26 Sep 2026 10:15"
-            }
-          ]
-        },
-        "fallback_text": "SQ 638 boarding pass: Mon 28 Sep, boards 07:55 at Terminal 3, seat 31A; the gate is shown on the day. The pass is in your Library."
-      }
-    },
-    {
-      "id": "text-flashcards",
-      "vertical": "education",
-      "kind": "text",
-      "request": "Quiz me on Japanese verbs.",
-      "reply": "Sure. First one: what does 食べる (taberu) mean?",
-      "surface": "text",
-      "components": [
-        "Flashcards"
-      ],
-      "rationale": "Recall runs one card at a time in the conversation; no flip component and no card per question.",
-      "document": null
-    },
-    {
       "id": "text-filter",
       "vertical": "data",
       "kind": "text",
@@ -7076,64 +7377,6 @@
       ],
       "rationale": "A filter is a follow-up message, not chips on a card; re-present a card only if they ask for it.",
       "document": null
-    },
-    {
-      "id": "file-statement",
-      "vertical": "money",
-      "kind": "file",
-      "request": "Send me my DBS statement for August.",
-      "says": "Your August statement is in your Library.",
-      "surface": "inline",
-      "fresh": false,
-      "components": [
-        "F18 Statement / report file",
-        "X6 File deliverable"
-      ],
-      "rationale": "A statement is the bank's file; the card names the period and the two numbers people check, then opens it.",
-      "document": {
-        "kind": "output_blocks",
-        "major": 1,
-        "header": {
-          "title": "DBS statement · August",
-          "subtitle": "Multiplier account ··5521 · PDF"
-        },
-        "blocks": [
-          {
-            "kind": "numbers",
-            "items": [
-              {
-                "value": "S$18,420",
-                "label": "Closing balance"
-              },
-              {
-                "value": "S$6,380",
-                "label": "Money out"
-              }
-            ]
-          },
-          {
-            "kind": "action",
-            "primary": {
-              "kind": "open_artifact",
-              "label": "Open statement",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a93"
-            },
-            "secondary": {
-              "kind": "download_artifact",
-              "label": "Download",
-              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a93"
-            }
-          }
-        ],
-        "details": {
-          "sources": [
-            {
-              "label": "DBS digibank e-statement, 1 Sep 2026"
-            }
-          ]
-        },
-        "fallback_text": "DBS August statement for account ending 5521: closing balance S$18,420, S$6,380 out. The PDF is in your Library."
-      }
     }
   ]
 }

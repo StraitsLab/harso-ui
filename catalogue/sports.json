@@ -1,0 +1,219 @@
+{
+  "vertical": "sports",
+  "fresh": [
+    "sports-score",
+    "sports-standings",
+    "sports-fixtures"
+  ],
+  "examples": [
+    {
+      "id": "sports-score",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "What was the Arsenal score?",
+      "says": "Arsenal won it with Saka's goal in the 78th minute.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Scoreboard"
+      ],
+      "rationale": "The score is two key numbers and the winner is in the sentence; no scorer list inline, no live ticker, just an as-of time.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arsenal v Chelsea",
+          "subtitle": "Full time · Premier League · as of 21:52"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "2",
+                "label": "Arsenal"
+              },
+              {
+                "value": "1",
+                "label": "Chelsea"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Premier League match centre, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Arsenal 2–1 Chelsea, full time. Ødegaard 23', Palmer 55', Saka 78'."
+      }
+    },
+    {
+      "id": "sports-standings",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "Where's Arsenal in the table?",
+      "says": "Second, two points behind Liverpool.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Standings"
+      ],
+      "rationale": "Top three plus your team as rows inline; the full table is a four-column table on the page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Premier League table",
+          "subtitle": "After 6 games · as of 26 Sep, 08:00"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Pos"
+              },
+              {
+                "label": "Team"
+              },
+              {
+                "label": "Played",
+                "align": "end"
+              },
+              {
+                "label": "Pts",
+                "align": "end"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "1",
+                  "Liverpool",
+                  "6",
+                  "16"
+                ]
+              },
+              {
+                "cells": [
+                  "2",
+                  "Arsenal",
+                  "6",
+                  "14"
+                ]
+              },
+              {
+                "cells": [
+                  "3",
+                  "Man City",
+                  "6",
+                  "13"
+                ]
+              },
+              {
+                "cells": [
+                  "4",
+                  "Chelsea",
+                  "6",
+                  "11"
+                ]
+              },
+              {
+                "cells": [
+                  "5",
+                  "Newcastle",
+                  "6",
+                  "10"
+                ]
+              }
+            ],
+            "total_count": 20
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Full table",
+              "url": "https://www.premierleague.com/tables"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Premier League, 26 Sep 2026 08:00"
+            }
+          ]
+        },
+        "fallback_text": "Premier League after 6 games: 1 Liverpool 16, 2 Arsenal 14, 3 Man City 13, 4 Chelsea 11, 5 Newcastle 10."
+      }
+    },
+    {
+      "id": "sports-fixtures",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "When do Arsenal play next?",
+      "says": "A home derby is next.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Fixture list"
+      ],
+      "rationale": "Next three fixtures with date secondary and home or away trailing; times in the person's time zone.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arsenal · next 3",
+          "subtitle": "Singapore time · as of 08:00"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "v Tottenham",
+                "secondary": "Sat 3 Oct · 19:30 · Emirates",
+                "trailing": "Home"
+              },
+              {
+                "label": "v PSV",
+                "secondary": "Thu 8 Oct · 03:00 · Champions League",
+                "trailing": "Away"
+              },
+              {
+                "label": "v Brighton",
+                "secondary": "Sun 18 Oct · 21:00",
+                "trailing": "Away"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Arsenal fixtures, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Arsenal next: v Tottenham Sat 3 Oct 19:30 (home); v PSV Thu 8 Oct 03:00 (away, Champions League); v Brighton Sun 18 Oct 21:00 (away)."
+      }
+    },
+    {
+      "id": "text-single-fact",
+      "vertical": "sports",
+      "kind": "text",
+      "request": "Who won the Singapore Grand Prix in 2024?",
+      "reply": "Lando Norris won it on 22 September 2024, ahead of Max Verstappen.",
+      "surface": "text",
+      "components": [
+        "Single fact"
+      ],
+      "rationale": "One fact with one detail is prose; a scoreboard is for scores.",
+      "document": null
+    }
+  ]
+}
