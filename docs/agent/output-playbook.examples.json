@@ -70,10 +70,15 @@
     "money-stock-quote",
     "money-portfolio",
     "money-transfer-quote",
+    "stale-portfolio",
     "money-key-stats",
     "money-stock-compare",
     "money-transfer-tracking",
-    "stale-portfolio",
+    "money-watchlist",
+    "money-card-charges",
+    "money-spending-so-far",
+    "money-balance",
+    "money-crypto-quote",
     "shop-vacuum-options",
     "shop-product-detail",
     "shop-compare-phones",
@@ -219,6 +224,141 @@
         },
         "more_label": "View all categories",
         "fallback_text": "August: S$4,280 spent of S$5,000, S$720 left. Highest week 15–21 Aug (S$1,460). By category: Dining S$1,160 (27%), Other S$1,080 (25%), Groceries S$840 (20%), Transport S$610 (14%), Shopping S$590 (14%); total S$4,280."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "August spending",
+            "subtitle": "1–31 Aug · all accounts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 4 accounts",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b01"
+              }
+            }
+          ],
+          "fallback_text": "Reading August spending from 4 accounts."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "August spending",
+            "subtitle": "1–31 Aug · 3 of 4 accounts read"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$3,610",
+                  "label": "Spent"
+                },
+                {
+                  "value": "215",
+                  "label": "Payments read"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "DBS Altitude card",
+                  "secondary": "142 charges",
+                  "trailing": "S$2,140"
+                },
+                {
+                  "label": "OCBC 365 card",
+                  "secondary": "61 charges",
+                  "trailing": "S$980"
+                },
+                {
+                  "label": "GIRO and PayNow",
+                  "secondary": "12 payments",
+                  "trailing": "S$490"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS and OCBC, synced 1 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "August so far from 3 of 4 accounts: S$3,610 spent (DBS Altitude card S$2,140, OCBC 365 card S$980, GIRO and PayNow S$490); 215 payments read. 1 account still to read, so the budget comparison waits."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "August spending",
+            "subtitle": "1–31 Aug · synced 28 Aug · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$1,190",
+                  "label": "Left of S$5,000"
+                },
+                {
+                  "value": "S$3,810",
+                  "label": "Spent to 28 Aug"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Linked accounts, synced 28 Aug 2026"
+              }
+            ]
+          },
+          "fallback_text": "August spending synced to 28 Aug: S$3,810 spent of S$5,000, S$1,190 left. Couldn’t refresh the last 3 days."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No spending recorded in August",
+            "subtitle": "1–31 Aug · all accounts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No card or bank charges came through for August"
+            }
+          ],
+          "fallback_text": "No spending recorded in August. No card or bank charges came through for August."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read August spending",
+            "subtitle": "All accounts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "DBS didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read August spending: DBS didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -292,6 +432,123 @@
           ]
         },
         "fallback_text": "Net worth S$412,300 as of 09:00 on 26 Sep, up S$9,800 since June."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Net worth",
+            "subtitle": "All linked accounts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 3 accounts",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b02"
+              }
+            }
+          ],
+          "fallback_text": "Reading your 3 linked accounts."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Net worth",
+            "subtitle": "2 of 3 accounts read · as of 09:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "CPF",
+                  "secondary": "Ordinary, Special and MediSave",
+                  "trailing": "S$287,300"
+                },
+                {
+                  "label": "DBS Multiplier",
+                  "secondary": "Savings ··5521",
+                  "trailing": "S$41,200"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "CPF and DBS balances, 26 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "2 of 3 accounts read (as of 09:00): CPF S$287,300, DBS Multiplier S$41,200. IBKR is still loading, so no total yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Net worth",
+            "subtitle": "As of Thu 24 Sep 18:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$410,900",
+                  "label": "Net worth"
+                },
+                {
+                  "value": "+S$8,400",
+                  "label": "Since June"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS, CPF and IBKR balances, 24 Sep 2026 18:00"
+              }
+            ]
+          },
+          "fallback_text": "Net worth S$410,900 as of Thu 24 Sep 18:00, up S$8,400 since June. Couldn’t refresh."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No accounts linked",
+            "subtitle": "As of 09:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Harso has no bank, CPF or broker account to read"
+            }
+          ],
+          "fallback_text": "No accounts linked as of 09:00: Harso has no bank, CPF or broker account to read."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t total your net worth",
+            "subtitle": "All linked accounts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "IBKR didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t total your net worth: IBKR didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -339,6 +596,7 @@
                 "12:00",
                 "13:00",
                 "14:00",
+                "15:00",
                 "16:00"
               ],
               "series": [
@@ -350,11 +608,12 @@
                     "236.4",
                     "237.1",
                     "237.8",
+                    "238.1",
                     "238.4"
                   ]
                 }
               ],
-              "highlight_index": 5
+              "highlight_index": 6
             }
           }
         ],
@@ -370,6 +629,77 @@
           ]
         },
         "fallback_text": "Apple (AAPL) closed at US$238.40 on Friday 25 Sep, up 1.8%. Markets reopen Monday."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Apple · AAPL",
+            "subtitle": "Nasdaq"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the latest price",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b03"
+              }
+            }
+          ],
+          "fallback_text": "Reading Apple’s latest price."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Apple · AAPL",
+            "subtitle": "Nasdaq · as of Thu 24 Sep close · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "US$234.20",
+                  "label": "Close"
+                },
+                {
+                  "value": "+0.4%",
+                  "label": "Thursday"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Nasdaq closing price, 24 Sep 2026"
+              }
+            ],
+            "disclaimers": [
+              "Not financial advice."
+            ]
+          },
+          "fallback_text": "Apple closed at US$234.20 on Thu 24 Sep, up 0.4%. Couldn’t refresh Friday’s close."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read Apple’s price",
+            "subtitle": "Nasdaq"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The market data feed didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read Apple’s price: The market data feed didn’t respond."
+        }
       }
     },
     {
@@ -663,6 +993,92 @@
           ]
         },
         "fallback_text": "Bills this week: SP Group S$212.40 overdue since 21 Sep; Singtel S$49.90 on 25 Sep (autopay); Great Eastern S$224.10 on 27 Sep (autopay)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Bills due this week",
+            "subtitle": "21–27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading bill emails and GIRO",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b04"
+              }
+            }
+          ],
+          "fallback_text": "Reading your bills for 21–27 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Bills due this week",
+            "subtitle": "21–27 Sep · 1 of 2 sources read"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Singtel Fibre",
+                  "secondary": "Due 25 Sep · Autopay",
+                  "trailing": "S$49.90"
+                },
+                {
+                  "label": "Great Eastern",
+                  "secondary": "Due 27 Sep · Autopay",
+                  "trailing": "S$224.10"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS GIRO list, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "From DBS GIRO only (bill emails not read yet): Singtel Fibre S$49.90 due 25 Sep, Great Eastern S$224.10 due 27 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No bills due this week",
+            "subtitle": "21–27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The next one is Singtel Fibre on 25 Oct"
+            }
+          ],
+          "fallback_text": "No bills due this week. The next one is Singtel Fibre on 25 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check your bills",
+            "subtitle": "21–27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail didn’t respond. Nothing was paid."
+            }
+          ],
+          "fallback_text": "Couldn’t check your bills: Gmail didn’t respond. Nothing was paid."
+        }
       }
     },
     {
@@ -689,7 +1105,7 @@
             "kind": "numbers",
             "items": [
               {
-                "value": "₹61,540",
+                "value": "INR 61,540",
                 "label": "Priya gets"
               },
               {
@@ -718,7 +1134,75 @@
             "Rate is held for 24 hours once you start the transfer."
           ]
         },
-        "fallback_text": "Sending S$1,000: Priya gets about ₹61,540 at 61.92, fee S$6.20, arrives by Tuesday."
+        "fallback_text": "Sending S$1,000: Priya gets about INR 61,540 at 61.92, fee S$6.20, arrives by Tuesday."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "S$1,000 to Priya",
+            "subtitle": "Wise"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Getting a quote",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b05"
+              }
+            }
+          ],
+          "fallback_text": "Getting a Wise quote for S$1,000 to Priya."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "S$1,000 to Priya",
+            "subtitle": "1 SGD = 61.80 INR · as of 08:40 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "INR 61,420",
+                  "label": "Priya gets"
+                },
+                {
+                  "value": "S$6.20",
+                  "label": "Fee"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Wise quote, 26 Sep 2026 08:40"
+              }
+            ]
+          },
+          "fallback_text": "At 08:40 Priya would have got INR 61,420 for S$1,000, fee S$6.20, at 61.80. Couldn’t refresh the quote."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get a quote",
+            "subtitle": "S$1,000 to Priya · Wise"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Wise didn’t respond. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn’t get a quote: Wise didn’t respond. Nothing was sent."
+        }
       }
     },
     {
@@ -846,6 +1330,43 @@
           ]
         },
         "fallback_text": "The S$900,000 loan falls below half during year 15 and is paid off in Sep 2051; total interest S$380,371. Schedule saved to Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Loan balance by year",
+            "subtitle": "S$900,000 · 25 years · 3.0%"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Building the 300-month schedule",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b06"
+              }
+            }
+          ],
+          "fallback_text": "Building the repayment schedule."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t make the schedule",
+            "subtitle": "S$900,000 · 25 years · 3.0%"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The sheet didn’t save. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t make the schedule: The sheet didn’t save. Nothing was changed."
+        }
       }
     },
     {
@@ -892,6 +1413,59 @@
           ]
         },
         "fallback_text": "Over budget so far in September (1–26 Sep): Dining S$1,160 of S$900 (S$260 over); Shopping S$590 of S$500 (S$90 over)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Budget this month",
+            "subtitle": "1–26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 9 categories",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b07"
+              }
+            }
+          ],
+          "fallback_text": "Reading your 9 budget categories."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No category over budget",
+            "subtitle": "1–26 Sep · 9 categories"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Dining is closest, with S$60 left"
+            }
+          ],
+          "fallback_text": "No category over budget. Dining is closest, with S$60 left."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check your budget",
+            "subtitle": "1–26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Your accounts didn’t sync. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t check your budget: Your accounts didn’t sync. Nothing was changed."
+        }
       }
     },
     {
@@ -994,6 +1568,72 @@
           ]
         },
         "fallback_text": "INV-2041 to Acme Pte Ltd, S$8,400.00, was due 20 Sep and is 6 days overdue."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "INV-2041 · Acme Pte Ltd",
+            "subtitle": "Xero"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the invoice",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b08"
+              }
+            }
+          ],
+          "fallback_text": "Reading INV-2041 in Xero."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "INV-2041 · Acme Pte Ltd",
+            "subtitle": "Due 20 Sep · synced 24 Sep 09:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "S$8,400.00",
+                  "secondary": "Due 20 Sep · 4 days late on 24 Sep",
+                  "trailing": "Unpaid",
+                  "status": "overdue"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Xero, synced 24 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "INV-2041 to Acme, S$8,400.00, due 20 Sep, was unpaid when Xero last synced on 24 Sep 09:00. Couldn’t refresh."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read INV-2041",
+            "subtitle": "Acme Pte Ltd · Xero"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Xero didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read INV-2041: Xero didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -1077,6 +1717,43 @@
           ]
         },
         "fallback_text": "Invoice INV-2042 to Acme Pte Ltd for 20 hours of design at S$150, S$3,270.00 including 9% GST, due 26 Oct. Saved to your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "INV-2042 · Acme Pte Ltd",
+            "subtitle": "PDF"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Making the invoice",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b09"
+              }
+            }
+          ],
+          "fallback_text": "Making invoice INV-2042 for Acme."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t make the invoice",
+            "subtitle": "INV-2042 · Acme Pte Ltd"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF didn’t save. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn’t make the invoice: The PDF didn’t save. Nothing was sent."
+        }
       }
     },
     {
@@ -1135,6 +1812,59 @@
           ]
         },
         "fallback_text": "August expenses: 142 transactions totalling S$4,280, in a spreadsheet in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "August expenses",
+            "subtitle": "XLSX"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 4 accounts",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b0a"
+              }
+            }
+          ],
+          "fallback_text": "Reading August expenses from 4 accounts."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No expenses in August",
+            "subtitle": "1–31 Aug · all accounts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No charges came through, so no sheet was made"
+            }
+          ],
+          "fallback_text": "No expenses in August. No charges came through, so no sheet was made."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t make the sheet",
+            "subtitle": "August expenses"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "OCBC didn’t respond. No file was made."
+            }
+          ],
+          "fallback_text": "Couldn’t make the sheet: OCBC didn’t respond. No file was made."
+        }
       }
     },
     {
@@ -1180,6 +1910,24 @@
           ]
         },
         "fallback_text": "Portfolio US$84,210 as of Friday's close, down 0.6% this week."
+      },
+      "states": {
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your portfolio",
+            "subtitle": "IBKR"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "IBKR didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your portfolio: IBKR didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -1239,6 +1987,89 @@
           ]
         },
         "fallback_text": "DBS (D05) S$42.10 at the 25 Sep close: P/E 11.2, dividend yield 5.6%, market cap S$119.6B, 52-week range S$34.80–43.25."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "DBS Group · D05",
+            "subtitle": "SGX"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading market data",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b0b"
+              }
+            }
+          ],
+          "fallback_text": "Reading DBS market data."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "DBS Group · D05",
+            "subtitle": "SGX · as of Thu 24 Sep close · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Price",
+                  "trailing": "S$41.85"
+                },
+                {
+                  "label": "P/E",
+                  "trailing": "11.1"
+                },
+                {
+                  "label": "Dividend yield",
+                  "trailing": "5.7%"
+                },
+                {
+                  "label": "Market cap",
+                  "trailing": "S$118.9B"
+                },
+                {
+                  "label": "52-week range",
+                  "trailing": "S$34.80–43.25"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "SGX market data, 24 Sep 2026 close"
+              }
+            ],
+            "disclaimers": [
+              "Not financial advice."
+            ]
+          },
+          "fallback_text": "DBS (D05) as of Thu 24 Sep close: price S$41.85, P/E 11.1, dividend yield 5.7%, market cap S$118.9B, 52-week range S$34.80–43.25. Couldn’t refresh."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read DBS’s stats",
+            "subtitle": "SGX"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The market data feed didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read DBS’s stats: The market data feed didn’t respond."
+        }
       }
     },
     {
@@ -1321,6 +2152,102 @@
           ]
         },
         "fallback_text": "Since 2 January: DBS +18%, OCBC +11%, UOB +8%, as of the 25 Sep close."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore banks this year",
+            "subtitle": "Change since 2 Jan"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 3 price histories",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b0c"
+              }
+            }
+          ],
+          "fallback_text": "Reading DBS, OCBC and UOB prices since 2 Jan."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore banks this year",
+            "subtitle": "2 of 3 read · as of 25 Sep close"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "line",
+                "unit": "%",
+                "x_labels": [
+                  "Jan",
+                  "Mar",
+                  "May",
+                  "Jul",
+                  "Sep"
+                ],
+                "series": [
+                  {
+                    "label": "DBS",
+                    "values": [
+                      "0",
+                      "5",
+                      "9",
+                      "14",
+                      "18"
+                    ]
+                  },
+                  {
+                    "label": "OCBC",
+                    "values": [
+                      "0",
+                      "3",
+                      "6",
+                      "9",
+                      "11"
+                    ]
+                  }
+                ],
+                "highlight_index": 4
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "SGX closing prices, 2 Jan–25 Sep 2026"
+              }
+            ],
+            "disclaimers": [
+              "Price change only; dividends excluded."
+            ]
+          },
+          "fallback_text": "2 of 3 read, change since 2 Jan to 25 Sep close: DBS up 18%, OCBC up 11%. UOB still loading."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t compare the banks",
+            "subtitle": "DBS, OCBC, UOB"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The market data feed didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t compare the banks: The market data feed didn’t respond."
+        }
       }
     },
     {
@@ -1373,6 +2300,59 @@
           ]
         },
         "fallback_text": "Ah Huat Renovation quoted S$14,800 for the bathroom (Q-3318), valid until 15 Oct. The PDF is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Bathroom renovation quote",
+            "subtitle": "Your email"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Searching your email",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b0d"
+              }
+            }
+          ],
+          "fallback_text": "Searching your email for the quote."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No bathroom quote found",
+            "subtitle": "Email since 1 Jul"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing from a contractor mentions a bathroom"
+            }
+          ],
+          "fallback_text": "No bathroom quote found. Nothing from a contractor mentions a bathroom."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t search your email",
+            "subtitle": "Bathroom renovation quote"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t search your email: Gmail didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -1403,7 +2383,7 @@
                 "secondary": "Sent from Wise 26 Sep 10:20"
               },
               {
-                "label": "Converted to ₹61,540",
+                "label": "Converted to INR 61,540",
                 "secondary": "26 Sep 10:18"
               },
               {
@@ -1428,7 +2408,71 @@
             }
           ]
         },
-        "fallback_text": "Your S$1,000 transfer to Priya (₹61,540) left Wise on 26 Sep and is with HDFC Bank; it should arrive by Tue 29 Sep."
+        "fallback_text": "Your S$1,000 transfer to Priya (INR 61,540) left Wise on 26 Sep and is with HDFC Bank; it should arrive by Tue 29 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Transfer to Priya",
+            "subtitle": "S$1,000 · Wise"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking with Wise",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b0e"
+              }
+            }
+          ],
+          "fallback_text": "Checking your transfer with Wise."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arrives by Tue 29 Sep",
+            "subtitle": "S$1,000 to Priya · as of 10:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Paid in",
+                  "secondary": "26 Sep 10:05"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Wise transfer 88213401, 26 Sep 2026 10:10"
+              }
+            ]
+          },
+          "fallback_text": "As of 10:10 your S$1,000 to Priya was paid in (10:05) and due by Tue 29 Sep. Couldn’t refresh."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check the transfer",
+            "subtitle": "S$1,000 to Priya · Wise"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Wise didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t check the transfer: Wise didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -1479,6 +2523,59 @@
           ]
         },
         "fallback_text": "SP Group bill S$212.40 was due 21 Sep. Pay it in DBS digibank; nothing has been paid yet."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "SP Group electricity",
+            "subtitle": "Your email"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Finding the latest bill",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b0f"
+              }
+            }
+          ],
+          "fallback_text": "Finding your latest SP Group bill."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing owed to SP Group",
+            "subtitle": "Account 93-1234567-8"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The last bill, S$198.60, was paid on 21 Aug"
+            }
+          ],
+          "fallback_text": "Nothing owed to SP Group. The last bill, S$198.60, was paid on 21 Aug."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t find the SP Group bill",
+            "subtitle": "Your email"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail didn’t respond. Nothing was paid."
+            }
+          ],
+          "fallback_text": "Couldn’t find the SP Group bill: Gmail didn’t respond. Nothing was paid."
+        }
       }
     },
     {
@@ -1537,6 +2634,1409 @@
           ]
         },
         "fallback_text": "DBS August statement for account ending 5521: closing balance S$18,420, S$6,380 out. The PDF is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "DBS statement · August",
+            "subtitle": "PDF"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Fetching the statement",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b10"
+              }
+            }
+          ],
+          "fallback_text": "Fetching your DBS August statement."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the statement",
+            "subtitle": "DBS · August"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "DBS didn’t respond. No file was made."
+            }
+          ],
+          "fallback_text": "Couldn’t get the statement: DBS didn’t respond. No file was made."
+        }
+      }
+    },
+    {
+      "id": "money-watchlist",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How's my watchlist doing?",
+      "says": "Tesla and NVIDIA fell; the other four edged up.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "F6 Watchlist / movers"
+      ],
+      "rationale": "Six tickers as rows, biggest move first, price beside the ticker and the move trailing; three inline.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Watchlist",
+          "subtitle": "6 stocks · as of Fri 25 Sep close"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Tesla",
+                "secondary": "TSLA · US$241.10",
+                "trailing": "−3.2%"
+              },
+              {
+                "label": "NVIDIA",
+                "secondary": "NVDA · US$118.60",
+                "trailing": "−2.1%"
+              },
+              {
+                "label": "Sea Ltd",
+                "secondary": "SE · US$96.40",
+                "trailing": "+1.9%"
+              },
+              {
+                "label": "Apple",
+                "secondary": "AAPL · US$238.40",
+                "trailing": "+1.8%"
+              },
+              {
+                "label": "Grab",
+                "secondary": "GRAB · US$4.12",
+                "trailing": "+1.5%"
+              },
+              {
+                "label": "Microsoft",
+                "secondary": "MSFT · US$436.20",
+                "trailing": "+0.3%"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Nasdaq and NYSE closing prices, 25 Sep 2026"
+            }
+          ],
+          "disclaimers": [
+            "Not financial advice."
+          ]
+        },
+        "more_label": "View all 6",
+        "fallback_text": "Watchlist at Fri 25 Sep close: Tesla US$241.10 −3.2%, NVIDIA US$118.60 −2.1%, Sea Ltd US$96.40 +1.9%, Apple US$238.40 +1.8%, Grab US$4.12 +1.5%, Microsoft US$436.20 +0.3%."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Watchlist",
+            "subtitle": "6 stocks"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 6 prices",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b11"
+              }
+            }
+          ],
+          "fallback_text": "Reading prices for your 6 stocks."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Watchlist",
+            "subtitle": "4 of 6 read · as of Fri 25 Sep close"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Tesla",
+                  "secondary": "TSLA · US$241.10",
+                  "trailing": "−3.2%"
+                },
+                {
+                  "label": "NVIDIA",
+                  "secondary": "NVDA · US$118.60",
+                  "trailing": "−2.1%"
+                },
+                {
+                  "label": "Apple",
+                  "secondary": "AAPL · US$238.40",
+                  "trailing": "+1.8%"
+                },
+                {
+                  "label": "Microsoft",
+                  "secondary": "MSFT · US$436.20",
+                  "trailing": "+0.3%"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Nasdaq closing prices, 25 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "4 of 6 read at Fri 25 Sep close: Tesla US$241.10 −3.2%, NVIDIA US$118.60 −2.1%, Apple US$238.40 +1.8%, Microsoft US$436.20 +0.3%. Sea Ltd and Grab still loading."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Watchlist",
+            "subtitle": "As of Thu 24 Sep close · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Tesla",
+                  "secondary": "TSLA · US$249.10",
+                  "trailing": "+0.8%"
+                },
+                {
+                  "label": "Sea Ltd",
+                  "secondary": "SE · US$94.60",
+                  "trailing": "+0.7%"
+                },
+                {
+                  "label": "NVIDIA",
+                  "secondary": "NVDA · US$121.10",
+                  "trailing": "−0.6%"
+                },
+                {
+                  "label": "Grab",
+                  "secondary": "GRAB · US$4.06",
+                  "trailing": "−0.5%"
+                },
+                {
+                  "label": "Apple",
+                  "secondary": "AAPL · US$234.20",
+                  "trailing": "+0.4%"
+                },
+                {
+                  "label": "Microsoft",
+                  "secondary": "MSFT · US$434.90",
+                  "trailing": "+0.2%"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Nasdaq closing prices, 24 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Watchlist at Thu 24 Sep close: Tesla US$249.10 +0.8%, Sea Ltd US$94.60 +0.7%, NVIDIA US$121.10 −0.6%, Grab US$4.06 −0.5%, Apple US$234.20 +0.4%, Microsoft US$434.90 +0.2%. Couldn’t refresh Friday’s prices."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your watchlist is empty",
+            "subtitle": "As of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Ask me to watch a stock and it appears here"
+            }
+          ],
+          "fallback_text": "Your watchlist is empty as of 10:30. Ask me to watch a stock and it appears here."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your watchlist",
+            "subtitle": "6 stocks"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The market data feed didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read your watchlist: The market data feed didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "money-card-charges",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What's gone on my DBS card this week?",
+      "says": "Nothing unusual; dinner at Burnt Ends was the big one.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "F9 Transactions list",
+        "X1 Headline number"
+      ],
+      "rationale": "Spent and the count answer it; every charge follows, newest first, adding up to Spent.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "DBS Altitude card",
+          "subtitle": "21–27 Sep · as of 09:30"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$684.30",
+                "label": "Spent"
+              },
+              {
+                "value": "7",
+                "label": "Charges"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Grab",
+                "secondary": "Sat 26 Sep · Transport",
+                "trailing": "S$18.40"
+              },
+              {
+                "label": "Cold Storage",
+                "secondary": "Fri 25 Sep · Groceries",
+                "trailing": "S$96.20"
+              },
+              {
+                "label": "Burnt Ends",
+                "secondary": "Thu 24 Sep · Dining",
+                "trailing": "S$312.00"
+              },
+              {
+                "label": "Shell",
+                "secondary": "Wed 23 Sep · Transport",
+                "trailing": "S$88.50"
+              },
+              {
+                "label": "Uniqlo",
+                "secondary": "Tue 22 Sep · Shopping",
+                "trailing": "S$79.80"
+              },
+              {
+                "label": "Toast Box",
+                "secondary": "Tue 22 Sep · Dining",
+                "trailing": "S$9.40"
+              },
+              {
+                "label": "Watsons",
+                "secondary": "Mon 21 Sep · Health",
+                "trailing": "S$80.00"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS Altitude card ··4410, 26 Sep 2026 09:30"
+            }
+          ]
+        },
+        "more_label": "View all 7 charges",
+        "fallback_text": "DBS Altitude card, 21–27 Sep as of 09:30: 7 charges, S$684.30. Grab S$18.40 (26 Sep), Cold Storage S$96.20 (25 Sep), Burnt Ends S$312.00 (24 Sep), Shell S$88.50 (23 Sep), Uniqlo S$79.80 (22 Sep), Toast Box S$9.40 (22 Sep), Watsons S$80.00 (21 Sep)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "DBS Altitude card",
+            "subtitle": "21–27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading this week’s charges",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b12"
+              }
+            }
+          ],
+          "fallback_text": "Reading this week’s DBS card charges."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "DBS Altitude card",
+            "subtitle": "21–27 Sep · as of Thu 24 Sep 20:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$569.70",
+                  "label": "Spent"
+                },
+                {
+                  "value": "5",
+                  "label": "Charges"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Burnt Ends",
+                  "secondary": "Thu 24 Sep · Dining",
+                  "trailing": "S$312.00"
+                },
+                {
+                  "label": "Shell",
+                  "secondary": "Wed 23 Sep · Transport",
+                  "trailing": "S$88.50"
+                },
+                {
+                  "label": "Uniqlo",
+                  "secondary": "Tue 22 Sep · Shopping",
+                  "trailing": "S$79.80"
+                },
+                {
+                  "label": "Toast Box",
+                  "secondary": "Tue 22 Sep · Dining",
+                  "trailing": "S$9.40"
+                },
+                {
+                  "label": "Watsons",
+                  "secondary": "Mon 21 Sep · Health",
+                  "trailing": "S$80.00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS Altitude card ··4410, 24 Sep 2026 20:00"
+              }
+            ]
+          },
+          "fallback_text": "DBS Altitude card to Thu 24 Sep 20:00: 5 charges, S$569.70. Burnt Ends S$312.00, Shell S$88.50, Uniqlo S$79.80, Toast Box S$9.40, Watsons S$80.00. Couldn’t refresh."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No charges this week",
+            "subtitle": "DBS Altitude card · 21–27 Sep · as of 09:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The last charge was S$42.00 at Cold Storage on 19 Sep"
+            }
+          ],
+          "fallback_text": "No charges on your DBS Altitude card from 21–27 Sep as of 09:30. The last charge was S$42.00 at Cold Storage on 19 Sep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your DBS card",
+            "subtitle": "21–27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "DBS didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your DBS card: DBS didn’t respond. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "money-spending-so-far",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How much have I spent so far this month?",
+      "says": "At this pace you'll finish about S$800 under budget.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F7 Spending summary",
+        "X1 Headline number"
+      ],
+      "rationale": "A month not yet over is \"so far\": left leads, spent beside it, the weeks show the pace; this week is partial and highlighted.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "September so far",
+          "subtitle": "1–26 Sep · all accounts · as of 09:00"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1,380",
+                "label": "Left of S$5,000"
+              },
+              {
+                "value": "S$3,620",
+                "label": "Spent"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "S$",
+              "x_labels": [
+                "1–7 Sep",
+                "8–14 Sep",
+                "15–21 Sep",
+                "22–26 Sep"
+              ],
+              "series": [
+                {
+                  "label": "Spent",
+                  "values": [
+                    "940",
+                    "1010",
+                    "1180",
+                    "490"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Linked accounts, synced 26 Sep 2026 09:00"
+            }
+          ],
+          "assumptions": [
+            "Transfers between your own accounts are excluded."
+          ]
+        },
+        "fallback_text": "September so far (1–26 Sep, as of 09:00): S$3,620 spent of S$5,000, S$1,380 left. By week: 1–7 Sep S$940, 8–14 Sep S$1,010, 15–21 Sep S$1,180, 22–26 Sep S$490."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "September so far",
+            "subtitle": "1–26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 4 accounts",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b13"
+              }
+            }
+          ],
+          "fallback_text": "Reading September spending from 4 accounts."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "September so far",
+            "subtitle": "1–26 Sep · 3 of 4 accounts · as of 09:00"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$3,150",
+                  "label": "Spent"
+                },
+                {
+                  "value": "153",
+                  "label": "Payments read"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "DBS Altitude card",
+                  "secondary": "96 charges",
+                  "trailing": "S$1,860"
+                },
+                {
+                  "label": "OCBC 365 card",
+                  "secondary": "48 charges",
+                  "trailing": "S$840"
+                },
+                {
+                  "label": "GIRO and PayNow",
+                  "secondary": "9 payments",
+                  "trailing": "S$450"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS and OCBC, 26 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "September so far from 3 of 4 accounts (as of 09:00): S$3,150 spent. DBS Altitude card S$1,860, OCBC 365 card S$840, GIRO and PayNow S$450; 153 payments read. 1 account still to read."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "September so far",
+            "subtitle": "1–24 Sep · as of Thu 24 Sep 18:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$1,560",
+                  "label": "Left of S$5,000"
+                },
+                {
+                  "value": "S$3,440",
+                  "label": "Spent"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Linked accounts, synced 24 Sep 2026 18:00"
+              }
+            ]
+          },
+          "fallback_text": "September to Thu 24 Sep 18:00: S$3,440 spent of S$5,000, S$1,560 left. Couldn’t refresh."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No spending yet this month",
+            "subtitle": "1–26 Sep · as of 09:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No charges have come through since 1 Sep"
+            }
+          ],
+          "fallback_text": "No spending recorded from 1–26 Sep as of 09:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read this month’s spending",
+            "subtitle": "All accounts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "OCBC didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read this month’s spending: OCBC didn’t respond. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "money-balance",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How much is in my DBS account?",
+      "says": "Rent went out on the 1st, which is most of the drop.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F1 Balance / net worth",
+        "X1 Headline number"
+      ],
+      "rationale": "One account: the balance leads, the change since the month began sits beside it; no chart for a single balance.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "DBS Multiplier ··5521",
+          "subtitle": "Savings · as of 09:10"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$12,860",
+                "label": "Available"
+              },
+              {
+                "value": "−S$5,560",
+                "label": "Since 1 Sep"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS digibank balance, 26 Sep 2026 09:10"
+            }
+          ]
+        },
+        "fallback_text": "DBS Multiplier ··5521: S$12,860 available as of 09:10, down S$5,560 since 1 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "DBS Multiplier ··5521",
+            "subtitle": "Savings"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the balance",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b14"
+              }
+            }
+          ],
+          "fallback_text": "Reading your DBS balance."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "DBS Multiplier ··5521",
+            "subtitle": "Savings · as of Thu 24 Sep 21:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$13,140",
+                  "label": "Available"
+                },
+                {
+                  "value": "−S$5,280",
+                  "label": "Since 1 Sep"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS digibank balance, 24 Sep 2026 21:00"
+              }
+            ]
+          },
+          "fallback_text": "DBS Multiplier ··5521: S$13,140 available as of Thu 24 Sep 21:00, down S$5,280 since 1 Sep. Couldn’t refresh."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your DBS balance",
+            "subtitle": "DBS Multiplier ··5521"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "DBS didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your DBS balance: DBS didn’t respond. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "money-crypto-quote",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What's bitcoin at?",
+      "says": "It slipped overnight and has been flat since 06:00.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F3 Stock / crypto quote"
+      ],
+      "rationale": "Crypto never closes, so the stamp is a clock time; price and 24-hour move lead, the line shows the day.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Bitcoin · BTC",
+          "subtitle": "US dollars · as of 10:15"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "US$63,120",
+                "label": "Price"
+              },
+              {
+                "value": "−1.4%",
+                "label": "24 hours"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "US$k",
+              "x_labels": [
+                "10:00",
+                "14:00",
+                "18:00",
+                "22:00",
+                "02:00",
+                "06:00",
+                "Now"
+              ],
+              "series": [
+                {
+                  "label": "BTC",
+                  "values": [
+                    "64.0",
+                    "64.3",
+                    "64.1",
+                    "63.6",
+                    "63.2",
+                    "63.1",
+                    "63.1"
+                  ]
+                }
+              ],
+              "highlight_index": 6
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Coinbase spot price, 26 Sep 2026 10:15"
+            }
+          ],
+          "disclaimers": [
+            "Not financial advice."
+          ]
+        },
+        "fallback_text": "Bitcoin US$63,120 as of 10:15, down 1.4% in 24 hours."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Bitcoin · BTC",
+            "subtitle": "US dollars"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the price",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b15"
+              }
+            }
+          ],
+          "fallback_text": "Reading the bitcoin price."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Bitcoin · BTC",
+            "subtitle": "As of 07:40 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "US$63,050",
+                  "label": "Price"
+                },
+                {
+                  "value": "−1.6%",
+                  "label": "24 hours"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Coinbase spot price, 26 Sep 2026 07:40"
+              }
+            ],
+            "disclaimers": [
+              "Not financial advice."
+            ]
+          },
+          "fallback_text": "Bitcoin US$63,050 as of 07:40, down 1.6% in 24 hours. Couldn’t refresh."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the bitcoin price",
+            "subtitle": "US dollars"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Coinbase didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read the bitcoin price: Coinbase didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "money-subscriptions",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Which subscriptions am I paying for?",
+      "says": "Netflix and Disney+ overlap; dropping one saves up to S$25.98 a month.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "F10 Bill / subscription due",
+        "X1 Headline number"
+      ],
+      "rationale": "The monthly total leads; every subscription follows, largest first, with its next charge; they add up to the total.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Subscriptions",
+          "subtitle": "6 found · monthly"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$98.47",
+                "label": "Total"
+              },
+              {
+                "value": "6",
+                "label": "Subscriptions"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "ChatGPT Plus",
+                "secondary": "Renews 4 Oct · DBS card",
+                "trailing": "S$27.50"
+              },
+              {
+                "label": "Netflix",
+                "secondary": "Renews 21 Oct · DBS card",
+                "trailing": "S$25.98"
+              },
+              {
+                "label": "Disney+",
+                "secondary": "Renews 12 Oct · OCBC card",
+                "trailing": "S$16.98"
+              },
+              {
+                "label": "Spotify",
+                "secondary": "Renews 30 Sep · DBS card",
+                "trailing": "S$11.98"
+              },
+              {
+                "label": "YouTube Premium",
+                "secondary": "Renews 8 Oct · OCBC card",
+                "trailing": "S$11.98"
+              },
+              {
+                "label": "iCloud+ 200 GB",
+                "secondary": "Renews 2 Oct · DBS card",
+                "trailing": "S$4.05"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS and OCBC card charges, Sep 2025–Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "A charge that repeats monthly from the same merchant counts as a subscription."
+          ]
+        },
+        "more_label": "View all 6",
+        "fallback_text": "6 subscriptions, S$98.47 a month: ChatGPT Plus S$27.50 (4 Oct), Netflix S$25.98 (21 Oct), Disney+ S$16.98 (12 Oct), Spotify S$11.98 (30 Sep), YouTube Premium S$11.98 (8 Oct), iCloud+ 200 GB S$4.05 (2 Oct)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Subscriptions",
+            "subtitle": "DBS and OCBC cards"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 12 months of charges",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b16"
+              }
+            }
+          ],
+          "fallback_text": "Reading 12 months of card charges for repeats."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Subscriptions",
+            "subtitle": "1 of 2 cards read · monthly"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$69.51",
+                  "label": "Total"
+                },
+                {
+                  "value": "4",
+                  "label": "Subscriptions"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "ChatGPT Plus",
+                  "secondary": "Renews 4 Oct · DBS card",
+                  "trailing": "S$27.50"
+                },
+                {
+                  "label": "Netflix",
+                  "secondary": "Renews 21 Oct · DBS card",
+                  "trailing": "S$25.98"
+                },
+                {
+                  "label": "Spotify",
+                  "secondary": "Renews 30 Sep · DBS card",
+                  "trailing": "S$11.98"
+                },
+                {
+                  "label": "iCloud+ 200 GB",
+                  "secondary": "Renews 2 Oct · DBS card",
+                  "trailing": "S$4.05"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS card charges, Sep 2025–Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "From the DBS card only: 4 subscriptions, S$69.51 a month. ChatGPT Plus S$27.50, Netflix S$25.98, Spotify S$11.98, iCloud+ 200 GB S$4.05. OCBC card still to read."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No subscriptions found",
+            "subtitle": "DBS and OCBC cards · last 12 months"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No merchant charged you monthly in the last 12 months"
+            }
+          ],
+          "fallback_text": "No subscriptions found. No merchant charged you monthly in the last 12 months."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your card charges",
+            "subtitle": "DBS and OCBC cards"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "OCBC didn’t respond. Nothing was cancelled."
+            }
+          ],
+          "fallback_text": "Couldn’t read your card charges: OCBC didn’t respond. Nothing was cancelled."
+        }
+      }
+    },
+    {
+      "id": "money-invoices-owed",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Who still owes me money?",
+      "says": "Acme is the one to chase; theirs is 6 days late.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "F11 Invoice",
+        "X2 Domain state word",
+        "X1 Headline number"
+      ],
+      "rationale": "The total owed leads; open invoices follow, late first, each with its due date; they add up to the total.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Unpaid invoices",
+          "subtitle": "4 open · synced 09:00"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$16,570.00",
+                "label": "Total"
+              },
+              {
+                "value": "1 late",
+                "label": "Past due"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Acme Pte Ltd",
+                "secondary": "INV-2041 · due 20 Sep",
+                "trailing": "S$8,400.00",
+                "status": "overdue"
+              },
+              {
+                "label": "Lumen Studio",
+                "secondary": "INV-2044 · due 30 Sep",
+                "trailing": "S$2,180.00"
+              },
+              {
+                "label": "Northwind Asia",
+                "secondary": "INV-2045 · due 9 Oct",
+                "trailing": "S$2,720.00"
+              },
+              {
+                "label": "Acme Pte Ltd",
+                "secondary": "INV-2042 · due 26 Oct",
+                "trailing": "S$3,270.00"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Xero, synced 26 Sep 2026 09:00"
+            }
+          ]
+        },
+        "more_label": "View all 4",
+        "fallback_text": "4 unpaid invoices, S$16,570.00 in all, 1 late: Acme INV-2041 S$8,400.00 due 20 Sep (late), Lumen Studio INV-2044 S$2,180.00 due 30 Sep, Northwind Asia INV-2045 S$2,720.00 due 9 Oct, Acme INV-2042 S$3,270.00 due 26 Oct."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Unpaid invoices",
+            "subtitle": "Xero"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading open invoices",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b17"
+              }
+            }
+          ],
+          "fallback_text": "Reading your open invoices in Xero."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Unpaid invoices",
+            "subtitle": "Synced Thu 24 Sep 09:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$13,300.00",
+                  "label": "Total"
+                },
+                {
+                  "value": "1 late",
+                  "label": "Past due"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Acme Pte Ltd",
+                  "secondary": "INV-2041 · due 20 Sep",
+                  "trailing": "S$8,400.00",
+                  "status": "overdue"
+                },
+                {
+                  "label": "Lumen Studio",
+                  "secondary": "INV-2044 · due 30 Sep",
+                  "trailing": "S$2,180.00"
+                },
+                {
+                  "label": "Northwind Asia",
+                  "secondary": "INV-2045 · due 9 Oct",
+                  "trailing": "S$2,720.00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Xero, synced 24 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "As Xero stood on Thu 24 Sep 09:00: 3 unpaid, S$13,300.00, 1 late. Acme INV-2041 S$8,400.00 (late), Lumen Studio S$2,180.00, Northwind Asia S$2,720.00. Couldn’t refresh."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nobody owes you money",
+            "subtitle": "Xero · synced 09:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Every invoice you sent has been paid"
+            }
+          ],
+          "fallback_text": "Nobody owes you money. Every invoice you sent has been paid."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your invoices",
+            "subtitle": "Xero"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Xero didn’t respond. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn’t read your invoices: Xero didn’t respond. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "money-bills-month",
+      "vertical": "money",
+      "kind": "card",
+      "request": "What bills are left to pay this month?",
+      "says": "Only the town council bill needs you; the rest are on autopay.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F10 Bill / subscription due",
+        "X2 Domain state word"
+      ],
+      "rationale": "Three bills fit inline; the one that needs the person comes first with its word; autopay is said in the secondary line.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Bills left in September",
+          "subtitle": "27–30 Sep · S$393.50"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Tampines Town Council",
+                "secondary": "Due 30 Sep · not on autopay",
+                "trailing": "S$96.50"
+              },
+              {
+                "label": "Great Eastern",
+                "secondary": "Due 27 Sep · Autopay",
+                "trailing": "S$224.10"
+              },
+              {
+                "label": "StarHub Mobile",
+                "secondary": "Due 29 Sep · Autopay",
+                "trailing": "S$72.90"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail bill notices and DBS GIRO list, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "3 bills left in September, S$393.50: Tampines Town Council S$96.50 due 30 Sep (not on autopay), Great Eastern S$224.10 due 27 Sep (autopay), StarHub Mobile S$72.90 due 29 Sep (autopay)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Bills left in September",
+            "subtitle": "27–30 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading bill emails and GIRO",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b18"
+              }
+            }
+          ],
+          "fallback_text": "Reading your bills for the rest of September."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No bills left this month",
+            "subtitle": "27–30 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The next one is Singtel Fibre on 25 Oct"
+            }
+          ],
+          "fallback_text": "No bills left this month. The next one is Singtel Fibre on 25 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check your bills",
+            "subtitle": "27–30 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail didn’t respond. Nothing was paid."
+            }
+          ],
+          "fallback_text": "Couldn’t check your bills: Gmail didn’t respond. Nothing was paid."
+        }
       }
     },
     {
