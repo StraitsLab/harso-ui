@@ -48,7 +48,10 @@ function wholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
     ...block.sections.flatMap(section => [...(section.heading ? [section.heading] : []), ...section.paragraphs ?? [], ...section.bullets ?? []]),
   ]);
   const firstText = document.blocks.findIndex(isText);
-  const blocks = document.blocks.flatMap((block, index): HarsoOutputBlock[] => !isText(block) ? [block]
+  // The whole answer is everything the agent sent. Rows it did not send (total_count) are reached through the answer's
+  // link or file, so the expanded card never offers a View all that has nothing left to open.
+  const sent = (block: HarsoOutputBlock): HarsoOutputBlock => "total_count" in block ? { ...block, total_count: undefined } as HarsoOutputBlock : block;
+  const blocks = document.blocks.flatMap((block, index): HarsoOutputBlock[] => !isText(block) ? [sent(block)]
     : index === firstText ? [{ kind: "text", sections: [{ paragraphs: words }] }] : []);
   return { ...document, blocks };
 }

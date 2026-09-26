@@ -164,7 +164,8 @@ describe("catalogue gallery overflow and routes", () => {
         const full = within(frame).getByRole("region", { name: /full answer/ });
         const text = full.textContent!;
         const expected = documents[index].blocks.flatMap((block: any) => block.kind === "rows" ? block.items.flatMap((item: any) => [item.label, item.secondary, item.trailing])
-          : block.kind === "numbers" ? block.items.flatMap((item: any) => [item.value, item.label])
+          // A budget pair draws as a progress bar ("S$4,280 of S$5,000 · S$720 left"): every figure stays, the labels become the bar's words.
+          : block.kind === "numbers" ? block.items.flatMap((item: any) => full.querySelector(".hkc-output-progress") && block.items.length === 2 ? [item.value] : [item.value, item.label])
             : block.kind === "text" ? [block.summary, ...block.sections.flatMap((section: any) => [section.heading, ...section.paragraphs ?? [], ...section.bullets ?? []])] : []).filter(Boolean);
         for (const words of expected) expect(text, `${example.id} ${index}`).toContain(words);
         expect(within(full).queryByRole("button", { name: /View all/ }), example.id).toBeNull();
@@ -208,7 +209,8 @@ describe("catalogue gallery", () => {
       const row = drawn[index];
       expect(row.querySelector(".hkl-cat-asked")).toHaveTextContent(example.request);
       const states = Object.keys(example.states ?? {});
-      expect([...row.querySelectorAll("[data-state]")].map(node => node.getAttribute("data-state"))).toEqual(states);
+      // Only the gallery's own state rows: charts, tables and media carry a data-state of their own inside the card.
+      expect([...row.querySelectorAll(".hkl-cat-state[data-state]")].map(node => node.getAttribute("data-state"))).toEqual(states);
       const frames = [...row.querySelectorAll(".hkl-cat-frame")];
       expect(frames).toHaveLength(4 * (1 + states.length));
       expect(frames.slice(0, 4).map(frame => `${frame.getAttribute("data-mode")}-${frame.getAttribute("data-width")}`)).toEqual(["light-390", "light-420", "dark-390", "dark-420"]);
