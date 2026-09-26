@@ -98,7 +98,9 @@ test("host-owned Details: onOpenDetails is called and no inline region renders",
   await expect(page.getByRole("region", { name: "Output details" })).toHaveCount(0);
 });
 
-for (const [doc, mode] of [["failed", "light"], ["spending", "dark"]] as const) {
+// Packet 5c: status now renders too (the failed document draws amber, tests/harso-output-media.spec.ts); a block kind
+// the card cannot draw (`doc=unknown`) still falls back.
+for (const [doc, mode] of [["unknown", "light"], ["unknown", "dark"]] as const) {
   test(`${doc} ${mode}: unsupported blocks render fallback_text only, axe clean`, async ({ page }) => {
     await page.setViewportSize({ width: 420, height: 720 });
     await page.goto(`${fixture}?doc=${doc}&mode=${mode}`);

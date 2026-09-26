@@ -210,7 +210,18 @@ test("display-only: a reply action (or any action) renders no button and no text
   expect(within(second).getAllByRole("listitem")).toHaveLength(3);
 });
 
-test.each([["failed status", failed], ["spending numbers/visual", spending]] as const)("unsupported block (%s) shows fallback_text and no rows or actions", (_, document) => {
+// Packet 5c: the failed status now draws as itself (amber, never red, and no Try again: the card is display-only and the
+// contract retries only through a Work Unit). An unknown status state still falls back.
+test("the failed example draws the failed status in amber with its detail, and no button", () => {
+  const { card } = renderCard({ document: failed });
+  expect(card).not.toHaveAttribute("data-fallback");
+  const block = card.querySelector(".hkc-output-block-failed")!;
+  expect(block).toHaveAttribute("data-meaning", "problem");
+  expect(block.textContent).toBe("the fare site didn't respond");
+  expect(within(card).queryByRole("button")).toBeNull();
+});
+
+test.each([["unknown status state", { ...failed, blocks: [{ kind: "status", state: "exploded" }] } as chat.HarsoOutputDocument]])("unsupported block (%s) shows fallback_text and no rows or actions", (_, document) => {
   const onViewAll = vi.fn();
   const { card } = renderCard({ document, onViewAll });
   expect(within(card).getByRole("heading", { name: document.header.title })).toBeVisible();
@@ -362,7 +373,7 @@ test("a row status word (overdue/paid), even beyond the visible cap, falls back 
 
 test("every text sink is plain text: fallback, subtitle, View-all label and Details never become markup", () => {
   const markup = "<img src=x onerror=alert(1)><b>x</b>";
-  const fallbackDoc = { ...flights, header: { title: "T", subtitle: markup }, fallback_text: markup, blocks: [{ kind: "status", state: "failed" }] };
+  const fallbackDoc = { ...flights, header: { title: "T", subtitle: markup }, fallback_text: markup, blocks: [{ kind: "hologram" }] };
   const first = render(<chat.HarsoOutputCard document={fallbackDoc as chat.HarsoOutputDocument} onViewAll={() => {}} />);
   expect(first.container.querySelector("img, b")).toBeNull();
   expect(screen.getAllByText(markup)).toHaveLength(2);
@@ -476,7 +487,7 @@ test("numbers and text keep agent order with rows and still fall back on any uns
   const order = [...card.querySelectorAll(".hkc-output-card-text, .hkc-output-card-numbers, .hkc-output-card-rows")].map(node => node.className);
   expect(order).toEqual(["hkc-output-card-text", "hkc-output-card-numbers", "hkc-output-card-rows"]);
   cleanup();
-  for (const other of [{ kind: "table", columns: [], rows: [] }, { kind: "status", state: "failed" }, { kind: "visual", visual: {} }]) {
+  for (const other of [{ kind: "table", columns: [], rows: [] }, { kind: "status", state: "exploded" }, { kind: "visual", visual: {} }]) {
     const { card: fallback, unmount } = renderCard({ document: { ...mixed, blocks: [...mixed.blocks, other] } });
     expect(fallback).toHaveAttribute("data-fallback", "true");
     expect(within(fallback).getByText(flights.fallback_text)).toBeVisible();

@@ -1,5 +1,5 @@
-import { useMemo, type ComponentType, type ReactNode } from "react";
-import { ThreadPrimitive } from "@assistant-ui/react";
+import { useMemo, type ComponentProps, type ComponentType, type ReactNode } from "react";
+import { ThreadPrimitive, unstable_useThreadMessageIds } from "@assistant-ui/react";
 import { ArrowDown } from "@phosphor-icons/react";
 import { HarsoAssistantMessage, HarsoEditComposer, HarsoUserMessage, type HarsoMessageSlots } from "./message";
 import "./thread.css";
@@ -26,11 +26,20 @@ export function HarsoThread({ composer, header, footer, empty = "Start a convers
       <div className="hkc-thread-transcript" role="log" aria-label="Conversation">
         {header}
         <ThreadPrimitive.Empty><div className="hkc-thread-empty">{empty}</div></ThreadPrimitive.Empty>
-        <ThreadPrimitive.Messages components={messages} />
+        <MessagesById components={messages} />
         {footer}
       </div>
     </ThreadPrimitive.Viewport>
     <ThreadPrimitive.ScrollToBottom className="hkc-thread-scroll"><ArrowDown size={16} />Latest message</ThreadPrimitive.ScrollToBottom>
     {composer && <div className="hkc-thread-composer">{composer}</div>}
   </ThreadPrimitive.Root>;
+}
+
+/**
+ * Rows keyed by message id, not index: prepending older history mounts only the new rows and every existing row keeps
+ * its client and DOM. Uses assistant-ui's unstable_ id API (pinned 0.15.19); thread.test.tsx fails if it disappears.
+ */
+function MessagesById({ components }: Pick<ComponentProps<typeof ThreadPrimitive.Unstable_MessageById>, "components">) {
+  const ids = unstable_useThreadMessageIds();
+  return <>{ids.map(id => <ThreadPrimitive.Unstable_MessageById key={id} messageId={id} components={components} />)}</>;
 }

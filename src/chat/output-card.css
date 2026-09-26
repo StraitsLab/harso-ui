@@ -66,6 +66,12 @@
   padding: 0; border-radius: var(--hk-radius-control); text-align: left;
   font-size: var(--hk-text-chrome); font-weight: 500;
 }
+/* Lead ruling: a hairline above View all spanning the full card width (through the card padding). A painted 1px
+   fill, not a border: the card allows none. */
+.harso-kit .hkc-output-card-view-all::before {
+  content: ""; position: absolute; top: 0; left: calc(-1 * var(--hk-space-4)); right: calc(-1 * var(--hk-space-4)); height: 1px;
+  background: var(--hk-line);
+}
 
 .harso-kit .hkc-output-card-details-toggle { flex: 0 0 auto; min-width: 44px; margin: -10px -8px 0 0; padding-inline: var(--hk-space-2); font-size: var(--hk-text-chrome); }
 .harso-kit .hkc-output-card-details { display: flex; flex-direction: column; gap: var(--hk-space-2); font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }

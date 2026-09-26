@@ -1,8 +1,13 @@
 "use client";
 
 import { CaretRight } from "@phosphor-icons/react";
-import { useId, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Button } from "../primitives";
+import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable,
+  type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
+import { HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputVideoView,
+  readMedia, readProgress, readStatus, readSteps, type HarsoOutputMedia, type HarsoOutputMediaHost, type HarsoOutputMediaKind,
+  type HarsoOutputProgress, type HarsoOutputStatusBlock } from "./output-card-media";
 import "./output-card.css";
 
 /*
@@ -40,10 +45,10 @@ export interface HarsoOutputActionSpec { kind: string; label: string; text?: str
 
 export interface HarsoOutputActionBlock { kind: "action"; primary?: HarsoOutputActionSpec; secondary?: HarsoOutputActionSpec }
 
-/** Any other block kind (visual, table, status, …) is carried opaquely and triggers the fallback. */
+/** Any block is carried as data; the card reads the kinds it draws by shape and falls back to text for anything else. */
 export interface HarsoOutputOtherBlock { kind: string; [key: string]: unknown }
 
-export type HarsoOutputBlock = HarsoOutputRowsBlock | HarsoOutputNumbersBlock | HarsoOutputTextBlock | HarsoOutputActionBlock | HarsoOutputOtherBlock;
+export type HarsoOutputBlock = HarsoOutputRowsBlock | HarsoOutputNumbersBlock | HarsoOutputTextBlock | HarsoOutputActionBlock | HarsoOutputVisualBlock | HarsoOutputTable | HarsoOutputStatusBlock | HarsoOutputOtherBlock;
 
 export interface HarsoOutputSource { label: string; url?: string }
 
@@ -75,6 +80,16 @@ export interface HarsoOutputCardProps {
   onViewAll: () => void;
   /** When supplied, Details hands off to the host; otherwise Details discloses inline. */
   onOpenDetails?: () => void;
+  /**
+   * Host-owned state per block, keyed by the block's index in `document.blocks` (the contract has no per-block state
+   * yet, G20). Charts, shares and tables draw loading/empty/partial/stale/failed as B0 does; absent means ready.
+   */
+  blockStates?: Readonly<Record<number, HarsoOutputBlockState>>;
+  /**
+   * What the host lends the card to show media: artifact URLs, opening a file, OpenStreetMap tiles. An image, video
+   * or map the host cannot supply falls back to text rather than drawing an empty frame.
+   */
+  media?: HarsoOutputMediaHost;
   className?: string;
 }
 
@@ -89,7 +104,16 @@ const isAction = (block: HarsoOutputBlock): block is HarsoOutputActionBlock => b
 type CardPart =
   | { kind: "rows"; items: HarsoOutputRow[] }
   | { kind: "numbers"; items: HarsoOutputNumber[] }
-  | { kind: "text"; text: string };
+  | { kind: "text"; text: string }
+  | { kind: "chart"; chart: HarsoOutputChart; state?: HarsoOutputBlockState }
+  | { kind: "share"; items: HarsoOutputRow[]; shares: number[]; shown: number; state?: HarsoOutputBlockState }
+  | { kind: "table"; table: HarsoOutputTable; shown: number; state?: HarsoOutputBlockState }
+  | { kind: "status"; status: HarsoOutputStatusBlock; steps?: HarsoOutputRow[]; state?: HarsoOutputBlockState }
+  | { kind: "progress"; progress: HarsoOutputProgress; state?: HarsoOutputBlockState }
+  | { kind: "media"; media: HarsoOutputMedia; state?: HarsoOutputBlockState };
+
+/** A block in one of these states shows no data of its own, so it counts nothing toward View all. */
+const withoutData = (state?: HarsoOutputBlockState) => state?.state === "loading" || state?.state === "empty" || state?.state === "failed";
 
 /** First `max` code points, backed off to a word boundary when one is near, then an ellipsis. */
 function clip(text: string, max: number) {
@@ -112,22 +136,84 @@ function readText(block: HarsoOutputTextBlock) {
 }
 
 /**
- * Supported = only rows/numbers/text/action blocks, and no row field this card would otherwise drop silently.
- * Blocks render in agent order under one running budget per kind. Action blocks are skipped unread.
- * `total` counts every row and key number the agent says exists; `clamped` marks text that continues off the card.
+ * Supported = rows/numbers/text/action blocks, bar and line charts, and tables, with no row field this card would
+ * otherwise drop silently. Rows that are shares of a whole (N% secondary, largest first, adding to 100%) draw as a share.
+ * Blocks render in agent order under one running budget per kind; table body rows share the row budget, and a
+ * Total row always shows. Action blocks are skipped unread. `total` counts every row and key number the agent says
+ * exists; `clamped` marks text that continues off the card.
  */
-function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps) {
+function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, states: Readonly<Record<number, HarsoOutputBlockState>> = {}, host: HarsoOutputMediaHost = {}) {
   const parts: CardPart[] = [];
   let rowBudget = Math.max(0, caps.maxRows), numberBudget = Math.max(0, caps.maxNumbers);
-  let total = 0, shown = 0, clamped = false, textShown = false;
-  for (const block of blocks) {
+  let total = 0, shown = 0, clamped = false, textShown = false, stepsAt = -1;
+  for (const [index, block] of blocks.entries()) {
+    if (index === stepsAt) continue;
+    const state = states[index];
+    const status = readStatus(block);
+    if (status) {
+      // Timed steps the playbook sends as the rows right after a running status (G16) draw on its rail.
+      const next = blocks[index + 1];
+      const steps = next && isRows(next) ? readSteps(status, next.items) : undefined;
+      let drawn: HarsoOutputRow[] | undefined;
+      if (steps) {
+        stepsAt = index + 1;
+        if (!withoutData(state)) {
+          drawn = steps.slice(0, rowBudget);
+          rowBudget -= drawn.length;
+          shown += drawn.length;
+          total += Math.max(steps.length, Number.isInteger((next as HarsoOutputRowsBlock).total_count) ? (next as HarsoOutputRowsBlock).total_count! : 0);
+        }
+      }
+      parts.push({ kind: "status", status, steps: drawn, state });
+      continue;
+    }
+    const media = readMedia(block, host);
+    if (media) { parts.push({ kind: "media", media, state }); continue; }
+    if (isNumbers(block)) {
+      const progress = readProgress(block.items);
+      // The bar is two key numbers drawn richer: it needs room for both under the number cap (else they draw as
+      // numbers, sliced and counted below), and like every block it counts nothing while it has no data.
+      if (progress && (withoutData(state) || numberBudget >= 2)) {
+        if (!withoutData(state)) {
+          numberBudget -= 2;
+          total += 2;
+          shown += 2;
+        }
+        parts.push({ kind: "progress", progress, state });
+        continue;
+      }
+    }
     if (isRows(block)) {
       if (block.items.some(row => row.status != null)) return undefined;
+      const shares = readShare(block.items);
+      if (shares) {
+        if (withoutData(state)) { parts.push({ kind: "share", items: [], shares, shown: 0, state }); continue; }
+        const count = Math.min(block.items.length, rowBudget);
+        rowBudget -= count;
+        total += Math.max(block.items.length, Number.isInteger(block.total_count) ? block.total_count! : 0);
+        shown += count;
+        parts.push({ kind: "share", items: block.items, shares, shown: count, state });
+        continue;
+      }
       const items = block.items.slice(0, rowBudget);
       rowBudget -= items.length;
       total += Math.max(block.items.length, Number.isInteger(block.total_count) ? block.total_count! : 0);
       shown += items.length;
       if (items.length) parts.push({ kind: "rows", items });
+    } else if (readChart(block)) {
+      parts.push({ kind: "chart", chart: readChart(block)!, state });
+    } else if (readTable(block)) {
+      const table = readTable(block)!;
+      if (withoutData(state)) { parts.push({ kind: "table", table, shown: 0, state }); continue; }
+      // One unit: body rows. `total_count` counts the table's rows as the playbook checker does (the Total row
+      // included), so a Total row is taken off it too.
+      const totalRow = isTotalRow(table, table.rows.length - 1) ? 1 : 0;
+      const body = table.rows.length - totalRow;
+      const count = Math.min(body, rowBudget);
+      rowBudget -= count;
+      total += Math.max(body, Number.isInteger(table.total_count) ? table.total_count! - totalRow : 0);
+      shown += count;
+      parts.push({ kind: "table", table, shown: count, state });
     } else if (isNumbers(block)) {
       const items = block.items.slice(0, numberBudget);
       numberBudget -= items.length;
@@ -167,6 +253,14 @@ function CardText({ text, lines, onClip }: { text: string; lines: number; onClip
   return <p ref={node} className="hkc-output-card-text" style={{ "--hkc-output-card-text-lines": Math.max(1, lines) } as CSSProperties}>{text}</p>;
 }
 
+/** B0 state wrapper for status/progress/media: their own loading skeleton, then the shared empty/partial/stale/failed frame. */
+function MediaFrame({ state, kind, children }: { state?: HarsoOutputBlockState; kind: HarsoOutputMediaKind; children: ReactNode }) {
+  if (state?.state === "loading") return <div className="hkc-output-block" data-state="loading" aria-busy="true">
+    <HarsoOutputMediaSkeleton kind={kind} /><span className="hk-sr-only">Loading</span>
+  </div>;
+  return <HarsoOutputBlockFrame kind="chart" state={state}>{children}</HarsoOutputBlockFrame>;
+}
+
 function hasDetails(details: HarsoOutputDocumentDetails | undefined): details is HarsoOutputDocumentDetails {
   return !!details && [details.sources, details.assumptions, details.disclaimers].some(list => !!list?.length);
 }
@@ -185,13 +279,13 @@ function DetailsContent({ details }: { details: HarsoOutputDocumentDetails }) {
   </>;
 }
 
-export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, className = "" }: HarsoOutputCardProps) {
+export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, className = "" }: HarsoOutputCardProps) {
   const id = useId();
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const [textClipped, setTextClipped] = useState(false);
   const limits = { ...HARSO_OUTPUT_CARD_CAPS, ...caps };
-  const content = readBlocks(document.blocks, limits);
+  const content = readBlocks(document.blocks, limits, blockStates, media);
   const details = hasDetails(document.details) ? document.details : undefined;
   const inlineDetails = details && !onOpenDetails;
   const hasMore = !!content && (content.hidden > 0 || content.clamped || textClipped);
@@ -220,7 +314,21 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, clas
     </div>}
     {content
       ? <>
-        {content.parts.map((part, partIndex) => part.kind === "rows"
+        {content.parts.map((part, partIndex) => part.kind === "status" || part.kind === "progress" || part.kind === "media"
+          ? <MediaFrame key={partIndex} state={part.state} kind={part.kind === "media" ? part.media.kind : part.kind}>
+            {part.kind === "status" ? <HarsoOutputStatusView status={part.status} steps={part.steps} />
+              : part.kind === "progress" ? <HarsoOutputProgressView progress={part.progress} />
+              : part.media.kind === "map" ? <HarsoOutputMapView map={part.media} host={media!} />
+              : part.media.kind === "video" ? <HarsoOutputVideoView video={part.media} host={media!} />
+              : <HarsoOutputImageView image={part.media} host={media!} />}
+          </MediaFrame>
+          : part.kind === "chart"
+          ? <HarsoOutputBlockFrame key={partIndex} kind="chart" state={part.state}><HarsoOutputChartView chart={part.chart} /></HarsoOutputBlockFrame>
+          : part.kind === "share"
+          ? <HarsoOutputBlockFrame key={partIndex} kind="share" state={part.state}><HarsoOutputShareView items={part.items} shares={part.shares} shown={part.shown} /></HarsoOutputBlockFrame>
+          : part.kind === "table"
+          ? <HarsoOutputBlockFrame key={partIndex} kind="table" state={part.state}><HarsoOutputTableView table={part.table} shown={part.shown} label={document.header.title} /></HarsoOutputBlockFrame>
+          : part.kind === "rows"
           ? <ul key={partIndex} className="hkc-output-card-rows">
             {part.items.map((row, index) => <li key={row.id ?? index} className="hkc-output-card-row">
               <div className="hkc-output-card-row-main">
