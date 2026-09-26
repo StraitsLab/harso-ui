@@ -6011,6 +6011,116 @@
           }
         ],
         "fallback_text": "Tomorrow: Design review 09:30 (Zoom), lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift 13:00. Free after 14:00."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 2 calendars",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c01"
+              }
+            }
+          ],
+          "fallback_text": "Reading your Google and iCloud calendars for Sun 27 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "1 of 2 calendars read · iCloud still loading"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Design review",
+                  "secondary": "Zoom · Mei, Arjun",
+                  "trailing": "09:30"
+                },
+                {
+                  "label": "Lunch with Sam",
+                  "secondary": "Tiong Bahru Bakery",
+                  "trailing": "12:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Sun 27 Sep, Google calendar only so far: Design review 09:30 on Zoom with Mei and Arjun, lunch with Sam 12:00 at Tiong Bahru Bakery. iCloud is still loading."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "3 events · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Design review",
+                  "secondary": "Zoom · Mei, Arjun",
+                  "trailing": "09:30"
+                },
+                {
+                  "label": "Lunch with Sam",
+                  "secondary": "Tiong Bahru Bakery",
+                  "trailing": "12:00"
+                },
+                {
+                  "label": "Viewing at The Clift",
+                  "secondary": "21 McCallum St",
+                  "trailing": "13:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "As of 09:10 (couldn’t refresh): Design review 09:30 on Zoom, lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift 13:00."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing on either calendar"
+            }
+          ],
+          "fallback_text": "Nothing on your Google or iCloud calendars for Sun 27 Sep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your calendar",
+            "subtitle": "Tomorrow · Sun 27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your calendar for Sun 27 Sep: the Google Calendar sign-in expired. Nothing was changed."
+        }
       }
     },
     {
@@ -6065,6 +6175,106 @@
           }
         ],
         "fallback_text": "Design review 26 Sep: ship the rows card first; no reply buttons. Actions: Mei drafts row states (29 Sep), Arjun checks dark contrast (30 Sep), you share the pane mock (2 Oct)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design review",
+            "subtitle": "26 Sep · Mei, Arjun, you"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 55 minutes of transcript",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c02"
+              }
+            }
+          ],
+          "fallback_text": "Reading the 55-minute transcript of the design review on 26 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design review",
+            "subtitle": "26 Sep · first 40 of 55 min"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Decided",
+                  "bullets": [
+                    "Ship the rows card before charts."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Draft the row states",
+                  "secondary": "Mei · Tue 29 Sep"
+                },
+                {
+                  "label": "Check dark contrast",
+                  "secondary": "Arjun · Wed 30 Sep"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Design review 26 Sep, first 40 of 55 minutes: ship the rows card before charts. Actions so far: Mei drafts row states (Tue 29 Sep), Arjun checks dark contrast (Wed 30 Sep)."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design review",
+            "subtitle": "26 Sep · Mei, Arjun, you"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Decided",
+                  "bullets": [
+                    "Ship the rows card before charts.",
+                    "Keep reply buttons off every card."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No action items were agreed"
+            }
+          ],
+          "fallback_text": "Design review 26 Sep: ship the rows card before charts; keep reply buttons off every card. No action items were agreed."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t summarise the design review",
+            "subtitle": "26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The recording has no transcript yet. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t summarise the design review on 26 Sep: the recording has no transcript yet. Nothing was changed."
+        }
       }
     },
     {
@@ -6099,6 +6309,43 @@
           }
         ],
         "fallback_text": "Draft to Nichol, not sent. Re: Lease viewing. Hi Nichol, Tuesday works for me. Shall we say 6:30 pm at the flat? Thanks, Abhi"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Re: Lease viewing",
+            "subtitle": "To Nichol · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your thread with Nichol",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c03"
+              }
+            }
+          ],
+          "fallback_text": "Reading your email thread with Nichol to draft the reply."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t draft the reply",
+            "subtitle": "To Nichol"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "No thread with Nichol in Gmail. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn’t draft the reply: there is no thread with Nichol in Gmail. Nothing was sent."
+        }
       }
     },
     {
@@ -6141,6 +6388,68 @@
           }
         ],
         "fallback_text": "Move to The Clift, 5 of 8 done. Left: tenancy agreement (waiting on landlord), book movers (2 of 3 quotes in), transfer SP Group account after 30 Sep."
+      },
+      "states": {
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Moving to The Clift",
+            "subtitle": "5 of 8 done · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sign the tenancy agreement",
+                  "secondary": "Waiting on the landlord's signature"
+                },
+                {
+                  "label": "Book movers",
+                  "secondary": "Quotes from 2 of 3 companies"
+                },
+                {
+                  "label": "Transfer SP Group account",
+                  "secondary": "Do after 30 Sep"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Move to The Clift, 5 of 8 done as of 09:10 (couldn’t refresh). Left: tenancy agreement (waiting on landlord), book movers (2 of 3 quotes in), transfer SP Group account after 30 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Moving to The Clift",
+            "subtitle": "8 of 8 done"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing left on this list"
+            }
+          ],
+          "fallback_text": "Move to The Clift: all 8 done, nothing left on the list."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your move list",
+            "subtitle": "Things"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Things didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your move list: Things didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -6196,6 +6505,24 @@
           ]
         },
         "fallback_text": "Watching WhatsApp for a reply from Nichol since 9:40 AM; stops after Friday 6 PM."
+      },
+      "states": {
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Reply from Nichol",
+            "subtitle": "WhatsApp"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "WhatsApp disconnected at 11:20. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Stopped watching for Nichol’s reply: WhatsApp disconnected at 11:20. Nothing was sent. Reconnect WhatsApp to watch again."
+        }
       }
     },
     {
@@ -6292,6 +6619,558 @@
           }
         ],
         "fallback_text": "Receipt filing stopped at 212 of about 400: Gmail sign-in expired. 212 were filed; nothing else changed."
+      }
+    },
+    {
+      "id": "prod-week-schedule",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "What does next week look like?",
+      "says": "Tuesday is the full day; the weekend is clear.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Schedule / calendar"
+      ],
+      "rationale": "A week is one list, date then place in secondary and time trailing; it earns the page. Day headings wait for grouped rows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Next week · 28 Sep–4 Oct",
+          "subtitle": "7 events"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Team planning",
+                "secondary": "Mon 28 Sep · Zoom",
+                "trailing": "10:00"
+              },
+              {
+                "label": "Dentist",
+                "secondary": "Tue 29 Sep · Novena Medical Centre",
+                "trailing": "08:30"
+              },
+              {
+                "label": "Investor call",
+                "secondary": "Tue 29 Sep · Zoom · Kai, Priya",
+                "trailing": "11:00"
+              },
+              {
+                "label": "Design review",
+                "secondary": "Tue 29 Sep · Studio · Mei, Arjun",
+                "trailing": "15:00"
+              },
+              {
+                "label": "Lease viewing with Nichol",
+                "secondary": "Wed 30 Sep · The Clift",
+                "trailing": "18:30"
+              },
+              {
+                "label": "Board prep",
+                "secondary": "Thu 1 Oct · Studio",
+                "trailing": "14:00"
+              },
+              {
+                "label": "Dinner with Sam",
+                "secondary": "Fri 2 Oct · Burnt Ends",
+                "trailing": "19:30"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open calendar",
+              "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+            }
+          }
+        ],
+        "more_label": "See all 7 events",
+        "fallback_text": "Next week, 28 Sep–4 Oct: Mon 10:00 team planning (Zoom); Tue 08:30 dentist, 11:00 investor call with Kai and Priya, 15:00 design review; Wed 18:30 lease viewing with Nichol at The Clift; Thu 14:00 board prep; Fri 19:30 dinner with Sam at Burnt Ends. Weekend clear."
+      },
+      "states": {
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Next week · 28 Sep–4 Oct",
+            "subtitle": "1 of 2 calendars read · iCloud still loading"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Team planning",
+                  "secondary": "Mon 28 Sep · Zoom",
+                  "trailing": "10:00"
+                },
+                {
+                  "label": "Dentist",
+                  "secondary": "Tue 29 Sep · Novena Medical Centre",
+                  "trailing": "08:30"
+                },
+                {
+                  "label": "Investor call",
+                  "secondary": "Tue 29 Sep · Zoom · Kai, Priya",
+                  "trailing": "11:00"
+                },
+                {
+                  "label": "Design review",
+                  "secondary": "Tue 29 Sep · Studio · Mei, Arjun",
+                  "trailing": "15:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Next week, Google calendar only so far: Mon 10:00 team planning; Tue 08:30 dentist, 11:00 investor call, 15:00 design review. iCloud is still loading."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Next week · 28 Sep–4 Oct",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing booked yet"
+            }
+          ],
+          "fallback_text": "Nothing on your Google or iCloud calendars for 28 Sep–4 Oct yet."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your calendar",
+            "subtitle": "Next week · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your calendar for 28 Sep–4 Oct: the Google Calendar sign-in expired. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "prod-email-draft-team",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Draft a note to the design team moving stand-up to 10:00 from Monday.",
+      "says": "It's in your Gmail drafts; nothing is sent until you send it.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Email draft preview"
+      ],
+      "rationale": "Greeting, body and sign-off as three paragraphs; the quiet link opens the saved draft, and sending stays with the person.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Stand-up moves to 10:00",
+          "subtitle": "To Design team · draft"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Hi all,",
+                  "From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes.",
+                  "Thanks, Abhi"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Gmail",
+              "url": "https://mail.google.com/mail/u/0/#drafts"
+            }
+          }
+        ],
+        "fallback_text": "Draft to the design team, not sent. Subject: Stand-up moves to 10:00. Hi all, From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes. Thanks, Abhi"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Stand-up moves to 10:00",
+            "subtitle": "To Design team · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing the draft in Gmail",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c04"
+              }
+            }
+          ],
+          "fallback_text": "Writing the stand-up note to the design team in your Gmail drafts."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t save the draft",
+            "subtitle": "To Design team"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn’t save the stand-up note to your drafts: the Gmail sign-in expired. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "prod-todo-today",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "What's on my to-do list today?",
+      "says": "The passport renewal is the one that's late.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Checklist / to-do"
+      ],
+      "rationale": "Only what is left, late first with its state; ticking one off happens in chat or in Todoist, never on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Today · Sat 26 Sep",
+          "subtitle": "2 of 5 done"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Renew passport",
+                "secondary": "Was due 24 Sep · ICA online",
+                "status": "overdue"
+              },
+              {
+                "label": "Send Q3 numbers to Priya",
+                "secondary": "Due today",
+                "trailing": "17:00"
+              },
+              {
+                "label": "Call Crown Relocations back",
+                "secondary": "After 14:00"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Todoist",
+              "url": "https://app.todoist.com/app/today"
+            }
+          }
+        ],
+        "fallback_text": "Today, 2 of 5 done. Left: renew passport (overdue since 24 Sep), send Q3 numbers to Priya by 17:00, call Crown Relocations back after 14:00."
+      },
+      "states": {
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Today · Sat 26 Sep",
+            "subtitle": "2 of 5 done · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Renew passport",
+                  "secondary": "Was due 24 Sep · ICA online",
+                  "status": "overdue"
+                },
+                {
+                  "label": "Send Q3 numbers to Priya",
+                  "secondary": "Due today",
+                  "trailing": "17:00"
+                },
+                {
+                  "label": "Call Crown Relocations back",
+                  "secondary": "After 14:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Today as of 09:10 (couldn’t refresh), 2 of 5 done. Left: renew passport (overdue), Q3 numbers to Priya by 17:00, call Crown Relocations after 14:00."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Today · Sat 26 Sep",
+            "subtitle": "5 of 5 done"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing left for today"
+            }
+          ],
+          "fallback_text": "All 5 of today’s to-dos are done."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your to-dos",
+            "subtitle": "Todoist"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Todoist didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read today’s to-dos: Todoist didn’t respond. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "prod-launch-status",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Where's the launch work at?",
+      "says": "Two things are blocked, and one is waiting on you.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Kanban / status list"
+      ],
+      "rationale": "Counts in the subtitle, problems first as rows with the owner trailing; the full board is Linear's, one tap away. Never columns.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Harso 1.0 launch",
+          "subtitle": "14 issues · 2 blocked · 6 in progress · 6 done"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "App Store review notes",
+                "secondary": "Blocked · waiting on legal",
+                "trailing": "Mei"
+              },
+              {
+                "label": "Stripe tax setup",
+                "secondary": "Blocked · needs the GST number",
+                "trailing": "You"
+              },
+              {
+                "label": "Onboarding copy",
+                "secondary": "In progress · due Wed 30 Sep",
+                "trailing": "Arjun"
+              }
+            ],
+            "total_count": 14
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Linear",
+              "url": "https://linear.app/straitslab/project/harso-1-0"
+            }
+          }
+        ],
+        "more_label": "See all 14 in Linear",
+        "fallback_text": "Harso 1.0 launch, 14 issues: 2 blocked, 6 in progress, 6 done. Blocked: App Store review notes (Mei, waiting on legal), Stripe tax setup (you, needs the GST number). Next due: onboarding copy (Arjun, Wed 30 Sep)."
+      },
+      "states": {
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harso 1.0 launch",
+            "subtitle": "14 issues · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "App Store review notes",
+                  "secondary": "Blocked · waiting on legal",
+                  "trailing": "Mei"
+                },
+                {
+                  "label": "Stripe tax setup",
+                  "secondary": "Blocked · needs the GST number",
+                  "trailing": "You"
+                },
+                {
+                  "label": "Onboarding copy",
+                  "secondary": "In progress · due Wed 30 Sep",
+                  "trailing": "Arjun"
+                }
+              ],
+              "total_count": 14
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Linear",
+                "url": "https://linear.app/straitslab/project/harso-1-0"
+              }
+            }
+          ],
+          "fallback_text": "Harso 1.0 launch as of 09:10 (couldn’t refresh): App Store review notes blocked on legal (Mei), Stripe tax setup needs the GST number (you), onboarding copy due Wed 30 Sep (Arjun)."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the launch project",
+            "subtitle": "Linear"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Linear didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read the Harso 1.0 launch project: Linear didn’t respond. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "text-next-meeting",
+      "vertical": "productivity",
+      "kind": "text",
+      "request": "When's my next meeting?",
+      "reply": "Design review at 09:30 tomorrow, on Zoom with Mei and Arjun.",
+      "surface": "text",
+      "components": [
+        "Schedule / calendar"
+      ],
+      "rationale": "One event is one fact; a card would only repeat the sentence.",
+      "document": null
+    },
+    {
+      "id": "file-move-tracker",
+      "vertical": "productivity",
+      "kind": "file",
+      "request": "Make me a spreadsheet to track the office move.",
+      "says": "It has tabs for tasks, budget and contacts, with totals that stay live.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Checklist / to-do",
+        "Sheet (XLSX/CSV)"
+      ],
+      "rationale": "A tracker people will filter and edit is a sheet; the card shows the two figures that set it up and opens the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Office move tracker",
+          "subtitle": "Excel · 3 tabs"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "24",
+                "label": "Tasks"
+              },
+              {
+                "value": "Mon 12 Oct",
+                "label": "Move day"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open sheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d1c10"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download Excel",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d1c10"
+            }
+          }
+        ],
+        "fallback_text": "Office move tracker (Excel, in your Library): 24 tasks towards move day Mon 12 Oct, with tabs for tasks, budget and contacts."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Office move tracker",
+            "subtitle": "Excel · 3 tabs"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Building the budget tab",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c05"
+              }
+            }
+          ],
+          "fallback_text": "Building the office move tracker: tasks, budget and contacts tabs."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t make the tracker",
+            "subtitle": "Excel"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Library storage is full. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn’t make the office move tracker: your Library storage is full. Nothing was saved."
+        }
       }
     },
     {
