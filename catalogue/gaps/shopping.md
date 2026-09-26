@@ -8,7 +8,7 @@ honest form, and the missing piece is listed here. Nothing below was invented as
 | Component | Example(s) | What is missing | Workaround used | Smallest contract field that fixes it |
 |---|---|---|---|---|
 | S1 Product options, S2 Product grid, S4 inline comparison | shop-vacuum-options, shop-running-shoes, shop-earbuds-compare, partial-sources | A picture per product row. Product answers are image-led at every leader; without it options read as a text list. | Name, one differentiator and rating on the secondary line; the one-product answer (S3) uses the single `image` visual. | `row.image` (artifact uri) — G7 |
-| S2 Product grid (many matches) | shop-running-shoes | A count of all matches when only the best are sent. `total_count` makes the gallery/app promise "View all 24" but can only show the 7 sent, so the page dead-ends. | "Top 7 of 24" in the subtitle, and a quiet `open_url` to the store's filtered result page for the rest. | None new: the app should route "View all" past the sent rows to the action's link when `total_count` exceeds the rows (renderer rule, not a field). |
+| S2 Product grid (many matches) | shop-running-shoes | A count of all matches when only the best are sent, and a place to see the rest. The 24 matches span three stores, and no store page holds another store's results, so no one link can honestly promise "all 24". `total_count` would make the app promise "View all 24" and dead-end at the 7 sent. | "Top 7 of 24 from 3 stores" in the subtitle; the fallback lists all 7 with price, type and rating; a quiet link labelled for what it opens ("Men's shoes at Running Lab", HTTP 200 checked 26 Sep). | A file artifact holding the full 24 (no contract change: `open_artifact` already exists), or a merged-results page when Harso has live pages. |
 | S3 Product detail | shop-product-detail | Offers AND specs both want rows; one `rows` block per card. | Offers are the rows; specs and "why it fits" go in `text` bullets. | Grouped rows (`rows_block.group` or a second rows block) — G2 |
 | S6 Price history, S8 Deal | shop-price-history, shop-deal | The verdict word (low / typical / high) has no meaning the app can colour, and there is no band for the typical range. | Verdict in the title ("S$379 is low for this vacuum"), typical range in the subtitle; today is the highlighted point. | `chart.caption` (G19) for the one-line verdict; a typical range band is not proposed (the subtitle carries it without extra ink). |
 | S8 Deal | shop-deal | A change beside the price ("−S$60", "−9%"). | The usual price sits in the subtitle ("Usually S$649"); no strike-through "was" price, by design. | `number.delta` (G3) if the deal moves to a numbers block. |
@@ -24,6 +24,21 @@ honest form, and the missing piece is listed here. Nothing below was invented as
 
 ## States drawn per example
 
-Loading, partial, stale, empty and failed are drawn wherever the component has that state. A state is left out only
-where it cannot happen: a finished refund or a placed order has no partial or stale read; a logo has no stale or
-empty; a new price watch has no partial read, and its "one check failed" stale case needs G20.
+Loading, partial, stale, empty and failed are drawn for every example whose request can meet them. A lookup is never
+exempt because the thing it looks up is finished: an order, a delivery or a refund is read from sources (email, the
+merchant, the carrier, the card feed) that can each answer late, answer alone, or be cached. Those reads get partial
+and stale states like any other. Only the cells below are left out, each for the reason given:
+
+| Example | State left out | Why it cannot happen for this request |
+|---|---|---|
+| partial-sources | partial | The main answer is the partial case (3 of 4 stores answered); a second copy adds nothing. |
+| shop-compare-phones, shop-earbuds-compare | empty | Both products are named and on sale; their fixed specs cannot come back empty. A missing test or price is the partial state. |
+| shop-price-watch | stale | Real, but not drawable: "the last check failed" belongs to one block between runs, and only a whole card can have a state (G20, row above). |
+| shop-price-watch | empty | Creating a watch has nothing to find; "no price below the target yet" is the watch itself. |
+| shop-delivery-missed | empty | The request names a delivery that already came; "not shipped yet" is shop-delivery's empty state. |
+| file-logo | partial, stale, empty | A finished image is one artifact: it has no partial read, no age and cannot come back empty. |
+| text-clarify-free | all | A words-only reply sends no card, so it has no card states. |
+
+Failed and empty lookups say what was observed, never a real-world outcome they did not see: "I couldn't reach your
+email, so I can't say whether it went through. Check Courts before you order again", not "Nothing was ordered".
+

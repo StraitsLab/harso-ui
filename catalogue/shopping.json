@@ -74,7 +74,7 @@
             }
           ]
         },
-        "fallback_text": "Quiet stick vacuums under S$400: Dyson V8 Origin S$379, 72 dB, 40 min, rated 4.6/5 (pick); Xiaomi G11 S$299, 74 dB, 60 min, rated 4.4/5; Samsung Jet 60 S$349, 76 dB, 40 min, rated 4.5/5."
+        "fallback_text": "Quiet stick vacuums under S$400 (10:05): Dyson V8 Origin S$379, 72 dB, 40 min, rated 4.6/5 (pick); Xiaomi G11 S$299, 74 dB, 60 min, rated 4.4/5; Samsung Jet 60 S$349, 76 dB, 40 min, rated 4.5/5."
       },
       "states": {
         "loading": {
@@ -128,7 +128,7 @@
               }
             ]
           },
-          "fallback_text": "2 of 3 stores checked (10:05): Dyson V8 Origin S$379, 72 dB (pick); Xiaomi G11 S$299, 74 dB. Shopee hasn't answered yet."
+          "fallback_text": "Quiet stick vacuums under S$400, 2 of 3 stores checked (10:05): Dyson V8 Origin S$379, 72 dB, 40 min, rated 4.6/5 (pick); Xiaomi G11 S$299, 74 dB, 60 min, rated 4.4/5. Shopee hasn't answered yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -167,7 +167,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:40 (couldn't refresh): Dyson V8 Origin S$379, 72 dB (pick); Xiaomi G11 S$299, 74 dB; Samsung Jet 60 S$349, 76 dB."
+          "fallback_text": "Quiet stick vacuums under S$400 as of 08:40 (couldn't refresh): Dyson V8 Origin S$379, 72 dB, 40 min, rated 4.6/5 (pick); Xiaomi G11 S$299, 74 dB, 60 min, rated 4.4/5; Samsung Jet 60 S$349, 76 dB, 40 min, rated 4.5/5."
         },
         "empty": {
           "kind": "output_blocks",
@@ -216,13 +216,13 @@
         "S2 Product grid / carousel (as rows)",
         "S10 Rating"
       ],
-      "rationale": "Many matches is a page of rows, best first, with the full list one link away; the shoe type is the secondary line because it is what people choose on.",
+      "rationale": "Many matches is a page of rows, best first, type on the secondary line; no one store page holds all 24, so the link is labelled for what it opens.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
         "header": {
           "title": "Road running shoes under S$200",
-          "subtitle": "Top 7 of 24 · men's EU 42 · as of 11:40"
+          "subtitle": "Top 7 of 24 from 3 stores · men's EU 42 · as of 11:40"
         },
         "blocks": [
           {
@@ -270,8 +270,8 @@
             "kind": "action",
             "secondary": {
               "kind": "open_url",
-              "label": "See all 24 at Running Lab",
-              "url": "https://www.runninglab.com/collections/mens-road-running?size=42&max_price=200"
+              "label": "Men's shoes at Running Lab",
+              "url": "https://runninglab.com/collections/men-footwear"
             }
           }
         ],
@@ -285,7 +285,7 @@
             }
           ]
         },
-        "fallback_text": "24 road running shoes under S$200 in men's EU 42 (11:40). Top 7: ASICS Novablast 5 S$189 (pick), Nike Pegasus 42 S$179, Brooks Ghost 17 S$199, Hoka Clifton 10 S$199, New Balance 880 v15 S$185, Adidas Adizero SL 2 S$159, Puma Velocity Nitro 4 S$149."
+        "fallback_text": "24 road running shoes under S$200 in men's EU 42 at 3 stores (Running Lab, Lazada and Shopee) (11:40). Top 7: ASICS Novablast 5 S$189, cushioned daily trainer, 4.7/5 (pick); Nike Pegasus 42 S$179, daily trainer, 4.6/5; Brooks Ghost 17 S$199, soft, stable, 4.6/5; Hoka Clifton 10 S$199, max cushion, 4.5/5; New Balance 880 v15 S$185, wide fit, 4.5/5; Adidas Adizero SL 2 S$159, light, fast, 4.4/5; Puma Velocity Nitro 4 S$149, budget daily, 4.4/5."
       },
       "states": {
         "loading": {
@@ -312,7 +312,7 @@
           "major": 1,
           "header": {
             "title": "Road running shoes under S$200",
-            "subtitle": "1 of 3 stores checked · men's EU 42 · as of 11:40"
+            "subtitle": "Top 4 of 9 · 1 of 3 stores checked · as of 11:40"
           },
           "blocks": [
             {
@@ -345,8 +345,8 @@
               "kind": "action",
               "secondary": {
                 "kind": "open_url",
-                "label": "See all 9 at Running Lab",
-                "url": "https://www.runninglab.com/collections/mens-road-running?size=42&max_price=200"
+                "label": "Men's shoes at Running Lab",
+                "url": "https://runninglab.com/collections/men-footwear"
               }
             }
           ],
@@ -357,7 +357,77 @@
               }
             ]
           },
-          "fallback_text": "1 of 3 stores checked (11:40): Running Lab has 9 in men's EU 42 under S$200. Top 4: ASICS Novablast 5 S$189 (pick), Nike Pegasus 42 S$179, Brooks Ghost 17 S$199, Hoka Clifton 10 S$199."
+          "fallback_text": "1 of 3 stores checked (11:40): Running Lab has 9 road shoes in men's EU 42 under S$200. Top 4: ASICS Novablast 5 S$189, cushioned daily trainer, 4.7/5 (pick); Nike Pegasus 42 S$179, daily trainer, 4.6/5; Brooks Ghost 17 S$199, soft, stable, 4.6/5; Hoka Clifton 10 S$199, max cushion, 4.5/5. Lazada and Shopee haven't answered yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Road running shoes under S$200",
+            "subtitle": "Top 7 of 24 from 3 stores · as of 09:10 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "ASICS Novablast 5",
+                  "secondary": "Cushioned daily trainer · rated 4.7/5",
+                  "trailing": "S$189",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Nike Pegasus 42",
+                  "secondary": "Daily trainer · rated 4.6/5",
+                  "trailing": "S$179"
+                },
+                {
+                  "label": "Brooks Ghost 17",
+                  "secondary": "Soft, stable · rated 4.6/5",
+                  "trailing": "S$199"
+                },
+                {
+                  "label": "Hoka Clifton 10",
+                  "secondary": "Max cushion · rated 4.5/5",
+                  "trailing": "S$199"
+                },
+                {
+                  "label": "New Balance 880 v15",
+                  "secondary": "Wide fit · rated 4.5/5",
+                  "trailing": "S$185"
+                },
+                {
+                  "label": "Adidas Adizero SL 2",
+                  "secondary": "Light, fast · rated 4.4/5",
+                  "trailing": "S$159"
+                },
+                {
+                  "label": "Puma Velocity Nitro 4",
+                  "secondary": "Budget daily · rated 4.4/5",
+                  "trailing": "S$149"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Men's shoes at Running Lab",
+                "url": "https://runninglab.com/collections/men-footwear"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Running Lab, Lazada and Shopee listings, 26 Sep 2026 09:10"
+              },
+              {
+                "label": "Ratings from store reviews"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:10 (couldn't refresh), 24 road shoes under S$200 match at 3 stores. Top 7: ASICS Novablast 5 S$189, cushioned daily trainer, 4.7/5 (pick); Nike Pegasus 42 S$179, daily trainer, 4.6/5; Brooks Ghost 17 S$199, soft, stable, 4.6/5; Hoka Clifton 10 S$199, max cushion, 4.5/5; New Balance 880 v15 S$185, wide fit, 4.5/5; Adidas Adizero SL 2 S$159, light, fast, 4.4/5; Puma Velocity Nitro 4 S$149, budget daily, 4.4/5."
         },
         "empty": {
           "kind": "output_blocks",
@@ -443,7 +513,7 @@
             }
           ]
         },
-        "fallback_text": "Sony Bravia 8 II 65\": Courts S$3,999 (pick), Challenger S$4,049, Harvey Norman S$4,099. Best Denki didn't respond."
+        "fallback_text": "Sony Bravia 8 II 65\" at 3 of 4 stores (11:20): Courts S$3,999, in stock, delivery Tue 29 Sep (pick); Harvey Norman S$4,099, in stock, delivery Thu 1 Oct; Challenger S$4,049, pre-order for Sat 10 Oct. Best Denki didn't respond."
       },
       "states": {
         "loading": {
@@ -470,7 +540,7 @@
           "major": 1,
           "header": {
             "title": "Sony Bravia 8 II 65\"",
-            "subtitle": "As of 09:00 · couldn't refresh"
+            "subtitle": "3 of 4 stores · as of 09:00 · couldn't refresh"
           },
           "blocks": [
             {
@@ -502,7 +572,23 @@
               }
             ]
           },
-          "fallback_text": "As of 09:00 (couldn't refresh): Sony Bravia 8 II 65\": Courts S$3,999 (pick), Challenger S$4,049, Harvey Norman S$4,099."
+          "fallback_text": "As of 09:00 (couldn't refresh), Sony Bravia 8 II 65\" at 3 of 4 stores: Courts S$3,999, in stock, delivery Tue 29 Sep (pick); Harvey Norman S$4,099, in stock, delivery Thu 1 Oct; Challenger S$4,049, pre-order for Sat 10 Oct. Best Denki didn't respond."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No store lists the Bravia 8 II 65\"",
+            "subtitle": "4 stores checked · as of 11:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The 55\" is listed at Courts for S$2,899"
+            }
+          ],
+          "fallback_text": "None of Courts, Harvey Norman, Challenger or Best Denki lists the Sony Bravia 8 II 65\" (11:20). The 55\" is listed at Courts for S$2,899."
         },
         "failed": {
           "kind": "output_blocks",
@@ -597,8 +683,8 @@
             "kind": "action",
             "primary": {
               "kind": "open_url",
-              "label": "View at Courts",
-              "url": "https://www.courts.com.sg/dyson-v8-origin-cordless-vacuum"
+              "label": "See it at Courts",
+              "url": "https://www.courts.com.sg/search?q=dyson%20v8%20origin"
             }
           }
         ],
@@ -612,7 +698,7 @@
             }
           ]
         },
-        "fallback_text": "Dyson V8 Origin: S$379 at Courts (in stock, delivery Tue 29 Sep), S$389 at Lazada Dyson Store, S$399 at Shopee Mall. 72 dB, 40 min runtime, wall dock. Buyers praise suction on hard floors and pet hair; some say the bin is small."
+        "fallback_text": "Dyson V8 Origin (10:05): S$379 at Courts, in stock, delivery Tue 29 Sep (pick); S$389 at Lazada Dyson Store, delivery Thu 1 Oct; S$399 at Shopee Mall, delivery Fri 2 Oct. Why it fits: quietest under S$400 at 72 dB; 40 minutes covers a 4-room flat on one charge; wall dock keeps it off the floor. What buyers say: strong on hard floors and pet hair; some mention the 0.54 L bin fills fast."
       },
       "states": {
         "loading": {
@@ -675,7 +761,7 @@
               }
             ]
           },
-          "fallback_text": "2 of 3 stores checked (10:05): Dyson V8 Origin S$379 at Courts (delivery Tue 29 Sep), S$389 at Lazada Dyson Store. Shopee hasn't answered yet."
+          "fallback_text": "2 of 3 stores checked (10:05): Dyson V8 Origin S$379 at Courts, delivery Tue 29 Sep (pick); S$389 at Lazada Dyson Store, delivery Thu 1 Oct. Shopee hasn't answered yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -723,7 +809,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:40 (couldn't refresh): Dyson V8 Origin S$379 at Courts, S$389 at Lazada Dyson Store, S$399 at Shopee Mall."
+          "fallback_text": "As of 08:40 (couldn't refresh): Dyson V8 Origin S$379 at Courts, delivery Tue 29 Sep (pick); S$389 at Lazada Dyson Store, delivery Thu 1 Oct; S$399 at Shopee Mall, delivery Fri 2 Oct."
         },
         "empty": {
           "kind": "output_blocks",
@@ -813,7 +899,7 @@
             "A summary of what buyers wrote, not a test."
           ]
         },
-        "fallback_text": "Sony WH-1000XM6, rated 4.6/5 from 8,210 reviews. Liked: noise cancelling on buses and planes, 30 hours per charge, clear calls in wind. Some mention: pressure after 4 hours, no longer folds flat, S$549 is high next to the XM5."
+        "fallback_text": "Sony WH-1000XM6, rated 4.6/5 from 8,210 reviews. Buyers rate the noise cancelling and battery highly. Opinions split on comfort beyond 4 hours. Liked: noise cancelling on buses and planes, 30 hours per charge, clear calls in wind. Some mention: pressure on the ears after 4 hours, no longer folds flat, S$549 is high next to the XM5."
       },
       "states": {
         "loading": {
@@ -834,6 +920,92 @@
             }
           ],
           "fallback_text": "Reading 8,210 reviews."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sony WH-1000XM6 reviews",
+            "subtitle": "Rated 4.5 · 6,020 reviews · 2 of 3 sites read"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "summary": "Buyers rate the noise cancelling and battery highly. Opinions split on comfort beyond 4 hours.",
+              "sections": [
+                {
+                  "heading": "Liked",
+                  "bullets": [
+                    "Noise cancelling on buses and planes.",
+                    "30 hours per charge.",
+                    "Clear calls in wind."
+                  ]
+                },
+                {
+                  "heading": "Some mention",
+                  "bullets": [
+                    "Pressure on the ears after 4 hours.",
+                    "No longer folds flat.",
+                    "S$549 is high next to the XM5."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Summarised from 6,020 reviews on Amazon and Lazada; Best Buy didn't load"
+              }
+            ],
+            "disclaimers": [
+              "A summary of what buyers wrote, not a test."
+            ]
+          },
+          "fallback_text": "Sony WH-1000XM6, rated 4.5/5 from 6,020 reviews on Amazon and Lazada (Best Buy didn't load). Buyers rate the noise cancelling and battery highly. Opinions split on comfort beyond 4 hours. Liked: noise cancelling on buses and planes, 30 hours per charge, clear calls in wind. Some mention: pressure on the ears after 4 hours, no longer folds flat, S$549 is high next to the XM5."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sony WH-1000XM6 reviews",
+            "subtitle": "Rated 4.6 · 8,210 reviews · summary from Thu 24 Sep · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "summary": "Buyers rate the noise cancelling and battery highly. Opinions split on comfort beyond 4 hours.",
+              "sections": [
+                {
+                  "heading": "Liked",
+                  "bullets": [
+                    "Noise cancelling on buses and planes.",
+                    "30 hours per charge.",
+                    "Clear calls in wind."
+                  ]
+                },
+                {
+                  "heading": "Some mention",
+                  "bullets": [
+                    "Pressure on the ears after 4 hours.",
+                    "No longer folds flat.",
+                    "S$549 is high next to the XM5."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "8,210 reviews on Amazon, Lazada and Best Buy, read Thu 24 Sep 2026"
+              }
+            ],
+            "disclaimers": [
+              "A summary of what buyers wrote, not a test."
+            ]
+          },
+          "fallback_text": "Summary from Thu 24 Sep (couldn't refresh): Sony WH-1000XM6, rated 4.6/5 from 8,210 reviews. Buyers rate the noise cancelling and battery highly. Opinions split on comfort beyond 4 hours. Liked: noise cancelling on buses and planes, 30 hours per charge, clear calls in wind. Some mention: pressure on the ears after 4 hours, no longer folds flat, S$549 is high next to the XM5."
         },
         "empty": {
           "kind": "output_blocks",
@@ -944,7 +1116,7 @@
             }
           ]
         },
-        "fallback_text": "iPhone 17 (S$1,299) vs Pixel 11 (S$1,249): Pixel has 5x optical zoom (iPhone 2x) and better night photos; iPhone films 4K at 120 fps (Pixel 60 fps)."
+        "fallback_text": "As of 10:05, iPhone 17 (S$1,299) vs Pixel 11 (S$1,249): Pixel has 5x optical zoom (iPhone 2x) and better night photos; iPhone films 4K at 120 fps (Pixel 60 fps)."
       },
       "states": {
         "loading": {
@@ -1029,7 +1201,7 @@
               }
             ]
           },
-          "fallback_text": "iPhone 17 (S$1,299) vs Pixel 11 (S$1,249): Pixel has 5x optical zoom (iPhone 2x); iPhone films 4K at 120 fps (Pixel 60 fps). The Pixel's night test isn't out yet."
+          "fallback_text": "As of 10:05, iPhone 17 (S$1,299) vs Pixel 11 (S$1,249): Pixel has 5x optical zoom (iPhone 2x); iPhone films 4K at 120 fps (Pixel 60 fps). The Pixel's night test isn't out yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1161,7 +1333,7 @@
             }
           ]
         },
-        "fallback_text": "Sony WF-1000XM6 S$399 (pick): best noise cancelling, 8 h battery. AirPods Pro 3 S$349: best with iPhone, 8 h battery; on Android they lose auto-switching and hearing features."
+        "fallback_text": "On Android, as of 10:50: Sony WF-1000XM6 S$399 (pick): best noise cancelling, 8 h battery. AirPods Pro 3 S$349: best with iPhone, 8 h battery; on Android they lose auto-switching and hearing features."
       },
       "states": {
         "loading": {
@@ -1182,6 +1354,42 @@
             }
           ],
           "fallback_text": "Reading tests and prices."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sony WF-1000XM6 vs AirPods Pro 3",
+            "subtitle": "On Android · 1 of 2 store prices · as of 10:50"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sony WF-1000XM6",
+                  "secondary": "Best noise cancelling · 8 h battery",
+                  "trailing": "S$399",
+                  "mark": "pick"
+                },
+                {
+                  "label": "AirPods Pro 3",
+                  "secondary": "Best with iPhone · 8 h battery · price not checked"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "RTINGS earbud tests, Sep 2026"
+              },
+              {
+                "label": "Sony Singapore store price, 26 Sep 2026 10:50; Apple's store didn't answer"
+              }
+            ]
+          },
+          "fallback_text": "1 of 2 store prices (10:50): Sony WF-1000XM6 S$399 (pick): best noise cancelling, 8 h battery. AirPods Pro 3: best with iPhone, 8 h battery, price not checked (Apple's store didn't answer); on Android they lose auto-switching and hearing features."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1218,7 +1426,7 @@
               }
             ]
           },
-          "fallback_text": "Prices as of 08:40 (couldn't refresh): Sony WF-1000XM6 S$399 (pick); AirPods Pro 3 S$349."
+          "fallback_text": "Prices as of 08:40 (couldn't refresh): Sony WF-1000XM6 S$399 (pick): best noise cancelling, 8 h battery. AirPods Pro 3 S$349: best with iPhone, 8 h battery; on Android they lose auto-switching and hearing features."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1310,7 +1518,7 @@
             }
           ]
         },
-        "fallback_text": "S$379 for the Dyson V8 Origin is the lowest in the last 13 weeks (as of 10:05); it usually sells for S$419–459."
+        "fallback_text": "Dyson V8 Origin weekly lowest price from 4 Jul (10:05): S$449, 449, 439, 429, 429, 459, 449, 429, 419, 429, 419 and 419, then S$379 on 26 Sep, the lowest in 13 weeks. It usually sells for S$419–459."
       },
       "states": {
         "loading": {
@@ -1392,7 +1600,7 @@
               }
             ]
           },
-          "fallback_text": "2 of 3 stores checked (10:05): S$379 for the Dyson V8 Origin is the lowest in 13 weeks at Courts and Lazada; it usually sells for S$419–459. Shopee hasn't answered yet."
+          "fallback_text": "2 of 3 stores checked (10:05), Courts and Lazada: Dyson V8 Origin weekly lowest price from 4 Jul: S$449, 449, 439, 429, 429, 459, 449, 429, 419, 429, 419 and 419, then S$379 on 26 Sep, the lowest in 13 weeks. It usually sells for S$419–459. Shopee hasn't answered yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1454,7 +1662,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:40 (couldn't refresh): S$379 for the Dyson V8 Origin is the lowest in 13 weeks; it usually sells for S$419–459."
+          "fallback_text": "As of 08:40 (couldn't refresh): Dyson V8 Origin weekly lowest price from 4 Jul: S$449, 449, 439, 429, 429, 459, 449, 429, 419, 429, 419 and 419, then S$379 on 26 Sep, the lowest in 13 weeks. It usually sells for S$419–459."
         },
         "empty": {
           "kind": "output_blocks",
@@ -1570,7 +1778,7 @@
             }
           ]
         },
-        "fallback_text": "The Nintendo Switch 2 is S$589 at Shopee until Sun 27 Sep, S$60 below its usual S$649."
+        "fallback_text": "The Nintendo Switch 2 is S$589 at Shopee until Sun 27 Sep (10:40). Its lowest price was S$649 every week from 4 Jul to 19 Sep, then S$589 on 26 Sep, so this is a real drop of S$60."
       },
       "states": {
         "loading": {
@@ -1591,6 +1799,76 @@
             }
           ],
           "fallback_text": "Reading Shopee and Courts prices."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nintendo Switch 2 at S$589",
+            "subtitle": "Usually S$649 · Shopee history only · as of 10:40"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "line",
+                "unit": "S$",
+                "x_labels": [
+                  "4 Jul",
+                  "11 Jul",
+                  "18 Jul",
+                  "25 Jul",
+                  "1 Aug",
+                  "8 Aug",
+                  "15 Aug",
+                  "22 Aug",
+                  "29 Aug",
+                  "5 Sep",
+                  "12 Sep",
+                  "19 Sep",
+                  "26 Sep"
+                ],
+                "series": [
+                  {
+                    "label": "Lowest price",
+                    "values": [
+                      "649",
+                      "649",
+                      "649",
+                      "649",
+                      "649",
+                      "649",
+                      "649",
+                      "649",
+                      "649",
+                      "649",
+                      "649",
+                      "649",
+                      "589"
+                    ]
+                  }
+                ],
+                "highlight_index": 12
+              }
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "View on Shopee",
+                "url": "https://shopee.sg/nintendo-switch-2-console"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopee Mall price history, Jul–Sep 2026, 26 Sep 10:40; Courts didn't answer"
+              }
+            ]
+          },
+          "fallback_text": "Shopee history only (10:40; Courts didn't answer): the Nintendo Switch 2 is S$589 at Shopee until Sun 27 Sep. Its Shopee price was S$649 every week from 4 Jul to 19 Sep, then S$589 on 26 Sep."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1660,7 +1938,23 @@
               }
             ]
           },
-          "fallback_text": "As of 08:40 (couldn't refresh): Nintendo Switch 2 S$589 at Shopee until Sun 27 Sep, usually S$649."
+          "fallback_text": "As of 08:40 (couldn't refresh): Nintendo Switch 2 S$589 at Shopee until Sun 27 Sep. Its lowest price was S$649 every week from 4 Jul to 19 Sep, then S$589 on 26 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Switch 2 deal at Shopee",
+            "subtitle": "Shopee · as of 10:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Shopee lists it at its usual S$649"
+            }
+          ],
+          "fallback_text": "There is no Nintendo Switch 2 deal at Shopee (10:40): it is listed at its usual S$649."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1733,7 +2027,7 @@
             "Checks twice a day; stops after 31 Dec."
           ]
         },
-        "fallback_text": "Watching AirPods Pro at Apple, Lazada and Shopee; you'll hear here when it drops below S$300 (now S$339)."
+        "fallback_text": "Since 26 Sep (10:30), watching AirPods Pro at Apple, Lazada and Shopee; you'll hear here when it drops below S$300 (now S$339)."
       },
       "states": {
         "loading": {
@@ -1754,6 +2048,49 @@
             }
           ],
           "fallback_text": "Setting up the watch."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "AirPods Pro price watch",
+            "subtitle": "2 of 3 stores checked · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "since 26 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000709"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Target",
+                  "secondary": "Now S$339 at Lazada · Apple didn't answer",
+                  "trailing": "Under S$300"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000709",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "assumptions": [
+              "Checks twice a day; stops after 31 Dec."
+            ]
+          },
+          "fallback_text": "Since 26 Sep, watching AirPods Pro at Apple, Lazada and Shopee; you'll hear here when it drops below S$300. Lowest now S$339 at Lazada (2 of 3 stores checked at 10:30; Apple didn't answer)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1842,7 +2179,7 @@
             }
           ]
         },
-        "fallback_text": "Robot vacuums for a small flat: Roborock Q7 Max S$399 (pick, vacuums and mops, rated 4.5/5); Eufy 11S S$229 (vacuum only, rated 4.3/5); Dreame L10s S$799 (self-emptying, rated 4.6/5)."
+        "fallback_text": "Robot vacuums for a small flat, under S$800 (10:15): Roborock Q7 Max S$399, vacuum and mop, rated 4.5/5 (pick); Eufy 11S S$229, vacuum only, rated 4.3/5; Dreame L10s S$799, self-emptying, rated 4.6/5. Why the Q7: mops and vacuums in one pass; maps rooms, so you can skip the bedroom; quiet enough to run while you work. Trade-offs: the Eufy is cheaper but can't mop; the Dreame empties itself but costs twice as much."
       },
       "states": {
         "loading": {
@@ -1863,6 +2200,64 @@
             }
           ],
           "fallback_text": "Reading reviews and prices."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Robot vacuums for a small flat",
+            "subtitle": "Under S$800 · 2 of 3 prices · as of 10:15"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Why the Q7",
+                  "bullets": [
+                    "Mops and vacuums in one pass.",
+                    "Maps rooms, so you can skip the bedroom.",
+                    "Quiet enough to run while you work."
+                  ]
+                },
+                {
+                  "heading": "Trade-offs",
+                  "bullets": [
+                    "The Eufy is cheaper but can't mop.",
+                    "The Dreame empties itself but costs twice as much."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Roborock Q7 Max",
+                  "secondary": "Vacuum and mop · rated 4.5/5",
+                  "trailing": "S$399",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Eufy 11S",
+                  "secondary": "Vacuum only · rated 4.3/5",
+                  "trailing": "S$229"
+                },
+                {
+                  "label": "Dreame L10s",
+                  "secondary": "Self-emptying · rated 4.6/5 · price not checked"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "RTINGS and Lazada, 26 Sep 2026 10:15; the Dreame listing didn't load"
+              }
+            ]
+          },
+          "fallback_text": "Robot vacuums for a small flat, under S$800 (10:15, 2 of 3 prices): Roborock Q7 Max S$399, vacuum and mop, rated 4.5/5 (pick); Eufy 11S S$229, vacuum only, rated 4.3/5; Dreame L10s, self-emptying, rated 4.6/5, price not checked (its listing didn't load). Why the Q7: mops and vacuums in one pass; maps rooms, so you can skip the bedroom; quiet enough to run while you work. Trade-offs: the Eufy is cheaper but can't mop; the Dreame empties itself but costs twice as much."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1901,7 +2296,7 @@
               }
             ]
           },
-          "fallback_text": "Prices as of 08:40 (couldn't refresh): Roborock Q7 Max S$399 (pick); Eufy 11S S$229; Dreame L10s S$799."
+          "fallback_text": "Robot vacuums under S$800, prices as of 08:40 (couldn't refresh): Roborock Q7 Max S$399, vacuum and mop, rated 4.5/5 (pick); Eufy 11S S$229, vacuum only, rated 4.3/5; Dreame L10s S$799, self-emptying, rated 4.6/5."
         },
         "empty": {
           "kind": "output_blocks",
@@ -2042,7 +2437,7 @@
             }
           ]
         },
-        "fallback_text": "FairPrice cart, 14 items, S$86.40 including S$4.99 delivery on Monday 9–11 am: chicken thigh 1 kg ×2 S$19.80, jasmine rice 5 kg S$14.50, fresh milk 2 L ×2 S$11.90, Greek yoghurt ×2 S$9.90, tissue S$5.96, wholemeal bread ×2 S$5.60, eggs S$3.95, dish soap S$3.60, baby spinach S$3.25, bananas 1 kg S$2.95."
+        "fallback_text": "FairPrice cart (10:12), 14 items, S$86.40 including S$4.99 delivery on Monday 9–11 am: chicken thigh 1 kg ×2 S$19.80, jasmine rice 5 kg S$14.50, fresh milk 2 L ×2 S$11.90, Greek yoghurt ×2 S$9.90, tissue 10 packs S$5.96, wholemeal bread ×2 S$5.60, eggs 10 S$3.95, dish soap S$3.60, baby spinach S$3.25, bananas 1 kg S$2.95."
       },
       "states": {
         "loading": {
@@ -2063,6 +2458,92 @@
             }
           ],
           "fallback_text": "Reading 14 items."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "FairPrice cart",
+            "subtitle": "14 items · delivery fee not loaded · as of 10:12"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$81.41",
+                  "label": "Before delivery"
+                },
+                {
+                  "value": "14",
+                  "label": "Items"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Chicken thigh 1 kg",
+                  "secondary": "× 2",
+                  "trailing": "S$19.80"
+                },
+                {
+                  "label": "Jasmine rice 5 kg",
+                  "secondary": "× 1",
+                  "trailing": "S$14.50"
+                },
+                {
+                  "label": "Fresh milk 2 L",
+                  "secondary": "× 2",
+                  "trailing": "S$11.90"
+                },
+                {
+                  "label": "Greek yoghurt",
+                  "secondary": "× 2",
+                  "trailing": "S$9.90"
+                },
+                {
+                  "label": "Tissue, 10 packs",
+                  "secondary": "× 1",
+                  "trailing": "S$5.96"
+                },
+                {
+                  "label": "Wholemeal bread",
+                  "secondary": "× 2",
+                  "trailing": "S$5.60"
+                },
+                {
+                  "label": "Eggs, 10",
+                  "secondary": "× 1",
+                  "trailing": "S$3.95"
+                },
+                {
+                  "label": "Dish soap",
+                  "secondary": "× 1",
+                  "trailing": "S$3.60"
+                },
+                {
+                  "label": "Baby spinach",
+                  "secondary": "× 1",
+                  "trailing": "S$3.25"
+                },
+                {
+                  "label": "Bananas 1 kg",
+                  "secondary": "× 1",
+                  "trailing": "S$2.95"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "FairPrice cart, 26 Sep 2026 10:12; the delivery slot didn't load"
+              }
+            ]
+          },
+          "fallback_text": "FairPrice cart (10:12), 14 items, S$81.41 before delivery; the delivery slot and fee didn't load: chicken thigh 1 kg ×2 S$19.80, jasmine rice 5 kg S$14.50, fresh milk 2 L ×2 S$11.90, Greek yoghurt ×2 S$9.90, tissue 10 packs S$5.96, wholemeal bread ×2 S$5.60, eggs 10 S$3.95, dish soap S$3.60, baby spinach S$3.25, bananas 1 kg S$2.95."
         },
         "stale": {
           "kind": "output_blocks",
@@ -2148,7 +2629,7 @@
               }
             ]
           },
-          "fallback_text": "FairPrice cart as of 08:30 (couldn't refresh), 14 items, S$86.40 including S$4.99 delivery on Monday 9–11 am: chicken thigh 1 kg ×2 S$19.80, jasmine rice 5 kg S$14.50, fresh milk 2 L ×2 S$11.90, Greek yoghurt ×2 S$9.90, tissue S$5.96, wholemeal bread ×2 S$5.60, eggs S$3.95, dish soap S$3.60, baby spinach S$3.25, bananas 1 kg S$2.95."
+          "fallback_text": "FairPrice cart as of 08:30 (couldn't refresh), 14 items, S$86.40 including S$4.99 delivery on Monday 9–11 am: chicken thigh 1 kg ×2 S$19.80, jasmine rice 5 kg S$14.50, fresh milk 2 L ×2 S$11.90, Greek yoghurt ×2 S$9.90, tissue 10 packs S$5.96, wholemeal bread ×2 S$5.60, eggs 10 S$3.95, dish soap S$3.60, baby spinach S$3.25, bananas 1 kg S$2.95."
         },
         "empty": {
           "kind": "output_blocks",
@@ -2177,10 +2658,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "FairPrice asked you to sign in again. Nothing was ordered."
+              "detail": "FairPrice asked you to sign in again. I didn't place an order."
             }
           ],
-          "fallback_text": "Couldn't open your FairPrice cart: FairPrice asked you to sign in again. Nothing was ordered."
+          "fallback_text": "Couldn't open your FairPrice cart: FairPrice asked you to sign in again. I didn't place an order."
         }
       }
     },
@@ -2255,21 +2736,99 @@
           ],
           "fallback_text": "Reading your Courts emails."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Order placed · Courts",
+            "subtitle": "Dyson V8 Origin · order 1044218 · as of 11:30"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$379",
+                  "label": "Paid"
+                },
+                {
+                  "value": "Not known",
+                  "label": "Arrives"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open receipt",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8e"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Courts email, 26 Sep 2026; Courts tracking didn't answer at 11:30"
+              }
+            ]
+          },
+          "fallback_text": "Courts order 1044218 for the Dyson V8 Origin went through: S$379 paid (11:30). Courts tracking didn't answer, so the arrival date is not known yet. Receipt in your Library."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Order placed · Courts",
+            "subtitle": "Dyson V8 Origin · order 1044218 · as of 09:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$379",
+                  "label": "Paid"
+                },
+                {
+                  "value": "Wed 30 Sep",
+                  "label": "Arrives"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open receipt",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8e"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Courts confirmation email and order tracking, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:30 (couldn't refresh): Courts order 1044218 for the Dyson V8 Origin, S$379 paid, arriving Wed 30 Sep. Receipt in your Library."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No Courts order found",
-            "subtitle": "Dyson V8 Origin"
+            "title": "No Courts confirmation found",
+            "subtitle": "Dyson V8 Origin · as of 11:30"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No confirmation email from Courts since Mon 21 Sep"
+              "detail": "No Courts email since Mon 21 Sep. Check Courts before you order again."
             }
           ],
-          "fallback_text": "No Courts order found: there is no confirmation email from Courts since Mon 21 Sep."
+          "fallback_text": "I found no confirmation email from Courts since Mon 21 Sep (11:30). That doesn't prove there is no order: check your Courts account before you order again."
         },
         "failed": {
           "kind": "output_blocks",
@@ -2282,10 +2841,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Couldn't reach your email. Nothing was ordered or paid."
+              "detail": "Couldn't reach your email. Check Courts before you order again."
             }
           ],
-          "fallback_text": "Couldn't check your Courts order: Couldn't reach your email. Nothing was ordered or paid."
+          "fallback_text": "Couldn't check your Courts order: I couldn't reach your email, so I can't say whether it went through. Check your Courts account before you order again."
         }
       }
     },
@@ -2343,7 +2902,7 @@
             }
           ]
         },
-        "fallback_text": "Your Uniqlo order 88213 is out for delivery with Ninja Van (left the Tuas hub at 08:12) and should arrive by 6 pm today. Shipped Wed 23 Sep, ordered Tue 22 Sep."
+        "fallback_text": "As of 11:05, your Uniqlo order 88213 is out for delivery with Ninja Van (left the Tuas hub at 08:12) and should arrive by 6 pm today. Shipped Wed 23 Sep, ordered Tue 22 Sep."
       },
       "states": {
         "loading": {
@@ -2364,6 +2923,45 @@
             }
           ],
           "fallback_text": "Checking Ninja Van tracking."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arriving today by 6 pm",
+            "subtitle": "Uniqlo · order 88213 · Ninja Van only · as of 11:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Out for delivery",
+                  "secondary": "Left the Tuas hub at 08:12"
+                },
+                {
+                  "label": "Shipped",
+                  "secondary": "Wed 23 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Track with Ninja Van",
+                "url": "https://www.ninjavan.co/en-sg/tracking?id=NVSGUNIQ88213"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Ninja Van tracking, 26 Sep 2026 11:05; Uniqlo's order page didn't answer"
+              }
+            ]
+          },
+          "fallback_text": "Your Uniqlo order 88213 is out for delivery with Ninja Van (left the Tuas hub at 08:12) and should arrive by 6 pm today; shipped Wed 23 Sep. Uniqlo's order page didn't answer, so the order date is missing (11:05)."
         },
         "stale": {
           "kind": "output_blocks",
@@ -2406,7 +3004,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:15 (couldn't refresh): Uniqlo order 88213 was out for delivery with Ninja Van, due by 6 pm today."
+          "fallback_text": "As of 08:15 (couldn't refresh): Uniqlo order 88213 was out for delivery with Ninja Van (left the Tuas hub at 08:12), due by 6 pm today. Shipped Wed 23 Sep, ordered Tue 22 Sep."
         },
         "empty": {
           "kind": "output_blocks",
@@ -2484,8 +3082,8 @@
             "kind": "action",
             "primary": {
               "kind": "open_url",
-              "label": "Pick a new slot",
-              "url": "https://www.ikea.com/sg/en/customer-service/track-and-manage/?order=SG4471902"
+              "label": "Pick a new slot at IKEA",
+              "url": "https://www.ikea.com/sg/en/customer-service/track-manage-order/"
             }
           }
         ],
@@ -2496,7 +3094,7 @@
             }
           ]
         },
-        "fallback_text": "IKEA order SG4471902: delivery missed at 10:40 (no one home). It was out for delivery from 07:55; ordered Sun 20 Sep. Pick a new slot at IKEA; the earliest is Mon 28 Sep."
+        "fallback_text": "IKEA order SG4471902 (11:15): delivery missed at 10:40 (no one home). It was out for delivery from Sat 26 Sep 07:55; ordered Sun 20 Sep. Pick a new slot at IKEA; the earliest is Mon 28 Sep."
       },
       "states": {
         "loading": {
@@ -2517,6 +3115,49 @@
             }
           ],
           "fallback_text": "Checking IKEA tracking."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Delivery missed · new slot needed",
+            "subtitle": "IKEA · order SG4471902 · slots didn't load · as of 11:15"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Delivery missed",
+                  "secondary": "No one home at 10:40"
+                },
+                {
+                  "label": "Out for delivery",
+                  "secondary": "Sat 26 Sep 07:55"
+                },
+                {
+                  "label": "Ordered",
+                  "secondary": "Sun 20 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "Pick a new slot at IKEA",
+                "url": "https://www.ikea.com/sg/en/customer-service/track-manage-order/"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "IKEA order tracking, 26 Sep 2026 11:15; IKEA's slot list didn't load"
+              }
+            ]
+          },
+          "fallback_text": "IKEA order SG4471902: delivery missed at 10:40 (no one home). It was out for delivery from Sat 26 Sep 07:55; ordered Sun 20 Sep. IKEA's slot list didn't load (11:15), so pick a new slot at IKEA."
         },
         "stale": {
           "kind": "output_blocks",
@@ -2541,10 +3182,10 @@
             },
             {
               "kind": "action",
-              "primary": {
+              "secondary": {
                 "kind": "open_url",
-                "label": "Pick a new slot",
-                "url": "https://www.ikea.com/sg/en/customer-service/track-and-manage/?order=SG4471902"
+                "label": "Track at IKEA",
+                "url": "https://www.ikea.com/sg/en/customer-service/track-manage-order/"
               }
             }
           ],
@@ -2555,7 +3196,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:00 (couldn't refresh): IKEA order SG4471902 was out for delivery from 07:55, due today. Ordered Sun 20 Sep."
+          "fallback_text": "As of 08:00 (couldn't refresh): IKEA order SG4471902 was out for delivery from Sat 26 Sep 07:55, due today. Ordered Sun 20 Sep."
         },
         "failed": {
           "kind": "output_blocks",
@@ -2641,6 +3282,72 @@
             }
           ],
           "fallback_text": "Checking Lazada and your card."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lazada says S$129.00 is refunded",
+            "subtitle": "Lazada return 5521 · not yet seen on Visa ··4417 · as of 11:40"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Refunded",
+                  "secondary": "Sat 26 Sep"
+                },
+                {
+                  "label": "Received by Lazada",
+                  "secondary": "Tue 22 Sep"
+                },
+                {
+                  "label": "Return requested",
+                  "secondary": "Fri 18 Sep"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Lazada return 5521, 26 Sep 2026 11:40; the DBS card feed didn't answer"
+              }
+            ]
+          },
+          "fallback_text": "Lazada says it refunded S$129.00 for the Sony WH-1000XM6 (return 5521) on Sat 26 Sep. I couldn't check your Visa ending 4417 (the card feed didn't answer at 11:40), so it isn't confirmed on the card yet. Lazada received it Tue 22 Sep; you asked for the return Fri 18 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No refund yet when last checked",
+            "subtitle": "Lazada return 5521 · as of 08:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Received by Lazada",
+                  "secondary": "Tue 22 Sep"
+                },
+                {
+                  "label": "Return requested",
+                  "secondary": "Fri 18 Sep"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Lazada return 5521 and DBS card feed, 26 Sep 2026 08:00"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:00 (couldn't refresh): no refund yet for Lazada return 5521. Lazada received the headphones Tue 22 Sep; you asked for the return Fri 18 Sep."
         },
         "empty": {
           "kind": "output_blocks",
