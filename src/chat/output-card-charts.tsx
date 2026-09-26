@@ -483,12 +483,9 @@ export function HarsoOutputTableView({ table, shown, label }: { table: HarsoOutp
     <table className="hkc-output-table">
       <thead><tr>{table.columns.map((column, index) => <th key={index} scope="col" data-align={align(index)}>{column.label}</th>)}</tr></thead>
       <tbody>
-        {body.map((row, rowIndex) => <tr key={rowIndex}>{row.cells.map((cell, index) => index === 0
+        {[...body, ...total ? [total] : []].map((row, rowIndex) => <tr key={rowIndex} className={row === total ? "hkc-output-table-total" : undefined}>{row.cells.map((cell, index) => index === 0
           ? <th key={index} scope="row" data-align={align(index)}>{cell}{row.status && <> <HarsoOutputRowStatus status={row.status} /></>}</th>
           : <td key={index} data-align={align(index)}>{cell}</td>)}</tr>)}
-        {total && <tr className="hkc-output-table-total">{total.cells.map((cell, index) => index === 0
-          ? <th key={index} scope="row" data-align={align(index)}>{cell}</th>
-          : <td key={index} data-align={align(index)}>{cell}</td>)}</tr>}
       </tbody>
     </table>
   </div>;
