@@ -802,8 +802,7 @@
             }
           ]
         },
-        "fallback_text": "Portfolio US$84,210, down 0.6% this week (25 Sep close). NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%, VOO +0.2%, IWDA +0.1%, BIL 0.0%.",
-        "more_label": "View all 9 holdings"
+        "fallback_text": "Portfolio US$84,210, down 0.6% this week (25 Sep close). NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%, VOO +0.2%, IWDA +0.1%, BIL 0.0%."
       },
       "states": {
         "loading": {
