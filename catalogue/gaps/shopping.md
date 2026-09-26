@@ -42,3 +42,6 @@ and stale states like any other. Only the cells below are left out, each for the
 Failed and empty lookups say what was observed, never a real-world outcome they did not see: "I couldn't reach your
 email, so I can't say whether it went through. Check Courts before you order again", not "Nothing was ordered".
 
+## Renderer gaps (lead visual gate)
+Visual acceptance is deferred to the lead's catalogue-wide pass (ruling 2026-09-26). At round 2, 122 of 186 cards per
+theme still fall back because charts/tables (PR #11) and actions + linked sources (P5d) have not landed.

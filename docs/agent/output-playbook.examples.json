@@ -3732,7 +3732,7 @@
           "major": 1,
           "header": {
             "title": "Robot vacuums for a small flat",
-            "subtitle": "Under S$800 · 2 of 3 prices · as of 10:15"
+            "subtitle": "Budget S$800 · 2 of 3 prices · as of 10:15"
           },
           "blocks": [
             {
@@ -3750,7 +3750,7 @@
                   "heading": "Trade-offs",
                   "bullets": [
                     "The Eufy is cheaper but can't mop.",
-                    "The Dreame empties itself but costs twice as much."
+                    "The Dreame empties itself; its price didn't load, so I can't say yet if it fits the budget."
                   ]
                 }
               ]
@@ -3783,7 +3783,7 @@
               }
             ]
           },
-          "fallback_text": "Robot vacuums for a small flat, under S$800 (10:15, 2 of 3 prices): Roborock Q7 Max S$399, vacuum and mop, rated 4.5/5 (pick); Eufy 11S S$229, vacuum only, rated 4.3/5; Dreame L10s, self-emptying, rated 4.6/5, price not checked (its listing didn't load). Why the Q7: mops and vacuums in one pass; maps rooms, so you can skip the bedroom; quiet enough to run while you work. Trade-offs: the Eufy is cheaper but can't mop; the Dreame empties itself but costs twice as much."
+          "fallback_text": "Robot vacuums for a small flat, budget S$800 (10:15, 2 of 3 prices): Roborock Q7 Max S$399, vacuum and mop, rated 4.5/5 (pick); Eufy 11S S$229, vacuum only, rated 4.3/5; Dreame L10s, self-emptying, rated 4.6/5, price not checked (its listing didn't load). Why the Q7: mops and vacuums in one pass; maps rooms, so you can skip the bedroom; quiet enough to run while you work. Trade-offs: the Eufy is cheaper but can't mop; the Dreame empties itself; its price didn't load, so I can't say yet if it fits the budget."
         },
         "stale": {
           "kind": "output_blocks",
