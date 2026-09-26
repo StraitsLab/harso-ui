@@ -160,6 +160,9 @@ test("image that fails to load shows the amber failed state and a Try again that
 
 test("an image, video or map the host cannot supply falls back to text instead of an empty frame", () => {
   for (const block of [logo, clip, tokyo]) {
+    // The same block draws when the host lends media, so the fallback below is the missing host and nothing else.
+    expect(renderDoc(doc([block]))).not.toHaveAttribute("data-fallback");
+    cleanup();
     const card = renderDoc(doc([block]), { media: undefined });
     expect(card).toHaveAttribute("data-fallback", "true");
     cleanup();
