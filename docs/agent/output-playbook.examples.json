@@ -875,8 +875,7 @@
               }
             ]
           },
-          "fallback_text": "6 of 9 holdings read (25 Sep close): NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%. The value waits for the other three.",
-          "more_label": "View 6 of 9"
+          "fallback_text": "6 of 9 holdings read (25 Sep close): NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%. The value waits for the other three."
         },
         "stale": {
           "kind": "output_blocks",
@@ -2810,7 +2809,6 @@
               }
             ]
           },
-          "more_label": "View 4 of 6",
           "fallback_text": "4 of 6 read at Fri 25 Sep close: Tesla US$241.10 −3.2%, NVIDIA US$118.60 −2.1%, Apple US$238.40 +1.8%, Microsoft US$436.20 +0.3%. Sea Ltd and Grab still loading."
         },
         "stale": {
@@ -3729,7 +3727,6 @@
               }
             ]
           },
-          "more_label": "View 4 from DBS",
           "fallback_text": "From the DBS card only: 4 subscriptions, S$69.51 a month. ChatGPT Plus S$27.50, Netflix S$25.98, Spotify S$11.98, iCloud+ 200 GB S$4.05. OCBC card still to read."
         },
         "empty": {
