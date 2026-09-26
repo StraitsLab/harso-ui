@@ -5555,7 +5555,7 @@
           "major": 1,
           "header": {
             "title": "Singapore",
-            "subtitle": "As of 10:40 · couldn’t refresh"
+            "subtitle": "NEA · as of 10:40 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -5834,37 +5834,37 @@
               {
                 "label": "Mon 28",
                 "secondary": "Sunny",
-                "trailing": "19–26°"
+                "trailing": "19–26°C"
               },
               {
                 "label": "Tue 29",
                 "secondary": "Cloudy",
-                "trailing": "19–25°"
+                "trailing": "19–25°C"
               },
               {
                 "label": "Wed 30",
                 "secondary": "Rain, 80%",
-                "trailing": "18–22°"
+                "trailing": "18–22°C"
               },
               {
                 "label": "Thu 1",
                 "secondary": "Cloudy",
-                "trailing": "18–24°"
+                "trailing": "18–24°C"
               },
               {
                 "label": "Fri 2",
                 "secondary": "Sunny",
-                "trailing": "18–25°"
+                "trailing": "18–25°C"
               },
               {
                 "label": "Sat 3",
                 "secondary": "Sunny",
-                "trailing": "19–26°"
+                "trailing": "19–26°C"
               },
               {
                 "label": "Sun 4",
                 "secondary": "Showers, 40%",
-                "trailing": "18–23°"
+                "trailing": "18–23°C"
               }
             ]
           }
@@ -5912,27 +5912,27 @@
                 {
                   "label": "Mon 28",
                   "secondary": "Sunny",
-                  "trailing": "19–26°"
+                  "trailing": "19–26°C"
                 },
                 {
                   "label": "Tue 29",
                   "secondary": "Cloudy",
-                  "trailing": "19–25°"
+                  "trailing": "19–25°C"
                 },
                 {
                   "label": "Wed 30",
                   "secondary": "Rain, 80%",
-                  "trailing": "18–22°"
+                  "trailing": "18–22°C"
                 },
                 {
                   "label": "Thu 1",
                   "secondary": "Cloudy",
-                  "trailing": "18–24°"
+                  "trailing": "18–24°C"
                 },
                 {
                   "label": "Fri 2",
                   "secondary": "Sunny",
-                  "trailing": "18–25°"
+                  "trailing": "18–25°C"
                 }
               ]
             }
@@ -5960,37 +5960,37 @@
                 {
                   "label": "Mon 28",
                   "secondary": "Sunny",
-                  "trailing": "19–26°"
+                  "trailing": "19–26°C"
                 },
                 {
                   "label": "Tue 29",
                   "secondary": "Cloudy",
-                  "trailing": "19–25°"
+                  "trailing": "19–25°C"
                 },
                 {
                   "label": "Wed 30",
                   "secondary": "Rain, 80%",
-                  "trailing": "18–22°"
+                  "trailing": "18–22°C"
                 },
                 {
                   "label": "Thu 1",
                   "secondary": "Cloudy",
-                  "trailing": "18–24°"
+                  "trailing": "18–24°C"
                 },
                 {
                   "label": "Fri 2",
                   "secondary": "Sunny",
-                  "trailing": "18–25°"
+                  "trailing": "18–25°C"
                 },
                 {
                   "label": "Sat 3",
                   "secondary": "Sunny",
-                  "trailing": "19–26°"
+                  "trailing": "19–26°C"
                 },
                 {
                   "label": "Sun 4",
                   "secondary": "Showers, 40%",
-                  "trailing": "18–23°"
+                  "trailing": "18–23°C"
                 }
               ]
             }
@@ -6088,7 +6088,7 @@
           "major": 1,
           "header": {
             "title": "Heavy rain warning until 18:00",
-            "subtitle": "West and central · as of 11:20 · couldn’t refresh"
+            "subtitle": "West and central · NEA · as of 11:20 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -6193,7 +6193,7 @@
           "major": 1,
           "header": {
             "title": "Typhoon signal No. 8 from 22:00",
-            "subtitle": "Hong Kong · as of 16:00 · couldn’t refresh"
+            "subtitle": "Hong Kong · HKO · as of 16:00 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -6490,13 +6490,13 @@
       "vertical": "sports",
       "kind": "card",
       "request": "What happened in the Arsenal game?",
-      "says": "Chelsea were down to ten when Saka scored the winner.",
-      "surface": "page",
+      "says": "Saka won it after Caicedo's red card left Chelsea short.",
+      "surface": "inline",
       "fresh": true,
       "components": [
         "Story timeline"
       ],
-      "rationale": "The match's moments newest first, so the winner shows inline; minute trailing; the rest on the page; no play-by-play.",
+      "rationale": "The three goals newest first, so all of 2–1 shows inline; the red card rides on the goal it shaped; no play-by-play.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -6510,13 +6510,8 @@
             "items": [
               {
                 "label": "Goal · Saka",
-                "secondary": "Arsenal",
+                "secondary": "Arsenal · Chelsea down to 10 from 71'",
                 "trailing": "78'"
-              },
-              {
-                "label": "Red card · Caicedo",
-                "secondary": "Chelsea",
-                "trailing": "71'"
               },
               {
                 "label": "Goal · Palmer",
@@ -6538,7 +6533,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal 2–1 Chelsea, full time: Saka goal 78', Caicedo red card 71', Palmer goal 55', Ødegaard goal 23'."
+        "fallback_text": "Arsenal 2–1 Chelsea, full time: Saka goal 78' (Chelsea down to 10 after Caicedo's red card, 71'), Palmer goal 55', Ødegaard goal 23'."
       },
       "states": {
         "loading": {

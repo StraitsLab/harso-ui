@@ -236,13 +236,13 @@
       "vertical": "sports",
       "kind": "card",
       "request": "What happened in the Arsenal game?",
-      "says": "Chelsea were down to ten when Saka scored the winner.",
-      "surface": "page",
+      "says": "Saka won it after Caicedo's red card left Chelsea short.",
+      "surface": "inline",
       "fresh": true,
       "components": [
         "Story timeline"
       ],
-      "rationale": "The match's moments newest first, so the winner shows inline; minute trailing; the rest on the page; no play-by-play.",
+      "rationale": "The three goals newest first, so all of 2–1 shows inline; the red card rides on the goal it shaped; no play-by-play.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -256,13 +256,8 @@
             "items": [
               {
                 "label": "Goal · Saka",
-                "secondary": "Arsenal",
+                "secondary": "Arsenal · Chelsea down to 10 from 71'",
                 "trailing": "78'"
-              },
-              {
-                "label": "Red card · Caicedo",
-                "secondary": "Chelsea",
-                "trailing": "71'"
               },
               {
                 "label": "Goal · Palmer",
@@ -284,7 +279,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal 2–1 Chelsea, full time: Saka goal 78', Caicedo red card 71', Palmer goal 55', Ødegaard goal 23'."
+        "fallback_text": "Arsenal 2–1 Chelsea, full time: Saka goal 78' (Chelsea down to 10 after Caicedo's red card, 71'), Palmer goal 55', Ødegaard goal 23'."
       },
       "states": {
         "loading": {

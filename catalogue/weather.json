@@ -107,7 +107,7 @@
           "major": 1,
           "header": {
             "title": "Singapore",
-            "subtitle": "As of 10:40 · couldn’t refresh"
+            "subtitle": "NEA · as of 10:40 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -386,37 +386,37 @@
               {
                 "label": "Mon 28",
                 "secondary": "Sunny",
-                "trailing": "19–26°"
+                "trailing": "19–26°C"
               },
               {
                 "label": "Tue 29",
                 "secondary": "Cloudy",
-                "trailing": "19–25°"
+                "trailing": "19–25°C"
               },
               {
                 "label": "Wed 30",
                 "secondary": "Rain, 80%",
-                "trailing": "18–22°"
+                "trailing": "18–22°C"
               },
               {
                 "label": "Thu 1",
                 "secondary": "Cloudy",
-                "trailing": "18–24°"
+                "trailing": "18–24°C"
               },
               {
                 "label": "Fri 2",
                 "secondary": "Sunny",
-                "trailing": "18–25°"
+                "trailing": "18–25°C"
               },
               {
                 "label": "Sat 3",
                 "secondary": "Sunny",
-                "trailing": "19–26°"
+                "trailing": "19–26°C"
               },
               {
                 "label": "Sun 4",
                 "secondary": "Showers, 40%",
-                "trailing": "18–23°"
+                "trailing": "18–23°C"
               }
             ]
           }
@@ -464,27 +464,27 @@
                 {
                   "label": "Mon 28",
                   "secondary": "Sunny",
-                  "trailing": "19–26°"
+                  "trailing": "19–26°C"
                 },
                 {
                   "label": "Tue 29",
                   "secondary": "Cloudy",
-                  "trailing": "19–25°"
+                  "trailing": "19–25°C"
                 },
                 {
                   "label": "Wed 30",
                   "secondary": "Rain, 80%",
-                  "trailing": "18–22°"
+                  "trailing": "18–22°C"
                 },
                 {
                   "label": "Thu 1",
                   "secondary": "Cloudy",
-                  "trailing": "18–24°"
+                  "trailing": "18–24°C"
                 },
                 {
                   "label": "Fri 2",
                   "secondary": "Sunny",
-                  "trailing": "18–25°"
+                  "trailing": "18–25°C"
                 }
               ]
             }
@@ -512,37 +512,37 @@
                 {
                   "label": "Mon 28",
                   "secondary": "Sunny",
-                  "trailing": "19–26°"
+                  "trailing": "19–26°C"
                 },
                 {
                   "label": "Tue 29",
                   "secondary": "Cloudy",
-                  "trailing": "19–25°"
+                  "trailing": "19–25°C"
                 },
                 {
                   "label": "Wed 30",
                   "secondary": "Rain, 80%",
-                  "trailing": "18–22°"
+                  "trailing": "18–22°C"
                 },
                 {
                   "label": "Thu 1",
                   "secondary": "Cloudy",
-                  "trailing": "18–24°"
+                  "trailing": "18–24°C"
                 },
                 {
                   "label": "Fri 2",
                   "secondary": "Sunny",
-                  "trailing": "18–25°"
+                  "trailing": "18–25°C"
                 },
                 {
                   "label": "Sat 3",
                   "secondary": "Sunny",
-                  "trailing": "19–26°"
+                  "trailing": "19–26°C"
                 },
                 {
                   "label": "Sun 4",
                   "secondary": "Showers, 40%",
-                  "trailing": "18–23°"
+                  "trailing": "18–23°C"
                 }
               ]
             }
@@ -640,7 +640,7 @@
           "major": 1,
           "header": {
             "title": "Heavy rain warning until 18:00",
-            "subtitle": "West and central · as of 11:20 · couldn’t refresh"
+            "subtitle": "West and central · NEA · as of 11:20 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -745,7 +745,7 @@
           "major": 1,
           "header": {
             "title": "Typhoon signal No. 8 from 22:00",
-            "subtitle": "Hong Kong · as of 16:00 · couldn’t refresh"
+            "subtitle": "Hong Kong · HKO · as of 16:00 · couldn’t refresh"
           },
           "blocks": [
             {
