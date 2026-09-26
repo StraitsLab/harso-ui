@@ -3277,7 +3277,7 @@
           "major": 1,
           "header": {
             "title": "No 1-bed near Outram under S$3,500",
-            "subtitle": "From October · as of 09:40"
+            "subtitle": "As of 09:40"
           },
           "blocks": [
             {
@@ -4733,7 +4733,7 @@
           "major": 1,
           "header": {
             "title": "Your applications",
-            "subtitle": "Gmail not read yet · this month"
+            "subtitle": "1 of 2 sources read · Gmail next"
           },
           "blocks": [
             {
@@ -4765,8 +4765,7 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No applications this month",
-            "subtitle": "This month"
+            "title": "No applications this month"
           },
           "blocks": [
             {
