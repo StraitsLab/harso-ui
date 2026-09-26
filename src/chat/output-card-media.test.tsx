@@ -13,9 +13,10 @@ const working: chat.HarsoOutputStatusBlock = { kind: "status", state: "working",
 const failedFares: chat.HarsoOutputStatusBlock = { kind: "status", state: "failed", detail: "The fare site didn't respond. Nothing was booked." };
 const emptySearch: chat.HarsoOutputStatusBlock = { kind: "status", state: "empty", detail: "Cheapest listed now is S$588k" };
 const budget: chat.HarsoOutputNumbersBlock = { kind: "numbers", items: [{ value: "S$720", label: "Left of S$5,000" }, { value: "S$4,280", label: "Spent" }] };
-const tokyo: chat.HarsoOutputVisualBlock = { kind: "visual", visual: { kind: "map", places: [
+const tokyoMap: chat.HarsoOutputMap = { kind: "map", places: [
   { id: "ueno", label: "Ueno", lat: "35.7141", lon: "139.7774" }, { id: "asakusa", label: "Asakusa", lat: "35.7148", lon: "139.7967" },
-  { id: "shinjuku", label: "Shinjuku", lat: "35.6938", lon: "139.7034" }], selected_place_id: "ueno" } as never };
+  { id: "shinjuku", label: "Shinjuku", lat: "35.6938", lon: "139.7034" }], selected_place_id: "ueno" };
+const tokyo: chat.HarsoOutputBlock = { kind: "visual", visual: tokyoMap };
 const logo = { kind: "visual", visual: { kind: "image", artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31", alt: "Crumb & Co logo: a wheat ear forming an ampersand, warm brown on cream", aspect: "square" } } as chat.HarsoOutputBlock;
 const clip = { kind: "visual", visual: { kind: "video", artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000b01", alt: "Walkthrough of the new kitchen", poster: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000b02" } } as chat.HarsoOutputBlock;
 
@@ -221,7 +222,7 @@ test("map: OSM tiles framing every place, the selected pin larger and labelled, 
 });
 
 test("map frames every place inside the plane with room for its pin, at the closest zoom that fits", () => {
-  const places = (tokyo as unknown as { visual: chat.HarsoOutputMap }).visual.places;
+  const places = tokyoMap.places;
   const frame = frameMap(places, 480, 260);
   for (const pin of frame.pins) {
     expect(pin.x).toBeGreaterThanOrEqual(36); expect(pin.x).toBeLessThanOrEqual(480 - 36);

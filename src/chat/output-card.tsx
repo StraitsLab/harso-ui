@@ -158,10 +158,9 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
       if (steps) {
         stepsAt = index + 1;
         if (!withoutData(state)) {
-          const kept = steps.slice(0, rowBudget);
-          drawn = kept;
-          rowBudget -= kept.length;
-          shown += kept.length;
+          drawn = steps.slice(0, rowBudget);
+          rowBudget -= drawn.length;
+          shown += drawn.length;
           total += Math.max(steps.length, Number.isInteger((next as HarsoOutputRowsBlock).total_count) ? (next as HarsoOutputRowsBlock).total_count! : 0);
         }
       }
