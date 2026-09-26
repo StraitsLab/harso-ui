@@ -1,0 +1,3469 @@
+{
+  "vertical": "home_admin",
+  "fresh": [
+    "home-sub-cancel-review",
+    "home-sub-cancelled",
+    "home-sub-needs-call",
+    "home-supplies-basket",
+    "home-electricity-plans",
+    "home-deadlines-mail",
+    "home-quotes-requested",
+    "home-stock-check"
+  ],
+  "examples": [
+    {
+      "id": "home-sub-cancel-review",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Cancel my Disney+.",
+      "says": "Shall I cancel it? You keep Premium until 11 Oct.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "F10 Bill / subscription due",
+        "X7 Purchase / pay / apply / accept"
+      ],
+      "rationale": "The cancel is shown before it happens: what changes, when, the refund; the yes is asked in the sentence, never a card button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Cancel Disney+ Premium",
+          "subtitle": "S$16.98 a month · DBS card · as of 10:05"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$16.98",
+                "label": "Saved a month"
+              },
+              {
+                "value": "11 Oct",
+                "label": "Access until"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Access until",
+                "secondary": "Premium stays to the end of the month you paid for",
+                "trailing": "Sun 11 Oct"
+              },
+              {
+                "label": "Refund",
+                "secondary": "Disney+ doesn't refund part of a month",
+                "trailing": "None"
+              },
+              {
+                "label": "Next charge",
+                "secondary": "Was due Mon 12 Oct on your DBS card",
+                "trailing": "Stopped"
+              },
+              {
+                "label": "Profiles and watchlist",
+                "secondary": "Kept for 10 months if you come back",
+                "trailing": "Kept"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Disney+ account page and help centre, 26 Sep 2026 10:05"
+            }
+          ],
+          "assumptions": [
+            "Cancelling ends renewal only; nothing is deleted today"
+          ]
+        },
+        "fallback_text": "Cancel Disney+ Premium (S$16.98 a month, DBS card), as of 10:05: access until Sun 11 Oct; refund none, Disney+ doesn't refund part of a month; the Mon 12 Oct charge is stopped; profiles and watchlist kept for 10 months if you come back. Saves S$16.98 a month. Nothing is cancelled until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancel Disney+ Premium",
+            "subtitle": "Your Disney+ account"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your Disney+ plan and its cancel terms",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad001"
+              }
+            }
+          ],
+          "fallback_text": "Reading your Disney+ plan and its cancel terms."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancel Disney+ Premium",
+            "subtitle": "S$16.98 a month · refund terms not in yet · as of 10:05"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$16.98",
+                  "label": "Saved a month"
+                },
+                {
+                  "value": "11 Oct",
+                  "label": "Access until"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Access until",
+                  "secondary": "Premium stays to the end of the month you paid for",
+                  "trailing": "Sun 11 Oct"
+                },
+                {
+                  "label": "Next charge",
+                  "secondary": "Was due Mon 12 Oct on your DBS card",
+                  "trailing": "Stopped"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Disney+ account page, 26 Sep 2026 10:05; help centre didn't load"
+              }
+            ]
+          },
+          "fallback_text": "Cancel Disney+ Premium (S$16.98 a month, DBS card), as of 10:05: access until Sun 11 Oct; the Mon 12 Oct charge would stop. Saves S$16.98 a month. The refund terms haven't loaded, so I won't ask you to cancel yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancel Disney+ Premium",
+            "subtitle": "S$16.98 a month · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$16.98",
+                  "label": "Saved a month"
+                },
+                {
+                  "value": "11 Oct",
+                  "label": "Access until"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Access until",
+                  "secondary": "Premium stays to the end of the month you paid for",
+                  "trailing": "Sun 11 Oct"
+                },
+                {
+                  "label": "Refund",
+                  "secondary": "Disney+ doesn't refund part of a month",
+                  "trailing": "None"
+                },
+                {
+                  "label": "Next charge",
+                  "secondary": "Was due Mon 12 Oct on your DBS card",
+                  "trailing": "Stopped"
+                },
+                {
+                  "label": "Profiles and watchlist",
+                  "secondary": "Kept for 10 months if you come back",
+                  "trailing": "Kept"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Disney+ account page and help centre, 26 Sep 2026 09:10"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:10 (couldn’t refresh): cancelling Disney+ Premium (S$16.98 a month, DBS card) keeps access until Sun 11 Oct; refund none; the Mon 12 Oct charge stops; profiles and watchlist kept 10 months. Saves S$16.98 a month. I’ll check again before cancelling."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Disney+ subscription",
+            "subtitle": "Your Disney+ account · as of 10:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing renews; the last charge was 12 Aug. Nothing was changed."
+            }
+          ],
+          "fallback_text": "No Disney+ subscription on your account as of 10:05: nothing renews, and the last charge was on 12 Aug. Nothing was changed."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t open your Disney+ account",
+            "subtitle": "Disney+ Premium"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Disney+ wants an email code. Approve it, then ask me again."
+            }
+          ],
+          "fallback_text": "Couldn’t open your Disney+ account to cancel Premium: Disney+ wants an email code. Approve it, then ask me again. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "home-sub-cancelled",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Yes, cancel it.",
+      "says": "Done. Nothing more will be charged.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: the date access ends and the saving are the two numbers; the confirmation number proves it happened.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Cancelled · Disney+ Premium",
+          "subtitle": "Confirmation DP-5528190 · as of 10:07"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "11 Oct",
+                "label": "Access until"
+              },
+              {
+                "value": "S$16.98",
+                "label": "Saved a month"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Disney+ cancellation email, 26 Sep 2026 10:07"
+            }
+          ]
+        },
+        "fallback_text": "Disney+ Premium is cancelled as of 10:07, confirmation DP-5528190: access until Sun 11 Oct, no more charges, saves S$16.98 a month. The cancellation email is in your Gmail."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancelling Disney+ Premium",
+            "subtitle": "S$16.98 a month"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Cancelling Disney+ Premium, S$16.98 a month",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad002"
+              }
+            }
+          ],
+          "fallback_text": "Cancelling Disney+ Premium, S$16.98 a month."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancelled · Disney+ Premium",
+            "subtitle": "Confirmation DP-5528190 · as of 10:07"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "Not given",
+                  "label": "Access until"
+                },
+                {
+                  "value": "S$16.98",
+                  "label": "Saved a month"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Disney+ confirmation screen, 26 Sep 2026 10:07; no email yet"
+              }
+            ]
+          },
+          "fallback_text": "Disney+ Premium is cancelled as of 10:07, confirmation DP-5528190, saving S$16.98 a month. Access until: not given yet by Disney+; the cancellation email isn't in."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancelled · Disney+ Premium",
+            "subtitle": "DP-5528190 · as of 10:07 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "11 Oct",
+                  "label": "Access until"
+                },
+                {
+                  "value": "S$16.98",
+                  "label": "Saved a month"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Disney+ cancellation email, 26 Sep 2026 10:07"
+              }
+            ]
+          },
+          "fallback_text": "As of 10:07 (couldn’t refresh since): Disney+ Premium is cancelled, confirmation DP-5528190, access until Sun 11 Oct, saving S$16.98 a month."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the cancellation",
+            "subtitle": "Disney+ Premium · sent at 10:06"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "No answer after it was sent. I’ll check your plan before trying again."
+            }
+          ],
+          "fallback_text": "I couldn’t confirm the Disney+ Premium cancellation: Disney+ didn’t answer after it was sent at 10:06, so it may or may not be cancelled. I’ll check your plan before trying again."
+        }
+      }
+    },
+    {
+      "id": "home-sub-needs-call",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Downgrade my home security plan to the cheaper one.",
+      "says": "They only take downgrades by phone; shall I call with this plan?",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "X7 Purchase / pay / apply / accept"
+      ],
+      "rationale": "When the service wants a call, the plan for the call is the proposal: target, what I may agree and share, what comes back to you.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Certis downgrades only by phone",
+          "subtitle": "Premium S$59 to Basic S$39 a month · as of 10:20"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$39",
+                "label": "Target a month"
+              },
+              {
+                "value": "S$20",
+                "label": "Saved a month"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Ask for",
+                "secondary": "Basic monitoring from the next bill, 1 Nov",
+                "trailing": "S$39/mo"
+              },
+              {
+                "label": "May agree",
+                "secondary": "A Premium discount to S$39 or less",
+                "trailing": "Up to S$39"
+              },
+              {
+                "label": "May share",
+                "secondary": "Your name, account 88-20417, address"
+              },
+              {
+                "label": "Won’t agree",
+                "secondary": "A new contract, a fee or a device change",
+                "trailing": "Asks you"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Certis letter of 3 Sep and support page, 26 Sep 2026 10:20"
+            }
+          ],
+          "assumptions": [
+            "I say at the start that I’m an assistant calling for you",
+            "An offer outside this plan comes back to you before I accept"
+          ]
+        },
+        "fallback_text": "Certis downgrades only by phone (Premium S$59 to Basic S$39 a month, as of 10:20). Call plan: ask for Basic monitoring from the next bill, 1 Nov, S$39/mo; may agree a Premium discount to S$39 or less; may share your name, account 88-20417 and address; won’t agree a new contract, a fee or a device change, that asks you. Saves S$20 a month. I won’t call until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Home security downgrade",
+            "subtitle": "Certis · Premium monitoring"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Finding how Certis handles a downgrade from Premium",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad003"
+              }
+            }
+          ],
+          "fallback_text": "Finding how Certis handles a downgrade from Premium monitoring."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Certis downgrades only by phone",
+            "subtitle": "Premium S$59 to Basic S$39 · exit fee not known · as of 10:20"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$39",
+                  "label": "Target a month"
+                },
+                {
+                  "value": "S$20",
+                  "label": "Saved a month"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Ask for",
+                  "secondary": "Basic monitoring from the next bill, 1 Nov",
+                  "trailing": "S$39/mo"
+                },
+                {
+                  "label": "May share",
+                  "secondary": "Your name, account 88-20417, address"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Certis letter of 3 Sep, 26 Sep 2026 10:20; contract terms didn’t load"
+              }
+            ]
+          },
+          "fallback_text": "Certis downgrades only by phone (Premium S$59 to Basic S$39, as of 10:20): ask for Basic monitoring from 1 Nov at S$39/mo, sharing your name, account 88-20417 and address. Saves S$20 a month. Whether there’s an exit fee isn’t known yet, so I won’t ask to call."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Certis downgrades only by phone",
+            "subtitle": "Premium S$59 to Basic S$39 · as of 09:15 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$39",
+                  "label": "Target a month"
+                },
+                {
+                  "value": "S$20",
+                  "label": "Saved a month"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Ask for",
+                  "secondary": "Basic monitoring from the next bill, 1 Nov",
+                  "trailing": "S$39/mo"
+                },
+                {
+                  "label": "May agree",
+                  "secondary": "A Premium discount to S$39 or less",
+                  "trailing": "Up to S$39"
+                },
+                {
+                  "label": "May share",
+                  "secondary": "Your name, account 88-20417, address"
+                },
+                {
+                  "label": "Won’t agree",
+                  "secondary": "A new contract, a fee or a device change",
+                  "trailing": "Asks you"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Certis letter of 3 Sep and support page, 26 Sep 2026 10:20"
+              }
+            ],
+            "assumptions": [
+              "I say at the start that I’m an assistant calling for you",
+              "An offer outside this plan comes back to you before I accept"
+            ]
+          },
+          "fallback_text": "As of 09:15 (couldn’t refresh): Certis downgrades only by phone, Premium S$59 to Basic S$39. Plan: ask for Basic from 1 Nov, S$39/mo; may agree a Premium discount to S$39 or less; may share name, account 88-20417, address; won’t agree a contract, fee or device change. Saves S$20 a month."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Already on Basic monitoring",
+            "subtitle": "Certis account 88-20417 · as of 10:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Basic is the cheapest plan, S$39 a month. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Your Certis account 88-20417 is already on Basic monitoring, the cheapest plan at S$39 a month, as of 10:20. Nothing was changed."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your Certis plan",
+            "subtitle": "Home security"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Certis portal didn’t load. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn’t read your Certis home security plan: the portal didn’t load. Nothing was changed. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "home-bill-dispute-draft",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Dispute the roaming charge on my Singtel bill.",
+      "says": "Here's the dispute; nothing is sent until you approve.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Email draft preview"
+      ],
+      "rationale": "The dispute message is the deliverable: the charge and account are in it, word for word in the fallback; sending is an approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Dispute: roaming charge S$38.52",
+          "subtitle": "To Singtel billing · draft"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Hi Singtel, I was charged S$38.52 for data roaming on my 26 Sep bill (account 1-88231455). I was in Singapore the whole period and roaming was off. Please reverse the charge. Thanks, Abhi Bansal"
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Draft to Singtel billing, not sent. Dispute: roaming charge S$38.52. Hi Singtel, I was charged S$38.52 for data roaming on my 26 Sep bill (account 1-88231455). I was in Singapore the whole period and roaming was off. Please reverse the charge. Thanks, Abhi Bansal"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dispute: roaming charge",
+            "subtitle": "To Singtel billing · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your 26 Sep Singtel bill for the roaming charge",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad004"
+              }
+            }
+          ],
+          "fallback_text": "Reading your 26 Sep Singtel bill for the roaming charge to draft the dispute."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dispute: roaming charge",
+            "subtitle": "Singtel bill of 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No roaming charge on the 26 Sep bill. Nothing was sent."
+            }
+          ],
+          "fallback_text": "There’s no roaming charge on your 26 Sep Singtel bill, so there’s nothing to dispute. Nothing was sent."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t draft the dispute",
+            "subtitle": "To Singtel billing"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The My Singtel sign-in expired. Nothing was sent."
+            }
+          ],
+          "fallback_text": "The My Singtel sign-in expired, so I couldn’t read the bill or draft the roaming dispute. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "home-bill-lower-pending",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Did Xfinity lower my internet bill?",
+      "says": "They agreed; it shows on the next bill.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J6 Application pipeline (one job)"
+      ],
+      "rationale": "Steps as rows, the one still open first; an agreed price is not done until the bill shows it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Xfinity internet · case 58-771204",
+          "subtitle": "From US$89 to US$65 a month"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "New price on your bill",
+                "secondary": "Xfinity said the 12 Oct bill",
+                "trailing": "Next"
+              },
+              {
+                "label": "Retention call",
+                "secondary": "Thu 24 Sep · US$65/mo for 12 months, within your plan",
+                "trailing": "Agreed"
+              },
+              {
+                "label": "Your call plan",
+                "secondary": "Wed 23 Sep · target US$70/mo or less",
+                "trailing": "Approved"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Xfinity internet, case 58-771204, from US$89 to US$65 a month: new price on your bill next, Xfinity said the 12 Oct bill; retention call Thu 24 Sep agreed US$65/mo for 12 months, within your plan; your call plan approved Wed 23 Sep with a target of US$70/mo or less."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Xfinity internet · case 58-771204",
+            "subtitle": "Your bill request"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the Xfinity call notes and your account",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad005"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Xfinity call notes and your account for case 58-771204."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Xfinity internet · case 58-771204",
+            "subtitle": "From US$89 to US$65 · as of 07:50 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "New price on your bill",
+                  "secondary": "Xfinity said the 12 Oct bill",
+                  "trailing": "Next"
+                },
+                {
+                  "label": "Retention call",
+                  "secondary": "Thu 24 Sep · US$65/mo for 12 months, within your plan",
+                  "trailing": "Agreed"
+                },
+                {
+                  "label": "Your call plan",
+                  "secondary": "Wed 23 Sep · target US$70/mo or less",
+                  "trailing": "Approved"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Xfinity account and call transcript, 26 Sep 2026 07:50"
+              }
+            ]
+          },
+          "fallback_text": "As of 07:50 (couldn't refresh your Xfinity account): case 58-771204, from US$89 to US$65 a month. New price on your bill next, the 12 Oct bill; retention call Thu 24 Sep agreed US$65/mo for 12 months; your call plan approved Wed 23 Sep, target US$70/mo or less."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Xfinity bill request",
+            "subtitle": "Last 90 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No call or case with Xfinity. Nothing was changed."
+            }
+          ],
+          "fallback_text": "No Xfinity bill request in the last 90 days: no call or case with Xfinity. Nothing was changed."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your Xfinity account",
+            "subtitle": "Case 58-771204"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Xfinity sign-in expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your Xfinity account for case 58-771204: the sign-in expired. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "home-upkeep-due",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "What home upkeep is due?",
+      "says": "The aircon servicing is already late.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "F10 Bill / subscription due",
+        "X2 Domain state word"
+      ],
+      "rationale": "Overdue first with its state word; each task's cycle and supplier on the line; last paid price trailing.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Home upkeep due",
+          "subtitle": "Next 7 days · 3 tasks · S$151.40"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Aircon servicing",
+                "secondary": "Was due 20 Sep · every 3 months · Cool Air Pte Ltd",
+                "trailing": "S$120.00",
+                "status": "overdue"
+              },
+              {
+                "label": "Water filter cartridge",
+                "secondary": "Due Wed 30 Sep · every 6 months · Brita Maxtra",
+                "trailing": "S$24.90"
+              },
+              {
+                "label": "Smoke alarm battery",
+                "secondary": "Due Sat 3 Oct · yearly · 9 V",
+                "trailing": "S$6.50"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your upkeep list in Google Sheets and Gmail receipts, 26 Sep 2026 09:00"
+            }
+          ],
+          "assumptions": [
+            "Prices are what you last paid, from your receipts"
+          ]
+        },
+        "fallback_text": "Home upkeep, next 7 days, 3 tasks, S$151.40 at last prices: aircon servicing by Cool Air Pte Ltd, every 3 months, was due 20 Sep, overdue, S$120.00; Brita Maxtra water filter cartridge, every 6 months, due Wed 30 Sep, S$24.90; 9 V smoke alarm battery, yearly, due Sat 3 Oct, S$6.50."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Home upkeep due",
+            "subtitle": "Next 7 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your upkeep list and receipts",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad006"
+              }
+            }
+          ],
+          "fallback_text": "Reading your home upkeep list and receipts for the next 7 days."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Home upkeep due",
+            "subtitle": "Next 7 days · 1 of 2 sources"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Water filter cartridge",
+                  "secondary": "Due Wed 30 Sep · every 6 months · Brita Maxtra",
+                  "trailing": "S$24.90"
+                },
+                {
+                  "label": "Smoke alarm battery",
+                  "secondary": "Due Sat 3 Oct · yearly · 9 V",
+                  "trailing": "S$6.50"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Your upkeep list in Google Sheets, 26 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "From your upkeep sheet only (receipts not read yet), next 7 days: Brita Maxtra water filter cartridge, every 6 months, due Wed 30 Sep, S$24.90; 9 V smoke alarm battery, yearly, due Sat 3 Oct, S$6.50. Tasks tracked only in receipts may be missing."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Home upkeep due",
+            "subtitle": "As of Thu 24 Sep 20:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Aircon servicing",
+                  "secondary": "Was due 20 Sep · every 3 months · Cool Air Pte Ltd",
+                  "trailing": "S$120.00",
+                  "status": "overdue"
+                },
+                {
+                  "label": "Water filter cartridge",
+                  "secondary": "Due Wed 30 Sep · every 6 months · Brita Maxtra",
+                  "trailing": "S$24.90"
+                },
+                {
+                  "label": "Smoke alarm battery",
+                  "secondary": "Due Sat 3 Oct · yearly · 9 V",
+                  "trailing": "S$6.50"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Your upkeep list and Gmail receipts, 24 Sep 2026 20:00"
+              }
+            ]
+          },
+          "fallback_text": "As of Thu 24 Sep 20:00 (couldn’t refresh), home upkeep: aircon servicing by Cool Air Pte Ltd, every 3 months, was due 20 Sep, overdue, S$120.00; Brita Maxtra filter, every 6 months, due Wed 30 Sep, S$24.90; 9 V smoke alarm battery, yearly, due Sat 3 Oct, S$6.50."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No home upkeep due",
+            "subtitle": "Next 7 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The next task is the fridge coil clean on 14 Oct"
+            }
+          ],
+          "fallback_text": "No home upkeep due in the next 7 days. The next task is the fridge coil clean on 14 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your upkeep list",
+            "subtitle": "Google Sheets"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Sheets didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your home upkeep list: Google Sheets didn’t respond. Nothing was changed. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "home-supplies-basket",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "What household supplies am I running low on? Put them in a basket.",
+      "says": "Four are low; shall I put them in your FairPrice basket?",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "D15 Grocery list to basket",
+        "X3 Total row"
+      ],
+      "rationale": "Low items from the person's own receipts, each with what they last paid; the basket is proposed, and the yes is asked in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Running low · FairPrice basket",
+          "subtitle": "4 items · delivery S$4.99 · as of 11:05"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$52.54",
+                "label": "Total"
+              },
+              {
+                "value": "S$4.99",
+                "label": "Delivery"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Dishwasher tablets 60",
+                "secondary": "FairPrice · you buy every 5 weeks",
+                "trailing": "S$18.90"
+              },
+              {
+                "label": "Kitchen towel 6 rolls",
+                "secondary": "FairPrice · last bought 22 Aug",
+                "trailing": "S$7.95"
+              },
+              {
+                "label": "Laundry liquid 3 L",
+                "secondary": "Dynamo · last bought 1 Sep",
+                "trailing": "S$16.50"
+              },
+              {
+                "label": "Bin bags 30",
+                "secondary": "FairPrice · last bought 18 Aug",
+                "trailing": "S$4.20"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your supplies sheet, Gmail receipts and FairPrice prices, 26 Sep 2026 11:05"
+            }
+          ],
+          "assumptions": [
+            "Low means it is past your usual gap between buys"
+          ]
+        },
+        "fallback_text": "Running low, for a FairPrice basket as of 11:05: dishwasher tablets 60 (you buy every 5 weeks) S$18.90; kitchen towel 6 rolls, last bought 22 Aug, S$7.95; Dynamo laundry liquid 3 L, last bought 1 Sep, S$16.50; bin bags 30, last bought 18 Aug, S$4.20. Total S$52.54 with S$4.99 delivery. Nothing is added or ordered until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Running low · FairPrice basket",
+            "subtitle": "Your supplies list"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking your supplies list against receipts and FairPrice prices",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad007"
+              }
+            }
+          ],
+          "fallback_text": "Checking your household supplies list against your receipts and FairPrice prices."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Running low · FairPrice basket",
+            "subtitle": "2 of 4 priced · as of 11:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Dishwasher tablets 60",
+                  "secondary": "FairPrice · you buy every 5 weeks",
+                  "trailing": "S$18.90"
+                },
+                {
+                  "label": "Kitchen towel 6 rolls",
+                  "secondary": "FairPrice · last bought 22 Aug",
+                  "trailing": "S$7.95"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "FairPrice prices, 26 Sep 2026 11:05; 2 items still loading"
+              }
+            ]
+          },
+          "fallback_text": "Running low, 2 of 4 priced at FairPrice as of 11:05: dishwasher tablets 60 S$18.90; kitchen towel 6 rolls S$7.95. Laundry liquid and bin bags aren't priced yet, so there's no total and I won't ask to add them."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Running low · FairPrice basket",
+            "subtitle": "4 items · as of 09:30 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$52.54",
+                  "label": "Total"
+                },
+                {
+                  "value": "S$4.99",
+                  "label": "Delivery"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Dishwasher tablets 60",
+                  "secondary": "FairPrice · you buy every 5 weeks",
+                  "trailing": "S$18.90"
+                },
+                {
+                  "label": "Kitchen towel 6 rolls",
+                  "secondary": "FairPrice · last bought 22 Aug",
+                  "trailing": "S$7.95"
+                },
+                {
+                  "label": "Laundry liquid 3 L",
+                  "secondary": "Dynamo · last bought 1 Sep",
+                  "trailing": "S$16.50"
+                },
+                {
+                  "label": "Bin bags 30",
+                  "secondary": "FairPrice · last bought 18 Aug",
+                  "trailing": "S$4.20"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "FairPrice prices, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:30 (couldn’t refresh FairPrice prices): dishwasher tablets 60 S$18.90; kitchen towel 6 rolls S$7.95; Dynamo laundry liquid 3 L S$16.50; bin bags 30 S$4.20. Total S$52.54 with S$4.99 delivery. I’ll check prices again before adding."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing running low",
+            "subtitle": "Your supplies list · as of 11:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Next likely: dishwasher tablets around 9 Oct"
+            }
+          ],
+          "fallback_text": "Nothing on your household supplies list is running low as of 11:05. Next likely: dishwasher tablets around 9 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your supplies list",
+            "subtitle": "Google Sheets"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Sheets didn’t respond. Nothing was added. Ask me again soon."
+            }
+          ],
+          "fallback_text": "Couldn’t read your household supplies list: Google Sheets didn’t respond. Nothing was added to a basket. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "home-electricity-plans",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Sign in to SP and compare electricity plans for me.",
+      "says": "Geneco's fixed plan would save about S$16 a month.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Comparison"
+      ],
+      "rationale": "Current plan first, then alternatives; the one differentiator is the rate and contract; the estimate per month trails; switching is a separate approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Electricity plans for your home",
+          "subtitle": "450 kWh a month · as of 10:30"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "SP Group regulated tariff",
+                "secondary": "Now · no contract · 450 kWh",
+                "trailing": "S$137/mo"
+              },
+              {
+                "label": "Geneco Power Eco Fixed",
+                "secondary": "24 months · 26.9¢/kWh fixed",
+                "trailing": "S$121/mo",
+                "mark": "pick"
+              },
+              {
+                "label": "Keppel Electric DOT",
+                "secondary": "12 months · 4% off the tariff",
+                "trailing": "S$132/mo"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Open Electricity Market plans, 26 Sep 2026 10:30",
+              "url": "https://www.openelectricitymarket.sg/residential"
+            },
+            {
+              "label": "Your SP Group bill, Aug 2026"
+            }
+          ],
+          "assumptions": [
+            "Estimated on your average 450 kWh a month; rates include GST"
+          ],
+          "disclaimers": [
+            "An estimate, not an offer. Switching is its own approval."
+          ]
+        },
+        "fallback_text": "Electricity plans for 450 kWh a month, as of 10:30, estimates with GST: now SP Group regulated tariff, no contract, S$137/mo; Geneco Power Eco Fixed, 24 months at 26.9¢/kWh fixed, S$121/mo (pick, about S$192 a year less); Keppel Electric DOT, 12 months at 4% off the tariff, S$132/mo. Nothing is switched without your yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Electricity plans for your home",
+            "subtitle": "SP Group account"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your SP usage and 3 retailers’ plans",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad008"
+              }
+            }
+          ],
+          "fallback_text": "Reading your SP Group usage and 3 electricity retailers’ plans."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Electricity plans for your home",
+            "subtitle": "450 kWh a month · 2 of 3 retailers · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "SP Group regulated tariff",
+                  "secondary": "Now · no contract · 450 kWh",
+                  "trailing": "S$137/mo"
+                },
+                {
+                  "label": "Geneco Power Eco Fixed",
+                  "secondary": "24 months · 26.9¢/kWh fixed",
+                  "trailing": "S$121/mo"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Open Electricity Market plans, 26 Sep 2026 10:30",
+                "url": "https://www.openelectricitymarket.sg/residential"
+              },
+              {
+                "label": "Your SP Group bill, Aug 2026"
+              }
+            ],
+            "assumptions": [
+              "Estimated on your average 450 kWh a month; rates include GST"
+            ],
+            "disclaimers": [
+              "An estimate, not an offer. Switching is its own approval."
+            ]
+          },
+          "fallback_text": "Electricity plans for 450 kWh a month, 2 of 3 read at 10:30: now SP Group regulated tariff, no contract, S$137/mo; Geneco Power Eco Fixed, 24 months at 26.9¢/kWh, S$121/mo. Keppel not in yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Electricity plans for your home",
+            "subtitle": "450 kWh a month · as of 25 Sep 10:30 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "SP Group regulated tariff",
+                  "secondary": "Now · no contract · 450 kWh",
+                  "trailing": "S$137/mo"
+                },
+                {
+                  "label": "Geneco Power Eco Fixed",
+                  "secondary": "24 months · 26.9¢/kWh fixed",
+                  "trailing": "S$121/mo",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Keppel Electric DOT",
+                  "secondary": "12 months · 4% off the tariff",
+                  "trailing": "S$132/mo"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Open Electricity Market plans, 26 Sep 2026 10:30",
+                "url": "https://www.openelectricitymarket.sg/residential"
+              },
+              {
+                "label": "Your SP Group bill, Aug 2026"
+              }
+            ],
+            "assumptions": [
+              "Estimated on your average 450 kWh a month; rates include GST"
+            ],
+            "disclaimers": [
+              "An estimate, not an offer. Switching is its own approval."
+            ]
+          },
+          "fallback_text": "Electricity plans for 450 kWh a month as of 25 Sep 10:30 (couldn’t refresh): now SP Group regulated tariff S$137/mo; Geneco Power Eco Fixed, 24 months at 26.9¢/kWh, S$121/mo (pick); Keppel Electric DOT, 12 months at 4% off, S$132/mo."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t sign in to SP Group",
+            "subtitle": "Electricity plans"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "SP wants a one-time code. Approve it, then ask me again."
+            }
+          ],
+          "fallback_text": "Couldn’t sign in to your SP Group account to compare electricity plans: SP wants a one-time code. Approve it, then ask me again. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "home-form-review",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Fill out the school football tryout form.",
+      "says": "I've filled 9 of 11 fields; two need you, then shall I submit?",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "X7 Purchase / pay / apply / accept"
+      ],
+      "rationale": "Every personal field that will be sent is shown before sending; what only the person can give is marked; submitting is asked in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Football tryout · Rosyth School",
+          "subtitle": "Form from the 21 Sep school email · due Fri 2 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "9",
+                "label": "Filled by me"
+              },
+              {
+                "value": "2",
+                "label": "Need you"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Student",
+                "secondary": "Aarav Bansal · P4 · born 12 Mar 2017",
+                "trailing": "Filled"
+              },
+              {
+                "label": "Parent contact",
+                "secondary": "Abhi Bansal · 9123 4567 · email",
+                "trailing": "Filled"
+              },
+              {
+                "label": "Medical conditions",
+                "secondary": "Asthma, from his school health form",
+                "trailing": "Filled"
+              },
+              {
+                "label": "Consent signature",
+                "secondary": "A signature box only you can sign",
+                "trailing": "Needs you"
+              },
+              {
+                "label": "Emergency contact 2",
+                "secondary": "Not in your saved details",
+                "trailing": "Needs you"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Rosyth School email of 21 Sep with the form link"
+            }
+          ],
+          "assumptions": [
+            "Filled from your saved details and memory; each field is shown before it is sent"
+          ]
+        },
+        "fallback_text": "Football tryout form, Rosyth School, from the 21 Sep school email, due Fri 2 Oct: 9 fields filled by me, 2 need you. Filled: student Aarav Bansal, P4, born 12 Mar 2017; parent contact Abhi Bansal, 9123 4567, email; medical conditions asthma, from his school health form. Needs you: the consent signature and a second emergency contact. Nothing is submitted until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Football tryout · Rosyth School",
+            "subtitle": "Form from the 21 Sep school email"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Filling the Rosyth School tryout form from your saved details",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad009"
+              }
+            }
+          ],
+          "fallback_text": "Filling the Rosyth School football tryout form from your saved details."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Football tryout · Rosyth School",
+            "subtitle": "Page 1 of 2 filled · due Fri 2 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "5",
+                  "label": "Filled by me"
+                },
+                {
+                  "value": "6",
+                  "label": "Not reached"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Student",
+                  "secondary": "Aarav Bansal · P4 · born 12 Mar 2017",
+                  "trailing": "Filled"
+                },
+                {
+                  "label": "Parent contact",
+                  "secondary": "Abhi Bansal · 9123 4567 · email",
+                  "trailing": "Filled"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Rosyth School email of 21 Sep with the form link"
+              }
+            ]
+          },
+          "fallback_text": "Football tryout form, Rosyth School, due Fri 2 Oct, page 1 of 2 filled: student Aarav Bansal, P4, born 12 Mar 2017; parent contact Abhi Bansal, 9123 4567. 6 fields on page 2 not reached yet; nothing was submitted."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No tryout form found",
+            "subtitle": "Your Gmail · last 30 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No Rosyth School football form. Forward it to me and I'll fill it."
+            }
+          ],
+          "fallback_text": "No Rosyth School football tryout form in your Gmail from the last 30 days. Forward it to me and I'll fill it. Nothing was submitted."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t open the tryout form",
+            "subtitle": "Rosyth School"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The form link has expired. Nothing was submitted. Ask the school for a new one."
+            }
+          ],
+          "fallback_text": "Couldn’t open the Rosyth School football tryout form: the link from the 21 Sep email has expired. Nothing was submitted. Ask the school for a new link."
+        }
+      }
+    },
+    {
+      "id": "home-form-needs-you",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Go ahead and submit the tryout form.",
+      "says": "The form wants a captcha only you can do.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Work status"
+      ],
+      "rationale": "A take-over is the running Work Unit in its needs-you state with one quiet Stop; the person solves the captcha in the live view.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Football tryout · Rosyth School",
+          "subtitle": "Waiting at the captcha, before submit"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "needs_you",
+            "detail": "Solve the captcha in the live view; nothing is submitted yet",
+            "subject": {
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad00a"
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "work_control",
+              "label": "Stop",
+              "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad00a",
+              "control": "cancel"
+            }
+          }
+        ],
+        "fallback_text": "The Rosyth School football tryout form is filled and waiting at the captcha, before submit. Solve the captcha in the live view; nothing is submitted yet. You can stop it."
+      }
+    },
+    {
+      "id": "home-form-submitted",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Captcha done.",
+      "says": "Submitted. The school's receipt is in your email.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: the reference, what was sent and the date that matters, the way a booking receipt reads.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Submitted · Football tryout",
+          "subtitle": "Rosyth School · receipt email 15:02"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Reference",
+                "trailing": "RS-FB-0412"
+              },
+              {
+                "label": "Sent",
+                "secondary": "11 fields, as you approved",
+                "trailing": "Sat 26 Sep 15:02"
+              },
+              {
+                "label": "Tryout",
+                "secondary": "Rosyth School field, bring boots",
+                "trailing": "Tue 6 Oct 15:30"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open the receipt email",
+              "url": "https://mail.google.com/mail/u/0/#search/RS-FB-0412"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Rosyth School receipt email, 26 Sep 2026 15:02"
+            }
+          ]
+        },
+        "fallback_text": "Submitted the Rosyth School football tryout form, reference RS-FB-0412: 11 fields sent as you approved, Sat 26 Sep 15:02. Tryout Tue 6 Oct 15:30 at the Rosyth School field, bring boots. The school's receipt email came at 15:02."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Football tryout · Rosyth School",
+            "subtitle": "Submitting 11 fields"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Submitting the Rosyth School form, 11 fields",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad00b"
+              }
+            }
+          ],
+          "fallback_text": "Submitting the Rosyth School football tryout form, 11 fields."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Submitted · Football tryout",
+            "subtitle": "Rosyth School · no receipt email yet"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "RS-FB-0412"
+                },
+                {
+                  "label": "Sent",
+                  "secondary": "11 fields, as you approved",
+                  "trailing": "Sat 26 Sep 15:02"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Search Gmail for it",
+                "url": "https://mail.google.com/mail/u/0/#search/RS-FB-0412"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Form confirmation page, 26 Sep 2026 15:02"
+              }
+            ]
+          },
+          "fallback_text": "Submitted the Rosyth School football tryout form, reference RS-FB-0412, 11 fields as you approved on Sat 26 Sep 15:02. The receipt email and tryout time haven't arrived yet."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the submission",
+            "subtitle": "Football tryout · sent at 15:02"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The form didn’t answer after sending. I’ll check your email before trying again."
+            }
+          ],
+          "fallback_text": "I couldn’t confirm the Rosyth School football tryout form: the site didn’t answer after it was sent at 15:02, so it may or may not be in. I’ll check your email for a receipt before trying again."
+        }
+      }
+    },
+    {
+      "id": "home-deadlines-mail",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Find every deadline in my inbox for the next 72 hours.",
+      "says": "The lease renewal is first, tomorrow.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S14 Return / refund status"
+      ],
+      "rationale": "Soonest first, the last day trailing, and the email each came from on the line; what already passed is named separately.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "4 deadlines in the next 72 hours",
+          "subtitle": "To Tue 29 Sep 11:30 · soonest first · as of 11:30"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Sign the lease renewal",
+                "secondary": "Nichol’s email 23 Sep · DocuSign",
+                "trailing": "by Sun 27 Sep"
+              },
+              {
+                "label": "Return library books",
+                "secondary": "NLB reminder 25 Sep · 3 books",
+                "trailing": "by Mon 28 Sep"
+              },
+              {
+                "label": "Renew road tax · SJA 4821 K",
+                "secondary": "LTA email 19 Sep · Gmail",
+                "trailing": "by Tue 29 Sep"
+              },
+              {
+                "label": "Pay parking fine · URA",
+                "secondary": "URA notice 24 Sep · S$50",
+                "trailing": "by Tue 29 Sep"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Already passed",
+                "bullets": [
+                  "Town council S&CC: GIRO form was due Fri 25 Sep (email 18 Sep)."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail, last 60 days, read 26 Sep 2026 11:30"
+            }
+          ],
+          "assumptions": [
+            "A deadline counts when the email names a date to act by"
+          ]
+        },
+        "fallback_text": "As of 11:30, 4 deadlines to Tue 29 Sep 11:30, soonest first: sign the lease renewal by Sun 27 Sep (Nichol’s email 23 Sep, DocuSign); return 3 library books by Mon 28 Sep (NLB reminder 25 Sep); renew road tax for SJA 4821 K by Tue 29 Sep (LTA email 19 Sep); pay the URA parking fine, S$50, by Tue 29 Sep (URA notice 24 Sep). Already passed: town council S&CC GIRO form was due Fri 25 Sep (email 18 Sep)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Deadlines in the next 72 hours",
+            "subtitle": "Your Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 60 days of Gmail for deadlines to Tue 29 Sep 11:30",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad00c"
+              }
+            }
+          ],
+          "fallback_text": "Reading 60 days of your Gmail for deadlines up to Tue 29 Sep 11:30."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3 deadlines in the next 72 hours",
+            "subtitle": "To Tue 29 Sep 11:30 · 40 of 60 days read · as of 11:30"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sign the lease renewal",
+                  "secondary": "Nichol’s email 23 Sep · DocuSign",
+                  "trailing": "by Sun 27 Sep"
+                },
+                {
+                  "label": "Return library books",
+                  "secondary": "NLB reminder 25 Sep · 3 books",
+                  "trailing": "by Mon 28 Sep"
+                },
+                {
+                  "label": "Renew road tax · SJA 4821 K",
+                  "secondary": "LTA email 19 Sep · Gmail",
+                  "trailing": "by Tue 29 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Already passed",
+                  "bullets": [
+                    "Town council S&CC: GIRO form was due Fri 25 Sep (email 18 Sep)."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail, 40 of 60 days, read 26 Sep 2026 11:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 11:30, 40 of 60 days of Gmail read: sign the lease renewal by Sun 27 Sep (Nichol’s email 23 Sep, DocuSign); return 3 library books by Mon 28 Sep (NLB 25 Sep); renew road tax for SJA 4821 K by Tue 29 Sep (LTA 19 Sep). Already passed: S&CC GIRO form, due Fri 25 Sep. Older mail still being read."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "4 deadlines in the next 72 hours",
+            "subtitle": "To Tue 29 Sep 11:30 · as of 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sign the lease renewal",
+                  "secondary": "Nichol’s email 23 Sep · DocuSign",
+                  "trailing": "by Sun 27 Sep"
+                },
+                {
+                  "label": "Return library books",
+                  "secondary": "NLB reminder 25 Sep · 3 books",
+                  "trailing": "by Mon 28 Sep"
+                },
+                {
+                  "label": "Renew road tax · SJA 4821 K",
+                  "secondary": "LTA email 19 Sep · Gmail",
+                  "trailing": "by Tue 29 Sep"
+                },
+                {
+                  "label": "Pay parking fine · URA",
+                  "secondary": "URA notice 24 Sep · S$50",
+                  "trailing": "by Tue 29 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Already passed",
+                  "bullets": [
+                    "Town council S&CC: GIRO form was due Fri 25 Sep (email 18 Sep)."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail, last 60 days, read 26 Sep 2026 08:00"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:00 (couldn’t refresh Gmail): sign the lease renewal by Sun 27 Sep (Nichol, DocuSign); return 3 library books by Mon 28 Sep (NLB); renew road tax for SJA 4821 K by Tue 29 Sep (LTA); pay the URA parking fine, S$50, by Tue 29 Sep (URA). Passed: S&CC GIRO form, due Fri 25 Sep. Mail since 08:00 isn’t included."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No deadlines in the next 72 hours",
+            "subtitle": "To Tue 29 Sep 11:30 · as of 11:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The next one is renewing your passport, by 12 Oct"
+            }
+          ],
+          "fallback_text": "No deadlines in your Gmail up to Tue 29 Sep 11:30 as of 11:30. The next one is renewing your passport, by 12 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your email",
+            "subtitle": "Deadlines to Tue 29 Sep 11:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Gmail connection has expired. Reconnect it, then ask again."
+            }
+          ],
+          "fallback_text": "Couldn’t read your Gmail for deadlines up to Tue 29 Sep 11:30: the connection has expired. Reconnect Gmail, then ask me again. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "home-files-organise",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Pull last month's three invoices into one folder.",
+      "says": "Shall I put these 3 into Invoices/2026-08 in Drive?",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "X7 Purchase / pay / apply / accept"
+      ],
+      "rationale": "Each proposed move or rename is a row, from where to where; nothing moves until the yes asked in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Invoices/2026-08 · Google Drive",
+          "subtitle": "3 August invoices · new folder"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "3",
+                "label": "Files"
+              },
+              {
+                "value": "1",
+                "label": "Renamed"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Singtel invoice Aug.pdf",
+                "secondary": "Downloads → Invoices/2026-08",
+                "trailing": "Move"
+              },
+              {
+                "label": "SP Group bill 0826.pdf",
+                "secondary": "Gmail attachment → Invoices/2026-08",
+                "trailing": "Copy"
+              },
+              {
+                "label": "scan_0042.pdf",
+                "secondary": "Desktop → Invoices/2026-08 · renamed Certis invoice Aug.pdf",
+                "trailing": "Move, rename"
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Proposed for a new Google Drive folder Invoices/2026-08, 3 August invoices, 3 files, 1 renamed: move Singtel invoice Aug.pdf from Downloads; copy SP Group bill 0826.pdf from its Gmail attachment; move scan_0042.pdf from the Desktop and rename it Certis invoice Aug.pdf. Nothing is moved until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "August invoices",
+            "subtitle": "Google Drive and Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Finding August invoices in Drive and Gmail",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad00d"
+              }
+            }
+          ],
+          "fallback_text": "Finding your August invoices in Google Drive and Gmail."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Invoices/2026-08 · Google Drive",
+            "subtitle": "2 of 3 invoices found · new folder"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "2",
+                  "label": "Files"
+                },
+                {
+                  "value": "0",
+                  "label": "Renamed"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Singtel invoice Aug.pdf",
+                  "secondary": "Downloads → Invoices/2026-08",
+                  "trailing": "Move"
+                },
+                {
+                  "label": "SP Group bill 0826.pdf",
+                  "secondary": "Gmail attachment → Invoices/2026-08",
+                  "trailing": "Copy"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Proposed for Invoices/2026-08 in Google Drive, 2 of 3 August invoices found, 2 files, 0 renamed: move Singtel invoice Aug.pdf from Downloads; copy SP Group bill 0826.pdf from Gmail. The third isn't found yet; nothing was moved."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No August invoices found",
+            "subtitle": "Google Drive and Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing named or sent as an invoice in August. Nothing was moved."
+            }
+          ],
+          "fallback_text": "No August invoices in your Google Drive or Gmail: nothing named or sent as an invoice in August. Nothing was moved."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your Drive",
+            "subtitle": "August invoices"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Drive didn’t respond. Nothing was moved. Ask me again soon."
+            }
+          ],
+          "fallback_text": "Couldn’t read your Google Drive for the August invoices: Drive didn’t respond. Nothing was moved. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "home-files-done",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Yes, move them.",
+      "says": "Done. All 3 are in Invoices/2026-08.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes, the result reads like a receipt: where they went, how many, what was renamed, and a quiet link to the folder.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Done · Invoices/2026-08",
+          "subtitle": "Google Drive · 26 Sep 14:12"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Folder",
+                "secondary": "Google Drive · My Drive",
+                "trailing": "Invoices/2026-08"
+              },
+              {
+                "label": "Moved or copied",
+                "secondary": "Singtel, SP Group, Certis",
+                "trailing": "3 files"
+              },
+              {
+                "label": "Renamed",
+                "secondary": "scan_0042.pdf is now Certis invoice Aug.pdf",
+                "trailing": "1 file"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open folder in Drive",
+              "url": "https://drive.google.com/drive/folders/1Invoices2026-08aB3dE"
+            }
+          }
+        ],
+        "fallback_text": "Done, 26 Sep 14:12: Invoices/2026-08 in My Drive now holds 3 files (Singtel and Certis moved, SP Group copied from Gmail); scan_0042.pdf was renamed Certis invoice Aug.pdf."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Invoices/2026-08",
+            "subtitle": "Google Drive · 3 files"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Moving 3 August invoices into Invoices/2026-08",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad00e"
+              }
+            }
+          ],
+          "fallback_text": "Moving 3 August invoices into Invoices/2026-08 in Google Drive."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "2 of 3 in Invoices/2026-08",
+            "subtitle": "Google Drive · 26 Sep 14:12"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Folder",
+                  "secondary": "Google Drive · My Drive",
+                  "trailing": "Invoices/2026-08"
+                },
+                {
+                  "label": "Moved or copied",
+                  "secondary": "Singtel, SP Group",
+                  "trailing": "2 files"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open folder in Drive",
+                "url": "https://drive.google.com/drive/folders/1Invoices2026-08aB3dE"
+              }
+            }
+          ],
+          "fallback_text": "2 of 3 are in Invoices/2026-08 in My Drive as of 26 Sep 14:12: Singtel moved, SP Group copied. scan_0042.pdf is still on the Desktop, not renamed; Drive said it was locked by another app. Ask me to try that one again."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the move",
+            "subtitle": "Invoices/2026-08 · sent at 14:11"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Drive didn’t answer after the move. I’ll check the folder before trying again."
+            }
+          ],
+          "fallback_text": "I couldn’t confirm moving the 3 August invoices: Google Drive didn’t answer after 14:11, so some may already be in Invoices/2026-08. I’ll check the folder before trying again."
+        }
+      }
+    },
+    {
+      "id": "home-tax-docs",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Collect every tax document I got this year.",
+      "says": "One thing is missing: the rental statements since March.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "S14 Return / refund status"
+      ],
+      "rationale": "Missing first, then found, each with where it came from; what IRAS already gets from your employer is said once so you don't chase it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tax documents for YA 2027",
+          "subtitle": "Income year 2026 · 3 found, 1 missing"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Rental income, Jan–Aug",
+                "secondary": "Propnex monthly statements · none since March",
+                "trailing": "Missing"
+              },
+              {
+                "label": "SRS contributions",
+                "secondary": "DBS SRS statement, 1 Aug · Gmail",
+                "trailing": "Found"
+              },
+              {
+                "label": "CPF cash top-up, S$8,000",
+                "secondary": "CPF Board receipt, 12 Mar · Gmail",
+                "trailing": "Found"
+              },
+              {
+                "label": "Donations, 2 receipts",
+                "secondary": "IPC Club Rainbow, SPCA · Gmail",
+                "trailing": "Found"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "IRAS gets these directly",
+                "bullets": [
+                  "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
+                  "CPF relief from your employer's contributions."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "IRAS individual income tax rates",
+              "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-residency-and-tax-rates/individual-income-tax-rates"
+            },
+            {
+              "label": "Gmail and Google Drive, searched 26 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Links to each found email are in the Library list"
+          ],
+          "disclaimers": [
+            "Not tax advice; check what you claim against IRAS."
+          ]
+        },
+        "fallback_text": "Tax documents for YA 2027 (income year 2026): 3 found, 1 missing. Missing: rental income Jan–Aug, Propnex monthly statements, none since March. Found: SRS contributions, DBS SRS statement 1 Aug; CPF cash top-up S$8,000, CPF Board receipt 12 Mar; donations, 2 receipts from IPC Club Rainbow and SPCA. IRAS gets your IR8A (employer sends by 1 Mar 2027) and employer CPF relief directly."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tax documents for YA 2027",
+            "subtitle": "Gmail and Google Drive"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Searching Gmail and Drive for 2026 tax documents",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad00f"
+              }
+            }
+          ],
+          "fallback_text": "Searching your Gmail and Google Drive for 2026 tax documents for YA 2027."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tax documents for YA 2027",
+            "subtitle": "Gmail read, Drive not yet · 2 found, 1 missing"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Rental income, Jan–Aug",
+                  "secondary": "Propnex monthly statements · none since March",
+                  "trailing": "Missing"
+                },
+                {
+                  "label": "SRS contributions",
+                  "secondary": "DBS SRS statement, 1 Aug · Gmail",
+                  "trailing": "Found"
+                },
+                {
+                  "label": "CPF cash top-up, S$8,000",
+                  "secondary": "CPF Board receipt, 12 Mar · Gmail",
+                  "trailing": "Found"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "IRAS gets these directly",
+                  "bullets": [
+                    "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
+                    "CPF relief from your employer's contributions."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail, searched 26 Sep 2026; Drive still reading"
+              }
+            ]
+          },
+          "fallback_text": "Tax documents for YA 2027, Gmail read, Drive not yet: missing rental income Jan–Aug (Propnex, none since March); found SRS contributions (DBS statement 1 Aug) and CPF cash top-up S$8,000 (receipt 12 Mar). IRAS gets your IR8A and employer CPF relief directly. Drive may hold more."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tax documents for YA 2027",
+            "subtitle": "Income year 2026 · as of Thu 24 Sep 20:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Rental income, Jan–Aug",
+                  "secondary": "Propnex monthly statements · none since March",
+                  "trailing": "Missing"
+                },
+                {
+                  "label": "SRS contributions",
+                  "secondary": "DBS SRS statement, 1 Aug · Gmail",
+                  "trailing": "Found"
+                },
+                {
+                  "label": "CPF cash top-up, S$8,000",
+                  "secondary": "CPF Board receipt, 12 Mar · Gmail",
+                  "trailing": "Found"
+                },
+                {
+                  "label": "Donations, 2 receipts",
+                  "secondary": "IPC Club Rainbow, SPCA · Gmail",
+                  "trailing": "Found"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "IRAS gets these directly",
+                  "bullets": [
+                    "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
+                    "CPF relief from your employer's contributions."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail and Google Drive, searched 24 Sep 2026 20:00"
+              }
+            ]
+          },
+          "fallback_text": "As of Thu 24 Sep 20:00 (couldn’t refresh): YA 2027 missing rental income Jan–Aug (Propnex, none since March); found SRS contributions (DBS 1 Aug), CPF cash top-up S$8,000 (12 Mar), donations, 2 receipts (IPC Club Rainbow, SPCA). IRAS gets your IR8A and employer CPF relief directly."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No tax documents for 2026 yet",
+            "subtitle": "Gmail and Google Drive"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Your IR8A comes from your employer by 1 Mar 2027"
+            }
+          ],
+          "fallback_text": "No tax documents for income year 2026 in your Gmail or Drive yet. Your IR8A comes from your employer by 1 Mar 2027."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t search for tax documents",
+            "subtitle": "YA 2027"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Google connection has expired. Reconnect it, then ask again."
+            }
+          ],
+          "fallback_text": "Couldn’t search your Gmail and Drive for YA 2027 tax documents: the Google connection has expired. Reconnect it, then ask me again. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "home-reminder-recurring",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Remind me to water the plants every Sunday and Wednesday at 8 am.",
+      "says": "Okay. I'll remind you on your phone.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Reply watch"
+      ],
+      "rationale": "A recurring reminder is a routine: status bound to it, the next times as rows, one quiet Pause. A one-shot is food-timer.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Water the plants",
+          "subtitle": "Every Sun and Wed · 8:00 am"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "scheduled",
+            "detail": "next on Sun 27 Sep, 8:00 am",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae001"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Then",
+                "trailing": "Wed 30 Sep 8:00"
+              },
+              {
+                "label": "And",
+                "trailing": "Sun 4 Oct 8:00"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae001",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Sent to your phone by SMS until the Harso app can notify you"
+          ]
+        },
+        "fallback_text": "Reminder set: water the plants every Sunday and Wednesday at 8:00 am. Next: Sun 27 Sep, then Wed 30 Sep and Sun 4 Oct. It reaches your phone by SMS. You can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Water the plants",
+            "subtitle": "Every Sun and Wed · 8:00 am"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Setting it for Sun and Wed at 8:00 am",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae001"
+              }
+            }
+          ],
+          "fallback_text": "Setting a reminder to water the plants every Sunday and Wednesday at 8:00 am."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the reminder",
+            "subtitle": "Water the plants · Sun and Wed 8:00 am"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "No answer from the reminder service. Check Reminders before asking again."
+            }
+          ],
+          "fallback_text": "Couldn’t confirm the reminder to water the plants every Sunday and Wednesday at 8:00 am: the reminder service didn’t answer, so it may or may not be set. Check Reminders before asking again."
+        }
+      }
+    },
+    {
+      "id": "home-reminder-place",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Remind me to buy milk when I'm near FairPrice.",
+      "says": "Okay. I'll remind you when you're there.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Reply watch"
+      ],
+      "rationale": "A place reminder is a watch bound to its routine: the place and when it stops as rows, one quiet Pause; no map.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Buy milk",
+          "subtitle": "Near FairPrice Tiong Bahru"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "when you arrive, from your phone’s Shortcuts",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae002"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Place",
+                "secondary": "Tiong Bahru Plaza, 302 Tiong Bahru Rd"
+              },
+              {
+                "label": "Stops after",
+                "secondary": "Once it rings",
+                "trailing": "Or Sun 4 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae002",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Your phone tells Harso when you arrive, through the Shortcuts automation you set up",
+            "Sent to your phone by SMS"
+          ]
+        },
+        "fallback_text": "Reminder set: buy milk when you arrive at FairPrice Tiong Bahru (Tiong Bahru Plaza, 302 Tiong Bahru Rd), from your phone’s Shortcuts. It stops once it rings, or on Sun 4 Oct. You can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Buy milk",
+            "subtitle": "Near FairPrice Tiong Bahru"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Saving FairPrice Tiong Bahru as the place",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae002"
+              }
+            }
+          ],
+          "fallback_text": "Saving FairPrice Tiong Bahru as the place for your buy-milk reminder."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t set the place reminder",
+            "subtitle": "Buy milk · FairPrice Tiong Bahru"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Your phone’s arrival shortcut isn’t set up. No reminder was made."
+            }
+          ],
+          "fallback_text": "Couldn’t set the buy-milk reminder for FairPrice Tiong Bahru: your phone’s arrival shortcut isn’t set up, so I’d never know you’re there. No reminder was made. Set up the shortcut, then ask me again."
+        }
+      }
+    },
+    {
+      "id": "home-weekly-plan",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Every Monday at 9, recap last week and plan my week. Start with next week.",
+      "says": "Shall I add these 4 blocks to your calendar?",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Schedule / calendar"
+      ],
+      "rationale": "The week's proposed blocks as one list, day then why in secondary, time trailing; adding them is the yes in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Next week · 28 Sep–4 Oct",
+          "subtitle": "Last week: 41 emails answered · 3 waiting on you"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Focus: board deck",
+                "secondary": "Mon 28 Sep · from last week’s open thread",
+                "trailing": "09:30–11:30"
+              },
+              {
+                "label": "Reply to Priya and Kai",
+                "secondary": "Tue 29 Sep · 2 emails waiting since 23 Sep",
+                "trailing": "08:30–09:00"
+              },
+              {
+                "label": "Focus: pricing page",
+                "secondary": "Wed 30 Sep · you moved it twice last week",
+                "trailing": "14:00–16:00"
+              },
+              {
+                "label": "Admin: bills and forms",
+                "secondary": "Thu 1 Oct · 3 things from your deadlines list",
+                "trailing": "17:00–17:30"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open calendar",
+              "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+            }
+          }
+        ],
+        "more_label": "See all 4 blocks",
+        "fallback_text": "Next week, 28 Sep–4 Oct. Last week you answered 41 emails; 3 wait on you. Proposed blocks: Mon 09:30–11:30 focus on the board deck; Tue 08:30–09:00 reply to Priya and Kai (waiting since 23 Sep); Wed 14:00–16:00 focus on the pricing page; Thu 17:00–17:30 bills and forms. Nothing is added until you say yes; this recap then comes every Monday at 9:00."
+      },
+      "states": {
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Next week · 28 Sep–4 Oct",
+            "subtitle": "Calendar read, email not yet"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Focus: board deck",
+                  "secondary": "Mon 28 Sep · from last week’s open thread",
+                  "trailing": "09:30–11:30"
+                },
+                {
+                  "label": "Focus: pricing page",
+                  "secondary": "Wed 30 Sep · you moved it twice last week",
+                  "trailing": "14:00–16:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Next week, 28 Sep–4 Oct, from your calendar only (email not read yet): Mon 09:30–11:30 focus on the board deck; Wed 14:00–16:00 focus on the pricing page. Email replies aren’t planned yet; nothing was added."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Next week · 28 Sep–4 Oct",
+            "subtitle": "Your calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No free 30-minute gap between 08:00 and 18:00"
+            }
+          ],
+          "fallback_text": "No free 30-minute gap between 08:00 and 18:00 next week, 28 Sep–4 Oct, so I have no blocks to propose. Nothing was added."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t plan your week",
+            "subtitle": "Next week · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "The Google Calendar sign-in expired, so I couldn’t plan 28 Sep–4 Oct. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "home-goal-plan",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Help me train for a half marathon around my schedule.",
+      "says": "Ten weeks fits; the first run is Tuesday.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Meeting notes",
+        "Checklist / to-do"
+      ],
+      "rationale": "What was agreed as a short text, then the milestones as rows with their dates; check-ins are named once, not a second card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Half marathon plan",
+          "subtitle": "10 weeks · 3 runs a week · race Sun 6 Dec"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Agreed",
+                "bullets": [
+                  "First run: Tue 29 Sep, 6:30 am, 5 km easy.",
+                  "Check-in every Sunday at 8 pm: I ask how the week went and adjust."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Easy runs up to 10 km",
+                "secondary": "Weeks 1–4 · Tue, Thu 6:30 am, Sun long run",
+                "trailing": "by Sun 25 Oct"
+              },
+              {
+                "label": "Long run 16 km",
+                "secondary": "Weeks 5–8 · one tempo run a week",
+                "trailing": "by Sun 22 Nov"
+              },
+              {
+                "label": "Taper, then race",
+                "secondary": "Weeks 9–10 · Standard Chartered Singapore half",
+                "trailing": "Sun 6 Dec"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Built around your calendar: mornings before 7:30 are free Tue, Thu and Sun"
+          ],
+          "disclaimers": [
+            "Not medical advice; see a doctor if you have a heart or joint condition."
+          ]
+        },
+        "fallback_text": "Half marathon plan, 10 weeks, 3 runs a week, race Sun 6 Dec. First run Tue 29 Sep 6:30 am, 5 km easy; check-in every Sunday 8 pm. Milestones: easy runs up to 10 km, weeks 1–4, Tue and Thu 6:30 am plus a Sunday long run, by Sun 25 Oct; long run 16 km, weeks 5–8 with a weekly tempo run, by Sun 22 Nov; taper, then the Standard Chartered Singapore half on Sun 6 Dec."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Half marathon plan",
+            "subtitle": "Race Sun 6 Dec"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your calendar for free mornings to 6 Dec",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad010"
+              }
+            }
+          ],
+          "fallback_text": "Reading your calendar for free mornings up to the race on Sun 6 Dec to build the half marathon plan."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Half marathon plan",
+            "subtitle": "Race Sun 6 Dec · first 4 weeks planned"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Agreed",
+                  "bullets": [
+                    "First run: Tue 29 Sep, 6:30 am, 5 km easy."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Easy runs up to 10 km",
+                  "secondary": "Weeks 1–4 · Tue, Thu 6:30 am, Sun long run",
+                  "trailing": "by Sun 25 Oct"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Half marathon plan for Sun 6 Dec, first 4 weeks planned: first run Tue 29 Sep 6:30 am, 5 km easy; easy runs up to 10 km, Tue and Thu 6:30 am plus a Sunday long run, by Sun 25 Oct. Weeks 5–10 wait for your November travel dates."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Half marathon plan",
+            "subtitle": "Race Sun 6 Dec · as of Thu 24 Sep 21:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Agreed",
+                  "bullets": [
+                    "First run: Tue 29 Sep, 6:30 am, 5 km easy.",
+                    "Check-in every Sunday at 8 pm: I ask how the week went and adjust."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Easy runs up to 10 km",
+                  "secondary": "Weeks 1–4 · Tue, Thu 6:30 am, Sun long run",
+                  "trailing": "by Sun 25 Oct"
+                },
+                {
+                  "label": "Long run 16 km",
+                  "secondary": "Weeks 5–8 · one tempo run a week",
+                  "trailing": "by Sun 22 Nov"
+                },
+                {
+                  "label": "Taper, then race",
+                  "secondary": "Weeks 9–10 · Standard Chartered Singapore half",
+                  "trailing": "Sun 6 Dec"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 24 Sep 2026 21:00"
+              }
+            ]
+          },
+          "fallback_text": "Half marathon plan as of Thu 24 Sep 21:00 (couldn’t re-read your calendar): first run Tue 29 Sep 6:30 am, 5 km easy; Sunday 8 pm check-ins; easy runs to 10 km by Sun 25 Oct; long run 16 km by Sun 22 Nov; taper, then the Standard Chartered Singapore half on Sun 6 Dec."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Half marathon plan",
+            "subtitle": "Race Sun 6 Dec"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No free mornings before 8 am for 3 runs a week. Tell me which evenings work."
+            }
+          ],
+          "fallback_text": "Your calendar has no free mornings before 8 am for 3 runs a week up to Sun 6 Dec, so there’s no plan yet. Tell me which evenings work."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t build the plan",
+            "subtitle": "Half marathon · Sun 6 Dec"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "The Google Calendar sign-in expired, so I couldn’t fit a half marathon plan around your schedule. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "home-negotiate-offer",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Get this Marketplace couch for $200 or less.",
+      "says": "Here's the opening offer; nothing is sent until you approve.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Email draft preview"
+      ],
+      "rationale": "The offer is the deliverable, word for word; the floor stays in the subtitle so the person sees it next to the offer, and it is never in the message.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Offer: gray sectional, listed US$260",
+          "subtitle": "To Jordan on Marketplace · draft · your limit US$200"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Hi Jordan, is the gray sectional still available? I can pick it up this Saturday in Oakland and pay US$180 cash. Thanks, Abhi"
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Draft to Jordan on Facebook Marketplace, not sent. Gray sectional listed at US$260; your limit US$200; opening offer US$180. Hi Jordan, is the gray sectional still available? I can pick it up this Saturday in Oakland and pay US$180 cash. Thanks, Abhi"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Offer: gray sectional",
+            "subtitle": "To Jordan on Marketplace · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Opening the gray sectional listing in your Chrome",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad011"
+              }
+            }
+          ],
+          "fallback_text": "Opening the gray sectional listing on Facebook Marketplace in your Chrome to draft the offer to Jordan."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Gray sectional is gone",
+            "subtitle": "Facebook Marketplace listing"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Jordan marked it sold. Nothing was sent."
+            }
+          ],
+          "fallback_text": "The gray sectional listing on Facebook Marketplace is marked sold by Jordan, so there’s no offer to make. Nothing was sent."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t draft the offer",
+            "subtitle": "Gray sectional · Marketplace"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Facebook signed you out in Chrome. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Facebook signed you out in Chrome, so I couldn’t open the gray sectional listing or draft the offer. Nothing was sent. Sign in again, then ask me."
+        }
+      }
+    },
+    {
+      "id": "home-quotes-requested",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Get quotes to haul away the fallen branch.",
+      "says": "Two quotes are in; Tree Doctor is cheaper and sooner.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F10 Bill / subscription due",
+        "X2 Domain state word"
+      ],
+      "rationale": "Each firm a row: when the form went and when it replied on the line, the quote trailing; a missing reply says so in words.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Quotes: fallen branch removal",
+          "subtitle": "3 forms sent · 2 replies · as of 14:30"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Tree Doctor Singapore",
+                "secondary": "Form sent 10:40 · replied 13:05 · Mon 28 Sep",
+                "trailing": "S$280"
+              },
+              {
+                "label": "GreenCut Landscaping",
+                "secondary": "Form sent 10:44 · replied 14:20 · Wed 30 Sep",
+                "trailing": "S$350"
+              },
+              {
+                "label": "Arbor Care SG",
+                "secondary": "Form sent 10:47",
+                "trailing": "No reply yet"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Replies to your Harso email address, 26 Sep 2026 14:30"
+            }
+          ],
+          "assumptions": [
+            "Each form shared your name, the Harso reply address, the postcode and 2 photos, as you approved"
+          ]
+        },
+        "fallback_text": "Quotes to remove the fallen branch, 3 forms sent, 2 replies as of 14:30: Tree Doctor Singapore S$280, can come Mon 28 Sep (form 10:40, replied 13:05); GreenCut Landscaping S$350, Wed 30 Sep (form 10:44, replied 14:20); Arbor Care SG, form sent 10:47, no reply yet. Nothing is booked."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Quotes: fallen branch removal",
+            "subtitle": "3 tree firms"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Filling 3 tree firms’ quote forms",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad012"
+              }
+            }
+          ],
+          "fallback_text": "Filling 3 tree firms’ quote forms for the fallen branch removal."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Quotes: fallen branch removal",
+            "subtitle": "2 of 3 forms sent · 1 reply · as of 11:10"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Tree Doctor Singapore",
+                  "secondary": "Form sent 10:40 · replied 13:05 · Mon 28 Sep",
+                  "trailing": "S$280"
+                },
+                {
+                  "label": "GreenCut Landscaping",
+                  "secondary": "Form sent 10:44",
+                  "trailing": "No reply yet"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Replies to your Harso email address, 26 Sep 2026 11:10"
+              }
+            ]
+          },
+          "fallback_text": "Quotes for the fallen branch, 2 of 3 forms sent as of 11:10: Tree Doctor Singapore S$280, Mon 28 Sep (form 10:40); GreenCut Landscaping, form sent 10:44, no reply yet. Arbor Care SG’s form is still being filled."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Quotes: fallen branch removal",
+            "subtitle": "3 forms sent · as of 13:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Tree Doctor Singapore",
+                  "secondary": "Form sent 10:40 · replied 13:05 · Mon 28 Sep",
+                  "trailing": "S$280"
+                },
+                {
+                  "label": "GreenCut Landscaping",
+                  "secondary": "Form sent 10:44",
+                  "trailing": "No reply yet"
+                },
+                {
+                  "label": "Arbor Care SG",
+                  "secondary": "Form sent 10:47",
+                  "trailing": "No reply yet"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Replies to your Harso email address, 26 Sep 2026 13:10"
+              }
+            ]
+          },
+          "fallback_text": "As of 13:10 (couldn’t refresh the inbox): Tree Doctor Singapore S$280, Mon 28 Sep; GreenCut Landscaping and Arbor Care SG, forms sent 10:44 and 10:47, no reply yet. Nothing is booked."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No quotes yet",
+            "subtitle": "3 forms sent · as of 14:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No firm has replied yet. I’ll tell you when one does."
+            }
+          ],
+          "fallback_text": "3 quote forms sent for the fallen branch, but no firm has replied as of 14:30. I’ll tell you when one does."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t send the quote forms",
+            "subtitle": "Fallen branch removal"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "All 3 forms wanted a phone number check. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn’t send the quote forms for the fallen branch: all 3 wanted a phone number check that only you can do. Nothing was sent. Ask me to call them instead."
+        }
+      }
+    },
+    {
+      "id": "home-stock-check",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Does any store near me have the PS5 in stock?",
+      "says": "Croma Indiranagar has it and is closest.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Place card"
+      ],
+      "rationale": "Stores with their stock word and the time each was checked; one pick; nothing is reserved or bought.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "PS5 Slim near Indiranagar",
+          "subtitle": "3 stores · as of 16:10"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Croma, Indiranagar",
+                "secondary": "2.1 km · in stock · checked 16:02",
+                "trailing": "INR 54,990",
+                "mark": "pick"
+              },
+              {
+                "label": "Reliance Digital, Koramangala",
+                "secondary": "4.8 km · low, 2 left · checked 16:05",
+                "trailing": "INR 54,990"
+              },
+              {
+                "label": "Sony Center, MG Road",
+                "secondary": "3.4 km · out of stock · called 16:10",
+                "trailing": "INR 54,990"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Croma and Reliance Digital stock pages; a call to Sony Center, 26 Sep 2026 16:10"
+            }
+          ],
+          "assumptions": [
+            "Stock can change before you get there; nothing is held for you"
+          ]
+        },
+        "fallback_text": "PS5 Slim near Indiranagar, as of 16:10: Croma Indiranagar, 2.1 km, in stock, checked 16:02, INR 54,990 (pick); Reliance Digital Koramangala, 4.8 km, low, 2 left, checked 16:05, INR 54,990; Sony Center MG Road, 3.4 km, out of stock, called 16:10, INR 54,990. Nothing is reserved."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "PS5 Slim near Indiranagar",
+            "subtitle": "3 stores"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 3 stores’ PS5 stock",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad013"
+              }
+            }
+          ],
+          "fallback_text": "Checking 3 stores near Indiranagar for PS5 Slim stock."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "PS5 Slim near Indiranagar",
+            "subtitle": "2 of 3 stores checked · as of 16:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Croma, Indiranagar",
+                  "secondary": "2.1 km · in stock · checked 16:02",
+                  "trailing": "INR 54,990",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Reliance Digital, Koramangala",
+                  "secondary": "4.8 km · low, 2 left · checked 16:05",
+                  "trailing": "INR 54,990"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Croma and Reliance Digital stock pages, 26 Sep 2026 16:05"
+              }
+            ]
+          },
+          "fallback_text": "PS5 Slim near Indiranagar, 2 of 3 stores checked as of 16:05: Croma Indiranagar, 2.1 km, in stock, INR 54,990; Reliance Digital Koramangala, 4.8 km, low, 2 left, INR 54,990. Sony Center hasn’t answered the call yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "PS5 Slim near Indiranagar",
+            "subtitle": "As of 12:30 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Croma, Indiranagar",
+                  "secondary": "2.1 km · in stock · checked 16:02",
+                  "trailing": "INR 54,990",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Reliance Digital, Koramangala",
+                  "secondary": "4.8 km · low, 2 left · checked 16:05",
+                  "trailing": "INR 54,990"
+                },
+                {
+                  "label": "Sony Center, MG Road",
+                  "secondary": "3.4 km · out of stock · called 16:10",
+                  "trailing": "INR 54,990"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Stock pages and a call, 26 Sep 2026 12:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 12:30 (couldn’t refresh; stock may have changed): Croma Indiranagar in stock (pick); Reliance Digital Koramangala low, 2 left; Sony Center MG Road out. All INR 54,990."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No PS5 Slim near Indiranagar",
+            "subtitle": "3 stores · as of 16:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "All 3 are out; Croma expects stock Thu 1 Oct"
+            }
+          ],
+          "fallback_text": "No PS5 Slim in stock at the 3 stores near Indiranagar as of 16:10. Croma Indiranagar expects stock on Thu 1 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check PS5 stock",
+            "subtitle": "Near Indiranagar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The store pages didn’t load. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn’t check PS5 Slim stock near Indiranagar: the store pages didn’t load and no call was made. Ask me again in a few minutes."
+        }
+      }
+    }
+  ]
+}
