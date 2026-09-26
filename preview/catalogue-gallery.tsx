@@ -36,17 +36,11 @@ export function catalogueRouteFromHash(): { vertical?: string; mode: string } | 
 
 /** No inline budget: every row and number, and the text unclipped (the line cap is a CSS clamp, so a finite number). */
 const UNCAPPED: HarsoOutputCardCaps = { maxRows: Infinity, maxNumbers: Infinity, maxTextChars: Infinity, maxTextLines: 10_000 };
-const withoutCount = (block: HarsoOutputBlock): HarsoOutputBlock => {
-  if (!("total_count" in block)) return block;
-  const { total_count: _, ...rest } = block as HarsoOutputBlock & { total_count?: number };
-  return rest as HarsoOutputBlock;
-};
 const isText = (block: HarsoOutputBlock): block is HarsoOutputTextBlock => block.kind === "text" && Array.isArray((block as HarsoOutputTextBlock).sections);
 
 /**
  * The whole answer for View all, drawn by the same card with its inline caps lifted. The card draws one text run, so
  * every text block's words (summary, headings, paragraphs, bullets, in order) become that one run, word for word.
- * It holds every row the agent sent; rows it only counted (`total_count`) are reached through the answer's action.
  */
 function wholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
   const words = document.blocks.filter(isText).flatMap(block => [
@@ -54,7 +48,10 @@ function wholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
     ...block.sections.flatMap(section => [...(section.heading ? [section.heading] : []), ...section.paragraphs ?? [], ...section.bullets ?? []]),
   ]);
   const firstText = document.blocks.findIndex(isText);
-  const blocks = document.blocks.flatMap((block, index): HarsoOutputBlock[] => !isText(block) ? [withoutCount(block)]
+  // The whole answer is everything the agent sent. Rows it did not send (total_count) are reached through the answer's
+  // link or file, so the expanded card never offers a View all that has nothing left to open.
+  const sent = (block: HarsoOutputBlock): HarsoOutputBlock => "total_count" in block ? { ...block, total_count: undefined } as HarsoOutputBlock : block;
+  const blocks = document.blocks.flatMap((block, index): HarsoOutputBlock[] => !isText(block) ? [sent(block)]
     : index === firstText ? [{ kind: "text", sections: [{ paragraphs: words }] }] : []);
   return { ...document, blocks };
 }

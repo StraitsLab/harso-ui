@@ -164,10 +164,10 @@ describe("catalogue gallery overflow and routes", () => {
         const full = within(frame).getByRole("region", { name: /full answer/ });
         const text = full.textContent!;
         const expected = documents[index].blocks.flatMap((block: any) => block.kind === "rows" ? block.items.flatMap((item: any) => [item.label, item.secondary, item.trailing])
-          // A budget pair draws as a progress bar, which says its label without the " of <target>" it carried (G9).
-          : block.kind === "numbers" ? block.items.flatMap((item: any) => [item.value, item.label.replace(/\s+of\s+\S+$/, "")])
+          // A budget pair draws as a progress bar ("S$4,280 of S$5,000 · S$720 left"): every figure stays, the labels become the bar's words.
+          : block.kind === "numbers" ? block.items.flatMap((item: any) => full.querySelector(".hkc-output-progress") && block.items.length === 2 ? [item.value] : [item.value, item.label])
             : block.kind === "text" ? [block.summary, ...block.sections.flatMap((section: any) => [section.heading, ...section.paragraphs ?? [], ...section.bullets ?? []])] : []).filter(Boolean);
-        for (const words of expected) expect(text.toLowerCase(), `${example.id} ${index}`).toContain(words.toLowerCase());
+        for (const words of expected) expect(text, `${example.id} ${index}`).toContain(words);
         expect(within(full).queryByRole("button", { name: /View all/ }), example.id).toBeNull();
         fireEvent.click(within(full).getByRole("button", { name: "Show less" }));
       });
@@ -175,17 +175,19 @@ describe("catalogue gallery overflow and routes", () => {
   }, 60_000);
 
   // Review round 1 (F3): `mode in MODES` accepted inherited keys, and the page then crashed on them.
+  // The route and the page are what is under test, not a vertical's size: the smallest vertical keeps each case well
+  // inside the default timeout now that the big verticals carry every state (money alone timed out on CI).
   test.each(["toString", "constructor", "__proto__", "hasOwnProperty", "valueOf", "bogus"])("mode=%s falls back to both appearances", mode => {
-    window.location.hash = `#/catalogue/money?mode=${mode}`;
+    window.location.hash = `#/catalogue/news?mode=${mode}`;
     const route = catalogueRouteFromHash()!;
-    expect(route).toEqual({ vertical: "money", mode: "both" });
+    expect(route).toEqual({ vertical: "news", mode: "both" });
     const { container } = render(<CataloguePage {...route} />);
     expect(container.querySelectorAll(".hkl-cat-example").length).toBeGreaterThan(0);
     // The page itself fails closed too, whatever it is handed.
-    const direct = render(<CataloguePage vertical="money" mode={mode} />);
+    const direct = render(<CataloguePage vertical="news" mode={mode} />);
     const frames = [...direct.container.querySelectorAll(".hkl-cat-frame")].slice(0, 4).map(frame => frame.getAttribute("data-mode"));
     expect(frames).toEqual(["light", "light", "dark", "dark"]);
-  }, 60_000);
+  });
 });
 
 describe("catalogue gallery", () => {
@@ -209,13 +211,15 @@ describe("catalogue gallery", () => {
       const row = drawn[index];
       expect(row.querySelector(".hkl-cat-asked")).toHaveTextContent(example.request);
       const states = Object.keys(example.states ?? {});
-      // The gallery's state rows (the card's own blocks carry data-state too).
-      expect([...row.querySelectorAll(":scope > .hkl-cat-state[data-state]")].map(node => node.getAttribute("data-state"))).toEqual(states);
+      // Only the gallery's own state rows: charts, tables and media carry a data-state of their own inside the card.
+      expect([...row.querySelectorAll(".hkl-cat-state[data-state]")].map(node => node.getAttribute("data-state"))).toEqual(states);
       const frames = [...row.querySelectorAll(".hkl-cat-frame")];
       expect(frames).toHaveLength(4 * (1 + states.length));
       expect(frames.slice(0, 4).map(frame => `${frame.getAttribute("data-mode")}-${frame.getAttribute("data-width")}`)).toEqual(["light-390", "light-420", "dark-390", "dark-420"]);
       expect(row.querySelectorAll(".hkc-output-card")).toHaveLength(example.document ? frames.length : 4 * states.length);
     });
     expect(errors).not.toHaveBeenCalled();
+    // Drawing a whole vertical (every example and state, four frames each) is this test's job; CI runners take
+    // well over the 5 s default on the big verticals, as the View all tests above already allow for.
   }, 60_000);
 });
