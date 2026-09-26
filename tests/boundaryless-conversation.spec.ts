@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { routeSource } from "./helpers/module-source";
 
 test("runtime transcript retains reader position across mounted disable and jumps to latest", async ({ page }) => {
   await page.goto("/#harso:chat-thread");
@@ -104,7 +105,7 @@ test("runtime Markdown rejects unsafe content without remote requests", async ({
   page.on("dialog", async dialog => { dialogs.push(dialog.message()); await dialog.dismiss(); });
   // Inject hostile text into the actual runtime Markdown fixture, not a removed module.
   await page.route("**/chat-markdown-example.tsx*", async route => {
-    const response = await route.fetch();
+    const response = await routeSource(route);
     const source = await response.text();
     const body = source.replace("# A calmer space to build", "# A calmer space to build\\n\\n<script>alert('unsafe')</script>\\n\\n![Remote](https://invalid.example/image.png)\\n\\n[Unsafe](javascript:alert(1))");
     expect(body).not.toBe(source); await route.fulfill({ response, body });

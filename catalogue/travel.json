@@ -7,7 +7,8 @@
     "travel-flight-status",
     "travel-flights-return",
     "travel-hotels-ueno",
-    "travel-flight-cancelled"
+    "travel-flight-cancelled",
+    "travel-rate-drop-rebook"
   ],
   "examples": [
     {
@@ -2456,6 +2457,444 @@
             }
           ],
           "fallback_text": "Couldn’t get the SQ 638 boarding pass for Mon 28 Sep: the airline didn’t respond. Your check-in is unchanged."
+        }
+      }
+    },
+    {
+      "id": "travel-flight-booked",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Book the 08:35 SQ 638 to Tokyo on 12 Oct, aisle seat, with my KrisFlyer number.",
+      "says": "Booked, with the aisle seat and your KrisFlyer number on it.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the approval, the booking: flight and ref in the header; what was paid, the seat and the refund terms as rows; the e-ticket is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked · SQ 638 to Tokyo",
+          "subtitle": "Mon 12 Oct · 08:35 · Ref 6XK2QP"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Total paid",
+                "secondary": "1 adult · economy Flexi · Visa ending 4412",
+                "trailing": "S$612"
+              },
+              {
+                "label": "Seat",
+                "secondary": "Aisle · KrisFlyer ending 0932 added",
+                "trailing": "31C"
+              },
+              {
+                "label": "Refund",
+                "secondary": "Refundable until departure",
+                "trailing": "S$100 fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open e-ticket",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000c7a01"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines e-ticket email, 26 Sep 2026 10:41"
+            }
+          ],
+          "assumptions": [
+            "Charged the S$612 you approved at 10:38; nothing else was bought."
+          ]
+        },
+        "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. Charged the S$612 you approved at 10:38; nothing else was bought. The e-ticket is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "SQ 638 to Tokyo",
+            "subtitle": "Mon 12 Oct · 08:35"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Booking SQ 638 to Tokyo, Mon 12 Oct 08:35, with Singapore Airlines",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a02"
+              }
+            }
+          ],
+          "fallback_text": "Booking SQ 638 to Tokyo, Mon 12 Oct 08:35, with Singapore Airlines."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · SQ 638 to Tokyo",
+            "subtitle": "Mon 12 Oct · 08:35 · Ref 6XK2QP · e-ticket not in yet"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Total paid",
+                  "secondary": "1 adult · economy Flexi · Visa ending 4412",
+                  "trailing": "S$612"
+                },
+                {
+                  "label": "Seat",
+                  "secondary": "Aisle asked for · SIA hasn't assigned it",
+                  "trailing": "Not yet"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines booking page, 26 Sep 2026 10:40"
+              }
+            ],
+            "assumptions": [
+              "Charged the S$612 you approved at 10:38; nothing else was bought."
+            ]
+          },
+          "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412. Seat: aisle asked for; SIA hasn't assigned it, not yet. Status: e-ticket not in yet, as the airline's email hasn't arrived. Charged the S$612 you approved at 10:38; nothing else was bought."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · SQ 638 to Tokyo",
+            "subtitle": "Mon 12 Oct · 08:35 · Ref 6XK2QP · as of 10:41 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Total paid",
+                  "secondary": "1 adult · economy Flexi · Visa ending 4412",
+                  "trailing": "S$612"
+                },
+                {
+                  "label": "Seat",
+                  "secondary": "Aisle · KrisFlyer ending 0932 added",
+                  "trailing": "31C"
+                },
+                {
+                  "label": "Refund",
+                  "secondary": "Refundable until departure",
+                  "trailing": "S$100 fee"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open e-ticket",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000c7a01"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines e-ticket email, 26 Sep 2026 10:41"
+              }
+            ],
+            "assumptions": [
+              "Charged the S$612 you approved at 10:38; nothing else was bought."
+            ]
+          },
+          "fallback_text": "As of 10:41 (couldn’t refresh with Singapore Airlines): SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. Charged the S$612 you approved at 10:38; nothing else was bought. The e-ticket is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "SQ 638 wasn’t booked",
+            "subtitle": "Mon 12 Oct · 08:35 · as of 10:39"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The S$612 Flexi fare was gone before payment; nothing was booked"
+            }
+          ],
+          "fallback_text": "SQ 638 to Tokyo wasn’t booked for Mon 12 Oct 08:35, as of 10:39: the S$612 Flexi fare was gone before payment; nothing was booked or charged."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the SQ 638 booking",
+            "subtitle": "Mon 12 Oct · 08:35"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Singapore Airlines didn’t answer. Check your SIA bookings before trying again"
+            }
+          ],
+          "fallback_text": "I couldn’t confirm whether SQ 638 to Tokyo on Mon 12 Oct 08:35 is booked: Singapore Airlines didn’t answer after the payment was sent, so you may or may not have been charged. Check your SIA bookings before trying again."
+        }
+      }
+    },
+    {
+      "id": "travel-rate-drop-rebook",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Watch my Gracery Ueno rate and rebook if it drops by S$100 or more.",
+      "says": "The rate dropped by S$240. Shall I book it, then cancel your current booking?",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S7 Price watch",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "The watch firing: old and new rate as rows with the saving; still bound to the routine with one Pause. Rebooking is a question, then an approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Gracery Ueno rate dropped",
+          "subtitle": "12–18 Oct · same room · as of 20:00"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every 12 hours since 26 Sep",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Your booking",
+                "secondary": "Ref ABX-4471 · free cancel until 9 Oct",
+                "trailing": "S$1,620"
+              },
+              {
+                "label": "Now on Booking.com",
+                "secondary": "Same room · free cancel until 9 Oct",
+                "trailing": "S$1,380"
+              },
+              {
+                "label": "You’d save",
+                "secondary": "Rule: refundable, S$100 or more",
+                "trailing": "S$240"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Booking.com, 26 Sep 2026 20:00"
+            }
+          ],
+          "assumptions": [
+            "Nothing is booked or cancelled until you say yes.",
+            "The old booking is cancelled only after the new one is confirmed."
+          ]
+        },
+        "fallback_text": "Gracery Ueno rate dropped for 12–18 Oct, same room, as of 20:00: your booking, Ref ABX-4471, free cancel until 9 Oct, S$1,620; now on Booking.com, same room, free cancel until 9 Oct, S$1,380; you’d save S$240 (rule: refundable, S$100 or more). Watching every 12 hours since 26 Sep. Nothing is booked or cancelled until you say yes; the old booking is cancelled only after the new one is confirmed."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Gracery Ueno rate",
+            "subtitle": "12–18 Oct · same room"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking the Gracery Ueno rate for 12–18 Oct, same room, on Booking.com",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a04"
+              }
+            }
+          ],
+          "fallback_text": "Checking the Gracery Ueno rate for 12–18 Oct, same room, on Booking.com."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Gracery Ueno rate dropped",
+            "subtitle": "12–18 Oct · same room · terms not in yet · as of 20:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every 12 hours since 26 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Your booking",
+                  "secondary": "Ref ABX-4471 · free cancel until 9 Oct",
+                  "trailing": "S$1,620"
+                },
+                {
+                  "label": "Now on Booking.com",
+                  "secondary": "Same room · cancel terms not in yet",
+                  "trailing": "S$1,380"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Booking.com, 26 Sep 2026 20:00; cancel terms still loading"
+              }
+            ],
+            "assumptions": [
+              "Can’t tell if it is refundable, so I won’t offer to rebook yet."
+            ]
+          },
+          "fallback_text": "Gracery Ueno rate dropped for 12–18 Oct, same room, as of 20:00: your booking, Ref ABX-4471, free cancel until 9 Oct, S$1,620; now on Booking.com, same room, S$1,380, cancel terms not in yet, so I can’t tell if it is refundable and won’t offer to rebook yet. Watching every 12 hours since 26 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Gracery Ueno rate dropped",
+            "subtitle": "12–18 Oct · same room · as of 20:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every 12 hours since 26 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Your booking",
+                  "secondary": "Ref ABX-4471 · free cancel until 9 Oct",
+                  "trailing": "S$1,620"
+                },
+                {
+                  "label": "Now on Booking.com",
+                  "secondary": "Same room · free cancel until 9 Oct",
+                  "trailing": "S$1,380"
+                },
+                {
+                  "label": "You’d save",
+                  "secondary": "Rule: refundable, S$100 or more",
+                  "trailing": "S$240"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Booking.com, 26 Sep 2026 20:00"
+              }
+            ],
+            "assumptions": [
+              "Nothing is booked or cancelled until you say yes.",
+              "The old booking is cancelled only after the new one is confirmed."
+            ]
+          },
+          "fallback_text": "As of 20:00 (couldn’t refresh with Booking.com; the rate may have gone): Gracery Ueno rate dropped for 12–18 Oct, same room: your booking, Ref ABX-4471, free cancel until 9 Oct, S$1,620; now on Booking.com, same room, free cancel until 9 Oct, S$1,380; you’d save S$240 (rule: refundable, S$100 or more). Watching every 12 hours since 26 Sep. Nothing is booked or cancelled until you say yes; the old booking is cancelled only after the new one is confirmed."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The S$1,380 Gracery rate is gone",
+            "subtitle": "12–18 Oct · as of 20:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Back to S$1,620. Your booking wasn’t changed; I’m still watching"
+            }
+          ],
+          "fallback_text": "The S$1,380 Gracery Ueno rate for 12–18 Oct is gone as of 20:30: back to S$1,620. Your booking wasn’t changed; I’m still watching."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check the Gracery rate",
+            "subtitle": "12–18 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Booking.com didn’t respond. Your booking wasn’t changed; next check is at 08:00"
+            }
+          ],
+          "fallback_text": "Couldn’t check the Gracery Ueno rate for 12–18 Oct: Booking.com didn’t respond. Your booking wasn’t changed; the next check is at 08:00."
         }
       }
     }

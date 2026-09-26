@@ -1,9 +1,10 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 async function mountCategories(page: Page, appearance: string, palette: string, labels: string[]) {
   await page.goto(`/?radarCategories=${labels.length}#boardui:radar-chart-card`);
-  const entry = await (await page.request.get("/preview/main.tsx")).text();
-  const example = await (await page.request.get("/preview/radial-radar-example.tsx")).text();
+  const entry = await moduleSource(page, "/preview/main.tsx");
+  const example = await moduleSource(page, "/preview/radial-radar-example.tsx");
   const reactUrl = entry.match(/from "([^"]*\/deps\/react\.js[^"]*)"/)?.[1];
   const domUrl = entry.match(/from "([^"]*\/deps\/react-dom_client\.js[^"]*)"/)?.[1];
   const producerUrl = example.match(/from "([^"]*\/src\/index\.ts[^"]*)"/)?.[1];

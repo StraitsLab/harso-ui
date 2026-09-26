@@ -1,8 +1,9 @@
 import { test, expect, type Page, type Locator } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 async function mount(page: Page, kind: string) {
   await page.goto("/#boardui:radio");
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];

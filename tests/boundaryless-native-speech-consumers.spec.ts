@@ -1,8 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { routeSource } from "./helpers/module-source";
 
 test.beforeEach(async ({ page }) => {
   if (process.env.HARSO_SABOTAGE_SPEECH_CLEANUP === "1") await page.route("**/native-speech-examples.tsx*", async route => {
-    const response = await route.fetch();
+    const response = await routeSource(route);
     const original = await response.text();
     const body = original.replace("return release;", "return () => {};");
     expect(body).not.toBe(original);

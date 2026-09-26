@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 const scenes = [
   { appearance: "light", palette: "clean", width: 1440 },
@@ -13,7 +14,7 @@ async function mount(page: Page, family: "color" | "contributions-card", scene: 
   await page.goto(`/#boardui:${family}`);
   await page.getByLabel("Appearance", { exact: true }).selectOption(scene.appearance);
   await page.getByLabel("Palette", { exact: true }).selectOption(scene.palette);
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];

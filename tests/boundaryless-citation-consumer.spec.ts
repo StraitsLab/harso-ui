@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 for (const width of [390, 1440]) test(`hover-only citation remains reachable at ordinary pointer speed at ${width}`, async ({ page }) => {
   await page.setViewportSize({ width, height: 900 });
@@ -67,7 +68,7 @@ test("revealed citation fits the actual narrow gallery and survives resize", asy
 test("shared hover placement handles edges, alignments and controlled refusal", async ({ page }, info) => {
   await page.setViewportSize({ width: 390, height: 640 });
   await page.goto("/#vercel:inline-citation");
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)![1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)![1];
   const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)![1];

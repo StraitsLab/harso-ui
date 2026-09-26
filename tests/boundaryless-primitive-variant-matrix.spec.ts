@@ -1,4 +1,5 @@
 import { expect, test, type Locator } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 // Each test owns its page and output files, so parallel mode lets CI spread this slow file across workers and shards.
 test.describe.configure({ mode: "parallel" });
@@ -34,7 +35,7 @@ for (const [familyId, file, exported, component] of families) {
       await page.goto(`/#${familyId}`);
       await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
       await page.getByLabel("Palette", { exact: true }).selectOption(palette);
-      const source = await (await page.request.get("/preview/main.tsx")).text();
+      const source = await moduleSource(page, "/preview/main.tsx");
       const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
       const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
       const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];

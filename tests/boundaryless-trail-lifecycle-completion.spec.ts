@@ -1,9 +1,10 @@
 import { expect, test, type Page } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 async function mountTrail(page: Page, mode: "tasks" | "steps" | "results") {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/#boardui:task-list");
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];

@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import type { ExampleState } from "../preview/examples";
+import { moduleSource } from "./helpers/module-source";
 
 async function openGallery(page: Page, component: string, appearance = "light", palette = "clean") {
   const family = component === "RadarChartCard" ? "radar" : "radial";
@@ -15,7 +16,7 @@ async function openGallery(page: Page, component: string, appearance = "light", 
 async function mountExample(page: Page, component: string, state: ExampleState) {
   const appearance = "light", palette = "clean";
   await page.goto(`/?radialRadar=${component}-${appearance}-${palette}`);
-  const entry = await (await page.request.get("/preview/main.tsx")).text();
+  const entry = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = entry.match(/from "([^"]*\/deps\/react\.js[^"]*)"/)?.[1];
   const domUrl = entry.match(/from "([^"]*\/deps\/react-dom_client\.js[^"]*)"/)?.[1];
   if (!reactUrl || !domUrl) throw new Error("This isolated consumer test requires the coordinated Vite dev server.");

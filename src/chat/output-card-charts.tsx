@@ -2,7 +2,7 @@
 
 import { Clock, Info, WarningCircle } from "@phosphor-icons/react";
 import { useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { Button } from "../primitives";
+import { Badge, Button } from "../primitives";
 import "./output-card-charts.css";
 
 /*
@@ -70,12 +70,24 @@ export function readShare(items: Row[]): number[] | undefined {
   return Math.abs(sum - 100) <= Math.ceil(items.length / 2) ? shares : undefined;
 }
 
-/** The table this card can draw: 2+ columns, 1+ rows, every row as wide as the header, no row status words (they fall back). */
+/** Row status words the card can say (output-blocks.v1 `row_status`), each in the kit's tone for its meaning. */
+const ROW_STATUS = { overdue: { word: "Overdue", tone: "attention" }, paid: { word: "Paid", tone: "positive" } } as const;
+/** True when the row has no status, or one this card can say; any other status makes the document fall back. */
+export const rowStatusOk = (status?: string) => status == null || Object.hasOwn(ROW_STATUS, status);
+const rowStatus = (status?: string) => status != null && Object.hasOwn(ROW_STATUS, status) ? ROW_STATUS[status as keyof typeof ROW_STATUS] : undefined;
+
+/** A row's status as the word itself beside its tone dot (the kit Badge), so the meaning never rests on colour. */
+export function HarsoOutputRowStatus({ status }: { status?: string }) {
+  const known = rowStatus(status);
+  return known ? <Badge tone={known.tone} className="hkc-output-row-status" data-status={status}>{known.word}</Badge> : null;
+}
+
+/** The table this card can draw: 2+ columns, 1+ rows, every row as wide as the header, row status words it can say. */
 export function readTable(block: AnyBlock): HarsoOutputTableBlock | undefined {
   if (block.kind !== "table") return undefined;
   const table = block as Partial<HarsoOutputTableBlock> as HarsoOutputTableBlock;
   if (!Array.isArray(table.columns) || table.columns.length < 2 || !Array.isArray(table.rows) || !table.rows.length) return undefined;
-  const ok = table.rows.every(row => Array.isArray(row?.cells) && row.cells.length === table.columns.length && row.status == null);
+  const ok = table.rows.every(row => Array.isArray(row?.cells) && row.cells.length === table.columns.length && rowStatusOk(row.status));
   return ok ? table : undefined;
 }
 
@@ -471,12 +483,9 @@ export function HarsoOutputTableView({ table, shown, label }: { table: HarsoOutp
     <table className="hkc-output-table">
       <thead><tr>{table.columns.map((column, index) => <th key={index} scope="col" data-align={align(index)}>{column.label}</th>)}</tr></thead>
       <tbody>
-        {body.map((row, rowIndex) => <tr key={rowIndex}>{row.cells.map((cell, index) => index === 0
-          ? <th key={index} scope="row" data-align={align(index)}>{cell}</th>
+        {[...body, ...total ? [total] : []].map((row, rowIndex) => <tr key={rowIndex} className={row === total ? "hkc-output-table-total" : undefined}>{row.cells.map((cell, index) => index === 0
+          ? <th key={index} scope="row" data-align={align(index)}>{cell}{row.status && <> <HarsoOutputRowStatus status={row.status} /></>}</th>
           : <td key={index} data-align={align(index)}>{cell}</td>)}</tr>)}
-        {total && <tr className="hkc-output-table-total">{total.cells.map((cell, index) => index === 0
-          ? <th key={index} scope="row" data-align={align(index)}>{cell}</th>
-          : <td key={index} data-align={align(index)}>{cell}</td>)}</tr>}
       </tbody>
     </table>
   </div>;
@@ -518,15 +527,17 @@ export function HarsoOutputBlockFrame({ state, kind, children }: { state?: Harso
   </div>;
 }
 
+const statusWord = (status?: string) => { const known = rowStatus(status); return known ? [known.word] : []; };
+
 /** Plain text of one block for Copy: every value with its unit, rows as lines, tables tab-separated. */
 export function harsoOutputBlockPlainText(block: AnyBlock): string | undefined {
   const chart = readChart(block);
   if (chart) return chart.series.map(series => `${series.label}: ${chart.x_labels.map((label, index) =>
     `${label} ${series.values[index] === null ? "not reported" : formatValue(series.values[index]!, chart.unit)}`).join(", ")}`).join("\n");
   const table = readTable(block);
-  if (table) return [table.columns.map(column => column.label), ...table.rows.map(row => row.cells)].map(cells => cells.join("\t")).join("\n");
+  if (table) return [table.columns.map(column => column.label), ...table.rows.map(row => [[row.cells[0], ...statusWord(row.status)].join(" · "), ...row.cells.slice(1)])].map(cells => cells.join("\t")).join("\n");
   const items = (block as { items?: unknown }).items;
   if (block.kind === "rows" && Array.isArray(items)) return (items as Row[])
-    .map(row => [row.label, row.secondary, row.trailing].filter(Boolean).join(" · ")).join("\n");
+    .map(row => [row.label, ...statusWord(row.status), row.secondary, row.trailing].filter(Boolean).join(" · ")).join("\n");
   return undefined;
 }
