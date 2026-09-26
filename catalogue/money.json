@@ -13,7 +13,8 @@
     "money-card-charges",
     "money-spending-so-far",
     "money-balance",
-    "money-crypto-quote"
+    "money-crypto-quote",
+    "money-transfer-idr"
   ],
   "examples": [
     {
@@ -3939,6 +3940,264 @@
             }
           ],
           "fallback_text": "Couldn’t check your bills: Gmail didn’t respond. Nothing was paid."
+        }
+      }
+    },
+    {
+      "id": "money-transfer-idr",
+      "vertical": "money",
+      "kind": "card",
+      "request": "How much will my mum get if I send S$2,000 to Jakarta?",
+      "says": "She gets about 24 million rupiah; Wise beats your bank by Rp412,000.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F13 Money transfer quote"
+      ],
+      "rationale": "A very large received amount must fit the number cell: the rupiah sign keeps it to 12 characters.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "S$2,000 to Mum",
+          "subtitle": "Rate 12,166 · arrives by Mon 28 Sep · as of 10:40"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "Rp24,318,400",
+                "label": "Mum gets"
+              },
+              {
+                "value": "S$9.80",
+                "label": "Fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Send with Wise",
+              "url": "https://wise.com/sg/send-money/send-money-to-indonesia"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Wise quote, 26 Sep 2026 10:40"
+            },
+            {
+              "label": "DBS Remit quote, 26 Sep 2026 10:40: Mum gets Rp23,906,400"
+            }
+          ],
+          "assumptions": [
+            "Rate is held for 24 hours once you start the transfer."
+          ]
+        },
+        "fallback_text": "Mum gets Rp24,318,400 for S$2,000 with Wise, fee S$9.80, rate 12,166 IDR per SGD, arriving by Mon 28 Sep (as of 10:40)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "S$2,000 to Mum",
+            "subtitle": "Wise and DBS Remit"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Getting 2 quotes",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b19"
+              }
+            }
+          ],
+          "fallback_text": "Getting quotes for S$2,000 to Jakarta."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "S$2,000 to Mum",
+            "subtitle": "Rate 12,140 · as of 08:15 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "Rp24,261,200",
+                  "label": "Mum gets"
+                },
+                {
+                  "value": "S$9.80",
+                  "label": "Fee"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Wise quote, 26 Sep 2026 08:15"
+              }
+            ]
+          },
+          "fallback_text": "At 08:15 Mum would have got Rp24,261,200 for S$2,000, fee S$9.80, at 12,140. Couldn’t refresh the quote."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get a quote",
+            "subtitle": "S$2,000 to Mum · Wise"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Wise didn’t respond. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn’t get a quote: Wise didn’t respond. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "money-spending-zh",
+      "vertical": "money",
+      "kind": "card",
+      "request": "上个月我哪方面花钱最多？",
+      "says": "餐饮最多，占了四分之一以上。",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "F7 Spending summary",
+        "X1 Headline number"
+      ],
+      "rationale": "Asked in Chinese, answered in Chinese: shares largest first in unspaced CJK, adding up to the total spent.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "8月支出",
+          "subtitle": "8月1日至31日 · 所有账户"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$720",
+                "label": "剩余（预算 S$5,000）"
+              },
+              {
+                "value": "S$4,280",
+                "label": "已支出"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "餐饮",
+                "secondary": "27%",
+                "trailing": "S$1,160"
+              },
+              {
+                "label": "其他",
+                "secondary": "25%",
+                "trailing": "S$1,080"
+              },
+              {
+                "label": "超市日用品和生鲜食品",
+                "secondary": "20%",
+                "trailing": "S$840"
+              },
+              {
+                "label": "交通",
+                "secondary": "14%",
+                "trailing": "S$610"
+              },
+              {
+                "label": "购物",
+                "secondary": "14%",
+                "trailing": "S$590"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "关联账户，2026年9月1日同步"
+            }
+          ],
+          "assumptions": [
+            "不含本人账户之间的转账。"
+          ]
+        },
+        "more_label": "查看全部类别",
+        "fallback_text": "8月共支出 S$4,280，比预算 S$5,000 少 S$720。餐饮 S$1,160（27%），其他 S$1,080（25%），超市日用品和生鲜食品 S$840（20%），交通 S$610（14%），购物 S$590（14%）。"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "8月支出",
+            "subtitle": "所有账户"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "正在读取4个账户",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b1a"
+              }
+            }
+          ],
+          "fallback_text": "正在读取4个账户的8月支出。"
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "8月没有支出记录",
+            "subtitle": "8月1日至31日 · 所有账户"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "4个账户都没有新的交易"
+            }
+          ],
+          "fallback_text": "8月没有支出记录：4个账户都没有新的交易。"
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "无法读取8月支出",
+            "subtitle": "所有账户"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "星展银行没有回应，未做任何更改。"
+            }
+          ],
+          "fallback_text": "无法读取8月支出: 星展银行没有回应，未做任何更改。"
         }
       }
     }
