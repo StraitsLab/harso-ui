@@ -104,8 +104,10 @@
     "home-listing-card",
     "home-rent-listings",
     "empty-search",
+    "home-open-houses",
     "jobs-results",
     "jobs-posting",
+    "jobs-remote-results",
     "travel-flights",
     "travel-stay-areas",
     "travel-hotel-detail",
@@ -8537,7 +8539,257 @@
             "Best value is asking price per square metre."
           ]
         },
-        "fallback_text": "7 three-room HDB flats in Tampines under S$600k near MRT: Blk 824 St 81 S$548k, 67 sqm (best value); Blk 201 St 21 S$575k; Blk 457 St 42 S$560k; Blk 866 St 83 S$585k; Blk 115 St 11 S$538k; Blk 395 Ave 7 S$559k; Blk 881 St 84 S$592k."
+        "fallback_text": "Seven 3-room HDB flats in Tampines under S$600k within 10 min of an MRT, as of 09:30: Blk 824 Tampines St 81, 67 sqm, 6 min to Tampines MRT, S$548k (best value per sqm); Blk 201 St 21, 68 sqm, 8 min to Tampines MRT, S$575k; Blk 457 St 42, 65 sqm, 9 min to Tampines East, S$560k; Blk 866 St 83, 67 sqm, 7 min to Tampines MRT, S$585k; Blk 115 St 11, 64 sqm, 10 min to Tampines MRT, S$538k; Blk 395 Ave 7, 66 sqm, 9 min to Tampines West, S$559k; Blk 881 St 84, 65 sqm, 8 min to Tampines West, S$592k."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3-room HDB in Tampines",
+            "subtitle": "Under S$600k · ≤10 min to MRT"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking PropertyGuru and the HDB Flat Portal",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b01"
+              }
+            }
+          ],
+          "fallback_text": "Checking PropertyGuru and the HDB Flat Portal for 3-room HDB flats in Tampines under S$600k within 10 min of an MRT."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3-room HDB in Tampines",
+            "subtitle": "1 of 2 portals checked · as of 09:30"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "t81",
+                    "label": "Blk 824 Tampines St 81",
+                    "lat": "1.3496",
+                    "lon": "103.9368"
+                  },
+                  {
+                    "id": "t45",
+                    "label": "Blk 457 Tampines St 42",
+                    "lat": "1.3589",
+                    "lon": "103.9542"
+                  },
+                  {
+                    "id": "t11",
+                    "label": "Blk 115 Tampines St 11",
+                    "lat": "1.3470",
+                    "lon": "103.9470"
+                  },
+                  {
+                    "id": "t34",
+                    "label": "Blk 395 Tampines Ave 7",
+                    "lat": "1.3575",
+                    "lon": "103.9392"
+                  }
+                ],
+                "selected_place_id": "t81"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Blk 824 Tampines St 81",
+                  "secondary": "67 sqm · 6 min to Tampines MRT",
+                  "trailing": "S$548k",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Blk 457 Tampines St 42",
+                  "secondary": "65 sqm · 9 min to Tampines East",
+                  "trailing": "S$560k"
+                },
+                {
+                  "label": "Blk 115 Tampines St 11",
+                  "secondary": "64 sqm · 10 min to Tampines MRT",
+                  "trailing": "S$538k"
+                },
+                {
+                  "label": "Blk 395 Tampines Ave 7",
+                  "secondary": "66 sqm · 9 min to Tampines West",
+                  "trailing": "S$559k"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listings, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "3-room HDB flats in Tampines under S$600k within 10 min of an MRT, 1 of 2 portals checked, as of 09:30: PropertyGuru only; the HDB Flat Portal hasn't answered yet. Blk 824 Tampines St 81, 67 sqm, 6 min to Tampines MRT, S$548k (best value per sqm); Blk 457 St 42, 65 sqm, 9 min to Tampines East, S$560k; Blk 115 St 11, 64 sqm, 10 min to Tampines MRT, S$538k; Blk 395 Ave 7, 66 sqm, 9 min to Tampines West, S$559k."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3-room HDB in Tampines",
+            "subtitle": "As of 09:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "t81",
+                    "label": "Blk 824 Tampines St 81",
+                    "lat": "1.3496",
+                    "lon": "103.9368"
+                  },
+                  {
+                    "id": "t24",
+                    "label": "Blk 201 Tampines St 21",
+                    "lat": "1.3561",
+                    "lon": "103.9489"
+                  },
+                  {
+                    "id": "t45",
+                    "label": "Blk 457 Tampines St 42",
+                    "lat": "1.3589",
+                    "lon": "103.9542"
+                  },
+                  {
+                    "id": "t83",
+                    "label": "Blk 866 Tampines St 83",
+                    "lat": "1.3530",
+                    "lon": "103.9330"
+                  },
+                  {
+                    "id": "t11",
+                    "label": "Blk 115 Tampines St 11",
+                    "lat": "1.3470",
+                    "lon": "103.9470"
+                  },
+                  {
+                    "id": "t34",
+                    "label": "Blk 395 Tampines Ave 7",
+                    "lat": "1.3575",
+                    "lon": "103.9392"
+                  },
+                  {
+                    "id": "t86",
+                    "label": "Blk 881 Tampines St 84",
+                    "lat": "1.3540",
+                    "lon": "103.9310"
+                  }
+                ],
+                "selected_place_id": "t81"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Blk 824 Tampines St 81",
+                  "secondary": "67 sqm · 6 min to Tampines MRT",
+                  "trailing": "S$548k",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Blk 201 Tampines St 21",
+                  "secondary": "68 sqm · 8 min to Tampines MRT",
+                  "trailing": "S$575k"
+                },
+                {
+                  "label": "Blk 457 Tampines St 42",
+                  "secondary": "65 sqm · 9 min to Tampines East",
+                  "trailing": "S$560k"
+                },
+                {
+                  "label": "Blk 866 Tampines St 83",
+                  "secondary": "67 sqm · 7 min to Tampines MRT",
+                  "trailing": "S$585k"
+                },
+                {
+                  "label": "Blk 115 Tampines St 11",
+                  "secondary": "64 sqm · 10 min to Tampines MRT",
+                  "trailing": "S$538k"
+                },
+                {
+                  "label": "Blk 395 Tampines Ave 7",
+                  "secondary": "66 sqm · 9 min to Tampines West",
+                  "trailing": "S$559k"
+                },
+                {
+                  "label": "Blk 881 Tampines St 84",
+                  "secondary": "65 sqm · 8 min to Tampines West",
+                  "trailing": "S$592k"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru and HDB Flat Portal listings, 26 Sep 2026 09:30"
+              }
+            ],
+            "assumptions": [
+              "Best value is asking price per square metre."
+            ]
+          },
+          "fallback_text": "As of 09:30 (couldn't refresh): seven 3-room HDB flats in Tampines under S$600k within 10 min of an MRT: Blk 824 Tampines St 81, 67 sqm, 6 min to Tampines MRT, S$548k (best value per sqm); Blk 201 St 21, 68 sqm, 8 min to Tampines MRT, S$575k; Blk 457 St 42, 65 sqm, 9 min to Tampines East, S$560k; Blk 866 St 83, 67 sqm, 7 min to Tampines MRT, S$585k; Blk 115 St 11, 64 sqm, 10 min to Tampines MRT, S$538k; Blk 395 Ave 7, 66 sqm, 9 min to Tampines West, S$559k; Blk 881 St 84, 65 sqm, 8 min to Tampines West, S$592k."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 3-room HDB in Tampines under S$600k",
+            "subtitle": "≤10 min to MRT · as of 09:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Cheapest near an MRT now is S$612k"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru and HDB Flat Portal listings, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "No 3-room HDB flats in Tampines under S$600k within 10 min of an MRT, as of 09:30. The cheapest near an MRT is S$612k."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search Tampines",
+            "subtitle": "Under S$600k · ≤10 min to MRT"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "PropertyGuru and the HDB Flat Portal didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't search for 3-room HDB flats in Tampines under S$600k within 10 min of an MRT: PropertyGuru and the HDB Flat Portal didn't answer."
+        }
       }
     },
     {
@@ -8598,7 +8850,154 @@
             }
           ]
         },
-        "fallback_text": "Blk 824 Tampines St 81, 3-room, 67 sqm, 9th floor, 1998 lease: asking S$548k (S$8,179 per sqm)."
+        "fallback_text": "Blk 824 Tampines St 81, 3-room, 67 sqm, 9th floor (#09), 1998 lease, as of 09:30: asking S$548k, S$8,179 per sqm. The photo shows the living room: bright, parquet floor."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 Tampines St 81",
+            "subtitle": "3-room · 67 sqm"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Opening the listing",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b02"
+              }
+            }
+          ],
+          "fallback_text": "Opening the listing for Blk 824 Tampines St 81, 3-room, 67 sqm."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 Tampines St 81",
+            "subtitle": "3-room · 67 sqm · photos not loaded yet · as of 09:30"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$548k",
+                  "label": "Asking"
+                },
+                {
+                  "value": "S$8,179",
+                  "label": "Per sqm"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "View listing",
+                "url": "https://www.propertyguru.com.sg/listing/24519877"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24519877, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "Blk 824 Tampines St 81, 3-room, 67 sqm, 9th floor, 1998 lease, as of 09:30: asking S$548k, S$8,179 per sqm. Photos not loaded yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 Tampines St 81",
+            "subtitle": "As of 09:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
+                "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor",
+                "aspect": "4:3"
+              }
+            },
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$548k",
+                  "label": "Asking"
+                },
+                {
+                  "value": "S$8,179",
+                  "label": "Per sqm"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "View listing",
+                "url": "https://www.propertyguru.com.sg/listing/24519877"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24519877, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:30 (couldn't refresh): Blk 824 Tampines St 81, 3-room, 67 sqm, 9th floor (#09), 1998 lease: asking S$548k, S$8,179 per sqm. The photo shows the living room: bright, parquet floor."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 is no longer listed",
+            "subtitle": "3-room · 67 sqm · as of 11:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The seller's agent removed it this morning"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24519877, 26 Sep 2026 11:05"
+              }
+            ]
+          },
+          "fallback_text": "Blk 824 Tampines St 81 (3-room, 67 sqm) is no longer listed, as of 11:05: the seller's agent removed it this morning."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't open the Blk 824 listing",
+            "subtitle": "3-room · 67 sqm"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "PropertyGuru didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't open the listing for Blk 824 Tampines St 81, 3-room, 67 sqm: PropertyGuru didn't answer."
+        }
       }
     },
     {
@@ -8646,7 +9045,106 @@
             "An estimate from recent sales, not a valuation."
           ]
         },
-        "fallback_text": "Your 2-bed, 818 sqft unit at The Trilinq is worth about S$1.18M (S$1,443 psf); recent sales S$1.12–1.24M."
+        "fallback_text": "Your 2-bed, 818 sqft unit at The Trilinq is worth about S$1.18M (S$1,443 per sqft); recent sales ran S$1.12–1.24M."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · 2 bed · 818 sqft",
+            "subtitle": "Estimate from recent sales"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 6 months of URA sales",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b03"
+              }
+            }
+          ],
+          "fallback_text": "Reading 6 months of URA sales to estimate your 2-bed, 818 sqft unit at The Trilinq."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · 2 bed · 818 sqft",
+            "subtitle": "Recent sales S$1.12–1.24M · as of 09:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$1.18M",
+                  "label": "Estimate"
+                },
+                {
+                  "value": "S$1,443",
+                  "label": "Per sqft"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "URA caveats, last 6 months, read 26 Sep 2026 09:40",
+                "url": "https://www.ura.gov.sg/property-market-information/pmiResidentialTransactionSearch"
+              }
+            ],
+            "disclaimers": [
+              "An estimate from recent sales, not a valuation."
+            ]
+          },
+          "fallback_text": "As of 09:40 (couldn't refresh URA's sales search), the last good estimate: your 2-bed, 818 sqft unit at The Trilinq was worth about S$1.18M (S$1,443 per sqft); recent sales ran S$1.12–1.24M. Newer sales may have moved it since."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Too few recent sales to estimate",
+            "subtitle": "The Trilinq · 2 bed · last 6 months"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Only 1 two-bed sale since March"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "URA caveats, last 6 months",
+                "url": "https://www.ura.gov.sg/property-market-information/pmiResidentialTransactionSearch"
+              }
+            ],
+            "disclaimers": [
+              "An estimate from recent sales, not a valuation."
+            ]
+          },
+          "fallback_text": "Too few recent sales to estimate your 2-bed at The Trilinq: only 1 two-bed sale since March, in the last 6 months."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't estimate your condo's value",
+            "subtitle": "2 bed · 818 sqft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "URA's sales search didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't estimate your 2-bed, 818 sqft condo at The Trilinq: URA's sales search didn't answer."
+        }
       }
     },
     {
@@ -8692,14 +9190,14 @@
             "A guide, not a loan approval."
           ]
         },
-        "fallback_text": "On S$14,000 a month you can afford up to about S$1.17M, with a monthly payment around S$4,200."
+        "fallback_text": "On a household income of S$14,000 a month you can afford a home up to about S$1.17M, with a monthly payment around S$4,200."
       }
     },
     {
       "id": "home-rent-listings",
       "vertical": "real_estate",
       "kind": "card",
-      "request": "Any 1-bedroom rentals near Outram under S$3,500?",
+      "request": "Any 1-bedroom rentals near Outram under S$3,500 from October?",
       "says": "Three are available from October.",
       "surface": "inline",
       "fresh": true,
@@ -8720,18 +9218,18 @@
             "items": [
               {
                 "label": "The Clift",
-                "secondary": "1 bed · 49 sqm · from 1 Oct",
+                "secondary": "49 sqm · from 1 Oct",
                 "trailing": "S$3,300",
                 "mark": "pick"
               },
               {
                 "label": "Spottiswoode 18",
-                "secondary": "1 bed · 45 sqm · from 15 Oct",
+                "secondary": "45 sqm · from 15 Oct",
                 "trailing": "S$3,450"
               },
               {
                 "label": "Pinnacle@Duxton",
-                "secondary": "1 bed · 50 sqm · from 1 Oct",
+                "secondary": "50 sqm · from 1 Oct",
                 "trailing": "S$3,400"
               }
             ]
@@ -8740,11 +9238,144 @@
         "details": {
           "sources": [
             {
-              "label": "99.co rental listings, 26 Sep 2026 09:40"
+              "label": "99.co and PropertyGuru rental listings, 26 Sep 2026 09:40"
             }
           ]
         },
-        "fallback_text": "1-bed rentals near Outram under S$3,500: The Clift S$3,300 from 1 Oct (pick); Spottiswoode 18 S$3,450 from 15 Oct; Pinnacle@Duxton S$3,400 from 1 Oct."
+        "fallback_text": "1-bed rentals near Outram under S$3,500 from October, as of 09:40: The Clift, 49 sqm, from 1 Oct, S$3,300 a month (pick); Spottiswoode 18, 45 sqm, from 15 Oct, S$3,450 a month; Pinnacle@Duxton, 50 sqm, from 1 Oct, S$3,400 a month."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1-bed rentals near Outram",
+            "subtitle": "Under S$3,500 · from October"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 99.co and PropertyGuru",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b04"
+              }
+            }
+          ],
+          "fallback_text": "Checking 99.co and PropertyGuru for 1-bed rentals near Outram under S$3,500 from October."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1-bed rentals near Outram",
+            "subtitle": "1 of 2 sites checked · as of 09:40"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Clift",
+                  "secondary": "49 sqm · from 1 Oct",
+                  "trailing": "S$3,300",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Pinnacle@Duxton",
+                  "secondary": "50 sqm · from 1 Oct",
+                  "trailing": "S$3,400"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "99.co rental listings, 26 Sep 2026 09:40"
+              }
+            ]
+          },
+          "fallback_text": "1-bed rentals near Outram under S$3,500 from October, 1 of 2 sites checked, as of 09:40: 99.co only; PropertyGuru hasn't answered yet. The Clift, 49 sqm, from 1 Oct, S$3,300 a month (pick); Pinnacle@Duxton, 50 sqm, from 1 Oct, S$3,400 a month."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1-bed rentals near Outram",
+            "subtitle": "As of 09:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Clift",
+                  "secondary": "49 sqm · from 1 Oct",
+                  "trailing": "S$3,300",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Spottiswoode 18",
+                  "secondary": "45 sqm · from 15 Oct",
+                  "trailing": "S$3,450"
+                },
+                {
+                  "label": "Pinnacle@Duxton",
+                  "secondary": "50 sqm · from 1 Oct",
+                  "trailing": "S$3,400"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "99.co and PropertyGuru rental listings, 26 Sep 2026 09:40"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:40 (couldn't refresh): 1-bed rentals near Outram under S$3,500 from October: The Clift, 49 sqm, from 1 Oct, S$3,300 a month (pick); Spottiswoode 18, 45 sqm, from 15 Oct, S$3,450 a month; Pinnacle@Duxton, 50 sqm, from 1 Oct, S$3,400 a month."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 1-bed near Outram under S$3,500",
+            "subtitle": "As of 09:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Cheapest listed now is S$3,650"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "99.co and PropertyGuru rental listings, 26 Sep 2026 09:40"
+              }
+            ]
+          },
+          "fallback_text": "No 1-bed rentals near Outram under S$3,500 from October, as of 09:40. The cheapest listed is S$3,650 a month."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search Outram rentals",
+            "subtitle": "Under S$3,500 · from October"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "99.co and PropertyGuru didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't search for 1-bed rentals near Outram under S$3,500 from October: 99.co and PropertyGuru didn't answer."
+        }
       }
     },
     {
@@ -8793,7 +9424,96 @@
             }
           ]
         },
-        "fallback_text": "Viewing at The Clift, 21 McCallum Street, on Sun 27 Sep at 11:00 with Jasmine Tan (ERA, 9123 4567)."
+        "fallback_text": "Your viewing at The Clift, 21 McCallum Street, is Sun 27 Sep at 11:00 with agent Jasmine Tan (ERA, 9123 4567). Directions are on the card."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your viewing at The Clift",
+            "subtitle": "Reading your calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Looking for the invite in your calendar",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b05"
+              }
+            }
+          ],
+          "fallback_text": "Looking for your viewing at The Clift in your calendar."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Viewing Sun 27 Sep · 11:00",
+            "subtitle": "The Clift · as of 08:10 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Agent",
+                  "secondary": "Jasmine Tan · ERA",
+                  "trailing": "9123 4567"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Directions",
+                "url": "https://maps.apple.com/?q=21+McCallum+Street+Singapore"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Calendar invite from Jasmine Tan, read 26 Sep 2026 08:10"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:10 (couldn't refresh your calendar): your viewing at The Clift, 21 McCallum Street, is Sun 27 Sep at 11:00 with agent Jasmine Tan (ERA, 9123 4567). Check with her before you go."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No viewing at The Clift in your calendar",
+            "subtitle": "Next 30 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Jasmine Tan's last message was on 24 Sep"
+            }
+          ],
+          "fallback_text": "No viewing at The Clift in your calendar for the next 30 days. Jasmine Tan's last message was on 24 Sep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your calendar",
+            "subtitle": "Your viewing at The Clift"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The calendar connection has expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't look up your viewing at The Clift: the calendar connection has expired. Nothing was changed."
+        }
       }
     },
     {
@@ -8839,7 +9559,44 @@
             "Starts at a 25% down payment, 3.0% mortgage rate and 3% yearly rent rise; change them on the page."
           ]
         },
-        "fallback_text": "A rent vs buy calculator (price, rent, years, break-even) is saved as a page in your Library; download it and open it in your browser."
+        "fallback_text": "A rent vs buy calculator is saved as an interactive HTML page in your Library: sliders for price, rent and years, with a break-even chart. Download it and open it in your browser."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Rent vs buy calculator",
+            "subtitle": "Interactive page · HTML"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Building the page",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b06"
+              }
+            }
+          ],
+          "fallback_text": "Building a rent vs buy calculator page."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't build the calculator",
+            "subtitle": "Interactive page · HTML"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The page failed its own test. Nothing was saved to Library."
+            }
+          ],
+          "fallback_text": "Couldn't build the calculator: the page failed its own test. Nothing was saved to Library."
+        }
       }
     },
     {
@@ -8859,7 +9616,7 @@
         "major": 1,
         "header": {
           "title": "No 3-room HDB in Bishan under S$500k",
-          "subtitle": "As of 10:50 · PropertyGuru and 99.co"
+          "subtitle": "As of 10:50"
         },
         "blocks": [
           {
@@ -8875,7 +9632,90 @@
             }
           ]
         },
-        "fallback_text": "No 3-room HDB flats in Bishan under S$500k right now; the cheapest listed is S$588k."
+        "fallback_text": "No 3-room HDB flats in Bishan under S$500k, as of 10:50; the cheapest listed now is S$588k."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3-room HDB in Bishan",
+            "subtitle": "Under S$500k"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking PropertyGuru and 99.co",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b07"
+              }
+            }
+          ],
+          "fallback_text": "Checking PropertyGuru and 99.co for 3-room HDB flats in Bishan under S$500k."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 3-room HDB in Bishan under S$500k so far",
+            "subtitle": "1 of 2 sites checked · as of 10:50"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "PropertyGuru's cheapest is S$588k; 99.co hasn't answered yet"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru, 26 Sep 2026 10:50"
+              }
+            ]
+          },
+          "fallback_text": "No 3-room HDB flats in Bishan under S$500k so far (1 of 2 sites checked), as of 10:50: PropertyGuru's cheapest is S$588k; 99.co hasn't answered yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 3-room HDB in Bishan under S$500k",
+            "subtitle": "As of 10:50 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The cheapest listed then was S$588k"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru and 99.co, 26 Sep 2026 10:50"
+              }
+            ]
+          },
+          "fallback_text": "As of 10:50 (couldn't refresh): no 3-room HDB flats in Bishan under S$500k; the cheapest listed then was S$588k."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search Bishan",
+            "subtitle": "Under S$500k"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "PropertyGuru and 99.co didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't search for 3-room HDB flats in Bishan under S$500k: PropertyGuru and 99.co didn't answer."
+        }
       }
     },
     {
@@ -8927,7 +9767,68 @@
             }
           ]
         },
-        "fallback_text": "Blk 824 Tampines St 81 3-room resales: S$542k (Aug 2026), S$515k (Jan 2026), S$485k (Sep 2024)."
+        "fallback_text": "3-room resales in Blk 824 Tampines St 81 in the last 2 years: unit on #11, 67 sqm, Aug 2026, S$542k; unit on #05, 67 sqm, Jan 2026, S$515k; unit on #08, 67 sqm, Sep 2024, S$485k."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 Tampines St 81",
+            "subtitle": "3-room resale · last 2 years"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading HDB resale records",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b08"
+              }
+            }
+          ],
+          "fallback_text": "Reading HDB resale records for 3-room resales in Blk 824 Tampines St 81 over the last 2 years."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 3-room resales in Blk 824",
+            "subtitle": "Last 2 years"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The nearest sale was Blk 826, S$531k in Jul 2026"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "HDB resale transactions",
+                "url": "https://services2.hdb.gov.sg/webapp/BB33RTIS/"
+              }
+            ]
+          },
+          "fallback_text": "No 3-room resales in Blk 824 Tampines St 81 in the last 2 years. The nearest was Blk 826, S$531k in Jul 2026."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read Blk 824's sales",
+            "subtitle": "3-room resale · last 2 years"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "HDB's resale search didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't read 3-room resales in Blk 824 Tampines St 81 for the last 2 years: HDB's resale search didn't answer."
+        }
       }
     },
     {
@@ -9001,7 +9902,183 @@
             }
           ]
         },
-        "fallback_text": "The Trilinq: 99-year lease from 2013, completed 2017, pool, gym and tennis, 12 min to Clementi MRT, maintenance S$380 a month."
+        "fallback_text": "The Trilinq, Clementi, 755 units: tenure 99-year from 2013; completed 2017; facilities pool, gym and tennis; nearest MRT Clementi, 12 min; maintenance S$380 a month."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · facts",
+            "subtitle": "Condo in Clementi"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading URA and the project page",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b09"
+              }
+            }
+          ],
+          "fallback_text": "Reading URA and the project page for the facts on The Trilinq, a condo in Clementi."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · facts",
+            "subtitle": "Clementi · 4 of 5 facts found · maintenance fee not published"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Fact"
+                },
+                {
+                  "label": "Detail"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Tenure",
+                    "99-year from 2013"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Completed",
+                    "2017"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Facilities",
+                    "Pool, gym, tennis"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Nearest MRT",
+                    "Clementi · 12 min"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "URA and PropertyGuru project page, Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "The Trilinq, Clementi, 4 of 5 facts found: tenure 99-year from 2013; completed 2017; facilities pool, gym and tennis; nearest MRT Clementi, 12 min. The maintenance fee is not published."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · facts",
+            "subtitle": "Clementi · 755 units · as of 09:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Fact"
+                },
+                {
+                  "label": "Detail"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Tenure",
+                    "99-year from 2013"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Completed",
+                    "2017"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Facilities",
+                    "Pool, gym, tennis"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Nearest MRT",
+                    "Clementi · 12 min"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Maintenance",
+                    "S$380 a month"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "URA and PropertyGuru project page, read 26 Sep 2026 09:40"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:40 (couldn't refresh the project page), the last good facts: The Trilinq, Clementi, 755 units: tenure 99-year from 2013; completed 2017; facilities pool, gym and tennis; nearest MRT Clementi, 12 min; maintenance S$380 a month, which may have changed since."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No project record for The Trilinq",
+            "subtitle": "Condo in Clementi"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "URA and PropertyGuru have no project under that name; check the spelling"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "URA and PropertyGuru project search, Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "No project record for The Trilinq, a condo in Clementi: URA and PropertyGuru have no project under that name. Check the spelling."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read The Trilinq's facts",
+            "subtitle": "Condo in Clementi"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "URA and PropertyGuru didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't read the facts on The Trilinq, a condo in Clementi: URA and PropertyGuru didn't answer."
+        }
       }
     },
     {
@@ -9051,14 +10128,282 @@
             "Distance is measured as the P1 registration rule measures it."
           ]
         },
-        "fallback_text": "Primary schools within 1 km of Blk 824 Tampines St 81: Tampines North Primary 0.4 km, St Hilda's Primary 0.9 km."
+        "fallback_text": "Primary schools within 1 km of Blk 824 Tampines St 81: Tampines North Primary, co-ed, 0.4 km; St Hilda's Primary, co-ed, SAP, 0.9 km."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Primary schools within 1 km",
+            "subtitle": "From Blk 824 Tampines St 81"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Measuring distances on OneMap",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b0a"
+              }
+            }
+          ],
+          "fallback_text": "Measuring distances on OneMap to primary schools within 1 km of Blk 824 Tampines St 81."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No primary school within 1 km",
+            "subtitle": "From Blk 824 Tampines St 81"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The nearest is Tampines Primary at 1.3 km"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "OneMap school query",
+                "url": "https://www.onemap.gov.sg/"
+              }
+            ],
+            "assumptions": [
+              "Distance is measured as the P1 registration rule measures it."
+            ]
+          },
+          "fallback_text": "No primary school within 1 km of Blk 824 Tampines St 81. The nearest is Tampines Primary at 1.3 km."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't measure school distances",
+            "subtitle": "From Blk 824 Tampines St 81"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "OneMap didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't measure distances to primary schools within 1 km of Blk 824 Tampines St 81: OneMap didn't answer."
+        }
+      }
+    },
+    {
+      "id": "home-monthly-cost",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What would Blk 824 cost me each month?",
+      "says": "The loan is most of it; the town council fee and tax are small.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R7 Monthly cost / mortgage"
+      ],
+      "rationale": "The monthly total is the title; the three lines that make it up are the rows and add up to it; loan terms go to Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "S$1,943 a month",
+          "subtitle": "Blk 824 Tampines St 81 · at S$548k asking"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Loan repayment",
+                "secondary": "HDB loan · 25 years",
+                "trailing": "S$1,865"
+              },
+              {
+                "label": "Service and conservancy",
+                "secondary": "Tampines Town Council",
+                "trailing": "S$70"
+              },
+              {
+                "label": "Property tax",
+                "secondary": "Owner-occupied",
+                "trailing": "S$8"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "75% HDB loan of S$411,000 at 2.6% over 25 years; S$137,000 down in cash or CPF.",
+            "Property tax on an annual value of S$14,400 at owner-occupier rates."
+          ],
+          "disclaimers": [
+            "A guide, not a loan offer."
+          ]
+        },
+        "fallback_text": "Blk 824 Tampines St 81 at S$548k asking: about S$1,943 a month. Loan repayment S$1,865 (HDB loan, 25 years); service and conservancy S$70 (Tampines Town Council); property tax S$8 (owner-occupied). S$137,000 down in cash or CPF."
+      }
+    },
+    {
+      "id": "home-open-houses",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Any condo open houses near Clementi this weekend?",
+      "says": "Three; the Sunday one at The Trilinq is closest to the MRT.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R10 Viewing / open house"
+      ],
+      "rationale": "Each open house is a row: project, when and walk time, asking from; booking a slot is a question after the card, never a button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Condo open houses near Clementi",
+          "subtitle": "Sat 26–Sun 27 Sep · as of 10:15"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "The Trilinq",
+                "secondary": "Sun 27 Sep · 10:00–13:00 · 12 min to MRT",
+                "trailing": "from S$1.15M",
+                "mark": "pick"
+              },
+              {
+                "label": "Clement Canopy",
+                "secondary": "Sat 26 Sep · 14:00–17:00 · 15 min to MRT",
+                "trailing": "from S$1.32M"
+              },
+              {
+                "label": "Parc Clematis",
+                "secondary": "Sun 27 Sep · 14:00–16:00 · 18 min to MRT",
+                "trailing": "from S$1.48M"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru open house listings, 26 Sep 2026 10:15"
+            }
+          ]
+        },
+        "fallback_text": "Condo open houses near Clementi this weekend, Sat 26–Sun 27 Sep, as of 10:15: The Trilinq, Sun 27 Sep, 10:00–13:00, 12 min to MRT, from S$1.15M (closest to the MRT); Clement Canopy, Sat 26 Sep, 14:00–17:00, 15 min to MRT, from S$1.32M; Parc Clematis, Sun 27 Sep, 14:00–16:00, 18 min to MRT, from S$1.48M."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Condo open houses near Clementi",
+            "subtitle": "Sat 26–Sun 27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking open house listings",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b0b"
+              }
+            }
+          ],
+          "fallback_text": "Checking open house listings for condos near Clementi this weekend, Sat 26–Sun 27 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Condo open houses near Clementi",
+            "subtitle": "As of 10:15 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Trilinq",
+                  "secondary": "Sun 27 Sep · 10:00–13:00 · 12 min to MRT",
+                  "trailing": "from S$1.15M",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Clement Canopy",
+                  "secondary": "Sat 26 Sep · 14:00–17:00 · 15 min to MRT",
+                  "trailing": "from S$1.32M"
+                },
+                {
+                  "label": "Parc Clematis",
+                  "secondary": "Sun 27 Sep · 14:00–16:00 · 18 min to MRT",
+                  "trailing": "from S$1.48M"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru open house listings, 26 Sep 2026 10:15"
+              }
+            ]
+          },
+          "fallback_text": "As of 10:15 (couldn't refresh): Condo open houses near Clementi this weekend, Sat 26–Sun 27 Sep: The Trilinq, Sun 27 Sep, 10:00–13:00, 12 min to MRT, from S$1.15M (closest to the MRT); Clement Canopy, Sat 26 Sep, 14:00–17:00, 15 min to MRT, from S$1.32M; Parc Clematis, Sun 27 Sep, 14:00–16:00, 18 min to MRT, from S$1.48M."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No condo open houses near Clementi",
+            "subtitle": "Sat 26–Sun 27 Sep · as of 10:15"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The next one is The Trilinq on Sat 3 Oct"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru open house listings, 26 Sep 2026 10:15"
+              }
+            ]
+          },
+          "fallback_text": "No condo open houses near Clementi this weekend, Sat 26–Sun 27 Sep, as of 10:15. The next one is The Trilinq on Sat 3 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check open houses",
+            "subtitle": "Sat 26–Sun 27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "PropertyGuru didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't check condo open houses near Clementi for Sat 26–Sun 27 Sep: PropertyGuru didn't answer."
+        }
       }
     },
     {
       "id": "jobs-results",
       "vertical": "jobs",
       "kind": "card",
-      "request": "Find product design lead roles in Singapore.",
+      "request": "Find product design lead roles in Singapore posted this week.",
       "says": "Three strong matches; Grab pays the most.",
       "surface": "inline",
       "fresh": true,
@@ -9103,7 +10448,140 @@
             }
           ]
         },
-        "fallback_text": "Product design lead roles in Singapore: Grab Lead Product Designer S$11–14k (pick); Wise Design Lead S$10–13k; Shopee Principal Designer S$9–12k."
+        "fallback_text": "Product design lead roles in Singapore posted this week, as of 08:30: Lead Product Designer, Grab, hybrid, posted 2 days ago, S$11–14k a month (pick); Design Lead, Payments, Wise, hybrid, posted 4 days ago, S$10–13k a month; Principal Designer, Shopee, on-site, posted 5 days ago, S$9–12k a month."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Product design lead roles",
+            "subtitle": "Singapore · posted this week"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking LinkedIn and MyCareersFuture",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b20"
+              }
+            }
+          ],
+          "fallback_text": "Checking LinkedIn and MyCareersFuture for product design lead roles in Singapore posted this week."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Product design lead roles",
+            "subtitle": "1 of 2 sites checked · as of 08:30"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Lead Product Designer",
+                  "secondary": "Grab · Hybrid · 2 days ago",
+                  "trailing": "S$11–14k/mo",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Design Lead, Payments",
+                  "secondary": "Wise · Hybrid · 4 days ago",
+                  "trailing": "S$10–13k/mo"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn, 26 Sep 2026 08:30"
+              }
+            ]
+          },
+          "fallback_text": "Product design lead roles in Singapore posted this week, 1 of 2 sites checked, as of 08:30: LinkedIn only; MyCareersFuture hasn't answered yet. Lead Product Designer, Grab, hybrid, posted 2 days ago, S$11–14k a month (pick); Design Lead, Payments, Wise, hybrid, posted 4 days ago, S$10–13k a month."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Product design lead roles",
+            "subtitle": "Singapore · as of 08:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Lead Product Designer",
+                  "secondary": "Grab · Hybrid · 2 days ago",
+                  "trailing": "S$11–14k/mo",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Design Lead, Payments",
+                  "secondary": "Wise · Hybrid · 4 days ago",
+                  "trailing": "S$10–13k/mo"
+                },
+                {
+                  "label": "Principal Designer",
+                  "secondary": "Shopee · On-site · 5 days ago",
+                  "trailing": "S$9–12k/mo"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn and MyCareersFuture, 26 Sep 2026 08:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:30 (couldn't refresh): Product design lead roles in Singapore posted this week: Lead Product Designer, Grab, hybrid, posted 2 days ago, S$11–14k a month (pick); Design Lead, Payments, Wise, hybrid, posted 4 days ago, S$10–13k a month; Principal Designer, Shopee, on-site, posted 5 days ago, S$9–12k a month."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No design lead roles this week",
+            "subtitle": "Singapore · as of 08:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The last one was posted on 17 Sep"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn and MyCareersFuture, 26 Sep 2026 08:30"
+              }
+            ]
+          },
+          "fallback_text": "No product design lead roles in Singapore posted this week, as of 08:30. The last one was posted on 17 Sep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search design lead roles",
+            "subtitle": "Singapore · posted this week"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "LinkedIn and MyCareersFuture didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't search for product design lead roles in Singapore posted this week: LinkedIn and MyCareersFuture didn't answer."
+        }
       }
     },
     {
@@ -9177,7 +10655,127 @@
             }
           ]
         },
-        "fallback_text": "Grab Lead Product Designer, hybrid Singapore, S$11–14k a month, apply by 10 Oct. You match on experience and fintech; Bahasa is a plus you lack."
+        "fallback_text": "As of 08:30: Lead Product Designer at Grab, hybrid, Singapore, full-time: S$11–14k a month, apply by 10 Oct. You'd lead design for GrabPay checkout, manage four designers and own the payments design system. You match on 8 years, fintech and team lead; the gap is Bahasa Indonesia, listed as a plus."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lead Product Designer · Grab",
+            "subtitle": "Hybrid · Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the posting",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b21"
+              }
+            }
+          ],
+          "fallback_text": "Reading the posting for Lead Product Designer at Grab, hybrid, Singapore."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lead Product Designer · Grab",
+            "subtitle": "Hybrid · Singapore · as of 08:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$11–14k",
+                  "label": "Monthly"
+                },
+                {
+                  "value": "10 Oct",
+                  "label": "Apply by"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "What you'd do",
+                  "bullets": [
+                    "Lead design for GrabPay checkout.",
+                    "Manage four designers.",
+                    "Own the payments design system."
+                  ]
+                },
+                {
+                  "heading": "Where you fit",
+                  "bullets": [
+                    "You match: 8 years, fintech, team lead.",
+                    "Gap: no Bahasa Indonesia, listed as a plus."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "Apply on Grab",
+                "url": "https://grab.careers/jobs/lead-product-designer-singapore"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Grab careers posting, 26 Sep 2026 08:30",
+                "url": "https://grab.careers/"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:30 (couldn't refresh): Lead Product Designer at Grab, hybrid, Singapore, full-time: S$11–14k a month, apply by 10 Oct. You'd lead design for GrabPay checkout, manage four designers and own the payments design system. You match on 8 years, fintech and team lead; the gap is Bahasa Indonesia, listed as a plus."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Grab role is no longer posted",
+            "subtitle": "Hybrid · Singapore · as of 11:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Taken down this morning; your CV is still in Library"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Grab careers, 26 Sep 2026 11:20"
+              }
+            ]
+          },
+          "fallback_text": "The Grab Lead Product Designer posting (hybrid, Singapore) was taken down this morning, as of 11:20. Your CV is still in Library."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't open the Grab posting",
+            "subtitle": "Hybrid · Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Grab's careers site didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't open the Grab Lead Product Designer posting (hybrid, Singapore): Grab's careers site didn't answer."
+        }
       }
     },
     {
@@ -9224,7 +10822,101 @@
             }
           ]
         },
-        "fallback_text": "Senior data analysts in Singapore earn a median S$7,800 a month (S$94k a year); most earn S$6,500–9,200."
+        "fallback_text": "Senior data analysts in Singapore earn a median S$7,800 a month (S$94k a year); most earn S$6,500–9,200 a month."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Senior data analyst pay",
+            "subtitle": "Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading MOM wage tables and Glassdoor",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b22"
+              }
+            }
+          ],
+          "fallback_text": "Reading MOM wage tables and Glassdoor for senior data analyst pay in Singapore."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Senior data analyst pay",
+            "subtitle": "Singapore · 1 of 2 sources read · Glassdoor next"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$7,500",
+                  "label": "Median monthly"
+                },
+                {
+                  "value": "S$90k",
+                  "label": "Median yearly"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MOM Occupational Wage Table 2025"
+              }
+            ]
+          },
+          "fallback_text": "1 of 2 sources read: MOM's wage table only; Glassdoor isn't read yet: senior data analysts in Singapore earn a median S$7,500 a month (S$90k a year)."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Too few salaries to say",
+            "subtitle": "Senior data analyst · Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Glassdoor has 7 salaries for this title; MOM groups all data analysts"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MOM Occupational Wage Table 2025"
+              },
+              {
+                "label": "Glassdoor, 7 salaries, Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Too few salaries to say for senior data analysts in Singapore: Glassdoor has 7 salaries for this title, and MOM groups all data analysts together."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read salary data",
+            "subtitle": "Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "MOM and Glassdoor didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't read senior data analyst pay in Singapore: MOM and Glassdoor didn't answer."
+        }
       }
     },
     {
@@ -9239,13 +10931,13 @@
         "J5 Application status",
         "X2 Domain state word"
       ],
-      "rationale": "Each application is a row with its state word; interview date secondary; three rows need no page.",
+      "rationale": "Each application is a row: the state word trailing, its date secondary; three rows need no page.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
         "header": {
           "title": "Your applications",
-          "subtitle": "3 active this month"
+          "subtitle": "3 this month"
         },
         "blocks": [
           {
@@ -9253,15 +10945,18 @@
             "items": [
               {
                 "label": "Grab · Lead Product Designer",
-                "secondary": "Interview Thu 1 Oct"
+                "secondary": "Final round Thu 1 Oct",
+                "trailing": "Interviewing"
               },
               {
                 "label": "Wise · Design Lead",
-                "secondary": "Applied 12 Sep · viewed"
+                "secondary": "Applied 12 Sep",
+                "trailing": "Viewed"
               },
               {
                 "label": "Shopee · Principal Designer",
-                "secondary": "Not selected, 22 Sep"
+                "secondary": "Closed 22 Sep",
+                "trailing": "Not selected"
               }
             ]
           }
@@ -9273,7 +10968,131 @@
             }
           ]
         },
-        "fallback_text": "Applications: Grab interview Thu 1 Oct; Wise viewed, applied 12 Sep; Shopee not selected on 22 Sep."
+        "fallback_text": "Your 3 applications this month: Grab, Lead Product Designer, interviewing, final round Thu 1 Oct; Wise, Design Lead, viewed, applied 12 Sep; Shopee, Principal Designer, not selected, closed 22 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your applications",
+            "subtitle": "This month"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading LinkedIn and Gmail",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b23"
+              }
+            }
+          ],
+          "fallback_text": "Reading LinkedIn and Gmail for your job applications this month."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your applications",
+            "subtitle": "1 of 2 sources read · Gmail next"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Wise · Design Lead",
+                  "secondary": "Applied 12 Sep",
+                  "trailing": "Viewed"
+                },
+                {
+                  "label": "Shopee · Principal Designer",
+                  "secondary": "Closed 22 Sep",
+                  "trailing": "Not selected"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn applications, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "1 of 2 sources read, this month: LinkedIn only; Gmail isn't read yet. Wise, Design Lead, viewed, applied 12 Sep; Shopee, Principal Designer, not selected, closed 22 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your applications",
+            "subtitle": "3 this month · as of 07:50 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Grab · Lead Product Designer",
+                  "secondary": "Final round Thu 1 Oct",
+                  "trailing": "Interviewing"
+                },
+                {
+                  "label": "Wise · Design Lead",
+                  "secondary": "Applied 12 Sep",
+                  "trailing": "Viewed"
+                },
+                {
+                  "label": "Shopee · Principal Designer",
+                  "secondary": "Closed 22 Sep",
+                  "trailing": "Not selected"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn applications and Gmail, 26 Sep 2026 07:50"
+              }
+            ]
+          },
+          "fallback_text": "As of 07:50 (couldn't refresh): your 3 applications this month: Grab, Lead Product Designer, interviewing, final round Thu 1 Oct; Wise, Design Lead, viewed, applied 12 Sep; Shopee, Principal Designer, not selected, closed 22 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No applications this month",
+            "subtitle": "This month"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The last one was Stripe on 18 Aug"
+            }
+          ],
+          "fallback_text": "No job applications this month in LinkedIn or Gmail. The last one was Stripe on 18 Aug."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your applications",
+            "subtitle": "This month"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The LinkedIn connection has expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your job applications this month: the LinkedIn connection has expired. Nothing was changed."
+        }
       }
     },
     {
@@ -9348,7 +11167,98 @@
             "Equity at today's value, vesting evenly over 4 years."
           ]
         },
-        "fallback_text": "Offers, year one: Grab S$201,600 (base S$156k, bonus S$15.6k, equity S$30k); Wise S$210,000 (base S$168k, bonus S$20k, equity S$22k)."
+        "fallback_text": "Grab vs Wise offer, first-year total compensation: Grab total S$201,600 (base S$156,000, bonus S$15,600, equity year 1 S$30,000); Wise total S$210,000 (base S$168,000, bonus S$20,000, equity year 1 S$22,000)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab vs Wise offer",
+            "subtitle": "First-year total compensation"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the Grab and Wise offer letters",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b24"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Grab and Wise offer letters to compare first-year total compensation."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab vs Wise offer",
+            "subtitle": "Wise letter not read yet"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Pay"
+                },
+                {
+                  "label": "Grab",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Base",
+                    "S$156,000"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Bonus",
+                    "S$15,600"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Equity (yr 1)",
+                    "S$30,000"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Total",
+                    "S$201,600"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "assumptions": [
+              "Equity at today's value, vesting evenly over 4 years."
+            ]
+          },
+          "fallback_text": "Grab offer, first year (the Wise letter isn't read yet): base S$156,000, bonus S$15,600, equity year 1 S$30,000, total S$201,600."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read the Wise offer letter",
+            "subtitle": "First-year total compensation"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF is password-protected. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read the Wise offer letter to compare first-year total compensation: the PDF is password-protected. Nothing was changed."
+        }
       }
     },
     {
@@ -9397,7 +11307,44 @@
             }
           }
         ],
-        "fallback_text": "Your CV is tailored for Grab: payments work first, team leadership added, older role shortened. PDF and Word in your Library."
+        "fallback_text": "Your CV for the Grab Lead Product Designer role is in your Library: 2 pages, PDF and Word. Changes: moved the payments redesign to the top; added team size and hiring to your current role; cut the 2016 agency role to one line."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "CV · Grab Lead Product Designer",
+            "subtitle": "PDF and Word"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Tailoring your CV",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b25"
+              }
+            }
+          ],
+          "fallback_text": "Tailoring your CV for the Grab Lead Product Designer role, as PDF and Word."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't tailor your CV",
+            "subtitle": "CV · Grab Lead Product Designer"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Your CV in Library is a scanned image I can't edit. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't tailor your CV for the Grab Lead Product Designer role: your CV in Library is a scanned image I can't edit. Nothing was changed."
+        }
       }
     },
     {
@@ -9441,7 +11388,98 @@
             ]
           }
         ],
-        "fallback_text": "Grab Lead Product Designer: final round Thu 1 Oct; portfolio review (22 Sep) and recruiter call (15 Sep) passed."
+        "fallback_text": "Grab Lead Product Designer: final round next, Thu 1 Oct, 3 interviews; portfolio review passed 22 Sep; recruiter call passed 15 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab · Lead Product Designer",
+            "subtitle": "Your application"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading messages from Grab in Gmail",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b26"
+              }
+            }
+          ],
+          "fallback_text": "Reading your Gmail messages from Grab about your Lead Product Designer application."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab · Lead Product Designer",
+            "subtitle": "Final round Thu 1 Oct · as of 07:50 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Final round",
+                  "secondary": "Thu 1 Oct · 3 interviews",
+                  "trailing": "Next"
+                },
+                {
+                  "label": "Portfolio review",
+                  "secondary": "22 Sep",
+                  "trailing": "Passed"
+                },
+                {
+                  "label": "Recruiter call",
+                  "secondary": "15 Sep",
+                  "trailing": "Passed"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "As of 07:50 (couldn't refresh your email): Grab Lead Product Designer: final round next, Thu 1 Oct, 3 interviews; portfolio review passed 22 Sep; recruiter call passed 15 Sep.",
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail messages from Grab recruiting, 26 Sep 2026 07:50"
+              }
+            ]
+          }
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Grab process in your email",
+            "subtitle": "Last 90 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No messages from Grab recruiting"
+            }
+          ],
+          "fallback_text": "No Grab Lead Product Designer process in your Gmail for the last 90 days: no messages from Grab recruiting."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your email",
+            "subtitle": "Your application"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Gmail connection has expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your email about the Grab Lead Product Designer application: the Gmail connection has expired. Nothing was changed."
+        }
       }
     },
     {
@@ -9461,7 +11499,7 @@
         "major": 1,
         "header": {
           "title": "Interviews next week",
-          "subtitle": "28 Sep–2 Oct"
+          "subtitle": "28 Sep–4 Oct"
         },
         "blocks": [
           {
@@ -9480,14 +11518,100 @@
             ]
           }
         ],
-        "fallback_text": "Interviews next week: Grab final round Thu 1 Oct 15:00 (Google Meet); Wise hiring manager Fri 2 Oct 10:00 (Zoom)."
+        "fallback_text": "Interviews next week, 28 Sep–4 Oct: Grab final round, Thu 1 Oct 15:00, Google Meet; Wise hiring manager, Fri 2 Oct 10:00, Zoom."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Interviews next week",
+            "subtitle": "28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your calendar",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b27"
+              }
+            }
+          ],
+          "fallback_text": "Reading your calendar for interviews next week, 28 Sep–4 Oct."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Interviews next week",
+            "subtitle": "28 Sep–4 Oct · as of 07:50 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Grab · final round",
+                  "secondary": "Thu 1 Oct · Google Meet",
+                  "trailing": "15:00"
+                },
+                {
+                  "label": "Wise · hiring manager",
+                  "secondary": "Fri 2 Oct · Zoom",
+                  "trailing": "10:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "As of 07:50 (couldn't refresh your calendar): Interviews next week, 28 Sep–4 Oct: Grab final round, Thu 1 Oct 15:00, Google Meet; Wise hiring manager, Fri 2 Oct 10:00, Zoom.",
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, read 26 Sep 2026 07:50"
+              }
+            ]
+          }
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No interviews next week",
+            "subtitle": "28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The next one is Wise on Tue 6 Oct"
+            }
+          ],
+          "fallback_text": "No interviews next week (28 Sep–4 Oct). The next one is Wise on Tue 6 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your calendar",
+            "subtitle": "28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The calendar connection has expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your interviews for next week, 28 Sep–4 Oct: the calendar connection has expired. Nothing was changed."
+        }
       }
     },
     {
       "id": "jobs-alert",
       "vertical": "jobs",
       "kind": "card",
-      "request": "Tell me when new design lead roles come up.",
+      "request": "Tell me when new design lead roles in Singapore paying S$10k+ a month come up.",
       "says": "Okay. I'll tell you here when one comes up.",
       "surface": "inline",
       "fresh": false,
@@ -9500,7 +11624,7 @@
         "major": 1,
         "header": {
           "title": "Design lead roles",
-          "subtitle": "LinkedIn and MyCareersFuture"
+          "subtitle": "Singapore · S$10k+/mo"
         },
         "blocks": [
           {
@@ -9512,15 +11636,6 @@
             }
           },
           {
-            "kind": "rows",
-            "items": [
-              {
-                "label": "Looking for",
-                "secondary": "Design lead · Singapore · S$10k+/mo"
-              }
-            ]
-          },
-          {
             "kind": "action",
             "secondary": {
               "kind": "routine_control",
@@ -9530,7 +11645,325 @@
             }
           }
         ],
-        "fallback_text": "Watching LinkedIn and MyCareersFuture every morning for design lead roles in Singapore paying S$10k+ a month."
+        "details": {
+          "sources": [
+            {
+              "label": "LinkedIn and MyCareersFuture saved searches"
+            }
+          ]
+        },
+        "fallback_text": "Watching for new design lead roles in Singapore paying S$10k+ a month: I check LinkedIn and MyCareersFuture every morning at 8:00 and tell you here. You can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design lead roles",
+            "subtitle": "Singapore · S$10k+/mo"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Setting up a check every morning at 8:00",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b28"
+              }
+            }
+          ],
+          "fallback_text": "Setting up a check every morning at 8:00 for design lead roles in Singapore paying S$10k+ a month."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't set up the alert",
+            "subtitle": "Singapore · S$10k+/mo"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "MyCareersFuture refused the saved search. No alert was made."
+            }
+          ],
+          "fallback_text": "Couldn't set up the alert for design lead roles in Singapore paying S$10k+ a month: MyCareersFuture refused the saved search. No alert was made."
+        }
+      }
+    },
+    {
+      "id": "jobs-remote-results",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Find remote senior frontend roles I can do from Singapore.",
+      "says": "Canva pays the most of the 23 that match.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "J1 Job results"
+      ],
+      "rationale": "Five best of 23 as rows; the subtitle says how many exist and the one link opens LinkedIn's own search for the rest.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Remote senior frontend roles",
+          "subtitle": "Top 5 of 23 · open to Singapore · as of 08:45"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Senior Frontend Engineer",
+                "secondary": "Canva · Remote, APAC · 1 day ago",
+                "trailing": "S$12–15k/mo",
+                "mark": "pick"
+              },
+              {
+                "label": "Staff Frontend Engineer",
+                "secondary": "Xendit · Remote, SEA · 3 days ago",
+                "trailing": "S$11–14k/mo"
+              },
+              {
+                "label": "Senior Web Engineer",
+                "secondary": "Deel · Remote, global · 2 days ago",
+                "trailing": "S$9–12k/mo"
+              },
+              {
+                "label": "Senior Frontend Engineer",
+                "secondary": "Airwallex · Remote, APAC · 5 days ago",
+                "trailing": "S$10–13k/mo"
+              },
+              {
+                "label": "Frontend Lead",
+                "secondary": "Ninja Van · Remote, SG · 6 days ago",
+                "trailing": "S$9–11k/mo"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "See all 23 on LinkedIn",
+              "url": "https://www.linkedin.com/jobs/search/?keywords=senior%20frontend&f_WT=2&location=Singapore"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LinkedIn, 26 Sep 2026 08:45"
+            }
+          ],
+          "assumptions": [
+            "Sorted by fit to your CV, then pay."
+          ]
+        },
+        "fallback_text": "23 remote senior frontend roles open to Singapore, as of 08:45; top 5: Senior Frontend Engineer, Canva, remote in APAC, posted 1 day ago, S$12–15k a month (pick); Staff Frontend Engineer, Xendit, remote in SEA, posted 3 days ago, S$11–14k a month; Senior Web Engineer, Deel, remote worldwide, posted 2 days ago, S$9–12k a month; Senior Frontend Engineer, Airwallex, remote in APAC, posted 5 days ago, S$10–13k a month; Frontend Lead, Ninja Van, remote in Singapore, posted 6 days ago, S$9–11k a month. All 23 are on LinkedIn."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Remote senior frontend roles",
+            "subtitle": "Open to Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking LinkedIn",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b29"
+              }
+            }
+          ],
+          "fallback_text": "Checking LinkedIn for remote senior frontend roles open to Singapore."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Remote senior frontend roles",
+            "subtitle": "Top 5 of 23 · as of 08:45 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Senior Frontend Engineer",
+                  "secondary": "Canva · Remote, APAC · 1 day ago",
+                  "trailing": "S$12–15k/mo",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Staff Frontend Engineer",
+                  "secondary": "Xendit · Remote, SEA · 3 days ago",
+                  "trailing": "S$11–14k/mo"
+                },
+                {
+                  "label": "Senior Web Engineer",
+                  "secondary": "Deel · Remote, global · 2 days ago",
+                  "trailing": "S$9–12k/mo"
+                },
+                {
+                  "label": "Senior Frontend Engineer",
+                  "secondary": "Airwallex · Remote, APAC · 5 days ago",
+                  "trailing": "S$10–13k/mo"
+                },
+                {
+                  "label": "Frontend Lead",
+                  "secondary": "Ninja Van · Remote, SG · 6 days ago",
+                  "trailing": "S$9–11k/mo"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "See all 23 on LinkedIn",
+                "url": "https://www.linkedin.com/jobs/search/?keywords=senior%20frontend&f_WT=2&location=Singapore"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn, 26 Sep 2026 08:45"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:45 (couldn't refresh): 23 remote senior frontend roles open to Singapore; top 5: Senior Frontend Engineer, Canva, remote in APAC, posted 1 day ago, S$12–15k a month (pick); Staff Frontend Engineer, Xendit, remote in SEA, posted 3 days ago, S$11–14k a month; Senior Web Engineer, Deel, remote worldwide, posted 2 days ago, S$9–12k a month; Senior Frontend Engineer, Airwallex, remote in APAC, posted 5 days ago, S$10–13k a month; Frontend Lead, Ninja Van, remote in Singapore, posted 6 days ago, S$9–11k a month. All 23 are on LinkedIn."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No remote senior frontend roles",
+            "subtitle": "Open to Singapore · as of 08:45"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "12 are hybrid in Singapore"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn, 26 Sep 2026 08:45"
+              }
+            ]
+          },
+          "fallback_text": "No remote senior frontend roles open to Singapore, as of 08:45. 12 are hybrid in Singapore."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search remote roles",
+            "subtitle": "Open to Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "LinkedIn didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't search for remote senior frontend roles open to Singapore: LinkedIn didn't answer."
+        }
+      }
+    },
+    {
+      "id": "jobs-fit",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Am I a good fit for the Wise design lead role?",
+      "says": "Mostly; the gap is the regulated-payments experience they ask for.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J9 Fit / match summary"
+      ],
+      "rationale": "What matches and what is missing, as short bullets side by side; no match percentage to argue with.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Wise · Design Lead",
+          "subtitle": "Your CV against the posting"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Matches: 8 years in product design, 4 leading a team",
+                  "Matches: shipped a checkout used in 3 markets",
+                  "Missing: 2 years in a regulated payments team",
+                  "Plus you have: design systems work, which they list as nice to have"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Wise careers posting, read 26 Sep 2026"
+            },
+            {
+              "label": "Your CV in Library, 24 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Wise Design Lead against your CV. Matches: 8 years in product design, 4 leading a team; shipped a checkout used in 3 markets. Missing: 2 years in a regulated payments team. Plus you have: design systems work, which they list as nice to have."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Wise · Design Lead",
+            "subtitle": "Your CV against the posting"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Comparing your CV with the posting",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b2a"
+              }
+            }
+          ],
+          "fallback_text": "Comparing your CV with the Wise Design Lead posting."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read the Wise posting",
+            "subtitle": "Your CV against the posting"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Wise's careers site didn't answer."
+            }
+          ],
+          "fallback_text": "Couldn't compare your CV with the Wise Design Lead posting: Wise's careers site didn't answer."
+        }
       }
     },
     {
