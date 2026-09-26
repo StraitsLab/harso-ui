@@ -1117,13 +1117,13 @@
       "components": [
         "J1 Job results"
       ],
-      "rationale": "Five best of 23 as rows with where you can work in the secondary line; the rest stay on LinkedIn's own search, one link.",
+      "rationale": "Five best of 23 as rows; the subtitle says how many exist and the one link opens LinkedIn's own search for the rest.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
         "header": {
           "title": "Remote senior frontend roles",
-          "subtitle": "Open to Singapore · posted this week · as of 08:45"
+          "subtitle": "Top 5 of 23 · open to Singapore · as of 08:45"
         },
         "blocks": [
           {
@@ -1155,8 +1155,7 @@
                 "secondary": "Ninja Van · Remote, SG · 6 days ago",
                 "trailing": "S$9–11k/mo"
               }
-            ],
-            "total_count": 23
+            ]
           },
           {
             "kind": "action",
@@ -1204,7 +1203,7 @@
           "major": 1,
           "header": {
             "title": "Remote senior frontend roles",
-            "subtitle": "As of 08:45 · couldn't refresh"
+            "subtitle": "Top 5 of 23 · as of 08:45 · couldn't refresh"
           },
           "blocks": [
             {
@@ -1236,8 +1235,7 @@
                   "secondary": "Ninja Van · Remote, SG · 6 days ago",
                   "trailing": "S$9–11k/mo"
                 }
-              ],
-              "total_count": 23
+              ]
             },
             {
               "kind": "action",
