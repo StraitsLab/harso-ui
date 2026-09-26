@@ -3,9 +3,34 @@
 Calendar changes (conflicts, finding a time, moving events, focus blocks) and bookings (dentist, salon, government
 appointments, event tickets, cancelling, an airport ride) in `catalogue/calendar_bookings.json`. Journeys C2–C5, R2–R6
 and T7 from the 60-journey map. Every example reuses the shape of an existing example on main and changes data only
-(lead steer, 27 Sep 03:20); the pattern source for each is in the table at the end. No field was invented; every gap
+(lead steer, 27 Sep 03:20); the pattern source for each example, state by state, is in the table below. No field was invented; every gap
 names a field that is not in `docs/agent/schema/output-blocks.v1.json` (sha256 `470aa1ae…`). Gap numbers G1–G24 are
 the playbook's.
+
+## Pattern source per example
+
+Every state (ready, loading, partial, stale, empty, failed) has the same blocks, in the same order, with the same
+Details / more_label presence as the named source's state; `"src; loading, stale: other"` names a second example on
+main for states the first lacks. Checked by `.lane/probes.py` (F1) in the lane.
+
+| example id | journey IDs | pattern source example id | what changed (data only) |
+|---|---|---|---|
+| cal-conflicts-next-week | C2 | docs-signatures | Rows are the clashing pairs (both names; day, times, the fix) with the overlap trailing, as signers with their state word; link opens the calendar |
+| cal-find-time-priya | C3 | travel-flights | Rows are slots (day, both time zones, time) with one pick and Details; same rows+details shape and states |
+| cal-move-event | C4 | delivery-cart-review | Numbers are the time kept and guests to notify; rows are was, now and each guest; question follows the card |
+| cal-event-moved | C4 | places-table-booked | Rows are each guest's reply and the old time; empty is the event gone before the move; failed is the couldn't-confirm wording (delivery-order-uncertain) |
+| cal-focus-blocks | C5 | prod-week-schedule; loading, stale: prod-launch-status | Rows are proposed blocks (what, day, time) instead of events; the full day is in the subtitle; same rows + open-calendar + more_label |
+| book-dentist-slots | R2 | travel-flights | Rows are slots (day, service, dentist, price) with the time trailing and one pick; same states |
+| book-dentist-booked | R2, R3 | places-table-booked | Rows are reference, what to bring and change terms; action opens the calendar day; same states |
+| book-clinic-call-plan | R2, R3 | prod-email-draft | The draft paragraph is the call script instead of an email; subtitle names the number and 'not called' |
+| book-salon-home-india | R3 | shop-india-cod | Rows are pros (platform, rating, slot) with the INR price trailing and one pick; link opens the listing; same states |
+| book-ica-passport | R4 | shop-marketplaces-compare | Rows are slots earliest first instead of marketplaces; the text section is 'Bring' instead of GST and duty; link opens ICA |
+| book-dmv-real-id | R4 | shop-marketplaces-compare | Rows are offices with distance and the earliest slot trailing; text is 'Bring' with the fee; link opens DMV appointments |
+| book-tickets-seats | R5 | delivery-cart-review | Numbers are total and fees; rows are seats and each fee, adding to the total; question follows |
+| book-tickets-confirmed | R5 | shop-order-confirmed | Numbers are paid and show date; action opens the e-tickets; failed is the may-have-landed wording |
+| book-cancel-lunch | R6 | delivery-cart-review | Numbers are the fee now and the deposit; rows are booking, policy and what can't be undone; question follows |
+| book-cancelled | R6 | places-table-booked | Rows are reference, refund and the venue's email instead of hold and cancel terms |
+| book-airport-ride | T7 | delivery-cart-review | Numbers are pickup and fare; rows work back from the flight to the pickup, then the ride; question follows |
 
 ## Truth rules every example follows
 
@@ -34,7 +59,7 @@ the playbook's.
 | C2 | cal-conflicts-next-week | Grouping two events into one clash | One row per clash: both event names in the label, both times and the fix in the secondary | Grouped rows — G2 |
 | C3 | cal-find-time-priya | A second time zone per row | Both times in the secondary line ("14:00 SGT · 11:30 IST for Priya") | None proposed: the secondary line carries it |
 | C4 | cal-event-moved | Per-guest RSVP state (accepted, declined, no reply) | The word in `trailing` | `row_status` meanings — G1 |
-| C5 | cal-focus-blocks | A week strip showing where blocks land among existing events | Rows in day order, times trailing; the day with no room named in Details and the fallback | None: the rows are the answer; a week grid is a page (pattern gap below) |
+| C5 | cal-focus-blocks | A week strip showing where blocks land among existing events | Rows in day order, times trailing; the day with no room named in the subtitle ("Tue full") and the fallback | None: the rows are the answer; a week grid is a page (pattern gap below) |
 | R2, R3 | book-clinic-call-plan | A call plan (who, what I'll ask, what may be shared) has no block of its own | The email-draft shape: the script word for word as the paragraph; the number and "not called" in the subtitle | None for display; the call is the approval card's |
 | R4 | book-ica-passport, book-dmv-real-id | A documents checklist the person ticks | A `text` section headed "Bring" with bullets (no tick-boxes, per the playbook) | None: ticking is not the card's job |
 | R5 | book-tickets-seats | A seat map | Seats as a row ("Cat 2 · Row K, seats 14–15"); no map | A seat-map image is a file; none proposed |
@@ -56,14 +81,14 @@ the playbook's.
 ## Links
 
 Checked with a plain fetch on 26 Sep: Google Calendar week and day views, ICA passport collection, California DMV
-appointments, Chope (Candlenut), Grab Advance Booking and Urban Company Bangalore answered 200. SISTIC and a Q & M
-Dental booking page were not checked (no deep link that answered), so those cards carry no link or use the calendar.
+appointments, Chope (Candlenut) and Urban Company Bangalore answered 200. Proposal cards reusing delivery-cart-review
+(tickets, the cancel, the ride) carry no link because their source has none. SISTIC and a Q & M Dental booking page
+were not checked (no deep link that answered), so those cards carry no link or use the calendar.
 
 ## States drawn per example
 
 | Example | State left out | Why |
 |---|---|---|
-| cal-event-moved | empty | The request is the yes to a proposal; "the slot went" is shown by cal-move-event's partial state; failed is the unconfirmed write |
 | book-clinic-call-plan | partial, stale | A draft is written, not read: it is there or it is not (as prod-email-draft) |
 
 ## Freshness
