@@ -18,20 +18,60 @@ No example invents a field.
 | Every loading state | `states.loading` | A lookup made in chat has no Work Unit, but `status(working)` needs a subject | Each loading state names a placeholder Work Unit id (`…4e0bNN`), as money-portfolio does. This is only honest if the backend opens a Work Unit for the lookup. | `block_state` on the card with no subject (per-block state) | G20 |
 | Every failed state | `states.failed` | A Retry for a chat lookup (the only retry verb is `work_control`) | No action. The closing sentence says to ask again. | a retry verb that needs no Work Unit | G11 |
 
-## States deliberately not drawn
+## Which states each answer has (applicability matrix)
 
-A state is included only where it can actually happen, and none is written to fill a grid.
+A state is drawn when the request can actually produce it, decided from what the answer reads, never from its `fresh`
+flag (`fresh` only says whether the subtitle carries an "as of" time).
 
-- **Pure calculations** (`home-affordability`, `home-monthly-cost`) have no states at all. The agent computes them
-  from the person's own numbers. Nothing is fetched, so nothing can be loading, partial, stale, empty or failed. A
-  bad input is a question, not a failed card.
-- **Stable records** (`home-value-estimate`, `home-price-history`, `home-schools`, `home-facts`, `jobs-salary`,
-  `jobs-offers`, `jobs-pipeline`, `jobs-interviews`, `jobs-applications`, `jobs-fit`, `home-viewing`) have no stale
-  state. Their `fresh` is false, so no "as of" time exists that could go stale.
-- **Partial** appears only when an answer reads two or more sources and one can arrive first: two listing portals,
-  two job sites, LinkedIn with Gmail, or a table with one fact still missing. A single-source answer is either whole
-  or failed.
-- `empty-search` is itself the empty answer, so it has loading and failed only.
-- **Empty** is left out where nothing is looked up (making a file, setting an alert). `file-calculator-page`,
-  `file-resume` and `jobs-alert` have loading and failed only. `jobs-offers` reads two letters the person already
-  has, so it has no empty state either.
+- **Loading / failed:** every answer that fetches or makes something.
+- **Partial:** the answer reads two or more independent inputs that can arrive apart.
+- **Stale:** the answer shows something that can change after it was read (a listing, a price, availability, a posting,
+  an application status, a calendar entry), so a failed refresh can leave an old version on screen.
+- **Empty:** a lookup that can honestly find nothing.
+
+| Example | Reads | L | P | S | E | F | Why a state is absent |
+|---|---|---|---|---|---|---|---|
+| `home-listing-results` | PropertyGuru + HDB Flat Portal | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| `home-listing-card` | one listing (details, then photos) | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| `home-rent-listings` | 99.co + PropertyGuru | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| `empty-search` | PropertyGuru + 99.co | ✓ | ✓ | ✓ | – | ✓ | It is itself the empty answer. |
+| `home-open-houses` | PropertyGuru open houses | ✓ | – | ✓ | ✓ | ✓ | One source: whole or failed. |
+| `home-viewing` | your calendar | ✓ | – | ✓ | ✓ | ✓ | One source. |
+| `home-value-estimate` | URA caveats, last 6 months | ✓ | – | – | ✓ | ✓ | One source; lodged sales do not change, and the estimate is recomputed on each ask. |
+| `home-price-history` | HDB resale records | ✓ | – | – | ✓ | ✓ | One source; completed sales never change. |
+| `home-facts` | URA + project page | ✓ | ✓ | – | ✓ | ✓ | Tenure, completion year and facilities are fixed facts of a finished building. |
+| `home-schools` | OneMap | ✓ | – | – | ✓ | ✓ | One source; distances and schools do not change between reads. |
+| `home-affordability`, `home-monthly-cost` | your own numbers | – | – | – | – | – | Pure calculation: nothing is fetched. A bad input is a question, not a card. |
+| `file-calculator-page` | makes a file | ✓ | – | – | – | ✓ | A delivered file does not change or go stale, and making one cannot find nothing. |
+| `jobs-results` | LinkedIn + MyCareersFuture | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| `jobs-remote-results` | LinkedIn | ✓ | – | ✓ | ✓ | ✓ | One source. |
+| `jobs-posting` | Grab careers | ✓ | – | ✓ | ✓ | ✓ | One source. |
+| `jobs-applications` | LinkedIn + Gmail | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| `jobs-pipeline` | Gmail from Grab | ✓ | – | ✓ | ✓ | ✓ | One source. |
+| `jobs-interviews` | your calendar | ✓ | – | ✓ | ✓ | ✓ | One source. |
+| `jobs-salary` | MOM wage table + Glassdoor | ✓ | ✓ | – | ✓ | ✓ | Published pay figures for a period, not live data. |
+| `jobs-offers` | two offer letters you have | ✓ | ✓ | – | – | ✓ | Letters are fixed documents; you named both, so neither can be missing (an unreadable one is failed). |
+| `jobs-fit` | the posting + your CV | ✓ | – | – | – | ✓ | A comparison needs both inputs, so half of it is not an answer; it is recomputed on each ask; a removed posting is `jobs-posting` empty. |
+| `file-resume` | makes a file | ✓ | – | – | – | ✓ | Delivered file, as above. |
+| `jobs-alert` | sets up a routine | ✓ | – | – | – | ✓ | A set-up confirmation: nothing is read, so nothing can be partial, stale or empty. Later matches are their own results. |
+
+Words-only answers (plain text examples) have no card and so no states.
+
+## Visual acceptance (lead ruling 2026-09-26: split from this PR)
+
+This PR is accepted on data. The visual floor (QUALITY-BAR 9+) is a separate lead gate run on the whole catalogue once
+the renderer prerequisites land; these examples wait on them and need no data change:
+
+| What a person would miss today | Examples | Prerequisite |
+|---|---|---|
+| Status, table, map and image blocks draw as a fallback paragraph | every loading/failed/empty state; `jobs-offers`, `home-facts` tables; `home-listing-results` map; `home-listing-card` photo | charts/tables PR #11; status/media P5c (on #11's branch); a media host in the gallery |
+| Actions and linked sources are not drawn | `home-listing-card` View listing, `home-viewing` Directions, `jobs-posting` Apply, `jobs-remote-results` See all 23, `file-resume`, `file-calculator-page`, `jobs-alert` Pause | P5d (t_451b1e32) |
+
+Loading-state note for the lead: the playbook says the agent never sends a loading card; the app draws it. The loading
+documents here are gallery fixtures of that app state, and their `work_unit_id` subjects are placeholders the schema
+needs (row G20 above). They are not examples of something the agent should send.
+
+## States deliberately not drawn (superseded)
+
+The matrix above replaces the earlier reasoning that stable (`fresh: false`) records cannot go stale. That was wrong:
+application status, pipelines, interviews and viewings change after they are read, and now have stale states.
