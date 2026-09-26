@@ -19,7 +19,8 @@
     "shop-counterfeit-risk",
     "shop-cross-border-tracking",
     "shop-india-cod",
-    "shop-us-amazon"
+    "shop-us-amazon",
+    "shop-return-windows"
   ],
   "examples": [
     {
@@ -3485,7 +3486,7 @@
       "vertical": "shopping",
       "kind": "card",
       "request": "Cheapest Soundcore Liberty 4 Pro delivered to Singapore: Amazon, Lazada, Shopee or AliExpress?",
-      "says": "AliExpress is cheapest delivered, but I'd pay S$28 more at Lazada's official store for the warranty and a Tuesday delivery.",
+      "says": "AliExpress is cheapest delivered, but I'd pay S$28 more at Lazada's official store for the warranty and delivery by Wednesday.",
       "surface": "page",
       "fresh": true,
       "components": [
@@ -3567,7 +3568,7 @@
             }
           ]
         },
-        "fallback_text": "Soundcore Liberty 4 Pro, delivered (10:30): Lazada, Soundcore Official Store, S$169.00, free, Tue 29–Wed 30 Sep, rated 4.8/5 (pick); Amazon.sg, sold by Amazon, S$179.00, free, Mon 28 Sep, rated 4.6/5; Shopee, third-party seller, S$156.99 including S$1.99 shipping, Wed 30 Sep–Fri 2 Oct, rated 4.7/5; AliExpress, third-party seller, S$140.83 (S$124.00 + S$5.20 shipping + S$11.63 GST), from China, Mon 5–Fri 9 Oct, rated 4.5/5. Local prices include GST; no duty on earbuds. Shopee and AliExpress have only third-party sellers: fakes possible, no local warranty."
+        "fallback_text": "Soundcore Liberty 4 Pro, delivered (10:30): Lazada, Soundcore Official Store, S$169.00, free, Tue 29–Wed 30 Sep, rated 4.8/5 (pick); Amazon.sg, sold by Amazon, S$179.00, free, Mon 28 Sep, rated 4.6/5; Shopee, third-party seller, S$156.99 including S$1.99 shipping, Wed 30 Sep–Fri 2 Oct, rated 4.7/5; AliExpress, third-party seller, S$140.83 (S$124.00 + S$5.20 shipping + S$11.63 GST at 9%), from China, Mon 5–Fri 9 Oct, rated 4.5/5. Local prices include GST; no duty on earbuds. Shopee, AliExpress: third-party sellers only; a fake is possible, local warranty may not apply."
       },
       "states": {
         "loading": {
@@ -3587,7 +3588,7 @@
               }
             }
           ],
-          "fallback_text": "Checking 4 marketplaces."
+          "fallback_text": "Soundcore Liberty 4 Pro, delivered: checking 4 marketplaces."
         },
         "partial": {
           "kind": "output_blocks",
@@ -3652,14 +3653,14 @@
               }
             ]
           },
-          "fallback_text": "Soundcore Liberty 4 Pro, delivered, 3 of 4 marketplaces (10:30): Lazada, Soundcore Official Store, S$169.00, free, Tue 29–Wed 30 Sep, rated 4.8/5 (pick); Amazon.sg, sold by Amazon, S$179.00, free, Mon 28 Sep, rated 4.6/5; Shopee, third-party seller, S$156.99 including S$1.99 shipping, Wed 30 Sep–Fri 2 Oct, rated 4.7/5. AliExpress didn't answer, so I can't say whether it's cheaper. Local prices include GST. Shopee has only third-party sellers: fakes possible."
+          "fallback_text": "Soundcore Liberty 4 Pro, delivered, 3 of 4 marketplaces (10:30): Lazada, Soundcore Official Store, S$169.00, free, Tue 29–Wed 30 Sep, rated 4.8/5 (pick); Amazon.sg, sold by Amazon, S$179.00, free, Mon 28 Sep, rated 4.6/5; Shopee, third-party seller, S$156.99 including S$1.99 shipping, Wed 30 Sep–Fri 2 Oct, rated 4.7/5. AliExpress didn't answer, so I can't say whether it's cheaper. Local prices include GST. Shopee has only third-party sellers: a fake is possible and the local warranty may not apply."
         },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Soundcore Liberty 4 Pro, delivered",
-            "subtitle": "As of 08:10 · couldn't refresh"
+            "subtitle": "4 marketplaces · price to your door · as of 08:10 · couldn't refresh"
           },
           "blocks": [
             {
@@ -3723,7 +3724,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:10 (couldn't refresh), Soundcore Liberty 4 Pro, delivered: Lazada, Soundcore Official Store, S$169.00, free, Tue 29–Wed 30 Sep, rated 4.8/5 (pick); Amazon.sg, sold by Amazon, S$179.00, free, Mon 28 Sep, rated 4.6/5; Shopee, third-party seller, S$156.99 including S$1.99 shipping, Wed 30 Sep–Fri 2 Oct, rated 4.7/5; AliExpress, third-party seller, S$140.83 (S$124.00 + S$5.20 shipping + S$11.63 GST), from China, Mon 5–Fri 9 Oct, rated 4.5/5. Local prices include GST; no duty on earbuds. Shopee and AliExpress have only third-party sellers: fakes possible, no local warranty."
+          "fallback_text": "As of 08:10 (couldn't refresh), Soundcore Liberty 4 Pro, delivered: Lazada, Soundcore Official Store, S$169.00, free, Tue 29–Wed 30 Sep, rated 4.8/5 (pick); Amazon.sg, sold by Amazon, S$179.00, free, Mon 28 Sep, rated 4.6/5; Shopee, third-party seller, S$156.99 including S$1.99 shipping, Wed 30 Sep–Fri 2 Oct, rated 4.7/5; AliExpress, third-party seller, S$140.83 (S$124.00 + S$5.20 shipping + S$11.63 GST at 9%), from China, Mon 5–Fri 9 Oct, rated 4.5/5. Local prices include GST; no duty on earbuds. Shopee, AliExpress: third-party sellers only; a fake is possible, local warranty may not apply."
         },
         "empty": {
           "kind": "output_blocks",
@@ -3828,7 +3829,7 @@
                 "heading": "Delivery and returns",
                 "bullets": [
                   "Free shipping; arrives Tue 29–Wed 30 Sep.",
-                  "15-day free returns (LazMall), change of mind included."
+                  "30-day free returns from delivery (LazMall), change of mind included."
                 ]
               },
               {
@@ -3858,7 +3859,7 @@
             }
           ]
         },
-        "fallback_text": "Soundcore Liberty 4 Pro on Lazada: S$169.00; the seller's was-price is S$229.00, but I haven't seen it sell at that in the last 90 days (10:30). Midnight Black in stock, Oat White 3 left, Navy Blue out of stock until Mon 5 Oct, all S$169.00. Sold by Soundcore Official Store (LazMall). Rated 4.8/5 from 2,140 reviews; 5,300 sold. Free shipping, arrives Tue 29–Wed 30 Sep. 15-day free returns, change of mind included."
+        "fallback_text": "Soundcore Liberty 4 Pro on Lazada: S$169.00; the seller's was-price is S$229.00, but I haven't seen it sell at that in the last 90 days (10:30). Midnight Black in stock, Oat White 3 left, Navy Blue out of stock until Mon 5 Oct, all S$169.00. Sold by Soundcore Official Store (LazMall). Rated 4.8/5 from 2,140 reviews; 5,300 sold. Free shipping, arrives Tue 29–Wed 30 Sep. 30-day free returns from delivery, change of mind included."
       },
       "states": {
         "loading": {
@@ -3878,7 +3879,7 @@
               }
             }
           ],
-          "fallback_text": "Reading the Lazada listing."
+          "fallback_text": "Soundcore Liberty 4 Pro: reading the Lazada listing."
         },
         "partial": {
           "kind": "output_blocks",
@@ -3935,7 +3936,7 @@
                   "heading": "Delivery and returns",
                   "bullets": [
                     "Free shipping; arrives Tue 29–Wed 30 Sep.",
-                    "15-day free returns (LazMall), change of mind included."
+                    "30-day free returns from delivery (LazMall), change of mind included."
                   ]
                 },
                 {
@@ -3965,7 +3966,7 @@
               }
             ]
           },
-          "fallback_text": "Soundcore Liberty 4 Pro on Lazada: S$169.00; the seller's was-price is S$229.00, but I haven't seen it sell at that in the last 90 days (10:30). Midnight Black in stock, Oat White 3 left, Navy Blue out of stock until Mon 5 Oct, all S$169.00. Sold by Soundcore Official Store (LazMall). Reviews didn't load. Free shipping, arrives Tue 29–Wed 30 Sep. 15-day free returns, change of mind included."
+          "fallback_text": "Soundcore Liberty 4 Pro on Lazada: S$169.00; the seller's was-price is S$229.00, but I haven't seen it sell at that in the last 90 days (10:30). Midnight Black in stock, Oat White 3 left, Navy Blue out of stock until Mon 5 Oct, all S$169.00. Sold by Soundcore Official Store (LazMall). Reviews didn't load. Free shipping, arrives Tue 29–Wed 30 Sep. 30-day free returns from delivery, change of mind included."
         },
         "stale": {
           "kind": "output_blocks",
@@ -4022,7 +4023,7 @@
                   "heading": "Delivery and returns",
                   "bullets": [
                     "Free shipping; arrives Tue 29–Wed 30 Sep.",
-                    "15-day free returns (LazMall), change of mind included."
+                    "30-day free returns from delivery (LazMall), change of mind included."
                   ]
                 },
                 {
@@ -4052,7 +4053,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:10 (couldn't refresh). Soundcore Liberty 4 Pro on Lazada: S$169.00; the seller's was-price is S$229.00, but I haven't seen it sell at that in the last 90 days. Midnight Black in stock, Oat White 3 left, Navy Blue out of stock until Mon 5 Oct, all S$169.00. Sold by Soundcore Official Store (LazMall). Rated 4.8/5 from 2,140 reviews; 5,300 sold. Free shipping, arrives Tue 29–Wed 30 Sep. 15-day free returns, change of mind included."
+          "fallback_text": "As of 08:10 (couldn't refresh). Soundcore Liberty 4 Pro on Lazada: S$169.00; the seller's was-price is S$229.00, but I haven't seen it sell at that in the last 90 days. Midnight Black in stock, Oat White 3 left, Navy Blue out of stock until Mon 5 Oct, all S$169.00. Sold by Soundcore Official Store (LazMall). Rated 4.8/5 from 2,140 reviews; 5,300 sold. Free shipping, arrives Tue 29–Wed 30 Sep. 30-day free returns from delivery, change of mind included."
         },
         "empty": {
           "kind": "output_blocks",
@@ -4181,7 +4182,7 @@
               }
             }
           ],
-          "fallback_text": "Checking 3 marketplaces for the Airwrap."
+          "fallback_text": "Dyson Airwrap under S$500: checking 3 marketplaces for the Airwrap."
         },
         "partial": {
           "kind": "output_blocks",
@@ -4214,6 +4215,7 @@
                   "bullets": [
                     "Dyson's own store and its official stores on Lazada and Shopee sell it for S$799.00.",
                     "At under S$500 a fake is a real risk, and Dyson's warranty covers only units bought from Dyson or its authorised sellers.",
+                    "If you buy one, ask for the serial number and the receipt before you pay.",
                     "Carousell didn't answer, so private listings aren't here."
                   ]
                 }
@@ -4237,7 +4239,7 @@
           "major": 1,
           "header": {
             "title": "No official Airwrap under S$500",
-            "subtitle": "As of 08:30 · couldn't refresh"
+            "subtitle": "Shopee, Lazada, Carousell · cheapest first · as of 08:30 · couldn't refresh"
           },
           "blocks": [
             {
@@ -4402,14 +4404,14 @@
               }
             }
           ],
-          "fallback_text": "Checking Cainiao and SingPost tracking."
+          "fallback_text": "AliExpress order 8193045622: checking Cainiao and SingPost tracking."
         },
         "partial": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Arriving Tue 29 Sep–Thu 1 Oct",
-            "subtitle": "AliExpress order 8193045622 · Cainiao only · as of 09:40"
+            "subtitle": "AliExpress order 8193045622 · Cainiao only, SingPost didn't answer · as of 09:40"
           },
           "blocks": [
             {
@@ -4456,7 +4458,7 @@
           "major": 1,
           "header": {
             "title": "Arriving Tue 29 Sep–Thu 1 Oct",
-            "subtitle": "As of 07:30 · couldn't refresh"
+            "subtitle": "AliExpress order 8193045622 · as of 07:30 · couldn't refresh"
           },
           "blocks": [
             {
@@ -4597,7 +4599,7 @@
           "major": 1,
           "header": {
             "title": "Pressure cookers under ₹3,000",
-            "subtitle": "Flipkart, Amazon.in"
+            "subtitle": "Flipkart, Amazon.in · cash on delivery to 400050"
           },
           "blocks": [
             {
@@ -4609,7 +4611,7 @@
               }
             }
           ],
-          "fallback_text": "Checking Flipkart and Amazon.in."
+          "fallback_text": "Pressure cookers under ₹3,000: checking Flipkart and Amazon.in."
         },
         "partial": {
           "kind": "output_blocks",
@@ -4658,7 +4660,7 @@
           "major": 1,
           "header": {
             "title": "Pressure cookers under ₹3,000",
-            "subtitle": "As of 08:45 · couldn't refresh"
+            "subtitle": "Cash on delivery to 400050 · as of 08:45 · couldn't refresh"
           },
           "blocks": [
             {
@@ -4721,7 +4723,7 @@
           "major": 1,
           "header": {
             "title": "Couldn't check pressure cookers",
-            "subtitle": "Flipkart, Amazon.in"
+            "subtitle": "Flipkart, Amazon.in · cash on delivery to 400050"
           },
           "blocks": [
             {
@@ -4806,7 +4808,7 @@
               }
             }
           ],
-          "fallback_text": "Checking Amazon."
+          "fallback_text": "Kindle Paperwhite 16 GB: checking Amazon."
         },
         "partial": {
           "kind": "output_blocks",
@@ -4849,7 +4851,7 @@
           "major": 1,
           "header": {
             "title": "Kindle Paperwhite 16 GB",
-            "subtitle": "As of 08:15 · couldn't refresh"
+            "subtitle": "Sold by Amazon · Prime, arrives Mon 28 Sep · as of 08:15 · couldn't refresh"
           },
           "blocks": [
             {
@@ -4927,17 +4929,17 @@
       "request": "What can I still return, and by when?",
       "says": "Four things can still go back; the Shopee blender is the one to decide on first.",
       "surface": "page",
-      "fresh": false,
+      "fresh": true,
       "components": [
         "S14 Return / refund status"
       ],
-      "rationale": "Soonest deadline first; the last day is the trailing value, each marketplace's window on the line; the closed one is said, not listed.",
+      "rationale": "What is still returnable changes as deadlines pass, so it carries a clock. Soonest first, last day trailing, each window and what it counts from on the line.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
         "header": {
           "title": "4 orders you can still return",
-          "subtitle": "Soonest first"
+          "subtitle": "Soonest first · as of 11:30"
         },
         "blocks": [
           {
@@ -4945,23 +4947,23 @@
             "items": [
               {
                 "label": "Blender · Shopee Mall",
-                "secondary": "15-day window · delivered Mon 14 Sep",
+                "secondary": "15 days from delivery · delivered Mon 14 Sep",
                 "trailing": "by Tue 29 Sep"
               },
               {
-                "label": "Earbuds · LazMall",
-                "secondary": "15-day window · delivered Fri 18 Sep",
-                "trailing": "by Sat 3 Oct"
+                "label": "Desk lamp · Amazon.sg",
+                "secondary": "15 days from delivery · delivered Wed 16 Sep",
+                "trailing": "by Thu 1 Oct"
               },
               {
-                "label": "Desk lamp · Amazon.sg",
-                "secondary": "30-day window · delivered Wed 16 Sep",
-                "trailing": "by Fri 16 Oct"
+                "label": "Earbuds · LazMall",
+                "secondary": "30 days from delivery · delivered Fri 18 Sep",
+                "trailing": "by Sun 18 Oct"
               },
               {
                 "label": "Phone case · Temu",
-                "secondary": "90-day window · delivered Fri 11 Sep",
-                "trailing": "by Thu 10 Dec"
+                "secondary": "90 days from purchase · ordered Wed 2 Sep",
+                "trailing": "by Tue 1 Dec"
               }
             ]
           },
@@ -4971,7 +4973,7 @@
               {
                 "heading": "Too late to return",
                 "bullets": [
-                  "Charger from AliExpress: its 15-day window closed Thu 24 Sep."
+                  "Charger from AliExpress: its 15-day window from delivery (Wed 9 Sep) closed Thu 24 Sep."
                 ]
               }
             ]
@@ -4980,14 +4982,15 @@
         "details": {
           "sources": [
             {
-              "label": "Shopee, Lazada, Amazon.sg, Temu and AliExpress order pages, 26 Sep 2026"
+              "label": "Shopee, Lazada, Amazon.sg, Temu and AliExpress order pages, 26 Sep 2026 11:30"
             }
           ],
           "assumptions": [
+            "Shopee, Lazada, Amazon.sg and AliExpress count the window from delivery; Temu counts it from purchase.",
             "Each window is the one the order page shows; it varies by seller and item, and some items can't be returned."
           ]
         },
-        "fallback_text": "You can still return 4 orders, soonest first: blender from Shopee Mall by Tue 29 Sep (15-day window, delivered Mon 14 Sep); earbuds from LazMall by Sat 3 Oct (15 days, delivered Fri 18 Sep); desk lamp from Amazon.sg by Fri 16 Oct (30 days, delivered Wed 16 Sep); phone case from Temu by Thu 10 Dec (90 days, delivered Fri 11 Sep). Too late: the AliExpress charger's 15-day window closed Thu 24 Sep."
+        "fallback_text": "As of 11:30, you can still return 4 orders, soonest first: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep); phone case from Temu by Tue 1 Dec (90 days from purchase, ordered Wed 2 Sep). Too late: the AliExpress charger's 15-day window from delivery closed Thu 24 Sep."
       },
       "states": {
         "loading": {
@@ -5007,7 +5010,7 @@
               }
             }
           ],
-          "fallback_text": "Checking 5 marketplaces for your orders."
+          "fallback_text": "Orders you can still return: checking 5 marketplaces for your orders."
         },
         "partial": {
           "kind": "output_blocks",
@@ -5022,18 +5025,18 @@
               "items": [
                 {
                   "label": "Blender · Shopee Mall",
-                  "secondary": "15-day window · delivered Mon 14 Sep",
+                  "secondary": "15 days from delivery · delivered Mon 14 Sep",
                   "trailing": "by Tue 29 Sep"
                 },
                 {
-                  "label": "Earbuds · LazMall",
-                  "secondary": "15-day window · delivered Fri 18 Sep",
-                  "trailing": "by Sat 3 Oct"
+                  "label": "Desk lamp · Amazon.sg",
+                  "secondary": "15 days from delivery · delivered Wed 16 Sep",
+                  "trailing": "by Thu 1 Oct"
                 },
                 {
-                  "label": "Desk lamp · Amazon.sg",
-                  "secondary": "30-day window · delivered Wed 16 Sep",
-                  "trailing": "by Fri 16 Oct"
+                  "label": "Earbuds · LazMall",
+                  "secondary": "30 days from delivery · delivered Fri 18 Sep",
+                  "trailing": "by Sun 18 Oct"
                 }
               ]
             },
@@ -5043,7 +5046,7 @@
                 {
                   "heading": "Too late to return",
                   "bullets": [
-                    "Charger from AliExpress: its 15-day window closed Thu 24 Sep."
+                    "Charger from AliExpress: its 15-day window from delivery (Wed 9 Sep) closed Thu 24 Sep."
                   ]
                 }
               ]
@@ -5059,17 +5062,18 @@
               }
             ],
             "assumptions": [
+              "Shopee, Lazada, Amazon.sg and AliExpress count the window from delivery; Temu counts it from purchase.",
               "Each window is the one the order page shows; it varies by seller and item, and some items can't be returned."
             ]
           },
-          "fallback_text": "As of 11:30, 4 of 5 marketplaces checked, you can still return 3 orders: blender from Shopee Mall by Tue 29 Sep (15-day window, delivered Mon 14 Sep); earbuds from LazMall by Sat 3 Oct (15 days, delivered Fri 18 Sep); desk lamp from Amazon.sg by Fri 16 Oct (30 days, delivered Wed 16 Sep). Temu didn't answer. Too late: the AliExpress charger's 15-day window closed Thu 24 Sep."
+          "fallback_text": "As of 11:30, 4 of 5 marketplaces checked, you can still return 3 orders: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep). Temu didn't answer. Too late: the AliExpress charger's 15-day window from delivery closed Thu 24 Sep."
         },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "4 orders you can still return",
-            "subtitle": "As of 08:00 · couldn't refresh"
+            "subtitle": "Soonest first · as of 08:00 · couldn't refresh"
           },
           "blocks": [
             {
@@ -5077,23 +5081,23 @@
               "items": [
                 {
                   "label": "Blender · Shopee Mall",
-                  "secondary": "15-day window · delivered Mon 14 Sep",
+                  "secondary": "15 days from delivery · delivered Mon 14 Sep",
                   "trailing": "by Tue 29 Sep"
                 },
                 {
-                  "label": "Earbuds · LazMall",
-                  "secondary": "15-day window · delivered Fri 18 Sep",
-                  "trailing": "by Sat 3 Oct"
+                  "label": "Desk lamp · Amazon.sg",
+                  "secondary": "15 days from delivery · delivered Wed 16 Sep",
+                  "trailing": "by Thu 1 Oct"
                 },
                 {
-                  "label": "Desk lamp · Amazon.sg",
-                  "secondary": "30-day window · delivered Wed 16 Sep",
-                  "trailing": "by Fri 16 Oct"
+                  "label": "Earbuds · LazMall",
+                  "secondary": "30 days from delivery · delivered Fri 18 Sep",
+                  "trailing": "by Sun 18 Oct"
                 },
                 {
                   "label": "Phone case · Temu",
-                  "secondary": "90-day window · delivered Fri 11 Sep",
-                  "trailing": "by Thu 10 Dec"
+                  "secondary": "90 days from purchase · ordered Wed 2 Sep",
+                  "trailing": "by Tue 1 Dec"
                 }
               ]
             },
@@ -5103,7 +5107,7 @@
                 {
                   "heading": "Too late to return",
                   "bullets": [
-                    "Charger from AliExpress: its 15-day window closed Thu 24 Sep."
+                    "Charger from AliExpress: its 15-day window from delivery (Wed 9 Sep) closed Thu 24 Sep."
                   ]
                 }
               ]
@@ -5116,10 +5120,11 @@
               }
             ],
             "assumptions": [
+              "Shopee, Lazada, Amazon.sg and AliExpress count the window from delivery; Temu counts it from purchase.",
               "Each window is the one the order page shows; it varies by seller and item, and some items can't be returned."
             ]
           },
-          "fallback_text": "As of 08:00 (couldn't refresh), you could still return 4 orders: blender from Shopee Mall by Tue 29 Sep (15-day window, delivered Mon 14 Sep); earbuds from LazMall by Sat 3 Oct (15 days, delivered Fri 18 Sep); desk lamp from Amazon.sg by Fri 16 Oct (30 days, delivered Wed 16 Sep); phone case from Temu by Thu 10 Dec (90 days, delivered Fri 11 Sep). Too late: the AliExpress charger's 15-day window closed Thu 24 Sep."
+          "fallback_text": "As of 08:00 (couldn't refresh), you could still return 4 orders: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep); phone case from Temu by Tue 1 Dec (90 days from purchase, ordered Wed 2 Sep). Too late: the AliExpress charger's 15-day window from delivery closed Thu 24 Sep."
         },
         "empty": {
           "kind": "output_blocks",
