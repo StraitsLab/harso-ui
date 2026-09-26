@@ -6714,19 +6714,19 @@
           "major": 1,
           "header": {
             "title": "Shop · August",
-            "subtitle": "Average sales a day · reading orders"
+            "subtitle": "Average sales a day · all channels"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 31 days of orders",
+              "detail": "Reading 31 days of Shopify orders",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d01"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d40"
               }
             }
           ],
-          "fallback_text": "Reading August orders from Shopify."
+          "fallback_text": "Shop, August (Average sales a day, all channels). Reading 31 days of Shopify orders."
         },
         "partial": {
           "kind": "output_blocks",
@@ -6788,12 +6788,72 @@
           },
           "fallback_text": "August so far, 3 of 4 weeks reported: S$31,500 revenue, S$1,500 a day on average. Average a day: 1–7 Aug S$1,400, 8–14 Aug S$1,500, 15–21 Aug S$1,600. 22–31 Aug is not reported yet."
         },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Shop · August",
+            "subtitle": "Average sales a day · as of 31 Aug, 23:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$47,900",
+                  "label": "Revenue"
+                },
+                {
+                  "value": "+11%",
+                  "label": "vs July"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "bar",
+                "unit": "S$",
+                "x_labels": [
+                  "1–7 Aug",
+                  "8–14 Aug",
+                  "15–21 Aug",
+                  "22–31 Aug"
+                ],
+                "series": [
+                  {
+                    "label": "Average a day",
+                    "values": [
+                      "1400",
+                      "1500",
+                      "1600",
+                      "1640"
+                    ]
+                  }
+                ],
+                "highlight_index": 3
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, read 31 Aug 2026 23:00"
+              }
+            ],
+            "assumptions": [
+              "Orders and refunds after 31 Aug 23:00 are not in."
+            ]
+          },
+          "fallback_text": "As of 31 Aug 23:00 (couldn’t refresh): August revenue S$47,900, up 11% on July. Average sales a day: 1–7 Aug S$1,400, 8–14 Aug S$1,500, 15–21 Aug S$1,600, 22–31 Aug S$1,640. Orders and refunds after 31 Aug 23:00 are not in."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No orders in August",
-            "subtitle": "All channels"
+            "subtitle": "All channels · store paused since 31 Jul"
           },
           "blocks": [
             {
@@ -6802,7 +6862,7 @@
               "detail": "Shopify shows no orders from 1 to 31 Aug"
             }
           ],
-          "fallback_text": "Shopify shows no orders from 1 to 31 Aug. The store has been paused since 31 Jul."
+          "fallback_text": "No orders in August (All channels, store paused since 31 Jul). Shopify shows no orders from 1 to 31 Aug."
         },
         "failed": {
           "kind": "output_blocks",
@@ -6815,10 +6875,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t read August sales (Shopify). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -6905,19 +6965,83 @@
           "major": 1,
           "header": {
             "title": "This week",
-            "subtitle": "21–26 Sep · reading orders"
+            "subtitle": "21–26 Sep · all channels"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 6 days of orders",
+              "detail": "Reading 6 days of Shopify orders",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0c"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d41"
               }
             }
           ],
-          "fallback_text": "Reading this week’s orders from Shopify."
+          "fallback_text": "This week (21–26 Sep, all channels). Reading 6 days of Shopify orders."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "This week",
+            "subtitle": "21–26 Sep · Saturday not in yet · as of 14:20"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$8,710",
+                  "label": "Revenue, Mon–Fri"
+                },
+                {
+                  "value": "S$2,210",
+                  "label": "Best day, Fri"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "bar",
+                "unit": "S$",
+                "x_labels": [
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Sat"
+                ],
+                "series": [
+                  {
+                    "label": "Revenue",
+                    "values": [
+                      "1500",
+                      "1720",
+                      "1380",
+                      "1900",
+                      "2210",
+                      null
+                    ]
+                  }
+                ],
+                "highlight_index": 4
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, read 26 Sep 2026 14:20"
+              }
+            ],
+            "assumptions": [
+              "Saturday’s orders are not read yet, so it is left blank, not counted as zero."
+            ]
+          },
+          "fallback_text": "This week to 14:20, Saturday not in yet: S$8,710 for Mon–Fri. Mon S$1,500, Tue S$1,720, Wed S$1,380, Thu S$1,900, Fri S$2,210 (best day). Saturday’s orders are not read yet, so it is left blank, not counted as zero."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6989,10 +7113,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No orders from Mon 21 Sep to now"
+              "detail": "No orders since Mon 21 Sep. Last week had 64 by this point."
             }
           ],
-          "fallback_text": "No orders from Mon 21 Sep to 14:20 today. Last week had 64 by this point."
+          "fallback_text": "No orders this week (21–26 Sep, all channels, as of 14:20). No orders since Mon 21 Sep. Last week had 64 by this point."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7005,10 +7129,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t read this week’s sales (Shopify). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -7080,10 +7204,11 @@
             }
           ],
           "assumptions": [
-            "Target S$50,000 for September, as you set it on 1 Sep."
+            "Target S$50,000 for September, as you set it on 1 Sep.",
+            "S$11,400 over the last 4 days is about S$2,850 a day; so far it has been about S$1,485 a day."
           ]
         },
-        "fallback_text": "September to 26 Sep, 16:05: S$38,600 of the S$50,000 target, so S$11,400 to go in 4 days (about S$2,850 a day; so far about S$1,485 a day). Running total: S$9,900 by 7 Sep, S$20,100 by 14 Sep, S$30,400 by 21 Sep."
+        "fallback_text": "September to 26 Sep, 16:05: S$38,600 of the S$50,000 target (set on 1 Sep), so S$11,400 to go in 4 days (about S$2,850 a day; so far about S$1,485 a day). Running total: S$9,900 by 7 Sep, S$20,100 by 14 Sep, S$30,400 by 21 Sep, S$38,600 by 26 Sep."
       },
       "states": {
         "loading": {
@@ -7091,19 +7216,80 @@
           "major": 1,
           "header": {
             "title": "September target",
-            "subtitle": "1–26 Sep · target S$50,000 · reading"
+            "subtitle": "1–26 Sep · target S$50,000"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 26 days of sales",
+              "detail": "Reading 26 days of Shopify sales",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d13"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d42"
               }
             }
           ],
-          "fallback_text": "Reading September sales to check the target."
+          "fallback_text": "September target (1–26 Sep, target S$50,000). Reading 26 days of Shopify sales."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "September target",
+            "subtitle": "1–26 Sep · target S$50,000 · 2 of 3 channels · as of 16:05"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$33,000",
+                  "label": "Online and Instagram"
+                },
+                {
+                  "value": "S$50,000",
+                  "label": "Target"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "line",
+                "unit": "S$",
+                "x_labels": [
+                  "7 Sep",
+                  "14 Sep",
+                  "21 Sep",
+                  "26 Sep"
+                ],
+                "series": [
+                  {
+                    "label": "Total, 2 channels",
+                    "values": [
+                      "8500",
+                      "17200",
+                      "26000",
+                      "33000"
+                    ]
+                  }
+                ],
+                "highlight_index": 3
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, read 26 Sep 2026 16:05"
+              }
+            ],
+            "assumptions": [
+              "Target S$50,000 for September, as you set it on 1 Sep.",
+              "Weekend market takings are not in yet, so the gap to target is not worked out."
+            ]
+          },
+          "fallback_text": "September to 26 Sep, 16:05, 2 of 3 channels read: S$33,000 from the online store and Instagram against the S$50,000 target (set on 1 Sep). Running total: S$8,500 by 7 Sep, S$17,200 by 14 Sep, S$26,000 by 21 Sep, S$33,000 by 26 Sep. Weekend market takings are not in yet, so the gap to target is not worked out."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7158,9 +7344,28 @@
               {
                 "label": "Shopify analytics, read 25 Sep 2026 18:00"
               }
+            ],
+            "assumptions": [
+              "Target S$50,000 for September, as you set it on 1 Sep."
             ]
           },
-          "fallback_text": "As of 25 Sep 18:00 (couldn’t refresh): S$37,100 of the S$50,000 target, S$12,900 to go. Running total: S$9,900 by 7 Sep, S$20,100 by 14 Sep, S$30,400 by 21 Sep."
+          "fallback_text": "As of 25 Sep 18:00 (couldn’t refresh): S$37,100 of the S$50,000 target (set on 1 Sep), S$12,900 to go. Running total: S$9,900 by 7 Sep, S$20,100 by 14 Sep, S$30,400 by 21 Sep, S$37,100 by 25 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No sales in September yet",
+            "subtitle": "1–26 Sep · target S$50,000 · as of 16:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Shopify shows no orders from 1 to 26 Sep, so all S$50,000 is left"
+            }
+          ],
+          "fallback_text": "No sales in September yet (1–26 Sep, target S$50,000, as of 16:05). Shopify shows no orders from 1 to 26 Sep, so all S$50,000 is left."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7173,10 +7378,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t check the September target (Shopify). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -7260,7 +7465,7 @@
             "The checkout page changed on 24 Aug and was rolled back on 29 Aug."
           ]
         },
-        "fallback_text": "Weekly conversion rate, weeks starting 27 Jul to 14 Sep: 2.7%, 2.8%, 2.6%, 2.7%, 1.9% (week of 24 Aug, checkout change), 2.4%, 2.8%, 2.9%. 8-week average 2.6%."
+        "fallback_text": "Weekly conversion rate, weeks starting 27 Jul to 14 Sep: 2.7%, 2.8%, 2.6%, 2.7%, 1.9% (week of 24 Aug: the checkout page changed on 24 Aug and was rolled back on 29 Aug), 2.4%, 2.8%, 2.9%. 8-week average 2.6%."
       },
       "states": {
         "loading": {
@@ -7268,19 +7473,19 @@
           "major": 1,
           "header": {
             "title": "Conversion rate",
-            "subtitle": "Weekly · reading 8 weeks"
+            "subtitle": "Weekly · 27 Jul–20 Sep"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 8 weeks of sessions and orders",
+              "detail": "Reading 8 weeks of Shopify sessions and orders",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d12"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d43"
               }
             }
           ],
-          "fallback_text": "Reading 8 weeks of conversion rate."
+          "fallback_text": "Conversion rate (Weekly, 27 Jul–20 Sep). Reading 8 weeks of Shopify sessions and orders."
         },
         "partial": {
           "kind": "output_blocks",
@@ -7348,23 +7553,105 @@
               "The week of 14 Sep is not in yet, so it is left blank, not counted as zero."
             ]
           },
-          "fallback_text": "Weekly conversion rate, weeks starting 27 Jul to 7 Sep: 2.7%, 2.8%, 2.6%, 2.7%, 1.9% (week of 24 Aug), 2.4%, 2.8%. 7-week average 2.6%. The week of 14 Sep is not in yet."
+          "fallback_text": "Weekly conversion rate, 7 of 8 weeks reported, weeks starting 27 Jul to 7 Sep: 2.7%, 2.8%, 2.6%, 2.7%, 1.9% (week of 24 Aug), 2.4%, 2.8%. 7-week average 2.6%. The week of 14 Sep is not in yet, so it is left blank, not counted as zero."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Conversion rate",
+            "subtitle": "Weekly · 27 Jul–13 Sep · as of 14 Sep, 09:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "2.8%",
+                  "label": "Week of 7 Sep"
+                },
+                {
+                  "value": "2.6%",
+                  "label": "7-week average"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "line",
+                "unit": "%",
+                "x_labels": [
+                  "27 Jul",
+                  "3 Aug",
+                  "10 Aug",
+                  "17 Aug",
+                  "24 Aug",
+                  "31 Aug",
+                  "7 Sep"
+                ],
+                "series": [
+                  {
+                    "label": "Conversion",
+                    "values": [
+                      "2.7",
+                      "2.8",
+                      "2.6",
+                      "2.7",
+                      "1.9",
+                      "2.4",
+                      "2.8"
+                    ]
+                  }
+                ],
+                "highlight_index": 4
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, read 14 Sep 2026 09:00"
+              }
+            ],
+            "assumptions": [
+              "The week of 14 Sep is not in this read."
+            ]
+          },
+          "fallback_text": "As of 14 Sep 09:00 (couldn’t refresh): weekly conversion rate, weeks starting 27 Jul to 7 Sep: 2.7%, 2.8%, 2.6%, 2.7%, 1.9% (week of 24 Aug, checkout change), 2.4%, 2.8%. 7-week average 2.6%. The week of 14 Sep is not in this read."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No conversion rate to show",
+            "subtitle": "Weekly · 27 Jul–20 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Shopify recorded no store sessions in these 8 weeks, so there is no rate"
+            }
+          ],
+          "fallback_text": "No conversion rate to show (Weekly, 27 Jul–20 Sep). Shopify recorded no store sessions in these 8 weeks, so there is no rate."
         },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Couldn’t read conversion rate",
-            "subtitle": "Shopify"
+            "subtitle": "Shopify analytics"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify analytics didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify analytics didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t read conversion rate (Shopify analytics). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -7493,7 +7780,7 @@
             "No sales on Mon 7 Sep: the shop was closed for stocktake."
           ]
         },
-        "fallback_text": "Sales 1–14 Sep: S$22,100, up 17.6% on the previous 14 days. Daily (S$): 1,400, 1,700, 1,300, 1,900, 2,100, 1,500, 0 on Mon 7 Sep (closed), 1,300, 1,800, 2,000, 1,400, 1,800, 2,200, 1,700. Unpaid S$5,350 across 5 invoices. Late: Cedar Studio S$1,200 (9 days), Moss Café S$900 (6 days), Tern Goods S$1,600 (3 days)."
+        "fallback_text": "Sales 1–14 Sep: S$22,100, up 17.6% on the previous 14 days. Daily (S$): 1,400, 1,700, 1,300, 1,900, 2,100, 1,500, 0 on Mon 7 Sep (closed for stocktake), 1,300, 1,800, 2,000, 1,400, 1,800, 2,200, 1,700. Unpaid as of 10:30: S$5,350 across 5 invoices. Late: Cedar Studio INV-101 S$1,200 (9 days), Moss Café INV-106 S$900 (6 days), Tern Goods INV-109 S$1,600 (3 days)."
       },
       "states": {
         "loading": {
@@ -7501,19 +7788,19 @@
           "major": 1,
           "header": {
             "title": "September sales",
-            "subtitle": "1–14 Sep · reading Xero"
+            "subtitle": "1–14 Sep"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading sales and invoices from Xero",
+              "detail": "Reading Xero sales and unpaid invoices",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d04"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d44"
               }
             }
           ],
-          "fallback_text": "Reading 1–14 Sep sales and unpaid invoices from Xero."
+          "fallback_text": "September sales (1–14 Sep). Reading Xero sales and unpaid invoices."
         },
         "partial": {
           "kind": "output_blocks",
@@ -7593,7 +7880,7 @@
               "No sales on Mon 7 Sep: the shop was closed for stocktake."
             ]
           },
-          "fallback_text": "Sales 1–14 Sep: S$22,100, up 17.6% on the previous 14 days. Daily (S$): 1,400, 1,700, 1,300, 1,900, 2,100, 1,500, 0 on Mon 7 Sep (closed), 1,300, 1,800, 2,000, 1,400, 1,800, 2,200, 1,700. Unpaid invoices are not read yet."
+          "fallback_text": "Sales 1–14 Sep as of 10:30, invoices not read yet: S$22,100, up 17.6% on the previous 14 days. Daily (S$): 1,400, 1,700, 1,300, 1,900, 2,100, 1,500, 0 on Mon 7 Sep (closed for stocktake), 1,300, 1,800, 2,000, 1,400, 1,800, 2,200, 1,700. Unpaid invoices are not read yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7703,7 +7990,7 @@
               }
             ]
           },
-          "fallback_text": "As of 25 Sep 17:00 (couldn’t refresh): sales 1–14 Sep S$22,100, up 17.6% on the previous 14 days. Daily (S$): 1,400, 1,700, 1,300, 1,900, 2,100, 1,500, 0 on Mon 7 Sep (closed), 1,300, 1,800, 2,000, 1,400, 1,800, 2,200, 1,700. Unpaid S$6,150 across 6 invoices. Late: Cedar Studio S$1,200 (9 days), Moss Café S$900 (6 days), Tern Goods S$1,600 (3 days)."
+          "fallback_text": "As of 25 Sep 17:00 (couldn’t refresh): sales 1–14 Sep S$22,100, up 17.6% on the previous 14 days. Daily (S$): 1,400, 1,700, 1,300, 1,900, 2,100, 1,500, 0 on Mon 7 Sep (closed for stocktake), 1,300, 1,800, 2,000, 1,400, 1,800, 2,200, 1,700. Unpaid S$6,150 across 6 invoices. Late: Cedar Studio INV-101 S$1,200 (9 days), Moss Café INV-106 S$900 (6 days), Tern Goods INV-109 S$1,600 (3 days)."
         },
         "empty": {
           "kind": "output_blocks",
@@ -7719,7 +8006,7 @@
               "detail": "Xero shows no sales and nothing owed for 1–14 Sep"
             }
           ],
-          "fallback_text": "No sales or unpaid invoices for 1–14 Sep in Xero, as of 10:30."
+          "fallback_text": "No sales or unpaid invoices (1–14 Sep, as of 10:30). Xero shows no sales and nothing owed for 1–14 Sep."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7732,10 +8019,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Xero asked you to sign in again. Nothing was changed."
+              "detail": "Xero asked you to sign in again. Nothing was changed. Sign in, then ask me."
             }
           ],
-          "fallback_text": "Xero asked you to sign in again. Nothing was changed. Sign in to Xero, then ask me again."
+          "fallback_text": "Couldn’t read sales from Xero (1–14 Sep). Xero asked you to sign in again. Nothing was changed. Sign in, then ask me."
         }
       }
     },
@@ -7792,19 +8079,19 @@
           "major": 1,
           "header": {
             "title": "Cash across accounts",
-            "subtitle": "DBS and OCBC via Xero · reading"
+            "subtitle": "DBS and OCBC via Xero"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 3 business accounts",
+              "detail": "Reading your balance from 3 business accounts",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d06"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d45"
               }
             }
           ],
-          "fallback_text": "Reading your cash balance from 3 accounts."
+          "fallback_text": "Cash across accounts (DBS and OCBC via Xero). Reading your balance from 3 business accounts."
         },
         "partial": {
           "kind": "output_blocks",
@@ -7838,7 +8125,7 @@
               "The DBS account is not read yet, so the balance is low."
             ]
           },
-          "fallback_text": "S$98,100 across 2 of 3 accounts as of 10:40; the DBS account is not read yet."
+          "fallback_text": "S$98,100 across 2 of 3 accounts as of 10:40; the DBS account is not read yet, so the balance is low."
         },
         "empty": {
           "kind": "output_blocks",
@@ -7851,10 +8138,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Xero has no bank accounts linked"
+              "detail": "Xero has no bank accounts linked. Connect DBS or OCBC in Xero first."
             }
           ],
-          "fallback_text": "Xero has no bank accounts linked, so there is no balance to read. Connect DBS or OCBC in Xero first."
+          "fallback_text": "No bank accounts connected (Xero, as of 10:40). Xero has no bank accounts linked. Connect DBS or OCBC in Xero first."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7867,10 +8154,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Xero didn’t respond. Nothing was changed."
+              "detail": "Xero didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Xero didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t read your cash balance (DBS and OCBC via Xero). Xero didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -7936,19 +8223,19 @@
           "major": 1,
           "header": {
             "title": "Top sellers · August",
-            "subtitle": "Units sold · reading orders"
+            "subtitle": "Units sold"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 1,696 items sold",
+              "detail": "Ranking 1,696 items sold in August",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d02"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d46"
               }
             }
           ],
-          "fallback_text": "Reading August orders to rank products."
+          "fallback_text": "Top sellers, August (Units sold). Ranking 1,696 items sold in August."
         },
         "partial": {
           "kind": "output_blocks",
@@ -7995,7 +8282,54 @@
               "Weekend market sales are not in yet, so these counts are low."
             ]
           },
-          "fallback_text": "Top sellers in August, online store and Instagram only: linen shirt 371 units, chinos 208, tote bag 176, cap 104. Weekend market sales are not in yet."
+          "fallback_text": "Top sellers in August, 2 of 3 channels read (online store and Instagram): linen shirt 371 units, chinos 208, tote bag 176, cap 104. Weekend market sales are not in yet, so these counts are low."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Top sellers · August",
+            "subtitle": "Units sold · as of 31 Aug, 23:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "bar",
+                "unit": "units",
+                "x_labels": [
+                  "Linen shirt",
+                  "Chinos",
+                  "Tote bag",
+                  "Cap"
+                ],
+                "series": [
+                  {
+                    "label": "Units",
+                    "values": [
+                      "412",
+                      "236",
+                      "198",
+                      "121"
+                    ]
+                  }
+                ],
+                "highlight_index": 0
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify, read 31 Aug 2026 23:00"
+              }
+            ],
+            "assumptions": [
+              "Orders and refunds after 31 Aug 23:00 are not in."
+            ]
+          },
+          "fallback_text": "As of 31 Aug 23:00 (couldn’t refresh): top sellers in August were linen shirt 412 units, chinos 236, tote bag 198, cap 121. Orders and refunds after 31 Aug 23:00 are not in."
         },
         "empty": {
           "kind": "output_blocks",
@@ -8008,10 +8342,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No products sold from 1 to 31 Aug"
+              "detail": "No products sold from 1 to 31 Aug. The store has been paused since 31 Jul."
             }
           ],
-          "fallback_text": "No products sold from 1 to 31 Aug. The store has been paused since 31 Jul."
+          "fallback_text": "No sales in August (Units sold). No products sold from 1 to 31 Aug. The store has been paused since 31 Jul."
         },
         "failed": {
           "kind": "output_blocks",
@@ -8024,10 +8358,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t rank August sales (Shopify). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -8108,26 +8442,146 @@
           "major": 1,
           "header": {
             "title": "Online store · August",
-            "subtitle": "Online store only · reading"
+            "subtitle": "Online store only"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading online store orders",
+              "detail": "Reading August online store orders",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0f"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d47"
               }
             }
           ],
-          "fallback_text": "Reading August online store orders."
+          "fallback_text": "Online store, August (Online store only). Reading August online store orders."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Online store · August",
+            "subtitle": "Average sales a day, by week · online store · 3 of 4 weeks"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$18,900",
+                  "label": "Online store, 1–21 Aug"
+                },
+                {
+                  "value": "S$900",
+                  "label": "Average a day"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "bar",
+                "unit": "S$",
+                "x_labels": [
+                  "1–7 Aug",
+                  "8–14 Aug",
+                  "15–21 Aug",
+                  "22–31 Aug"
+                ],
+                "series": [
+                  {
+                    "label": "Average a day",
+                    "values": [
+                      "840",
+                      "900",
+                      "960",
+                      null
+                    ]
+                  }
+                ],
+                "highlight_index": 2
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, online store, 1–21 Aug 2026"
+              }
+            ],
+            "assumptions": [
+              "22–31 Aug is not read yet, so it is left blank, not counted as zero."
+            ]
+          },
+          "fallback_text": "Online store in August so far, 3 of 4 weeks read: S$18,900 for 1–21 Aug, S$900 a day on average. Average sales a day: 1–7 Aug S$840, 8–14 Aug S$900, 15–21 Aug S$960. 22–31 Aug is not read yet, so it is left blank, not counted as zero."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Online store · August",
+            "subtitle": "Online store only · as of 31 Aug, 23:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$28,600",
+                  "label": "Online store revenue"
+                },
+                {
+                  "value": "60%",
+                  "label": "Of all revenue"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "bar",
+                "unit": "S$",
+                "x_labels": [
+                  "1–7 Aug",
+                  "8–14 Aug",
+                  "15–21 Aug",
+                  "22–31 Aug"
+                ],
+                "series": [
+                  {
+                    "label": "Average a day",
+                    "values": [
+                      "840",
+                      "900",
+                      "960",
+                      "970"
+                    ]
+                  }
+                ],
+                "highlight_index": 3
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, online store, read 31 Aug 2026 23:00"
+              }
+            ],
+            "assumptions": [
+              "Orders and refunds after 31 Aug 23:00 are not in."
+            ]
+          },
+          "fallback_text": "As of 31 Aug 23:00 (couldn’t refresh): online store in August S$28,600, 60% of all revenue. Average sales a day: 1–7 Aug S$840, 8–14 Aug S$900, 15–21 Aug S$960, 22–31 Aug S$970. Orders and refunds after 31 Aug 23:00 are not in."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No online store sales in August",
-            "subtitle": "Online store only"
+            "subtitle": "Online store only · Instagram and markets did sell"
           },
           "blocks": [
             {
@@ -8136,7 +8590,7 @@
               "detail": "The online store had no orders from 1 to 31 Aug"
             }
           ],
-          "fallback_text": "The online store had no orders from 1 to 31 Aug; all August sales came from Instagram and the markets."
+          "fallback_text": "No online store sales in August (Online store only, Instagram and markets did sell). The online store had no orders from 1 to 31 Aug."
         },
         "failed": {
           "kind": "output_blocks",
@@ -8149,10 +8603,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t filter to the online store (Shopify). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -8212,19 +8666,19 @@
           "major": 1,
           "header": {
             "title": "Revenue by channel · August",
-            "subtitle": "1–31 Aug · reading 3 channels"
+            "subtitle": "1–31 Aug"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading Shopify, Instagram and market takings",
+              "detail": "Reading 3 channels: Shopify, Instagram and market takings",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d03"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d48"
               }
             }
           ],
-          "fallback_text": "Reading August revenue from three channels."
+          "fallback_text": "Revenue by channel, August (1–31 Aug). Reading 3 channels: Shopify, Instagram and market takings."
         },
         "partial": {
           "kind": "output_blocks",
@@ -8260,7 +8714,48 @@
               "Weekend market takings are not in yet, so shares wait until every channel is."
             ]
           },
-          "fallback_text": "August revenue so far, 2 of 3 channels read: online store S$28,900, Instagram shop S$12,100. Weekend markets not in yet, so no shares yet."
+          "fallback_text": "August revenue so far, 2 of 3 channels read: online store (Shopify) S$28,900, Instagram shop S$12,100. Weekend market takings are not in yet, so shares wait until every channel is."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Revenue by channel · August",
+            "subtitle": "1–31 Aug · S$47,900 · as of 31 Aug, 23:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Online store",
+                  "secondary": "60%",
+                  "trailing": "S$28,600"
+                },
+                {
+                  "label": "Instagram shop",
+                  "secondary": "25%",
+                  "trailing": "S$12,100"
+                },
+                {
+                  "label": "Weekend markets",
+                  "secondary": "15%",
+                  "trailing": "S$7,200"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, read 31 Aug 2026 23:00"
+              }
+            ],
+            "assumptions": [
+              "Orders and refunds after 31 Aug 23:00 are not in."
+            ]
+          },
+          "fallback_text": "As of 31 Aug 23:00 (couldn’t refresh): August revenue S$47,900: online store S$28,600 (60%), Instagram shop S$12,100 (25%), weekend markets S$7,200 (15%). Orders and refunds after 31 Aug 23:00 are not in."
         },
         "empty": {
           "kind": "output_blocks",
@@ -8273,10 +8768,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No channel took any money from 1 to 31 Aug"
+              "detail": "No channel took money from 1 to 31 Aug. The store has been paused since 31 Jul."
             }
           ],
-          "fallback_text": "No channel took any money from 1 to 31 Aug. The store has been paused since 31 Jul."
+          "fallback_text": "No revenue in August (1–31 Aug, 3 channels). No channel took money from 1 to 31 Aug. The store has been paused since 31 Jul."
         },
         "failed": {
           "kind": "output_blocks",
@@ -8289,10 +8784,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Instagram didn’t respond. Nothing was changed."
+              "detail": "Instagram didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Instagram didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t split August revenue (3 channels). Instagram didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -8352,19 +8847,19 @@
           "major": 1,
           "header": {
             "title": "Payment methods · August",
-            "subtitle": "1–31 Aug · reading orders"
+            "subtitle": "1–31 Aug"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 1,240 orders",
+              "detail": "Reading 1,240 orders by payment method",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d11"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d49"
               }
             }
           ],
-          "fallback_text": "Reading August orders by payment method."
+          "fallback_text": "Payment methods, August (1–31 Aug). Reading 1,240 orders by payment method."
         },
         "partial": {
           "kind": "output_blocks",
@@ -8400,14 +8895,55 @@
               "GrabPay settles a day later, so its 137 orders are not read yet."
             ]
           },
-          "fallback_text": "1,103 of 1,240 August orders read: card 719, PayNow 384. GrabPay orders not read yet, so no shares yet."
+          "fallback_text": "1,103 of 1,240 August orders read: card 719, PayNow 384 (both Shopify Payments). GrabPay settles a day later, so its 137 orders are not read yet, and there are no shares yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Payment methods · August",
+            "subtitle": "1–31 Aug · 1,236 orders · as of 31 Aug, 23:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Card",
+                  "secondary": "58%",
+                  "trailing": "716 orders"
+                },
+                {
+                  "label": "PayNow",
+                  "secondary": "31%",
+                  "trailing": "384 orders"
+                },
+                {
+                  "label": "GrabPay",
+                  "secondary": "11%",
+                  "trailing": "136 orders"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify payments, read 31 Aug 2026 23:00"
+              }
+            ],
+            "assumptions": [
+              "Orders and refunds after 31 Aug 23:00 are not in."
+            ]
+          },
+          "fallback_text": "As of 31 Aug 23:00 (couldn’t refresh): August orders by payment method, 1,236 in all: card 716 (58%), PayNow 384 (31%), GrabPay 136 (11%). Orders and refunds after 31 Aug 23:00 are not in."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No orders in August",
-            "subtitle": "Payment methods"
+            "subtitle": "Payment methods · store paused since 31 Jul"
           },
           "blocks": [
             {
@@ -8416,23 +8952,23 @@
               "detail": "Shopify shows no paid orders from 1 to 31 Aug"
             }
           ],
-          "fallback_text": "Shopify shows no paid orders from 1 to 31 Aug. The store has been paused since 31 Jul."
+          "fallback_text": "No orders in August (Payment methods, store paused since 31 Jul). Shopify shows no paid orders from 1 to 31 Aug."
         },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Couldn’t split August payments",
-            "subtitle": "Shopify"
+            "subtitle": "Shopify payments"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify payments didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify payments didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t split August payments (Shopify payments). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -8525,7 +9061,8 @@
             }
           ],
           "assumptions": [
-            "September is left out because it has not ended."
+            "September is left out because it has not ended.",
+            "Jan–Aug 2025 revenue was S$279,400."
           ]
         },
         "fallback_text": "Jan–Aug revenue: S$307,200 in 2026, up 10% on S$279,400 in 2025. 2026 by month (S$k): 30.4, 29.1, 35.8, 37.9, 40.2, 42.6, 43.0, 48.2. 2025: 31.2, 29.8, 33.0, 34.1, 35.6, 36.0, 38.2, 41.5."
@@ -8536,19 +9073,19 @@
           "major": 1,
           "header": {
             "title": "Revenue · 2026 vs 2025",
-            "subtitle": "Monthly · Jan–Aug · reading"
+            "subtitle": "Monthly · Jan–Aug"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 16 months of revenue",
+              "detail": "Reading 16 months of Shopify revenue",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0d"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d4a"
               }
             }
           ],
-          "fallback_text": "Reading monthly revenue for 2025 and 2026."
+          "fallback_text": "Revenue, 2026 vs 2025 (Monthly, Jan–Aug). Reading 16 months of Shopify revenue."
         },
         "partial": {
           "kind": "output_blocks",
@@ -8602,21 +9139,103 @@
           },
           "fallback_text": "2026 revenue by month (S$k): 30.4, 29.1, 35.8, 37.9, 40.2, 42.6, 43.0, 48.2. 2025 is still loading, so there is no comparison yet."
         },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Revenue · 2026 vs 2025",
+            "subtitle": "Monthly · Jan–Aug · as of 31 Aug, 23:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$306,900",
+                  "label": "Jan–Aug 2026"
+                },
+                {
+                  "value": "+10%",
+                  "label": "vs Jan–Aug 2025"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "line",
+                "unit": "S$k",
+                "x_labels": [
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug"
+                ],
+                "series": [
+                  {
+                    "label": "2026",
+                    "values": [
+                      "30.4",
+                      "29.1",
+                      "35.8",
+                      "37.9",
+                      "40.2",
+                      "42.6",
+                      "43.0",
+                      "47.9"
+                    ]
+                  },
+                  {
+                    "label": "2025",
+                    "values": [
+                      "31.2",
+                      "29.8",
+                      "33.0",
+                      "34.1",
+                      "35.6",
+                      "36.0",
+                      "38.2",
+                      "41.5"
+                    ]
+                  }
+                ],
+                "highlight_index": 2
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, read 31 Aug 2026 23:00"
+              }
+            ],
+            "assumptions": [
+              "Orders and refunds after 31 Aug 23:00 are not in.",
+              "Jan–Aug 2025 revenue was S$279,400."
+            ]
+          },
+          "fallback_text": "As of 31 Aug 23:00 (couldn’t refresh): Jan–Aug revenue S$306,900 in 2026, up 10% on S$279,400 in 2025. 2026 by month (S$k): 30.4, 29.1, 35.8, 37.9, 40.2, 42.6, 43.0, 47.9. 2025: 31.2, 29.8, 33.0, 34.1, 35.6, 36.0, 38.2, 41.5. Orders and refunds after 31 Aug 23:00 are not in."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No revenue to compare",
-            "subtitle": "Monthly · Jan–Aug"
+            "subtitle": "Monthly · Jan–Aug · store opened 1 Sep 2026"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Shopify has no orders in Jan–Aug of either year"
+              "detail": "Shopify has no orders in Jan–Aug of 2025 or 2026"
             }
           ],
-          "fallback_text": "Shopify has no orders in Jan–Aug of 2025 or 2026. The store opened on 1 Sep 2026."
+          "fallback_text": "No revenue to compare (Monthly, Jan–Aug, store opened 1 Sep 2026). Shopify has no orders in Jan–Aug of 2025 or 2026."
         },
         "failed": {
           "kind": "output_blocks",
@@ -8629,10 +9248,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify has no orders before March 2025. Nothing was changed."
+              "detail": "Shopify didn’t return the 2025 orders. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify has no orders before March 2025. Nothing was changed. I can compare March to August instead."
+          "fallback_text": "Couldn’t compare the two years (Shopify). Shopify didn’t return the 2025 orders. Ask me again in a few minutes."
         }
       }
     },
@@ -8703,19 +9322,19 @@
           "major": 1,
           "header": {
             "title": "Website visitors",
-            "subtitle": "Monthly · Apr–Sep · reading"
+            "subtitle": "Monthly · Apr–Sep"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 6 months of visits",
+              "detail": "Reading 6 months of Plausible visits",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0a"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d4b"
               }
             }
           ],
-          "fallback_text": "Reading monthly website visitors for Apr–Sep."
+          "fallback_text": "Website visitors (Monthly, Apr–Sep). Reading 6 months of Plausible visits."
         },
         "partial": {
           "kind": "output_blocks",
@@ -8766,7 +9385,58 @@
               "September is not in yet, so it is left blank, not counted as zero."
             ]
           },
-          "fallback_text": "Monthly visitors: 8,200 in April, 8,900 in May, 17,400 in June, 18,100 in July, 17,800 in August. September is not reported yet."
+          "fallback_text": "Monthly visitors, 5 of 6 months reported: 8,200 in April, 8,900 in May, 17,400 in June, 18,100 in July, 17,800 in August. September is not in yet, so it is left blank, not counted as zero."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Website visitors",
+            "subtitle": "Monthly · Apr–Sep · as of 21 Sep, 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "line",
+                "unit": "visits",
+                "x_labels": [
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep"
+                ],
+                "series": [
+                  {
+                    "label": "Visitors",
+                    "values": [
+                      "8200",
+                      "8900",
+                      "17400",
+                      "18100",
+                      "17800",
+                      "14900"
+                    ]
+                  }
+                ],
+                "highlight_index": 2
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Plausible analytics, read 21 Sep 2026 08:00"
+              }
+            ],
+            "assumptions": [
+              "September runs to 20 Sep in this read."
+            ]
+          },
+          "fallback_text": "As of 21 Sep 08:00 (couldn’t refresh): monthly visitors 8,200 in April, 8,900 in May, 17,400 in June after the launch, 18,100 in July, 17,800 in August and 14,900 in September to 20 Sep."
         },
         "empty": {
           "kind": "output_blocks",
@@ -8779,10 +9449,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Plausible recorded no visits from 1 Apr to 25 Sep"
+              "detail": "Plausible recorded no visits, 1 Apr–25 Sep. Check its script is on the site."
             }
           ],
-          "fallback_text": "Plausible recorded no visits from 1 Apr to 25 Sep. The tracking script is not on the site."
+          "fallback_text": "No visits recorded (Monthly, Apr–Sep). Plausible recorded no visits, 1 Apr–25 Sep. Check its script is on the site."
         },
         "failed": {
           "kind": "output_blocks",
@@ -8795,10 +9465,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Plausible asked for a new API key. Nothing was changed."
+              "detail": "Plausible asked for a new API key. Nothing was changed. Make one, then ask me."
             }
           ],
-          "fallback_text": "Plausible asked for a new API key. Nothing was changed. Make a new key in Plausible, then ask me again."
+          "fallback_text": "Couldn’t read website visitors (Plausible). Plausible asked for a new API key. Nothing was changed. Make one, then ask me."
         }
       }
     },
@@ -8880,7 +9550,7 @@
             "25 and 26 Sep are not reported yet, so they are left blank, not counted as zero."
           ]
         },
-        "fallback_text": "Daily sales 13–24 Sep: S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900. 25 and 26 Sep not reported yet."
+        "fallback_text": "Daily sales, 12 of 14 days reported as of 10:40. 13–24 Sep: S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900. 25 and 26 Sep are not reported yet, so they are left blank, not counted as zero."
       },
       "states": {
         "loading": {
@@ -8888,19 +9558,19 @@
           "major": 1,
           "header": {
             "title": "Daily sales · 13–26 Sep",
-            "subtitle": "Shopify payouts · reading"
+            "subtitle": "Shopify payouts"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 14 days of payouts",
+              "detail": "Reading 14 days of Shopify payouts",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d09"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d4c"
               }
             }
           ],
-          "fallback_text": "Reading daily sales for 13–26 Sep."
+          "fallback_text": "Daily sales, 13–26 Sep (Shopify payouts). Reading 14 days of Shopify payouts."
         },
         "stale": {
           "kind": "output_blocks",
@@ -8967,39 +9637,39 @@
               "25 and 26 Sep were not read before the refresh failed."
             ]
           },
-          "fallback_text": "As of 25 Sep 09:10 (couldn’t refresh): daily sales 13–24 Sep S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900."
+          "fallback_text": "As of 25 Sep 09:10 (couldn’t refresh): daily sales 13–24 Sep S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900. 25 and 26 Sep were not read before the refresh failed."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No sales in the last two weeks",
-            "subtitle": "13–26 Sep · as of 10:40"
+            "subtitle": "13–26 Sep · store paused since 12 Sep · as of 10:40"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Shopify shows no payouts from 13 to 26 Sep"
+              "detail": "Shopify shows no orders and no payouts from 13 to 26 Sep"
             }
           ],
-          "fallback_text": "No sales from 13 to 26 Sep, as of 10:40. The store has been paused since 12 Sep."
+          "fallback_text": "No sales in the last two weeks (13–26 Sep, store paused since 12 Sep, as of 10:40). Shopify shows no orders and no payouts from 13 to 26 Sep."
         },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Couldn’t read daily sales",
-            "subtitle": "13–26 Sep"
+            "subtitle": "13–26 Sep · Shopify payouts"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify payouts didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify payouts didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t read daily sales (13–26 Sep, Shopify payouts). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -9086,19 +9756,19 @@
           "major": 1,
           "header": {
             "title": "Sales by region · Q2",
-            "subtitle": "Singapore stores · reading the POS export"
+            "subtitle": "Singapore stores"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 3 regions",
+              "detail": "Reading 3 regions from the POS export",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d05"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d4d"
               }
             }
           ],
-          "fallback_text": "Reading Q2 sales by region from the POS export."
+          "fallback_text": "Sales by region, Q2 (Singapore stores). Reading 3 regions from the POS export."
         },
         "partial": {
           "kind": "output_blocks",
@@ -9148,26 +9818,93 @@
               }
             ],
             "assumptions": [
-              "West stores have not sent their Q2 figures, so there is no total yet."
+              "The West stores have not sent their Q2 figures, so there is no total yet."
             ]
           },
-          "fallback_text": "Q2 sales so far, 2 of 3 regions reported: Central S$182,400 (+4%), East S$96,300 (+18%). The West stores haven’t reported yet, so there is no total."
+          "fallback_text": "Q2 sales so far, 2 of 3 regions reported (1 Apr–30 Jun): Central S$182,400 (+4%), East S$96,300 (+18%). The West stores have not sent their Q2 figures, so there is no total yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sales by region · Q2",
+            "subtitle": "Singapore stores · as of 1 Jul, 09:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Region"
+                },
+                {
+                  "label": "Revenue",
+                  "align": "end"
+                },
+                {
+                  "label": "vs Q1",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Central",
+                    "S$182,400",
+                    "+4%"
+                  ]
+                },
+                {
+                  "cells": [
+                    "East",
+                    "S$96,300",
+                    "+18%"
+                  ]
+                },
+                {
+                  "cells": [
+                    "West",
+                    "S$71,100",
+                    "−3%"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Total",
+                    "S$349,800",
+                    "+6%"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "POS export, read 1 Jul 2026 09:00"
+              }
+            ],
+            "assumptions": [
+              "The West stores’ 30 Jun takings are not in this read."
+            ]
+          },
+          "fallback_text": "As of 1 Jul 09:00 (couldn’t refresh), Q2 sales, 1 Apr–30 Jun: Central S$182,400 (+4% on Q1), East S$96,300 (+18%), West S$71,100 (−3%); total S$349,800 (+6%). The West stores’ 30 Jun takings are not in this read."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No sales in the Q2 export",
-            "subtitle": "Singapore stores"
+            "subtitle": "Singapore stores · 1 Apr–30 Jun"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The POS export for 1 Apr–30 Jun has no rows"
+              "detail": "The export has headers but no rows. Export it again with the dates set."
             }
           ],
-          "fallback_text": "The POS export for 1 Apr–30 Jun has headers but no rows. Export it again with the dates set, and send me that file."
+          "fallback_text": "No sales in the Q2 export (Singapore stores, 1 Apr–30 Jun). The export has headers but no rows. Export it again with the dates set."
         },
         "failed": {
           "kind": "output_blocks",
@@ -9180,10 +9917,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "The file is not a sales export. Nothing was changed."
+              "detail": "The file is not a sales export. Nothing was changed. Send the POS sales export."
             }
           ],
-          "fallback_text": "The file is not a sales export. Nothing was changed. Send me the sales export from the POS instead."
+          "fallback_text": "Couldn’t read the POS export (Singapore stores). The file is not a sales export. Nothing was changed. Send the POS sales export."
         }
       }
     },
@@ -9273,7 +10010,7 @@
             "Orders count in the month they were placed."
           ]
         },
-        "fallback_text": "Q2 orders by channel (Apr, May, Jun): online store 520, 548, 601; Instagram shop 150, 162, 171; weekend markets 52, 55, 59; total 722, 765, 831, or 2,318 in all."
+        "fallback_text": "Q2 orders by channel, 1 Apr–30 Jun (Apr, May, Jun): online store 520, 548, 601; Instagram shop 150, 162, 171; weekend markets 52, 55, 59; total 722, 765, 831, or 2,318 in all. Orders count in the month they were placed."
       },
       "states": {
         "loading": {
@@ -9281,19 +10018,19 @@
           "major": 1,
           "header": {
             "title": "Orders by channel · Q2",
-            "subtitle": "1 Apr–30 Jun · reading"
+            "subtitle": "1 Apr–30 Jun"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 2,318 orders",
+              "detail": "Reading 2,318 Shopify orders by channel and month",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0e"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d4e"
               }
             }
           ],
-          "fallback_text": "Reading Q2 orders by channel and month."
+          "fallback_text": "Orders by channel, Q2 (1 Apr–30 Jun). Reading 2,318 Shopify orders by channel and month."
         },
         "partial": {
           "kind": "output_blocks",
@@ -9352,14 +10089,89 @@
               "Weekend market sales are entered by hand and have not been added for Q2."
             ]
           },
-          "fallback_text": "Q2 orders so far, 2 of 3 channels read (Apr, May, Jun): online store 520, 548, 601; Instagram shop 150, 162, 171. Weekend markets not in yet, so no total."
+          "fallback_text": "Q2 orders so far, 1 Apr–30 Jun, 2 of 3 channels read (Apr, May, Jun): online store 520, 548, 601; Instagram shop 150, 162, 171. Weekend market sales are entered by hand and have not been added for Q2, so there is no total."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Orders by channel · Q2",
+            "subtitle": "1 Apr–30 Jun · 2,315 orders · as of 1 Jul, 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Channel"
+                },
+                {
+                  "label": "Apr",
+                  "align": "end"
+                },
+                {
+                  "label": "May",
+                  "align": "end"
+                },
+                {
+                  "label": "Jun",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Online store",
+                    "520",
+                    "548",
+                    "598"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Instagram shop",
+                    "150",
+                    "162",
+                    "171"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Weekend markets",
+                    "52",
+                    "55",
+                    "59"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Total",
+                    "722",
+                    "765",
+                    "828"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify orders, read 1 Jul 2026 08:00"
+              }
+            ],
+            "assumptions": [
+              "Orders placed late on 30 Jun may not be in."
+            ]
+          },
+          "fallback_text": "As of 1 Jul 08:00 (couldn’t refresh): Q2 orders by channel, 1 Apr–30 Jun (Apr, May, Jun): online store 520, 548, 598; Instagram shop 150, 162, 171; weekend markets 52, 55, 59; total 722, 765, 828, or 2,315 in all. Orders placed late on 30 Jun may not be in."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No orders in Q2",
-            "subtitle": "1 Apr–30 Jun"
+            "subtitle": "1 Apr–30 Jun · first order on 3 Jul"
           },
           "blocks": [
             {
@@ -9368,7 +10180,7 @@
               "detail": "Shopify has no orders from 1 Apr to 30 Jun"
             }
           ],
-          "fallback_text": "Shopify has no orders from 1 Apr to 30 Jun. The first order is on 3 Jul."
+          "fallback_text": "No orders in Q2 (1 Apr–30 Jun, first order on 3 Jul). Shopify has no orders from 1 Apr to 30 Jun."
         },
         "failed": {
           "kind": "output_blocks",
@@ -9381,10 +10193,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t break down Q2 orders (Shopify). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -9512,7 +10324,7 @@
             }
           ]
         },
-        "fallback_text": "August revenue by product: linen shirt S$14,420 (412 units), chinos S$9,440 (236), linen dress S$5,760 (96), tote bag S$3,960 (198), wool scarf S$2,520 (84), cap S$2,420 (121), canvas belt S$1,925 (77), sun hat S$1,750 (70), 34 other products S$6,005 (402). Total S$48,200 from 1,696 units."
+        "fallback_text": "August revenue by product, 42 products: linen shirt S$14,420 (412 units), chinos S$9,440 (236), linen dress S$5,760 (96), tote bag S$3,960 (198), wool scarf S$2,520 (84), cap S$2,420 (121), canvas belt S$1,925 (77), sun hat S$1,750 (70), 34 other products S$6,005 (402). Total S$48,200 from 1,696 units."
       },
       "states": {
         "loading": {
@@ -9520,26 +10332,238 @@
           "major": 1,
           "header": {
             "title": "Revenue by product · August",
-            "subtitle": "42 products · reading"
+            "subtitle": "42 products"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 1,696 items sold",
+              "detail": "Reading 1,696 items sold in August",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d10"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d4f"
               }
             }
           ],
-          "fallback_text": "Reading August revenue for 42 products."
+          "fallback_text": "Revenue by product, August (42 products). Reading 1,696 items sold in August."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Revenue by product · August",
+            "subtitle": "1–31 Aug · 2 of 3 channels read · no total yet"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Product"
+                },
+                {
+                  "label": "Units",
+                  "align": "end"
+                },
+                {
+                  "label": "Revenue",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Linen shirt",
+                    "371",
+                    "S$12,985"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Chinos",
+                    "208",
+                    "S$8,320"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Linen dress",
+                    "80",
+                    "S$4,800"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Tote bag",
+                    "176",
+                    "S$3,520"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Wool scarf",
+                    "70",
+                    "S$2,100"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Cap",
+                    "104",
+                    "S$2,080"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Canvas belt",
+                    "64",
+                    "S$1,600"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Sun hat",
+                    "60",
+                    "S$1,500"
+                  ]
+                },
+                {
+                  "cells": [
+                    "34 other products",
+                    "290",
+                    "S$4,095"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, online store and Instagram, 1–31 Aug 2026"
+              }
+            ],
+            "assumptions": [
+              "Online store and Instagram so far: S$41,000 from 1,423 units.",
+              "Weekend market sales are not in yet, so there is no total."
+            ]
+          },
+          "fallback_text": "August revenue by product so far, 2 of 3 channels read (online store and Instagram): linen shirt S$12,985 (371), chinos S$8,320 (208), linen dress S$4,800 (80), tote bag S$3,520 (176), wool scarf S$2,100 (70), cap S$2,080 (104), canvas belt S$1,600 (64), sun hat S$1,500 (60), 34 other products S$4,095 (290). That is S$41,000 from 1,423 units. Weekend market sales are not in yet, so there is no total."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Revenue by product · August",
+            "subtitle": "42 products · as of 31 Aug, 23:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Product"
+                },
+                {
+                  "label": "Units",
+                  "align": "end"
+                },
+                {
+                  "label": "Revenue",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Linen shirt",
+                    "412",
+                    "S$14,420"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Chinos",
+                    "236",
+                    "S$9,440"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Linen dress",
+                    "91",
+                    "S$5,460"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Tote bag",
+                    "198",
+                    "S$3,960"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Wool scarf",
+                    "84",
+                    "S$2,520"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Cap",
+                    "121",
+                    "S$2,420"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Canvas belt",
+                    "77",
+                    "S$1,925"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Sun hat",
+                    "70",
+                    "S$1,750"
+                  ]
+                },
+                {
+                  "cells": [
+                    "34 other products",
+                    "402",
+                    "S$6,005"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Total",
+                    "1,691",
+                    "S$47,900"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify analytics, read 31 Aug 2026 23:00"
+              }
+            ],
+            "assumptions": [
+              "Orders and refunds after 31 Aug 23:00 are not in."
+            ]
+          },
+          "fallback_text": "As of 31 Aug 23:00 (couldn’t refresh): August revenue by product, 42 products: linen shirt S$14,420 (412), chinos S$9,440 (236), linen dress S$5,460 (91), tote bag S$3,960 (198), wool scarf S$2,520 (84), cap S$2,420 (121), canvas belt S$1,925 (77), sun hat S$1,750 (70), 34 other products S$6,005 (402). Total S$47,900 from 1,691 units. Orders and refunds after 31 Aug 23:00 are not in."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No sales in August",
-            "subtitle": "Revenue by product"
+            "subtitle": "Revenue by product · store paused since 31 Jul"
           },
           "blocks": [
             {
@@ -9548,7 +10572,7 @@
               "detail": "No products sold from 1 to 31 Aug"
             }
           ],
-          "fallback_text": "No products sold from 1 to 31 Aug. The store has been paused since 31 Jul."
+          "fallback_text": "No sales in August (Revenue by product, store paused since 31 Jul). No products sold from 1 to 31 Aug."
         },
         "failed": {
           "kind": "output_blocks",
@@ -9561,10 +10585,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify didn’t respond. Nothing was changed."
+              "detail": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t break down August revenue (Shopify). Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -9618,7 +10642,7 @@
             }
           ]
         },
-        "fallback_text": "Q2 orders export: 2,318 orders, S$120,700 revenue, as a CSV in your Library."
+        "fallback_text": "Q2 orders export, 1 Apr–30 Jun: 2,318 orders, S$120,700 revenue, as a CSV in your Library."
       },
       "states": {
         "loading": {
@@ -9626,35 +10650,77 @@
           "major": 1,
           "header": {
             "title": "Q2 orders",
-            "subtitle": "1 Apr–30 Jun · exporting"
+            "subtitle": "1 Apr–30 Jun · CSV"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Exporting 2,318 orders",
+              "detail": "Exporting 2,318 Shopify orders to a CSV",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d07"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d50"
               }
             }
           ],
-          "fallback_text": "Exporting Q2 orders to a CSV."
+          "fallback_text": "Q2 orders (1 Apr–30 Jun, CSV). Exporting 2,318 Shopify orders to a CSV."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q2 orders",
+            "subtitle": "1 Apr–31 May so far · June still exporting · CSV"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "1,487",
+                  "label": "Orders, Apr–May"
+                },
+                {
+                  "value": "S$78,100",
+                  "label": "Revenue, Apr–May"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "download_artifact",
+                "label": "Download Apr–May CSV",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000e10"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopify orders, 1 Apr–31 May 2026"
+              }
+            ],
+            "assumptions": [
+              "June is still exporting, so this file is not the full quarter."
+            ]
+          },
+          "fallback_text": "Q2 orders export so far: 1,487 orders and S$78,100 revenue for 1 Apr–31 May, as a CSV in your Library. June is still exporting, so this file is not the full quarter."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No orders in Q2",
-            "subtitle": "1 Apr–30 Jun"
+            "subtitle": "1 Apr–30 Jun · first order on 3 Jul"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Shopify has no orders from 1 Apr to 30 Jun"
+              "detail": "Shopify has no orders from 1 Apr to 30 Jun, so no file was made"
             }
           ],
-          "fallback_text": "Shopify has no orders from 1 Apr to 30 Jun. The first order is on 3 Jul."
+          "fallback_text": "No orders in Q2 (1 Apr–30 Jun, first order on 3 Jul). Shopify has no orders from 1 Apr to 30 Jun, so no file was made."
         },
         "failed": {
           "kind": "output_blocks",
@@ -9667,10 +10733,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Shopify stopped the export at 1,200 orders. Nothing was saved."
+              "detail": "Shopify stopped the export at 1,200 orders. Nothing was saved. Ask me again."
             }
           ],
-          "fallback_text": "Shopify stopped the export at 1,200 orders. Nothing was saved. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t export Q2 orders (1 Apr–30 Jun). Shopify stopped the export at 1,200 orders. Nothing was saved. Ask me again."
         }
       }
     },
@@ -9717,7 +10783,7 @@
             "Correlation 0.41; not proof that ads caused sales."
           ]
         },
-        "fallback_text": "Daily ad spend vs sales, 1 Jul–25 Sep: a loose positive link with three high outliers. The analysis is in your Library."
+        "fallback_text": "Daily ad spend vs sales, 1 Jul–25 Sep, 87 days: a loose positive link with three high outliers (correlation 0.41; not proof that ads caused sales). The analysis is in your Library."
       },
       "states": {
         "loading": {
@@ -9731,13 +10797,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Plotting 87 days",
+              "detail": "Plotting 87 days of ad spend against sales",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d08"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d51"
               }
             }
           ],
-          "fallback_text": "Plotting daily ad spend against sales for 1 Jul–25 Sep."
+          "fallback_text": "Ad spend vs sales (Daily, 1 Jul–25 Sep). Plotting 87 days of ad spend against sales."
         },
         "partial": {
           "kind": "output_blocks",
@@ -9771,7 +10837,23 @@
               "Correlation 0.38 on 56 days; not proof that ads caused sales."
             ]
           },
-          "fallback_text": "Daily ad spend vs sales, 1 Aug–25 Sep only (56 of 87 days): a loose positive link with two high outliers. July is missing. The analysis is in your Library."
+          "fallback_text": "Daily ad spend vs sales, 1 Aug–25 Sep only (56 of 87 days): a loose positive link with two high outliers (correlation 0.38 on 56 days; not proof that ads caused sales). July ad spend is missing from Meta, so July is left out. The analysis is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing to compare",
+            "subtitle": "Daily · 1 Jul–25 Sep · 87 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Meta shows no ad spend on any of the 87 days, so there is no link to test"
+            }
+          ],
+          "fallback_text": "Nothing to compare (Daily, 1 Jul–25 Sep, 87 days). Meta shows no ad spend on any of the 87 days, so there is no link to test."
         },
         "failed": {
           "kind": "output_blocks",
@@ -9784,10 +10866,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Meta returned no ad spend for the period. No chart was made."
+              "detail": "Meta asked you to sign in again. No chart was made. Sign in, then ask me."
             }
           ],
-          "fallback_text": "Meta returned no ad spend for the period. No chart was made. Reconnect the Meta ad account, then ask me again."
+          "fallback_text": "Couldn’t compare ad spend and sales (1 Jul–25 Sep). Meta asked you to sign in again. No chart was made. Sign in, then ask me."
         }
       }
     },
@@ -9829,7 +10911,7 @@
             }
           }
         ],
-        "fallback_text": "Orders peak at 12:00–13:00 on weekdays, highest on Friday. The heatmap is in your Library."
+        "fallback_text": "Over the last 90 days, orders peak at 12:00–13:00 on weekdays, highest on Friday. The heatmap is in your Library."
       },
       "states": {
         "loading": {
@@ -9837,19 +10919,19 @@
           "major": 1,
           "header": {
             "title": "Orders by day and hour",
-            "subtitle": "Last 90 days · plotting"
+            "subtitle": "Last 90 days"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Plotting 90 days of orders",
+              "detail": "Plotting 90 days of orders by weekday and hour",
               "subject": {
-                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0b"
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d52"
               }
             }
           ],
-          "fallback_text": "Plotting orders by weekday and hour for the last 90 days."
+          "fallback_text": "Orders by day and hour (Last 90 days). Plotting 90 days of orders by weekday and hour."
         },
         "partial": {
           "kind": "output_blocks",
@@ -9882,7 +10964,7 @@
               "29 days of market orders have no time, so they are left out."
             ]
           },
-          "fallback_text": "From the 61 of 90 days with order times: orders peak at 12:00–13:00 on weekdays, highest on Friday. The heatmap is in your Library."
+          "fallback_text": "From the 61 of 90 days with order times: orders peak at 12:00–13:00 on weekdays, highest on Friday. 29 days of market orders have no time, so they are left out. The heatmap is in your Library."
         },
         "empty": {
           "kind": "output_blocks",
@@ -9895,10 +10977,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Shopify has no orders from 28 Jun to 25 Sep"
+              "detail": "Shopify has no orders from 28 Jun to 25 Sep, so nothing to plot"
             }
           ],
-          "fallback_text": "Shopify has no orders from 28 Jun to 25 Sep, so there is nothing to plot."
+          "fallback_text": "No orders in the last 90 days (Orders by day and hour). Shopify has no orders from 28 Jun to 25 Sep, so nothing to plot."
         },
         "failed": {
           "kind": "output_blocks",
@@ -9911,10 +10993,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Order times are missing for 61 of 90 days. No chart was made."
+              "detail": "Order times are missing on 61 of 90 days. I can plot the 29 days that have them."
             }
           ],
-          "fallback_text": "Order times are missing for 61 of 90 days. No chart was made. I can plot the last 29 days instead."
+          "fallback_text": "Couldn’t plot orders by hour (Last 90 days). Order times are missing on 61 of 90 days. I can plot the 29 days that have them."
         }
       }
     },

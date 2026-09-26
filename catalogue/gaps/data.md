@@ -22,6 +22,47 @@ contract.
 | D-10 | `data-sales-collections` | A **row link** for each late invoice (G8). | One `open_url` to Xero's filtered unpaid list. | `row.url` (G8) |
 | D-11 | `data-filter-weeks`, `text-filter` | A **filter echo**: what the answer is narrowed to. | The subtitle says "online store only". There are no chips (a ruling). | None (G-B1-7, rejected on purpose). |
 
+## State applicability matrix
+
+Every data example against the five states. **✓** = a state document is in `catalogue/data.json`. **main** = the
+example's main document already is that state. **exempt** = the state cannot happen for that answer; the reason is
+in the row. Checked by `.lane/parity.py` (lane-local) for card/fallback parity in every one of the 109 documents.
+
+| Example | loading | partial | stale | empty | failed | Why a slot is exempt |
+|---|---|---|---|---|---|---|
+| data-kpis | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-kpis-week | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-target | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-metric-trend | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-sales-collections | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-stale | ✓ | ✓ | main | ✓ | ✓ | The main answer is the stale balance. |
+| data-top-products | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-filter-weeks | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-channel-share | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-share-payments | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-year-compare | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-area-trend | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| partial-days | ✓ | main | ✓ | ✓ | ✓ | The main answer is the partial fortnight. |
+| data-table-small | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-pivot | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| data-product-breakdown | ✓ | ✓ | ✓ | ✓ | ✓ | |
+| file-data-export | ✓ | ✓ | exempt | ✓ | ✓ | Immutable artifact: the CSV is written from one read and never refreshed, so it cannot go stale after it is made. An incomplete read is its partial state (Apr–May file). |
+| file-scatter | ✓ | ✓ | exempt | ✓ | ✓ | Immutable artifact: a generated image of one read. A missing month is partial; zero spend is empty. |
+| data-heatmap | ✓ | ✓ | exempt | ✓ | ✓ | Immutable artifact: a generated image of one read. Days without order times are partial. |
+| text-math | – | – | – | – | – | Words-only answer (no card, no states). |
+| text-filter | – | – | – | – | – | Words-only answer (no card, no states). |
+
+Rules the states follow (so a new state can be checked against them):
+
+- **Status-only states** (loading, empty, failed) say everything on the card: the way forward is in `status.detail`
+  (80 characters), and `fallback_text` is built from title, subtitle and detail, so the two cannot drift.
+- **Empty is not failure, and missing is not zero.** An empty state reports what the source returned ("Meta shows no
+  ad spend on any of the 87 days"). It never names a cause the read does not prove. A failed read never claims the
+  data does not exist ("Shopify didn't return the 2025 orders", not "no orders before March 2025"). A reconnect or
+  sign-in instruction appears only when the source actually asked for sign-in.
+- **Stale** shows the last good values with "as of <time> · couldn't refresh" and names what the old read cannot have.
+- **Partial** leaves unread values `null` and says which part is not in. A share or a total waits for every part.
+
 ## Renderer findings (outside this lane; from a scratch preview of this data merged with PR #11 and #12)
 
 Shot in a throwaway worktree: this branch + #11 at `0c8d7e9` + #12 at `82de6b4`. The sheets are at
