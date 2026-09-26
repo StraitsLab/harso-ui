@@ -4611,7 +4611,7 @@
               }
             }
           ],
-          "fallback_text": "Pressure cookers under ₹3,000: checking Flipkart and Amazon.in."
+          "fallback_text": "Pressure cookers under ₹3,000, cash on delivery to 400050: checking Flipkart and Amazon.in."
         },
         "partial": {
           "kind": "output_blocks",
@@ -4732,7 +4732,7 @@
               "detail": "Flipkart and Amazon.in didn't answer. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't check pressure cookers: Flipkart and Amazon.in didn't answer. Ask me again in a few minutes."
+          "fallback_text": "Couldn't check pressure cookers (cash on delivery to 400050): Flipkart and Amazon.in didn't answer. Ask me again in a few minutes."
         }
       }
     },
@@ -4990,7 +4990,7 @@
             "Each window is the one the order page shows; it varies by seller and item, and some items can't be returned."
           ]
         },
-        "fallback_text": "As of 11:30, you can still return 4 orders, soonest first: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep); phone case from Temu by Tue 1 Dec (90 days from purchase, ordered Wed 2 Sep). Too late: the AliExpress charger's 15-day window from delivery closed Thu 24 Sep."
+        "fallback_text": "As of 11:30, you can still return 4 orders, soonest first: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep); phone case from Temu by Tue 1 Dec (90 days from purchase, ordered Wed 2 Sep). Too late: the AliExpress charger's 15-day window from delivery (delivered Wed 9 Sep) closed Thu 24 Sep."
       },
       "states": {
         "loading": {
@@ -5066,7 +5066,7 @@
               "Each window is the one the order page shows; it varies by seller and item, and some items can't be returned."
             ]
           },
-          "fallback_text": "As of 11:30, 4 of 5 marketplaces checked, you can still return 3 orders: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep). Temu didn't answer. Too late: the AliExpress charger's 15-day window from delivery closed Thu 24 Sep."
+          "fallback_text": "As of 11:30, 4 of 5 marketplaces checked, you can still return 3 orders: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep). Temu didn't answer. Too late: the AliExpress charger's 15-day window from delivery (delivered Wed 9 Sep) closed Thu 24 Sep."
         },
         "stale": {
           "kind": "output_blocks",
@@ -5124,7 +5124,7 @@
               "Each window is the one the order page shows; it varies by seller and item, and some items can't be returned."
             ]
           },
-          "fallback_text": "As of 08:00 (couldn't refresh), you could still return 4 orders: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep); phone case from Temu by Tue 1 Dec (90 days from purchase, ordered Wed 2 Sep). Too late: the AliExpress charger's 15-day window from delivery closed Thu 24 Sep."
+          "fallback_text": "As of 08:00 (couldn't refresh), you could still return 4 orders: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep); phone case from Temu by Tue 1 Dec (90 days from purchase, ordered Wed 2 Sep). Too late: the AliExpress charger's 15-day window from delivery (delivered Wed 9 Sep) closed Thu 24 Sep."
         },
         "empty": {
           "kind": "output_blocks",
