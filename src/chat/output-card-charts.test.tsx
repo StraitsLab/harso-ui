@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
-import { formatValue, readShare, scale } from "./output-card-charts";
+import { formatValue, readShare, scale, wrapFigure } from "./output-card-charts";
 import chartStyles from "./output-card-charts.css?raw";
 
 afterEach(cleanup);
@@ -41,7 +41,8 @@ const renderDoc = (document: chat.HarsoOutputDocument, props: Partial<chat.Harso
 
 // ---- chart ----
 
-test("bar: hand-built SVG with baseline, gridlines, unit on every axis figure, the highlighted bar labelled", () => {
+// Lead ruling (F2, round 2): the unit is said once, on a caption line under the header; ticks and the value are bare.
+test("bar: hand-built SVG with baseline, gridlines, the unit said once under the header, the highlighted bar labelled", () => {
   const { card } = renderDoc(doc([spendingBar]));
   expect(card).not.toHaveAttribute("data-fallback");
   const svg = card.querySelector("svg.hkc-chart-svg")!;
@@ -49,11 +50,12 @@ test("bar: hand-built SVG with baseline, gridlines, unit on every axis figure, t
   expect(svg.querySelectorAll(".hkc-chart-baseline")).toHaveLength(1);
   expect(svg.querySelectorAll(".hkc-chart-grid").length).toBeGreaterThanOrEqual(1);
   const axis = [...svg.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent);
-  expect(axis).toEqual(["S$0", "S$1,000", "S$2,000"]);
+  expect(axis).toEqual(["0", "1,000", "2,000"]);
+  expect([...card.querySelectorAll(".hkc-output-chart-unit")].map(node => node.textContent)).toEqual(["S$"]);
   expect(svg.querySelectorAll(".hkc-chart-mark")).toHaveLength(4);
   expect(svg.querySelectorAll(".hkc-chart-mark--strong")).toHaveLength(1);
   expect(svg.querySelector(".hkc-chart-mark--strong")).toHaveAttribute("data-index", "2");
-  expect(svg.querySelector(".hkc-chart-value")!.textContent).toBe("S$1,460");
+  expect(svg.querySelector(".hkc-chart-value")!.textContent).toBe("1,460");
   expect(svg.querySelector(".hkc-chart-x--strong")!.textContent).toBe("15–21 Aug");
   // The series label is the caption; no chart library markup.
   expect(within(card).getByText("Spent", { selector: "figcaption" })).toBeVisible();
@@ -79,13 +81,13 @@ test("line: nulls are gaps with not-reported ticks, a real zero is plotted and h
   expect(svg.querySelectorAll(".hkc-chart-line")).toHaveLength(1);
   expect(svg.querySelectorAll(".hkc-chart-missing")).toHaveLength(2);
   expect([...svg.querySelectorAll(".hkc-chart-missing")].map(node => node.getAttribute("data-index"))).toEqual(["12", "13"]);
-  expect(svg.querySelector(".hkc-chart-highlight .hkc-chart-value")!.textContent).toBe("S$0 · 19 Sep");
+  expect(svg.querySelector(".hkc-chart-highlight .hkc-chart-value")!.textContent).toBe("0 · 19 Sep");
   expect(svg.querySelector(".hkc-chart-x--strong")!.textContent).toBe("19 Sep");
   expect(within(card).getByRole("table").textContent).toContain("25 SepNot reported");
-  // First, last and highlighted labels always show; axis includes S$0 because the data does.
+  // First, last and highlighted labels always show; axis includes 0 because the data does.
   const xs = [...svg.querySelectorAll(".hkc-chart-x")].map(node => node.textContent);
   expect(xs).toContain("13 Sep"); expect(xs).toContain("26 Sep"); expect(xs).toContain("19 Sep");
-  expect([...svg.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent)[0]).toBe("S$0");
+  expect([...svg.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent)[0]).toBe("0");
 });
 
 test("line: three series get distinct dash patterns and a key; the pill names the period only", () => {
@@ -97,15 +99,19 @@ test("line: three series get distinct dash patterns and a key; the pill names th
   expect([...card.querySelectorAll(".hkc-output-chart-key li")].map(node => node.textContent)).toEqual(["AAPL", "MSFT", "VOO"]);
   expect(card.querySelector(".hkc-chart-highlight .hkc-chart-value")!.textContent).toBe("Sep");
   expect(card.querySelectorAll(".hkc-chart-point")).toHaveLength(3);
-  expect([...card.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent)).toContain("−10%");
+  expect([...card.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent)).toContain("−10");
+  expect(card.querySelector(".hkc-output-chart-unit")!.textContent).toBe("%");
 });
 
 test("negative bars hang below a zero baseline; units follow the figure the way people write them", () => {
   const loss: chat.HarsoOutputVisualBlock = { kind: "visual", visual: { kind: "chart", chart: "bar", unit: "S$k", x_labels: ["Q1", "Q2", "Q3"], series: [{ label: "Profit", values: ["12.5", "-4", "8"] }], highlight_index: 1 } };
   const { card } = renderDoc(doc([loss], { header: { title: "Profit" } }));
-  expect(card.querySelector(".hkc-chart-value")!.textContent).toBe("−S$4k");
+  expect(card.querySelector(".hkc-chart-value")!.textContent).toBe("−4");
   const axis = [...card.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent);
-  expect(axis).toContain("S$0k"); expect(axis.some(text => text!.startsWith("−S$"))).toBe(true);
+  expect(axis).toContain("0"); expect(axis.some(text => text!.startsWith("−"))).toBe(true);
+  expect(card.querySelector(".hkc-output-chart-unit")!.textContent).toBe("S$k");
+  // Copy and the data table still say each figure with its unit, the way people write it.
+  expect(chat.harsoOutputBlockPlainText(loss)).toBe("Profit: Q1 S$12.5k, Q2 −S$4k, Q3 S$8k");
   expect(formatValue("1160", "S$")).toBe("S$1,160");
   expect(formatValue("31", "°C")).toBe("31°C");
   expect(formatValue("7.8", "hours")).toBe("7.8\u00a0hours");
@@ -129,7 +135,7 @@ test("values keep every digit the agent sent: 15-digit wholes, 6-place fractions
   expect(chat.harsoOutputBlockPlainText(precise)).toBe("Balance: A S$999,999,999,999,999.123456, B S$999,999,999,999,999.654321");
   const { card } = renderDoc(doc([precise], { header: { title: "Balance" } }));
   expect(within(card).getByRole("table").textContent).toContain("S$999,999,999,999,999.123456");
-  expect(card.querySelector(".hkc-chart-highlight .hkc-chart-value")!.textContent).toContain("S$999,999,999,999,999.654321");
+  expect(card.querySelector(".hkc-chart-highlight .hkc-chart-value")!.textContent).toContain("999,999,999,999,999.654321");
 });
 
 test("axis ticks are distinct, ordered, inside the domain and printed without rounding, for micro and high-offset data", () => {
@@ -164,7 +170,25 @@ test("micro and high-offset charts draw distinct axis labels at distinct heights
   }
   const { card, rerender } = (() => { const result = render(<chat.HarsoOutputCard document={doc([chart(["999999999999998", "999999999999999"], "line")])} onViewAll={() => {}} />); return { card: result.container, rerender: result.rerender }; })();
   rerender(<chat.HarsoOutputCard document={doc([spendingBar])} onViewAll={() => {}} />);
-  expect([...card.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent)).toEqual(["S$0", "S$1,000", "S$2,000"]);
+  expect([...card.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent)).toEqual(["0", "1,000", "2,000"]);
+});
+
+// Lead ruling (F2, round 2): a highlighted figure wider than the card wraps onto lines that each fit; the lines joined
+// are the figure exactly, never cut, never ellipsed. Fixed-width measure (10px per character) keeps the check exact.
+test("wrapFigure: fits on one line, breaks after a group separator, and breaks anywhere (CJK) when it must", () => {
+  const measure = (text: string) => Array.from(text).length * 10;
+  const figure = formatValue("999999999999999.654321");
+  expect(wrapFigure(figure, 1000, measure)).toEqual([figure]);
+  const split = wrapFigure(figure, 120, measure);
+  expect(split.length).toBeGreaterThan(1);
+  expect(split.join("")).toBe(figure);
+  for (const line of split) expect(measure(line)).toBeLessThanOrEqual(120);
+  expect(split[0]).toBe("999,999,999,");
+  const cjk = "微秒每秒处理交易计数单位";
+  const wrapped = wrapFigure(cjk, 50, measure);
+  expect(wrapped).toEqual(["微秒每秒处", "理交易计数", "单位"]);
+  expect(wrapped.join("")).toBe(cjk);
+  expect(wrapFigure("−1", 5, measure).join("")).toBe("−1"); // narrower than one character: one per line, still whole
 });
 
 test("scale: bars always include zero; lines span their data; flat data still gets two intervals", () => {

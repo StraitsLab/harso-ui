@@ -4,6 +4,8 @@
    Mark tones are ink mixed over the card: the lightest (55%) stays >= 3:1 in every palette (lead ruling). */
 .harso-kit .hkc-output-chart { margin: 0; display: flex; flex-direction: column; gap: var(--hk-space-2); min-width: 0; }
 .harso-kit .hkc-output-chart-caption { font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
+/* The unit, said once under the header (lead ruling): ticks and the highlighted figure are bare. Wraps, never cut. */
+.harso-kit .hkc-output-chart-unit { margin: 0; font-size: var(--hk-text-meta); line-height: 16px; color: var(--hk-secondary); overflow-wrap: anywhere; }
 .harso-kit .hkc-output-chart-key { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--hk-space-1) var(--hk-space-3); }
 .harso-kit .hkc-output-chart-key li { display: inline-flex; align-items: center; gap: 6px; }
 .harso-kit .hkc-output-chart-plot { width: 100%; min-width: 0; }

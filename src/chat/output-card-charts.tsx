@@ -8,7 +8,9 @@ import "./output-card-charts.css";
 /*
  * Packet 5b: chart (bar, line), share and table blocks for the inline output card, drawn from the published B0 v4
  * masters (`v4/macOS/<theme>/{bar,line,share,table}/<state>`). Charts are hand-built SVG: axis baseline, the highlighted
- * datum labelled, direct labels, units on every axis figure. Local copy of the output-blocks.v1 subset these read.
+ * datum labelled, direct labels. The unit is said once, on a caption line under the chart's header (lead ruling, as
+ * Stocks and Health do); ticks and the highlighted figure are bare, and Copy and the data table carry figure and unit.
+ * Local copy of the output-blocks.v1 subset these read.
  */
 
 export interface HarsoOutputSeries { label: string; values: (string | null)[] }
@@ -172,11 +174,20 @@ function measurer(node: SVGTextElement | null): Measure {
   };
 }
 
+/** The probe's resolved font, as the browser styles it now (token changes included). Empty without a probe. */
+function resolvedFont(node: SVGTextElement | null) {
+  if (!node || typeof getComputedStyle !== "function") return "";
+  const style = getComputedStyle(node);
+  return `${style.fontFamily}|${style.fontSize}|${style.fontWeight}|${style.fontVariantNumeric}`;
+}
+
 function useWidth() {
   const node = useRef<HTMLDivElement>(null);
   const probe = useRef<SVGTextElement>(null);
   const [width, setWidth] = useState(DEFAULT_WIDTH);
+  // Font generation: bumped once the probe is attached and whenever a web font finishes loading.
   const [fonts, setFonts] = useState(0);
+  const [font, setFont] = useState("");
   useLayoutEffect(() => {
     const element = node.current;
     if (!element) return;
@@ -187,12 +198,40 @@ function useWidth() {
     const observer = typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(measure);
     observer?.observe(element);
     let live = true;
-    globalThis.document?.fonts?.ready.then(() => { if (live) setFonts(value => value + 1); });
-    return () => { live = false; observer?.disconnect(); };
+    const loaded = () => { if (live) setFonts(value => value + 1); };
+    const faces = globalThis.document?.fonts;
+    faces?.ready.then(loaded);
+    faces?.addEventListener?.("loadingdone", loaded);
+    return () => { live = false; observer?.disconnect(); faces?.removeEventListener?.("loadingdone", loaded); };
   }, []);
-  // A fresh measurer per font generation: widths cached before the font loaded are dropped.
-  const measure = useMemo(() => fonts ? measurer(probe.current) : estimate, [fonts]);
+  // Every render (a rerender or a resize) reads the font the tokens resolve to now; a change redraws with fresh metrics.
+  useLayoutEffect(() => {
+    const current = resolvedFont(probe.current);
+    if (current !== font) setFont(current);
+  });
+  // A fresh measurer per resolved font and font generation: widths cached under another font are dropped.
+  const measure = useMemo(() => fonts ? measurer(probe.current) : estimate, [fonts, font]);
   return { node, probe, width, fonts, measure };
+}
+
+/**
+ * A figure that is wider than `max` broken into lines that each fit, never cut: greedily by character, preferring to
+ * break after a group separator or space. The lines joined are the text, character for character (CJK may break anywhere).
+ */
+export function wrapFigure(text: string, max: number, measure: Measure): string[] {
+  const lines: string[] = [];
+  let rest = Array.from(text);
+  while (rest.length && measure(rest.join("")) > max) {
+    let take = 1;
+    while (take < rest.length && measure(rest.slice(0, take + 1).join("")) <= max) take++;
+    let soft = take - 1;
+    while (soft > 0 && !/[,\s]/.test(rest[soft])) soft--;
+    if (soft > 0 && soft + 1 < take) take = soft + 1;
+    lines.push(rest.slice(0, take).join(""));
+    rest = rest.slice(take);
+  }
+  if (rest.length) lines.push(rest.join(""));
+  return lines;
 }
 
 /** The text, cut with an ellipsis if it is wider than `max` on its own (labels only; figures are never cut). */
@@ -245,11 +284,11 @@ function XLabels({ labels, y }: { labels: XLabel[]; y: number }) {
     className={label.strong ? "hkc-chart-x hkc-chart-x--strong" : "hkc-chart-x"}>{label.text}</text>)}</>;
 }
 
-function Axis({ ticks, y, width, plotWidth, unit, places, zeroLine }: { ticks: bigint[]; y: (value: bigint) => number; width: number; plotWidth: number; unit?: string; places: number; zeroLine: bigint }) {
+function Axis({ ticks, y, width, plotWidth, places, zeroLine }: { ticks: bigint[]; y: (value: bigint) => number; width: number; plotWidth: number; places: number; zeroLine: bigint }) {
   return <>
     {ticks.map(tick => <g key={tick.toString()}>
       {tick !== zeroLine && <line x1={0} x2={plotWidth} y1={Math.round(y(tick)) + .5} y2={Math.round(y(tick)) + .5} className="hkc-chart-grid" />}
-      <text x={width} y={y(tick) + 4} textAnchor="end" className="hkc-chart-axis">{formatMicro(tick, places, unit)}</text>
+      <text x={width} y={y(tick) + 4} textAnchor="end" className="hkc-chart-axis">{formatMicro(tick, places)}</text>
     </g>)}
     <line x1={0} x2={plotWidth} y1={Math.round(y(zeroLine)) + .5} y2={Math.round(y(zeroLine)) + .5} className="hkc-chart-baseline" />
   </>;
@@ -265,12 +304,20 @@ const barPath = (x: number, top: number, width: number, height: number, down: bo
 function frame(chart: HarsoOutputChart, width: number, measure: Measure) {
   const numbers = chart.series.flatMap(series => series.values.filter((value): value is string => value !== null));
   const axis = scale(numbers.length ? numbers : ["0"], chart.chart === "bar" || numbers.some(value => toMicro(value) <= 0n));
-  const labelWidth = Math.max(40, ...axis.ticks.map(tick => measure(formatMicro(tick, axis.places, chart.unit)))) + 8;
-  const plotWidth = Math.max(80, width - labelWidth);
+  // The gutter is the widest tick figure, measured, plus 8px; the plot takes what is left and never overrides it.
+  const labelWidth = Math.max(40, ...axis.ticks.map(tick => measure(formatMicro(tick, axis.places)))) + 8;
+  const plotWidth = width - labelWidth;
   const span = Number(axis.top - axis.bottom);
   /** Pixel offset of a value down from the axis top, over `height` px. */
   const ratio = (value: bigint) => Number(axis.top - value) / span;
   return { ...axis, labelWidth, plotWidth, ratio };
+}
+
+/** Lines of one figure, stacked from `y`, as one text node (its text is the whole figure). */
+function Figure({ lines, x, y, anchor }: { lines: string[]; x: number; y: number; anchor?: "middle" }) {
+  return <text x={x} y={y} textAnchor={anchor} className="hkc-chart-value">
+    {lines.map((line, index) => <tspan key={index} x={x} dy={index ? LINE_HEIGHT : 0}>{line}</tspan>)}
+  </text>;
 }
 
 function BarChart({ chart, width, measure }: { chart: HarsoOutputChart; width: number; measure: Measure }) {
@@ -279,18 +326,20 @@ function BarChart({ chart, width, measure }: { chart: HarsoOutputChart; width: n
   const hi = chart.highlight_index != null && values[chart.highlight_index] != null ? chart.highlight_index : undefined;
   const slot = f.plotWidth / values.length, barWidth = Math.min(BAR_MAX, Math.round(slot * .56));
   const center = (index: number) => index * slot + slot / 2;
-  // The highlighted figure: over (or under) its bar when it fits the plot; wider than the plot, it takes its own row
-  // above the chart, clamped inside the card. A figure is never cut.
-  const valueText = hi === undefined ? undefined : formatValue(values[hi]!, chart.unit);
+  // The highlighted figure: over (or under) its bar when it fits the plot; otherwise on its own line(s) above the
+  // plot, wrapped at the card width. The plot moves down by the lines it takes. A figure is never cut.
+  const valueText = hi === undefined ? undefined : formatValue(values[hi]!);
   const valueWidth = valueText ? measure(valueText) : 0;
   const ownRow = valueWidth + 4 > f.plotWidth;
-  const top = ownRow ? LINE_HEIGHT + 14 : LINE_HEIGHT + 6, below = f.bottom < 0n && !ownRow ? LINE_HEIGHT + 6 : 0;
+  const lines = valueText ? ownRow ? wrapFigure(valueText, width, measure) : [valueText] : [];
+  const blockWidth = Math.max(0, ...lines.map(measure));
+  const top = ownRow ? lines.length * LINE_HEIGHT + 14 : LINE_HEIGHT + 6, below = f.bottom < 0n && !ownRow ? LINE_HEIGHT + 6 : 0;
   const y = (value: bigint) => top + PLOT * f.ratio(value);
   const zero = y(0n), plotBottom = top + PLOT + below;
   const { labels, rows } = placeLabels(chart.x_labels, center, f.plotWidth, hi, false, measure);
   const height = plotBottom + 6 + LINE_HEIGHT * rows;
   return <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true" focusable="false" className="hkc-chart-svg">
-    <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} unit={chart.unit} places={f.places} zeroLine={0n} />
+    <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} places={f.places} zeroLine={0n} />
     {values.map((value, index) => {
       const x = Math.round(center(index) - barWidth / 2);
       if (value === null) return <rect key={index} x={Math.round(center(index) - 8)} y={zero - 2} width={16} height={2} rx={1} className="hkc-chart-missing" data-index={index} />;
@@ -299,9 +348,10 @@ function BarChart({ chart, width, measure }: { chart: HarsoOutputChart; width: n
       return <g key={index}>
         {h >= .5 && <path d={barPath(x, down ? zero : end, barWidth, h, down)} className={strong ? "hkc-chart-mark hkc-chart-mark--strong" : "hkc-chart-mark"} data-index={index} />}
         {strong && (ownRow
-          ? <text x={Math.max(0, Math.min(width - valueWidth, center(index) - valueWidth / 2))} y={AXIS} className="hkc-chart-value">{valueText}</text>
+          // Every line fits the card, so the block is placed over its bar as far as the card's edges allow.
+          ? <Figure lines={lines} x={Math.min(width - blockWidth, Math.max(0, center(index) - blockWidth / 2))} y={AXIS} />
           // Centred on its bar, but never past the plot's edges (a first or last bar in a narrow pane).
-          : <text x={Math.min(f.plotWidth - valueWidth / 2, Math.max(valueWidth / 2, center(index)))} y={down ? end + LINE_HEIGHT : end - 5} textAnchor="middle" className="hkc-chart-value">{valueText}</text>)}
+          : <Figure lines={lines} x={Math.min(f.plotWidth - valueWidth / 2, Math.max(valueWidth / 2, center(index)))} y={down ? end + LINE_HEIGHT : end - 5} anchor="middle" />)}
       </g>;
     })}
     <XLabels labels={labels} y={plotBottom + 6} />
@@ -312,29 +362,31 @@ const DASH = [undefined, "6 4", "1.5 4"];
 function LineChart({ chart, width, measure }: { chart: HarsoOutputChart; width: number; measure: Measure }) {
   const f = frame(chart, width, measure);
   const count = chart.x_labels.length, highlight = chart.highlight_index != null && chart.highlight_index < count ? chart.highlight_index : undefined;
-  const top = LINE_HEIGHT + 4 + 12;
+  const points = highlight === undefined ? [] : chart.series.map(series => series.values[highlight]).filter((value): value is string => value !== null);
+  // The pill sits above the plot and may use the card's full width. A single series shows "figure · period"; when that
+  // is too wide the period goes (it is the strong x label below), and a figure wider still wraps onto more lines,
+  // never cut. The knockout grows with it and the plot moves down by the extra lines.
+  let pill: string[] = [];
+  if (highlight !== undefined && points.length) {
+    if (chart.series.length > 1) pill = [fitText(chart.x_labels[highlight], width - 12, measure)];
+    else {
+      const value = formatValue(points[0]), both = `${value} · ${chart.x_labels[highlight]}`;
+      pill = measure(both) + 12 <= width ? [both] : wrapFigure(value, width - 12, measure);
+    }
+  }
+  const pillHeight = LINE_HEIGHT * Math.max(1, pill.length) + 4;
+  const top = pillHeight + 12;
   const y = (value: bigint) => top + PLOT * f.ratio(value);
   const step = (f.plotWidth - 12) / (count - 1), x = (index: number) => 6 + index * step;
   const plotBottom = top + PLOT;
   const zeroLine = f.bottom <= 0n && f.top >= 0n ? 0n : f.bottom;
   const { labels, rows } = placeLabels(chart.x_labels, x, f.plotWidth, highlight, true, measure);
   const height = plotBottom + 6 + LINE_HEIGHT * rows;
-  const points = highlight === undefined ? [] : chart.series.map(series => series.values[highlight]).filter((value): value is string => value !== null);
-  // The pill sits above the plot and may use the card's full width. A single series shows "value · period"; when that
-  // is too wide the period goes (it is the strong x label below), and the figure itself is never cut.
-  let pill: string | undefined;
-  if (highlight !== undefined && points.length) {
-    if (chart.series.length > 1) pill = fitText(chart.x_labels[highlight], width - 12, measure);
-    else {
-      const value = formatValue(points[0], chart.unit), both = `${value} · ${chart.x_labels[highlight]}`;
-      pill = measure(both) + 12 <= width ? both : value;
-    }
-  }
-  const pillWidth = pill ? measure(pill) + 12 : 0;
+  const pillWidth = pill.length ? Math.max(...pill.map(measure)) + 12 : 0;
   const pillX = highlight === undefined ? 0 : Math.max(0, Math.min(Math.max(f.plotWidth, pillWidth) - pillWidth, x(highlight) - pillWidth / 2));
   const highest = points.length ? Math.min(...points.map(value => y(toMicro(value)))) : 0;
   return <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true" focusable="false" className="hkc-chart-svg">
-    <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} unit={chart.unit} places={f.places} zeroLine={zeroLine} />
+    <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} places={f.places} zeroLine={zeroLine} />
     {chart.series.map((series, seriesIndex) => {
       const runs: [number, number][][] = [[]];
       series.values.forEach((value, index) => value === null ? runs.push([]) : runs[runs.length - 1].push([x(index), y(toMicro(value))]));
@@ -347,10 +399,10 @@ function LineChart({ chart, width, measure }: { chart: HarsoOutputChart; width: 
     })}
     {chart.x_labels.map((_, index) => chart.series.every(series => series.values[index] === null)
       ? <rect key={index} x={Math.round(x(index)) - .5} y={plotBottom - 10} width={1} height={10} className="hkc-chart-missing" data-index={index} /> : null)}
-    {pill && highlight !== undefined && <g className="hkc-chart-highlight">
-      <line x1={Math.round(x(highlight)) + .5} x2={Math.round(x(highlight)) + .5} y1={LINE_HEIGHT + 4} y2={Math.max(LINE_HEIGHT + 4, highest - 7)} className="hkc-chart-leader" />
-      <rect x={pillX} y={0} width={pillWidth} height={LINE_HEIGHT + 4} rx={6} className="hkc-chart-knockout" />
-      <text x={pillX + 6} y={AXIS + 2} className="hkc-chart-value">{pill}</text>
+    {pill.length > 0 && highlight !== undefined && <g className="hkc-chart-highlight">
+      <line x1={Math.round(x(highlight)) + .5} x2={Math.round(x(highlight)) + .5} y1={pillHeight} y2={Math.max(pillHeight, highest - 7)} className="hkc-chart-leader" />
+      <rect x={pillX} y={0} width={pillWidth} height={pillHeight} rx={6} className="hkc-chart-knockout" />
+      <Figure lines={pill} x={pillX + 6} y={AXIS + 2} />
       {chart.series.map((series, seriesIndex) => series.values[highlight] === null ? null : <g key={seriesIndex}>
         <circle cx={x(highlight)} cy={y(toMicro(series.values[highlight]!))} r={7} className="hkc-chart-halo" />
         <circle cx={x(highlight)} cy={y(toMicro(series.values[highlight]!))} r={4} className="hkc-chart-point" />
@@ -383,6 +435,7 @@ export function HarsoOutputChartView({ chart }: { chart: HarsoOutputChart }) {
           {series.label}
         </li>)}</ul>}
     </figcaption>
+    {chart.unit?.trim() && <p className="hkc-output-chart-unit">{chart.unit.trim()}</p>}
     <div ref={node} className="hkc-output-chart-plot">{chart.chart === "bar" ? <BarChart chart={chart} width={width} measure={measure} /> : <LineChart chart={chart} width={width} measure={measure} />}</div>
     <svg className="hkc-chart-measure" aria-hidden="true" focusable="false"><text ref={probe} className="hkc-chart-measure-text" /></svg>
     <ChartTable chart={chart} />

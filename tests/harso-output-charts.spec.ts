@@ -45,11 +45,13 @@ async function contrast(page: Page, selector: string, property: "fill" | "backgr
 }
 
 for (const mode of ["light", "dark"] as const) {
-  test(`bar ${mode}: SVG chart with baseline, units, highlighted week named, uneven last period labelled; axe clean`, async ({ page }) => {
+  test(`bar ${mode}: SVG chart with baseline, the unit said once, highlighted week named, uneven last period labelled; axe clean`, async ({ page }) => {
     await open(page, `doc=bar&mode=${mode}&width=544`);
     const svg = card(page).locator("svg.hkc-chart-svg");
-    await expect(svg.locator(".hkc-chart-axis")).toHaveText(["S$0", "S$1,000", "S$2,000"]);
-    await expect(svg.locator(".hkc-chart-value")).toHaveText("S$1,570");
+    // Lead ruling (F2, round 2): the unit is a caption line under the header; ticks and the value are bare figures.
+    await expect(card(page).locator(".hkc-output-chart-unit")).toHaveText("S$");
+    await expect(svg.locator(".hkc-chart-axis")).toHaveText(["0", "1,000", "2,000"]);
+    await expect(svg.locator(".hkc-chart-value")).toHaveText("1,570");
     await expect(svg.locator(".hkc-chart-x--strong")).toHaveText("15–21 Sep");
     // Lead ruling (B0.1): the longer last week is "22–30 Sep" alone, no "9 days".
     await expect(svg.locator(".hkc-chart-x")).toHaveText(["1–7 Sep", "8–14 Sep", "15–21 Sep", "22–30 Sep"]);
@@ -74,7 +76,7 @@ for (const mode of ["light", "dark"] as const) {
   test(`line ${mode}: the real zero is highlighted with value and date; nulls are gaps in partial; axe clean`, async ({ page }) => {
     await open(page, `doc=line&mode=${mode}&width=544`);
     const svg = card(page).locator("svg.hkc-chart-svg");
-    await expect(svg.locator(".hkc-chart-highlight .hkc-chart-value")).toHaveText("S$0 · 7 Sep");
+    await expect(svg.locator(".hkc-chart-highlight .hkc-chart-value")).toHaveText("0 · 7 Sep");
     await expect(svg.locator(".hkc-chart-x")).toHaveText(["1 Sep", "7 Sep", "14 Sep"]);
     await expect(svg.locator(".hkc-chart-x--strong")).toHaveText("7 Sep");
     const point = (await svg.locator(".hkc-chart-point").boundingBox())!;
@@ -215,12 +217,12 @@ for (const width of [320, 390, 420]) for (const unit of ["S$", "transactions"]) 
   });
 }
 
-// Lead ruling (B0.1): at 338px the last week's label stands clear of the S$0 axis figure (8px or more apart).
-for (const mode of ["light", "dark"] as const) test(`bar ${mode} at 338px: "22–30 Sep" does not crowd S$0`, async ({ page }) => {
+// Lead ruling (B0.1): at 338px the last week's label stands clear of the 0 axis figure (8px or more apart).
+for (const mode of ["light", "dark"] as const) test(`bar ${mode} at 338px: "22–30 Sep" does not crowd the 0 tick`, async ({ page }) => {
   await open(page, `doc=bar&mode=${mode}&width=338`, 400);
   const svg = card(page).locator("svg.hkc-chart-svg");
   await expect(svg.locator(".hkc-chart-x").last()).toHaveText("22–30 Sep");
-  const [label, zero] = await Promise.all([svg.locator(".hkc-chart-x").last().boundingBox(), svg.locator(".hkc-chart-axis", { hasText: /^S\$0$/ }).boundingBox()]);
+  const [label, zero] = await Promise.all([svg.locator(".hkc-chart-x").last().boundingBox(), svg.locator(".hkc-chart-axis", { hasText: /^0$/ }).boundingBox()]);
   const apart = Math.max(zero!.x - (label!.x + label!.width), label!.x - (zero!.x + zero!.width), zero!.y - (label!.y + label!.height), label!.y - (zero!.y + zero!.height));
   expect(apart).toBeGreaterThanOrEqual(8);
   expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
@@ -233,7 +235,7 @@ test("figures wider than the plot are drawn whole and inside the card at 320px",
     await page.evaluate(({ kind, values }) => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput({ header: { title: "Big" },
       blocks: [{ kind: "visual", visual: { kind: "chart", chart: kind, unit: "S$", x_labels: ["A", "B"], series: [{ label: "V", values }], highlight_index: 1 } }], fallback_text: "F" }), { kind, values });
     const value = card(page).locator(".hkc-chart-value");
-    await expect(value).toContainText(values[1].startsWith("999") ? "S$999,999,999,999,999" : "S$1");
+    await expect(value).toContainText(values[1].startsWith("999") ? "999,999,999,999,999" : "1");
     const axis = await card(page).locator(".hkc-chart-axis").allTextContents();
     expect(new Set(axis).size, `${kind} ${values}`).toBe(axis.length);
     expect(await geometry(page), `${kind} ${values}`).toEqual({ overlaps: [], outside: [], bordered: [] });
@@ -278,7 +280,96 @@ for (const width of [320, 400, 560, 900]) {
     }
     await open(page, "doc=hostile", width);
     expect(await card(page).locator(".hkc-output-table-scroll").evaluate(node => node.scrollWidth > node.clientWidth)).toBe(true);
-    await expect(card(page).locator(".hkc-chart-value")).toHaveText("−S$1,200");
+    await expect(card(page).locator(".hkc-chart-value")).toHaveText("−1,200");
     expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+  });
+}
+
+// Reviewer residual tests, round 2 (/tmp/rv11-r2/harso-review-residual.spec.ts), adopted verbatim per the lead ruling.
+const residualDocumentFor = (kind: 'bar' | 'line', values: string[]) => ({header:{title:'Review'},blocks:[{kind:'visual',visual:{kind:'chart',chart:kind,unit:'transactions',x_labels:['1–7 Aug','8–14 Aug','15–21 Aug','22–31 Aug'],series:[{label:'Count',values}],highlight_index:2}}],fallback_text:'Fallback'});
+const residualGaps = async (page: any) => page.locator('.hkc-output-card').evaluate((root: Element) => {const right=Math.max(...[...root.querySelectorAll('.hkc-chart-grid,.hkc-chart-baseline')].map(n=>n.getBoundingClientRect().right));return [...root.querySelectorAll('.hkc-chart-axis')].map(n=>n.getBoundingClientRect().left-right)});
+async function residualOpen(page:any){await page.setViewportSize({width:320,height:1000});await page.goto('/preview/output-card.html?doc=short');await page.waitForFunction(()=>!!(window as any).renderOutput);await page.evaluate(()=>document.fonts.ready)}
+test('F2 maximum decimal with accepted unit keeps its axis clear of chart marks',async({page})=>{await residualOpen(page);await page.evaluate(d=>(window as any).renderOutput(d),residualDocumentFor('line',['999999999999999.123456','999999999999999.234567','999999999999999.654321','999999999999999.345678']));await expect(page.locator('.hkc-chart-value')).toContainText('999,999,999,999,999.654321');await page.evaluate(()=>document.fonts.ready);const measured=await residualGaps(page);for(const gap of measured)expect(gap,JSON.stringify(measured)).toBeGreaterThanOrEqual(0)});
+test('F5 existing chart remeasures after a font-token change, even on rerender and resize',async({page})=>{await residualOpen(page);const d=residualDocumentFor('bar',['980000','1040000','1460000','800000']);await page.evaluate(d=>(window as any).renderOutput(d),d);await expect(page.locator('.hkc-chart-value')).toContainText('1,460,000');await page.evaluate(()=>document.fonts.ready);for(const gap of await residualGaps(page))expect(gap).toBeGreaterThanOrEqual(0);await page.addStyleTag({content:'.harso-kit { --hk-font: "Geist Mono Variable", monospace; }'});await page.evaluate(()=>document.fonts.ready);await page.evaluate(d=>(window as any).renderOutput(d),d);await page.setViewportSize({width:321,height:1000});await page.setViewportSize({width:320,height:1000});await expect(page.locator('.hkc-chart-svg')).toHaveCSS('font-family',/Geist Mono/);await expect.poll(async()=>Math.min(...await residualGaps(page))).toBeGreaterThanOrEqual(0)});
+
+// Lead ruling (F5): after a token change on a mounted, warmed chart (then rerender and resize), the axis gutter
+// matches a fresh mount in that font.
+test("F5 a warmed chart re-measures after --hk-font changes: same axis gap as a fresh mount", async ({ page }) => {
+  const d = residualDocumentFor("bar", ["980000", "1040000", "1460000", "800000"]);
+  const mono = '.harso-kit { --hk-font: "Geist Mono Variable", monospace; }';
+  const gap = async () => Math.round(Math.min(...await residualGaps(page)));
+  // Fresh mount, font set first.
+  await residualOpen(page);
+  await page.addStyleTag({ content: mono });
+  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(d => (window as any).renderOutput(d), d);
+  await expect(page.locator(".hkc-chart-svg")).toHaveCSS("font-family", /Geist Mono/);
+  await page.evaluate(() => document.fonts.ready);
+  const fresh = await gap();
+  expect(fresh).toBeGreaterThanOrEqual(0);
+  // Warm in the kit font, change the token, rerender, resize.
+  await residualOpen(page);
+  await page.evaluate(d => (window as any).renderOutput(d), d);
+  await expect(page.locator(".hkc-chart-value")).toContainText("1,460,000");
+
+  await page.addStyleTag({ content: mono });
+  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(d => (window as any).renderOutput({ ...d }), d);
+  await page.setViewportSize({ width: 321, height: 1000 });
+  await page.setViewportSize({ width: 320, height: 1000 });
+  await expect(page.locator(".hkc-chart-svg")).toHaveCSS("font-family", /Geist Mono/);
+  await expect.poll(gap).toBe(fresh);
+});
+
+// Lead ruling (F2, round 2): extremes crossed. Maximum decimals, their negative and a micro value x long, wide, CJK and
+// money units x bar and line, at 320 and 390px. Invariant 1: every axis figure starts at or right of the plot's right
+// edge. Invariant 2: every chart text lies inside the card, and the complete exact figure is in the DOM (the unit is
+// in the caption; Copy carries both). Light and dark snapshots of the CJK and WWWW cases at 320px.
+const EXTREMES: Record<string, string[]> = {
+  max: ["999999999999999.123456", "999999999999999.654321"],
+  negative: ["-999999999999999.123456", "-999999999999999.654321"],
+  micro: ["0", "0.000001"],
+};
+const UNITS = ["transactions", "微秒每秒处理交易计数单位", "WWWWWWWWWWWW", "MW h per day", "S$"];
+for (const width of [320, 390]) {
+  test(`extremes at ${width}px: axis clear of the plot, every figure whole and inside the card, bar and line x units`, async ({ page }) => {
+    await open(page, "doc=short", width);
+    await page.waitForFunction(() => "renderOutput" in window);
+    for (const [name, values] of Object.entries(EXTREMES)) for (const unit of UNITS) for (const kind of ["bar", "line"] as const) {
+      const label = `${kind} ${name} ${unit}`;
+      await page.evaluate(({ kind, unit, values }) => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput({ header: { title: "Extremes" },
+        blocks: [{ kind: "visual", visual: { kind: "chart", chart: kind, unit, x_labels: ["1–7 Aug", "22–31 Aug"], series: [{ label: "Count", values }], highlight_index: 1 } }], fallback_text: "F" }), { kind, unit, values });
+      await expect(card(page).locator(".hkc-output-chart-unit"), label).toHaveText(unit);
+      const figure = values[1].replace(/^-/, "−").replace(/^(−?)(\d+)/, (_, sign: string, whole: string) => sign + whole.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+      const result = await card(page).evaluate(root => {
+        const box = root.getBoundingClientRect();
+        const plotRight = Math.max(...[...root.querySelectorAll(".hkc-chart-grid, .hkc-chart-baseline")].map(node => node.getBoundingClientRect().right));
+        const texts = [...root.querySelectorAll(".hkc-chart-value, .hkc-chart-axis, .hkc-chart-x, .hkc-output-chart-unit")].map(node => ({ text: node.textContent ?? "", r: node.getBoundingClientRect() }));
+        return {
+          gaps: [...root.querySelectorAll(".hkc-chart-axis")].map(node => node.getBoundingClientRect().left - plotRight),
+          outside: texts.filter(t => t.r.left < box.left - .5 || t.r.right > box.right + .5).map(t => `${t.text} [${t.r.left}, ${t.r.right}] of [${box.left}, ${box.right}]`),
+          value: root.querySelector(".hkc-chart-value")?.textContent ?? "",
+          pageOverflow: document.documentElement.scrollWidth > innerWidth,
+        };
+      });
+      for (const gap of result.gaps) expect(gap, `${label} axis gap ${JSON.stringify(result.gaps)}`).toBeGreaterThanOrEqual(0);
+      expect(result.outside, label).toEqual([]);
+      expect(result.value, label).toContain(figure);
+      expect(result.pageOverflow, label).toBe(false);
+      expect(await geometry(page), label).toEqual({ overlaps: [], outside: [], bordered: [] });
+    }
+  });
+}
+for (const mode of ["light", "dark"] as const) for (const [name, unit] of [["cjk", "微秒每秒处理交易计数单位"], ["wide", "WWWWWWWWWWWW"]] as const) {
+  test(`extremes ${name} ${mode} at 320px: bar and line snapshots`, async ({ page }) => {
+    await open(page, `doc=short&mode=${mode}`, 320);
+    await page.waitForFunction(() => "renderOutput" in window);
+    for (const kind of ["bar", "line"] as const) {
+      await page.evaluate(({ kind, unit }) => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput({ header: { title: "Extremes" },
+        blocks: [{ kind: "visual", visual: { kind: "chart", chart: kind, unit, x_labels: ["1–7 Aug", "22–31 Aug"], series: [{ label: "Count", values: ["-999999999999999.123456", "999999999999999.654321"] }], highlight_index: 1 } }], fallback_text: "F" }), { kind, unit });
+      await page.evaluate(() => document.fonts.ready);
+      expect(await geometry(page), kind).toEqual({ overlaps: [], outside: [], bordered: [] });
+      await expect(card(page)).toHaveScreenshot(`output-extremes-${name}-${kind}-${mode}.png`, { animations: "disabled" });
+    }
   });
 }
