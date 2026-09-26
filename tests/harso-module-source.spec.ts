@@ -16,7 +16,8 @@ async function serve(plan: Array<"drop" | "garbage" | 200 | 500>) {
   });
   await new Promise<void>(resolve => server.listen(0, "127.0.0.1", resolve));
   const url = `http://127.0.0.1:${(server.address() as AddressInfo).port}/preview/main.tsx`;
-  return { url, hits: () => hits, close: () => new Promise(resolve => server.close(resolve)) };
+  // closeAllConnections: the browser keeps its own keep-alive socket open, which server.close alone waits for.
+  return { url, hits: () => hits, close: () => new Promise(resolve => { server.closeAllConnections(); server.close(resolve); }) };
 }
 
 // Navigates to url through page.route and reports what `fetch` gave the handler: the body, or the error it threw.
