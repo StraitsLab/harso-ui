@@ -219,5 +219,7 @@ describe("catalogue gallery", () => {
       expect(row.querySelectorAll(".hkc-output-card")).toHaveLength(example.document ? frames.length : 4 * states.length);
     });
     expect(errors).not.toHaveBeenCalled();
-  });
+    // Drawing a whole vertical (every example and state, four frames each) is this test's job; CI runners take
+    // well over the 5 s default on the big verticals, as the View all tests above already allow for.
+  }, 60_000);
 });
