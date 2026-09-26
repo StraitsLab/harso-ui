@@ -363,11 +363,11 @@ test("failed without a host retry shows no Try again (nothing that cannot act); 
 
 // ---- the whole spending example, hostile text, copy text ----
 
-test("the money-spending-month example renders numbers → bar → share with the page's View all", () => {
+test("the money-spending-month example renders progress (its budget pair, 5c) → bar → share with the page's View all", () => {
   const numbers: chat.HarsoOutputNumbersBlock = { kind: "numbers", items: [{ value: "S$720", label: "Left of S$5,000" }, { value: "S$4,280", label: "Spent" }] };
   const { card } = renderDoc(doc([numbers, spendingBar, shareRows], { more_label: "View all categories" }));
-  const order = [...card.querySelectorAll(".hkc-output-card-numbers, .hkc-output-chart, .hkc-output-share")].map(node => node.className);
-  expect(order).toEqual(["hkc-output-card-numbers", "hkc-output-chart", "hkc-output-share"]);
+  const order = [...card.querySelectorAll(".hkc-output-progress, .hkc-output-card-numbers, .hkc-output-chart, .hkc-output-share")].map(node => node.className);
+  expect(order).toEqual(["hkc-output-progress", "hkc-output-chart", "hkc-output-share"]);
   expect(within(card).getByRole("button", { name: "View all categories" })).toBeVisible();
 });
 

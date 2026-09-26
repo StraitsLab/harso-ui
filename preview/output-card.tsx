@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import { KitProvider } from "../src/theme";
 import { HarsoOutputCard, type HarsoOutputDocument, type HarsoOutputRowsBlock } from "../src/chat/output-card";
 import type { HarsoOutputBlockState } from "../src/chat/output-card-charts";
+import type { HarsoOutputMediaHost } from "../src/chat/output-card-media";
+import clipUrl from "./output-card-clip.mp4";
 import "../src/primitives.css";
 
 // WEV-1851 S1 fixture. Documents are verbatim copies of the output-blocks.v1 draft examples;
@@ -322,10 +324,129 @@ const hostile: HarsoOutputDocument = {
   ],
   fallback_text: "Hostile content probe."
 };
-const documents: Record<string, HarsoOutputDocument> = { hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide };
+// Packet 5c: status, progress, image, video and map. B0 master data (B0-blocks/.lane/data.js) sent the way the playbook
+// tells the agent to send it (status + timed rows G16; the budget pair G9), plus verbatim playbook blocks.
+const b0Status: HarsoOutputDocument = {
+  header: { title: "SQ 638 to Tokyo", subtitle: "12 Oct · Changi T3" },
+  blocks: [{ kind: "status", state: "working", detail: "Boarding · gate C19", subject: { work_unit_id: "0192a3b4-5c6d-7e8f-9a0b-000000000c01" } },
+    { kind: "rows", items: [{ label: "Doors close", trailing: "08:20" }, { label: "Departs", trailing: "08:35" }] }],
+  fallback_text: "SQ 638 is boarding at gate C19. Doors close 08:20, departs 08:35."
+};
+const watchReply: HarsoOutputDocument = {
+  header: { title: "Reply from Nichol", subtitle: "WhatsApp" },
+  blocks: [{ kind: "status", state: "watching", detail: "since 9:40 AM", subject: { routine_id: "0192a3b4-5c6d-7e8f-9a0b-000000000961" } },
+    { kind: "rows", items: [{ label: "Stops after", trailing: "Fri 6 PM" }] },
+    { kind: "action", primary: { kind: "routine_control", label: "Pause", routine_id: "0192a3b4-5c6d-7e8f-9a0b-000000000961", control: "pause" } }],
+  fallback_text: "Watching for Nichol's reply on WhatsApp since 9:40 AM; stops after Fri 6 PM."
+};
+const meanings: HarsoOutputDocument = {
+  header: { title: "Four meanings" },
+  blocks: [{ kind: "status", state: "ready", detail: "14 files moved" }, { kind: "status", state: "working", detail: "112 of about 400 checked" },
+    { kind: "status", state: "needs_you", detail: "sign in to Gmail" }, { kind: "status", state: "failed", detail: "The fare site didn't respond. Nothing was booked." }],
+  fallback_text: "Done, working, needs you, couldn't finish."
+};
+const emptySearch: HarsoOutputDocument = {
+  header: { title: "No 3-room HDB in Bishan under S$500k", subtitle: "As of 10:50 · PropertyGuru and 99.co" },
+  blocks: [{ kind: "status", state: "empty", detail: "Cheapest listed now is S$588k" }],
+  fallback_text: "No 3-room HDB in Bishan under S$500k. Cheapest listed now is S$588k."
+};
+const b0Progress: HarsoOutputDocument = {
+  header: { title: "September budget", subtitle: "1–30 Sep · 4 days to go" },
+  blocks: [{ kind: "numbers", items: [{ value: "S$4,280", label: "Spent of budget" }, { value: "S$720", label: "Left of S$5,000" }] }],
+  fallback_text: "September: S$4,280 spent of S$5,000, S$720 left for 4 days."
+};
+const overBudget: HarsoOutputDocument = {
+  header: { title: "September dining", subtitle: "1–30 Sep" },
+  blocks: [{ kind: "numbers", items: [{ value: "S$1,510", label: "Spent" }, { value: "−S$310", label: "Left of S$1,200" }] }],
+  fallback_text: "Dining: S$1,510 spent of S$1,200, over by S$310."
+};
+const b0Image: HarsoOutputDocument = {
+  header: { title: "Crumb & Co logo", subtitle: "Direction 1 · wheat ear and ampersand" },
+  blocks: [{ kind: "visual", visual: { kind: "image", artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31", alt: "Crumb & Co logo: a wheat ear forming an ampersand, warm brown on cream", aspect: "square" } },
+    { kind: "action", primary: { kind: "download_artifact", label: "Download", artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31" } }],
+  fallback_text: "Crumb & Co logo, direction 1: a wheat ear forming an ampersand."
+};
+const deck: HarsoOutputDocument = {
+  header: { title: "EVs in Singapore, 2026", subtitle: "6 slides · PPTX and PDF" },
+  blocks: [{ kind: "visual", visual: { kind: "image", artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2d", alt: "Title slide: EVs in Singapore, 2026, with a charger photo", aspect: "16:9" } }],
+  fallback_text: "EVs in Singapore, 2026: 6 slides."
+};
+const video: HarsoOutputDocument = {
+  header: { title: "Kitchen walkthrough", subtitle: "Renovation · 26 Sep" },
+  blocks: [{ kind: "visual", visual: { kind: "video", artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000b01", alt: "Walkthrough of the new kitchen", poster: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000b02" } }],
+  fallback_text: "Kitchen walkthrough video, 26 Sep."
+};
+const b0Map: HarsoOutputDocument = {
+  header: { title: "Where to stay in Tokyo", subtitle: "6 nights in Oct · S$2,000 budget · as of 09:20" },
+  blocks: [{ kind: "visual", visual: { kind: "map", places: [{ id: "ueno", label: "Ueno", lat: "35.7141", lon: "139.7774" }, { id: "asakusa", label: "Asakusa", lat: "35.7148", lon: "139.7967" }, { id: "shinjuku", label: "Shinjuku", lat: "35.6938", lon: "139.7034" }], selected_place_id: "ueno" } }],
+  fallback_text: "Where to stay in Tokyo: Ueno (pick), Asakusa, Shinjuku."
+};
+const tampines: HarsoOutputDocument = {
+  header: { title: "3-room HDB in Tampines", subtitle: "Under S$600k · as of 09:30" },
+  blocks: [{ kind: "visual", visual: { kind: "map", selected_place_id: "p0", places: Array.from({ length: 12 }, (_, index) => ({ id: `p${index}`, label: `Blk ${800 + index * 7} Tampines St ${81 + index % 5}`, lat: (1.345 + (index * 37 % 17) / 1000).toFixed(4), lon: (103.93 + (index * 53 % 23) / 1000).toFixed(4) })) } }],
+  fallback_text: "Twelve 3-room flats in Tampines."
+};
+// Synthetic hostile content for the new blocks: a 300-character word, CJK without spaces, RTL, emoji, huge figures.
+const hostileMedia: HarsoOutputDocument = {
+  header: { title: "长长长长长长长长长长长长长长长长长长长长", subtitle: "مرحبا بالعالم · 🙂" },
+  blocks: [
+    { kind: "status", state: "watching", detail: hostileWord.slice(0, 80) },
+    // Schema maxima: label line48, trailing line24 (Latin with no break, CJK, RTL).
+    { kind: "rows", items: [{ label: "长长长长长长长长长长长长长长长长长长长长长长长长", trailing: "星期五 18:00" }, { label: "مرحبا بالعالم", trailing: "🙂🙂🙂" },
+      { label: "W".repeat(48), trailing: "W".repeat(24) }, { label: "Stops after", trailing: "星".repeat(24) }, { label: "Ends", trailing: "مرحبا بالعالم مرحبا بال" }] },
+    { kind: "numbers", items: [{ value: "S$987,654,321", label: `${hostileWord.slice(0, 40)} of S$1,000,000,000` }, { value: "S$12,345,679", label: "Left" }] },
+    { kind: "visual", visual: { kind: "map", selected_place_id: "a", places: [{ id: "a", label: hostileWord.slice(0, 40), lat: "1.3000", lon: "103.8000" }, { id: "b", label: "长长长长长长长长长长长长", lat: "1.3010", lon: "103.8012" }, { id: "c", label: "مرحبا بالعالم 🙂", lat: "1.2990", lon: "103.7990" }] } }
+  ],
+  fallback_text: "Hostile media probe."
+};
+// Synthetic maps at the edges of the world: two continents, the dateline, a pick with a 40-character label beside
+// another pin, and two places no single still map can hold at a narrow pane.
+const mapOf = (title: string, places: { id: string; label: string; lat: string; lon: string }[], selected = places[0].id): HarsoOutputDocument =>
+  ({ header: { title }, blocks: [{ kind: "visual", visual: { kind: "map", places, selected_place_id: selected } }], fallback_text: title });
+const worldMaps: Record<string, HarsoOutputDocument> = {
+  world: mapOf("New York and Singapore", [{ id: "ny", label: "New York", lat: "40.7128", lon: "-74.0060" }, { id: "sg", label: "Singapore", lat: "1.3521", lon: "103.8198" }]),
+  continents: mapOf("London, Sydney, Los Angeles", [{ id: "lon", label: "London", lat: "51.5072", lon: "-0.1276" }, { id: "syd", label: "Sydney", lat: "-33.8688", lon: "151.2093" }, { id: "la", label: "Los Angeles", lat: "34.0522", lon: "-118.2437" }], "syd"),
+  dateline: mapOf("Either side of the dateline", [{ id: "east", label: "Taveuni", lat: "-16.8", lon: "179.9" }, { id: "west", label: "Vanua Balavu", lat: "-17.2", lon: "-179.9" }, { id: "apia", label: "Apia", lat: "-13.83", lon: "-171.76" }]),
+  longpick: mapOf("A long name beside a neighbour", [{ id: "a", label: "W".repeat(40), lat: "1.3000", lon: "103.8000" }, { id: "b", label: "Other", lat: "1.3000", lon: "103.8200" }]),
+  poles: mapOf("Svalbard and the Ross Sea", [{ id: "n", label: "Longyearbyen", lat: "78.2232", lon: "15.6267" }, { id: "s", label: "McMurdo", lat: "-77.8419", lon: "166.6863" }])
+};
+// Synthetic: a block kind the card does not draw, so the whole card falls back to its text.
+const unknown: HarsoOutputDocument = { ...failed, blocks: [{ kind: "hologram", payload: { raw: true } }] };
+const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide,
+  ...worldMaps, status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
+
+/* Fixture media host: artifacts are local drawings, map tiles a drawn street grid per tile (deterministic, offline:
+   the browser suite never calls openstreetmap.org). `?imgfail=1` serves a missing image; `?imgslow=1` never resolves. */
+const svg = (body: string, w = 400, h = 400) => `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${body}</svg>`)}`;
+const ART: Record<string, string> = {
+  "0192a3b4-5c6d-7e8f-9a0b-000000000a31": svg(`<rect width="400" height="400" fill="#f4ede0"/><path d="M200 70c-40 60-40 120 0 160c40-40 40-100 0-160z" fill="#8a5a2b"/><path d="M200 230c-60 20-90 60-70 100c30 30 90 10 120-40" fill="none" stroke="#8a5a2b" stroke-width="18" stroke-linecap="round"/>`),
+  "0192a3b4-5c6d-7e8f-9a0b-000000000a2d": svg(`<rect width="640" height="360" fill="#1f2a33"/><text x="40" y="170" font-family="sans-serif" font-size="40" fill="#fff">EVs in Singapore, 2026</text><rect x="40" y="200" width="160" height="6" fill="#3d8bf5"/>`, 640, 360),
+  "0192a3b4-5c6d-7e8f-9a0b-000000000b02": svg(`<rect width="640" height="360" fill="#d9d2c5"/><rect x="60" y="200" width="520" height="120" fill="#b8ab96"/><rect x="100" y="60" width="160" height="120" fill="#efe9dd"/>`, 640, 360),
+  "0192a3b4-5c6d-7e8f-9a0b-000000000b01": clipUrl
+};
+// Roads sit on a grid that continues across tile edges (so the plane reads as one map); a park on some tiles.
+const tile = (z: number, x: number, y: number) => {
+  const park = (x * 7 + y * 3 + z) % 4 === 0;
+  return svg(`<rect width="256" height="256" fill="#ecebe6"/>${park ? `<rect x="150" y="30" width="80" height="56" rx="6" fill="#dde5d6"/>` : ""}`
+    + `<path d="M0 96H256M0 208H256M72 0V256M184 0V256" stroke="#ffffff" stroke-width="6"/>`
+    + `<path d="M0 150H256" stroke="#d3dde3" stroke-width="10"/>`, 256, 256);
+};
+// `?net=1` serves artifacts and tiles over HTTP paths the browser suite routes (fulfils, aborts or holds), so real
+// transport failure and recovery are exercised, not a host-injected state. `?generation=` changes every tile URL.
+const mediaHost = (onOpen: (artifact: string) => void): HarsoOutputMediaHost => ({
+  resolveArtifact: artifact => query.has("imgfail") ? "/preview/missing-image.png" : query.has("imgslow") ? "/__never__/slow.png"
+    : query.has("net") ? `/__media__/${artifact.slice(9)}` : ART[artifact.slice(9)],
+  onOpenArtifact: onOpen,
+  mapTile: query.has("net") ? (z, x, y) => `/__tiles__/${query.get("generation") ?? 0}/${z}/${x}/${y}.svg` : tile
+});
 // Per-block state for B0 state crops: ?state=partial etc. The B0 master copy for each kind (data.js).
 const STATE_COPY: Record<string, Record<string, Omit<HarsoOutputBlockState, "state">>> = {
   bar: { empty: { message: "No spending recorded this month" }, partial: { message: "3 of 4 weeks · 22–30 Sep still syncing" }, stale: { message: "As of 09:10 · couldn’t refresh" }, failed: { message: "Couldn’t load the chart", reason: "The bank feed didn’t respond. Nothing was changed." } },
+  status: { empty: { message: "No steps yet" }, partial: { message: "3 of 4 updates · departure time not confirmed" }, stale: { message: "As of 09:10 · couldn’t refresh" }, failed: { message: "Couldn’t update the flight", reason: "The airline didn’t respond." } },
+  progress: { empty: { message: "No budget set for September" }, partial: { message: "3 of 4 accounts counted" }, stale: { message: "As of 09:10 · couldn’t refresh" }, failed: { message: "Couldn’t load your budget", reason: "The source didn’t respond. Nothing was changed." } },
+  image: { empty: { message: "No image yet" }, partial: { message: "Rendering · 1 of 2 sizes" }, stale: { message: "As of 09:10 · older version" }, failed: { message: "Couldn’t make the image", reason: "The image tool timed out. Nothing was charged." } },
+  video: { empty: { message: "No video yet" }, partial: { message: "Processing · 1 of 2 sizes" }, stale: { message: "As of 09:10 · older version" }, failed: { message: "Couldn’t load the video", reason: "The file didn’t respond. Nothing was changed." } },
+  map: { empty: { message: "No places to show" }, partial: { message: "3 of 5 places located" }, stale: { message: "As of 09:10 · couldn’t refresh" }, failed: { message: "Couldn’t load the map", reason: "The map service didn’t respond." } },
   line: { empty: { message: "No sales in this period" }, partial: { message: "12 of 14 days reported · 13–14 Sep still coming in" }, stale: { message: "As of 09:10 · couldn’t refresh" }, failed: { message: "Couldn’t load daily revenue", reason: "The shop didn’t respond. Nothing was changed." } },
   share: { empty: { message: "No spending to break down" }, partial: { message: "3 of 4 accounts categorised" }, stale: { message: "As of 09:10 · couldn’t refresh" }, failed: { message: "Couldn’t load categories", reason: "The source didn’t respond. Nothing was changed." } },
   table: { empty: { message: "No rows to show" }, partial: { message: "4 of 10 rows loaded" }, stale: { message: "As of 09:10 · couldn’t refresh" }, failed: { message: "Couldn’t load the table", reason: "The source didn’t respond. Nothing was changed." } }
@@ -337,6 +458,8 @@ const PARTIAL: Record<string, HarsoOutputDocument> = {
 };
 
 const query = new URLSearchParams(location.search);
+// Image aspect override for the geometry test: ?aspect=3:4 etc.
+if (query.has("aspect")) (b0Image.blocks[0] as { visual: { aspect?: string } }).visual.aspect = query.get("aspect")!;
 
 function Fixture() {
   const [appearance] = useState<"light" | "dark">(query.get("mode") === "dark" ? "dark" : "light");
@@ -352,15 +475,17 @@ function Fixture() {
   const blockStates = blockState && blockState !== "ready"
     ? { 0: { state: blockState, ...STATE_COPY[doc]?.[blockState], onRetry: blockState === "failed" ? () => setRetried(value => value + 1) : undefined } } : undefined;
   const [detailsOpened, setDetailsOpened] = useState(0);
+  const [opened, setOpened] = useState<string[]>([]);
+  const [media] = useState(() => mediaHost(artifact => setOpened(list => [...list, artifact])));
   return <KitProvider appearance={appearance} palette={palette} className="output-card-fixture" style={query.has("width") ? { maxWidth: `${Number(query.get("width"))}px` } : undefined}>
     <main>
       <div className="output-card-transcript" data-testid="transcript">
         <p className="output-card-user">Flights to Tokyo on 12 Oct?</p>
         <p>Three direct options. SQ 638 has the best times for your morning start.</p>
         <HarsoOutputCard document={document} onViewAll={() => setViewAllOpened(value => value + 1)}
-          onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} />
+          onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} />
       </div>
-      <output aria-label="Fixture callbacks">{JSON.stringify({ viewAllOpened, detailsOpened, retried })}</output>
+      <output aria-label="Fixture callbacks">{JSON.stringify({ viewAllOpened, detailsOpened, retried, opened })}</output>
     </main>
   </KitProvider>;
 }
