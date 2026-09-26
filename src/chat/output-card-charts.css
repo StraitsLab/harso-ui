@@ -29,12 +29,13 @@
 .harso-kit .hkc-output-share-segment { flex: 1 1 0; min-width: 2px; background: color-mix(in srgb, var(--hk-ink) var(--hkc-tone), var(--hk-surface)); }
 .harso-kit .hkc-output-share-rows { list-style: none; margin: 0; padding: 0; }
 .harso-kit .hkc-output-share-row {
-  display: grid; grid-template-columns: 8px minmax(0, 1fr) auto auto; align-items: center; column-gap: var(--hk-space-2);
+  /* Top-aligned: a wrapped label keeps its key, share and amount on the first line. */
+  display: grid; grid-template-columns: 8px minmax(0, 1fr) auto auto; align-items: start; column-gap: var(--hk-space-2);
   min-height: 32px; padding-block: 6px; position: relative;
 }
 /* Ruled rows: the hairline starts at the label (after the key), as the B0 share row atom draws it. */
 .harso-kit .hkc-output-share-row + .hkc-output-share-row::before { content: ""; position: absolute; top: 0; left: 16px; right: 0; height: 1px; background: var(--hk-line); }
-.harso-kit .hkc-output-share-key { width: 8px; height: 8px; border-radius: var(--hk-radius-pill); background: color-mix(in srgb, var(--hk-ink) var(--hkc-tone), var(--hk-surface)); }
+.harso-kit .hkc-output-share-key { width: 8px; height: 8px; margin-top: 6px; border-radius: var(--hk-radius-pill); background: color-mix(in srgb, var(--hk-ink) var(--hkc-tone), var(--hk-surface)); }
 .harso-kit .hkc-output-share-label { min-width: 0; font-size: var(--hk-text-body); font-weight: 500; line-height: 20px; }
 .harso-kit .hkc-output-share-percent { min-width: 48px; text-align: right; font-size: var(--hk-text-chrome); line-height: 20px; color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
 .harso-kit .hkc-output-share-amount { min-width: 72px; text-align: right; font-size: var(--hk-text-body); line-height: 20px; font-variant-numeric: tabular-nums; }
