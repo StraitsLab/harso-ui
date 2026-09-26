@@ -22,6 +22,30 @@ honest form, and the missing piece is listed here. Nothing below was invented as
 | Every stale state | all "stale" states | A freshness time the app can age. | "As of 08:40 · couldn't refresh" in the subtitle. | `document.as_of` — G6 |
 | Every failed state | all "failed" states | A retry for a lookup made in chat (no Work Unit). | No action; the detail says "Ask me again in a few minutes." | Retry without a Work Unit — G11 |
 
+## Marketplace fields (Amazon, Lazada, Shopee, AliExpress, Flipkart, Temu, Carousell)
+
+The marketplace examples (shop-marketplaces-compare, shop-marketplace-listing, shop-counterfeit-risk,
+shop-cross-border-tracking, shop-india-cod, shop-us-amazon, shop-return-windows) are modelled on the fields these apps
+return for a listing and an order. Every field below is shown, but the ones without a home in the blocks are carried as
+words. No contract field was invented. These are renderer and contract gaps for the lead to batch.
+
+| Real field | Where it is carried now | What the app cannot do with it | Smallest fix |
+|---|---|---|---|
+| Was-price / list price | A second number, labelled "Seller's was-price"; the text says whether it was ever charged. | Strike it through or tie it to the price. We deliberately don't strike it through, because a seller's was-price is often never charged. | `number.delta` (G3) for the change, never a strike-through |
+| Seller identity (brand's official store: LazMall, Shopee Mall and brand stores such as the Hawkins store; "sold by Amazon"; third-party; private) | Words on the row's secondary line ("Official store", "sold by Amazon", "third-party seller") and a "Seller" text bullet. | Draw the badge, or sort and filter by who sells it. | A row badge from a closed set (brand or retailer · marketplace seller · private) |
+| Platform assurance (Flipkart Assured, Amazon Prime, Lazada Choice) | Not used on a row; Prime appears as a delivery term ("Prime, arrives Mon 28 Sep"). These are quality or fulfilment programmes that marketplace sellers join. They say nothing about who the seller is, so they never stand in for seller identity. | Show the programme next to the seller without it reading as "official". | A separate assurance chip, never folded into the seller badge; no field in this lane |
+| Rating with review count, sold count | "rated 4.8/5" on the row; the review and sold counts are in text or the secondary line | Tell a rating backed by 12 reviews from one backed by 2,140 at a glance. | Same as S10: renderer and copy rule; no field |
+| Variants with stock (colour, size) | One row per variant: stock on the line, price trailing | Show a variant picker, or grey out a variant that is out of stock | `row_status` meanings (G1): out of stock = problem |
+| Currency | In the value string (S$, ₹, US$). The shared checker's money sum and the totals law read only S$. | Convert or compare across currencies. The laws check an INR or USD cart only by hand. | A currency code on `number` (G-new), or the checker learns ₹ and US$ |
+| Delivered price breakdown (item + shipping + import GST) | AliExpress: breakdown in a text bullet, delivered total trailing. Probe M1 proves the sum and the 9%. | Draw an itemised price (the same gap as the S11 total row) | `rows_block.total` (G4) |
+| Customs step in tracking | A row in the step list ("Cleared Singapore customs · GST paid at checkout, nothing to pay") | Mark a "customs hold / pay duty" step as needing you | `row_status` meanings (G1) |
+| Cash on delivery, pincode | In the subtitle as the filter, and the pincode in Details › assumptions | Show the payment method as a chip | None: it is the request's filter |
+| Return window per order | Last day trailing; the window and the event it counts from on the line (Shopee, LazMall, Amazon.sg, AliExpress from delivery; Temu from purchase), soonest first | Count down or set a reminder from the row | Per-row action (G-new), or a routine through the question card |
+| Product image per listing | Not drawn (as S1) | Image-led listings | `row.image` (G7) |
+
+Food delivery and quick-commerce fields (Swiggy, Zomato, Uber Eats, DoorDash, GrabFood, Instamart, Blinkit, Zepto) belong
+to the delivery lane (catalogue/delivery.json, gaps/delivery.md) and are not duplicated here.
+
 ## States drawn per example
 
 Loading, partial, stale, empty and failed are drawn for every example whose request can meet them. A lookup is never
@@ -44,4 +68,5 @@ email, so I can't say whether it went through. Check Courts before you order aga
 
 ## Renderer gaps (lead visual gate)
 Visual acceptance is deferred to the lead's catalogue-wide pass (ruling 2026-09-26). At round 2, 122 of 186 cards per
-theme still fall back because charts/tables (PR #11) and actions + linked sources (P5d) have not landed.
+theme still fall back because charts/tables (PR #11) and actions + linked sources (P5d) have not landed. With the
+marketplace examples it is 164 of 270 per theme; each new example falls back only in its status and action cards (6 of 12).
