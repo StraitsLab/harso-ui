@@ -245,9 +245,10 @@ export const FRESH_EXAMPLES = new Set(PLAYBOOK.fresh);
 /** A state of an example (loading, partial...) is drawn from its own document, validated like the main one. */
 export const STATES = ["loading", "partial", "stale", "empty", "failed"];
 /**
- * Which data laws a state's document can meet. Every other law applies to every state unchanged. Loading and failed
- * carry no data, so no "as of" stamp, file, contents or sources; empty is a read that found nothing, so it has its
- * moment ("as of") but nothing else; partial and stale show data read at a moment, so every law applies. The
+ * Which data laws a state's document can meet WHEN IT CARRIES NO DATA (see stateLaws: a data-bearing document in any
+ * state meets every law). Loading and failed carry no data, so no "as of" stamp, file, contents or sources; empty is a
+ * read that found nothing, so it has its moment ("as of") but nothing else; partial and stale show data read at a
+ * moment, so every law applies. The
  * example-level checks (says, reply, the fresh verdict, the declared surface, a finished-month request) are the main
  * answer's and are checked once, on it: a state has no sentence or declared surface of its own.
  */
@@ -259,6 +260,20 @@ export const STATE_LAWS = Object.freeze({
   stale: Object.freeze({ asOf: true, data: true }),
 });
 const MAIN_LAWS = Object.freeze({ asOf: true, data: true });
+/**
+ * A state's exemptions hold only for what it actually carries: a loading, failed or empty state is exempt from the data
+ * laws (and loading/failed from the "as of" stamp) ONLY when its document is a bare status block, optionally with an
+ * action. A document in one of those states that carries data (rows, numbers, a table, text, a visual) is held to every
+ * law, exactly like partial or stale; the state's name never earns an exemption on its own.
+ */
+export const NO_DATA_KINDS = Object.freeze(new Set(["status", "action"]));
+export function carriesData(document) {
+  return (document?.blocks ?? []).some(block => !NO_DATA_KINDS.has(block.kind));
+}
+export function stateLaws(state, document) {
+  const declared = STATE_LAWS[state];
+  return carriesData(document) ? MAIN_LAWS : declared;
+}
 /** "as of" followed by a clock time or a market close: a date alone does not say how old a price is. */
 const AS_OF = /\bas of\b[^·]*(?:\b\d{1,2}:\d{2}\b|\bclose\b)/i;
 /** Reserved documentation domains are never a real destination. */
@@ -319,8 +334,8 @@ export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensi
   const push = (law, message) => errors.push(`${law}: ${message}`);
   const main = state === undefined;
   if (!main && !Object.hasOwn(STATE_LAWS, state)) return [`states: ${state} is not one of ${STATES.join(", ")}`];
-  const applies = main ? MAIN_LAWS : STATE_LAWS[state];
   const document = main ? example.document : example.states[state];
+  const applies = main ? MAIN_LAWS : stateLaws(state, document);
   const sentences = main ? { says: example.says ?? "", reply: example.reply ?? "" } : {};
   for (const [path, text] of walkStrings({ ...sentences, document })) {
     if (text.includes("!")) push("voice", `${path} uses an exclamation mark`);
