@@ -173,7 +173,7 @@
               "detail": "Shopify shows no orders from 1 to 31 Aug"
             }
           ],
-          "fallback_text": "No orders in August. Shopify shows no orders from 1 to 31 Aug."
+          "fallback_text": "Shopify shows no orders from 1 to 31 Aug. The store has been paused since 31 Jul."
         },
         "failed": {
           "kind": "output_blocks",
@@ -189,7 +189,7 @@
               "detail": "Shopify didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read August sales: Shopify didn’t respond. Nothing was changed."
+          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -369,7 +369,7 @@
               "detail": "Shopify didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read this week’s sales: Shopify didn’t respond. Nothing was changed."
+          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -518,7 +518,7 @@
               "detail": "Shopify didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t check the September target: Shopify didn’t respond. Nothing was changed."
+          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -889,7 +889,7 @@
               "detail": "Xero asked you to sign in again. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read sales from Xero: Xero asked you to sign in again. Nothing was changed."
+          "fallback_text": "Xero asked you to sign in again. Nothing was changed. Sign in to Xero, then ask me again."
         }
       }
     },
@@ -1008,7 +1008,7 @@
               "detail": "Xero didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read your cash balance: Xero didn’t respond. Nothing was changed."
+          "fallback_text": "Xero didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -1149,7 +1149,7 @@
               "detail": "No products sold from 1 to 31 Aug"
             }
           ],
-          "fallback_text": "No sales in August. No products sold from 1 to 31 Aug."
+          "fallback_text": "No products sold from 1 to 31 Aug. The store has been paused since 31 Jul."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1165,7 +1165,7 @@
               "detail": "Shopify didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t rank August sales: Shopify didn’t respond. Nothing was changed."
+          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -1274,7 +1274,7 @@
               "detail": "Shopify didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t filter to the online store: Shopify didn’t respond. Nothing was changed."
+          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -1398,7 +1398,7 @@
               "detail": "Instagram didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t split August revenue: Instagram didn’t respond. Nothing was changed."
+          "fallback_text": "Instagram didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -1582,7 +1582,7 @@
               "detail": "Shopify has no orders before March 2025. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t compare the two years: Shopify has no orders before March 2025. Nothing was changed."
+          "fallback_text": "Shopify has no orders before March 2025. Nothing was changed. I can compare March to August instead."
         }
       }
     },
@@ -1732,7 +1732,7 @@
               "detail": "Plausible asked for a new API key. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read website visitors: Plausible asked for a new API key. Nothing was changed."
+          "fallback_text": "Plausible asked for a new API key. Nothing was changed. Make a new key in Plausible, then ask me again."
         }
       }
     },
@@ -1917,7 +1917,7 @@
               "detail": "Shopify payouts didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read daily sales: Shopify payouts didn’t respond. Nothing was changed."
+          "fallback_text": "Shopify payouts didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -2069,7 +2069,7 @@
               "West stores have not sent their Q2 figures, so there is no total yet."
             ]
           },
-          "fallback_text": "Q2 sales so far, 2 of 3 regions reported: Central S$182,400 (+4%), East S$96,300 (+18%). West not in yet, so no total."
+          "fallback_text": "Q2 sales so far, 2 of 3 regions reported: Central S$182,400 (+4%), East S$96,300 (+18%). The West stores haven’t reported yet, so there is no total."
         },
         "empty": {
           "kind": "output_blocks",
@@ -2085,7 +2085,7 @@
               "detail": "The POS export for 1 Apr–30 Jun has no rows"
             }
           ],
-          "fallback_text": "No sales in the Q2 export. The POS export for 1 Apr–30 Jun has no rows."
+          "fallback_text": "The POS export for 1 Apr–30 Jun has headers but no rows. Export it again with the dates set, and send me that file."
         },
         "failed": {
           "kind": "output_blocks",
@@ -2101,7 +2101,7 @@
               "detail": "The file is not a sales export. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read the POS export: The file is not a sales export. Nothing was changed."
+          "fallback_text": "The file is not a sales export. Nothing was changed. Send me the sales export from the POS instead."
         }
       }
     },
@@ -2227,7 +2227,7 @@
               "detail": "Shopify has no orders from 1 Apr to 30 Jun"
             }
           ],
-          "fallback_text": "No orders in Q2. Shopify has no orders from 1 Apr to 30 Jun."
+          "fallback_text": "Shopify has no orders from 1 Apr to 30 Jun. The first order is on 3 Jul."
         },
         "failed": {
           "kind": "output_blocks",
@@ -2243,7 +2243,7 @@
               "detail": "Shopify didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t break down Q2 orders: Shopify didn’t respond. Nothing was changed."
+          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -2407,7 +2407,7 @@
               "detail": "Shopify didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t break down August revenue: Shopify didn’t respond. Nothing was changed."
+          "fallback_text": "Shopify didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -2497,7 +2497,7 @@
               "detail": "Shopify has no orders from 1 Apr to 30 Jun"
             }
           ],
-          "fallback_text": "No orders in Q2. Shopify has no orders from 1 Apr to 30 Jun."
+          "fallback_text": "Shopify has no orders from 1 Apr to 30 Jun. The first order is on 3 Jul."
         },
         "failed": {
           "kind": "output_blocks",
@@ -2513,7 +2513,7 @@
               "detail": "Shopify stopped the export at 1,200 orders. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t export Q2 orders: Shopify stopped the export at 1,200 orders. Nothing was saved."
+          "fallback_text": "Shopify stopped the export at 1,200 orders. Nothing was saved. Ask me again in a few minutes."
         }
       }
     },
@@ -2621,7 +2621,7 @@
           "major": 1,
           "header": {
             "title": "Couldn’t compare ad spend and sales",
-            "subtitle": "Jul–Sep"
+            "subtitle": "1 Jul–25 Sep"
           },
           "blocks": [
             {
@@ -2630,7 +2630,7 @@
               "detail": "Meta returned no ad spend for the period. No chart was made."
             }
           ],
-          "fallback_text": "Couldn’t compare ad spend and sales: Meta returned no ad spend for the period. No chart was made."
+          "fallback_text": "Meta returned no ad spend for the period. No chart was made. Reconnect the Meta ad account, then ask me again."
         }
       }
     },
@@ -2708,7 +2708,7 @@
               "detail": "Order times are missing for 61 of 90 days. No chart was made."
             }
           ],
-          "fallback_text": "Couldn’t plot orders by hour: Order times are missing for 61 of 90 days. No chart was made."
+          "fallback_text": "Order times are missing for 61 of 90 days. No chart was made. I can plot the last 29 days instead."
         }
       }
     },
