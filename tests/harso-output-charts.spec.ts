@@ -185,8 +185,47 @@ test("money-spending-month at 320px: numbers, bar and share reflow without overf
 test("forced colors: chart and share marks stay visible", async ({ page }) => {
   await open(page, "doc=month&mode=light&width=544");
   await page.emulateMedia({ forcedColors: "active" });
-  const fills = await card(page).locator(".hkc-chart-mark, .hkc-output-share-segment").evaluateAll(nodes => nodes.map(node => { const s = getComputedStyle(node); return s.fill !== "none" ? s.fill : s.backgroundColor; }));
-  expect(fills.every(fill => fill && fill !== "rgba(0, 0, 0, 0)")).toBe(true);
+  // Each mark is read by the property that paints it: SVG bars by fill, HTML share segments and keys by background.
+  const painted = (selector: string, property: "fill" | "backgroundColor") => card(page).locator(selector)
+    .evaluateAll((nodes, property) => nodes.map(node => (getComputedStyle(node) as unknown as Record<string, string>)[property]), property);
+  const bars = await painted(".hkc-chart-mark", "fill");
+  const segments = await painted(".hkc-output-share-segment, .hkc-output-share-key", "backgroundColor");
+  expect(bars).toHaveLength(4);
+  expect(segments).toHaveLength(8);
+  for (const paint of [...bars, ...segments]) expect(paint).not.toMatch(/^(none|transparent|rgba\(0, 0, 0, 0\))$/);
+});
+
+// Review round 1 (F2): every required x label (first, last, highlighted, uneven period with its note) stays visible at
+// every width, including a long unit that widens the axis; a figure wider than the plot still sits inside the card.
+for (const width of [320, 390, 420]) for (const unit of ["S$", "transactions"]) {
+  test(`required chart labels survive at ${width}px with unit ${unit}`, async ({ page }) => {
+    await open(page, "doc=short", width);
+    await page.waitForFunction(() => "renderOutput" in window);
+    for (const kind of ["bar", "line"] as const) {
+      await page.evaluate(({ kind, unit }) => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput({ header: { title: "August" },
+        blocks: [{ kind: "visual", visual: { kind: "chart", chart: kind, unit, x_labels: ["1–7 Aug", "8–14 Aug", "15–21 Aug", "22–31 Aug"], series: [{ label: "Spent", values: ["980", "1040", "1460", "800"] }], highlight_index: 2 } }],
+        fallback_text: "F" }), { kind, unit });
+      const svg = card(page).locator("svg.hkc-chart-svg");
+      await expect(svg.locator(".hkc-chart-x").first()).toHaveText("1–7 Aug");
+      await expect(svg.locator(".hkc-chart-x").last()).toHaveText(kind === "bar" ? "22–31 Aug10 days" : "22–31 Aug");
+      await expect(svg.locator(".hkc-chart-x--strong")).toHaveText("15–21 Aug");
+      expect(await geometry(page), kind).toEqual({ overlaps: [], outside: [], bordered: [] });
+    }
+  });
+}
+
+test("figures wider than the plot are drawn whole and inside the card at 320px", async ({ page }) => {
+  await open(page, "doc=short", 320);
+  await page.waitForFunction(() => "renderOutput" in window);
+  for (const kind of ["bar", "line"] as const) for (const values of [["999999999999998", "999999999999999"], ["-999999999999999", "1"], ["999999999999999.123456", "999999999999999.654321"]]) {
+    await page.evaluate(({ kind, values }) => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput({ header: { title: "Big" },
+      blocks: [{ kind: "visual", visual: { kind: "chart", chart: kind, unit: "S$", x_labels: ["A", "B"], series: [{ label: "V", values }], highlight_index: 1 } }], fallback_text: "F" }), { kind, values });
+    const value = card(page).locator(".hkc-chart-value");
+    await expect(value).toContainText(values[1].startsWith("999") ? "S$999,999,999,999,999" : "S$1");
+    const axis = await card(page).locator(".hkc-chart-axis").allTextContents();
+    expect(new Set(axis).size, `${kind} ${values}`).toBe(axis.length);
+    expect(await geometry(page), `${kind} ${values}`).toEqual({ overlaps: [], outside: [], bordered: [] });
+  }
 });
 
 // Hostile content (CJK without spaces, a 300-character word, emoji, RTL, negatives, 9-digit values) at four widths:

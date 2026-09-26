@@ -1,11 +1,19 @@
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
-import { periodNotes, readShare, scale, withUnit } from "./output-card-charts";
+import { formatValue, periodNotes, readShare, scale } from "./output-card-charts";
 import chartStyles from "./output-card-charts.css?raw";
 import cardStyles from "./output-card.css?raw";
 
 afterEach(cleanup);
+
+/** Test-side exact decimal helpers (strings, no floats), so the checks do not reuse the code under test. */
+const formatMicroText = (micro: bigint, places: number) => {
+  const size = micro < 0n ? -micro : micro, digits = size.toString().padStart(7, "0");
+  const whole = digits.slice(0, -6), fraction = digits.slice(-6, -6 + places || undefined);
+  return `${micro < 0n ? "-" : ""}${whole}${places ? `.${fraction.slice(0, places)}` : ""}`;
+};
+const toMicroText = (text: string) => { const [whole, fraction = ""] = text.replace(/^-/, "").split("."); const micro = BigInt(whole) * 1_000_000n + BigInt(fraction.padEnd(6, "0")); return text.startsWith("-") ? -micro : micro; };
 
 // Verbatim blocks from docs/agent/output-playbook.examples.json: money-spending-month, data-channel-share,
 // data-table-small, partial-days.
@@ -101,21 +109,70 @@ test("negative bars hang below a zero baseline; units follow the figure the way 
   expect(card.querySelector(".hkc-chart-value")!.textContent).toBe("−S$4k");
   const axis = [...card.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent);
   expect(axis).toContain("S$0k"); expect(axis.some(text => text!.startsWith("−S$"))).toBe(true);
-  expect(withUnit(1160, 0, "S$")).toBe("S$1,160");
-  expect(withUnit(31, 0, "°C")).toBe("31°C");
-  expect(withUnit(7.8, 1, "hours")).toBe("7.8\u00a0hours");
-  expect(withUnit(412, 0, "units")).toBe("412\u00a0units");
-  expect(withUnit(-2, 0, "%")).toBe("−2%");
-  expect(withUnit(1234567, 0)).toBe("1,234,567");
-  expect(withUnit(18.4, 1, "US$")).toBe("US$18.4");
+  expect(formatValue("1160", "S$")).toBe("S$1,160");
+  expect(formatValue("31", "°C")).toBe("31°C");
+  expect(formatValue("7.8", "hours")).toBe("7.8\u00a0hours");
+  expect(formatValue("412", "units")).toBe("412\u00a0units");
+  expect(formatValue("-2", "%")).toBe("−2%");
+  expect(formatValue("1234567")).toBe("1,234,567");
+  expect(formatValue("18.4", "US$")).toBe("US$18.4");
 });
 
-test("scale: bars always include zero; lines span their data; flat and all-zero data still get two intervals", () => {
-  expect(scale([980, 1460], true)).toMatchObject({ bottom: 0, top: 2000, ticks: [0, 1000, 2000] });
-  expect(scale([402.5, 418.3], false).bottom).toBeGreaterThan(0);
-  expect(scale([0, 0], true).ticks).toEqual([0, 0.5, 1]);
-  expect(scale([649, 649], false).ticks.length).toBeGreaterThanOrEqual(2);
-  expect(scale([-4, 12.5], true).bottom).toBeLessThan(0);
+// F1 (review round 1): contract decimals (15 digits, 6 places) are exact in every text the chart produces.
+test("values keep every digit the agent sent: 15-digit wholes, 6-place fractions, micro values, signs", () => {
+  expect(formatValue("999999999999999.123456", "S$")).toBe("S$999,999,999,999,999.123456");
+  expect(formatValue("999999999999999.654321", "S$")).toBe("S$999,999,999,999,999.654321");
+  expect(formatValue("-999999999999999.000001")).toBe("−999,999,999,999,999.000001");
+  expect(formatValue("0.000001", "%")).toBe("0.000001%");
+  expect(formatValue("-0.000001", "%")).toBe("−0.000001%");
+  expect(formatValue("-0")).toBe("0");
+  expect(formatValue("007.50", "S$")).toBe("S$7.50");
+  const precise: chat.HarsoOutputVisualBlock = { kind: "visual", visual: { kind: "chart", chart: "line", unit: "S$", x_labels: ["A", "B"],
+    series: [{ label: "Balance", values: ["999999999999999.123456", "999999999999999.654321"] }], highlight_index: 1 } };
+  expect(chat.harsoOutputBlockPlainText(precise)).toBe("Balance: A S$999,999,999,999,999.123456, B S$999,999,999,999,999.654321");
+  const { card } = renderDoc(doc([precise], { header: { title: "Balance" } }));
+  expect(within(card).getByRole("table").textContent).toContain("S$999,999,999,999,999.123456");
+  expect(card.querySelector(".hkc-chart-highlight .hkc-chart-value")!.textContent).toContain("S$999,999,999,999,999.654321");
+});
+
+test("axis ticks are distinct, ordered, inside the domain and printed without rounding, for micro and high-offset data", () => {
+  const cases: [string[], boolean][] = [[["0", "0.000001"], true], [["0.000001", "0.000002"], false], [["999999999999998", "999999999999999"], false],
+    [["999999999999998", "999999999999999"], true], [["999999999999999.123456", "999999999999999.654321"], false], [["-0.000003", "0.000001"], true],
+    [["-999999999999999", "999999999999999"], true], [["649", "649"], false], [["0", "0"], true], [["0.1", "0.3"], false]];
+  for (const [values, zero] of cases) {
+    const { bottom, top, ticks, places } = scale(values, zero);
+    const micros = values.map(value => BigInt(Math.round(Number(value) * 1e6)) || 0n);
+    expect(ticks.length, values.join()).toBeGreaterThanOrEqual(2);
+    expect(ticks[0]).toBe(bottom); expect(ticks[ticks.length - 1]).toBe(top);
+    for (let index = 1; index < ticks.length; index++) expect(ticks[index] > ticks[index - 1], values.join()).toBe(true);
+    const labels = ticks.map(tick => formatMicroText(tick, places));
+    expect(new Set(labels).size, `${values.join()} → ${labels.join(" | ")}`).toBe(ticks.length);
+    // Every label parses back to its exact tick.
+    for (const [index, label] of labels.entries()) expect(toMicroText(label), label).toBe(ticks[index]);
+    if (Math.abs(Number(values[0])) < 1e12) for (const micro of micros) { expect(micro >= bottom).toBe(true); expect(micro <= top).toBe(true); }
+  }
+  expect(scale(["980", "1460"], true)).toMatchObject({ bottom: 0n, top: 2_000_000_000n, ticks: [0n, 1_000_000_000n, 2_000_000_000n], places: 0 });
+  expect(scale(["0", "0"], true).ticks).toEqual([0n, 500_000n, 1_000_000n]);
+  expect(scale(["-4", "12.5"], true).bottom < 0n).toBe(true);
+});
+
+test("micro and high-offset charts draw distinct axis labels at distinct heights, and stale ticks do not survive a re-render", () => {
+  const chart = (values: string[], kind: "bar" | "line"): chat.HarsoOutputVisualBlock => ({ kind: "visual", visual: { kind: "chart", chart: kind, unit: "S$", x_labels: ["A", "B"], series: [{ label: "V", values }], highlight_index: 1 } });
+  for (const kind of ["bar", "line"] as const) for (const values of [["0", "0.000001"], ["999999999999998", "999999999999999"]]) {
+    const { card } = renderDoc(doc([chart(values, kind)], { header: { title: "V" } }));
+    const axis = [...card.querySelectorAll(".hkc-chart-axis")];
+    expect(new Set(axis.map(node => node.textContent)).size, `${kind} ${values}`).toBe(axis.length);
+    expect(new Set(axis.map(node => node.getAttribute("y"))).size, `${kind} ${values}`).toBe(axis.length);
+    cleanup();
+  }
+  const { card, rerender } = (() => { const result = render(<chat.HarsoOutputCard document={doc([chart(["999999999999998", "999999999999999"], "line")])} onViewAll={() => {}} />); return { card: result.container, rerender: result.rerender }; })();
+  rerender(<chat.HarsoOutputCard document={doc([spendingBar])} onViewAll={() => {}} />);
+  expect([...card.querySelectorAll(".hkc-chart-axis")].map(node => node.textContent)).toEqual(["S$0", "S$1,000", "S$2,000"]);
+});
+
+test("scale: bars always include zero; lines span their data; flat data still gets two intervals", () => {
+  expect(scale(["402.5", "418.3"], false).bottom > 0n).toBe(true);
+  expect(scale(["649", "649"], false).ticks.length).toBeGreaterThanOrEqual(2);
 });
 
 test("charts the card cannot draw fall back: ragged series, bad decimals, multi-series bars, unknown chart kinds", () => {
@@ -206,12 +263,32 @@ test("table: total_count overflows to View all; rows share one budget with rows 
   expect(within(mixed).getByRole("button", { name: "View all 5" })).toBeVisible();
 });
 
-test("table without a Total row keeps every row as body; tables the card cannot draw fall back", () => {
-  const plain: chat.HarsoOutputTableBlock = { kind: "table", columns: [{ label: "Fact" }, { label: "Detail" }], rows: [{ cells: ["Tenure", "99 years"] }, { cells: ["Total floor area", "92 sqm"] }] };
-  const { card } = renderDoc(doc([plain], { header: { title: "Facts" } }));
-  // "Total floor area" is the last row, and it is labelled Total…: the contract's convention (G4) wins, so it is set apart.
-  expect(card.querySelector(".hkc-output-table-total")!.textContent).toBe("Total floor area92 sqm");
-  cleanup();
+// F3 (review round 1): only the playbook's "Total" (or B0's "Total · N") is a total; View all only when a row is hidden.
+test.each([
+  ["Total floor area", false], ["Total Energies", false], ["total", false], ["Totals", false], ["Subtotal", false],
+  ["Total", true], ["  Total ", true], ["Total · 4", true],
+])("a last row labelled %j is a total row: %s", (label, isTotal) => {
+  const table: chat.HarsoOutputTableBlock = { kind: "table", columns: [{ label: "Name" }, { label: "Price", align: "end" }],
+    rows: [{ cells: ["Shell", "S$10"] }, { cells: ["BP", "S$11"] }, { cells: ["Chevron", "S$12"] }, { cells: [label, "S$13"] }] };
+  const { card } = renderDoc(doc([table], { header: { title: "T" } }));
+  expect(card.querySelector(".hkc-output-table-total") !== null).toBe(isTotal);
+  // Three rows inline: an ordinary fourth row is hidden behind View all 4; a Total row always shows and hides nothing.
+  expect(within(card).getAllByRole("row")).toHaveLength(isTotal ? 5 : 4);
+  expect(within(card).queryByRole("button", { name: /View all/ })?.textContent ?? null).toBe(isTotal ? null : "View all 4");
+});
+
+test.each([
+  // [body rows sent, Total row?, total_count, View all label]
+  [3, true, 4, null], [3, true, undefined, null], [3, true, 10, "View all 9"], [2, false, 2, null], [3, false, 20, "View all 20"], [5, true, 6, "View all 5"],
+] as const)("table of %i rows (Total: %s, total_count %s) counts rows one way: %s", (count, withTotal, totalCount, label) => {
+  const rows = Array.from({ length: count }, (_, index) => ({ cells: [`Row ${index + 1}`, `S$${index + 1}`] }));
+  const table: chat.HarsoOutputTableBlock = { kind: "table", columns: [{ label: "Name" }, { label: "Amount", align: "end" }],
+    rows: withTotal ? [...rows, { cells: ["Total", "S$0"] }] : rows, ...(totalCount === undefined ? {} : { total_count: totalCount }) };
+  const { card } = renderDoc(doc([table], { header: { title: "T" } }));
+  expect(within(card).queryByRole("button", { name: /View all/ })?.textContent ?? null).toBe(label);
+});
+
+test("tables the card cannot draw fall back", () => {
   for (const bad of [{ kind: "table", columns: [{ label: "A" }], rows: [{ cells: ["x"] }] }, { kind: "table", columns: [{ label: "A" }, { label: "B" }], rows: [{ cells: ["x"] }] },
     { kind: "table", columns: [{ label: "A" }, { label: "B" }], rows: [{ cells: ["x", "y"], status: "overdue" }] }]) {
     const { card: fallback } = renderDoc(doc([bad]));

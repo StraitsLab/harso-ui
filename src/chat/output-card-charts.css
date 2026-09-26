@@ -8,6 +8,9 @@
 .harso-kit .hkc-output-chart-key li { display: inline-flex; align-items: center; gap: 6px; }
 .harso-kit .hkc-output-chart-plot { width: 100%; min-width: 0; }
 .harso-kit .hkc-chart-svg { display: block; overflow: visible; font-family: var(--hk-font); font-variant-numeric: tabular-nums; }
+/* The measuring probe: the same font tokens as the chart text, at the heaviest weight it draws (500). Never seen. */
+.harso-kit .hkc-chart-measure { position: absolute; width: 0; height: 0; overflow: hidden; visibility: hidden; font-family: var(--hk-font); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-chart-measure-text { font-size: var(--hk-text-meta); font-weight: 500; }
 .harso-kit .hkc-chart-axis, .harso-kit .hkc-chart-x { font-size: var(--hk-text-meta); fill: var(--hk-secondary); }
 .harso-kit .hkc-chart-x--strong { fill: var(--hk-ink); font-weight: 500; }
 .harso-kit .hkc-chart-x-note { fill: var(--hk-secondary); font-weight: 400; }
@@ -27,10 +30,11 @@
 .harso-kit .hkc-output-share { display: flex; flex-direction: column; gap: var(--hk-space-3); min-width: 0; }
 .harso-kit .hkc-output-share-bar { display: flex; gap: 1px; height: 10px; border-radius: var(--hk-radius-pill); overflow: hidden; }
 .harso-kit .hkc-output-share-segment { flex: 1 1 0; min-width: 2px; background: color-mix(in srgb, var(--hk-ink) var(--hkc-tone), var(--hk-surface)); }
-.harso-kit .hkc-output-share-rows { list-style: none; margin: 0; padding: 0; }
+/* One grid for all rows (rows are subgrids), so every share % and every amount shares one column edge. */
+.harso-kit .hkc-output-share-rows { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 8px minmax(0, 1fr) auto auto; column-gap: var(--hk-space-2); }
 .harso-kit .hkc-output-share-row {
   /* Top-aligned: a wrapped label keeps its key, share and amount on the first line. */
-  display: grid; grid-template-columns: 8px minmax(0, 1fr) auto auto; align-items: start; column-gap: var(--hk-space-2);
+  display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: start;
   min-height: 32px; padding-block: 6px; position: relative;
 }
 /* Ruled rows: the hairline starts at the label (after the key), as the B0 share row atom draws it. */

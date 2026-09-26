@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { KitProvider } from "../src/theme";
 import { HarsoOutputCard, type HarsoOutputDocument, type HarsoOutputRowsBlock } from "../src/chat/output-card";
@@ -343,7 +343,10 @@ function Fixture() {
   const palette = query.get("palette") === "cozy" ? "cozy" : "clean";
   const doc = query.get("doc") ?? "flights";
   const blockState = query.get("state") as HarsoOutputBlockState["state"] | null;
-  const document = (blockState === "partial" && PARTIAL[doc]) || (documents[doc] ?? flights);
+  // Tests may draw any document through `window.renderOutput` (hostile values and widths without a fixture per case).
+  const [posted, setPosted] = useState<HarsoOutputDocument>();
+  useEffect(() => { (window as unknown as { renderOutput: typeof setPosted }).renderOutput = setPosted; }, []);
+  const document = posted ?? ((blockState === "partial" && PARTIAL[doc]) || (documents[doc] ?? flights));
   const [viewAllOpened, setViewAllOpened] = useState(0);
   const [retried, setRetried] = useState(0);
   const blockStates = blockState && blockState !== "ready"

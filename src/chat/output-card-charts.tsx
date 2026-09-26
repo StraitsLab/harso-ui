@@ -1,7 +1,7 @@
 "use client";
 
 import { Clock, Info, WarningCircle } from "@phosphor-icons/react";
-import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Button } from "../primitives";
 import "./output-card-charts.css";
 
@@ -77,22 +77,28 @@ export function readTable(block: AnyBlock): HarsoOutputTableBlock | undefined {
   return ok ? table : undefined;
 }
 
-/** A last row labelled "Total" (G4: the contract has no totals field; the playbook sends it as the last row). */
+/**
+ * The playbook's total row (G4: no totals field yet): the last row labelled exactly "Total", or "Total · N" as the B0
+ * table master draws it. Anything else ("Total Energies", "Total floor area") is an ordinary row.
+ */
 export const isTotalRow = (table: HarsoOutputTableBlock, index: number) =>
-  index === table.rows.length - 1 && table.rows.length > 1 && /^total\b/i.test(table.rows[index].cells[0]?.trim() ?? "");
+  index === table.rows.length - 1 && table.rows.length > 1 && /^Total(?: · \d+)?$/.test(table.rows[index].cells[0]?.trim() ?? "");
 
 // ---- numbers and units ----
+// Values are exact: a contract decimal (15 digits, 6 places) is held as BigInt millionths and printed from its digits.
+// Floats are used only for pixel ratios.
 
-const MINUS = "\u2212";
+const MINUS = "\u2212", MICRO = 1_000_000n;
 function decimals(value: string) { return value.split(".")[1]?.length ?? 0; }
-function group(value: number, places: number) {
-  return Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: places, maximumFractionDigits: places });
+/** A contract decimal string as integer millionths: "-12.5" → -12500000n. */
+export function toMicro(value: string): bigint {
+  const [whole, fraction = ""] = value.replace(/^-/, "").split(".");
+  const micro = BigInt(whole) * MICRO + BigInt(fraction.padEnd(6, "0"));
+  return value.startsWith("-") ? -micro : micro;
 }
 
 /** A figure with its unit where people expect it: S$1,160 · S$402.5k · 32% · 31°C · 7.8 hours. */
-export function withUnit(value: number, places: number, unit?: string) {
-  const sign = value < 0 ? MINUS : "";
-  const body = group(value, places);
+function attachUnit(sign: string, body: string, unit?: string) {
   const trimmed = unit?.trim();
   if (!trimmed) return sign + body;
   const money = /^([A-Z]{0,3}[$€£¥₹])(k|m|bn|K|M|B)?$/.exec(trimmed);
@@ -100,27 +106,43 @@ export function withUnit(value: number, places: number, unit?: string) {
   if (/^(%|°C|°F|°|k|x|×)$/.test(trimmed)) return `${sign}${body}${trimmed}`;
   return `${sign}${body}\u00a0${trimmed}`;
 }
-const formatValue = (value: string, unit?: string) => withUnit(Number(value), decimals(value), unit);
-
-const LADDER = [1, 1.5, 2, 2.5, 3, 4, 5, 10];
-function niceStep(raw: number) {
-  const magnitude = 10 ** Math.floor(Math.log10(raw));
-  return LADDER.find(step => step * magnitude >= raw - 1e-9)! * magnitude;
+/** Millionths printed with `places` decimals (0–6), grouped, with the unit. Exact for every contract value. */
+export function formatMicro(micro: bigint, places: number, unit?: string) {
+  const size = micro < 0n ? -micro : micro;
+  const whole = (size / MICRO).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const fraction = places > 0 ? `.${(size % MICRO).toString().padStart(6, "0").slice(0, places)}` : "";
+  return attachUnit(micro < 0n ? MINUS : "", whole + fraction, unit);
 }
+/** A contract value as the agent wrote it: every decimal it sent, none it did not. */
+export const formatValue = (value: string, unit?: string) => formatMicro(toMicro(value), decimals(value), unit);
+
+const LADDER = [10n, 15n, 20n, 25n, 30n, 40n, 50n]; // tenths: 1, 1.5, 2, 2.5, 3, 4, 5 × 10^k
+function niceStep(raw: bigint) {
+  for (let magnitude = 1n; ; magnitude *= 10n) for (const tenths of LADDER) {
+    if (tenths * magnitude % 10n) continue;
+    const step = tenths * magnitude / 10n;
+    if (step >= raw) return step;
+  }
+}
+const floorDiv = (a: bigint, b: bigint) => (a < 0n && a % b ? a / b - 1n : a / b);
+const ceilDiv = (a: bigint, b: bigint) => (a > 0n && a % b ? a / b + 1n : a / b);
 
 /**
- * Axis ticks. Bars always include zero (a bar needs its baseline); a line spans its data, and includes zero when the
- * data does. Two intervals, like the B0 masters (S$0 · S$1,000 · S$2,000).
+ * Axis ticks in millionths. Bars always include zero (a bar needs its baseline); a line spans its data, and includes
+ * zero when the data does. Two intervals, like the B0 masters (S$0 · S$1,000 · S$2,000). Ticks are exact multiples of
+ * the step, so they are distinct and `places` shows each one without rounding.
  */
-export function scale(values: number[], zero: boolean) {
-  let lo = Math.min(...values), hi = Math.max(...values);
-  if (zero) { lo = Math.min(0, lo); hi = Math.max(0, hi); }
-  if (hi === lo) { const pad = Math.abs(hi) || 1; if (zero && lo === 0) hi = pad; else { lo -= pad / 2; hi += pad / 2; } }
-  const step = niceStep((hi - lo) / 2);
-  const bottom = Math.floor(lo / step + 1e-9) * step, top = Math.ceil(hi / step - 1e-9) * step;
-  const ticks: number[] = [];
-  for (let tick = bottom; tick <= top + step / 1e6; tick += step) ticks.push(Number(tick.toPrecision(12)));
-  const places = Math.max(0, ...ticks.map(tick => decimals(String(tick))));
+export function scale(values: string[], zero: boolean) {
+  const micros = values.map(toMicro);
+  let lo = micros.reduce((a, b) => (b < a ? b : a)), hi = micros.reduce((a, b) => (b > a ? b : a));
+  if (zero) { lo = lo < 0n ? lo : 0n; hi = hi > 0n ? hi : 0n; }
+  if (hi === lo) { const pad = (hi < 0n ? -hi : hi) || MICRO; if (zero && lo === 0n) hi = pad; else { lo -= pad / 2n; hi += (pad + 1n) / 2n; } }
+  const step = niceStep(ceilDiv(hi - lo, 2n));
+  const bottom = floorDiv(lo, step) * step, top = ceilDiv(hi, step) * step;
+  const ticks: bigint[] = [];
+  for (let tick = bottom; tick <= top; tick += step) ticks.push(tick);
+  let places = 6;
+  for (let rest = step; places > 0 && rest % 10n === 0n; rest /= 10n) places--;
   return { bottom, top, ticks, places };
 }
 
@@ -143,25 +165,32 @@ export function periodNotes(labels: string[]) {
 // ---- drawing ----
 
 const AXIS = 12, LINE_HEIGHT = 16, PLOT = 160, BAR_MAX = 36, DEFAULT_WIDTH = 480;
+type Measure = (text: string) => number;
+/** Without a laid-out font (jsdom, first render): wide characters (CJK, emoji) a full em, everything else 0.6em. */
+const estimate: Measure = text => Array.from(text).reduce((width, char) => width + AXIS * (/[\u1100-\u115f\u2e80-\ua4cf\uac00-\ud7a3\uf900-\ufaff\ufe30-\ufe4f\uff00-\uff60\uffe0-\uffe6]|\p{Extended_Pictographic}/u.test(char) ? 1 : .6), 0);
+
 /**
- * Rendered width of axis/label text: measured with a canvas in the kit's font when the browser has one, else an
- * estimate that counts wide (CJK, emoji) characters as a full em and everything else as 0.6em.
+ * Rendered width of chart text, measured by an SVG text node styled by the same rules as the chart's own text
+ * (the kit's --hk-font and --hk-text-meta tokens, weight 500, tabular figures). No font is named here.
  */
-let measurer: CanvasRenderingContext2D | null | undefined;
-function textWidth(text: string, size = AXIS, weight = 500) {
-  if (measurer === undefined) {
-    try { measurer = typeof document === "undefined" || /jsdom/i.test(navigator.userAgent) ? null : document.createElement("canvas").getContext("2d"); } catch { measurer = null; }
-  }
-  if (measurer) {
-    measurer.font = `${weight} ${size}px "Instrument Sans Variable", sans-serif`;
-    // Canvas cannot apply tabular-nums; tabular digits are at most ~4% wider in Instrument Sans.
-    return Math.ceil(measurer.measureText(text).width * 1.04) + 1;
-  }
-  return Array.from(text).reduce((width, char) => width + size * (/[\u1100-\u115f\u2e80-\ua4cf\uac00-\ud7a3\uf900-\ufaff\ufe30-\ufe4f\uff00-\uff60\uffe0-\uffe6]|\p{Extended_Pictographic}/u.test(char) ? 1 : .6), 0);
+function measurer(node: SVGTextElement | null): Measure {
+  if (!node || typeof node.getComputedTextLength !== "function") return estimate;
+  const cache = new Map<string, number>();
+  return text => {
+    let width = cache.get(text);
+    if (width === undefined) {
+      node.textContent = text;
+      try { width = Math.ceil(node.getComputedTextLength()) + 1; } catch { width = estimate(text); }
+      node.textContent = "";
+      cache.set(text, width);
+    }
+    return width;
+  };
 }
 
 function useWidth() {
   const node = useRef<HTMLDivElement>(null);
+  const probe = useRef<SVGTextElement>(null);
   const [width, setWidth] = useState(DEFAULT_WIDTH);
   const [fonts, setFonts] = useState(0);
   useLayoutEffect(() => {
@@ -169,62 +198,80 @@ function useWidth() {
     if (!element) return;
     const measure = () => { if (element.clientWidth > 0) setWidth(Math.round(element.clientWidth)); };
     measure();
+    // Draw again with the probe attached (the first render could only estimate), and once the web font has loaded.
+    setFonts(value => value + 1);
     const observer = typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(measure);
     observer?.observe(element);
-    // Label widths are measured in the web font; draw again once it has loaded.
     let live = true;
     globalThis.document?.fonts?.ready.then(() => { if (live) setFonts(value => value + 1); });
     return () => { live = false; observer?.disconnect(); };
   }, []);
-  return [node, width, fonts] as const;
+  // A fresh measurer per font generation: widths cached before the font loaded are dropped.
+  const measure = useMemo(() => fonts ? measurer(probe.current) : estimate, [fonts]);
+  return { node, probe, width, fonts, measure };
 }
 
-/** The text, cut with an ellipsis if it is wider than `max` on its own. */
-function fitText(text: string, max: number) {
-  if (textWidth(text) <= max) return text;
+/** The text, cut with an ellipsis if it is wider than `max` on its own (labels only; figures are never cut). */
+function fitText(text: string, max: number, measure: Measure) {
+  if (measure(text) <= max) return text;
   const chars = Array.from(text);
-  while (chars.length > 1 && textWidth(`${chars.join("")}…`) > max) chars.pop();
+  while (chars.length > 1 && measure(`${chars.join("")}…`) > max) chars.pop();
   return `${chars.join("").trimEnd()}…`;
 }
 
-type XLabel = { index: number; x: number; anchor: "start" | "middle" | "end"; lines: string[]; strong: boolean };
+type XLabel = { index: number; x: number; anchor: "start" | "middle" | "end"; lines: string[]; strong: boolean; tier: number };
 
-/** First, last and the highlighted label always; the rest while they fit without touching (8px apart). */
-function placeLabels(labels: string[], notes: (string | undefined)[], xOf: (index: number) => number, plotWidth: number, highlight: number | undefined, sparse: boolean) {
+/**
+ * X labels. First, last, the highlighted period and any uneven period are required: when one would touch another it
+ * drops to a row below (staggered), it is never removed. The rest are shown while they fit on the first row, 8px apart.
+ * Returns the labels and the rows (in lines) they occupy.
+ */
+function placeLabels(labels: string[], notes: (string | undefined)[], xOf: (index: number) => number, plotWidth: number, highlight: number | undefined, sparse: boolean, measure: Measure) {
   const last = labels.length - 1;
   const extent = (index: number) => {
-    const lines = ([labels[index], notes[index]].filter(Boolean) as string[]).map(line => fitText(line, plotWidth));
-    const width = Math.max(...lines.map(line => textWidth(line)));
+    const lines = ([labels[index], notes[index]].filter(Boolean) as string[]).map(line => fitText(line, plotWidth, measure));
+    const width = Math.max(...lines.map(line => measure(line)));
     const x = xOf(index);
     const anchor: XLabel["anchor"] = index === 0 && x - width / 2 < 0 ? "start" : index === last && x + width / 2 > plotWidth ? "end" : "middle";
     const ax = anchor === "start" ? 0 : anchor === "end" ? plotWidth : Math.min(plotWidth - width / 2, Math.max(width / 2, x));
     const left = anchor === "start" ? 0 : anchor === "end" ? plotWidth - width : ax - width / 2;
-    return { label: { index, x: ax, anchor, lines, strong: index === highlight }, left, right: left + width };
+    return { index, x: ax, anchor, lines, strong: index === highlight, tier: 0, left, right: left + width };
   };
-  const order = [...new Set([highlight, 0, last].filter((index): index is number => index !== undefined && index >= 0 && index <= last))];
-  if (!sparse || labels.length <= 7) for (let index = 1; index < last; index++) if (!order.includes(index)) order.push(index);
+  const inRange = (index: number | undefined): index is number => index !== undefined && index >= 0 && index <= last && !!labels[index]?.trim();
+  const required = [...new Set([highlight, 0, last, ...notes.map((note, index) => note ? index : undefined)].filter(inRange))];
+  const optional: number[] = [];
+  if (!sparse || labels.length <= 7) for (let index = 1; index < last; index++) if (!required.includes(index) && inRange(index)) optional.push(index);
   const placed: ReturnType<typeof extent>[] = [];
-  for (const index of order) {
+  const clear = (box: ReturnType<typeof extent>, tier: number) => placed.every(other => other.tier !== tier || box.right + 8 <= other.left || box.left >= other.right + 8);
+  for (const index of required) {
     const box = extent(index);
-    if (!labels[index]?.trim()) continue;
-    if (placed.every(other => box.right + 8 <= other.left || box.left >= other.right + 8)) placed.push(box);
+    while (!clear(box, box.tier)) box.tier++;
+    placed.push(box);
   }
-  return placed.map(box => box.label).sort((a, b) => a.index - b.index);
+  for (const index of optional) {
+    const box = extent(index);
+    if (box.lines.length === 1 && clear(box, 0)) placed.push(box);
+  }
+  const tiers = Math.max(0, ...placed.map(box => box.tier)) + 1;
+  const rows = Array.from({ length: tiers }, (_, tier) => Math.max(1, ...placed.filter(box => box.tier === tier).map(box => box.lines.length)));
+  const labelsOut: XLabel[] = placed.map(({ index, x, anchor, lines, strong, tier }) => ({ index, x, anchor, lines, strong, tier })).sort((a, b) => a.index - b.index);
+  return { labels: labelsOut, rows };
 }
 
-function XLabels({ labels, y }: { labels: XLabel[]; y: number }) {
-  return <>{labels.map(label => <text key={label.index} x={label.x} y={y + AXIS} textAnchor={label.anchor}
+function XLabels({ labels, rows, y }: { labels: XLabel[]; rows: number[]; y: number }) {
+  const offset = (tier: number) => rows.slice(0, tier).reduce((sum, lines) => sum + lines * LINE_HEIGHT, 0);
+  return <>{labels.map(label => <text key={label.index} x={label.x} y={y + AXIS + offset(label.tier)} textAnchor={label.anchor}
     className={label.strong ? "hkc-chart-x hkc-chart-x--strong" : "hkc-chart-x"}>
     {label.lines.map((line, index) => <tspan key={index} x={label.x} dy={index ? LINE_HEIGHT : 0}
       className={index ? "hkc-chart-x-note" : undefined}>{line}</tspan>)}
   </text>)}</>;
 }
 
-function Axis({ ticks, y, width, plotWidth, unit, places, zeroLine }: { ticks: number[]; y: (value: number) => number; width: number; plotWidth: number; unit?: string; places: number; zeroLine: number }) {
+function Axis({ ticks, y, width, plotWidth, unit, places, zeroLine }: { ticks: bigint[]; y: (value: bigint) => number; width: number; plotWidth: number; unit?: string; places: number; zeroLine: bigint }) {
   return <>
-    {ticks.map(tick => <g key={tick}>
+    {ticks.map(tick => <g key={tick.toString()}>
       {tick !== zeroLine && <line x1={0} x2={plotWidth} y1={Math.round(y(tick)) + .5} y2={Math.round(y(tick)) + .5} className="hkc-chart-grid" />}
-      <text x={width} y={y(tick) + 4} textAnchor="end" className="hkc-chart-axis">{withUnit(tick, places, unit)}</text>
+      <text x={width} y={y(tick) + 4} textAnchor="end" className="hkc-chart-axis">{formatMicro(tick, places, unit)}</text>
     </g>)}
     <line x1={0} x2={plotWidth} y1={Math.round(y(zeroLine)) + .5} y2={Math.round(y(zeroLine)) + .5} className="hkc-chart-baseline" />
   </>;
@@ -237,72 +284,83 @@ const barPath = (x: number, top: number, width: number, height: number, down: bo
     : `M${x} ${top + height}v${-(height - r)}q0 ${-r} ${r} ${-r}h${width - 2 * r}q${r} 0 ${r} ${r}v${height - r}z`;
 };
 
-function frame(chart: HarsoOutputChart, width: number) {
-  const numbers = chart.series.flatMap(series => series.values.filter((value): value is string => value !== null).map(Number));
-  const axis = scale(numbers.length ? numbers : [0], chart.chart === "bar" || numbers.some(value => value <= 0));
-  const labelWidth = Math.max(40, ...axis.ticks.map(tick => textWidth(withUnit(tick, axis.places, chart.unit)))) + 8;
+function frame(chart: HarsoOutputChart, width: number, measure: Measure) {
+  const numbers = chart.series.flatMap(series => series.values.filter((value): value is string => value !== null));
+  const axis = scale(numbers.length ? numbers : ["0"], chart.chart === "bar" || numbers.some(value => toMicro(value) <= 0n));
+  const labelWidth = Math.max(40, ...axis.ticks.map(tick => measure(formatMicro(tick, axis.places, chart.unit)))) + 8;
   const plotWidth = Math.max(80, width - labelWidth);
-  return { ...axis, labelWidth, plotWidth };
+  const span = Number(axis.top - axis.bottom);
+  /** Pixel offset of a value down from the axis top, over `height` px. */
+  const ratio = (value: bigint) => Number(axis.top - value) / span;
+  return { ...axis, labelWidth, plotWidth, ratio };
 }
 
-function BarChart({ chart, width }: { chart: HarsoOutputChart; width: number }) {
-  const f = frame(chart, width);
+function BarChart({ chart, width, measure }: { chart: HarsoOutputChart; width: number; measure: Measure }) {
+  const f = frame(chart, width, measure);
   const values = chart.series[0].values;
   const hi = chart.highlight_index != null && values[chart.highlight_index] != null ? chart.highlight_index : undefined;
-  const top = LINE_HEIGHT + 6, below = f.bottom < 0 ? LINE_HEIGHT + 6 : 0;
-  const y = (value: number) => top + PLOT * (f.top - value) / (f.top - f.bottom);
-  const zero = y(0), plotBottom = top + PLOT + below;
   const slot = f.plotWidth / values.length, barWidth = Math.min(BAR_MAX, Math.round(slot * .56));
   const center = (index: number) => index * slot + slot / 2;
+  // The highlighted figure: over (or under) its bar when it fits the plot; wider than the plot, it takes its own row
+  // above the chart, clamped inside the card. A figure is never cut.
+  const valueText = hi === undefined ? undefined : formatValue(values[hi]!, chart.unit);
+  const valueWidth = valueText ? measure(valueText) : 0;
+  const ownRow = valueWidth + 4 > f.plotWidth;
+  const top = ownRow ? LINE_HEIGHT + 14 : LINE_HEIGHT + 6, below = f.bottom < 0n && !ownRow ? LINE_HEIGHT + 6 : 0;
+  const y = (value: bigint) => top + PLOT * f.ratio(value);
+  const zero = y(0n), plotBottom = top + PLOT + below;
   const notes = periodNotes(chart.x_labels);
-  const labels = placeLabels(chart.x_labels, notes, center, f.plotWidth, hi, false);
-  const lines = Math.max(1, ...labels.map(label => label.lines.length));
-  const height = plotBottom + 6 + LINE_HEIGHT * lines;
+  const { labels, rows } = placeLabels(chart.x_labels, notes, center, f.plotWidth, hi, false, measure);
+  const height = plotBottom + 6 + LINE_HEIGHT * rows.reduce((sum, lines) => sum + lines, 0);
   return <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true" focusable="false" className="hkc-chart-svg">
-    <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} unit={chart.unit} places={f.places} zeroLine={0} />
+    <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} unit={chart.unit} places={f.places} zeroLine={0n} />
     {values.map((value, index) => {
       const x = Math.round(center(index) - barWidth / 2);
       if (value === null) return <rect key={index} x={Math.round(center(index) - 8)} y={zero - 2} width={16} height={2} rx={1} className="hkc-chart-missing" data-index={index} />;
-      const n = Number(value), end = y(n), down = n < 0, h = Math.abs(end - zero);
+      const n = toMicro(value), end = y(n), down = n < 0n, h = Math.abs(end - zero);
       const strong = index === hi;
       return <g key={index}>
         {h >= .5 && <path d={barPath(x, down ? zero : end, barWidth, h, down)} className={strong ? "hkc-chart-mark hkc-chart-mark--strong" : "hkc-chart-mark"} data-index={index} />}
-        {strong && (() => {
+        {strong && (ownRow
+          ? <text x={Math.max(0, Math.min(width - valueWidth, center(index) - valueWidth / 2))} y={AXIS} className="hkc-chart-value">{valueText}</text>
           // Centred on its bar, but never past the plot's edges (a first or last bar in a narrow pane).
-          const text = formatValue(value, chart.unit), half = textWidth(text) / 2 + 2; // +2: canvas ignores tabular-nums
-          const labelX = Math.min(f.plotWidth - half, Math.max(half, center(index)));
-          return <text x={labelX} y={down ? end + LINE_HEIGHT : end - 5} textAnchor="middle" className="hkc-chart-value">{text}</text>;
-        })()}
+          : <text x={Math.min(f.plotWidth - valueWidth / 2, Math.max(valueWidth / 2, center(index)))} y={down ? end + LINE_HEIGHT : end - 5} textAnchor="middle" className="hkc-chart-value">{valueText}</text>)}
       </g>;
     })}
-    <XLabels labels={labels} y={plotBottom + 6} />
+    <XLabels labels={labels} rows={rows} y={plotBottom + 6} />
   </svg>;
 }
 
 const DASH = [undefined, "6 4", "1.5 4"];
-function LineChart({ chart, width }: { chart: HarsoOutputChart; width: number }) {
-  const f = frame(chart, width);
+function LineChart({ chart, width, measure }: { chart: HarsoOutputChart; width: number; measure: Measure }) {
+  const f = frame(chart, width, measure);
   const count = chart.x_labels.length, highlight = chart.highlight_index != null && chart.highlight_index < count ? chart.highlight_index : undefined;
   const top = LINE_HEIGHT + 4 + 12;
-  const y = (value: number) => top + PLOT * (f.top - value) / (f.top - f.bottom);
+  const y = (value: bigint) => top + PLOT * f.ratio(value);
   const step = (f.plotWidth - 12) / (count - 1), x = (index: number) => 6 + index * step;
   const plotBottom = top + PLOT;
-  const zeroLine = f.bottom <= 0 && f.top >= 0 ? 0 : f.bottom;
-  const labels = placeLabels(chart.x_labels, chart.x_labels.map(() => undefined), x, f.plotWidth, highlight, true);
-  const height = plotBottom + 6 + LINE_HEIGHT;
+  const zeroLine = f.bottom <= 0n && f.top >= 0n ? 0n : f.bottom;
+  const { labels, rows } = placeLabels(chart.x_labels, chart.x_labels.map(() => undefined), x, f.plotWidth, highlight, true, measure);
+  const height = plotBottom + 6 + LINE_HEIGHT * rows.reduce((sum, lines) => sum + lines, 0);
   const points = highlight === undefined ? [] : chart.series.map(series => series.values[highlight]).filter((value): value is string => value !== null);
-  const single = chart.series.length === 1;
-  const rawPill = highlight === undefined || !points.length ? undefined
-    : single ? `${formatValue(points[0], chart.unit)} · ${chart.x_labels[highlight]}` : chart.x_labels[highlight];
-  const pill = rawPill && fitText(rawPill, f.plotWidth - 12);
-  const pillWidth = pill ? textWidth(pill) + 12 : 0;
-  const pillX = highlight === undefined ? 0 : Math.max(0, Math.min(f.plotWidth - pillWidth, x(highlight) - pillWidth / 2));
-  const highest = points.length ? Math.min(...points.map(value => y(Number(value)))) : 0;
+  // The pill sits above the plot and may use the card's full width. A single series shows "value · period"; when that
+  // is too wide the period goes (it is the strong x label below), and the figure itself is never cut.
+  let pill: string | undefined;
+  if (highlight !== undefined && points.length) {
+    if (chart.series.length > 1) pill = fitText(chart.x_labels[highlight], width - 12, measure);
+    else {
+      const value = formatValue(points[0], chart.unit), both = `${value} · ${chart.x_labels[highlight]}`;
+      pill = measure(both) + 12 <= width ? both : value;
+    }
+  }
+  const pillWidth = pill ? measure(pill) + 12 : 0;
+  const pillX = highlight === undefined ? 0 : Math.max(0, Math.min(Math.max(f.plotWidth, pillWidth) - pillWidth, x(highlight) - pillWidth / 2));
+  const highest = points.length ? Math.min(...points.map(value => y(toMicro(value)))) : 0;
   return <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true" focusable="false" className="hkc-chart-svg">
     <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} unit={chart.unit} places={f.places} zeroLine={zeroLine} />
     {chart.series.map((series, seriesIndex) => {
       const runs: [number, number][][] = [[]];
-      series.values.forEach((value, index) => value === null ? runs.push([]) : runs[runs.length - 1].push([x(index), y(Number(value))]));
+      series.values.forEach((value, index) => value === null ? runs.push([]) : runs[runs.length - 1].push([x(index), y(toMicro(value))]));
       return <g key={seriesIndex} className="hkc-chart-series" data-series={seriesIndex}>
         {runs.filter(run => run.length).map((run, runIndex) => run.length === 1
           ? <circle key={runIndex} cx={run[0][0]} cy={run[0][1]} r={2} className="hkc-chart-dot" />
@@ -317,11 +375,11 @@ function LineChart({ chart, width }: { chart: HarsoOutputChart; width: number })
       <rect x={pillX} y={0} width={pillWidth} height={LINE_HEIGHT + 4} rx={6} className="hkc-chart-knockout" />
       <text x={pillX + 6} y={AXIS + 2} className="hkc-chart-value">{pill}</text>
       {chart.series.map((series, seriesIndex) => series.values[highlight] === null ? null : <g key={seriesIndex}>
-        <circle cx={x(highlight)} cy={y(Number(series.values[highlight]))} r={7} className="hkc-chart-halo" />
-        <circle cx={x(highlight)} cy={y(Number(series.values[highlight]))} r={4} className="hkc-chart-point" />
+        <circle cx={x(highlight)} cy={y(toMicro(series.values[highlight]!))} r={7} className="hkc-chart-halo" />
+        <circle cx={x(highlight)} cy={y(toMicro(series.values[highlight]!))} r={4} className="hkc-chart-point" />
       </g>)}
     </g>}
-    <XLabels labels={labels} y={plotBottom + 6} />
+    <XLabels labels={labels} rows={rows} y={plotBottom + 6} />
   </svg>;
 }
 
@@ -339,7 +397,7 @@ function ChartTable({ chart }: { chart: HarsoOutputChart }) {
 }
 
 export function HarsoOutputChartView({ chart }: { chart: HarsoOutputChart }) {
-  const [node, width, fonts] = useWidth();
+  const { node, probe, width, fonts, measure } = useWidth();
   return <figure className="hkc-output-chart" data-chart={chart.chart} data-fonts={fonts}>
     <figcaption className="hkc-output-chart-caption">
       {chart.series.length === 1 ? chart.series[0].label
@@ -348,7 +406,8 @@ export function HarsoOutputChartView({ chart }: { chart: HarsoOutputChart }) {
           {series.label}
         </li>)}</ul>}
     </figcaption>
-    <div ref={node} className="hkc-output-chart-plot">{chart.chart === "bar" ? <BarChart chart={chart} width={width} /> : <LineChart chart={chart} width={width} />}</div>
+    <div ref={node} className="hkc-output-chart-plot">{chart.chart === "bar" ? <BarChart chart={chart} width={width} measure={measure} /> : <LineChart chart={chart} width={width} measure={measure} />}</div>
+    <svg className="hkc-chart-measure" aria-hidden="true" focusable="false"><text ref={probe} className="hkc-chart-measure-text" /></svg>
     <ChartTable chart={chart} />
   </figure>;
 }

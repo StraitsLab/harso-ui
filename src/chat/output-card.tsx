@@ -159,10 +159,13 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
     } else if (readTable(block)) {
       const table = readTable(block)!;
       if (withoutData(state)) { parts.push({ kind: "table", table, shown: 0, state }); continue; }
-      const body = table.rows.length - (isTotalRow(table, table.rows.length - 1) ? 1 : 0);
+      // One unit: body rows. `total_count` counts the table's rows as the playbook checker does (the Total row
+      // included), so a Total row is taken off it too.
+      const totalRow = isTotalRow(table, table.rows.length - 1) ? 1 : 0;
+      const body = table.rows.length - totalRow;
       const count = Math.min(body, rowBudget);
       rowBudget -= count;
-      total += Math.max(body, Number.isInteger(table.total_count) ? table.total_count! : 0);
+      total += Math.max(body, Number.isInteger(table.total_count) ? table.total_count! - totalRow : 0);
       shown += count;
       parts.push({ kind: "table", table, shown: count, state });
     } else if (isNumbers(block)) {
