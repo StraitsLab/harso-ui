@@ -870,7 +870,7 @@
           "major": 1,
           "header": {
             "title": "2 taken so far",
-            "subtitle": "Sat 26 Sep · 2 of 3 medicines read · as of 20:15"
+            "subtitle": "Sat 26 Sep · 2 of 3 doses read · as of 20:15"
           },
           "blocks": [
             {
@@ -885,6 +885,11 @@
                   "label": "Metformin 500 mg",
                   "secondary": "With dinner · taken 19:20",
                   "trailing": "Taken"
+                },
+                {
+                  "label": "Atorvastatin 20 mg",
+                  "secondary": "At bedtime · logged in an app I can't read; check there before taking it",
+                  "trailing": "Not read"
                 }
               ]
             }
@@ -899,7 +904,7 @@
               "Follow your doctor's instructions if they differ."
             ]
           },
-          "fallback_text": "Sat 26 Sep, as of 20:15, 2 of 3 medicines read: Metformin 500 mg with breakfast, taken 08:10, and with dinner, taken 19:20. Atorvastatin 20 mg is logged in another app I can't read, so check it there before you take it."
+          "fallback_text": "Sat 26 Sep, as of 20:15, 2 of 3 doses read: Metformin 500 mg with breakfast, taken 08:10, and with dinner, taken 19:20. Atorvastatin 20 mg at bedtime is logged in another app I can't read, so check it there before you take it."
         },
         "stale": {
           "kind": "output_blocks",
@@ -909,6 +914,16 @@
             "subtitle": "Sat 26 Sep · as of 18:00 · couldn't refresh"
           },
           "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Doses logged after 18:00 don't show here. Check your log before taking a dose again."
+                  ]
+                }
+              ]
+            },
             {
               "kind": "rows",
               "items": [
@@ -1088,7 +1103,7 @@
             "Harso is not a doctor."
           ]
         },
-        "fallback_text": "2 days of sore throat without fever is most likely viral. Rest, drink plenty, use lozenges or paracetamol. See a GP if it lasts more than a week, swallowing becomes hard, or a fever above 38°C starts. Go to A&E or call 995 if breathing becomes hard."
+        "fallback_text": "2 days of sore throat without fever is most likely viral. Rest, drink plenty, use lozenges or paracetamol. See a GP if it lasts more than a week, swallowing becomes hard or you can't drink, or a fever above 38°C starts. Go to A&E or call 995 if breathing becomes hard."
       }
     },
     {

@@ -138,7 +138,7 @@
             }
           ]
         },
-        "fallback_text": "Photosynthesis (chapter 4, pages 31–38): plants turn light, water and carbon dioxide into sugar and oxygen. Stage 1, the light reactions in the thylakoids, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2, the Calvin cycle in the stroma, spends it to fix carbon dioxide into sugar; six turns make one glucose."
+        "fallback_text": "Photosynthesis (chapter 4, pages 31–38): plants turn light, water and carbon dioxide into sugar and oxygen, in two stages inside the chloroplast. Stage 1, the light reactions in the thylakoid membranes: chlorophyll absorbs light and splits water, releasing oxygen and storing the energy in two carriers, ATP and NADPH. Stage 2, the Calvin cycle in the stroma, uses that ATP and NADPH to fix carbon dioxide into a three-carbon sugar; six turns of the cycle make one glucose."
       },
       "states": {
         "loading": {
@@ -240,7 +240,7 @@
               }
             ]
           },
-          "fallback_text": "From your biology notes as of Tue 22 Sep 21:05 (the newer copy in your Library didn't open, so any edits since aren't in this). Photosynthesis, chapter 4, pages 31–38: plants turn light, water and carbon dioxide into sugar and oxygen. Stage 1, the light reactions in the thylakoids, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2, the Calvin cycle in the stroma, spends it to fix carbon dioxide into sugar; six turns make one glucose."
+          "fallback_text": "From your biology notes as of Tue 22 Sep 21:05 (the newer copy in your Library didn't open, so later edits aren't in this). Photosynthesis, chapter 4, pages 31–38: plants turn light, water and carbon dioxide into sugar and oxygen in the chloroplast. Stage 1, light reactions in the thylakoids: chlorophyll absorbs light, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2, the Calvin cycle in the stroma: ATP and NADPH fix carbon dioxide into a three-carbon sugar; six turns make one glucose."
         },
         "empty": {
           "kind": "output_blocks",
@@ -253,7 +253,7 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The notes end at chapter 3, page 30"
+              "detail": "The notes end at chapter 3, cell respiration, on page 30"
             }
           ],
           "fallback_text": "Your biology notes have no chapter 4: Biology notes.pdf ends at chapter 3, page 30. Chapter 3 is cell respiration, if that is the one you meant."

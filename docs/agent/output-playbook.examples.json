@@ -5409,7 +5409,7 @@
             }
           ]
         },
-        "fallback_text": "Photosynthesis (chapter 4, pages 31–38): plants turn light, water and carbon dioxide into sugar and oxygen. Stage 1, the light reactions in the thylakoids, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2, the Calvin cycle in the stroma, spends it to fix carbon dioxide into sugar; six turns make one glucose."
+        "fallback_text": "Photosynthesis (chapter 4, pages 31–38): plants turn light, water and carbon dioxide into sugar and oxygen, in two stages inside the chloroplast. Stage 1, the light reactions in the thylakoid membranes: chlorophyll absorbs light and splits water, releasing oxygen and storing the energy in two carriers, ATP and NADPH. Stage 2, the Calvin cycle in the stroma, uses that ATP and NADPH to fix carbon dioxide into a three-carbon sugar; six turns of the cycle make one glucose."
       },
       "states": {
         "loading": {
@@ -5511,7 +5511,7 @@
               }
             ]
           },
-          "fallback_text": "From your biology notes as of Tue 22 Sep 21:05 (the newer copy in your Library didn't open, so any edits since aren't in this). Photosynthesis, chapter 4, pages 31–38: plants turn light, water and carbon dioxide into sugar and oxygen. Stage 1, the light reactions in the thylakoids, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2, the Calvin cycle in the stroma, spends it to fix carbon dioxide into sugar; six turns make one glucose."
+          "fallback_text": "From your biology notes as of Tue 22 Sep 21:05 (the newer copy in your Library didn't open, so later edits aren't in this). Photosynthesis, chapter 4, pages 31–38: plants turn light, water and carbon dioxide into sugar and oxygen in the chloroplast. Stage 1, light reactions in the thylakoids: chlorophyll absorbs light, splits water, releases oxygen and stores energy as ATP and NADPH. Stage 2, the Calvin cycle in the stroma: ATP and NADPH fix carbon dioxide into a three-carbon sugar; six turns make one glucose."
         },
         "empty": {
           "kind": "output_blocks",
@@ -5524,7 +5524,7 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The notes end at chapter 3, page 30"
+              "detail": "The notes end at chapter 3, cell respiration, on page 30"
             }
           ],
           "fallback_text": "Your biology notes have no chapter 4: Biology notes.pdf ends at chapter 3, page 30. Chapter 3 is cell respiration, if that is the one you meant."
@@ -7292,7 +7292,7 @@
           "major": 1,
           "header": {
             "title": "2 taken so far",
-            "subtitle": "Sat 26 Sep · 2 of 3 medicines read · as of 20:15"
+            "subtitle": "Sat 26 Sep · 2 of 3 doses read · as of 20:15"
           },
           "blocks": [
             {
@@ -7307,6 +7307,11 @@
                   "label": "Metformin 500 mg",
                   "secondary": "With dinner · taken 19:20",
                   "trailing": "Taken"
+                },
+                {
+                  "label": "Atorvastatin 20 mg",
+                  "secondary": "At bedtime · logged in an app I can't read; check there before taking it",
+                  "trailing": "Not read"
                 }
               ]
             }
@@ -7321,7 +7326,7 @@
               "Follow your doctor's instructions if they differ."
             ]
           },
-          "fallback_text": "Sat 26 Sep, as of 20:15, 2 of 3 medicines read: Metformin 500 mg with breakfast, taken 08:10, and with dinner, taken 19:20. Atorvastatin 20 mg is logged in another app I can't read, so check it there before you take it."
+          "fallback_text": "Sat 26 Sep, as of 20:15, 2 of 3 doses read: Metformin 500 mg with breakfast, taken 08:10, and with dinner, taken 19:20. Atorvastatin 20 mg at bedtime is logged in another app I can't read, so check it there before you take it."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7331,6 +7336,16 @@
             "subtitle": "Sat 26 Sep · as of 18:00 · couldn't refresh"
           },
           "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Doses logged after 18:00 don't show here. Check your log before taking a dose again."
+                  ]
+                }
+              ]
+            },
             {
               "kind": "rows",
               "items": [
@@ -7510,7 +7525,7 @@
             "Harso is not a doctor."
           ]
         },
-        "fallback_text": "2 days of sore throat without fever is most likely viral. Rest, drink plenty, use lozenges or paracetamol. See a GP if it lasts more than a week, swallowing becomes hard, or a fever above 38°C starts. Go to A&E or call 995 if breathing becomes hard."
+        "fallback_text": "2 days of sore throat without fever is most likely viral. Rest, drink plenty, use lozenges or paracetamol. See a GP if it lasts more than a week, swallowing becomes hard or you can't drink, or a fever above 38°C starts. Go to A&E or call 995 if breathing becomes hard."
       }
     },
     {
