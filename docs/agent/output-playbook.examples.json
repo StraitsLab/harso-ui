@@ -1558,7 +1558,7 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Over budget this month",
+            "title": "Over budget in the accounts read",
             "subtitle": "1–26 Sep · 3 of 4 accounts · as of 08:00"
           },
           "blocks": [
@@ -1580,7 +1580,7 @@
               }
             ]
           },
-          "fallback_text": "From 3 of 4 accounts (1–26 Sep, as of 08:00): Dining S$1,040 of S$900, S$140 over already. The fourth account can only add to this, so other categories may still go over."
+          "fallback_text": "From 3 of 4 accounts (1–26 Sep, as of 08:00): Dining S$1,040 of S$900, S$140 over across the three accounts read. The final comparison waits for the fourth account, and other categories may still change."
         },
         "stale": {
           "kind": "output_blocks",
@@ -2835,7 +2835,7 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No transfer to Priya found",
+            "title": "No S$1,000 transfer to Priya found",
             "subtitle": "Wise · as of 10:20"
           },
           "blocks": [
@@ -2845,7 +2845,7 @@
               "detail": "Your last transfer to Priya was S$800 on 28 Aug"
             }
           ],
-          "fallback_text": "No transfer to Priya in Wise as of 10:20. Your last one was S$800 on 28 Aug."
+          "fallback_text": "No S$1,000 transfer to Priya in Wise as of 10:20. Your last transfer to her was S$800 on 28 Aug."
         },
         "failed": {
           "kind": "output_blocks",
@@ -4228,7 +4228,7 @@
             ]
           },
           "more_label": "View all 6",
-          "fallback_text": "As of Thu 24 Sep 20:00: 6 subscriptions, S$98.47 a month. ChatGPT Plus S$27.50, 4 Oct, DBS; Netflix S$25.98, 21 Oct, DBS; Disney+ S$16.98, 12 Oct, OCBC; Spotify S$11.98, 30 Sep, DBS; YouTube Premium S$11.98, 8 Oct, OCBC; iCloud+ 200 GB S$4.05, 2 Oct, DBS. Couldn’t refresh."
+          "fallback_text": "As of Thu 24 Sep 20:00: 6 subscriptions, S$98.47 a month. Price, renewal date and payment card for each: ChatGPT Plus S$27.50, renews 4 Oct, DBS card; Netflix S$25.98, 21 Oct, DBS; Disney+ S$16.98, 12 Oct, OCBC; Spotify S$11.98, 30 Sep, DBS; YouTube Premium S$11.98, 8 Oct, OCBC; iCloud+ 200 GB S$4.05, 2 Oct, DBS. Couldn’t refresh."
         },
         "empty": {
           "kind": "output_blocks",
@@ -4334,7 +4334,7 @@
           ]
         },
         "more_label": "View all 4",
-        "fallback_text": "4 unpaid invoices, S$16,570.00 in all, 1 late: Acme Pte Ltd INV-2041 S$8,400.00 due 20 Sep (late), Lumen Studio INV-2044 S$2,180.00 due 30 Sep, Northwind Asia INV-2045 S$2,720.00 due 9 Oct, Acme Pte Ltd INV-2042 S$3,270.00 due 26 Oct."
+        "fallback_text": "As of 09:00: 4 unpaid invoices, S$16,570.00 in all, 1 late: Acme Pte Ltd INV-2041 S$8,400.00 due 20 Sep (late), Lumen Studio INV-2044 S$2,180.00 due 30 Sep, Northwind Asia INV-2045 S$2,720.00 due 9 Oct, Acme Pte Ltd INV-2042 S$3,270.00 due 26 Oct."
       },
       "states": {
         "loading": {
