@@ -12,14 +12,28 @@ for (const width of [390, 1440]) test(`hover-only citation remains reachable at 
   const origin = { x: start.x + start.width / 2, y: start.y + start.height / 2 };
   const destination = { x: Math.max(end.x + 5, Math.min(origin.x, end.x + end.width - 5)), y: end.y > origin.y ? end.y + 5 : end.y + end.height - 5 };
   const steps = Math.ceil(Math.hypot(destination.x - origin.x, destination.y - origin.y) / 150 * 1000 / 50);
-  // Pace each 50 ms step against the clock: a fixed sleep after each move adds the move's own cost, which on a loaded
-  // CI runner stretched this 150 px/s crossing past the card's close delay.
-  const began = Date.now();
-  for (let step = 1; step <= steps; step++) {
-    await page.mouse.move(origin.x + (destination.x - origin.x) * step / steps, origin.y + (destination.y - origin.y) * step / steps);
-    await page.waitForTimeout(Math.max(0, began + step * 50 - Date.now()));
+  // The page timestamps every pointermove it receives, so speed is judged where the component sees it. No step may arrive
+  // sooner than 50 ms after the previous one (150 px/s): move() resolves only after the page has handled the event and the
+  // next move leaves 51 ms later, so earlier delays can never be caught up in a burst. A loaded runner can still deliver
+  // a step late; past 125 ms the two steps spent in the 8 px gap can outlast the 300 ms close delay, so that crossing is
+  // too slow to judge the card and is sent again from the trigger. A crossing delivered inside 50-125 ms must end visible.
+  await page.evaluate(() => { const times: number[] = []; Reflect.set(window, "hkMoves", times); addEventListener("pointermove", () => times.push(performance.now()), true); });
+  let intervals: number[] = [];
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    if (attempt > 1) { await page.mouse.move(origin.x, origin.y); await expect(content).toBeVisible(); }
+    await page.evaluate(() => { Reflect.get(window, "hkMoves").length = 0; });
+    for (let step = 1; step <= steps; step++) {
+      if (step > 1) await new Promise(resolve => setTimeout(resolve, 51));
+      await page.mouse.move(origin.x + (destination.x - origin.x) * step / steps, origin.y + (destination.y - origin.y) * step / steps);
+    }
+    const times: number[] = await page.evaluate(() => Reflect.get(window, "hkMoves"));
+    intervals = times.slice(1).map((time, index) => time - times[index]);
+    expect(intervals, "one pointermove per step").toHaveLength(steps - 1);
+    expect(Math.min(...intervals), `no step faster than ordinary speed; intervals ${intervals.map(Math.round)} ms`).toBeGreaterThanOrEqual(50);
+    if (Math.max(...intervals) <= 125) break;
   }
-  await expect(content).toBeVisible();
+  expect(Math.max(...intervals), `runner never delivered an ordinary-speed crossing; last intervals ${intervals.map(Math.round)} ms`).toBeLessThanOrEqual(125);
+  await expect(content, `step intervals ${intervals.map(Math.round)} ms`).toBeVisible();
   await expect(trigger).not.toBeFocused();
 });
 
