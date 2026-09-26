@@ -2748,17 +2748,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn't search Tampines listings",
-            "subtitle": "PropertyGuru and HDB Flat Portal"
+            "title": "Couldn't search Tampines",
+            "subtitle": "Under S$600k · ≤10 min to MRT"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Neither portal answered. Nothing was saved."
+              "detail": "PropertyGuru and the HDB Flat Portal didn't answer."
             }
           ],
-          "fallback_text": "Couldn't search Tampines listings: neither PropertyGuru nor the HDB Flat Portal answered. Nothing was saved."
+          "fallback_text": "Couldn't search Tampines: propertyGuru and the HDB Flat Portal didn't answer."
         }
       }
     },
@@ -2828,7 +2828,7 @@
           "major": 1,
           "header": {
             "title": "Blk 824 Tampines St 81",
-            "subtitle": "3-room · PropertyGuru"
+            "subtitle": "3-room · 67 sqm"
           },
           "blocks": [
             {
@@ -2933,14 +2933,14 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Blk 824 listing was taken down",
+            "title": "Blk 824 is no longer listed",
             "subtitle": "PropertyGuru · as of 11:05"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Removed by the agent this morning"
+              "detail": "The seller's agent removed it this morning"
             }
           ],
           "details": {
@@ -2950,23 +2950,23 @@
               }
             ]
           },
-          "fallback_text": "The Blk 824 Tampines St 81 listing was taken down this morning, as of 11:05."
+          "fallback_text": "The Blk 824 Tampines St 81 listing is no longer on PropertyGuru; the seller's agent removed it this morning, as of 11:05."
         },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Couldn't open the Blk 824 listing",
-            "subtitle": "PropertyGuru"
+            "subtitle": "3-room · 67 sqm"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "PropertyGuru didn't respond. Nothing was saved."
+              "detail": "PropertyGuru didn't answer."
             }
           ],
-          "fallback_text": "Couldn't open the Blk 824 Tampines St 81 listing: PropertyGuru didn't respond. Nothing was saved."
+          "fallback_text": "Couldn't open the Blk 824 listing: propertyGuru didn't answer."
         }
       }
     },
@@ -3023,13 +3023,13 @@
           "major": 1,
           "header": {
             "title": "The Trilinq · 2 bed · 818 sqft",
-            "subtitle": "Reading recent sales"
+            "subtitle": "2 bed · 818 sqft"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 6 months of URA caveats",
+              "detail": "Reading 6 months of URA sales",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b03"
               }
@@ -3069,16 +3069,16 @@
           "major": 1,
           "header": {
             "title": "Couldn't estimate your condo's value",
-            "subtitle": "The Trilinq"
+            "subtitle": "2 bed · 818 sqft"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "URA's sales search didn't respond. Nothing was saved."
+              "detail": "URA's sales search didn't answer."
             }
           ],
-          "fallback_text": "Couldn't estimate The Trilinq unit: URA's sales search didn't respond. Nothing was saved."
+          "fallback_text": "Couldn't estimate your condo's value: uRA's sales search didn't answer."
         }
       }
     },
@@ -3153,18 +3153,18 @@
             "items": [
               {
                 "label": "The Clift",
-                "secondary": "1 bed · 49 sqm · from 1 Oct",
+                "secondary": "49 sqm · from 1 Oct",
                 "trailing": "S$3,300",
                 "mark": "pick"
               },
               {
                 "label": "Spottiswoode 18",
-                "secondary": "1 bed · 45 sqm · from 15 Oct",
+                "secondary": "45 sqm · from 15 Oct",
                 "trailing": "S$3,450"
               },
               {
                 "label": "Pinnacle@Duxton",
-                "secondary": "1 bed · 50 sqm · from 1 Oct",
+                "secondary": "50 sqm · from 1 Oct",
                 "trailing": "S$3,400"
               }
             ]
@@ -3212,13 +3212,13 @@
               "items": [
                 {
                   "label": "The Clift",
-                  "secondary": "1 bed · 49 sqm · from 1 Oct",
+                  "secondary": "49 sqm · from 1 Oct",
                   "trailing": "S$3,300",
                   "mark": "pick"
                 },
                 {
                   "label": "Pinnacle@Duxton",
-                  "secondary": "1 bed · 50 sqm · from 1 Oct",
+                  "secondary": "50 sqm · from 1 Oct",
                   "trailing": "S$3,400"
                 }
               ]
@@ -3246,18 +3246,18 @@
               "items": [
                 {
                   "label": "The Clift",
-                  "secondary": "1 bed · 49 sqm · from 1 Oct",
+                  "secondary": "49 sqm · from 1 Oct",
                   "trailing": "S$3,300",
                   "mark": "pick"
                 },
                 {
                   "label": "Spottiswoode 18",
-                  "secondary": "1 bed · 45 sqm · from 15 Oct",
+                  "secondary": "45 sqm · from 15 Oct",
                   "trailing": "S$3,450"
                 },
                 {
                   "label": "Pinnacle@Duxton",
-                  "secondary": "1 bed · 50 sqm · from 1 Oct",
+                  "secondary": "50 sqm · from 1 Oct",
                   "trailing": "S$3,400"
                 }
               ]
@@ -3300,16 +3300,16 @@
           "major": 1,
           "header": {
             "title": "Couldn't search Outram rentals",
-            "subtitle": "99.co and PropertyGuru"
+            "subtitle": "Under S$3,500 · from October"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Neither site answered. Nothing was saved."
+              "detail": "99.co and PropertyGuru didn't answer."
             }
           ],
-          "fallback_text": "Couldn't search Outram rentals: neither 99.co nor PropertyGuru answered. Nothing was saved."
+          "fallback_text": "Couldn't search Outram rentals: 99.co and PropertyGuru didn't answer."
         }
       }
     },
@@ -3373,7 +3373,7 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Looking for the viewing invite",
+              "detail": "Looking for the invite in your calendar",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b05"
               }
@@ -3411,7 +3411,7 @@
               "detail": "The calendar connection has expired. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn't read your calendar: the Google Calendar connection has expired. Nothing was changed."
+          "fallback_text": "Couldn't read your calendar: the calendar connection has expired. Nothing was changed."
         }
       }
     },
@@ -3494,7 +3494,7 @@
               "detail": "The page failed its own test. Nothing was saved to Library."
             }
           ],
-          "fallback_text": "Couldn't build the rent vs buy calculator: the page failed its own test. Nothing was saved to Library."
+          "fallback_text": "Couldn't build the calculator: the page failed its own test. Nothing was saved to Library."
         }
       }
     },
@@ -3557,17 +3557,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn't search Bishan listings",
-            "subtitle": "PropertyGuru and 99.co"
+            "title": "Couldn't search Bishan",
+            "subtitle": "Under S$500k"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Neither site answered. Nothing was saved."
+              "detail": "PropertyGuru and 99.co didn't answer."
             }
           ],
-          "fallback_text": "Couldn't search Bishan listings: neither PropertyGuru nor 99.co answered. Nothing was saved."
+          "fallback_text": "Couldn't search Bishan: propertyGuru and 99.co didn't answer."
         }
       }
     },
@@ -3670,17 +3670,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn't read Blk 824's resale records",
-            "subtitle": "HDB"
+            "title": "Couldn't read Blk 824's sales",
+            "subtitle": "3-room resale · last 2 years"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "HDB's resale search didn't respond. Nothing was saved."
+              "detail": "HDB's resale search didn't answer."
             }
           ],
-          "fallback_text": "Couldn't read resale records for Blk 824 Tampines St 81: HDB's resale search didn't respond. Nothing was saved."
+          "fallback_text": "Couldn't read Blk 824's sales: hDB's resale search didn't answer."
         }
       }
     },
@@ -3763,7 +3763,7 @@
           "major": 1,
           "header": {
             "title": "The Trilinq · facts",
-            "subtitle": "Clementi"
+            "subtitle": "Clementi · 755 units"
           },
           "blocks": [
             {
@@ -3837,16 +3837,16 @@
           "major": 1,
           "header": {
             "title": "Couldn't read The Trilinq's facts",
-            "subtitle": "URA and PropertyGuru"
+            "subtitle": "Clementi · 755 units"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Neither source answered. Nothing was saved."
+              "detail": "URA and PropertyGuru didn't answer."
             }
           ],
-          "fallback_text": "Couldn't read the facts on The Trilinq: neither URA nor PropertyGuru answered. Nothing was saved."
+          "fallback_text": "Couldn't read The Trilinq's facts: uRA and PropertyGuru didn't answer."
         }
       }
     },
@@ -3951,16 +3951,16 @@
           "major": 1,
           "header": {
             "title": "Couldn't measure school distances",
-            "subtitle": "OneMap"
+            "subtitle": "From Blk 824 Tampines St 81"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "OneMap didn't respond. Nothing was saved."
+              "detail": "OneMap didn't answer."
             }
           ],
-          "fallback_text": "Couldn't measure school distances from Blk 824: OneMap didn't respond. Nothing was saved."
+          "fallback_text": "Couldn't measure school distances: oneMap didn't answer."
         }
       }
     },
@@ -4088,6 +4088,45 @@
           ],
           "fallback_text": "Checking condo open houses near Clementi this weekend."
         },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Condo open houses near Clementi",
+            "subtitle": "As of 10:15 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Trilinq",
+                  "secondary": "Sun 27 Sep · 10:00–13:00 · 12 min to MRT",
+                  "trailing": "from S$1.15M",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Clement Canopy",
+                  "secondary": "Sat 26 Sep · 14:00–17:00 · 15 min to MRT",
+                  "trailing": "from S$1.32M"
+                },
+                {
+                  "label": "Parc Clematis",
+                  "secondary": "Sun 27 Sep · 14:00–16:00 · 18 min to MRT",
+                  "trailing": "from S$1.48M"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru open house listings, 26 Sep 2026 10:15"
+              }
+            ]
+          },
+          "fallback_text": "As of 10:15 (couldn't refresh): Condo open houses near Clementi this weekend: The Trilinq Sun 27 Sep 10:00–13:00, from S$1.15M (closest to MRT); Clement Canopy Sat 26 Sep 14:00–17:00, from S$1.32M; Parc Clematis Sun 27 Sep 14:00–16:00, from S$1.48M."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
@@ -4116,16 +4155,16 @@
           "major": 1,
           "header": {
             "title": "Couldn't check open houses",
-            "subtitle": "PropertyGuru"
+            "subtitle": "Sat 26–Sun 27 Sep"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "PropertyGuru didn't respond. Nothing was booked."
+              "detail": "PropertyGuru didn't answer. Nothing was booked."
             }
           ],
-          "fallback_text": "Couldn't check condo open houses near Clementi: PropertyGuru didn't respond. Nothing was booked."
+          "fallback_text": "Couldn't check open houses: propertyGuru didn't answer. Nothing was booked."
         }
       }
     },
@@ -4277,7 +4316,7 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No design lead roles posted this week",
+            "title": "No design lead roles this week",
             "subtitle": "Singapore · as of 08:30"
           },
           "blocks": [
@@ -4300,17 +4339,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn't search for design lead roles",
-            "subtitle": "LinkedIn and MyCareersFuture"
+            "title": "Couldn't search design lead roles",
+            "subtitle": "Singapore · posted this week"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Neither site answered. Nothing was saved."
+              "detail": "LinkedIn and MyCareersFuture didn't answer."
             }
           ],
-          "fallback_text": "Couldn't search for design lead roles: neither LinkedIn nor MyCareersFuture answered. Nothing was saved."
+          "fallback_text": "Couldn't search design lead roles: linkedIn and MyCareersFuture didn't answer."
         }
       }
     },
@@ -4393,7 +4432,7 @@
           "major": 1,
           "header": {
             "title": "Lead Product Designer · Grab",
-            "subtitle": "Grab careers"
+            "subtitle": "Hybrid · Singapore"
           },
           "blocks": [
             {
@@ -4495,16 +4534,16 @@
           "major": 1,
           "header": {
             "title": "Couldn't open the Grab posting",
-            "subtitle": "Grab careers"
+            "subtitle": "Hybrid · Singapore"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Grab's careers site didn't respond. Nothing was saved."
+              "detail": "Grab's careers site didn't answer."
             }
           ],
-          "fallback_text": "Couldn't open the Grab Lead Product Designer posting: Grab's careers site didn't respond. Nothing was saved."
+          "fallback_text": "Couldn't open the Grab posting: grab's careers site didn't answer."
         }
       }
     },
@@ -4605,16 +4644,16 @@
           "major": 1,
           "header": {
             "title": "Couldn't read salary data",
-            "subtitle": "MOM and Glassdoor"
+            "subtitle": "Singapore"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Neither source answered. Nothing was saved."
+              "detail": "MOM and Glassdoor didn't answer."
             }
           ],
-          "fallback_text": "Couldn't read senior data analyst salary data: neither MOM nor Glassdoor answered. Nothing was saved."
+          "fallback_text": "Couldn't read salary data: mOM and Glassdoor didn't answer."
         }
       }
     },
@@ -4630,7 +4669,7 @@
         "J5 Application status",
         "X2 Domain state word"
       ],
-      "rationale": "Each application is a row with its state word; interview date secondary; three rows need no page.",
+      "rationale": "Each application is a row: the state word trailing, its date secondary; three rows need no page.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -4644,15 +4683,18 @@
             "items": [
               {
                 "label": "Grab · Lead Product Designer",
-                "secondary": "Interview Thu 1 Oct"
+                "secondary": "Final round Thu 1 Oct",
+                "trailing": "Interviewing"
               },
               {
                 "label": "Wise · Design Lead",
-                "secondary": "Applied 12 Sep · viewed"
+                "secondary": "Applied 12 Sep",
+                "trailing": "Viewed"
               },
               {
                 "label": "Shopee · Principal Designer",
-                "secondary": "Not selected, 22 Sep"
+                "secondary": "Closed 22 Sep",
+                "trailing": "Not selected"
               }
             ]
           }
@@ -4672,7 +4714,7 @@
           "major": 1,
           "header": {
             "title": "Your applications",
-            "subtitle": "LinkedIn and Gmail"
+            "subtitle": "This month"
           },
           "blocks": [
             {
@@ -4691,7 +4733,7 @@
           "major": 1,
           "header": {
             "title": "Your applications",
-            "subtitle": "LinkedIn read · Gmail not yet"
+            "subtitle": "Gmail not read yet · this month"
           },
           "blocks": [
             {
@@ -4699,11 +4741,13 @@
               "items": [
                 {
                   "label": "Wise · Design Lead",
-                  "secondary": "Applied 12 Sep · viewed"
+                  "secondary": "Applied 12 Sep",
+                  "trailing": "Viewed"
                 },
                 {
                   "label": "Shopee · Principal Designer",
-                  "secondary": "Not selected, 22 Sep"
+                  "secondary": "Closed 22 Sep",
+                  "trailing": "Not selected"
                 }
               ]
             }
@@ -4722,7 +4766,7 @@
           "major": 1,
           "header": {
             "title": "No applications this month",
-            "subtitle": "LinkedIn and Gmail"
+            "subtitle": "This month"
           },
           "blocks": [
             {
@@ -4738,7 +4782,7 @@
           "major": 1,
           "header": {
             "title": "Couldn't read your applications",
-            "subtitle": "LinkedIn and Gmail"
+            "subtitle": "This month"
           },
           "blocks": [
             {
@@ -4831,7 +4875,7 @@
           "major": 1,
           "header": {
             "title": "Grab vs Wise offer",
-            "subtitle": "Reading both offer letters"
+            "subtitle": "First-year total compensation"
           },
           "blocks": [
             {
@@ -4850,7 +4894,7 @@
           "major": 1,
           "header": {
             "title": "Couldn't read the Wise offer letter",
-            "subtitle": "Grab vs Wise offer"
+            "subtitle": "First-year total compensation"
           },
           "blocks": [
             {
@@ -4859,7 +4903,7 @@
               "detail": "The PDF is password-protected. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn't compare the offers: the Wise offer letter PDF is password-protected. Nothing was changed."
+          "fallback_text": "Couldn't read the Wise offer letter: the PDF is password-protected. Nothing was changed."
         }
       }
     },
@@ -4945,7 +4989,7 @@
               "detail": "Your CV in Library is a scanned image I can't edit. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn't tailor your CV: the one in Library is a scanned image I can't edit. Nothing was changed."
+          "fallback_text": "Couldn't tailor your CV: your CV in Library is a scanned image I can't edit. Nothing was changed."
         }
       }
     },
@@ -4998,13 +5042,13 @@
           "major": 1,
           "header": {
             "title": "Grab · Lead Product Designer",
-            "subtitle": "Reading Gmail"
+            "subtitle": "Your application"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading messages from Grab",
+              "detail": "Reading messages from Grab in Gmail",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b26"
               }
@@ -5017,7 +5061,7 @@
           "major": 1,
           "header": {
             "title": "No Grab process in your email",
-            "subtitle": "Gmail · last 90 days"
+            "subtitle": "Your application"
           },
           "blocks": [
             {
@@ -5033,7 +5077,7 @@
           "major": 1,
           "header": {
             "title": "Couldn't read your email",
-            "subtitle": "Gmail"
+            "subtitle": "Your application"
           },
           "blocks": [
             {
@@ -5042,7 +5086,7 @@
               "detail": "The Gmail connection has expired. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn't check the Grab process: the Gmail connection has expired. Nothing was changed."
+          "fallback_text": "Couldn't read your email: the Gmail connection has expired. Nothing was changed."
         }
       }
     },
@@ -5134,7 +5178,7 @@
               "detail": "The calendar connection has expired. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn't read your interviews: the Google Calendar connection has expired. Nothing was changed."
+          "fallback_text": "Couldn't read your calendar: the calendar connection has expired. Nothing was changed."
         }
       }
     },
@@ -5193,13 +5237,13 @@
           "major": 1,
           "header": {
             "title": "Design lead roles",
-            "subtitle": "Setting up the alert"
+            "subtitle": "Singapore · S$10k+/mo"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Setting up a morning check",
+              "detail": "Setting up a check every morning at 8:00",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b28"
               }
@@ -5212,7 +5256,7 @@
           "major": 1,
           "header": {
             "title": "Couldn't set up the alert",
-            "subtitle": "Design lead roles"
+            "subtitle": "Singapore · S$10k+/mo"
           },
           "blocks": [
             {
@@ -5221,7 +5265,7 @@
               "detail": "MyCareersFuture refused the saved search. No alert was made."
             }
           ],
-          "fallback_text": "Couldn't set up the design lead alert: MyCareersFuture refused the saved search. No alert was made."
+          "fallback_text": "Couldn't set up the alert: myCareersFuture refused the saved search. No alert was made."
         }
       }
     },
@@ -5230,7 +5274,7 @@
       "vertical": "jobs",
       "kind": "card",
       "request": "Find remote senior frontend roles I can do from Singapore.",
-      "says": "Canva pays the most; 18 more are on LinkedIn.",
+      "says": "Canva pays the most of the 23 that match.",
       "surface": "page",
       "fresh": true,
       "components": [
@@ -5304,7 +5348,7 @@
           "major": 1,
           "header": {
             "title": "Remote senior frontend roles",
-            "subtitle": "Open to Singapore"
+            "subtitle": "Open to Singapore · posted this week"
           },
           "blocks": [
             {
@@ -5380,7 +5424,7 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No remote senior frontend roles this week",
+            "title": "No remote frontend roles this week",
             "subtitle": "Open to Singapore · as of 08:45"
           },
           "blocks": [
@@ -5403,17 +5447,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn't search LinkedIn",
-            "subtitle": "Remote senior frontend roles"
+            "title": "Couldn't search remote roles",
+            "subtitle": "Open to Singapore · posted this week"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "LinkedIn didn't respond. Nothing was saved."
+              "detail": "LinkedIn didn't answer."
             }
           ],
-          "fallback_text": "Couldn't search for remote senior frontend roles: LinkedIn didn't respond. Nothing was saved."
+          "fallback_text": "Couldn't search remote roles: linkedIn didn't answer."
         }
       }
     },
@@ -5469,7 +5513,7 @@
           "major": 1,
           "header": {
             "title": "Wise · Design Lead",
-            "subtitle": "Reading the posting and your CV"
+            "subtitle": "Your CV against the posting"
           },
           "blocks": [
             {
@@ -5488,16 +5532,16 @@
           "major": 1,
           "header": {
             "title": "Couldn't read the Wise posting",
-            "subtitle": "Wise · Design Lead"
+            "subtitle": "Your CV against the posting"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Wise's careers site didn't respond. Nothing was changed."
+              "detail": "Wise's careers site didn't answer."
             }
           ],
-          "fallback_text": "Couldn't check your fit for the Wise Design Lead role: Wise's careers site didn't respond. Nothing was changed."
+          "fallback_text": "Couldn't read the Wise posting: wise's careers site didn't answer."
         }
       }
     },
