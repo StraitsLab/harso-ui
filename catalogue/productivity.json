@@ -824,7 +824,7 @@
               ]
             }
           ],
-          "fallback_text": "Next week, 28 Sep–4 Oct, Google calendar only so far (1 of 2 calendars): Mon 28 Sep 10:00 team planning on Zoom; Tue 29 Sep 08:30 dentist, 11:00 investor call with Kai and Priya, 15:00 design review. iCloud is still loading."
+          "fallback_text": "Next week, 28 Sep–4 Oct, Google calendar only so far (1 of 2 calendars): Mon 28 Sep 10:00 team planning on Zoom; Tue 29 Sep 08:30 dentist at Novena Medical Centre, 11:00 investor call on Zoom with Kai and Priya, 15:00 design review at Studio with Mei and Arjun. iCloud is still loading."
         },
         "empty": {
           "kind": "output_blocks",

@@ -673,7 +673,7 @@
               }
             ]
           },
-          "fallback_text": "EVs in Singapore 2026, as written 25 Sep 18:20 (couldn’t recheck sources): 15,000+ public chargers, mostly in HDB car parks; fast chargers scarce. Public charging about S$0.60–0.75 per kWh in August against about S$0.35 at home (Jul–Sep tariff)."
+          "fallback_text": "EVs in Singapore 2026, as written 25 Sep 18:20 (couldn’t recheck sources): 15,000+ public chargers, mostly in HDB car parks; fast chargers scarce outside big malls. Public charging about S$0.60–0.75 per kWh in August against about S$0.35 at home (Jul–Sep tariff). Check your car park’s rollout date before you buy."
         },
         "failed": {
           "kind": "output_blocks",
@@ -985,7 +985,7 @@
               "A template, not legal advice. Have a lawyer check it for your case."
             ]
           },
-          "fallback_text": "A 3-page editable freelance agreement (scope, fees, IP on payment, 14 days' notice) is in your Library. Clause 9, governing law, is blank until you tell me the country."
+          "fallback_text": "A 3-page editable freelance agreement (scope, fees and payment terms; IP transfers on payment; either side can end it with 14 days' notice) is in your Library. Clause 9, governing law, is blank until you tell me the country."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1538,7 +1538,7 @@
               "detail": "No plans shortlisted yet"
             }
           ],
-          "fallback_text": "You haven’t shortlisted any Integrated Shield plans yet, so there is nothing to put side by side. Name up to 3 and I’ll compare them."
+          "fallback_text": "For age 35 and private hospital cover, as of 10:30, you haven’t shortlisted any Integrated Shield plans yet, so there is nothing to put side by side. Name up to 3 and I’ll compare them."
         },
         "failed": {
           "kind": "output_blocks",
