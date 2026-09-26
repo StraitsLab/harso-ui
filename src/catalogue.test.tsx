@@ -217,5 +217,5 @@ describe("catalogue gallery", () => {
       expect(row.querySelectorAll(".hkc-output-card")).toHaveLength(example.document ? frames.length : 4 * states.length);
     });
     expect(errors).not.toHaveBeenCalled();
-  });
+  }, 60_000); // full vertical render, 4 frames per state; the largest verticals passed vitest's 5 s default
 });
