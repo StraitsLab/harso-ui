@@ -146,22 +146,6 @@ export function scale(values: string[], zero: boolean) {
   return { bottom, top, ticks, places };
 }
 
-/**
- * Equal day ranges read as equal weeks; a period of a different length says so ("22–31 Aug" + "10 days").
- * Only when every label is a day range in one month ("1–7", "8–14 Aug").
- */
-export function periodNotes(labels: string[]) {
-  const spans = labels.map(label => {
-    const match = /^(\d{1,2})\s*[–-]\s*(\d{1,2})(?:\s+\p{L}+)?$/u.exec(label.trim());
-    return match && Number(match[2]) >= Number(match[1]) ? Number(match[2]) - Number(match[1]) + 1 : undefined;
-  });
-  if (spans.some(span => span === undefined)) return labels.map(() => undefined);
-  const counts = new Map<number, number>();
-  spans.forEach(span => counts.set(span!, (counts.get(span!) ?? 0) + 1));
-  const usual = [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
-  return spans.map(span => span !== usual ? `${span} days` : undefined);
-}
-
 // ---- drawing ----
 
 const AXIS = 12, LINE_HEIGHT = 16, PLOT = 160, BAR_MAX = 36, DEFAULT_WIDTH = 480;
@@ -219,26 +203,26 @@ function fitText(text: string, max: number, measure: Measure) {
   return `${chars.join("").trimEnd()}…`;
 }
 
-type XLabel = { index: number; x: number; anchor: "start" | "middle" | "end"; lines: string[]; strong: boolean; tier: number };
+type XLabel = { index: number; x: number; anchor: "start" | "middle" | "end"; text: string; strong: boolean; tier: number };
 
 /**
- * X labels. First, last, the highlighted period and any uneven period are required: when one would touch another it
- * drops to a row below (staggered), it is never removed. The rest are shown while they fit on the first row, 8px apart.
- * Returns the labels and the rows (in lines) they occupy.
+ * X labels, as the agent wrote them (a longer last period says so by its range, "22–30 Sep": lead ruling, no note).
+ * First, last and the highlighted period are required: when one would touch another it drops to a row below
+ * (staggered), it is never removed. The rest are shown while they fit on the first row, 8px apart.
+ * Returns the labels and how many rows they occupy.
  */
-function placeLabels(labels: string[], notes: (string | undefined)[], xOf: (index: number) => number, plotWidth: number, highlight: number | undefined, sparse: boolean, measure: Measure) {
+function placeLabels(labels: string[], xOf: (index: number) => number, plotWidth: number, highlight: number | undefined, sparse: boolean, measure: Measure) {
   const last = labels.length - 1;
   const extent = (index: number) => {
-    const lines = ([labels[index], notes[index]].filter(Boolean) as string[]).map(line => fitText(line, plotWidth, measure));
-    const width = Math.max(...lines.map(line => measure(line)));
+    const text = fitText(labels[index], plotWidth, measure), width = measure(text);
     const x = xOf(index);
     const anchor: XLabel["anchor"] = index === 0 && x - width / 2 < 0 ? "start" : index === last && x + width / 2 > plotWidth ? "end" : "middle";
     const ax = anchor === "start" ? 0 : anchor === "end" ? plotWidth : Math.min(plotWidth - width / 2, Math.max(width / 2, x));
     const left = anchor === "start" ? 0 : anchor === "end" ? plotWidth - width : ax - width / 2;
-    return { index, x: ax, anchor, lines, strong: index === highlight, tier: 0, left, right: left + width };
+    return { index, x: ax, anchor, text, strong: index === highlight, tier: 0, left, right: left + width };
   };
   const inRange = (index: number | undefined): index is number => index !== undefined && index >= 0 && index <= last && !!labels[index]?.trim();
-  const required = [...new Set([highlight, 0, last, ...notes.map((note, index) => note ? index : undefined)].filter(inRange))];
+  const required = [...new Set([highlight, 0, last].filter(inRange))];
   const optional: number[] = [];
   if (!sparse || labels.length <= 7) for (let index = 1; index < last; index++) if (!required.includes(index) && inRange(index)) optional.push(index);
   const placed: ReturnType<typeof extent>[] = [];
@@ -250,21 +234,15 @@ function placeLabels(labels: string[], notes: (string | undefined)[], xOf: (inde
   }
   for (const index of optional) {
     const box = extent(index);
-    if (box.lines.length === 1 && clear(box, 0)) placed.push(box);
+    if (clear(box, 0)) placed.push(box);
   }
-  const tiers = Math.max(0, ...placed.map(box => box.tier)) + 1;
-  const rows = Array.from({ length: tiers }, (_, tier) => Math.max(1, ...placed.filter(box => box.tier === tier).map(box => box.lines.length)));
-  const labelsOut: XLabel[] = placed.map(({ index, x, anchor, lines, strong, tier }) => ({ index, x, anchor, lines, strong, tier })).sort((a, b) => a.index - b.index);
-  return { labels: labelsOut, rows };
+  const rows = Math.max(0, ...placed.map(box => box.tier)) + 1;
+  return { labels: placed.map(({ index, x, anchor, text, strong, tier }): XLabel => ({ index, x, anchor, text, strong, tier })).sort((a, b) => a.index - b.index), rows };
 }
 
-function XLabels({ labels, rows, y }: { labels: XLabel[]; rows: number[]; y: number }) {
-  const offset = (tier: number) => rows.slice(0, tier).reduce((sum, lines) => sum + lines * LINE_HEIGHT, 0);
-  return <>{labels.map(label => <text key={label.index} x={label.x} y={y + AXIS + offset(label.tier)} textAnchor={label.anchor}
-    className={label.strong ? "hkc-chart-x hkc-chart-x--strong" : "hkc-chart-x"}>
-    {label.lines.map((line, index) => <tspan key={index} x={label.x} dy={index ? LINE_HEIGHT : 0}
-      className={index ? "hkc-chart-x-note" : undefined}>{line}</tspan>)}
-  </text>)}</>;
+function XLabels({ labels, y }: { labels: XLabel[]; y: number }) {
+  return <>{labels.map(label => <text key={label.index} x={label.x} y={y + AXIS + label.tier * LINE_HEIGHT} textAnchor={label.anchor}
+    className={label.strong ? "hkc-chart-x hkc-chart-x--strong" : "hkc-chart-x"}>{label.text}</text>)}</>;
 }
 
 function Axis({ ticks, y, width, plotWidth, unit, places, zeroLine }: { ticks: bigint[]; y: (value: bigint) => number; width: number; plotWidth: number; unit?: string; places: number; zeroLine: bigint }) {
@@ -309,9 +287,8 @@ function BarChart({ chart, width, measure }: { chart: HarsoOutputChart; width: n
   const top = ownRow ? LINE_HEIGHT + 14 : LINE_HEIGHT + 6, below = f.bottom < 0n && !ownRow ? LINE_HEIGHT + 6 : 0;
   const y = (value: bigint) => top + PLOT * f.ratio(value);
   const zero = y(0n), plotBottom = top + PLOT + below;
-  const notes = periodNotes(chart.x_labels);
-  const { labels, rows } = placeLabels(chart.x_labels, notes, center, f.plotWidth, hi, false, measure);
-  const height = plotBottom + 6 + LINE_HEIGHT * rows.reduce((sum, lines) => sum + lines, 0);
+  const { labels, rows } = placeLabels(chart.x_labels, center, f.plotWidth, hi, false, measure);
+  const height = plotBottom + 6 + LINE_HEIGHT * rows;
   return <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true" focusable="false" className="hkc-chart-svg">
     <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} unit={chart.unit} places={f.places} zeroLine={0n} />
     {values.map((value, index) => {
@@ -327,7 +304,7 @@ function BarChart({ chart, width, measure }: { chart: HarsoOutputChart; width: n
           : <text x={Math.min(f.plotWidth - valueWidth / 2, Math.max(valueWidth / 2, center(index)))} y={down ? end + LINE_HEIGHT : end - 5} textAnchor="middle" className="hkc-chart-value">{valueText}</text>)}
       </g>;
     })}
-    <XLabels labels={labels} rows={rows} y={plotBottom + 6} />
+    <XLabels labels={labels} y={plotBottom + 6} />
   </svg>;
 }
 
@@ -340,8 +317,8 @@ function LineChart({ chart, width, measure }: { chart: HarsoOutputChart; width: 
   const step = (f.plotWidth - 12) / (count - 1), x = (index: number) => 6 + index * step;
   const plotBottom = top + PLOT;
   const zeroLine = f.bottom <= 0n && f.top >= 0n ? 0n : f.bottom;
-  const { labels, rows } = placeLabels(chart.x_labels, chart.x_labels.map(() => undefined), x, f.plotWidth, highlight, true, measure);
-  const height = plotBottom + 6 + LINE_HEIGHT * rows.reduce((sum, lines) => sum + lines, 0);
+  const { labels, rows } = placeLabels(chart.x_labels, x, f.plotWidth, highlight, true, measure);
+  const height = plotBottom + 6 + LINE_HEIGHT * rows;
   const points = highlight === undefined ? [] : chart.series.map(series => series.values[highlight]).filter((value): value is string => value !== null);
   // The pill sits above the plot and may use the card's full width. A single series shows "value · period"; when that
   // is too wide the period goes (it is the strong x label below), and the figure itself is never cut.
@@ -379,7 +356,7 @@ function LineChart({ chart, width, measure }: { chart: HarsoOutputChart; width: 
         <circle cx={x(highlight)} cy={y(toMicro(series.values[highlight]!))} r={4} className="hkc-chart-point" />
       </g>)}
     </g>}
-    <XLabels labels={labels} rows={rows} y={plotBottom + 6} />
+    <XLabels labels={labels} y={plotBottom + 6} />
   </svg>;
 }
 

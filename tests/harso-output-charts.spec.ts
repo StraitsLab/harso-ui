@@ -50,8 +50,9 @@ for (const mode of ["light", "dark"] as const) {
     const svg = card(page).locator("svg.hkc-chart-svg");
     await expect(svg.locator(".hkc-chart-axis")).toHaveText(["S$0", "S$1,000", "S$2,000"]);
     await expect(svg.locator(".hkc-chart-value")).toHaveText("S$1,570");
-    await expect(svg.locator(".hkc-chart-x--strong")).toHaveText("15–21");
-    await expect(svg.locator(".hkc-chart-x-note")).toHaveText("9 days");
+    await expect(svg.locator(".hkc-chart-x--strong")).toHaveText("15–21 Sep");
+    // Lead ruling (B0.1): the longer last week is "22–30 Sep" alone, no "9 days".
+    await expect(svg.locator(".hkc-chart-x")).toHaveText(["1–7 Sep", "8–14 Sep", "15–21 Sep", "22–30 Sep"]);
     await expect(svg.locator(".hkc-chart-baseline")).toHaveCount(1);
     // The highlighted value sits above its own bar, centred on it.
     const [bar, label] = await Promise.all([svg.locator(".hkc-chart-mark--strong").boundingBox(), svg.locator(".hkc-chart-value").boundingBox()]);
@@ -207,12 +208,23 @@ for (const width of [320, 390, 420]) for (const unit of ["S$", "transactions"]) 
         fallback_text: "F" }), { kind, unit });
       const svg = card(page).locator("svg.hkc-chart-svg");
       await expect(svg.locator(".hkc-chart-x").first()).toHaveText("1–7 Aug");
-      await expect(svg.locator(".hkc-chart-x").last()).toHaveText(kind === "bar" ? "22–31 Aug10 days" : "22–31 Aug");
+      await expect(svg.locator(".hkc-chart-x").last()).toHaveText("22–31 Aug");
       await expect(svg.locator(".hkc-chart-x--strong")).toHaveText("15–21 Aug");
       expect(await geometry(page), kind).toEqual({ overlaps: [], outside: [], bordered: [] });
     }
   });
 }
+
+// Lead ruling (B0.1): at 338px the last week's label stands clear of the S$0 axis figure (8px or more apart).
+for (const mode of ["light", "dark"] as const) test(`bar ${mode} at 338px: "22–30 Sep" does not crowd S$0`, async ({ page }) => {
+  await open(page, `doc=bar&mode=${mode}&width=338`, 400);
+  const svg = card(page).locator("svg.hkc-chart-svg");
+  await expect(svg.locator(".hkc-chart-x").last()).toHaveText("22–30 Sep");
+  const [label, zero] = await Promise.all([svg.locator(".hkc-chart-x").last().boundingBox(), svg.locator(".hkc-chart-axis", { hasText: /^S\$0$/ }).boundingBox()]);
+  const apart = Math.max(zero!.x - (label!.x + label!.width), label!.x - (zero!.x + zero!.width), zero!.y - (label!.y + label!.height), label!.y - (zero!.y + zero!.height));
+  expect(apart).toBeGreaterThanOrEqual(8);
+  expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
+});
 
 test("figures wider than the plot are drawn whole and inside the card at 320px", async ({ page }) => {
   await open(page, "doc=short", 320);

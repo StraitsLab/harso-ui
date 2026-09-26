@@ -13,7 +13,6 @@
 .harso-kit .hkc-chart-measure-text { font-size: var(--hk-text-meta); font-weight: 500; }
 .harso-kit .hkc-chart-axis, .harso-kit .hkc-chart-x { font-size: var(--hk-text-meta); fill: var(--hk-secondary); }
 .harso-kit .hkc-chart-x--strong { fill: var(--hk-ink); font-weight: 500; }
-.harso-kit .hkc-chart-x-note { fill: var(--hk-secondary); font-weight: 400; }
 .harso-kit .hkc-chart-value { font-size: var(--hk-text-meta); font-weight: 500; fill: var(--hk-ink); }
 .harso-kit .hkc-chart-grid { stroke: var(--hk-line); stroke-width: 1; }
 .harso-kit .hkc-chart-baseline { stroke: color-mix(in srgb, var(--hk-ink) 40%, var(--hk-surface)); stroke-width: 1; }
@@ -92,7 +91,7 @@
   .harso-kit .hkc-chart-mark:not(.hkc-chart-mark--strong) { fill: GrayText; }
   .harso-kit .hkc-chart-line, .harso-kit .hkc-chart-baseline, .harso-kit .hkc-chart-leader { stroke: CanvasText; }
   .harso-kit .hkc-chart-grid { stroke: GrayText; }
-  .harso-kit .hkc-chart-axis, .harso-kit .hkc-chart-x, .harso-kit .hkc-chart-value, .harso-kit .hkc-chart-x-note { fill: CanvasText; }
+  .harso-kit .hkc-chart-axis, .harso-kit .hkc-chart-x, .harso-kit .hkc-chart-value { fill: CanvasText; }
   .harso-kit .hkc-chart-knockout, .harso-kit .hkc-chart-halo { fill: Canvas; }
   .harso-kit .hkc-output-share-segment, .harso-kit .hkc-output-share-key { background: CanvasText; forced-color-adjust: none; }
   .harso-kit .hkc-output-share-bar { outline: 1px solid CanvasText; }

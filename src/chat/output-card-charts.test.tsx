@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
-import { formatValue, periodNotes, readShare, scale } from "./output-card-charts";
+import { formatValue, readShare, scale } from "./output-card-charts";
 import chartStyles from "./output-card-charts.css?raw";
 
 afterEach(cleanup);
@@ -59,13 +59,11 @@ test("bar: hand-built SVG with baseline, gridlines, unit on every axis figure, t
   expect(within(card).getByText("Spent", { selector: "figcaption" })).toBeVisible();
 });
 
-test("bar: the uneven last period is labelled with its length, equal weeks are not", () => {
+// Lead ruling (B0.1): a longer last period says so by its own range ("22–31 Aug"); no "N days" note on any platform.
+test("bar: x labels are drawn as sent, the longer last period by its range alone", () => {
   const { card } = renderDoc(doc([spendingBar]));
-  const notes = [...card.querySelectorAll(".hkc-chart-x-note")].map(node => node.textContent);
-  expect(notes).toEqual(["10 days"]);
-  expect(periodNotes(["1–7", "8–14", "15–21", "22–30"])).toEqual([undefined, undefined, undefined, "9 days"]);
-  expect(periodNotes(["1–7", "8–14", "15–21", "22–28"])).toEqual([undefined, undefined, undefined, undefined]);
-  expect(periodNotes(["Mon", "Tue"])).toEqual([undefined, undefined]);
+  expect([...card.querySelectorAll(".hkc-chart-x")].map(node => node.textContent)).toEqual(["1–7 Aug", "8–14 Aug", "15–21 Aug", "22–31 Aug"]);
+  expect(card.textContent).not.toMatch(/\d+ days/);
 });
 
 test("chart data is announced as a table with every value, its unit and the highlighted period", () => {

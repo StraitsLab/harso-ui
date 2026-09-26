@@ -259,9 +259,9 @@ const short: HarsoOutputDocument = {
 // B0-blocks/.lane/data.js) as contract blocks, so the fidelity crops compare like with like; plus verbatim playbook blocks.
 const b0Bar: HarsoOutputDocument = {
   header: { title: "September spending", subtitle: "1–30 Sep · all accounts" },
-  blocks: [{ kind: "visual", visual: { kind: "chart", chart: "bar", unit: "S$", x_labels: ["1–7", "8–14", "15–21", "22–30"],
+  blocks: [{ kind: "visual", visual: { kind: "chart", chart: "bar", unit: "S$", x_labels: ["1–7 Sep", "8–14 Sep", "15–21 Sep", "22–30 Sep"],
     series: [{ label: "Spent per week in September", values: ["1020", "880", "1570", "810"] }], highlight_index: 2 } }],
-  fallback_text: "Spent per week in September: 1–7 S$1,020, 8–14 S$880, 15–21 S$1,570 (highest), 22–30 S$810."
+  fallback_text: "Spent per week in September: 1–7 Sep S$1,020, 8–14 Sep S$880, 15–21 Sep S$1,570 (highest), 22–30 Sep S$810."
 };
 const b0Line: HarsoOutputDocument = {
   header: { title: "September sales", subtitle: "1–14 Sep · as of 10:30" },
