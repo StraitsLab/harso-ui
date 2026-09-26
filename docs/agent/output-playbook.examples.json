@@ -4871,7 +4871,7 @@
               },
               {
                 "label": "NH 802",
-                "secondary": "Via Narita · seats left",
+                "secondary": "Via Narita · 9 seats left",
                 "trailing": "14:05"
               },
               {
@@ -5117,7 +5117,7 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading the October climate",
+              "detail": "Reading October weather",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000e07"
               }
@@ -5129,7 +5129,7 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn’t read Tokyo’s climate",
+            "title": "Couldn’t get Tokyo’s October weather",
             "subtitle": "12–18 Oct"
           },
           "blocks": [
@@ -5139,7 +5139,7 @@
               "detail": "The weather service didn’t respond. No list was made."
             }
           ],
-          "fallback_text": "Couldn’t read Tokyo’s October climate: the weather service didn’t respond. No packing list was made."
+          "fallback_text": "Couldn’t get Tokyo’s October weather: the weather service didn’t respond, so no packing list was made."
         }
       }
     },
@@ -5218,17 +5218,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No booking found for Hotel Gracery",
+            "title": "No booking at Hotel Gracery Ueno",
             "subtitle": "12–18 Oct"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No confirmation email or Booking.com trip matches"
+              "detail": "Nothing in your email or Booking.com trips"
             }
           ],
-          "fallback_text": "No booking found for Hotel Gracery Ueno, 12–18 Oct: no confirmation email or Booking.com trip matches."
+          "fallback_text": "No booking at Hotel Gracery Ueno for 12–18 Oct: nothing in your email or Booking.com trips."
         },
         "failed": {
           "kind": "output_blocks",
@@ -5746,7 +5746,7 @@
           "major": 1,
           "header": {
             "title": "鼎泰豐 Din Tai Fung, Taipei 101",
-            "subtitle": "Dumplings · open until 21:30 · wait not in yet · as of 10:20"
+            "subtitle": "Dumplings · wait time not in yet · as of 10:20"
           },
           "blocks": [
             {
