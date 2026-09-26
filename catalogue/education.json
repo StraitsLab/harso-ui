@@ -637,7 +637,7 @@
             }
           }
         ],
-        "fallback_text": "The water cycle diagram (evaporation, condensation, precipitation, collection) is saved to your Library."
+        "fallback_text": "Your water cycle diagram is in your Library: water evaporates from the sea, forms clouds, falls as rain on the hills and flows back in rivers."
       },
       "states": {
         "loading": {

@@ -5908,7 +5908,7 @@
             }
           }
         ],
-        "fallback_text": "The water cycle diagram (evaporation, condensation, precipitation, collection) is saved to your Library."
+        "fallback_text": "Your water cycle diagram is in your Library: water evaporates from the sea, forms clouds, falls as rain on the hills and flows back in rivers."
       },
       "states": {
         "loading": {
@@ -6293,7 +6293,7 @@
               "Not medical advice."
             ]
           },
-          "fallback_text": "Resting heart rate, 3 of 4 weeks reported (no readings the week of 15 Sep): 63, 62, then 58 bpm this week; average 61 bpm."
+          "fallback_text": "Resting heart rate, 3 of 4 weeks reported: 63 bpm, 62 bpm, then 58 bpm this week, with no readings the week of 15 Sep. Average 61 bpm."
         },
         "stale": {
           "kind": "output_blocks",
