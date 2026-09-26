@@ -9,7 +9,7 @@ field in an example; every row names a field that is not in `docs/agent/schema/o
 ## Truth rules every example follows
 
 - Every price has its currency (INR, S$, US$) and the time it was read ("as of 19:48"); a compare card gives each app's
-  own read time on its row.
+  own read time in its subtitle and fallback, since a row has no "as of" of its own (D9 below).
 - Fees are never folded into the dish price: delivery, packaging, platform and tax are their own rows or their own
   number. A total says what it includes ("before tip").
 - "Cheaper" is said only when every compared price is in. The partial compare (one app didn't answer) says "I can't say
@@ -19,8 +19,10 @@ field in an example; every row names a field that is not in `docs/agent/schema/o
   describes the app's estimates (Swiggy estimates no open place at under 40 minutes), never that no place can reach you.
 - The fallback is the whole answer for a device that cannot draw the card: every row's name, quantity, size, variant,
   add-on, mark, condition and amount, every number, and the scoped subject of the header (restaurant, order number,
-  people, items) are in it, in every state. Recovery words ("Ask me again…", "Tell me what you'd like") are in the
-  drawn `status.detail` too, not only in the fallback.
+  people, items) are in it, in every state. Every word of the title that scopes or qualifies it ("Jain options",
+  "before tip", "Swiggy") is in the fallback, and a loading card's `status.detail` carries the title and subtitle scope
+  too. Any recovery instruction in the fallback ("Ask me again…", "Tell me what you'd like", "ask the restaurant about
+  onion and garlic", "I'll check your Swiggy orders…") is in the drawn `status.detail` too, not only in the fallback.
 - Closed restaurants are never recommended: search results are open places only and say how many closed ones were left
   out (Swiggy `availabilityStatus: OPEN`).
 - Nothing is ordered without a yes. A cart, group order, reorder or basket card is followed by the approval question
