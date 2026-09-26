@@ -244,6 +244,21 @@ const AS_OF_STAMP = /\bas of\b[^·]*/gi;
 export const FRESH_EXAMPLES = new Set(PLAYBOOK.fresh);
 /** A state of an example (loading, partial...) is drawn from its own document, validated like the main one. */
 export const STATES = ["loading", "partial", "stale", "empty", "failed"];
+/**
+ * Which data laws a state's document can meet. Every other law applies to every state unchanged. Loading and failed
+ * carry no data, so no "as of" stamp, file, contents or sources; empty is a read that found nothing, so it has its
+ * moment ("as of") but nothing else; partial and stale show data read at a moment, so every law applies. The
+ * example-level checks (says, reply, the fresh verdict, the declared surface, a finished-month request) are the main
+ * answer's and are checked once, on it: a state has no sentence or declared surface of its own.
+ */
+export const STATE_LAWS = Object.freeze({
+  loading: Object.freeze({ asOf: false, data: false }),
+  failed: Object.freeze({ asOf: false, data: false }),
+  empty: Object.freeze({ asOf: true, data: false }),
+  partial: Object.freeze({ asOf: true, data: true }),
+  stale: Object.freeze({ asOf: true, data: true }),
+});
+const MAIN_LAWS = Object.freeze({ asOf: true, data: true });
 /** "as of" followed by a clock time or a market close: a date alone does not say how old a price is. */
 const AS_OF = /\bas of\b[^·]*(?:\b\d{1,2}:\d{2}\b|\bclose\b)/i;
 /** Reserved documentation domains are never a real destination. */
@@ -295,23 +310,30 @@ export function projectSurface(document) {
   return page ? "page" : "inline";
 }
 
-/** `verdicts` are the playbook's lists; a check of another file passes that file's lists. */
-export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensitive: TIME_SENSITIVE_COMPONENTS }) {
+/**
+ * `verdicts` are the playbook's lists; a check of another file passes that file's lists. With `state`, the laws run on
+ * that state's document (STATE_LAWS says which data laws apply) and the example-level checks are left to the main run.
+ */
+export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensitive: TIME_SENSITIVE_COMPONENTS }, state) {
   const errors = [];
   const push = (law, message) => errors.push(`${law}: ${message}`);
-  const document = example.document;
-  for (const [path, text] of walkStrings({ says: example.says ?? "", reply: example.reply ?? "", document })) {
+  const main = state === undefined;
+  const applies = main ? MAIN_LAWS : STATE_LAWS[state];
+  if (!applies) return [`states: ${state} is not one of ${STATES.join(", ")}`];
+  const document = main ? example.document : example.states[state];
+  const said = main ? { says: example.says ?? "", reply: example.reply ?? "" } : {};
+  for (const [path, text] of walkStrings({ ...said, document })) {
     if (text.includes("!")) push("voice", `${path} uses an exclamation mark`);
     if (BANNED.test(text)) push("voice", `${path} uses banned wording ("${text.match(BANNED)[0]}")`);
   }
-  if (example.kind === "text") {
+  if (main && example.kind === "text") {
     if (document !== null) push("law 1", "a plain-text answer sends no card (document must be null)");
     if (!example.reply) push("law 1", "a plain-text example needs the reply text");
     if (example.surface !== "text") push("surface", "a plain-text example has surface \"text\"");
     return errors;
   }
   if (!document) return [...errors, "law 1: a card or file example needs a document"];
-  if (example.reply) push("law 6", "a card example puts its one sentence in \"says\", not \"reply\"");
+  if (main && example.reply) push("law 6", "a card example puts its one sentence in \"says\", not \"reply\"");
   (function scanKeys(node, path) {
     if (Array.isArray(node)) node.forEach((item, index) => scanKeys(item, `${path}[${index}]`));
     else if (node && typeof node === "object") for (const [key, item] of Object.entries(node)) {
@@ -331,7 +353,7 @@ export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensi
     if (SOURCE_IN_TEXT.test(text)) push("law 5", `${path}: sources and links live in Details`);
     if (/\b(?:donut|doughnut|pie chart)\b/i.test(text)) push("shares", `${path}: no donut or pie; shares are rows, largest first`);
   }
-  if (example.says) {
+  if (main && example.says) {
     const said = norm(example.says);
     for (const [path, text] of visibleStrings(document)) {
       if (norm(text) === said || (norm(text).split(" ").filter(word => /\p{L}{2,}/u.test(word)).length >= 3 && said.includes(norm(text)))) push("law 6", `${path} repeats the sentence above the card`);
@@ -344,7 +366,7 @@ export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensi
       if (block.items.some(row => row.mark === "pick") && block.items.length < 2) push("law 4", `${here}: a pick needs at least two rows to choose between`);
       if ((block.total_count ?? 0) > block.items.length && !reachesRest(action)) push("truth", `${here}: rows beyond those sent must be reachable (a file, or a link to the source's own result page)`);
       for (const row of block.items) {
-        if (row.status && !(row.status in ROW_STATUS_MEANING)) push("state", `${here}: row status ${row.status} has no meaning`);
+        if (row.status && !Object.hasOwn(ROW_STATUS_MEANING, row.status)) push("state", `${here}: row status ${row.status} has no meaning`);
       }
     }
     // Shares of a whole (lead ruling 2026-09-26: no donut; a proportion bar above sorted rows): a rows block whose
@@ -368,28 +390,29 @@ export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensi
       }
     }
     if (block.kind === "status") {
-      if (!(block.state in STATE_MEANING)) push("state", `${here}: state ${block.state} is outside the closed set`);
+      if (!Object.hasOwn(STATE_MEANING, block.state)) push("state", `${here}: state ${block.state} is outside the closed set`);
       if (block.state === "failed" && !block.detail) push("failure", `${here}: a failed card says what happened in detail`);
     }
   }
-  if (example.kind === "file") {
+  if (applies.data && example.kind === "file") {
     if (![action?.primary, action?.secondary].some(verb => verb && ARTIFACT_VERBS.has(verb.kind))) push("file", "a file example opens or downloads the artifact");
   }
-  if (typeof example.fresh !== "boolean") push("stale", "declare fresh: true or false (is the data time-sensitive?)");
-  else if (example.fresh !== verdicts.fresh.has(example.id)) push("stale", `fresh is ${example.fresh}, but the playbook's verdict for ${example.id} is ${verdicts.fresh.has(example.id)} (the vertical's "fresh" list)`);
+  // The fresh verdict and the components are the example's, so they are checked once, on the main answer.
+  if (main && typeof example.fresh !== "boolean") push("stale", "declare fresh: true or false (is the data time-sensitive?)");
+  else if (main && example.fresh !== verdicts.fresh.has(example.id)) push("stale", `fresh is ${example.fresh}, but the playbook's verdict for ${example.id} is ${verdicts.fresh.has(example.id)} (the vertical's "fresh" list)`);
   const staleComponents = (example.components ?? []).filter(name => verdicts.timeSensitive.has(name));
-  if (example.fresh !== true && staleComponents.length) push("stale", `${staleComponents.join(", ")} is time-sensitive, so fresh must be true`);
-  const liveText = [example.says ?? "", document.fallback_text, ...visibleStrings(document).map(([, text]) => text)].find(text => LIVE_WORDS.test(text));
+  if (main && example.fresh !== true && staleComponents.length) push("stale", `${staleComponents.join(", ")} is time-sensitive, so fresh must be true`);
+  const liveText = [main ? example.says ?? "" : "", document.fallback_text, ...visibleStrings(document).map(([, text]) => text)].find(text => LIVE_WORDS.test(text));
   if (example.fresh !== true && liveText) push("stale", `"${liveText.match(LIVE_WORDS)[0]}" is true only right now, so fresh must be true`);
-  if (example.fresh === true && !AS_OF.test(document.header.subtitle ?? "")) push("stale", "time-sensitive data says \"as of HH:MM\" (or a market close) in the subtitle");
+  if (applies.asOf && example.fresh === true && !AS_OF.test(document.header.subtitle ?? "")) push("stale", "time-sensitive data says \"as of HH:MM\" (or a market close) in the subtitle");
   for (const verb of [action?.primary, action?.secondary]) {
     if (verb?.kind === "open_url" && !specificLink(verb.url)) push("truth", `action "${verb.label}" opens a site's home page; link to the specific page`);
   }
-  for (const [path, text] of [["says", example.says ?? ""], ["$.fallback_text", document.fallback_text]]) {
+  for (const [path, text] of [["says", main ? example.says ?? "" : ""], ["$.fallback_text", document.fallback_text]]) {
     if (LIVE_PAGE_CLAIM.test(text)) push("truth", `${path}: live pages do not open in the app yet; the page is a file`);
   }
   // Truth: a request for the contents of something gets the contents, not only a count and a total.
-  if (/\bwhat(?:'s| is| are)\b(?: \w+)? in\b/i.test(example.request ?? "") && !blocks.some(item => item.kind === "rows" || item.kind === "table") && example.kind !== "file") push("truth", "the request asks what is in it: list the contents as rows or a table");
+  if (applies.data && /\bwhat(?:'s| is| are)\b(?: \w+)? in\b/i.test(example.request ?? "") && !blocks.some(item => item.kind === "rows" || item.kind === "table") && example.kind !== "file") push("truth", "the request asks what is in it: list the contents as rows or a table");
   // Truth: the fallback is the whole answer for a device that cannot draw the card.
   const fallback = unsigned(document.fallback_text);
   for (const block of blocks.filter(item => item.kind === "numbers")) {
@@ -412,9 +435,9 @@ export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensi
     const fees = totals.filter(number => number !== total && money(number.value)).map(number => amount(money(number.value)));
     if (![0, ...fees].some(fee => Math.abs(sum + fee - target) < 0.01)) push("data", `rows add up to S$${sum.toFixed(2)}, not the ${total.label} of ${total.value}; send every row or say what is left out`);
   }
-  if (["news", "health", "weather"].includes(example.vertical) && !document.details) push("law 5", `${example.vertical} cards carry their sources or disclaimers in Details`);
+  if (applies.data && ["news", "health", "weather"].includes(example.vertical) && !document.details) push("law 5", `${example.vertical} cards carry their sources or disclaimers in Details`);
   const surface = projectSurface(document);
-  if (example.surface !== surface) push("surface", `declared ${example.surface}, but the app will show ${surface}`);
+  if (main && example.surface !== surface) push("surface", `declared ${example.surface}, but the app will show ${surface}`);
   return errors;
 }
 
@@ -454,9 +477,9 @@ export function requestedPeriod(request, referenceDate) {
  * Truth: dates in the header fall inside the period the request names ("next week" asked on Sat 26 Sep is 28 Sep–4 Oct),
  * and a finished-month question ("how did I do in <month>") is never asked about a month that has not ended.
  */
-export function periodErrors(example, referenceDate) {
+export function periodErrors(example, referenceDate, state) {
   const errors = [];
-  const header = example.document?.header;
+  const header = (state === undefined ? example.document : example.states?.[state])?.header;
   const today = new Date(`${referenceDate}T00:00:00Z`);
   const year = today.getUTCFullYear();
   const period = requestedPeriod(example.request ?? "", referenceDate);
@@ -474,7 +497,7 @@ export function periodErrors(example, referenceDate) {
       for (const name of MONTH_NAMES) if (name !== period.month && new RegExp(`\\b${name}\\b`).test(text)) errors.push(`truth: "last month" is ${period.month}, not ${name}`);
     }
   }
-  const finished = /\b(?:how did|did i do|how was|how were)\b.*\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/i.exec(example.request ?? "");
+  const finished = state === undefined && /\b(?:how did|did i do|how was|how were)\b.*\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/i.exec(example.request ?? "");
   if (finished) {
     const index = MONTH_NAMES.indexOf(finished[1][0].toUpperCase() + finished[1].slice(1).toLowerCase());
     if (new Date(Date.UTC(year, index + 1, 1)) > today) errors.push(`truth: ${MONTH_NAMES[index]} ${year} has not ended on ${referenceDate}`);
@@ -517,25 +540,36 @@ export function checkPlaybookData(playbook, schema, sha, schemaFile = SCHEMA_PAT
     // present_output never ends a turn: the model calls it, then ends with one sentence (weave-api output_blocks.py).
     if (example.kind !== "text" && (typeof example.says !== "string" || !example.says.trim())) report("turn: says (the one sentence that ends the turn after present_output) is required, failed cards included");
     const documents = example.document ? [["", example.document]] : [];
+    const states = [];
     if (example.states !== undefined) {
       if (example.kind === "text" || !example.states || typeof example.states !== "object" || Array.isArray(example.states) || !Object.keys(example.states).length) report("states: a card or file example's states are a map of state name to document");
       else for (const [name, document] of Object.entries(example.states)) {
         if (!STATES.includes(name)) report(`states: ${name} is not one of ${STATES.join(", ")}`);
         documents.push([`states.${name} `, document]);
+        states.push(name);
       }
     }
+    const valid = new Set();
     for (const [prefix, document] of documents) {
       const schemaFindings = schemaErrors(schema, document);
       schemaFindings.forEach(message => report(`${prefix}schema ${message}`));
       if (schemaFindings.length === 0) semanticErrors(document).forEach(message => report(`${prefix}contract ${message}`));
+      if (schemaFindings.length === 0) valid.add(prefix);
     }
     lawErrors(example, verdicts).forEach(message => report(message));
+    // The same laws on every state's own document (a malformed one is already a schema finding).
+    for (const name of states.filter(item => STATES.includes(item) && valid.has(`states.${item} `))) {
+      lawErrors(example, verdicts, name).forEach(message => report(`states.${name} ${message}`));
+    }
   }
   const year = Number((playbook.reference_date ?? "").slice(0, 4));
   if (!year) findings.push("playbook: reference_date (YYYY-MM-DD) is required so weekdays can be checked");
   else for (const example of examples) {
     weekdayErrors(example, year).forEach(message => findings.push(`example ${example.id}: ${message}`));
     periodErrors(example, playbook.reference_date).forEach(message => findings.push(`example ${example.id}: ${message}`));
+    for (const name of Object.keys(example.states ?? {}).filter(item => STATES.includes(item))) {
+      periodErrors(example, playbook.reference_date, name).forEach(message => findings.push(`example ${example.id}: states.${name} ${message}`));
+    }
   }
   const count = kind => examples.filter(example => example.kind === kind).length;
   if (examples.length < 80) findings.push(`playbook: ${examples.length} examples, need at least 80`);

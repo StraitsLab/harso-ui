@@ -1,6 +1,7 @@
-import { useEffect } from "react";
-import { KitProvider, type Appearance } from "../src";
-import { HarsoOutputCard, type HarsoOutputDocument } from "../src/chat/output-card";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { KitProvider } from "../src";
+import { Button } from "../src/primitives";
+import { HarsoOutputCard, type HarsoOutputBlock, type HarsoOutputCardCaps, type HarsoOutputDocument, type HarsoOutputTextBlock } from "../src/chat/output-card";
 import index from "../catalogue/index.json";
 import "./catalogue-gallery.css";
 
@@ -21,7 +22,8 @@ export const catalogueVerticals: string[] = index.verticals;
 const examplesOf = (vertical: string) => files[`../catalogue/${vertical}.json`]?.examples ?? [];
 /** Inline chat width on iPhone, and the desktop output pane. */
 const WIDTHS = [390, 420];
-const MODES: Record<string, Array<"light" | "dark">> = { light: ["light"], dark: ["dark"], both: ["light", "dark"] };
+/** A Map, not an object: a mode from the URL must be one of these keys, never an inherited one (toString, __proto__). */
+const MODES = new Map<string, Array<"light" | "dark">>([["light", ["light"]], ["dark", ["dark"]], ["both", ["light", "dark"]]]);
 
 /** `#/catalogue` → the index; `#/catalogue/<vertical>` → that vertical; anything else is not a catalogue route. */
 export function catalogueRouteFromHash(): { vertical?: string; mode: string } | undefined {
@@ -29,16 +31,48 @@ export function catalogueRouteFromHash(): { vertical?: string; mode: string } | 
   const match = /^\/catalogue(?:\/([a-z_]+))?\/?$/.exec(path);
   if (!match) return undefined;
   const mode = new URLSearchParams(query).get("mode") ?? "both";
-  return { vertical: match[1], mode: mode in MODES ? mode : "both" };
+  return { vertical: match[1], mode: MODES.has(mode) ? mode : "both" };
 }
 
-const ignore = () => {};
+/** No inline budget: every row and number, and the text unclipped (the line cap is a CSS clamp, so a finite number). */
+const UNCAPPED: HarsoOutputCardCaps = { maxRows: Infinity, maxNumbers: Infinity, maxTextChars: Infinity, maxTextLines: 10_000 };
+const isText = (block: HarsoOutputBlock): block is HarsoOutputTextBlock => block.kind === "text" && Array.isArray((block as HarsoOutputTextBlock).sections);
 
+/**
+ * The whole answer for View all, drawn by the same card with its inline caps lifted. The card draws one text run, so
+ * every text block's words (summary, headings, paragraphs, bullets, in order) become that one run, word for word.
+ */
+export function wholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
+  const words = document.blocks.filter(isText).flatMap(block => [
+    ...(block.summary ? [block.summary] : []),
+    ...block.sections.flatMap(section => [...(section.heading ? [section.heading] : []), ...section.paragraphs ?? [], ...section.bullets ?? []]),
+  ]);
+  const firstText = document.blocks.findIndex(isText);
+  const blocks = document.blocks.flatMap((block, index): HarsoOutputBlock[] => !isText(block) ? [block]
+    : index === firstText ? [{ kind: "text", sections: [{ paragraphs: words }] }] : []);
+  return { ...document, blocks };
+}
+
+/** The card as the chat shows it; View all opens the whole answer in place, Show less or Escape closes it. */
 function Answer({ example, document }: { example: CatalogueExample; document: HarsoOutputDocument | null }) {
-  return <div className="hkl-cat-cell">
-    {document
-      ? <HarsoOutputCard document={document} onViewAll={ignore} />
-      : <p className="hkl-cat-reply">{example.reply}</p>}
+  const [open, setOpen] = useState(false);
+  const cell = useRef<HTMLDivElement>(null);
+  const returnFocus = useRef(false);
+  useLayoutEffect(() => {
+    if (open) cell.current?.querySelector<HTMLElement>(".hkl-cat-full")?.focus();
+    else if (returnFocus.current) cell.current?.querySelector<HTMLElement>(".hkc-output-card-view-all")?.focus();
+    returnFocus.current = false;
+  }, [open]);
+  const close = () => { returnFocus.current = true; setOpen(false); };
+  if (!document) return <div className="hkl-cat-cell"><p className="hkl-cat-reply">{example.reply}</p></div>;
+  return <div className="hkl-cat-cell" ref={cell}>
+    {open
+      ? <div className="hkl-cat-full" role="region" aria-label={`${document.header.title}, full answer`} tabIndex={-1}
+        onKeyDown={event => { if (event.key === "Escape") { event.stopPropagation(); close(); } }}>
+        <HarsoOutputCard document={wholeAnswer(document)} caps={UNCAPPED} onViewAll={close} />
+        <Button variant="ghost" size="small" className="hkl-cat-less" onClick={close}>Show less</Button>
+      </div>
+      : <HarsoOutputCard document={document} onViewAll={() => setOpen(true)} />}
   </div>;
 }
 
@@ -53,7 +87,7 @@ function ExampleRow({ example, modes }: { example: CatalogueExample; modes: Arra
     {rows.map(([state, document]) => <div key={state || "answer"} className="hkl-cat-state" data-state={state || undefined}>
       {state && <p className="hkl-cat-state-name">{state}</p>}
       <div className="hkl-cat-grid">
-        {modes.flatMap(mode => WIDTHS.map(width => <KitProvider key={`${mode}-${width}`} appearance={mode as Appearance}
+        {modes.flatMap(mode => WIDTHS.map(width => <KitProvider key={`${mode}-${width}`} appearance={mode}
           className="hkl-cat-frame" style={{ width }} data-width={width}>
           <Answer example={example} document={document} />
         </KitProvider>))}
@@ -63,7 +97,7 @@ function ExampleRow({ example, modes }: { example: CatalogueExample; modes: Arra
 }
 
 export function CataloguePage({ vertical, mode }: { vertical?: string; mode: string }) {
-  const modes = MODES[mode];
+  const modes = MODES.get(mode) ?? MODES.get("both")!;
   const known = vertical === undefined || catalogueVerticals.includes(vertical);
   useEffect(() => { document.title = `${vertical ? `${vertical} · ` : ""}Catalogue · Harso`; }, [vertical]);
   return <KitProvider appearance={modes.length === 1 ? modes[0] : "light"} className="hkl-cat-root">

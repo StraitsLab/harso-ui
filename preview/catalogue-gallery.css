@@ -15,3 +15,5 @@
 .hkl-cat-grid { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--hk-space-4); }
 .hkl-cat-frame { box-sizing: border-box; flex: none; padding: var(--hk-space-3); border-radius: var(--hk-radius-card); background: var(--hk-canvas); color: var(--hk-ink); }
 .hkl-cat-reply { margin: 0; padding: var(--hk-space-3) var(--hk-space-4); font-size: var(--hk-text-body); line-height: 1.5; }
+.hkl-cat-full { display: flex; flex-direction: column; align-items: flex-start; gap: var(--hk-space-2); border-radius: var(--hk-radius-card); }
+.hkl-cat-full > .hkc-output-card { align-self: stretch; }
