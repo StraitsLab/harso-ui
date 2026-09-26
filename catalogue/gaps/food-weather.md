@@ -18,6 +18,8 @@ contract field that would fix it. No example invents a field. Numbers such as G2
 | Story timeline / match feed | Event kind. A goal, a card or a deal milestone is only a word in the label. | "Goal · Saka", "Red card · Caicedo" as the label, newest first, so the result is inline | sports-match-feed, news-timeline | none. The words are clear; no icon set (the flow score would fall) | not a gap |
 | Nutrition (week) | Daily target line on the bar chart. | The average goes in a number; no target is drawn | food-nutrition-week | `chart.target` (decimal) | G9 |
 | Source list (links) | A link must open the original article, so an illustrative story has no honest URL. | Illustrative rows (headlines, the MRT brief, the haze brief) name their outlet and time in Details with no URL. Rows that need links (news-sources, news-timeline) use real, retrievable 2025–26 reporting on Grab–GoTo | news-headlines, news-brief, news-brief-haze | none. This is a data rule, not a field | new |
+| Meal plan + grocery list (H1) | A week and its shopping list are two lists, and only one `rows` block is allowed; aisles cannot be grouped rows (G2) | Dinners as rows (day secondary, cooking time trailing); the groceries as a text block: a one-line summary inline, one bulleted section per aisle on the page. The basket is a separate yes after the question (the delivery-quick-basket card) | food-meal-plan-week | `row.group` (as Menu) | new |
+| Recurring digest (Q2) | A delivered run and its routine are one card; nothing says "run N" or when the next is due, except as text | Watching status bound to the routine with one Pause (as jobs-alert); five headline rows with outlet and date; each article in Details in row order (as news-sources). "Every day at 07:00" is the status detail | news-digest-tech | `status_block.next_run_at` (RFC 3339) | new |
 | Menu (daily) | Some restaurants have no menu page (Burnt Ends writes a new menu daily). | The link is the restaurant's own page, labelled "Burnt Ends website", not "Full menu"; Details says the menu is daily | food-menu | none | new |
 | Cooking timer | Nothing. It is a routine with `status: scheduled` and one Pause. | as the component | food-timer | none | not a gap |
 
@@ -45,6 +47,7 @@ card, because every card waits on a read or a write.
 | food-nutrition-week | Y | Y | Y | Y | Y | |
 | food-menu | Y | Y | Y | Y | Y | |
 | food-menu-section | Y | Y | Y | N/A | Y | The request names a section the restaurant is known for. A menu that isn't online is food-menu's empty |
+| food-meal-plan-week | Y | N/A | N/A | N/A | Y | A plan is written, not read (fresh: false): nothing to go stale. Half a week's plan gives half a shopping list, so there is no partial. Vegetarian dinners always exist, so no empty |
 | food-timer | Y | N/A | N/A | N/A | Y | It is one write, not a read: nothing to be partial, old or empty. A failed write says the outcome couldn't be confirmed and to check before asking again |
 | weather-now | Y | Y | Y | N/A | Y | A forecast always exists for a place and time; no reading is a failure, not an empty |
 | weather-tomorrow | Y | Y | Y | N/A | Y | As weather-now |
@@ -63,6 +66,7 @@ card, because every card waits on a read or a write.
 | news-timeline | Y | Y | Y | Y | Y | |
 | news-headlines | Y | Y | Y | N/A | Y | Front pages always carry headlines; unreadable front pages are failed or partial |
 | news-sources | Y | Y | Y | Y | Y | |
+| news-digest-tech | Y | Y | N/A | Y | Y | A digest is delivered once per run and never refreshed: an older one is yesterday's message, not a stale card. Partial: a paywalled story is left out and said so |
 
 Negative states say only what was checked ("None of the 40 outlets searched", "None of the 3 recipe sites checked").
 They never say "no one" or "nothing exists".

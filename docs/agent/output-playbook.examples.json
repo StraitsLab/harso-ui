@@ -131,12 +131,14 @@
     "travel-flights-return",
     "travel-hotels-ueno",
     "travel-flight-cancelled",
+    "travel-rate-drop-rebook",
     "places-cafe",
     "places-dinner-options",
     "places-hours",
     "places-nearby-map",
     "places-card-photo",
     "places-table-booked",
+    "places-aircon-pros",
     "food-menu",
     "food-nutrition-week",
     "food-menu-section",
@@ -170,6 +172,7 @@
     "news-headlines",
     "news-sources",
     "news-brief-haze",
+    "news-digest-tech",
     "health-sleep",
     "health-steps-week",
     "health-meds-taken",
@@ -16134,6 +16137,444 @@
       }
     },
     {
+      "id": "travel-flight-booked",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Book the 08:35 SQ 638 to Tokyo on 12 Oct, aisle seat, with my KrisFlyer number.",
+      "says": "Booked, with the aisle seat and your KrisFlyer number on it.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the approval, the booking: flight and ref in the header; what was paid, the seat and the refund terms as rows; the e-ticket is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked · SQ 638 to Tokyo",
+          "subtitle": "Mon 12 Oct · 08:35 · Ref 6XK2QP"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Total paid",
+                "secondary": "1 adult · economy Flexi · Visa ending 4412",
+                "trailing": "S$612"
+              },
+              {
+                "label": "Seat",
+                "secondary": "Aisle · KrisFlyer ending 0932 added",
+                "trailing": "31C"
+              },
+              {
+                "label": "Refund",
+                "secondary": "Refundable until departure",
+                "trailing": "S$100 fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open e-ticket",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000c7a01"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines e-ticket email, 26 Sep 2026 10:41"
+            }
+          ],
+          "assumptions": [
+            "Charged the S$612 you approved at 10:38; nothing else was bought."
+          ]
+        },
+        "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. Charged the S$612 you approved at 10:38; nothing else was bought. The e-ticket is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "SQ 638 to Tokyo",
+            "subtitle": "Mon 12 Oct · 08:35"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Booking SQ 638 to Tokyo, Mon 12 Oct 08:35, with Singapore Airlines",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a02"
+              }
+            }
+          ],
+          "fallback_text": "Booking SQ 638 to Tokyo, Mon 12 Oct 08:35, with Singapore Airlines."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · SQ 638 to Tokyo",
+            "subtitle": "Mon 12 Oct · 08:35 · Ref 6XK2QP · e-ticket not in yet"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Total paid",
+                  "secondary": "1 adult · economy Flexi · Visa ending 4412",
+                  "trailing": "S$612"
+                },
+                {
+                  "label": "Seat",
+                  "secondary": "Aisle asked for · SIA hasn't assigned it",
+                  "trailing": "Not yet"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines booking page, 26 Sep 2026 10:40"
+              }
+            ],
+            "assumptions": [
+              "Charged the S$612 you approved at 10:38; nothing else was bought."
+            ]
+          },
+          "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412. Seat: aisle asked for; SIA hasn't assigned it, not yet. Status: e-ticket not in yet, as the airline's email hasn't arrived. Charged the S$612 you approved at 10:38; nothing else was bought."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · SQ 638 to Tokyo",
+            "subtitle": "Mon 12 Oct · 08:35 · Ref 6XK2QP · as of 10:41 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Total paid",
+                  "secondary": "1 adult · economy Flexi · Visa ending 4412",
+                  "trailing": "S$612"
+                },
+                {
+                  "label": "Seat",
+                  "secondary": "Aisle · KrisFlyer ending 0932 added",
+                  "trailing": "31C"
+                },
+                {
+                  "label": "Refund",
+                  "secondary": "Refundable until departure",
+                  "trailing": "S$100 fee"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open e-ticket",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000c7a01"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines e-ticket email, 26 Sep 2026 10:41"
+              }
+            ],
+            "assumptions": [
+              "Charged the S$612 you approved at 10:38; nothing else was bought."
+            ]
+          },
+          "fallback_text": "As of 10:41 (couldn’t refresh with Singapore Airlines): SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. Charged the S$612 you approved at 10:38; nothing else was bought. The e-ticket is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "SQ 638 wasn’t booked",
+            "subtitle": "Mon 12 Oct · 08:35 · as of 10:39"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The S$612 Flexi fare was gone before payment; nothing was booked"
+            }
+          ],
+          "fallback_text": "SQ 638 to Tokyo wasn’t booked for Mon 12 Oct 08:35, as of 10:39: the S$612 Flexi fare was gone before payment; nothing was booked or charged."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the SQ 638 booking",
+            "subtitle": "Mon 12 Oct · 08:35"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Singapore Airlines didn’t answer. Check your SIA bookings before trying again"
+            }
+          ],
+          "fallback_text": "I couldn’t confirm whether SQ 638 to Tokyo on Mon 12 Oct 08:35 is booked: Singapore Airlines didn’t answer after the payment was sent, so you may or may not have been charged. Check your SIA bookings before trying again."
+        }
+      }
+    },
+    {
+      "id": "travel-rate-drop-rebook",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Watch my Gracery Ueno rate and rebook if it drops by S$100 or more.",
+      "says": "The rate dropped by S$240. Shall I book it, then cancel your current booking?",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S7 Price watch",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "The watch firing: old and new rate as rows with the saving; still bound to the routine with one Pause. Rebooking is a question, then an approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Gracery Ueno rate dropped",
+          "subtitle": "12–18 Oct · same room · as of 20:00"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every 12 hours since 26 Sep",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Your booking",
+                "secondary": "Ref ABX-4471 · free cancel until 9 Oct",
+                "trailing": "S$1,620"
+              },
+              {
+                "label": "Now on Booking.com",
+                "secondary": "Same room · free cancel until 9 Oct",
+                "trailing": "S$1,380"
+              },
+              {
+                "label": "You’d save",
+                "secondary": "Rule: refundable, S$100 or more",
+                "trailing": "S$240"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Booking.com, 26 Sep 2026 20:00"
+            }
+          ],
+          "assumptions": [
+            "Nothing is booked or cancelled until you say yes.",
+            "The old booking is cancelled only after the new one is confirmed."
+          ]
+        },
+        "fallback_text": "Gracery Ueno rate dropped for 12–18 Oct, same room, as of 20:00: your booking, Ref ABX-4471, free cancel until 9 Oct, S$1,620; now on Booking.com, same room, free cancel until 9 Oct, S$1,380; you’d save S$240 (rule: refundable, S$100 or more). Watching every 12 hours since 26 Sep. Nothing is booked or cancelled until you say yes; the old booking is cancelled only after the new one is confirmed."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Gracery Ueno rate",
+            "subtitle": "12–18 Oct · same room"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking the Gracery Ueno rate for 12–18 Oct, same room, on Booking.com",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a04"
+              }
+            }
+          ],
+          "fallback_text": "Checking the Gracery Ueno rate for 12–18 Oct, same room, on Booking.com."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Gracery Ueno rate dropped",
+            "subtitle": "12–18 Oct · same room · terms not in yet · as of 20:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every 12 hours since 26 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Your booking",
+                  "secondary": "Ref ABX-4471 · free cancel until 9 Oct",
+                  "trailing": "S$1,620"
+                },
+                {
+                  "label": "Now on Booking.com",
+                  "secondary": "Same room · cancel terms not in yet",
+                  "trailing": "S$1,380"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Booking.com, 26 Sep 2026 20:00; cancel terms still loading"
+              }
+            ],
+            "assumptions": [
+              "Can’t tell if it is refundable, so I won’t offer to rebook yet."
+            ]
+          },
+          "fallback_text": "Gracery Ueno rate dropped for 12–18 Oct, same room, as of 20:00: your booking, Ref ABX-4471, free cancel until 9 Oct, S$1,620; now on Booking.com, same room, S$1,380, cancel terms not in yet, so I can’t tell if it is refundable and won’t offer to rebook yet. Watching every 12 hours since 26 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Gracery Ueno rate dropped",
+            "subtitle": "12–18 Oct · same room · as of 20:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every 12 hours since 26 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Your booking",
+                  "secondary": "Ref ABX-4471 · free cancel until 9 Oct",
+                  "trailing": "S$1,620"
+                },
+                {
+                  "label": "Now on Booking.com",
+                  "secondary": "Same room · free cancel until 9 Oct",
+                  "trailing": "S$1,380"
+                },
+                {
+                  "label": "You’d save",
+                  "secondary": "Rule: refundable, S$100 or more",
+                  "trailing": "S$240"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a03",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Booking.com, 26 Sep 2026 20:00"
+              }
+            ],
+            "assumptions": [
+              "Nothing is booked or cancelled until you say yes.",
+              "The old booking is cancelled only after the new one is confirmed."
+            ]
+          },
+          "fallback_text": "As of 20:00 (couldn’t refresh with Booking.com; the rate may have gone): Gracery Ueno rate dropped for 12–18 Oct, same room: your booking, Ref ABX-4471, free cancel until 9 Oct, S$1,620; now on Booking.com, same room, free cancel until 9 Oct, S$1,380; you’d save S$240 (rule: refundable, S$100 or more). Watching every 12 hours since 26 Sep. Nothing is booked or cancelled until you say yes; the old booking is cancelled only after the new one is confirmed."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The S$1,380 Gracery rate is gone",
+            "subtitle": "12–18 Oct · as of 20:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Back to S$1,620. Your booking wasn’t changed; I’m still watching"
+            }
+          ],
+          "fallback_text": "The S$1,380 Gracery Ueno rate for 12–18 Oct is gone as of 20:30: back to S$1,620. Your booking wasn’t changed; I’m still watching."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check the Gracery rate",
+            "subtitle": "12–18 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Booking.com didn’t respond. Your booking wasn’t changed; next check is at 08:00"
+            }
+          ],
+          "fallback_text": "Couldn’t check the Gracery Ueno rate for 12–18 Oct: Booking.com didn’t respond. Your booking wasn’t changed; the next check is at 08:00."
+        }
+      }
+    },
+    {
       "id": "places-cafe",
       "vertical": "places",
       "kind": "card",
@@ -17652,6 +18093,206 @@
       "document": null
     },
     {
+      "id": "places-aircon-pros",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Find aircon servicing near me in Tampines and compare a few.",
+      "says": "CoolBreeze is the pick: well reviewed, certified and mid-priced.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Place card",
+        "Comparison"
+      ],
+      "rationale": "Three firms, one pick: rating, reviews, certification and phone on the line, the price trailing. What a directory blocked is said, not hidden.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Aircon servicing near Tampines",
+          "subtitle": "3 firms · general service, wall unit · as of 11:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "CoolBreeze Aircon",
+                "secondary": "4.8★ · 1,240 reviews · NEA cert · 6123 4567",
+                "trailing": "S$30/unit",
+                "mark": "pick"
+              },
+              {
+                "label": "Tampines Aircon Care",
+                "secondary": "4.6★ · 310 reviews · NEA cert · 8123 4567",
+                "trailing": "S$25/unit"
+              },
+              {
+                "label": "FrostLine Engineering",
+                "secondary": "4.9★ · 85 reviews · not NEA-listed · 9123 4568",
+                "trailing": "S$40/unit"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Maps reviews, 26 Sep 2026 11:20"
+            },
+            {
+              "label": "Carousell services listings, 26 Sep 2026 11:20"
+            },
+            {
+              "label": "NEA list of certified residential aircon technicians, Nov 2025"
+            }
+          ],
+          "assumptions": [
+            "Price is each firm’s listed general service for one wall unit; a chemical wash costs more.",
+            "Nothing is booked; call or ask me to message the one you choose."
+          ]
+        },
+        "fallback_text": "Aircon servicing near Tampines, 3 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit. Price is each firm’s listed general service for one wall unit; a chemical wash costs more. Nothing is booked; call or ask me to message the one you choose."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Aircon servicing near Tampines",
+            "subtitle": "General service, wall unit"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Searching aircon servicing near Tampines, general service, wall unit",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a05"
+              }
+            }
+          ],
+          "fallback_text": "Searching aircon servicing near Tampines, general service, wall unit."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Aircon servicing near Tampines",
+            "subtitle": "2 firms · Carousell blocked · as of 11:20"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "CoolBreeze Aircon",
+                  "secondary": "4.8★ · 1,240 reviews · NEA cert · 6123 4567",
+                  "trailing": "S$30/unit",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Tampines Aircon Care",
+                  "secondary": "4.6★ · 310 reviews · NEA cert · 8123 4567",
+                  "trailing": "S$25/unit"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Maps reviews, 26 Sep 2026 11:20; Carousell blocked the search"
+              }
+            ],
+            "assumptions": [
+              "Price is each firm’s listed general service for one wall unit; a chemical wash costs more.",
+              "Nothing is booked; call or ask me to message the one you choose."
+            ]
+          },
+          "fallback_text": "Aircon servicing near Tampines, 2 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit. Carousell blocked my search, so firms listed only there are missing. Price is each firm’s listed general service for one wall unit; a chemical wash costs more. Nothing is booked; call or ask me to message the one you choose."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Aircon servicing near Tampines",
+            "subtitle": "3 firms · general service, wall unit · as of 09:05 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "CoolBreeze Aircon",
+                  "secondary": "4.8★ · 1,240 reviews · NEA cert · 6123 4567",
+                  "trailing": "S$30/unit",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Tampines Aircon Care",
+                  "secondary": "4.6★ · 310 reviews · NEA cert · 8123 4567",
+                  "trailing": "S$25/unit"
+                },
+                {
+                  "label": "FrostLine Engineering",
+                  "secondary": "4.9★ · 85 reviews · not NEA-listed · 9123 4568",
+                  "trailing": "S$40/unit"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Maps reviews, 26 Sep 2026 09:05"
+              },
+              {
+                "label": "Carousell services listings, 26 Sep 2026 09:05"
+              }
+            ],
+            "assumptions": [
+              "Price is each firm’s listed general service for one wall unit; a chemical wash costs more.",
+              "Nothing is booked; call or ask me to message the one you choose."
+            ]
+          },
+          "fallback_text": "As of 09:05 (couldn’t refresh; prices may have changed): aircon servicing near Tampines, 3 firms, general service, wall unit: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit. Price is each firm’s listed general service for one wall unit; a chemical wash costs more. Nothing is booked; call or ask me to message the one you choose."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No aircon servicing found near Tampines",
+            "subtitle": "General service · as of 11:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Neither directory searched lists a firm within 5 km"
+            }
+          ],
+          "fallback_text": "No aircon servicing found near Tampines for general service, as of 11:20: neither directory searched (Google Maps, Carousell) lists a firm within 5 km."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t search for aircon servicing",
+            "subtitle": "Tampines"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Maps and Carousell didn’t respond. Ask me again in a few minutes"
+            }
+          ],
+          "fallback_text": "Couldn’t search for aircon servicing near Tampines: Google Maps and Carousell didn’t respond. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
       "id": "food-recipe",
       "vertical": "food",
       "kind": "card",
@@ -18796,6 +19437,133 @@
             }
           ],
           "fallback_text": "Couldn’t confirm the reminder to take the bread out at 19:42: the reminder service didn’t answer, so it may or may not be set. Check Reminders before asking again."
+        }
+      }
+    },
+    {
+      "id": "food-meal-plan-week",
+      "vertical": "food",
+      "kind": "card",
+      "request": "Plan vegetarian dinners for next week, Monday to Friday, and give me the grocery list.",
+      "says": "Five dinners from one shop. Shall I put the list in a FairPrice basket?",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Schedule / calendar",
+        "Recipe"
+      ],
+      "rationale": "The week is one list, day secondary and cooking time trailing; the groceries are one short list by aisle. The basket is a separate yes.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Dinners next week · 28 Sep–2 Oct",
+          "subtitle": "Vegetarian · for 2 · 12 groceries"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Palak paneer with rice",
+                "secondary": "Mon 28 Sep",
+                "trailing": "35 min"
+              },
+              {
+                "label": "Chana masala with rotis",
+                "secondary": "Tue 29 Sep",
+                "trailing": "30 min"
+              },
+              {
+                "label": "Vegetable pulao with raita",
+                "secondary": "Wed 30 Sep",
+                "trailing": "40 min"
+              },
+              {
+                "label": "Dal tadka with rice",
+                "secondary": "Thu 1 Oct",
+                "trailing": "30 min"
+              },
+              {
+                "label": "Paneer tikka wraps",
+                "secondary": "Fri 2 Oct",
+                "trailing": "25 min"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "summary": "Groceries: spinach, tomatoes, onions, capsicum, cucumber, coriander, paneer, curd, chickpeas, toor dal, basmati rice and wraps.",
+            "sections": [
+              {
+                "heading": "Vegetables",
+                "bullets": [
+                  "Spinach 500 g",
+                  "Tomatoes 1 kg",
+                  "Onions 1 kg",
+                  "Capsicum, 2",
+                  "Cucumber, 1",
+                  "Coriander, 1 bunch"
+                ]
+              },
+              {
+                "heading": "Dairy and pantry",
+                "bullets": [
+                  "Paneer 400 g",
+                  "Curd 500 g",
+                  "Chickpeas, 2 cans",
+                  "Toor dal 500 g",
+                  "Basmati rice 1 kg",
+                  "Wraps, 6"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Vegetarian, for 2: per your 12 Sep note.",
+            "Assumes you have atta, oil, ginger, garlic and spices.",
+            "Nothing is ordered until you say yes."
+          ]
+        },
+        "fallback_text": "Vegetarian dinners next week for 2 (per your 12 Sep note), 28 Sep–2 Oct: Mon 28 Sep palak paneer with rice, 35 min; Tue 29 Sep chana masala with rotis, 30 min; Wed 30 Sep vegetable pulao with raita, 40 min; Thu 1 Oct dal tadka with rice, 30 min; Fri 2 Oct paneer tikka wraps, 25 min. 12 groceries: vegetables: spinach 500 g, tomatoes 1 kg, onions 1 kg, capsicum, 2, cucumber, 1, coriander, 1 bunch; dairy and pantry: paneer 400 g, curd 500 g, chickpeas, 2 cans, toor dal 500 g, basmati rice 1 kg, wraps, 6. Assumes you have atta, oil, ginger, garlic and spices. Nothing is ordered until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dinners next week · 28 Sep–2 Oct",
+            "subtitle": "Vegetarian · for 2"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Planning dinners next week, 28 Sep–2 Oct, vegetarian, for 2",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a06"
+              }
+            }
+          ],
+          "fallback_text": "Planning dinners next week, 28 Sep–2 Oct, vegetarian, for 2."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t plan next week’s dinners",
+            "subtitle": "28 Sep–2 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The recipe search didn’t respond. Ask me again in a few minutes"
+            }
+          ],
+          "fallback_text": "Couldn’t plan next week’s dinners for 28 Sep–2 Oct: the recipe search didn’t respond, and nothing was ordered. Ask me again in a few minutes."
         }
       }
     },
@@ -25019,6 +25787,219 @@
             }
           ],
           "fallback_text": "Couldn’t search the news for the Grab–GoTo deal: the search didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "news-digest-tech",
+      "vertical": "news",
+      "kind": "card",
+      "request": "Every morning at 7, send me the 5 tech stories I care about.",
+      "says": "Here’s this morning’s tech digest.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Story cluster (brief)",
+        "Source list"
+      ],
+      "rationale": "One digest per run: five headlines with the outlet, each article in Details in row order; still bound to the routine with one Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tech this morning",
+          "subtitle": "Sat 26 Sep · 5 stories · as of 07:00"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every day at 07:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a07"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "OpenAI agents posted 53 user images online",
+                "secondary": "TechCrunch · 25 Sep"
+              },
+              {
+                "label": "Copilot gets a coding tool and always-on agent",
+                "secondary": "Reuters · 25 Sep"
+              },
+              {
+                "label": "Akamai signs US$11.6b cloud deal with Anthropic",
+                "secondary": "The Straits Times · 25 Sep"
+              },
+              {
+                "label": "Google to test its AI chips in orbit",
+                "secondary": "TechSpot · 25 Sep"
+              },
+              {
+                "label": "StarHub in talks to buy M1 from Keppel",
+                "secondary": "TNGlobal · 25 Sep"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a07",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "TechCrunch, 25 Sep 2026",
+              "url": "https://techcrunch.com/2026/09/25/unsecured-openai-agents-posted-53-user-images-on-the-internet-without-the-labs-knowledge/"
+            },
+            {
+              "label": "Reuters, 25 Sep 2026",
+              "url": "https://www.reuters.com/technology/microsoft-revamps-copilot-with-code-generation-agentic-ai-tools-2026-09-25/"
+            },
+            {
+              "label": "The Straits Times, 25 Sep 2026",
+              "url": "https://www.straitstimes.com/business/akamai-signs-14-8-billion-cloud-deal-with-anthropic-grants-warrant-for-up-to-5-stake"
+            },
+            {
+              "label": "TechSpot, 25 Sep 2026",
+              "url": "https://www.techspot.com/news/113989-google-launching-ai-chips-space-see-if-they.html"
+            },
+            {
+              "label": "TNGlobal, 25 Sep 2026",
+              "url": "https://technode.global/2026/09/25/singapore-telco-merger-m1-starhub-keppel/"
+            }
+          ]
+        },
+        "fallback_text": "Tech this morning, Sat 26 Sep, 5 stories as of 07:00: OpenAI agents posted 53 user images online (TechCrunch, 25 Sep); Copilot gets a coding tool and always-on agent (Reuters, 25 Sep); Akamai signs US$11.6b cloud deal with Anthropic (The Straits Times, 25 Sep); Google to test its AI chips in orbit (TechSpot, 25 Sep); StarHub in talks to buy M1 from Keppel (TNGlobal, 25 Sep). Next digest every day at 07:00; you can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tech this morning",
+            "subtitle": "Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing tech this morning, Sat 26 Sep",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a08"
+              }
+            }
+          ],
+          "fallback_text": "Writing tech this morning, Sat 26 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tech this morning",
+            "subtitle": "Sat 26 Sep · 4 of 5 · Reuters paywall · as of 07:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every day at 07:00",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a07"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "OpenAI agents posted 53 user images online",
+                  "secondary": "TechCrunch · 25 Sep"
+                },
+                {
+                  "label": "Akamai signs US$11.6b cloud deal with Anthropic",
+                  "secondary": "The Straits Times · 25 Sep"
+                },
+                {
+                  "label": "Google to test its AI chips in orbit",
+                  "secondary": "TechSpot · 25 Sep"
+                },
+                {
+                  "label": "StarHub in talks to buy M1 from Keppel",
+                  "secondary": "TNGlobal · 25 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000000c7a07",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "TechCrunch, 25 Sep 2026",
+                "url": "https://techcrunch.com/2026/09/25/unsecured-openai-agents-posted-53-user-images-on-the-internet-without-the-labs-knowledge/"
+              },
+              {
+                "label": "The Straits Times, 25 Sep 2026",
+                "url": "https://www.straitstimes.com/business/akamai-signs-14-8-billion-cloud-deal-with-anthropic-grants-warrant-for-up-to-5-stake"
+              },
+              {
+                "label": "TechSpot, 25 Sep 2026",
+                "url": "https://www.techspot.com/news/113989-google-launching-ai-chips-space-see-if-they.html"
+              },
+              {
+                "label": "TNGlobal, 25 Sep 2026",
+                "url": "https://technode.global/2026/09/25/singapore-telco-merger-m1-starhub-keppel/"
+              }
+            ]
+          },
+          "fallback_text": "Tech this morning, Sat 26 Sep, 4 of 5 stories as of 07:00: OpenAI agents posted 53 user images online (TechCrunch, 25 Sep); Akamai signs US$11.6b cloud deal with Anthropic (The Straits Times, 25 Sep); Google to test its AI chips in orbit (TechSpot, 25 Sep); StarHub in talks to buy M1 from Keppel (TNGlobal, 25 Sep). A fifth story is behind the Reuters paywall, so it is left out. Next digest every day at 07:00; you can pause it."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No new tech stories",
+            "subtitle": "Sat 26 Sep · as of 07:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing new since yesterday’s digest. The next one is tomorrow at 07:00"
+            }
+          ],
+          "fallback_text": "No new tech stories on Sat 26 Sep as of 07:00: nothing new on your topics since yesterday’s digest. The next one is tomorrow at 07:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t write today’s tech digest",
+            "subtitle": "Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The news sites didn’t respond. I’ll try again tomorrow at 07:00"
+            }
+          ],
+          "fallback_text": "Couldn’t write today’s tech digest, Sat 26 Sep: the news sites didn’t respond. I’ll try again tomorrow at 07:00."
         }
       }
     },
