@@ -62,7 +62,7 @@
             "Fares change often. Nothing is booked until you confirm with the airline."
           ]
         },
-        "fallback_text": "Flights to Tokyo, 12 Oct: Singapore Airlines SQ 638 08:35 S$612 (pick); ANA NH 842 22:30 S$548; ZIPAIR ZG 52 23:55 S$326."
+        "fallback_text": "Flights to Tokyo, 12 Oct, 1 adult, economy, as of 09:12, all direct: Singapore Airlines SQ 638 departs 08:35, 7h 05m, S$612 (my pick for a morning start); ANA NH 842 departs 22:30, 6h 55m, S$548; ZIPAIR ZG 52 departs 23:55, 7h 10m, S$326."
       },
       "states": {
         "loading": {
@@ -116,7 +116,7 @@
               }
             ]
           },
-          "fallback_text": "Flights to Tokyo, 12 Oct, 2 of 3 airlines priced: Singapore Airlines SQ 638 08:35 S$612; ANA NH 842 22:30 S$548. ZIPAIR is still loading."
+          "fallback_text": "Flights to Tokyo, 12 Oct, 2 of 3 airlines priced as of 09:12, both direct: Singapore Airlines SQ 638 departs 08:35, 7h 05m, S$612 (pick); ANA NH 842 departs 22:30, 6h 55m, S$548. ZIPAIR is still loading."
         },
         "stale": {
           "kind": "output_blocks",
@@ -158,7 +158,7 @@
               "Fares change often. Nothing is booked until you confirm with the airline."
             ]
           },
-          "fallback_text": "Flights to Tokyo, 12 Oct, as of 07:40 (couldn’t refresh): SQ 638 08:35 S$612; NH 842 22:30 S$548; ZG 52 23:55 S$326."
+          "fallback_text": "Flights to Tokyo, 12 Oct, as of 07:40 (couldn’t refresh; fares may have changed), all direct: Singapore Airlines SQ 638 departs 08:35, 7h 05m, S$612 (pick); ANA NH 842 departs 22:30, 6h 55m, S$548; ZIPAIR ZG 52 departs 23:55, 7h 10m, S$326."
         },
         "empty": {
           "kind": "output_blocks",
@@ -254,7 +254,7 @@
             "Fares change often. Nothing is booked until you confirm with the airline."
           ]
         },
-        "fallback_text": "Tokyo to Singapore, Sun 18 Oct, as of 09:14: ZIPAIR ZG 51 17:05 S$298 (no bag, lands 23:40); Scoot TR 809 13:30 S$341; Singapore Airlines SQ 639 11:00 S$530. 14 flights in all."
+        "fallback_text": "Tokyo to Singapore, Sun 18 Oct, the 3 cheapest of 14 as of 09:14: ZIPAIR ZG 51 departs 17:05, lands 23:40, no bag, S$298 (pick); Scoot TR 809 departs 13:30, lands 20:15, no bag, S$341; Singapore Airlines SQ 639 departs 11:00, lands 17:30, S$530. All 14 are on Google Flights."
       },
       "states": {
         "loading": {
@@ -275,6 +275,101 @@
             }
           ],
           "fallback_text": "Checking return flights from Tokyo on Sun 18 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo to Singapore",
+            "subtitle": "Sun 18 Oct · 9 of 14 priced · as of 09:14"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "ZIPAIR",
+                  "secondary": "ZG 51 · 17:05 · lands 23:40 · no bag",
+                  "trailing": "S$298",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Scoot",
+                  "secondary": "TR 809 · 13:30 · lands 20:15 · no bag",
+                  "trailing": "S$341"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "All 14 on Google Flights",
+                "url": "https://www.google.com/travel/flights?q=Flights%20to%20SIN%20from%20TYO%20on%202026-10-18%20oneway"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Flights, 26 Sep 2026 09:14"
+              }
+            ],
+            "disclaimers": [
+              "Fares change often. Nothing is booked until you confirm with the airline."
+            ]
+          },
+          "fallback_text": "Tokyo to Singapore, Sun 18 Oct, 9 of 14 flights priced as of 09:14; the cheapest so far: ZIPAIR ZG 51 departs 17:05, lands 23:40, no bag, S$298; Scoot TR 809 departs 13:30, lands 20:15, no bag, S$341. The other 5 are still loading; all 14 are on Google Flights."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo to Singapore",
+            "subtitle": "Sun 18 Oct · 3 cheapest of 14 · as of 07:40 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "ZIPAIR",
+                  "secondary": "ZG 51 · 17:05 · lands 23:40 · no bag",
+                  "trailing": "S$298",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Scoot",
+                  "secondary": "TR 809 · 13:30 · lands 20:15 · no bag",
+                  "trailing": "S$341"
+                },
+                {
+                  "label": "Singapore Airlines",
+                  "secondary": "SQ 639 · 11:00 · lands 17:30",
+                  "trailing": "S$530"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "All 14 on Google Flights",
+                "url": "https://www.google.com/travel/flights?q=Flights%20to%20SIN%20from%20TYO%20on%202026-10-18%20oneway"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Flights, 26 Sep 2026 07:40"
+              }
+            ],
+            "disclaimers": [
+              "Fares change often. Nothing is booked until you confirm with the airline."
+            ]
+          },
+          "fallback_text": "Tokyo to Singapore, Sun 18 Oct, the 3 cheapest of 14 as of 07:40 (couldn’t refresh; fares may have changed): ZIPAIR ZG 51 departs 17:05, lands 23:40, no bag, S$298 (pick); Scoot TR 809 departs 13:30, lands 20:15, no bag, S$341; Singapore Airlines SQ 639 departs 11:00, lands 17:30, S$530. All 14 are on Google Flights."
         },
         "empty": {
           "kind": "output_blocks",
@@ -390,7 +485,7 @@
             "Per stay for 6 nights, one room, before tax."
           ]
         },
-        "fallback_text": "Where to stay in Tokyo for 6 nights in October: Ueno S$1,500–1,800 (pick); Asakusa S$1,200–1,500; Shinjuku S$1,800–2,200."
+        "fallback_text": "Where to stay in Tokyo for 6 nights in October on a S$2,000 budget, as of 09:20, per stay for one room before tax: Ueno S$1,500–1,800, Skyliner to Narita in 41 min (pick); Asakusa S$1,200–1,500, quiet at night, older hotels; Shinjuku S$1,800–2,200, busiest, most choice."
       },
       "states": {
         "loading": {
@@ -469,7 +564,7 @@
               "Per stay for 6 nights, one room, before tax."
             ]
           },
-          "fallback_text": "Where to stay in Tokyo, 2 of 3 areas priced: Ueno S$1,500–1,800; Asakusa S$1,200–1,500. Shinjuku is still loading."
+          "fallback_text": "Where to stay in Tokyo for 6 nights, 2 of 3 areas priced as of 09:20, per stay for one room before tax: Ueno S$1,500–1,800, Skyliner to Narita in 41 min (pick); Asakusa S$1,200–1,500, quiet at night, older hotels. Shinjuku is still loading."
         },
         "stale": {
           "kind": "output_blocks",
@@ -538,7 +633,7 @@
               "Per stay for 6 nights, one room, before tax."
             ]
           },
-          "fallback_text": "Where to stay in Tokyo, as of 08:05 (couldn’t refresh): Ueno S$1,500–1,800; Asakusa S$1,200–1,500; Shinjuku S$1,800–2,200."
+          "fallback_text": "Where to stay in Tokyo for 6 nights in October, as of 08:05 (couldn’t refresh; prices may have changed), per stay for one room before tax: Ueno S$1,500–1,800, Skyliner to Narita in 41 min (pick); Asakusa S$1,200–1,500, quiet at night, older hotels; Shinjuku S$1,800–2,200, busiest, most choice."
         },
         "empty": {
           "kind": "output_blocks",
@@ -579,7 +674,7 @@
       "vertical": "travel",
       "kind": "card",
       "request": "Hotels in Ueno under S$300 a night for 12–18 Oct?",
-      "says": "Gracery has the best reviews of the three and is closest to the Skyliner.",
+      "says": "Gracery is closest to the Skyliner; Nohga has the best reviews for S$25 more a night.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -654,7 +749,7 @@
             "Double room, 2 adults, taxes included."
           ]
         },
-        "fallback_text": "Ueno hotels under S$300 a night, 12–18 Oct, as of 09:30: Hotel Gracery Ueno S$270 (8.6); Mitsui Garden Ueno S$255 (8.4); Nohga Hotel Ueno S$295 (8.9)."
+        "fallback_text": "Ueno hotels under S$300 a night, 12–18 Oct, 2 adults, taxes included, as of 09:30: Hotel Gracery Ueno S$270 a night, 3 min to Keisei Ueno, rated 8.6 (pick); Mitsui Garden Ueno S$255 a night, bigger rooms, rated 8.4; Nohga Hotel Ueno S$295 a night, quiet street, rated 8.9."
       },
       "states": {
         "loading": {
@@ -729,7 +824,76 @@
               }
             ]
           },
-          "fallback_text": "Ueno hotels, 2 of 3 priced as of 09:30: Hotel Gracery Ueno S$270; Mitsui Garden Ueno S$255. Nohga is still loading."
+          "fallback_text": "Ueno hotels under S$300 a night, 12–18 Oct, 2 of 3 priced as of 09:30: Hotel Gracery Ueno S$270 a night, 3 min to Keisei Ueno, rated 8.6 (pick); Mitsui Garden Ueno S$255 a night, bigger rooms, rated 8.4. Nohga is still loading."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Ueno hotels under S$300",
+            "subtitle": "12–18 Oct · 2 adults · as of 08:05 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "gracery",
+                    "label": "Hotel Gracery Ueno",
+                    "lat": "35.7118",
+                    "lon": "139.7745"
+                  },
+                  {
+                    "id": "mitsui",
+                    "label": "Mitsui Garden Ueno",
+                    "lat": "35.7104",
+                    "lon": "139.7790"
+                  },
+                  {
+                    "id": "nohga",
+                    "label": "Nohga Hotel Ueno",
+                    "lat": "35.7072",
+                    "lon": "139.7795"
+                  }
+                ],
+                "selected_place_id": "gracery"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Hotel Gracery Ueno",
+                  "secondary": "3 min to Keisei Ueno · 8.6 rating",
+                  "trailing": "S$270 a night",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Mitsui Garden Ueno",
+                  "secondary": "Bigger rooms · 8.4 rating",
+                  "trailing": "S$255 a night"
+                },
+                {
+                  "label": "Nohga Hotel Ueno",
+                  "secondary": "Quiet street · 8.9 rating",
+                  "trailing": "S$295 a night"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Booking.com, 26 Sep 2026 08:05"
+              }
+            ],
+            "assumptions": [
+              "Double room, 2 adults, taxes included."
+            ]
+          },
+          "fallback_text": "Ueno hotels under S$300 a night, 12–18 Oct, 2 adults, taxes included, as of 08:05 (couldn’t refresh; prices may have changed): Hotel Gracery Ueno S$270 a night, 3 min to Keisei Ueno, rated 8.6 (pick); Mitsui Garden Ueno S$255 a night, bigger rooms, rated 8.4; Nohga Hotel Ueno S$295 a night, quiet street, rated 8.9."
         },
         "empty": {
           "kind": "output_blocks",
@@ -1068,7 +1232,7 @@
             "Early starts to avoid crowds; trains and buses between areas."
           ]
         },
-        "fallback_text": "Kyoto, 14–17 Oct: Day 1 Higashiyama, Day 2 Arashiyama, Day 3 Fushimi Inari, Day 4 Nishiki and Gion. The full plan is in your Library."
+        "fallback_text": "Kyoto in 4 days, 14–17 Oct, one area a day. Day 1 Higashiyama: 09:00 Kiyomizu-dera before the crowds, 12:30 Lunch on Ninenzaka, 16:00 Yasaka Shrine at dusk. Day 2 Arashiyama: 08:30 Bamboo grove, 11:00 Tenryu-ji garden, 14:00 Hozu river boat. Day 3 Fushimi Inari: 07:30 walk the torii gates to Yotsutsuji, 13:00 Tofuku-ji. Day 4 Nishiki and Gion: 10:00 Nishiki Market, 15:00 tea at Ippodo, 18:00 Gion evening walk. The plan is in your Library."
       },
       "states": {
         "loading": {
@@ -1145,7 +1309,115 @@
               "Early starts to avoid crowds; trains and buses between areas."
             ]
           },
-          "fallback_text": "Kyoto, 14–17 Oct, 2 of 4 days planned: Day 1 Higashiyama, Day 2 Arashiyama. Days 3 and 4 are still being planned."
+          "fallback_text": "Kyoto in 4 days, 14–17 Oct, 2 of 4 days planned. Day 1 Higashiyama: 09:00 Kiyomizu-dera before the crowds, 12:30 Lunch on Ninenzaka, 16:00 Yasaka Shrine at dusk. Day 2 Arashiyama: 08:30 Bamboo grove, 11:00 Tenryu-ji garden, 14:00 Hozu river boat. Days 3 and 4 are still being planned."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Kyoto in 4 days",
+            "subtitle": "14–17 Oct · opening hours as of 20 Sep · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "d1",
+                    "label": "Higashiyama",
+                    "lat": "34.9967",
+                    "lon": "135.7850"
+                  },
+                  {
+                    "id": "d2",
+                    "label": "Arashiyama",
+                    "lat": "35.0094",
+                    "lon": "135.6668"
+                  },
+                  {
+                    "id": "d3",
+                    "label": "Fushimi Inari",
+                    "lat": "34.9671",
+                    "lon": "135.7727"
+                  },
+                  {
+                    "id": "d4",
+                    "label": "Nishiki and Gion",
+                    "lat": "35.0050",
+                    "lon": "135.7650"
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Day 1 · Higashiyama",
+                  "bullets": [
+                    "09:00 Kiyomizu-dera before the crowds",
+                    "12:30 Lunch on Ninenzaka",
+                    "16:00 Yasaka Shrine at dusk"
+                  ]
+                },
+                {
+                  "heading": "Day 2 · Arashiyama",
+                  "bullets": [
+                    "08:30 Bamboo grove",
+                    "11:00 Tenryu-ji garden",
+                    "14:00 Hozu river boat"
+                  ]
+                },
+                {
+                  "heading": "Day 3 · Fushimi Inari",
+                  "bullets": [
+                    "07:30 Walk the torii gates to Yotsutsuji",
+                    "13:00 Tofuku-ji"
+                  ]
+                },
+                {
+                  "heading": "Day 4 · Nishiki and Gion",
+                  "bullets": [
+                    "10:00 Nishiki Market",
+                    "15:00 Tea at Ippodo",
+                    "18:00 Gion evening walk"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Temple and garden opening hours, read 20 Sep 2026"
+              }
+            ],
+            "assumptions": [
+              "Early starts to avoid crowds; trains and buses between areas."
+            ],
+            "disclaimers": [
+              "Opening hours may have changed since 20 Sep; check before you go."
+            ]
+          },
+          "fallback_text": "Kyoto in 4 days, 14–17 Oct, with opening hours as of 20 Sep (couldn’t refresh). Day 1 Higashiyama: 09:00 Kiyomizu-dera before the crowds, 12:30 Lunch on Ninenzaka, 16:00 Yasaka Shrine at dusk. Day 2 Arashiyama: 08:30 Bamboo grove, 11:00 Tenryu-ji garden, 14:00 Hozu river boat. Day 3 Fushimi Inari: 07:30 walk the torii gates to Yotsutsuji, 13:00 Tofuku-ji. Day 4 Nishiki and Gion: 10:00 Nishiki Market, 15:00 tea at Ippodo, 18:00 Gion evening walk. Check the hours before you go."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your Kyoto plan has no days yet",
+            "subtitle": "14–17 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The dates are saved; no stops are chosen yet"
+            }
+          ],
+          "fallback_text": "Your Kyoto plan for 14–17 Oct has no days planned yet: the dates are saved, but no stops are chosen."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1267,7 +1539,7 @@
               }
             ]
           },
-          "fallback_text": "SQ 638 is delayed 45 min: now departs 09:20 (was 08:35), as of 07:10. The gate isn’t set yet."
+          "fallback_text": "SQ 638 is delayed 45 min: now departs 09:20 (was 08:35), as of 07:10. The gate isn’t set yet; it’s shown after 07:50."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1402,7 +1674,7 @@
             "Nothing changes until you accept on ANA’s site."
           ]
         },
-        "fallback_text": "NH 842 on Sun 27 Sep is cancelled. ANA moved you to NH 844 at 10:15 (seat 34C), as of 18:40. Other options: NH 802 at 14:05, or a full S$548 refund."
+        "fallback_text": "NH 842 on Sun 27 Sep is cancelled, as of 18:40. ANA has moved you to NH 844 at 10:15, seat 34C; accept it on ANA’s site. Other options: NH 802 at 14:05 via Narita, 9 seats left, or a full S$548 refund to your card. Nothing changes until you accept."
       },
       "states": {
         "loading": {
@@ -1423,6 +1695,50 @@
             }
           ],
           "fallback_text": "Reading your ANA booking for NH 842 on Sun 27 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "NH 842 cancelled · moved to NH 844",
+            "subtitle": "Sun 27 Sep · refund amount not in yet · as of 18:40"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "NH 844",
+                  "secondary": "Rebooked by ANA · seat 34C",
+                  "trailing": "10:15"
+                },
+                {
+                  "label": "NH 802",
+                  "secondary": "Via Narita · 9 seats left",
+                  "trailing": "14:05"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "Accept on ANA",
+                "url": "https://www.ana.co.jp/en/sg/book-plan/reservation/"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "ANA booking and flight status, 26 Sep 2026 18:40"
+              }
+            ],
+            "disclaimers": [
+              "Nothing changes until you accept on ANA’s site."
+            ]
+          },
+          "fallback_text": "NH 842 on Sun 27 Sep is cancelled, as of 18:40. ANA has moved you to NH 844 at 10:15, seat 34C; accept it on ANA’s site. The other option so far: NH 802 at 14:05 via Narita, 9 seats left. The refund amount isn’t in yet. Nothing changes until you accept."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1455,7 +1771,23 @@
               }
             ]
           },
-          "fallback_text": "As of 17:55 (couldn’t refresh): NH 842 on Sun 27 Sep is cancelled; ANA moved you to NH 844 at 10:15, or a full S$548 refund."
+          "fallback_text": "As of 17:55 (couldn’t refresh): NH 842 on Sun 27 Sep is cancelled; ANA moved you to NH 844 at 10:15, seat 34C, or you can take a full S$548 refund to your card."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No ANA booking for Sun 27 Sep",
+            "subtitle": "NH 842 · as of 18:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing in your email or ANA trips for that date"
+            }
+          ],
+          "fallback_text": "I found no ANA booking for NH 842 on Sun 27 Sep as of 18:40: nothing in your email or your ANA trips for that date."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1520,7 +1852,7 @@
             "Rules can change; check before you fly."
           ]
         },
-        "fallback_text": "Singapore passport holders visit Japan visa-free for up to 90 days. Passport valid for the stay, Visit Japan Web, onward ticket."
+        "fallback_text": "Singapore passport holders visit Japan visa-free for up to 90 days. Before you fly: passport valid for your whole stay, fill in Visit Japan Web for fast immigration, and have a return or onward ticket on hand."
       },
       "states": {
         "loading": {
@@ -1541,6 +1873,41 @@
             }
           ],
           "fallback_text": "Reading Japan’s entry rules for Singapore passports."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Japan · Singapore passport",
+            "subtitle": "Visa-free up to 90 days · as of 12 Sep · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Before you fly",
+                  "bullets": [
+                    "Passport valid for your whole stay.",
+                    "Fill in Visit Japan Web for fast immigration.",
+                    "Return or onward ticket on hand."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Ministry of Foreign Affairs of Japan, read 12 Sep 2026",
+                "url": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
+              }
+            ],
+            "disclaimers": [
+              "Rules can change; check before you fly."
+            ]
+          },
+          "fallback_text": "As of 12 Sep (couldn’t refresh the official page): Singapore passport holders visit Japan visa-free for up to 90 days. Before you fly: passport valid for your whole stay, fill in Visit Japan Web for fast immigration, and have a return or onward ticket on hand. Check the rules before you fly."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1605,7 +1972,7 @@
             "Too far out for a forecast; ask again the week before for one."
           ]
         },
-        "fallback_text": "Pack for Tokyo 12–18 Oct (usually 15–22°C, some rain): light layers, a jumper, rain jacket, walking shoes, Suica on your phone, Type A adapter."
+        "fallback_text": "Pack for Tokyo, 6 nights, 12–18 Oct (usually 15–22°C, some rain): light layers and one warm jumper, a packable rain jacket, comfortable walking shoes, Suica on your phone and a Type A plug adapter."
       },
       "states": {
         "loading": {
@@ -1715,6 +2082,76 @@
             }
           ],
           "fallback_text": "Checking the Hotel Gracery Ueno booking with Booking.com."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · Hotel Gracery Ueno",
+            "subtitle": "Ref ABX-4471 · 12–18 Oct · email not in yet · as of 10:02"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$1,620",
+                  "label": "Total"
+                },
+                {
+                  "value": "6",
+                  "label": "Nights"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Booking.com trips, 26 Sep 2026 10:02"
+              }
+            ]
+          },
+          "fallback_text": "Hotel Gracery Ueno is booked on Booking.com, ref ABX-4471, 12–18 Oct, S$1,620 for 6 nights, as of 10:02. The confirmation email hasn’t arrived yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · Hotel Gracery Ueno",
+            "subtitle": "Ref ABX-4471 · 12–18 Oct · as of 08:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$1,620",
+                  "label": "Total"
+                },
+                {
+                  "value": "6",
+                  "label": "Nights"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open confirmation",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000837"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Booking.com confirmation email, 26 Sep 2026 08:10"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:10 (couldn’t refresh with Booking.com): Hotel Gracery Ueno is booked, ref ABX-4471, 12–18 Oct, S$1,620 for 6 nights. The confirmation is in your Library."
         },
         "empty": {
           "kind": "output_blocks",
@@ -1926,7 +2363,7 @@
             }
           ]
         },
-        "fallback_text": "SQ 638 boarding pass: Mon 28 Sep, boards 07:55 at Terminal 3, seat 31A; the gate is shown on the day. The pass is in your Library."
+        "fallback_text": "SQ 638 boarding pass: Mon 28 Sep, boards 07:55 at Terminal 3, seat 31A; the gate is shown on the day, after 06:30. The pass is in your Library."
       },
       "states": {
         "loading": {
@@ -1947,6 +2384,46 @@
             }
           ],
           "fallback_text": "Getting your SQ 638 boarding pass for Mon 28 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "SQ 638 · Singapore to Tokyo",
+            "subtitle": "Mon 28 Sep · boards 07:55 · as of 26 Sep 10:15 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Seat",
+                  "trailing": "31A"
+                },
+                {
+                  "label": "Gate",
+                  "secondary": "Not set when last read; check the airport screens",
+                  "trailing": "Not yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "download_artifact",
+                "label": "Add to Wallet",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a92"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines check-in, 26 Sep 2026 10:15"
+              }
+            ]
+          },
+          "fallback_text": "SQ 638 boarding pass, Mon 28 Sep, as of 26 Sep 10:15 (couldn’t refresh): boards 07:55 at Terminal 3, seat 31A. The gate wasn’t set when last read; check the airport screens. The pass is in your Library."
         },
         "empty": {
           "kind": "output_blocks",

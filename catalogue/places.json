@@ -14,7 +14,7 @@
       "vertical": "places",
       "kind": "card",
       "request": "Is there a quiet cafe near me to work from?",
-      "says": "Apartment Coffee is 6 minutes away and quiet on weekdays.",
+      "says": "Apartment Coffee is 6 minutes away and quiet after 14:00.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -54,7 +54,7 @@
               },
               {
                 "label": "Good for",
-                "secondary": "Quiet weekdays, power at the bar"
+                "secondary": "Quiet after 14:00, power at the bar"
               }
             ]
           },
@@ -74,7 +74,7 @@
             }
           ]
         },
-        "fallback_text": "Apartment Coffee, 161 Lavender St, 6 min walk, open until 18:00, 4.7 stars; quiet on weekdays with power at the bar."
+        "fallback_text": "Apartment Coffee, 161 Lavender St, a 6 min walk, open until 18:00, 4.7 stars, as of 14:20; quiet after 14:00, with power at the bar."
       },
       "states": {
         "loading": {
@@ -95,6 +95,60 @@
             }
           ],
           "fallback_text": "Looking for a quiet cafe within a 15-minute walk."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Apartment Coffee",
+            "subtitle": "Cafe · hours not in yet · 4.7★ · as of 14:20"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "apt",
+                    "label": "Apartment Coffee",
+                    "lat": "1.3031",
+                    "lon": "103.8587"
+                  }
+                ],
+                "selected_place_id": "apt"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Address",
+                  "secondary": "161 Lavender St · 6 min walk"
+                },
+                {
+                  "label": "Good for",
+                  "secondary": "Quiet after 14:00, power at the bar"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Maps",
+                "url": "https://maps.apple.com/?q=Apartment+Coffee+Singapore"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Maps, 26 Sep 2026 14:20"
+              }
+            ]
+          },
+          "fallback_text": "Apartment Coffee, 161 Lavender St, a 6 min walk, 4.7 stars, as of 14:20; quiet after 14:00, with power at the bar. Today’s hours aren’t in yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -128,7 +182,7 @@
                 },
                 {
                   "label": "Good for",
-                  "secondary": "Quiet weekdays, power at the bar"
+                  "secondary": "Quiet after 14:00, power at the bar"
                 }
               ]
             },
@@ -148,7 +202,7 @@
               }
             ]
           },
-          "fallback_text": "Apartment Coffee, 161 Lavender St, 6 min walk, 4.7 stars, as of 11:05; couldn’t refresh today’s hours."
+          "fallback_text": "Apartment Coffee, 161 Lavender St, a 6 min walk, 4.7 stars, as of 11:05 (couldn’t refresh today’s hours); quiet after 14:00, with power at the bar."
         },
         "empty": {
           "kind": "output_blocks",
@@ -202,7 +256,7 @@
         "major": 1,
         "header": {
           "title": "鼎泰豐 Din Tai Fung, Taipei 101",
-          "subtitle": "Dumplings · open until 21:30 · 4.5★ · as of 10:20"
+          "subtitle": "Dumplings · opens 11:00 · 4.5★ · as of 10:20"
         },
         "blocks": [
           {
@@ -248,7 +302,7 @@
             }
           ]
         },
-        "fallback_text": "Din Tai Fung (鼎泰豐), B1 Taipei 101 Mall, 45 Shifu Rd: open 11:00–21:30 today, 4.5 stars, usual wait 40–60 min, as of 10:20."
+        "fallback_text": "Din Tai Fung (鼎泰豐), B1 Taipei 101 Mall, 45 Shifu Rd: opens at 11:00 today and closes at 21:30, 4.5 stars, as of 10:20. The usual wait is 40–60 min; take a number at the desk."
       },
       "states": {
         "loading": {
@@ -307,7 +361,7 @@
               }
             ]
           },
-          "fallback_text": "Din Tai Fung (鼎泰豐), B1 Taipei 101 Mall: open 11:00–21:30 today as of 10:20. The usual wait isn’t in yet."
+          "fallback_text": "Din Tai Fung (鼎泰豐), B1 Taipei 101 Mall, 45 Shifu Rd: opens at 11:00 today and closes at 21:30, as of 10:20. The usual wait isn’t in yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -343,7 +397,7 @@
               }
             ]
           },
-          "fallback_text": "Din Tai Fung (鼎泰豐), B1 Taipei 101 Mall, as of 25 Sep 20:10 (couldn’t refresh): 11:00–21:30, usual wait 40–60 min."
+          "fallback_text": "Din Tai Fung (鼎泰豐), B1 Taipei 101 Mall, 45 Shifu Rd, as of 25 Sep 20:10 (couldn’t refresh): hours 11:00–21:30, usual wait 40–60 min; take a number at the desk."
         },
         "failed": {
           "kind": "output_blocks",
@@ -380,7 +434,7 @@
         "major": 1,
         "header": {
           "title": "42 min to Jewel by MRT",
-          "subtitle": "From Tanjong Pagar · one change"
+          "subtitle": "From Tanjong Pagar · one change · 4 min waiting"
         },
         "blocks": [
           {
@@ -419,7 +473,7 @@
             }
           ]
         },
-        "fallback_text": "Tanjong Pagar to Jewel by MRT: about 42 min. East–West line to Tanah Merah, change to the Changi Airport line, 5 min walk."
+        "fallback_text": "Tanjong Pagar to Jewel by MRT, about 42 min with one change and about 4 min of waiting. East–West line 10 stops to Tanah Merah, 24 min; change to the Changi Airport line, 2 stops, 9 min; walk 5 min from Changi Airport MRT to Jewel."
       },
       "states": {
         "loading": {
@@ -440,6 +494,96 @@
             }
           ],
           "fallback_text": "Planning the MRT route from Tanjong Pagar to Jewel."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "To Jewel by MRT",
+            "subtitle": "From Tanjong Pagar · one change · walk not in yet"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "East–West line to Tanah Merah",
+                  "secondary": "10 stops",
+                  "trailing": "24 min"
+                },
+                {
+                  "label": "Change to Changi Airport line",
+                  "secondary": "2 stops",
+                  "trailing": "9 min"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "Directions in Maps",
+                "url": "https://maps.apple.com/?daddr=Jewel+Changi+Airport&dirflg=r"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "SMRT journey planner, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Tanjong Pagar to Jewel by MRT, one change: East–West line 10 stops to Tanah Merah, 24 min; change to the Changi Airport line, 2 stops, 9 min. The walk from Changi Airport MRT isn’t in yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "42 min to Jewel by MRT",
+            "subtitle": "From Tanjong Pagar · 4 min waiting · as of 25 Sep · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "East–West line to Tanah Merah",
+                  "secondary": "10 stops",
+                  "trailing": "24 min"
+                },
+                {
+                  "label": "Change to Changi Airport line",
+                  "secondary": "2 stops",
+                  "trailing": "9 min"
+                },
+                {
+                  "label": "Walk to Jewel",
+                  "secondary": "From Changi Airport MRT",
+                  "trailing": "5 min"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "Directions in Maps",
+                "url": "https://maps.apple.com/?daddr=Jewel+Changi+Airport&dirflg=r"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "SMRT journey planner, 25 Sep 2026"
+              }
+            ],
+            "disclaimers": [
+              "Service changes since 25 Sep are not included; check before you go."
+            ]
+          },
+          "fallback_text": "As of 25 Sep (couldn’t refresh): Tanjong Pagar to Jewel by MRT, about 42 min with one change and about 4 min of waiting. East–West line 10 stops to Tanah Merah, 24 min; change to the Changi Airport line, 2 stops, 9 min; walk 5 min from Changi Airport MRT to Jewel. Check for service changes before you go."
         },
         "empty": {
           "kind": "output_blocks",
@@ -552,7 +696,7 @@
             }
           ]
         },
-        "fallback_text": "JR Ueno to Hotel Gracery Ueno: 8 min, 650 m. Park exit to Chuo-dori 2 min, south on Chuo-dori 5 min, entrance beside Keisei Ueno 1 min."
+        "fallback_text": "JR Ueno to Hotel Gracery Ueno: an 8 min walk, 650 m. Leave by the Park exit, go down the steps and turn left onto Chuo-dori (2 min); walk south on Chuo-dori past Ameyoko on your left (5 min); the hotel entrance is beside the Keisei Ueno exit (1 min)."
       },
       "states": {
         "loading": {
@@ -597,7 +741,7 @@
       "vertical": "places",
       "kind": "card",
       "request": "Somewhere nice for dinner in Tiong Bahru tonight for 4?",
-      "says": "Merci Marcel is the best fit for a relaxed dinner.",
+      "says": "Merci Marcel is the best fit: a table at 7:30, mid-priced, and rated above the other 7:30 option.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -642,7 +786,7 @@
             }
           ]
         },
-        "fallback_text": "Tables for 4 in Tiong Bahru tonight: Merci Marcel 7:30 (pick); Bincho 7:45; Tiong Bahru Bakery Diner 7:30."
+        "fallback_text": "Tables for 4 in Tiong Bahru tonight at 7:30 pm, as of 16:05: Merci Marcel, French, 4.5 stars, table at 7:30, S$$ (pick); Bincho, yakitori, 4.6 stars, table at 7:45, S$$$; Tiong Bahru Bakery Diner, brunch-style, 4.3 stars, table at 7:30, S$$."
       },
       "states": {
         "loading": {
@@ -696,7 +840,7 @@
               }
             ]
           },
-          "fallback_text": "Tables for 4 in Tiong Bahru, 2 of 3 checked as of 16:05: Merci Marcel 7:30; Bincho 7:45."
+          "fallback_text": "Tables for 4 in Tiong Bahru at 7:30 pm, 2 of 3 checked as of 16:05: Merci Marcel, French, 4.5 stars, table at 7:30, S$$ (pick); Bincho, yakitori, 4.6 stars, table at 7:45, S$$$. Tiong Bahru Bakery Diner is still being checked."
         },
         "stale": {
           "kind": "output_blocks",
@@ -735,7 +879,7 @@
               }
             ]
           },
-          "fallback_text": "Tables for 4 in Tiong Bahru as of 15:20 (couldn’t refresh): Merci Marcel 7:30; Bincho 7:45; Tiong Bahru Bakery Diner 7:30."
+          "fallback_text": "Tables for 4 in Tiong Bahru at 7:30 pm, as of 15:20 (couldn’t refresh; tables may have gone): Merci Marcel, French, 4.5 stars, table at 7:30, S$$ (pick); Bincho, yakitori, 4.6 stars, table at 7:45, S$$$; Tiong Bahru Bakery Diner, brunch-style, 4.3 stars, table at 7:30, S$$."
         },
         "empty": {
           "kind": "output_blocks",
@@ -827,7 +971,7 @@
             }
           ]
         },
-        "fallback_text": "Booked Merci Marcel, Sat 26 Sep 7:30 pm for 4, ref CH-88213, as of 16:12. Table held until 7:45 pm; free to cancel on Chope before 5:30 pm."
+        "fallback_text": "Booked Merci Marcel, Sat 26 Sep 7:30 pm for 4, ref CH-88213, as of 16:12. The table is held until 7:45 pm and released 15 min after 7:30; cancelling is free on Chope before 5:30 pm, no fee."
       },
       "states": {
         "loading": {
@@ -849,6 +993,91 @@
           ],
           "fallback_text": "Waiting for Chope to confirm your table for 4 at 7:30 pm."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · Merci Marcel",
+            "subtitle": "Sat 26 Sep · 7:30 pm · 4 people · as of 16:12"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "CH-88213"
+                },
+                {
+                  "label": "Hold and cancel terms",
+                  "secondary": "Chope hasn’t sent them yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Manage on Chope",
+                "url": "https://www.chope.co/singapore-restaurants/restaurant/merci-marcel-tiong-bahru"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Chope confirmation, 26 Sep 2026 16:12"
+              }
+            ]
+          },
+          "fallback_text": "Booked Merci Marcel, Sat 26 Sep 7:30 pm for 4, ref CH-88213, as of 16:12. How long the table is held and the cancel terms aren’t in from Chope yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · Merci Marcel",
+            "subtitle": "Sat 26 Sep · 7:30 pm · 4 people · as of 16:12 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "CH-88213"
+                },
+                {
+                  "label": "Table held",
+                  "secondary": "Released 15 min after",
+                  "trailing": "until 7:45 pm"
+                },
+                {
+                  "label": "Cancel",
+                  "secondary": "Free on Chope before 5:30 pm",
+                  "trailing": "No fee"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Manage on Chope",
+                "url": "https://www.chope.co/singapore-restaurants/restaurant/merci-marcel-tiong-bahru"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Chope confirmation, 26 Sep 2026 16:12"
+              }
+            ]
+          },
+          "fallback_text": "As of 16:12 (couldn’t refresh with Chope): Merci Marcel is booked for Sat 26 Sep 7:30 pm for 4, ref CH-88213. The table is held until 7:45 pm and released 15 min after 7:30; cancelling is free on Chope before 5:30 pm, no fee."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
@@ -869,17 +1098,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn’t book Merci Marcel",
-            "subtitle": "Sat 26 Sep · 7:30 pm"
+            "title": "Couldn’t confirm the Merci Marcel booking",
+            "subtitle": "Sat 26 Sep · 7:30 pm · 4 people"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Chope didn’t respond. Nothing was booked."
+              "detail": "Chope didn’t answer. Check Chope before booking again"
             }
           ],
-          "fallback_text": "Couldn’t book Merci Marcel for 7:30 pm: Chope didn’t respond. Nothing was booked."
+          "fallback_text": "I couldn’t confirm whether Merci Marcel is booked for 4 at 7:30 pm on Sat 26 Sep: Chope didn’t answer after the request was sent. Check your Chope bookings before trying again, so the table isn’t booked twice."
         }
       }
     },
@@ -926,7 +1155,7 @@
             }
           ]
         },
-        "fallback_text": "Singapore Botanic Gardens: open daily 05:00 to midnight, free. National Orchid Garden 08:30–19:00, last entry 18:00, S$15."
+        "fallback_text": "Singapore Botanic Gardens, every day, as of 09:00: the gardens are open 05:00 to midnight and free. National Orchid Garden 08:30–19:00, last entry 18:00, S$15."
       },
       "states": {
         "loading": {
@@ -947,6 +1176,38 @@
             }
           ],
           "fallback_text": "Reading the Botanic Gardens’ hours from NParks."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore Botanic Gardens",
+            "subtitle": "Every day · Orchid Garden not in yet · as of 09:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Gardens",
+                  "trailing": "05:00–00:00"
+                },
+                {
+                  "label": "National Orchid Garden",
+                  "trailing": "Not in yet"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NParks, 26 Sep 2026 09:00",
+                "url": "https://www.nparks.gov.sg/sbg"
+              }
+            ]
+          },
+          "fallback_text": "Singapore Botanic Gardens, every day, as of 09:00: the gardens are open 05:00 to midnight and free. The National Orchid Garden’s hours aren’t in yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1076,7 +1337,7 @@
             }
           ]
         },
-        "fallback_text": "24-hour clinics nearby: Raffles Medical Holland Village 8 min; Fullerton Health Novena 12 min; Parkway Shenton Bukit Timah 15 min (call first)."
+        "fallback_text": "24-hour clinics open now near you, as of 23:10: Raffles Medical, Holland Village, walk-in, 8 min (pick); Fullerton Health, Novena, walk-in, 12 min; Parkway Shenton, Bukit Timah, call first, 15 min."
       },
       "states": {
         "loading": {
@@ -1151,7 +1412,7 @@
               }
             ]
           },
-          "fallback_text": "24-hour clinics, 2 of 3 confirmed as of 23:10: Raffles Medical Holland Village 8 min; Fullerton Health Novena 12 min."
+          "fallback_text": "24-hour clinics near you, 2 of 3 confirmed open as of 23:10: Raffles Medical, Holland Village, walk-in, 8 min (pick); Fullerton Health, Novena, walk-in, 12 min. The third is still being checked."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1217,7 +1478,7 @@
               }
             ]
           },
-          "fallback_text": "24-hour clinics as of 21:40 (couldn’t refresh): Raffles Medical Holland Village 8 min; Fullerton Health Novena 12 min; Parkway Shenton Bukit Timah 15 min."
+          "fallback_text": "24-hour clinics near you, as of 21:40 (couldn’t refresh): Raffles Medical, Holland Village, walk-in, 8 min (pick); Fullerton Health, Novena, walk-in, 12 min; Parkway Shenton, Bukit Timah, call first, 15 min. Call ahead to check they’re open."
         },
         "empty": {
           "kind": "output_blocks",
