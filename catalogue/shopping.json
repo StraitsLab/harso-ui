@@ -13,7 +13,14 @@
     "shop-buyers-guide",
     "shop-cart-summary",
     "shop-delivery",
-    "shop-delivery-missed"
+    "shop-delivery-missed",
+    "shop-marketplaces-compare",
+    "shop-marketplace-listing",
+    "shop-counterfeit-risk",
+    "shop-cross-border-tracking",
+    "shop-india-cod",
+    "shop-us-amazon",
+    "shop-return-windows"
   ],
   "examples": [
     {
@@ -3471,6 +3478,1685 @@
             }
           ],
           "fallback_text": "Couldn't draw the logo: The image tool stopped. Nothing was saved to Library."
+        }
+      }
+    },
+    {
+      "id": "shop-marketplaces-compare",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Cheapest Soundcore Liberty 4 Pro delivered to Singapore: Amazon, Lazada, Shopee or AliExpress?",
+      "says": "AliExpress is cheapest delivered, but I'd pay S$28 more at Lazada's official store for the warranty and delivery by Wednesday.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S1 Product options",
+        "S4 Comparison",
+        "S10 Rating",
+        "X3 Total row"
+      ],
+      "rationale": "One product, four marketplaces: delivered price trailing, seller type and window on the line; GST, duty and fake risk are the text.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Soundcore Liberty 4 Pro, delivered",
+          "subtitle": "4 marketplaces · price to your door · as of 10:30"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Lazada · Soundcore Official Store",
+                "secondary": "Official store · free shipping · Tue 29–Wed 30 Sep · rated 4.8/5",
+                "trailing": "S$169.00",
+                "mark": "pick"
+              },
+              {
+                "label": "Amazon.sg · sold by Amazon",
+                "secondary": "Official stock · free delivery · Mon 28 Sep · rated 4.6/5",
+                "trailing": "S$179.00"
+              },
+              {
+                "label": "Shopee · third-party seller",
+                "secondary": "Incl. S$1.99 shipping · Wed 30 Sep–Fri 2 Oct · seller rated 4.7/5",
+                "trailing": "S$156.99"
+              },
+              {
+                "label": "AliExpress · third-party seller",
+                "secondary": "Ships from China · Mon 5–Fri 9 Oct · seller rated 4.5/5",
+                "trailing": "S$140.83"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Price to your door",
+                "bullets": [
+                  "AliExpress: S$124.00 item, S$5.20 shipping and S$11.63 GST (9%), all paid at checkout.",
+                  "Lazada, Amazon.sg and Shopee prices already include GST.",
+                  "Singapore charges no customs duty on earbuds, so nothing is due on arrival."
+                ]
+              },
+              {
+                "heading": "Who sells it",
+                "bullets": [
+                  "Only third-party sellers list it on Shopee and AliExpress, so a fake is possible and the local warranty may not apply."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "See it on Lazada",
+              "url": "https://www.lazada.sg/catalog/?q=soundcore+liberty+4+pro"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Amazon.sg, Lazada, Shopee and AliExpress, 26 Sep 2026 10:30"
+            },
+            {
+              "label": "Singapore Customs: GST on low-value imported goods"
+            }
+          ]
+        },
+        "fallback_text": "Soundcore Liberty 4 Pro, delivered (10:30): Lazada, Soundcore Official Store, S$169.00, free, Tue 29–Wed 30 Sep, rated 4.8/5 (pick); Amazon.sg, sold by Amazon, S$179.00, free, Mon 28 Sep, rated 4.6/5; Shopee, third-party seller, S$156.99 including S$1.99 shipping, Wed 30 Sep–Fri 2 Oct, rated 4.7/5; AliExpress, third-party seller, S$140.83 (S$124.00 + S$5.20 shipping + S$11.63 GST at 9%), from China, Mon 5–Fri 9 Oct, rated 4.5/5. Local prices include GST; no duty on earbuds. Shopee, AliExpress: third-party sellers only; a fake is possible, local warranty may not apply."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Soundcore Liberty 4 Pro, delivered",
+            "subtitle": "Amazon.sg, Lazada, Shopee, AliExpress"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 4 marketplaces",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b12"
+              }
+            }
+          ],
+          "fallback_text": "Soundcore Liberty 4 Pro, delivered: checking 4 marketplaces."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Soundcore Liberty 4 Pro, delivered",
+            "subtitle": "3 of 4 marketplaces · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Lazada · Soundcore Official Store",
+                  "secondary": "Official store · free shipping · Tue 29–Wed 30 Sep · rated 4.8/5",
+                  "trailing": "S$169.00",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Amazon.sg · sold by Amazon",
+                  "secondary": "Official stock · free delivery · Mon 28 Sep · rated 4.6/5",
+                  "trailing": "S$179.00"
+                },
+                {
+                  "label": "Shopee · third-party seller",
+                  "secondary": "Incl. S$1.99 shipping · Wed 30 Sep–Fri 2 Oct · seller rated 4.7/5",
+                  "trailing": "S$156.99"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Price to your door",
+                  "bullets": [
+                    "Lazada, Amazon.sg and Shopee prices already include GST.",
+                    "AliExpress didn't answer, so I can't say whether it's cheaper delivered."
+                  ]
+                },
+                {
+                  "heading": "Who sells it",
+                  "bullets": [
+                    "Only third-party sellers list it on Shopee, so a fake is possible and the local warranty may not apply."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "See it on Lazada",
+                "url": "https://www.lazada.sg/catalog/?q=soundcore+liberty+4+pro"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Amazon.sg, Lazada and Shopee, 26 Sep 2026 10:30; AliExpress didn't answer"
+              }
+            ]
+          },
+          "fallback_text": "Soundcore Liberty 4 Pro, delivered, 3 of 4 marketplaces (10:30): Lazada, Soundcore Official Store, S$169.00, free, Tue 29–Wed 30 Sep, rated 4.8/5 (pick); Amazon.sg, sold by Amazon, S$179.00, free, Mon 28 Sep, rated 4.6/5; Shopee, third-party seller, S$156.99 including S$1.99 shipping, Wed 30 Sep–Fri 2 Oct, rated 4.7/5. AliExpress didn't answer, so I can't say whether it's cheaper. Local prices include GST. Shopee has only third-party sellers: a fake is possible and the local warranty may not apply."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Soundcore Liberty 4 Pro, delivered",
+            "subtitle": "4 marketplaces · price to your door · as of 08:10 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Lazada · Soundcore Official Store",
+                  "secondary": "Official store · free shipping · Tue 29–Wed 30 Sep · rated 4.8/5",
+                  "trailing": "S$169.00",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Amazon.sg · sold by Amazon",
+                  "secondary": "Official stock · free delivery · Mon 28 Sep · rated 4.6/5",
+                  "trailing": "S$179.00"
+                },
+                {
+                  "label": "Shopee · third-party seller",
+                  "secondary": "Incl. S$1.99 shipping · Wed 30 Sep–Fri 2 Oct · seller rated 4.7/5",
+                  "trailing": "S$156.99"
+                },
+                {
+                  "label": "AliExpress · third-party seller",
+                  "secondary": "Ships from China · Mon 5–Fri 9 Oct · seller rated 4.5/5",
+                  "trailing": "S$140.83"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Price to your door",
+                  "bullets": [
+                    "AliExpress: S$124.00 item, S$5.20 shipping and S$11.63 GST (9%), all paid at checkout.",
+                    "Lazada, Amazon.sg and Shopee prices already include GST.",
+                    "Singapore charges no customs duty on earbuds, so nothing is due on arrival."
+                  ]
+                },
+                {
+                  "heading": "Who sells it",
+                  "bullets": [
+                    "Only third-party sellers list it on Shopee and AliExpress, so a fake is possible and the local warranty may not apply."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "See it on Lazada",
+                "url": "https://www.lazada.sg/catalog/?q=soundcore+liberty+4+pro"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Amazon.sg, Lazada, Shopee and AliExpress, 26 Sep 2026 08:10"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:10 (couldn't refresh), Soundcore Liberty 4 Pro, delivered: Lazada, Soundcore Official Store, S$169.00, free, Tue 29–Wed 30 Sep, rated 4.8/5 (pick); Amazon.sg, sold by Amazon, S$179.00, free, Mon 28 Sep, rated 4.6/5; Shopee, third-party seller, S$156.99 including S$1.99 shipping, Wed 30 Sep–Fri 2 Oct, rated 4.7/5; AliExpress, third-party seller, S$140.83 (S$124.00 + S$5.20 shipping + S$11.63 GST at 9%), from China, Mon 5–Fri 9 Oct, rated 4.5/5. Local prices include GST; no duty on earbuds. Shopee, AliExpress: third-party sellers only; a fake is possible, local warranty may not apply."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No marketplace has the Liberty 4 Pro",
+            "subtitle": "4 marketplaces checked · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Lazada's Soundcore store expects stock on Mon 5 Oct"
+            }
+          ],
+          "fallback_text": "None of Amazon.sg, Lazada, Shopee or AliExpress has the Soundcore Liberty 4 Pro in stock (10:30). Lazada's Soundcore store expects stock on Mon 5 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't compare the Liberty 4 Pro",
+            "subtitle": "Amazon.sg, Lazada, Shopee, AliExpress"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "None of the 4 marketplaces answered. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't compare the Liberty 4 Pro: None of the 4 marketplaces answered. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "shop-marketplace-listing",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Is this Lazada listing for the Liberty 4 Pro any good?",
+      "says": "It's the brand's own store and well reviewed; ignore the was-price, S$169 is its normal price.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S3 Product detail",
+        "S10 Rating",
+        "S9 Review summary"
+      ],
+      "rationale": "A listing as the marketplace returns it: price and the seller's was-price, variants with stock as rows, seller, reviews, shipping and returns as text.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Soundcore Liberty 4 Pro",
+          "subtitle": "Lazada · as of 10:30"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$169.00",
+                "label": "Price"
+              },
+              {
+                "value": "S$229.00",
+                "label": "Seller's was-price"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Midnight Black",
+                "secondary": "In stock",
+                "trailing": "S$169.00"
+              },
+              {
+                "label": "Oat White",
+                "secondary": "3 left",
+                "trailing": "S$169.00"
+              },
+              {
+                "label": "Navy Blue",
+                "secondary": "Out of stock · back Mon 5 Oct",
+                "trailing": "S$169.00"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Seller",
+                "bullets": [
+                  "Soundcore Official Store, LazMall badge: sold by the brand.",
+                  "Rated 4.8/5 from 2,140 reviews; 5,300 sold."
+                ]
+              },
+              {
+                "heading": "Delivery and returns",
+                "bullets": [
+                  "Free shipping; arrives Tue 29–Wed 30 Sep.",
+                  "30-day free returns from delivery (LazMall), change of mind included."
+                ]
+              },
+              {
+                "heading": "Price",
+                "bullets": [
+                  "The was-price is the seller's own; I haven't seen it sell at S$229.00 in the last 90 days."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "See it on Lazada",
+              "url": "https://www.lazada.sg/catalog/?q=soundcore+liberty+4+pro"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Lazada listing, 26 Sep 2026 10:30"
+            },
+            {
+              "label": "Lazada price history, 90 days to 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Soundcore Liberty 4 Pro on Lazada: S$169.00; the seller's was-price is S$229.00, but I haven't seen it sell at that in the last 90 days (10:30). Midnight Black in stock, Oat White 3 left, Navy Blue out of stock until Mon 5 Oct, all S$169.00. Sold by Soundcore Official Store (LazMall). Rated 4.8/5 from 2,140 reviews; 5,300 sold. Free shipping, arrives Tue 29–Wed 30 Sep. 30-day free returns from delivery, change of mind included."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Soundcore Liberty 4 Pro",
+            "subtitle": "Lazada"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the Lazada listing",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b18"
+              }
+            }
+          ],
+          "fallback_text": "Soundcore Liberty 4 Pro: reading the Lazada listing."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Soundcore Liberty 4 Pro",
+            "subtitle": "Lazada · reviews didn't load · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$169.00",
+                  "label": "Price"
+                },
+                {
+                  "value": "S$229.00",
+                  "label": "Seller's was-price"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Midnight Black",
+                  "secondary": "In stock",
+                  "trailing": "S$169.00"
+                },
+                {
+                  "label": "Oat White",
+                  "secondary": "3 left",
+                  "trailing": "S$169.00"
+                },
+                {
+                  "label": "Navy Blue",
+                  "secondary": "Out of stock · back Mon 5 Oct",
+                  "trailing": "S$169.00"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Seller",
+                  "bullets": [
+                    "Soundcore Official Store, LazMall badge: sold by the brand.",
+                    "Reviews didn't load, so I can't say how buyers rate it yet."
+                  ]
+                },
+                {
+                  "heading": "Delivery and returns",
+                  "bullets": [
+                    "Free shipping; arrives Tue 29–Wed 30 Sep.",
+                    "30-day free returns from delivery (LazMall), change of mind included."
+                  ]
+                },
+                {
+                  "heading": "Price",
+                  "bullets": [
+                    "The was-price is the seller's own; I haven't seen it sell at S$229.00 in the last 90 days."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "See it on Lazada",
+                "url": "https://www.lazada.sg/catalog/?q=soundcore+liberty+4+pro"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Lazada listing, 26 Sep 2026 10:30; reviews didn't load"
+              },
+              {
+                "label": "Lazada price history, 90 days to 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Soundcore Liberty 4 Pro on Lazada: S$169.00; the seller's was-price is S$229.00, but I haven't seen it sell at that in the last 90 days (10:30). Midnight Black in stock, Oat White 3 left, Navy Blue out of stock until Mon 5 Oct, all S$169.00. Sold by Soundcore Official Store (LazMall). Reviews didn't load. Free shipping, arrives Tue 29–Wed 30 Sep. 30-day free returns from delivery, change of mind included."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Soundcore Liberty 4 Pro",
+            "subtitle": "Lazada · as of 08:10 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$169.00",
+                  "label": "Price"
+                },
+                {
+                  "value": "S$229.00",
+                  "label": "Seller's was-price"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Midnight Black",
+                  "secondary": "In stock",
+                  "trailing": "S$169.00"
+                },
+                {
+                  "label": "Oat White",
+                  "secondary": "3 left",
+                  "trailing": "S$169.00"
+                },
+                {
+                  "label": "Navy Blue",
+                  "secondary": "Out of stock · back Mon 5 Oct",
+                  "trailing": "S$169.00"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Seller",
+                  "bullets": [
+                    "Soundcore Official Store, LazMall badge: sold by the brand.",
+                    "Rated 4.8/5 from 2,140 reviews; 5,300 sold."
+                  ]
+                },
+                {
+                  "heading": "Delivery and returns",
+                  "bullets": [
+                    "Free shipping; arrives Tue 29–Wed 30 Sep.",
+                    "30-day free returns from delivery (LazMall), change of mind included."
+                  ]
+                },
+                {
+                  "heading": "Price",
+                  "bullets": [
+                    "The was-price is the seller's own; I haven't seen it sell at S$229.00 in the last 90 days."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "See it on Lazada",
+                "url": "https://www.lazada.sg/catalog/?q=soundcore+liberty+4+pro"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Lazada listing, 26 Sep 2026 08:10"
+              },
+              {
+                "label": "Lazada price history, 90 days to 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:10 (couldn't refresh). Soundcore Liberty 4 Pro on Lazada: S$169.00; the seller's was-price is S$229.00, but I haven't seen it sell at that in the last 90 days. Midnight Black in stock, Oat White 3 left, Navy Blue out of stock until Mon 5 Oct, all S$169.00. Sold by Soundcore Official Store (LazMall). Rated 4.8/5 from 2,140 reviews; 5,300 sold. Free shipping, arrives Tue 29–Wed 30 Sep. 30-day free returns from delivery, change of mind included."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "This listing is no longer on Lazada",
+            "subtitle": "Soundcore Liberty 4 Pro · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Soundcore's LazMall store lists it at S$169.00"
+            }
+          ],
+          "fallback_text": "The Lazada listing you sent has been removed (10:30). Soundcore's LazMall store lists the Liberty 4 Pro at S$169.00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read the listing",
+            "subtitle": "Lazada"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Lazada didn't answer. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't read the listing: Lazada didn't answer. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "shop-counterfeit-risk",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Find me a Dyson Airwrap under S$500 on Shopee, Lazada or Carousell.",
+      "says": "Three listings fit, all from third-party or private sellers, so I can't vouch that any of them is genuine.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S1 Product options",
+        "S10 Rating"
+      ],
+      "rationale": "Only third-party sellers fit the budget: no pick, cheapest first, and the counterfeit-risk note beside the official price.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "No official Airwrap under S$500",
+          "subtitle": "Shopee, Lazada, Carousell · cheapest first · as of 11:00"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Shopee · third-party seller",
+                "secondary": "Airwrap Complete · from overseas · rated 4.1/5 · 38 sold",
+                "trailing": "S$329.00"
+              },
+              {
+                "label": "Carousell · private seller",
+                "secondary": "Listed as used, bought 2025 · no receipt shown",
+                "trailing": "S$420.00"
+              },
+              {
+                "label": "Lazada · third-party seller",
+                "secondary": "Airwrap Complete Long · ships locally · rated 4.3/5 · 12 sold",
+                "trailing": "S$459.00"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Before you buy",
+                "bullets": [
+                  "Dyson's own store and its official stores on Lazada and Shopee sell it for S$799.00.",
+                  "At under S$500 a fake is a real risk, and Dyson's warranty covers only units bought from Dyson or its authorised sellers.",
+                  "If you buy one, ask for the serial number and the receipt before you pay."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Dyson's store on Shopee",
+              "url": "https://shopee.sg/dyson_official_store"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopee, Lazada and Carousell listings, 26 Sep 2026 11:00"
+            },
+            {
+              "label": "Dyson Singapore price and warranty terms, 26 Sep 2026 11:00"
+            }
+          ]
+        },
+        "fallback_text": "No Dyson Airwrap from Dyson or an authorised seller under S$500 (11:00). Shopee, third-party seller: Airwrap Complete S$329.00, from overseas, rated 4.1/5, 38 sold; Carousell, private seller: listed as used, bought 2025, no receipt shown, S$420.00; Lazada, third-party seller: Airwrap Complete Long S$459.00, ships locally, rated 4.3/5, 12 sold. Dyson and its official stores sell it for S$799.00. At under S$500 a fake is a real risk, and Dyson's warranty covers only units from Dyson or authorised sellers. Ask for the serial number and receipt before you pay."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dyson Airwrap under S$500",
+            "subtitle": "Shopee, Lazada, Carousell"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 3 marketplaces for the Airwrap",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b13"
+              }
+            }
+          ],
+          "fallback_text": "Dyson Airwrap under S$500: checking 3 marketplaces for the Airwrap."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No official Airwrap under S$500",
+            "subtitle": "2 of 3 marketplaces · as of 11:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Shopee · third-party seller",
+                  "secondary": "Airwrap Complete · from overseas · rated 4.1/5 · 38 sold",
+                  "trailing": "S$329.00"
+                },
+                {
+                  "label": "Lazada · third-party seller",
+                  "secondary": "Airwrap Complete Long · ships locally · rated 4.3/5 · 12 sold",
+                  "trailing": "S$459.00"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Before you buy",
+                  "bullets": [
+                    "Dyson's own store and its official stores on Lazada and Shopee sell it for S$799.00.",
+                    "At under S$500 a fake is a real risk, and Dyson's warranty covers only units bought from Dyson or its authorised sellers.",
+                    "If you buy one, ask for the serial number and the receipt before you pay.",
+                    "Carousell didn't answer, so private listings aren't here."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopee and Lazada listings, 26 Sep 2026 11:00; Carousell didn't answer"
+              },
+              {
+                "label": "Dyson Singapore price and warranty terms, 26 Sep 2026 11:00"
+              }
+            ]
+          },
+          "fallback_text": "No Dyson Airwrap from Dyson or an authorised seller under S$500, 2 of 3 marketplaces (11:00). Shopee, third-party seller: Airwrap Complete S$329.00, from overseas, rated 4.1/5, 38 sold; Lazada, third-party seller: Airwrap Complete Long S$459.00, ships locally, rated 4.3/5, 12 sold. Carousell didn't answer. Dyson and its official stores sell it for S$799.00. At under S$500 a fake is a real risk, and Dyson's warranty covers only units from Dyson or authorised sellers. Ask for the serial number and receipt before you pay."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No official Airwrap under S$500",
+            "subtitle": "Shopee, Lazada, Carousell · cheapest first · as of 08:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Shopee · third-party seller",
+                  "secondary": "Airwrap Complete · from overseas · rated 4.1/5 · 38 sold",
+                  "trailing": "S$329.00"
+                },
+                {
+                  "label": "Carousell · private seller",
+                  "secondary": "Listed as used, bought 2025 · no receipt shown",
+                  "trailing": "S$420.00"
+                },
+                {
+                  "label": "Lazada · third-party seller",
+                  "secondary": "Airwrap Complete Long · ships locally · rated 4.3/5 · 12 sold",
+                  "trailing": "S$459.00"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Before you buy",
+                  "bullets": [
+                    "Dyson's own store and its official stores on Lazada and Shopee sell it for S$799.00.",
+                    "At under S$500 a fake is a real risk, and Dyson's warranty covers only units bought from Dyson or its authorised sellers.",
+                    "If you buy one, ask for the serial number and the receipt before you pay."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopee, Lazada and Carousell listings, 26 Sep 2026 08:30"
+              },
+              {
+                "label": "Dyson Singapore price and warranty terms, 26 Sep 2026 08:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:30 (couldn't refresh), no Dyson Airwrap from Dyson or an authorised seller under S$500. Shopee, third-party seller: Airwrap Complete S$329.00, from overseas, rated 4.1/5, 38 sold; Carousell, private seller: listed as used, bought 2025, no receipt shown, S$420.00; Lazada, third-party seller: Airwrap Complete Long S$459.00, ships locally, rated 4.3/5, 12 sold. Dyson and its official stores sell it for S$799.00. At under S$500 a fake is a real risk, and Dyson's warranty covers only units from Dyson or authorised sellers. Ask for the serial number and receipt before you pay."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Airwrap listed under S$500",
+            "subtitle": "Shopee, Lazada, Carousell · as of 11:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The lowest is S$799.00 at Dyson's official stores"
+            }
+          ],
+          "fallback_text": "No Dyson Airwrap is listed under S$500 on Shopee, Lazada or Carousell (11:00). The lowest is S$799.00 at Dyson's official stores."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search for the Airwrap",
+            "subtitle": "Shopee, Lazada, Carousell"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "None of the 3 marketplaces answered. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't search for the Airwrap: None of the 3 marketplaces answered. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "shop-cross-border-tracking",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Where's my AliExpress order?",
+      "says": "It's through customs and with SingPost now.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S13 Delivery tracking",
+        "X2 Domain state word"
+      ],
+      "rationale": "The window is the title; customs is a step with what it cost you; steps newest first; the carrier link is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arriving Tue 29 Sep–Thu 1 Oct",
+          "subtitle": "AliExpress order 8193045622 · Cainiao, then SingPost · as of 09:40"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "With SingPost",
+                "secondary": "Handed over 26 Sep 09:30"
+              },
+              {
+                "label": "Cleared Singapore customs",
+                "secondary": "26 Sep 08:55 · GST paid at checkout, nothing to pay"
+              },
+              {
+                "label": "Arrived in Singapore",
+                "secondary": "Fri 25 Sep 22:10"
+              },
+              {
+                "label": "Left Guangzhou",
+                "secondary": "Wed 23 Sep"
+              },
+              {
+                "label": "Shipped by the seller",
+                "secondary": "Sun 20 Sep"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Track with Cainiao",
+              "url": "https://global.cainiao.com/newDetail.htm?mailNoList=LP00712345678SG"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Cainiao and SingPost tracking LP00712345678SG, 26 Sep 2026 09:40"
+            }
+          ]
+        },
+        "fallback_text": "As of 09:40, AliExpress order 8193045622 should arrive Tue 29 Sep–Thu 1 Oct. With SingPost since 26 Sep 09:30; cleared Singapore customs 26 Sep 08:55 (GST was paid at checkout, nothing to pay); arrived in Singapore Fri 25 Sep 22:10; left Guangzhou Wed 23 Sep; shipped by the seller Sun 20 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "AliExpress order 8193045622",
+            "subtitle": "Cainiao, SingPost"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking Cainiao and SingPost tracking",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b14"
+              }
+            }
+          ],
+          "fallback_text": "AliExpress order 8193045622: checking Cainiao and SingPost tracking."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arriving Tue 29 Sep–Thu 1 Oct",
+            "subtitle": "AliExpress order 8193045622 · Cainiao only, SingPost didn't answer · as of 09:40"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Cleared Singapore customs",
+                  "secondary": "26 Sep 08:55 · GST paid at checkout, nothing to pay"
+                },
+                {
+                  "label": "Arrived in Singapore",
+                  "secondary": "Fri 25 Sep 22:10"
+                },
+                {
+                  "label": "Left Guangzhou",
+                  "secondary": "Wed 23 Sep"
+                },
+                {
+                  "label": "Shipped by the seller",
+                  "secondary": "Sun 20 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Track with Cainiao",
+                "url": "https://global.cainiao.com/newDetail.htm?mailNoList=LP00712345678SG"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Cainiao tracking LP00712345678SG, 26 Sep 2026 09:40; SingPost didn't answer"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:40, AliExpress order 8193045622 should arrive Tue 29 Sep–Thu 1 Oct. Cleared Singapore customs 26 Sep 08:55 (GST was paid at checkout, nothing to pay); arrived in Singapore Fri 25 Sep 22:10; left Guangzhou Wed 23 Sep; shipped by the seller Sun 20 Sep. SingPost didn't answer, so the hand-over isn't confirmed."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arriving Tue 29 Sep–Thu 1 Oct",
+            "subtitle": "AliExpress order 8193045622 · as of 07:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Arrived in Singapore",
+                  "secondary": "Fri 25 Sep 22:10"
+                },
+                {
+                  "label": "Left Guangzhou",
+                  "secondary": "Wed 23 Sep"
+                },
+                {
+                  "label": "Shipped by the seller",
+                  "secondary": "Sun 20 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Track with Cainiao",
+                "url": "https://global.cainiao.com/newDetail.htm?mailNoList=LP00712345678SG"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Cainiao tracking LP00712345678SG, 26 Sep 2026 07:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 07:30 (couldn't refresh), AliExpress order 8193045622 had arrived in Singapore (Fri 25 Sep 22:10) and was due Tue 29 Sep–Thu 1 Oct. Left Guangzhou Wed 23 Sep; shipped by the seller Sun 20 Sep. Customs wasn't shown yet."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Not shipped yet",
+            "subtitle": "AliExpress order 8193045622 · as of 09:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The seller hasn't handed it to Cainiao; it must ship by Wed 30 Sep"
+            }
+          ],
+          "fallback_text": "AliExpress order 8193045622 hasn't shipped yet (09:40), so there is no tracking. The seller must ship it by Wed 30 Sep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't track order 8193045622",
+            "subtitle": "AliExpress · Cainiao, SingPost"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Cainiao and SingPost didn't answer. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't track order 8193045622: Cainiao and SingPost didn't answer. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "shop-india-cod",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Pressure cooker under ₹3,000 on Flipkart or Amazon.in with cash on delivery.",
+      "says": "The Hawkins is the one I'd get; all three take cash on delivery to your pincode.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S1 Product options",
+        "S10 Rating"
+      ],
+      "rationale": "Rupees, the marketplace and seller type on the line; cash on delivery is the filter, so it is in the subtitle, not on every row.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Pressure cookers under ₹3,000",
+          "subtitle": "Cash on delivery to 400050 · as of 10:30"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Hawkins Contura 3 L",
+                "secondary": "Flipkart · Hawkins store · Tue 29 Sep · rated 4.4/5",
+                "trailing": "₹2,390",
+                "mark": "pick"
+              },
+              {
+                "label": "Prestige Svachh 5 L",
+                "secondary": "Amazon.in · sold by Amazon · Mon 28 Sep · rated 4.3/5",
+                "trailing": "₹2,199"
+              },
+              {
+                "label": "Pigeon Special 5 L",
+                "secondary": "Flipkart · third-party seller · Thu 1 Oct · rated 4.0/5",
+                "trailing": "₹1,249"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "See it on Flipkart",
+              "url": "https://www.flipkart.com/search?q=hawkins+contura+3+litre"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Flipkart and Amazon.in listings, 26 Sep 2026 10:30"
+            }
+          ],
+          "assumptions": [
+            "Delivered to pincode 400050 (Bandra West, Mumbai), from your saved address."
+          ]
+        },
+        "fallback_text": "Pressure cookers under ₹3,000 with cash on delivery to 400050 (10:30): Hawkins Contura 3 L ₹2,390, Flipkart, Hawkins store, arrives Tue 29 Sep, rated 4.4/5 (pick); Prestige Svachh 5 L ₹2,199, Amazon.in, sold by Amazon, arrives Mon 28 Sep, rated 4.3/5; Pigeon Special 5 L ₹1,249, Flipkart, third-party seller, arrives Thu 1 Oct, rated 4.0/5."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pressure cookers under ₹3,000",
+            "subtitle": "Flipkart, Amazon.in · cash on delivery to 400050"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking Flipkart and Amazon.in",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b15"
+              }
+            }
+          ],
+          "fallback_text": "Pressure cookers under ₹3,000, cash on delivery to 400050: checking Flipkart and Amazon.in."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pressure cookers under ₹3,000",
+            "subtitle": "Flipkart only · cash on delivery to 400050 · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Hawkins Contura 3 L",
+                  "secondary": "Flipkart · Hawkins store · Tue 29 Sep · rated 4.4/5",
+                  "trailing": "₹2,390",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Pigeon Special 5 L",
+                  "secondary": "Flipkart · third-party seller · Thu 1 Oct · rated 4.0/5",
+                  "trailing": "₹1,249"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "See it on Flipkart",
+                "url": "https://www.flipkart.com/search?q=hawkins+contura+3+litre"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Flipkart listings, 26 Sep 2026 10:30; Amazon.in didn't answer"
+              }
+            ]
+          },
+          "fallback_text": "Pressure cookers under ₹3,000 with cash on delivery to 400050, Flipkart only (10:30): Hawkins Contura 3 L ₹2,390, Hawkins store, arrives Tue 29 Sep, rated 4.4/5 (pick); Pigeon Special 5 L ₹1,249, third-party seller, arrives Thu 1 Oct, rated 4.0/5. Amazon.in didn't answer."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pressure cookers under ₹3,000",
+            "subtitle": "Cash on delivery to 400050 · as of 08:45 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Hawkins Contura 3 L",
+                  "secondary": "Flipkart · Hawkins store · Tue 29 Sep · rated 4.4/5",
+                  "trailing": "₹2,390",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Prestige Svachh 5 L",
+                  "secondary": "Amazon.in · sold by Amazon · Mon 28 Sep · rated 4.3/5",
+                  "trailing": "₹2,199"
+                },
+                {
+                  "label": "Pigeon Special 5 L",
+                  "secondary": "Flipkart · third-party seller · Thu 1 Oct · rated 4.0/5",
+                  "trailing": "₹1,249"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "See it on Flipkart",
+                "url": "https://www.flipkart.com/search?q=hawkins+contura+3+litre"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Flipkart and Amazon.in listings, 26 Sep 2026 08:45"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:45 (couldn't refresh), Pressure cookers under ₹3,000 with cash on delivery to 400050: Hawkins Contura 3 L ₹2,390, Flipkart, Hawkins store, arrives Tue 29 Sep, rated 4.4/5 (pick); Prestige Svachh 5 L ₹2,199, Amazon.in, sold by Amazon, arrives Mon 28 Sep, rated 4.3/5; Pigeon Special 5 L ₹1,249, Flipkart, third-party seller, arrives Thu 1 Oct, rated 4.0/5."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No cooker under ₹3,000 with cash on delivery",
+            "subtitle": "Flipkart, Amazon.in · 400050 · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Prepaid, the Hawkins Contura 3 L is ₹2,390 on Flipkart"
+            }
+          ],
+          "fallback_text": "No pressure cooker under ₹3,000 on Flipkart or Amazon.in takes cash on delivery to 400050 (10:30). Prepaid, the Hawkins Contura 3 L is ₹2,390 on Flipkart."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check pressure cookers",
+            "subtitle": "Flipkart, Amazon.in · cash on delivery to 400050"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Flipkart and Amazon.in didn't answer. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't check pressure cookers (cash on delivery to 400050): Flipkart and Amazon.in didn't answer. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "shop-us-amazon",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "How much is the Kindle Paperwhite on Amazon with tax, shipped to Austin?",
+      "says": "With Austin sales tax it comes to just over 173 dollars, and Prime gets it to you Monday.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S3 Product detail"
+      ],
+      "rationale": "Two numbers answer it: the price and what you pay with tax; seller and arrival sit in the subtitle.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Kindle Paperwhite 16 GB",
+          "subtitle": "Sold by Amazon · Prime, arrives Mon 28 Sep · as of 10:30"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "US$159.99",
+                "label": "Price"
+              },
+              {
+                "value": "US$173.19",
+                "label": "With 8.25% tax"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "See it on Amazon",
+              "url": "https://www.amazon.com/s?k=kindle+paperwhite"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Amazon.com, 26 Sep 2026 10:30"
+            },
+            {
+              "label": "Texas Comptroller sales tax rate for Austin 78701"
+            }
+          ]
+        },
+        "fallback_text": "Kindle Paperwhite 16 GB on Amazon (10:30): sold by Amazon, US$159.99; US$173.19 with 8.25% Texas sales tax to 78701. Free Prime delivery arrives Mon 28 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Kindle Paperwhite 16 GB",
+            "subtitle": "Amazon · 78701"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking Amazon",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b16"
+              }
+            }
+          ],
+          "fallback_text": "Kindle Paperwhite 16 GB: checking Amazon."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Kindle Paperwhite 16 GB",
+            "subtitle": "Tax and delivery to 78701 didn't load · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Amazon",
+                  "secondary": "Sold by Amazon · tax and delivery not checked",
+                  "trailing": "US$159.99"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "See it on Amazon",
+                "url": "https://www.amazon.com/s?k=kindle+paperwhite"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Amazon.com, 26 Sep 2026 10:30; tax and delivery for 78701 didn't load"
+              }
+            ]
+          },
+          "fallback_text": "Kindle Paperwhite 16 GB on Amazon (10:30): US$159.99, sold by Amazon. Tax and delivery to 78701 didn't load, so the total isn't known yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Kindle Paperwhite 16 GB",
+            "subtitle": "Sold by Amazon · Prime, arrives Mon 28 Sep · as of 08:15 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "US$159.99",
+                  "label": "Price"
+                },
+                {
+                  "value": "US$173.19",
+                  "label": "With 8.25% tax"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "See it on Amazon",
+                "url": "https://www.amazon.com/s?k=kindle+paperwhite"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Amazon.com, 26 Sep 2026 08:15"
+              },
+              {
+                "label": "Texas Comptroller sales tax rate for Austin 78701"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:15 (couldn't refresh), Kindle Paperwhite 16 GB on Amazon: sold by Amazon, US$159.99; US$173.19 with 8.25% Texas sales tax to 78701. Free Prime delivery arrives Mon 28 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Kindle Paperwhite 16 GB is out of stock",
+            "subtitle": "Amazon · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Amazon expects it back on Mon 5 Oct"
+            }
+          ],
+          "fallback_text": "Amazon has the Kindle Paperwhite 16 GB out of stock (10:30). It expects it back on Mon 5 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check the Kindle price",
+            "subtitle": "Amazon · 78701"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Amazon didn't answer. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't check the Kindle price: Amazon didn't answer. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "shop-return-windows",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "What can I still return, and by when?",
+      "says": "Four things can still go back; the Shopee blender is the one to decide on first.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S14 Return / refund status"
+      ],
+      "rationale": "What is still returnable changes as deadlines pass, so it carries a clock. Soonest first, last day trailing, each window and what it counts from on the line.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "4 orders you can still return",
+          "subtitle": "Soonest first · as of 11:30"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Blender · Shopee Mall",
+                "secondary": "15 days from delivery · delivered Mon 14 Sep",
+                "trailing": "by Tue 29 Sep"
+              },
+              {
+                "label": "Desk lamp · Amazon.sg",
+                "secondary": "15 days from delivery · delivered Wed 16 Sep",
+                "trailing": "by Thu 1 Oct"
+              },
+              {
+                "label": "Earbuds · LazMall",
+                "secondary": "30 days from delivery · delivered Fri 18 Sep",
+                "trailing": "by Sun 18 Oct"
+              },
+              {
+                "label": "Phone case · Temu",
+                "secondary": "90 days from purchase · ordered Wed 2 Sep",
+                "trailing": "by Tue 1 Dec"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Too late to return",
+                "bullets": [
+                  "Charger from AliExpress: its 15-day window from delivery (Wed 9 Sep) closed Thu 24 Sep."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopee, Lazada, Amazon.sg, Temu and AliExpress order pages, 26 Sep 2026 11:30"
+            }
+          ],
+          "assumptions": [
+            "Shopee, Lazada, Amazon.sg and AliExpress count the window from delivery; Temu counts it from purchase.",
+            "Each window is the one the order page shows; it varies by seller and item, and some items can't be returned."
+          ]
+        },
+        "fallback_text": "As of 11:30, you can still return 4 orders, soonest first: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep); phone case from Temu by Tue 1 Dec (90 days from purchase, ordered Wed 2 Sep). Too late: the AliExpress charger's 15-day window from delivery (delivered Wed 9 Sep) closed Thu 24 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Orders you can still return",
+            "subtitle": "Shopee, Lazada, Amazon.sg, Temu, AliExpress"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 5 marketplaces for your orders",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000b17"
+              }
+            }
+          ],
+          "fallback_text": "Orders you can still return: checking 5 marketplaces for your orders."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3 orders you can still return",
+            "subtitle": "4 of 5 marketplaces · soonest first · as of 11:30"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Blender · Shopee Mall",
+                  "secondary": "15 days from delivery · delivered Mon 14 Sep",
+                  "trailing": "by Tue 29 Sep"
+                },
+                {
+                  "label": "Desk lamp · Amazon.sg",
+                  "secondary": "15 days from delivery · delivered Wed 16 Sep",
+                  "trailing": "by Thu 1 Oct"
+                },
+                {
+                  "label": "Earbuds · LazMall",
+                  "secondary": "30 days from delivery · delivered Fri 18 Sep",
+                  "trailing": "by Sun 18 Oct"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Too late to return",
+                  "bullets": [
+                    "Charger from AliExpress: its 15-day window from delivery (Wed 9 Sep) closed Thu 24 Sep."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopee, Lazada, Amazon.sg, AliExpress order pages, 26 Sep 2026 11:30"
+              },
+              {
+                "label": "Temu didn't answer"
+              }
+            ],
+            "assumptions": [
+              "Shopee, Lazada, Amazon.sg and AliExpress count the window from delivery; Temu counts it from purchase.",
+              "Each window is the one the order page shows; it varies by seller and item, and some items can't be returned."
+            ]
+          },
+          "fallback_text": "As of 11:30, 4 of 5 marketplaces checked, you can still return 3 orders: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep). Temu didn't answer. Too late: the AliExpress charger's 15-day window from delivery (delivered Wed 9 Sep) closed Thu 24 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "4 orders you can still return",
+            "subtitle": "Soonest first · as of 08:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Blender · Shopee Mall",
+                  "secondary": "15 days from delivery · delivered Mon 14 Sep",
+                  "trailing": "by Tue 29 Sep"
+                },
+                {
+                  "label": "Desk lamp · Amazon.sg",
+                  "secondary": "15 days from delivery · delivered Wed 16 Sep",
+                  "trailing": "by Thu 1 Oct"
+                },
+                {
+                  "label": "Earbuds · LazMall",
+                  "secondary": "30 days from delivery · delivered Fri 18 Sep",
+                  "trailing": "by Sun 18 Oct"
+                },
+                {
+                  "label": "Phone case · Temu",
+                  "secondary": "90 days from purchase · ordered Wed 2 Sep",
+                  "trailing": "by Tue 1 Dec"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Too late to return",
+                  "bullets": [
+                    "Charger from AliExpress: its 15-day window from delivery (Wed 9 Sep) closed Thu 24 Sep."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Shopee, Lazada, Amazon.sg, Temu and AliExpress order pages, 26 Sep 2026 08:00"
+              }
+            ],
+            "assumptions": [
+              "Shopee, Lazada, Amazon.sg and AliExpress count the window from delivery; Temu counts it from purchase.",
+              "Each window is the one the order page shows; it varies by seller and item, and some items can't be returned."
+            ]
+          },
+          "fallback_text": "As of 08:00 (couldn't refresh), you could still return 4 orders: blender from Shopee Mall by Tue 29 Sep (15 days from delivery, delivered Mon 14 Sep); desk lamp from Amazon.sg by Thu 1 Oct (15 days from delivery, delivered Wed 16 Sep); earbuds from LazMall by Sun 18 Oct (30 days from delivery, delivered Fri 18 Sep); phone case from Temu by Tue 1 Dec (90 days from purchase, ordered Wed 2 Sep). Too late: the AliExpress charger's 15-day window from delivery (delivered Wed 9 Sep) closed Thu 24 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing left inside a return window",
+            "subtitle": "5 marketplaces checked · as of 11:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The last window, an AliExpress charger, closed Thu 24 Sep"
+            }
+          ],
+          "fallback_text": "None of your orders on Shopee, Lazada, Amazon.sg, Temu or AliExpress is still inside its return window (11:30). The last one, an AliExpress charger, closed Thu 24 Sep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check your return windows",
+            "subtitle": "Shopee, Lazada, Amazon.sg, Temu, AliExpress"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "None of the 5 marketplaces answered. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't check your return windows: None of the 5 marketplaces answered. Ask me again in a few minutes."
         }
       }
     }
