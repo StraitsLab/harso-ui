@@ -4280,7 +4280,7 @@
         "major": 1,
         "header": {
           "title": "Hotel Gracery Ueno",
-          "subtitle": "12–18 Oct · free cancellation to 9 Oct · as of 09:25"
+          "subtitle": "12–18 Oct · free to cancel to 9 Oct · as of 09:25"
         },
         "blocks": [
           {
@@ -6318,13 +6318,13 @@
               }
             }
           ],
-          "fallback_text": "Waiting for Chope to confirm Merci Marcel, 7:30 pm for 4."
+          "fallback_text": "Waiting for Chope to confirm your table for 4 at 7:30 pm."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "7:30 pm at Merci Marcel just went",
+            "title": "7:30 pm at Merci Marcel was taken",
             "subtitle": "Sat 26 Sep · 4 people · as of 16:12"
           },
           "blocks": [
@@ -6334,7 +6334,7 @@
               "detail": "The nearest is 8:15 pm; nothing was booked"
             }
           ],
-          "fallback_text": "The 7:30 pm table for 4 at Merci Marcel just went as of 16:12. The nearest is 8:15 pm; nothing was booked."
+          "fallback_text": "The 7:30 pm table for 4 at Merci Marcel was taken before Chope confirmed, as of 16:12. The nearest is 8:15 pm; nothing was booked."
         },
         "failed": {
           "kind": "output_blocks",
