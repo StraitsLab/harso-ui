@@ -10,10 +10,12 @@ async function attachmentConsumer(page: Page, appearance: string, palette: strin
   const domUrl = entry.match(/from "([^"]+\/react-dom_client\.js\?[^\"]+)"/)?.[1];
   expect(reactUrl).toBeTruthy();
   expect(domUrl).toBeTruthy();
-  await page.evaluate(async ({ reactUrl, domUrl, longName }) => {
+  const galleryUrl = "/preview/attachments-examples.tsx";
+  const producerUrl = longName ? (await moduleSource(page, galleryUrl)).match(/from "([^"]*\/src\/index\.ts[^\"]*)"/)?.[1] : undefined;
+  if (longName && !producerUrl) throw new Error("Actual attachment producer import not found");
+  await page.evaluate(async ({ reactUrl, domUrl, galleryUrl, producerUrl }) => {
     const React = (await import(reactUrl!)).default;
     const { createRoot } = (await import(domUrl!)).default;
-    const galleryUrl = "/preview/attachments-examples.tsx";
     const { AttachmentsExample } = await import(galleryUrl);
     const example = document.querySelector<HTMLElement>('[data-testid="live-example"]')!;
     for (const child of Array.from(example.children)) (child as HTMLElement).style.display = "none";
@@ -23,15 +25,12 @@ async function attachmentConsumer(page: Page, appearance: string, palette: strin
     example.append(host);
     const element = React.createElement;
     const content = [element(AttachmentsExample, { key: "gallery", component: "Attachments", state: "error" })];
-    if (longName) {
-      const source = await (await fetch(galleryUrl)).text();
-      const producerUrl = source.match(/from "([^"]*\/src\/index\.ts[^\"]*)"/)?.[1];
-      if (!producerUrl) throw new Error("Actual attachment producer import not found");
+    if (producerUrl) {
       const { Attachments, Attachment, AttachmentPreview, AttachmentInfo, AttachmentRemove } = await import(producerUrl);
       content.push(element(Attachments, { key: "long", variant: "inline", "aria-label": "Long filename attachment" }, element(Attachment, { data: { id: "long", name: "design-review-evidence-".repeat(12) + ".png", mediaType: "image/png", size: 2048 }, onRemove: () => {} }, element(AttachmentPreview), element(AttachmentInfo, { showMediaType: true }), element(AttachmentRemove))));
     }
     createRoot(host).render(element(React.Fragment, null, ...content));
-  }, { reactUrl, domUrl, longName });
+  }, { reactUrl, domUrl, galleryUrl, producerUrl });
   const consumer = page.getByRole("region", { name: "Attachment contrast consumer" });
   await expect(consumer.getByRole("alert")).toHaveText("Upload failed");
   return consumer;

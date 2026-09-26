@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { moduleSource } from "./helpers/module-source";
+import { moduleSource, routeSource } from "./helpers/module-source";
 
 async function localSpeechEvents(page: Page) {
   await page.addInitScript(() => {
@@ -55,7 +55,7 @@ for (const appearance of ["light", "dark"] as const) for (const palette of ["cle
   test(`INPUT VISUAL ${appearance} ${palette} ${width} runtime composer and mocked speech states`, async ({ page }, testInfo) => {
     const mutation = process.env.INPUT_VISUAL_MUTATION;
     if (mutation === "accent") await page.route("**/primitives.css*", async route => {
-      const response = await route.fetch();
+      const response = await routeSource(route);
       const body = await response.text();
       expect(body).toContain("background: var(--hk-accent); color: var(--hk-inverse); animation: hk-speech-pulse");
       await route.fulfill({ response, body: body.replace("background: var(--hk-accent); color: var(--hk-inverse); animation: hk-speech-pulse", "background: transparent; color: var(--hk-inverse); animation: hk-speech-pulse") });
