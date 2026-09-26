@@ -4,7 +4,8 @@
     "home-listing-results",
     "home-listing-card",
     "home-rent-listings",
-    "empty-search"
+    "empty-search",
+    "home-open-houses"
   ],
   "examples": [
     {
@@ -132,6 +133,256 @@
           ]
         },
         "fallback_text": "7 three-room HDB flats in Tampines under S$600k near MRT: Blk 824 St 81 S$548k, 67 sqm (best value); Blk 201 St 21 S$575k; Blk 457 St 42 S$560k; Blk 866 St 83 S$585k; Blk 115 St 11 S$538k; Blk 395 Ave 7 S$559k; Blk 881 St 84 S$592k."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3-room HDB in Tampines",
+            "subtitle": "Under S$600k · ≤10 min to MRT"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking PropertyGuru and the HDB Flat Portal",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b01"
+              }
+            }
+          ],
+          "fallback_text": "Checking PropertyGuru and the HDB Flat Portal for 3-room flats in Tampines under S$600k."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3-room HDB in Tampines",
+            "subtitle": "1 of 2 portals checked · as of 09:30"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "t81",
+                    "label": "Blk 824 Tampines St 81",
+                    "lat": "1.3496",
+                    "lon": "103.9368"
+                  },
+                  {
+                    "id": "t45",
+                    "label": "Blk 457 Tampines St 42",
+                    "lat": "1.3589",
+                    "lon": "103.9542"
+                  },
+                  {
+                    "id": "t11",
+                    "label": "Blk 115 Tampines St 11",
+                    "lat": "1.3470",
+                    "lon": "103.9470"
+                  },
+                  {
+                    "id": "t34",
+                    "label": "Blk 395 Tampines Ave 7",
+                    "lat": "1.3575",
+                    "lon": "103.9392"
+                  }
+                ],
+                "selected_place_id": "t81"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Blk 824 Tampines St 81",
+                  "secondary": "67 sqm · 6 min to Tampines MRT",
+                  "trailing": "S$548k",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Blk 457 Tampines St 42",
+                  "secondary": "65 sqm · 9 min to Tampines East",
+                  "trailing": "S$560k"
+                },
+                {
+                  "label": "Blk 115 Tampines St 11",
+                  "secondary": "64 sqm · 10 min to Tampines MRT",
+                  "trailing": "S$538k"
+                },
+                {
+                  "label": "Blk 395 Tampines Ave 7",
+                  "secondary": "66 sqm · 9 min to Tampines West",
+                  "trailing": "S$559k"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listings, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "PropertyGuru only, as of 09:30; the HDB Flat Portal hasn't answered yet: Blk 824 St 81 S$548k, 67 sqm (best value so far); Blk 457 St 42 S$560k; Blk 115 St 11 S$538k; Blk 395 Ave 7 S$559k."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3-room HDB in Tampines",
+            "subtitle": "As of 09:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "t81",
+                    "label": "Blk 824 Tampines St 81",
+                    "lat": "1.3496",
+                    "lon": "103.9368"
+                  },
+                  {
+                    "id": "t24",
+                    "label": "Blk 201 Tampines St 21",
+                    "lat": "1.3561",
+                    "lon": "103.9489"
+                  },
+                  {
+                    "id": "t45",
+                    "label": "Blk 457 Tampines St 42",
+                    "lat": "1.3589",
+                    "lon": "103.9542"
+                  },
+                  {
+                    "id": "t83",
+                    "label": "Blk 866 Tampines St 83",
+                    "lat": "1.3530",
+                    "lon": "103.9330"
+                  },
+                  {
+                    "id": "t11",
+                    "label": "Blk 115 Tampines St 11",
+                    "lat": "1.3470",
+                    "lon": "103.9470"
+                  },
+                  {
+                    "id": "t34",
+                    "label": "Blk 395 Tampines Ave 7",
+                    "lat": "1.3575",
+                    "lon": "103.9392"
+                  },
+                  {
+                    "id": "t86",
+                    "label": "Blk 881 Tampines St 84",
+                    "lat": "1.3540",
+                    "lon": "103.9310"
+                  }
+                ],
+                "selected_place_id": "t81"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Blk 824 Tampines St 81",
+                  "secondary": "67 sqm · 6 min to Tampines MRT",
+                  "trailing": "S$548k",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Blk 201 Tampines St 21",
+                  "secondary": "68 sqm · 8 min to Tampines MRT",
+                  "trailing": "S$575k"
+                },
+                {
+                  "label": "Blk 457 Tampines St 42",
+                  "secondary": "65 sqm · 9 min to Tampines East",
+                  "trailing": "S$560k"
+                },
+                {
+                  "label": "Blk 866 Tampines St 83",
+                  "secondary": "67 sqm · 7 min to Tampines MRT",
+                  "trailing": "S$585k"
+                },
+                {
+                  "label": "Blk 115 Tampines St 11",
+                  "secondary": "64 sqm · 10 min to Tampines MRT",
+                  "trailing": "S$538k"
+                },
+                {
+                  "label": "Blk 395 Tampines Ave 7",
+                  "secondary": "66 sqm · 9 min to Tampines West",
+                  "trailing": "S$559k"
+                },
+                {
+                  "label": "Blk 881 Tampines St 84",
+                  "secondary": "65 sqm · 8 min to Tampines West",
+                  "trailing": "S$592k"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru and HDB Flat Portal listings, 26 Sep 2026 09:30"
+              }
+            ],
+            "assumptions": [
+              "Best value is asking price per square metre."
+            ]
+          },
+          "fallback_text": "As of 09:30 (couldn't refresh): 7 three-room HDB flats in Tampines under S$600k near MRT: Blk 824 St 81 S$548k, 67 sqm (best value); Blk 201 St 21 S$575k; Blk 457 St 42 S$560k; Blk 866 St 83 S$585k; Blk 115 St 11 S$538k; Blk 395 Ave 7 S$559k; Blk 881 St 84 S$592k."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 3-room HDB in Tampines under S$600k",
+            "subtitle": "≤10 min to MRT · as of 09:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Cheapest near an MRT now is S$612k"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru and HDB Flat Portal listings, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "No 3-room HDB flats in Tampines under S$600k within 10 minutes of an MRT, as of 09:30. The cheapest near an MRT is S$612k."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search Tampines listings",
+            "subtitle": "PropertyGuru and HDB Flat Portal"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Neither portal answered. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't search Tampines listings: neither PropertyGuru nor the HDB Flat Portal answered. Nothing was saved."
+        }
       }
     },
     {
@@ -193,6 +444,153 @@
           ]
         },
         "fallback_text": "Blk 824 Tampines St 81, 3-room, 67 sqm, 9th floor, 1998 lease: asking S$548k (S$8,179 per sqm)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 Tampines St 81",
+            "subtitle": "3-room · PropertyGuru"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Opening the listing",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b02"
+              }
+            }
+          ],
+          "fallback_text": "Opening the Blk 824 Tampines St 81 listing."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 Tampines St 81",
+            "subtitle": "Photos not loaded yet · as of 09:30"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$548k",
+                  "label": "Asking"
+                },
+                {
+                  "value": "S$8,179",
+                  "label": "Per sqm"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "View listing",
+                "url": "https://www.propertyguru.com.sg/listing/24519877"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24519877, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "Blk 824 Tampines St 81, 3-room, 67 sqm, 9th floor: asking S$548k (S$8,179 per sqm). Photos not loaded yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 Tampines St 81",
+            "subtitle": "As of 09:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
+                "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor",
+                "aspect": "4:3"
+              }
+            },
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$548k",
+                  "label": "Asking"
+                },
+                {
+                  "value": "S$8,179",
+                  "label": "Per sqm"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "View listing",
+                "url": "https://www.propertyguru.com.sg/listing/24519877"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24519877, 26 Sep 2026 09:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:30 (couldn't refresh): Blk 824 Tampines St 81, 3-room, 67 sqm, 9th floor, 1998 lease: asking S$548k (S$8,179 per sqm)."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 listing was taken down",
+            "subtitle": "PropertyGuru · as of 11:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Removed by the agent this morning"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24519877, 26 Sep 2026 11:05"
+              }
+            ]
+          },
+          "fallback_text": "The Blk 824 Tampines St 81 listing was taken down this morning, as of 11:05."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't open the Blk 824 listing",
+            "subtitle": "PropertyGuru"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "PropertyGuru didn't respond. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't open the Blk 824 Tampines St 81 listing: PropertyGuru didn't respond. Nothing was saved."
+        }
       }
     },
     {
@@ -241,6 +639,70 @@
           ]
         },
         "fallback_text": "Your 2-bed, 818 sqft unit at The Trilinq is worth about S$1.18M (S$1,443 psf); recent sales S$1.12–1.24M."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · 2 bed · 818 sqft",
+            "subtitle": "Reading recent sales"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 6 months of URA caveats",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b03"
+              }
+            }
+          ],
+          "fallback_text": "Reading 6 months of URA sales for The Trilinq."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Too few recent sales to estimate",
+            "subtitle": "The Trilinq · 2 bed · last 6 months"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Only 1 two-bed sale since March"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "URA caveats, last 6 months",
+                "url": "https://www.ura.gov.sg/property-market-information/pmiResidentialTransactionSearch"
+              }
+            ],
+            "disclaimers": [
+              "An estimate from recent sales, not a valuation."
+            ]
+          },
+          "fallback_text": "Only 1 two-bed sale at The Trilinq in the last 6 months, too few for an estimate."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't estimate your condo's value",
+            "subtitle": "The Trilinq"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "URA's sales search didn't respond. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't estimate The Trilinq unit: URA's sales search didn't respond. Nothing was saved."
+        }
       }
     },
     {
@@ -334,11 +796,144 @@
         "details": {
           "sources": [
             {
-              "label": "99.co rental listings, 26 Sep 2026 09:40"
+              "label": "99.co and PropertyGuru rental listings, 26 Sep 2026 09:40"
             }
           ]
         },
         "fallback_text": "1-bed rentals near Outram under S$3,500: The Clift S$3,300 from 1 Oct (pick); Spottiswoode 18 S$3,450 from 15 Oct; Pinnacle@Duxton S$3,400 from 1 Oct."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1-bed rentals near Outram",
+            "subtitle": "Under S$3,500 · from October"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 99.co and PropertyGuru",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b04"
+              }
+            }
+          ],
+          "fallback_text": "Checking 99.co and PropertyGuru for 1-bed rentals near Outram under S$3,500."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1-bed rentals near Outram",
+            "subtitle": "1 of 2 sites checked · as of 09:40"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Clift",
+                  "secondary": "1 bed · 49 sqm · from 1 Oct",
+                  "trailing": "S$3,300",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Pinnacle@Duxton",
+                  "secondary": "1 bed · 50 sqm · from 1 Oct",
+                  "trailing": "S$3,400"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "99.co rental listings, 26 Sep 2026 09:40"
+              }
+            ]
+          },
+          "fallback_text": "99.co only, as of 09:40; PropertyGuru hasn't answered yet: The Clift S$3,300 from 1 Oct (pick); Pinnacle@Duxton S$3,400 from 1 Oct."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1-bed rentals near Outram",
+            "subtitle": "As of 09:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Clift",
+                  "secondary": "1 bed · 49 sqm · from 1 Oct",
+                  "trailing": "S$3,300",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Spottiswoode 18",
+                  "secondary": "1 bed · 45 sqm · from 15 Oct",
+                  "trailing": "S$3,450"
+                },
+                {
+                  "label": "Pinnacle@Duxton",
+                  "secondary": "1 bed · 50 sqm · from 1 Oct",
+                  "trailing": "S$3,400"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "99.co and PropertyGuru rental listings, 26 Sep 2026 09:40"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:40 (couldn't refresh): 1-bed rentals near Outram under S$3,500: The Clift S$3,300 from 1 Oct (pick); Spottiswoode 18 S$3,450 from 15 Oct; Pinnacle@Duxton S$3,400 from 1 Oct."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 1-bed near Outram under S$3,500",
+            "subtitle": "From October · as of 09:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Cheapest listed now is S$3,650"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "99.co and PropertyGuru rental listings, 26 Sep 2026 09:40"
+              }
+            ]
+          },
+          "fallback_text": "No 1-bed rentals near Outram under S$3,500 from October, as of 09:40. The cheapest listed is S$3,650."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search Outram rentals",
+            "subtitle": "99.co and PropertyGuru"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Neither site answered. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't search Outram rentals: neither 99.co nor PropertyGuru answered. Nothing was saved."
+        }
       }
     },
     {
@@ -388,6 +983,59 @@
           ]
         },
         "fallback_text": "Viewing at The Clift, 21 McCallum Street, on Sun 27 Sep at 11:00 with Jasmine Tan (ERA, 9123 4567)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your viewing at The Clift",
+            "subtitle": "Reading your calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Looking for the viewing invite",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b05"
+              }
+            }
+          ],
+          "fallback_text": "Looking for The Clift viewing in your calendar."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No viewing at The Clift in your calendar",
+            "subtitle": "Next 30 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Jasmine Tan's last message was on 24 Sep"
+            }
+          ],
+          "fallback_text": "No viewing at The Clift in your calendar for the next 30 days. Jasmine Tan's last message was on 24 Sep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your calendar",
+            "subtitle": "Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The calendar connection has expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your calendar: the Google Calendar connection has expired. Nothing was changed."
+        }
       }
     },
     {
@@ -434,6 +1082,43 @@
           ]
         },
         "fallback_text": "A rent vs buy calculator (price, rent, years, break-even) is saved as a page in your Library; download it and open it in your browser."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Rent vs buy calculator",
+            "subtitle": "Interactive page · HTML"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Building the page",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b06"
+              }
+            }
+          ],
+          "fallback_text": "Building a rent vs buy calculator page."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't build the calculator",
+            "subtitle": "Interactive page · HTML"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The page failed its own test. Nothing was saved to Library."
+            }
+          ],
+          "fallback_text": "Couldn't build the rent vs buy calculator: the page failed its own test. Nothing was saved to Library."
+        }
       }
     },
     {
@@ -470,6 +1155,43 @@
           ]
         },
         "fallback_text": "No 3-room HDB flats in Bishan under S$500k right now; the cheapest listed is S$588k."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3-room HDB in Bishan",
+            "subtitle": "Under S$500k"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking PropertyGuru and 99.co",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b07"
+              }
+            }
+          ],
+          "fallback_text": "Checking PropertyGuru and 99.co for 3-room HDB in Bishan under S$500k."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search Bishan listings",
+            "subtitle": "PropertyGuru and 99.co"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Neither site answered. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't search Bishan listings: neither PropertyGuru nor 99.co answered. Nothing was saved."
+        }
       }
     },
     {
@@ -522,6 +1244,67 @@
           ]
         },
         "fallback_text": "Blk 824 Tampines St 81 3-room resales: S$542k (Aug 2026), S$515k (Jan 2026), S$485k (Sep 2024)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Blk 824 Tampines St 81",
+            "subtitle": "3-room resale · last 2 years"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading HDB resale records",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b08"
+              }
+            }
+          ],
+          "fallback_text": "Reading HDB resale records for Blk 824 Tampines St 81."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 3-room resales in Blk 824",
+            "subtitle": "Last 2 years"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The nearest sale was Blk 826, S$531k in Jul 2026"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "HDB resale transactions",
+                "url": "https://services2.hdb.gov.sg/webapp/BB33RTIS/"
+              }
+            ]
+          },
+          "fallback_text": "No 3-room resales in Blk 824 Tampines St 81 in the last 2 years. The nearest was Blk 826, S$531k in Jul 2026."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read Blk 824's resale records",
+            "subtitle": "HDB"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "HDB's resale search didn't respond. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't read resale records for Blk 824 Tampines St 81: HDB's resale search didn't respond. Nothing was saved."
+        }
       }
     },
     {
@@ -596,6 +1379,98 @@
           ]
         },
         "fallback_text": "The Trilinq: 99-year lease from 2013, completed 2017, pool, gym and tennis, 12 min to Clementi MRT, maintenance S$380 a month."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · facts",
+            "subtitle": "Clementi"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading URA and the project page",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b09"
+              }
+            }
+          ],
+          "fallback_text": "Reading the facts on The Trilinq."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · facts",
+            "subtitle": "4 of 5 facts found · maintenance fee not published"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Fact"
+                },
+                {
+                  "label": "Detail"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Tenure",
+                    "99-year from 2013"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Completed",
+                    "2017"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Facilities",
+                    "Pool, gym, tennis"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Nearest MRT",
+                    "Clementi · 12 min"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "URA and PropertyGuru project page, Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "The Trilinq: 99-year lease from 2013, completed 2017, pool, gym and tennis, 12 min to Clementi MRT. Maintenance fee not published."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read The Trilinq's facts",
+            "subtitle": "URA and PropertyGuru"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Neither source answered. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't read the facts on The Trilinq: neither URA nor PropertyGuru answered. Nothing was saved."
+        }
       }
     },
     {
@@ -646,6 +1521,235 @@
           ]
         },
         "fallback_text": "Primary schools within 1 km of Blk 824 Tampines St 81: Tampines North Primary 0.4 km, St Hilda's Primary 0.9 km."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Primary schools within 1 km",
+            "subtitle": "From Blk 824 Tampines St 81"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Measuring distances on OneMap",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b0a"
+              }
+            }
+          ],
+          "fallback_text": "Measuring primary school distances from Blk 824 on OneMap."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No primary school within 1 km",
+            "subtitle": "From Blk 824 Tampines St 81"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The nearest is Tampines Primary at 1.3 km"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "OneMap school query",
+                "url": "https://www.onemap.gov.sg/"
+              }
+            ],
+            "assumptions": [
+              "Distance is measured as the P1 registration rule measures it."
+            ]
+          },
+          "fallback_text": "No primary school within 1 km of Blk 824 Tampines St 81. The nearest is Tampines Primary at 1.3 km."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't measure school distances",
+            "subtitle": "OneMap"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "OneMap didn't respond. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't measure school distances from Blk 824: OneMap didn't respond. Nothing was saved."
+        }
+      }
+    },
+    {
+      "id": "home-monthly-cost",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "What would Blk 824 cost me each month?",
+      "says": "The loan is most of it; the town council fee and tax are small.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R7 Monthly cost / mortgage"
+      ],
+      "rationale": "The monthly total is the title; the three lines that make it up are the rows and add up to it; loan terms go to Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "S$1,943 a month",
+          "subtitle": "Blk 824 Tampines St 81 · at S$548k asking"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Loan repayment",
+                "secondary": "HDB loan · 25 years",
+                "trailing": "S$1,865"
+              },
+              {
+                "label": "Service and conservancy",
+                "secondary": "Tampines Town Council",
+                "trailing": "S$70"
+              },
+              {
+                "label": "Property tax",
+                "secondary": "Owner-occupied",
+                "trailing": "S$8"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "75% HDB loan of S$411,000 at 2.6% over 25 years; S$137,000 down in cash or CPF.",
+            "Property tax on an annual value of S$14,400 at owner-occupier rates."
+          ],
+          "disclaimers": [
+            "A guide, not a loan offer."
+          ]
+        },
+        "fallback_text": "Blk 824 at S$548k: about S$1,943 a month. Loan repayment S$1,865 (HDB loan, 25 years), service and conservancy S$70, property tax S$8. Cash or CPF upfront S$137,000."
+      }
+    },
+    {
+      "id": "home-open-houses",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Any condo open houses near Clementi this weekend?",
+      "says": "Three; the Sunday one at The Trilinq is closest to the MRT.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R10 Viewing / open house"
+      ],
+      "rationale": "Each open house is a row: project, when and walk time, asking from; booking a slot is a question after the card, never a button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Condo open houses near Clementi",
+          "subtitle": "Sat 26–Sun 27 Sep · as of 10:15"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "The Trilinq",
+                "secondary": "Sun 27 Sep · 10:00–13:00 · 12 min to MRT",
+                "trailing": "from S$1.15M",
+                "mark": "pick"
+              },
+              {
+                "label": "Clement Canopy",
+                "secondary": "Sat 26 Sep · 14:00–17:00 · 15 min to MRT",
+                "trailing": "from S$1.32M"
+              },
+              {
+                "label": "Parc Clematis",
+                "secondary": "Sun 27 Sep · 14:00–16:00 · 18 min to MRT",
+                "trailing": "from S$1.48M"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru open house listings, 26 Sep 2026 10:15"
+            }
+          ]
+        },
+        "fallback_text": "Condo open houses near Clementi this weekend: The Trilinq Sun 27 Sep 10:00–13:00, from S$1.15M (closest to MRT); Clement Canopy Sat 26 Sep 14:00–17:00, from S$1.32M; Parc Clematis Sun 27 Sep 14:00–16:00, from S$1.48M."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Condo open houses near Clementi",
+            "subtitle": "Sat 26–Sun 27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking open house listings",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b0b"
+              }
+            }
+          ],
+          "fallback_text": "Checking condo open houses near Clementi this weekend."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No condo open houses near Clementi",
+            "subtitle": "Sat 26–Sun 27 Sep · as of 10:15"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The next one is The Trilinq on Sat 3 Oct"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru open house listings, 26 Sep 2026 10:15"
+              }
+            ]
+          },
+          "fallback_text": "No condo open houses near Clementi this weekend, as of 10:15. The next one is The Trilinq on Sat 3 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check open houses",
+            "subtitle": "PropertyGuru"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "PropertyGuru didn't respond. Nothing was booked."
+            }
+          ],
+          "fallback_text": "Couldn't check condo open houses near Clementi: PropertyGuru didn't respond. Nothing was booked."
+        }
       }
     }
   ]
