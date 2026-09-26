@@ -3,7 +3,11 @@
   "fresh": [
     "sports-score",
     "sports-standings",
-    "sports-fixtures"
+    "sports-fixtures",
+    "sports-live",
+    "sports-match-feed",
+    "sports-standings-f1",
+    "sports-f1-weekend"
   ],
   "examples": [
     {
@@ -48,6 +52,276 @@
           ]
         },
         "fallback_text": "Arsenal 2–1 Chelsea, full time. Ødegaard 23', Palmer 55', Saka 78'."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal v Chelsea",
+            "subtitle": "Premier League"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking the match centre",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0020"
+              }
+            }
+          ],
+          "fallback_text": "Checking the Arsenal v Chelsea score."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal v Chelsea",
+            "subtitle": "71' · as of 21:05 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "1",
+                  "label": "Arsenal"
+                },
+                {
+                  "value": "1",
+                  "label": "Chelsea"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal 1–1 Chelsea at 71', as of 21:05 (couldn’t refresh). Ødegaard 23', Palmer 55'."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the score",
+            "subtitle": "Arsenal v Chelsea"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Premier League match centre didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get the Arsenal v Chelsea score: the match centre didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "sports-live",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "How's the Liverpool game going?",
+      "says": "Level, and City equalised just after the break.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Scoreboard"
+      ],
+      "rationale": "Live: the minute and the as-of time lead and the score is two numbers; a final-score watch is a separate ask, never a ticker.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Liverpool v Man City",
+          "subtitle": "67' · second half · as of 23:12"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "1",
+                "label": "Liverpool"
+              },
+              {
+                "value": "1",
+                "label": "Man City"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Premier League match centre, 26 Sep 2026 23:12"
+            }
+          ]
+        },
+        "fallback_text": "Liverpool 1–1 Man City at 67', as of 23:12. Salah 12', Haaland 48'."
+      },
+      "states": {
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Liverpool v Man City",
+            "subtitle": "54' · as of 22:58 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "1",
+                  "label": "Liverpool"
+                },
+                {
+                  "value": "1",
+                  "label": "Man City"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026 22:58"
+              }
+            ]
+          },
+          "fallback_text": "Liverpool 1–1 Man City at 54', as of 22:58 (couldn’t refresh). Salah 12', Haaland 48'."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Liverpool aren’t playing now",
+            "subtitle": "Next: v Brentford, Sat 3 Oct · as of 23:12"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No Liverpool match is in progress"
+            }
+          ],
+          "fallback_text": "Liverpool aren’t playing now (as of 23:12); next is v Brentford, Sat 3 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the live score",
+            "subtitle": "Liverpool v Man City"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Premier League match centre didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get the Liverpool v Man City score: the match centre didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "sports-match-feed",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "What happened in the Arsenal game?",
+      "says": "Chelsea were down to ten when Saka scored the winner.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Story timeline"
+      ],
+      "rationale": "The match's moments in order, minute trailing; three inline and the rest on the page; no play-by-play.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arsenal 2–1 Chelsea",
+          "subtitle": "Full time · Premier League · as of 21:52"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Goal · Ødegaard",
+                "secondary": "Arsenal",
+                "trailing": "23'"
+              },
+              {
+                "label": "Goal · Palmer",
+                "secondary": "Chelsea",
+                "trailing": "55'"
+              },
+              {
+                "label": "Red card · Caicedo",
+                "secondary": "Chelsea",
+                "trailing": "71'"
+              },
+              {
+                "label": "Goal · Saka",
+                "secondary": "Arsenal",
+                "trailing": "78'"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Premier League match centre, 26 Sep 2026 21:52"
+            }
+          ]
+        },
+        "fallback_text": "Arsenal 2–1 Chelsea, full time: Ødegaard goal 23', Palmer goal 55', Caicedo red card 71', Saka goal 78'."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal v Chelsea",
+            "subtitle": "Premier League"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the match report",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0022"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Arsenal v Chelsea match report."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the match report",
+            "subtitle": "Arsenal v Chelsea"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Premier League match centre didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get the Arsenal v Chelsea report: the match centre didn’t respond."
+        }
       }
     },
     {
@@ -149,6 +423,359 @@
           ]
         },
         "fallback_text": "Premier League after 6 games: 1 Liverpool 16, 2 Arsenal 14, 3 Man City 13, 4 Chelsea 11, 5 Newcastle 10."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Premier League table",
+            "subtitle": "After 6 games"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the league table",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0021"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Premier League table."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Premier League table",
+            "subtitle": "After 5 games · as of 20 Sep, 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Pos"
+                },
+                {
+                  "label": "Team"
+                },
+                {
+                  "label": "Played",
+                  "align": "end"
+                },
+                {
+                  "label": "Pts",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "1",
+                    "Liverpool",
+                    "5",
+                    "13"
+                  ]
+                },
+                {
+                  "cells": [
+                    "2",
+                    "Arsenal",
+                    "5",
+                    "13"
+                  ]
+                },
+                {
+                  "cells": [
+                    "3",
+                    "Man City",
+                    "5",
+                    "12"
+                  ]
+                },
+                {
+                  "cells": [
+                    "4",
+                    "Chelsea",
+                    "5",
+                    "10"
+                  ]
+                },
+                {
+                  "cells": [
+                    "5",
+                    "Newcastle",
+                    "5",
+                    "9"
+                  ]
+                }
+              ],
+              "total_count": 20
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full table",
+                "url": "https://www.premierleague.com/tables"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League, 20 Sep 2026 08:00"
+              }
+            ]
+          },
+          "fallback_text": "Premier League after 5 games, as of 20 Sep 08:00 (couldn’t refresh): 1 Liverpool 13, 2 Arsenal 13, 3 Man City 12, 4 Chelsea 10, 5 Newcastle 9."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the table",
+            "subtitle": "Premier League"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Premier League site didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get the Premier League table: the site didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "sports-standings-f1",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "Who's leading the F1 championship?",
+      "says": "Norris, but Piastri is within one race win.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Standings"
+      ],
+      "rationale": "Top five as a four-column table with wins and points; the full grid is a link; no gap-to-leader column to add up.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Drivers’ championship",
+          "subtitle": "After 17 of 24 races · as of 08:00"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Pos"
+              },
+              {
+                "label": "Driver"
+              },
+              {
+                "label": "Wins",
+                "align": "end"
+              },
+              {
+                "label": "Pts",
+                "align": "end"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "1",
+                  "Lando Norris",
+                  "6",
+                  "312"
+                ]
+              },
+              {
+                "cells": [
+                  "2",
+                  "Oscar Piastri",
+                  "5",
+                  "298"
+                ]
+              },
+              {
+                "cells": [
+                  "3",
+                  "Max Verstappen",
+                  "4",
+                  "271"
+                ]
+              },
+              {
+                "cells": [
+                  "4",
+                  "George Russell",
+                  "2",
+                  "205"
+                ]
+              },
+              {
+                "cells": [
+                  "5",
+                  "Charles Leclerc",
+                  "0",
+                  "164"
+                ]
+              }
+            ],
+            "total_count": 22
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Full standings",
+              "url": "https://www.formula1.com/en/results/2026/drivers"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Formula 1 driver standings, 26 Sep 2026",
+              "url": "https://www.formula1.com/en/results/2026/drivers"
+            }
+          ]
+        },
+        "fallback_text": "Drivers’ championship after 17 of 24 races (as of 08:00): 1 Norris 312 pts, 2 Piastri 298, 3 Verstappen 271, 4 Russell 205, 5 Leclerc 164."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Drivers’ championship",
+            "subtitle": "Formula 1"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the standings",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0024"
+              }
+            }
+          ],
+          "fallback_text": "Reading the F1 drivers’ standings."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Drivers’ championship",
+            "subtitle": "After 16 of 24 races · as of 14 Sep, 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Pos"
+                },
+                {
+                  "label": "Driver"
+                },
+                {
+                  "label": "Wins",
+                  "align": "end"
+                },
+                {
+                  "label": "Pts",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "1",
+                    "Lando Norris",
+                    "6",
+                    "297"
+                  ]
+                },
+                {
+                  "cells": [
+                    "2",
+                    "Oscar Piastri",
+                    "4",
+                    "273"
+                  ]
+                },
+                {
+                  "cells": [
+                    "3",
+                    "Max Verstappen",
+                    "4",
+                    "259"
+                  ]
+                },
+                {
+                  "cells": [
+                    "4",
+                    "George Russell",
+                    "2",
+                    "195"
+                  ]
+                },
+                {
+                  "cells": [
+                    "5",
+                    "Charles Leclerc",
+                    "0",
+                    "158"
+                  ]
+                }
+              ],
+              "total_count": 22
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full standings",
+                "url": "https://www.formula1.com/en/results/2026/drivers"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Formula 1 driver standings, 14 Sep 2026",
+                "url": "https://www.formula1.com/en/results/2026/drivers"
+              }
+            ]
+          },
+          "fallback_text": "Drivers’ championship after 16 of 24 races, as of 14 Sep 08:00 (couldn’t refresh): 1 Norris 297 pts, 2 Piastri 273, 3 Verstappen 259, 4 Russell 195, 5 Leclerc 158."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the standings",
+            "subtitle": "Formula 1"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Formula 1 site didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get the F1 drivers’ standings: the Formula 1 site didn’t respond."
+        }
       }
     },
     {
@@ -200,6 +827,188 @@
           ]
         },
         "fallback_text": "Arsenal next: v Tottenham Sat 3 Oct 19:30 (home); v PSV Thu 8 Oct 03:00 (away, Champions League); v Brighton Sun 18 Oct 21:00 (away)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal · next 3",
+            "subtitle": "Singapore time"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading Arsenal’s fixtures",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0023"
+              }
+            }
+          ],
+          "fallback_text": "Reading Arsenal’s fixtures."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal · next 3",
+            "subtitle": "As of 24 Sep, 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "v Tottenham",
+                  "secondary": "Sat 3 Oct · 19:30 · Emirates",
+                  "trailing": "Home"
+                },
+                {
+                  "label": "v PSV",
+                  "secondary": "Thu 8 Oct · 03:00 · Champions League",
+                  "trailing": "Away"
+                },
+                {
+                  "label": "v Brighton",
+                  "secondary": "Sun 18 Oct · 21:00",
+                  "trailing": "Away"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Arsenal fixtures, 24 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal next (as of 24 Sep 08:00, couldn’t refresh): v Tottenham Sat 3 Oct 19:30 (home); v PSV Thu 8 Oct 03:00 (away, Champions League); v Brighton Sun 18 Oct 21:00 (away)."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the fixtures",
+            "subtitle": "Arsenal"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Arsenal’s site didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get Arsenal’s fixtures: the club site didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "sports-f1-weekend",
+      "vertical": "sports",
+      "kind": "card",
+      "request": "When is the Singapore Grand Prix?",
+      "says": "Race day is two weeks from tomorrow.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Fixture list"
+      ],
+      "rationale": "Three sessions as rows with the local start time trailing; no countdown; the circuit is in the subtitle once.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Singapore Grand Prix",
+          "subtitle": "Marina Bay · Singapore time · as of 08:00"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Practice 1",
+                "secondary": "Fri 9 Oct",
+                "trailing": "17:30"
+              },
+              {
+                "label": "Qualifying",
+                "secondary": "Sat 10 Oct",
+                "trailing": "21:00"
+              },
+              {
+                "label": "Race",
+                "secondary": "Sun 11 Oct",
+                "trailing": "20:00"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Formula 1 Singapore Grand Prix timetable, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Singapore Grand Prix, Marina Bay (Singapore time, as of 08:00): Practice 1 Fri 9 Oct 17:30, qualifying Sat 10 Oct 21:00, race Sun 11 Oct 20:00."
+      },
+      "states": {
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore Grand Prix",
+            "subtitle": "Marina Bay · as of 19 Sep, 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Practice 1",
+                  "secondary": "Fri 9 Oct",
+                  "trailing": "17:30"
+                },
+                {
+                  "label": "Qualifying",
+                  "secondary": "Sat 10 Oct",
+                  "trailing": "21:00"
+                },
+                {
+                  "label": "Race",
+                  "secondary": "Sun 11 Oct",
+                  "trailing": "20:00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Formula 1 Singapore Grand Prix timetable, 19 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Singapore Grand Prix, Marina Bay (Singapore time, as of 19 Sep 08:00, couldn’t refresh): Practice 1 Fri 9 Oct 17:30, qualifying Sat 10 Oct 21:00, race Sun 11 Oct 20:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the race timetable",
+            "subtitle": "Singapore Grand Prix"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Formula 1 site didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get the Singapore Grand Prix timetable: the Formula 1 site didn’t respond."
+        }
       }
     },
     {

@@ -1,7 +1,9 @@
 {
   "vertical": "food",
   "fresh": [
-    "food-menu"
+    "food-menu",
+    "food-nutrition-week",
+    "food-menu-section"
   ],
   "examples": [
     {
@@ -67,6 +69,162 @@
           ]
         },
         "fallback_text": "Hainanese chicken rice for 4, about 60 min. You need 1 whole chicken (about 1.5 kg), 2 cups jasmine rice, 6 cloves garlic, 5 slices ginger, 2 pandan leaves, and chilli, lime and dark soy to serve. 1. Poach the chicken with the ginger for 35 min, then plunge it into ice water. 2. Fry the rice with garlic and a spoon of chicken fat, then cook it in the stock with pandan. 3. Slice and serve with the rice, chilli and dark soy."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Hainanese chicken rice",
+            "subtitle": "Serves 4"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Comparing 3 home recipes",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0001"
+              }
+            }
+          ],
+          "fallback_text": "Finding a chicken rice recipe for 4."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t load a recipe",
+            "subtitle": "Chicken rice for 4"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The recipe sites didn’t respond. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn’t load a chicken rice recipe: the recipe sites didn’t respond. Nothing was saved."
+        }
+      }
+    },
+    {
+      "id": "food-recipe-pantry",
+      "vertical": "food",
+      "kind": "card",
+      "request": "What can I make for dinner with eggs, tomatoes and leftover rice?",
+      "says": "Fried rice, and the day-old rice is exactly what it wants.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Recipe"
+      ],
+      "rationale": "Built from what they have: time and servings as numbers, then ingredients and numbered steps; nothing to buy.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tomato egg fried rice",
+          "subtitle": "Serves 2 · one pan"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "20 min",
+                "label": "Total time"
+              },
+              {
+                "value": "2",
+                "label": "Serves"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Ingredients",
+                "bullets": [
+                  "3 eggs, beaten with a pinch of salt",
+                  "2 ripe tomatoes, cut in wedges",
+                  "2 cups cooked rice, a day old if you have it",
+                  "2 spring onions, sliced",
+                  "1 tbsp light soy sauce, 1 tbsp oil"
+                ]
+              },
+              {
+                "heading": "Method",
+                "paragraphs": [
+                  "1. Scramble the eggs in the hot oil until just set, then tip them out.",
+                  "2. Fry the tomatoes for 3 minutes until they soften and give up their juice.",
+                  "3. Add the rice and soy sauce, press out any lumps and fry for 4 minutes.",
+                  "4. Fold the eggs back in and finish with the spring onions."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Uses only what you listed, plus oil, salt, soy sauce and spring onions."
+          ]
+        },
+        "fallback_text": "Tomato egg fried rice for 2, about 20 min, one pan. You need 3 eggs, 2 tomatoes, 2 cups cooked rice, 2 spring onions, 1 tbsp light soy sauce and 1 tbsp oil. 1. Scramble the eggs until just set, tip out. 2. Fry the tomatoes 3 min. 3. Add the rice and soy, fry 4 min. 4. Fold the eggs back in, finish with spring onions."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomato egg fried rice",
+            "subtitle": "Serves 2"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Matching recipes to eggs, tomatoes and rice",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0002"
+              }
+            }
+          ],
+          "fallback_text": "Finding a recipe for eggs, tomatoes and rice."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No recipe uses only these",
+            "subtitle": "Eggs, tomatoes, rice"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Every match needed something you don’t have"
+            }
+          ],
+          "fallback_text": "No recipe found that uses only eggs, tomatoes and rice."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t load a recipe",
+            "subtitle": "Eggs, tomatoes, rice"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The recipe sites didn’t respond. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn’t load a recipe for eggs, tomatoes and rice: the recipe sites didn’t respond."
+        }
       }
     },
     {
@@ -119,6 +277,314 @@
           ]
         },
         "fallback_text": "One plate of char kway teow (about 380 g) has around 740 kcal, 38 g fat and 1,460 mg sodium."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Char kway teow · one plate",
+            "subtitle": "About 380 g"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Looking it up in the HPB food database",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0003"
+              }
+            }
+          ],
+          "fallback_text": "Looking up char kway teow in the HPB food database."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No nutrition data for this dish",
+            "subtitle": "Char kway teow with cockles"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "HPB lists no entry for this version"
+            }
+          ],
+          "fallback_text": "HPB lists no nutrition data for char kway teow with cockles."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t look up the calories",
+            "subtitle": "Char kway teow"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The HPB food database didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t look up char kway teow: the HPB food database didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "food-nutrition-week",
+      "vertical": "food",
+      "kind": "card",
+      "request": "How many calories have I eaten each day this week?",
+      "says": "Today is on the light side, with dinner still to log.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Nutrition"
+      ],
+      "rationale": "Average and today as numbers, one bar per day with today highlighted; Sunday is null, not 0.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Calories this week",
+          "subtitle": "21–27 Sep · MyFitnessPal · as of 19:30"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "1,978 kcal",
+                "label": "Average, Mon–Fri"
+              },
+              {
+                "value": "1,310 kcal",
+                "label": "Today so far"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "bar",
+              "unit": "kcal",
+              "x_labels": [
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri",
+                "Sat",
+                "Sun"
+              ],
+              "series": [
+                {
+                  "label": "Energy",
+                  "values": [
+                    "2050",
+                    "1880",
+                    "2210",
+                    "1760",
+                    "1990",
+                    "1310",
+                    null
+                  ]
+                }
+              ],
+              "highlight_index": 5
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "MyFitnessPal food diary, 26 Sep 2026 19:30"
+            }
+          ]
+        },
+        "fallback_text": "Calories 21–27 Sep, as of 19:30: Mon 2,050, Tue 1,880, Wed 2,210, Thu 1,760, Fri 1,990, today so far 1,310 kcal. Average Mon–Fri 1,978 kcal."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Calories this week",
+            "subtitle": "21–27 Sep · MyFitnessPal"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your food diary",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0004"
+              }
+            }
+          ],
+          "fallback_text": "Reading your MyFitnessPal food diary for 21–27 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Calories this week",
+            "subtitle": "5 of 7 days reported · as of 19:30"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "2,033 kcal",
+                  "label": "Average, full days"
+                },
+                {
+                  "value": "1,310 kcal",
+                  "label": "Today so far"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "bar",
+                "unit": "kcal",
+                "x_labels": [
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Sat",
+                  "Sun"
+                ],
+                "series": [
+                  {
+                    "label": "Energy",
+                    "values": [
+                      "2050",
+                      "1880",
+                      "2210",
+                      null,
+                      "1990",
+                      "1310",
+                      null
+                    ]
+                  }
+                ],
+                "highlight_index": 5
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MyFitnessPal food diary, 26 Sep 2026 19:30"
+              }
+            ]
+          },
+          "fallback_text": "5 of 7 days reported, as of 19:30: Mon 2,050, Tue 1,880, Wed 2,210, Fri 1,990, today so far 1,310 kcal; Thursday has no entries. Average of the full days logged 2,033 kcal."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Calories this week",
+            "subtitle": "As of 14:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "1,978 kcal",
+                  "label": "Average, Mon–Fri"
+                },
+                {
+                  "value": "860 kcal",
+                  "label": "Today so far"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "bar",
+                "unit": "kcal",
+                "x_labels": [
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Sat",
+                  "Sun"
+                ],
+                "series": [
+                  {
+                    "label": "Energy",
+                    "values": [
+                      "2050",
+                      "1880",
+                      "2210",
+                      "1760",
+                      "1990",
+                      "860",
+                      null
+                    ]
+                  }
+                ],
+                "highlight_index": 5
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MyFitnessPal food diary, 26 Sep 2026 14:10"
+              }
+            ]
+          },
+          "fallback_text": "As of 14:10 (couldn’t refresh): Mon 2,050, Tue 1,880, Wed 2,210, Thu 1,760, Fri 1,990, today so far 860 kcal. Average Mon–Fri 1,978 kcal."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing logged this week",
+            "subtitle": "21–27 Sep · MyFitnessPal · as of 19:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Your food diary has no entries since Mon 21 Sep"
+            }
+          ],
+          "fallback_text": "Nothing logged in MyFitnessPal for 21–27 Sep, as of 19:30."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your food diary",
+            "subtitle": "MyFitnessPal"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "MyFitnessPal didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read your food diary: MyFitnessPal didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -178,6 +644,281 @@
           ]
         },
         "fallback_text": "Burnt Ends highlights: the sanger S$28, leeks with hazelnut and brown butter S$24, onion rings S$18."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Burnt Ends · highlights",
+            "subtitle": "Modern barbecue · Dempsey"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the menu and recent reviews",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0005"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Burnt Ends menu and recent reviews."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Burnt Ends · highlights",
+            "subtitle": "As of 25 Sep, 10:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Burnt Ends sanger",
+                  "secondary": "Pulled pork, brioche, slaw",
+                  "trailing": "S$28"
+                },
+                {
+                  "label": "Leeks, hazelnut, brown butter",
+                  "secondary": "Smoked over almond wood",
+                  "trailing": "S$24"
+                },
+                {
+                  "label": "Onion rings",
+                  "secondary": "With smoked mayo",
+                  "trailing": "S$18"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full menu",
+                "url": "https://burntends.com.sg/menu"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Burnt Ends menu and Google reviews, 25 Sep 2026 10:00"
+              }
+            ]
+          },
+          "fallback_text": "Burnt Ends highlights as of 25 Sep 10:00 (couldn’t refresh): the sanger S$28, leeks with hazelnut and brown butter S$24, onion rings S$18."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No menu online",
+            "subtitle": "Burnt Ends · as of 10:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The restaurant hasn’t published this season’s menu"
+            }
+          ],
+          "fallback_text": "Burnt Ends hasn’t published this season’s menu online (checked 10:00)."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the menu",
+            "subtitle": "Burnt Ends"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The restaurant’s site didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read the Burnt Ends menu: the restaurant’s site didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "food-menu-section",
+      "vertical": "food",
+      "kind": "card",
+      "request": "Which dumplings does Din Tai Fung do, and how much are they?",
+      "says": "The classic pork one is what people queue for.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Menu"
+      ],
+      "rationale": "One course as priced rows, the classic marked; three inline and the rest on the page; the full menu is a link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Din Tai Fung · dumplings",
+          "subtitle": "Singapore outlets · as of 11:00"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Pork xiao long bao",
+                "secondary": "10 pieces · the house classic",
+                "trailing": "S$10.80",
+                "mark": "pick"
+              },
+              {
+                "label": "Chicken xiao long bao",
+                "secondary": "10 pieces",
+                "trailing": "S$10.30"
+              },
+              {
+                "label": "Crab roe and pork xiao long bao",
+                "secondary": "10 pieces",
+                "trailing": "S$16.80"
+              },
+              {
+                "label": "Truffle and pork xiao long bao",
+                "secondary": "5 pieces",
+                "trailing": "S$28.00"
+              },
+              {
+                "label": "Vegetable and pork dumplings",
+                "secondary": "8 pieces",
+                "trailing": "S$9.80"
+              },
+              {
+                "label": "Shrimp and pork shao mai",
+                "secondary": "6 pieces",
+                "trailing": "S$12.80"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Full menu",
+              "url": "https://www.dintaifung.com.sg/menu"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Din Tai Fung Singapore menu, 26 Sep 2026 11:00",
+              "url": "https://www.dintaifung.com.sg/menu"
+            }
+          ]
+        },
+        "fallback_text": "Din Tai Fung dumplings (Singapore, as of 11:00): pork xiao long bao 10 pcs S$10.80, chicken xiao long bao S$10.30, crab roe and pork S$16.80, truffle and pork 5 pcs S$28.00, vegetable and pork dumplings 8 pcs S$9.80, shrimp and pork shao mai 6 pcs S$12.80."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Din Tai Fung · dumplings",
+            "subtitle": "Singapore outlets"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the menu",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0006"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Din Tai Fung menu."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Din Tai Fung · dumplings",
+            "subtitle": "As of 24 Sep, 11:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Pork xiao long bao",
+                  "secondary": "10 pieces · the house classic",
+                  "trailing": "S$10.80",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Chicken xiao long bao",
+                  "secondary": "10 pieces",
+                  "trailing": "S$10.30"
+                },
+                {
+                  "label": "Crab roe and pork xiao long bao",
+                  "secondary": "10 pieces",
+                  "trailing": "S$16.80"
+                },
+                {
+                  "label": "Truffle and pork xiao long bao",
+                  "secondary": "5 pieces",
+                  "trailing": "S$28.00"
+                },
+                {
+                  "label": "Vegetable and pork dumplings",
+                  "secondary": "8 pieces",
+                  "trailing": "S$9.80"
+                },
+                {
+                  "label": "Shrimp and pork shao mai",
+                  "secondary": "6 pieces",
+                  "trailing": "S$12.80"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full menu",
+                "url": "https://www.dintaifung.com.sg/menu"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Din Tai Fung Singapore menu, 24 Sep 2026 11:00",
+                "url": "https://www.dintaifung.com.sg/menu"
+              }
+            ]
+          },
+          "fallback_text": "Din Tai Fung dumplings (Singapore, as of 24 Sep 11:00, couldn’t refresh): pork xiao long bao 10 pcs S$10.80, chicken xiao long bao S$10.30, crab roe and pork S$16.80, truffle and pork 5 pcs S$28.00, vegetable and pork dumplings 8 pcs S$9.80, shrimp and pork shao mai 6 pcs S$12.80."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the menu",
+            "subtitle": "Din Tai Fung"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The restaurant’s site didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read the Din Tai Fung menu: the restaurant’s site didn’t respond."
+        }
       }
     },
     {
@@ -219,6 +960,24 @@
           }
         ],
         "fallback_text": "Reminder set: take the bread out at 19:42."
+      },
+      "states": {
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t set the reminder",
+            "subtitle": "Take the bread out"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The reminder service didn’t answer. Nothing was scheduled."
+            }
+          ],
+          "fallback_text": "Couldn’t set the reminder to take the bread out: the reminder service didn’t answer. Nothing was scheduled."
+        }
       }
     }
   ]

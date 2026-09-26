@@ -3,7 +3,9 @@
   "fresh": [
     "weather-now",
     "weather-week",
-    "weather-alert"
+    "weather-alert",
+    "weather-tomorrow",
+    "weather-alert-typhoon"
   ],
   "examples": [
     {
@@ -79,6 +81,283 @@
           ]
         },
         "fallback_text": "Singapore, as of 12:05: 31°C now, thunderstorms from about 3 pm (70% chance), cooling to 27°C."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore",
+            "subtitle": "This afternoon"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading NEA’s latest forecast",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0010"
+              }
+            }
+          ],
+          "fallback_text": "Reading NEA’s latest forecast for this afternoon."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore",
+            "subtitle": "As of 10:40 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "31°",
+                  "label": "Now"
+                },
+                {
+                  "value": "70%",
+                  "label": "Rain after 3 pm"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "line",
+                "unit": "°C",
+                "x_labels": [
+                  "12:00",
+                  "13:00",
+                  "14:00",
+                  "15:00",
+                  "16:00",
+                  "17:00"
+                ],
+                "series": [
+                  {
+                    "label": "Temperature",
+                    "values": [
+                      "31",
+                      "32",
+                      "32",
+                      "28",
+                      "27",
+                      "27"
+                    ]
+                  }
+                ],
+                "highlight_index": 3
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NEA weather forecast",
+                "url": "https://www.nea.gov.sg/weather"
+              }
+            ]
+          },
+          "fallback_text": "Singapore, as of 10:40 (couldn’t refresh): 31°C now, thunderstorms from about 3 pm (70% chance), cooling to 27°C."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the forecast",
+            "subtitle": "Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "NEA didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get the Singapore forecast: NEA didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "weather-tomorrow",
+      "vertical": "weather",
+      "kind": "card",
+      "request": "What's the weather in London tomorrow?",
+      "says": "Dry in the morning; take a jacket for the afternoon.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Current + forecast"
+      ],
+      "rationale": "High and rain chance as numbers, the day's temperature as one line with the peak highlighted; times are local.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "London tomorrow",
+          "subtitle": "Sun 27 Sep · London time · as of 13:00"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "17°",
+                "label": "High"
+              },
+              {
+                "value": "60%",
+                "label": "Showers after 14:00"
+              }
+            ]
+          },
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "°C",
+              "x_labels": [
+                "09:00",
+                "11:00",
+                "13:00",
+                "15:00",
+                "17:00",
+                "19:00",
+                "21:00"
+              ],
+              "series": [
+                {
+                  "label": "Temperature",
+                  "values": [
+                    "12",
+                    "14",
+                    "16",
+                    "17",
+                    "16",
+                    "14",
+                    "13"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Met Office forecast for London, 26 Sep 2026",
+              "url": "https://weather.metoffice.gov.uk/forecast/gcpvj0v07"
+            }
+          ]
+        },
+        "fallback_text": "London, Sun 27 Sep (London time, as of 13:00): high 17°C around 15:00, 60% chance of showers after 14:00, 12°C at 09:00 and 13°C by 21:00."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "London tomorrow",
+            "subtitle": "Sun 27 Sep · London time"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the Met Office forecast",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0011"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Met Office forecast for London, Sun 27 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "London tomorrow",
+            "subtitle": "Sun 27 Sep · London time · as of 07:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "17°",
+                  "label": "High"
+                },
+                {
+                  "value": "60%",
+                  "label": "Showers after 14:00"
+                }
+              ]
+            },
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "chart",
+                "chart": "line",
+                "unit": "°C",
+                "x_labels": [
+                  "09:00",
+                  "11:00",
+                  "13:00",
+                  "15:00",
+                  "17:00",
+                  "19:00",
+                  "21:00"
+                ],
+                "series": [
+                  {
+                    "label": "Temperature",
+                    "values": [
+                      "12",
+                      "14",
+                      "16",
+                      "17",
+                      "16",
+                      "14",
+                      "13"
+                    ]
+                  }
+                ],
+                "highlight_index": 3
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Met Office forecast for London, 26 Sep 2026",
+                "url": "https://weather.metoffice.gov.uk/forecast/gcpvj0v07"
+              }
+            ]
+          },
+          "fallback_text": "London, Sun 27 Sep (London time, as of 07:00, couldn’t refresh): high 17°C around 15:00, 60% chance of showers after 14:00, 12°C at 09:00 and 13°C by 21:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the forecast",
+            "subtitle": "London · Sun 27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Met Office didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get the London forecast for Sun 27 Sep: the Met Office didn’t respond."
+        }
       }
     },
     {
@@ -150,6 +429,149 @@
           ]
         },
         "fallback_text": "Tokyo 28 Sep–4 Oct, as of 09:00: Mon sunny 19–26°C, Tue cloudy 19–25°C, Wed rain (80%) 18–22°C, Thu cloudy 18–24°C, Fri sunny 18–25°C, Sat sunny 19–26°C, Sun showers (40%) 18–23°C."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo next week",
+            "subtitle": "Mon 28 Sep–Sun 4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the Japan Meteorological Agency forecast",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0012"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Tokyo forecast for 28 Sep–4 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo next week",
+            "subtitle": "Mon 28 Sep–Fri 2 Oct · 5 of 7 days · as of 09:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Mon 28",
+                  "secondary": "Sunny",
+                  "trailing": "19–26°"
+                },
+                {
+                  "label": "Tue 29",
+                  "secondary": "Cloudy",
+                  "trailing": "19–25°"
+                },
+                {
+                  "label": "Wed 30",
+                  "secondary": "Rain, 80%",
+                  "trailing": "18–22°"
+                },
+                {
+                  "label": "Thu 1",
+                  "secondary": "Cloudy",
+                  "trailing": "18–24°"
+                },
+                {
+                  "label": "Fri 2",
+                  "secondary": "Sunny",
+                  "trailing": "18–25°"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Japan Meteorological Agency, 26 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "Tokyo 28 Sep–2 Oct, as of 09:00 (the weekend isn’t forecast yet): Mon sunny 19–26°C, Tue cloudy 19–25°C, Wed rain (80%) 18–22°C, Thu cloudy 18–24°C, Fri sunny 18–25°C."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo next week",
+            "subtitle": "Mon 28 Sep–Sun 4 Oct · as of 25 Sep, 21:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Mon 28",
+                  "secondary": "Sunny",
+                  "trailing": "19–26°"
+                },
+                {
+                  "label": "Tue 29",
+                  "secondary": "Cloudy",
+                  "trailing": "19–25°"
+                },
+                {
+                  "label": "Wed 30",
+                  "secondary": "Rain, 80%",
+                  "trailing": "18–22°"
+                },
+                {
+                  "label": "Thu 1",
+                  "secondary": "Cloudy",
+                  "trailing": "18–24°"
+                },
+                {
+                  "label": "Fri 2",
+                  "secondary": "Sunny",
+                  "trailing": "18–25°"
+                },
+                {
+                  "label": "Sat 3",
+                  "secondary": "Sunny",
+                  "trailing": "19–26°"
+                },
+                {
+                  "label": "Sun 4",
+                  "secondary": "Showers, 40%",
+                  "trailing": "18–23°"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Japan Meteorological Agency, 25 Sep 2026 21:00"
+              }
+            ]
+          },
+          "fallback_text": "Tokyo 28 Sep–4 Oct, as of 25 Sep 21:00, couldn’t refresh: Mon sunny 19–26°C, Tue cloudy 19–25°C, Wed rain (80%) 18–22°C, Thu cloudy 18–24°C, Fri sunny 18–25°C, Sat sunny 19–26°C, Sun showers (40%) 18–23°C."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t get the Tokyo forecast",
+            "subtitle": "Mon 28 Sep–Sun 4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Japan Meteorological Agency didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t get the Tokyo forecast for 28 Sep–4 Oct: the Japan Meteorological Agency didn’t respond."
+        }
       }
     },
     {
@@ -192,6 +614,193 @@
           ]
         },
         "fallback_text": "NEA heavy rain warning until 18:00 for the west and central areas; flash floods possible, avoid Bukit Timah and Dunearn Road."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Weather warnings",
+            "subtitle": "Singapore · today"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking NEA warnings",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0013"
+              }
+            }
+          ],
+          "fallback_text": "Checking NEA for weather warnings today."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Heavy rain warning until 18:00",
+            "subtitle": "As of 11:20 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Flash floods are possible in low-lying areas. Avoid Bukit Timah Road and Dunearn Road until the rain eases."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NEA heavy rain warning",
+                "url": "https://www.nea.gov.sg/weather"
+              }
+            ]
+          },
+          "fallback_text": "NEA heavy rain warning (as of 11:20, couldn’t refresh) until 18:00 for the west and central areas; flash floods possible, avoid Bukit Timah and Dunearn Road."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No weather warnings",
+            "subtitle": "Singapore · NEA · as of 13:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "NEA has no warnings in force today"
+            }
+          ],
+          "fallback_text": "No NEA weather warnings in force for Singapore, as of 13:40."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check for warnings",
+            "subtitle": "Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "NEA didn’t respond, so this is not an all-clear."
+            }
+          ],
+          "fallback_text": "Couldn’t check for weather warnings: NEA didn’t respond, so this is not an all-clear."
+        }
+      }
+    },
+    {
+      "id": "weather-alert-typhoon",
+      "vertical": "weather",
+      "kind": "card",
+      "request": "Is there a typhoon warning in Hong Kong?",
+      "says": "Yes, plan to be indoors by 9 tonight.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Severe-weather alert"
+      ],
+      "rationale": "The signal and when it starts are the title; one paragraph says what stops; the Observatory is in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Typhoon signal No. 8 from 22:00",
+          "subtitle": "Hong Kong · HKO · as of 17:30"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Gale-force winds are expected overnight. Be indoors before the signal goes up; ferries and above-ground MTR lines stop when it does."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Hong Kong Observatory tropical cyclone warning",
+              "url": "https://www.hko.gov.hk/en/wxinfo/currwx/tc.htm"
+            }
+          ]
+        },
+        "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 17:30). Gale-force winds overnight; ferries and above-ground MTR lines stop when the signal goes up."
+      },
+      "states": {
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Typhoon signal No. 8 from 22:00",
+            "subtitle": "Hong Kong · as of 16:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Gale-force winds are expected overnight. Be indoors before the signal goes up; ferries and above-ground MTR lines stop when it does."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Hong Kong Observatory tropical cyclone warning",
+                "url": "https://www.hko.gov.hk/en/wxinfo/currwx/tc.htm"
+              }
+            ]
+          },
+          "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 16:00, couldn’t refresh). Gale-force winds overnight; ferries and above-ground MTR lines stop when the signal goes up."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No typhoon signal",
+            "subtitle": "Hong Kong · HKO · as of 17:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No tropical cyclone signal is in force"
+            }
+          ],
+          "fallback_text": "No tropical cyclone signal in force in Hong Kong, as of 17:30."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check the typhoon signal",
+            "subtitle": "Hong Kong"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Hong Kong Observatory didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t check the Hong Kong typhoon signal: the Observatory didn’t respond."
+        }
       }
     },
     {
