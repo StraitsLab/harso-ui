@@ -133,6 +133,7 @@
     "health-steps-week",
     "health-meds-taken",
     "docs-compare-plans",
+    "docs-compare-table",
     "data-kpis-week",
     "data-target",
     "data-sales-collections",
@@ -16705,7 +16706,117 @@
             ]
           }
         ],
-        "fallback_text": "Tomorrow: Design review 09:30 (Zoom), lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift 13:00. Free after 14:00."
+        "fallback_text": "Tomorrow, Sun 27 Sep: Design review 09:30 on Zoom with Mei and Arjun, lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift (21 McCallum St) 13:00. Free after 14:00."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 2 calendars",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c01"
+              }
+            }
+          ],
+          "fallback_text": "Reading your Google and iCloud calendars for Sun 27 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "1 of 2 calendars read · iCloud still loading"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Design review",
+                  "secondary": "Zoom · Mei, Arjun",
+                  "trailing": "09:30"
+                },
+                {
+                  "label": "Lunch with Sam",
+                  "secondary": "Tiong Bahru Bakery",
+                  "trailing": "12:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Sun 27 Sep, Google calendar only so far: Design review 09:30 on Zoom with Mei and Arjun, lunch with Sam 12:00 at Tiong Bahru Bakery. iCloud is still loading."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "3 events · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Design review",
+                  "secondary": "Zoom · Mei, Arjun",
+                  "trailing": "09:30"
+                },
+                {
+                  "label": "Lunch with Sam",
+                  "secondary": "Tiong Bahru Bakery",
+                  "trailing": "12:00"
+                },
+                {
+                  "label": "Viewing at The Clift",
+                  "secondary": "21 McCallum St",
+                  "trailing": "13:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Sun 27 Sep as of 09:10 (couldn’t refresh): Design review 09:30 on Zoom with Mei and Arjun, lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift (21 McCallum St) 13:00."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing on either calendar"
+            }
+          ],
+          "fallback_text": "Nothing on your Google or iCloud calendars for Sun 27 Sep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your calendar",
+            "subtitle": "Tomorrow · Sun 27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "The Google Calendar sign-in expired, so I couldn’t read Sun 27 Sep. Nothing was changed."
+        }
       }
     },
     {
@@ -16760,6 +16871,153 @@
           }
         ],
         "fallback_text": "Design review 26 Sep: ship the rows card first; no reply buttons. Actions: Mei drafts row states (29 Sep), Arjun checks dark contrast (30 Sep), you share the pane mock (2 Oct)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design review",
+            "subtitle": "26 Sep · Mei, Arjun, you"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 55 minutes of transcript",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c02"
+              }
+            }
+          ],
+          "fallback_text": "Reading the 55-minute transcript of the design review on 26 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design review",
+            "subtitle": "26 Sep · first 40 of 55 min"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Decided",
+                  "bullets": [
+                    "Ship the rows card before charts."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Draft the row states",
+                  "secondary": "Mei · Tue 29 Sep"
+                },
+                {
+                  "label": "Check dark contrast",
+                  "secondary": "Arjun · Wed 30 Sep"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Design review 26 Sep, first 40 of 55 minutes: ship the rows card before charts. Actions so far: Mei drafts row states (Tue 29 Sep), Arjun checks dark contrast (Wed 30 Sep)."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design review",
+            "subtitle": "26 Sep · as of 16:40 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Decided",
+                  "bullets": [
+                    "Ship the rows card before charts.",
+                    "Keep reply buttons off every card."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Draft the row states",
+                  "secondary": "Mei · Tue 29 Sep"
+                },
+                {
+                  "label": "Check dark contrast",
+                  "secondary": "Arjun · Wed 30 Sep"
+                },
+                {
+                  "label": "Share the pane mock",
+                  "secondary": "You · Fri 2 Oct"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Design review notes in Notion, 26 Sep 2026 16:40"
+              }
+            ]
+          },
+          "fallback_text": "Design review 26 Sep, notes as of 16:40 (couldn’t refresh from Notion): ship the rows card before charts; keep reply buttons off every card. Actions: Mei drafts row states (Tue 29 Sep), Arjun checks dark contrast (Wed 30 Sep), you share the pane mock (Fri 2 Oct)."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design review",
+            "subtitle": "26 Sep · Mei, Arjun, you"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Decided",
+                  "bullets": [
+                    "Ship the rows card before charts.",
+                    "Keep reply buttons off every card."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No action items were agreed"
+            }
+          ],
+          "fallback_text": "Design review 26 Sep: ship the rows card before charts; keep reply buttons off every card. No action items were agreed."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t summarise the design review",
+            "subtitle": "26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The recording has no transcript yet. Nothing was changed."
+            }
+          ],
+          "fallback_text": "The design review recording from 26 Sep has no transcript yet, so there is nothing to summarise. Nothing was changed."
+        }
       }
     },
     {
@@ -16794,6 +17052,59 @@
           }
         ],
         "fallback_text": "Draft to Nichol, not sent. Re: Lease viewing. Hi Nichol, Tuesday works for me. Shall we say 6:30 pm at the flat? Thanks, Abhi"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Re: Lease viewing",
+            "subtitle": "To Nichol · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your thread with Nichol",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c03"
+              }
+            }
+          ],
+          "fallback_text": "Reading your email thread with Nichol to draft the reply."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Re: Lease viewing",
+            "subtitle": "To Nichol"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No email from Nichol in Gmail"
+            }
+          ],
+          "fallback_text": "There’s no email from Nichol in your Gmail, so there’s nothing to reply to yet. Nothing was sent."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t draft the reply",
+            "subtitle": "To Nichol"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired. Nothing was sent."
+            }
+          ],
+          "fallback_text": "The Gmail sign-in expired, so I couldn’t read your thread with Nichol or draft the reply. Nothing was sent."
+        }
       }
     },
     {
@@ -16836,6 +17147,68 @@
           }
         ],
         "fallback_text": "Move to The Clift, 5 of 8 done. Left: tenancy agreement (waiting on landlord), book movers (2 of 3 quotes in), transfer SP Group account after 30 Sep."
+      },
+      "states": {
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Moving to The Clift",
+            "subtitle": "5 of 8 done · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sign the tenancy agreement",
+                  "secondary": "Waiting on the landlord's signature"
+                },
+                {
+                  "label": "Book movers",
+                  "secondary": "Quotes from 2 of 3 companies"
+                },
+                {
+                  "label": "Transfer SP Group account",
+                  "secondary": "Do after 30 Sep"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Move to The Clift, 5 of 8 done as of 09:10 (couldn’t refresh). Left: tenancy agreement (waiting on landlord), book movers (2 of 3 quotes in), transfer SP Group account after 30 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Moving to The Clift",
+            "subtitle": "8 of 8 done"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing left on this list"
+            }
+          ],
+          "fallback_text": "Move to The Clift: all 8 done, nothing left on the list."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your move list",
+            "subtitle": "Things"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Things didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Things didn’t respond, so I couldn’t read the move list. Nothing was changed."
+        }
       }
     },
     {
@@ -16891,6 +17264,24 @@
           ]
         },
         "fallback_text": "Watching WhatsApp for a reply from Nichol since 9:40 AM; stops after Friday 6 PM."
+      },
+      "states": {
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Reply from Nichol",
+            "subtitle": "WhatsApp"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "WhatsApp disconnected at 11:20. Nothing was sent."
+            }
+          ],
+          "fallback_text": "WhatsApp disconnected at 11:20, so I stopped watching for Nichol’s reply. Nothing was sent. Reconnect WhatsApp to watch again."
+        }
       }
     },
     {
@@ -16990,6 +17381,674 @@
       }
     },
     {
+      "id": "prod-week-schedule",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "What does next week look like?",
+      "says": "Tuesday is the full day; the weekend is clear.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Schedule / calendar"
+      ],
+      "rationale": "A week is one list, date then place in secondary and time trailing; it earns the page. Day headings wait for grouped rows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Next week · 28 Sep–4 Oct",
+          "subtitle": "7 events"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Team planning",
+                "secondary": "Mon 28 Sep · Zoom",
+                "trailing": "10:00"
+              },
+              {
+                "label": "Dentist",
+                "secondary": "Tue 29 Sep · Novena Medical Centre",
+                "trailing": "08:30"
+              },
+              {
+                "label": "Investor call",
+                "secondary": "Tue 29 Sep · Zoom · Kai, Priya",
+                "trailing": "11:00"
+              },
+              {
+                "label": "Design review",
+                "secondary": "Tue 29 Sep · Studio · Mei, Arjun",
+                "trailing": "15:00"
+              },
+              {
+                "label": "Lease viewing with Nichol",
+                "secondary": "Wed 30 Sep · The Clift",
+                "trailing": "18:30"
+              },
+              {
+                "label": "Board prep",
+                "secondary": "Thu 1 Oct · Studio",
+                "trailing": "14:00"
+              },
+              {
+                "label": "Dinner with Sam",
+                "secondary": "Fri 2 Oct · Burnt Ends",
+                "trailing": "19:30"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open calendar",
+              "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+            }
+          }
+        ],
+        "more_label": "See all 7 events",
+        "fallback_text": "Next week, 28 Sep–4 Oct: Mon 10:00 team planning (Zoom); Tue 08:30 dentist, 11:00 investor call with Kai and Priya, 15:00 design review; Wed 18:30 lease viewing with Nichol at The Clift; Thu 14:00 board prep; Fri 19:30 dinner with Sam at Burnt Ends. Weekend clear."
+      },
+      "states": {
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Next week · 28 Sep–4 Oct",
+            "subtitle": "1 of 2 calendars read · iCloud still loading"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Team planning",
+                  "secondary": "Mon 28 Sep · Zoom",
+                  "trailing": "10:00"
+                },
+                {
+                  "label": "Dentist",
+                  "secondary": "Tue 29 Sep · Novena Medical Centre",
+                  "trailing": "08:30"
+                },
+                {
+                  "label": "Investor call",
+                  "secondary": "Tue 29 Sep · Zoom · Kai, Priya",
+                  "trailing": "11:00"
+                },
+                {
+                  "label": "Design review",
+                  "secondary": "Tue 29 Sep · Studio · Mei, Arjun",
+                  "trailing": "15:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Next week, 28 Sep–4 Oct, Google calendar only so far (1 of 2 calendars): Mon 28 Sep 10:00 team planning on Zoom; Tue 29 Sep 08:30 dentist at Novena Medical Centre, 11:00 investor call on Zoom with Kai and Priya, 15:00 design review at Studio with Mei and Arjun. iCloud is still loading."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Next week · 28 Sep–4 Oct",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing booked yet"
+            }
+          ],
+          "fallback_text": "Nothing on your Google or iCloud calendars for 28 Sep–4 Oct yet."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your calendar",
+            "subtitle": "Next week · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "The Google Calendar sign-in expired, so I couldn’t read 28 Sep–4 Oct. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "prod-email-draft-team",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Draft a note to the design team moving stand-up to 10:00 from Monday.",
+      "says": "It's in your Gmail drafts; nothing is sent until you send it.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Email draft preview"
+      ],
+      "rationale": "Greeting, body and sign-off as three paragraphs; the quiet link opens the Gmail Drafts folder (a draft has no link of its own, WD-7), and sending stays with the person.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Stand-up moves to 10:00",
+          "subtitle": "To Design team · draft"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Hi all,",
+                  "From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes.",
+                  "Thanks, Abhi"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open Gmail drafts",
+              "url": "https://mail.google.com/mail/u/0/#drafts"
+            }
+          }
+        ],
+        "fallback_text": "Draft to the design team, not sent. Subject: Stand-up moves to 10:00. Hi all, From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes. Thanks, Abhi"
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Stand-up moves to 10:00",
+            "subtitle": "To Design team · draft"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing the draft in Gmail",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c04"
+              }
+            }
+          ],
+          "fallback_text": "Writing the stand-up note to the design team in your Gmail drafts."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Stand-up moves to 10:00",
+            "subtitle": "To 5 of 6 in Design team · draft · no address for Ravi"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Hi all,",
+                    "From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes.",
+                    "Thanks, Abhi"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Gmail drafts",
+                "url": "https://mail.google.com/mail/u/0/#drafts"
+              }
+            }
+          ],
+          "fallback_text": "Draft saved to 5 of 6 in the design team, not sent; I found no address for Ravi. Subject: Stand-up moves to 10:00. Hi all, From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes. Thanks, Abhi"
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Stand-up moves to 10:00",
+            "subtitle": "To Design team · draft as of 09:40 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Hi all,",
+                    "From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes.",
+                    "Thanks, Abhi"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Gmail drafts",
+                "url": "https://mail.google.com/mail/u/0/#drafts"
+              }
+            }
+          ],
+          "fallback_text": "Draft to the design team as saved at 09:40, not sent (couldn’t re-read Gmail). Subject: Stand-up moves to 10:00. Hi all, From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes. Thanks, Abhi"
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t save the draft",
+            "subtitle": "To Design team"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired. Nothing was sent."
+            }
+          ],
+          "fallback_text": "The Gmail sign-in expired, so the stand-up note isn’t in your drafts. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "prod-todo-today",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "What's on my to-do list today?",
+      "says": "The passport renewal is the one that's late.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Checklist / to-do"
+      ],
+      "rationale": "Only what is left, late first with its state; ticking one off happens in chat or in Todoist, never on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Today · Sat 26 Sep",
+          "subtitle": "2 of 5 done"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Renew passport",
+                "secondary": "Was due 24 Sep · ICA online",
+                "status": "overdue"
+              },
+              {
+                "label": "Send Q3 numbers to Priya",
+                "secondary": "Due today",
+                "trailing": "17:00"
+              },
+              {
+                "label": "Call Crown Relocations back",
+                "secondary": "After 14:00"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Todoist",
+              "url": "https://app.todoist.com/app/today"
+            }
+          }
+        ],
+        "fallback_text": "Today, 2 of 5 done. Left: renew passport (overdue since 24 Sep), send Q3 numbers to Priya by 17:00, call Crown Relocations back after 14:00."
+      },
+      "states": {
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Today · Sat 26 Sep",
+            "subtitle": "2 of 5 done · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Renew passport",
+                  "secondary": "Was due 24 Sep · ICA online",
+                  "status": "overdue"
+                },
+                {
+                  "label": "Send Q3 numbers to Priya",
+                  "secondary": "Due today",
+                  "trailing": "17:00"
+                },
+                {
+                  "label": "Call Crown Relocations back",
+                  "secondary": "After 14:00"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Today, Sat 26 Sep, as of 09:10 (couldn’t refresh), 2 of 5 done. Left: renew passport (overdue since 24 Sep, ICA online), send Q3 numbers to Priya by 17:00, call Crown Relocations back after 14:00."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Today · Sat 26 Sep",
+            "subtitle": "5 of 5 done"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing left for today"
+            }
+          ],
+          "fallback_text": "All 5 of your to-dos for Sat 26 Sep are done."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your to-dos",
+            "subtitle": "Todoist"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Todoist didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Todoist didn’t respond, so I couldn’t read today’s to-dos. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "prod-launch-status",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Where's the launch work at?",
+      "says": "Two things are blocked, and one is waiting on you.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Kanban / status list"
+      ],
+      "rationale": "Counts in the subtitle, problems first as rows with the owner trailing; the full board is Linear's, reached by the Open in Linear link. View all only shows these rows. Never columns.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Harso 1.0 launch",
+          "subtitle": "14 issues · 2 blocked · 6 in progress · 6 done"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "App Store review notes",
+                "secondary": "Blocked · waiting on legal",
+                "trailing": "Mei"
+              },
+              {
+                "label": "Stripe tax setup",
+                "secondary": "Blocked · needs the GST number",
+                "trailing": "You"
+              },
+              {
+                "label": "Onboarding copy",
+                "secondary": "In progress · due Wed 30 Sep",
+                "trailing": "Arjun"
+              }
+            ],
+            "total_count": 14
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Linear",
+              "url": "https://linear.app/straitslab/project/harso-1-0"
+            }
+          }
+        ],
+        "more_label": "View blocked and due",
+        "fallback_text": "Harso 1.0 launch, 14 issues: 2 blocked, 6 in progress, 6 done. Blocked: App Store review notes (Mei, waiting on legal), Stripe tax setup (you, needs the GST number). Next due: onboarding copy (Arjun, Wed 30 Sep)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harso 1.0 launch",
+            "subtitle": "Linear"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 14 issues",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d2c01"
+              }
+            }
+          ],
+          "fallback_text": "Reading the 14 issues in the Harso 1.0 launch project in Linear."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harso 1.0 launch",
+            "subtitle": "9 of 14 issues read · 2 blocked so far"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "App Store review notes",
+                  "secondary": "Blocked · waiting on legal",
+                  "trailing": "Mei"
+                },
+                {
+                  "label": "Stripe tax setup",
+                  "secondary": "Blocked · needs the GST number",
+                  "trailing": "You"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Linear",
+                "url": "https://linear.app/straitslab/project/harso-1-0"
+              }
+            }
+          ],
+          "fallback_text": "Harso 1.0 launch, 9 of 14 issues read so far: 2 blocked. App Store review notes (Mei, waiting on legal), Stripe tax setup (you, needs the GST number). Still reading the other 5."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harso 1.0 launch",
+            "subtitle": "14 issues · 2 blocked · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "App Store review notes",
+                  "secondary": "Blocked · waiting on legal",
+                  "trailing": "Mei"
+                },
+                {
+                  "label": "Stripe tax setup",
+                  "secondary": "Blocked · needs the GST number",
+                  "trailing": "You"
+                },
+                {
+                  "label": "Onboarding copy",
+                  "secondary": "In progress · due Wed 30 Sep",
+                  "trailing": "Arjun"
+                }
+              ],
+              "total_count": 14
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Linear",
+                "url": "https://linear.app/straitslab/project/harso-1-0"
+              }
+            }
+          ],
+          "fallback_text": "Harso 1.0 launch, 14 issues, 2 blocked, as of 09:10 (couldn’t refresh): App Store review notes blocked on legal (Mei), Stripe tax setup needs the GST number (you), onboarding copy due Wed 30 Sep (Arjun).",
+          "more_label": "View blocked and due"
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the launch project",
+            "subtitle": "Linear"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Linear didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Linear didn’t respond, so I couldn’t read the Harso 1.0 launch project. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "text-next-meeting",
+      "vertical": "productivity",
+      "kind": "text",
+      "request": "When's my next meeting?",
+      "reply": "Design review at 09:30 tomorrow, on Zoom with Mei and Arjun.",
+      "surface": "text",
+      "components": [
+        "Schedule / calendar"
+      ],
+      "rationale": "One event is one fact; a card would only repeat the sentence.",
+      "document": null
+    },
+    {
+      "id": "file-move-tracker",
+      "vertical": "productivity",
+      "kind": "file",
+      "request": "Make me a spreadsheet to track the office move.",
+      "says": "It has tabs for tasks, budget and contacts, with totals that stay live.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Checklist / to-do",
+        "Sheet (XLSX/CSV)"
+      ],
+      "rationale": "A tracker people will filter and edit is a sheet; the card shows the two figures that set it up and opens the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Office move tracker",
+          "subtitle": "Excel · 3 tabs"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "24",
+                "label": "Tasks"
+              },
+              {
+                "value": "Mon 12 Oct",
+                "label": "Move day"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open sheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d1c10"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download Excel",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d1c10"
+            }
+          }
+        ],
+        "fallback_text": "Office move tracker (Excel, in your Library): 24 tasks towards move day Mon 12 Oct, with tabs for tasks, budget and contacts."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Office move tracker",
+            "subtitle": "Excel · 3 tabs"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Building the budget tab",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d1c05"
+              }
+            }
+          ],
+          "fallback_text": "Building the office move tracker: tasks, budget and contacts tabs."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t make the tracker",
+            "subtitle": "Excel"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Library storage is full. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Your Library storage is full, so the office move tracker wasn’t saved. Nothing else changed."
+        }
+      }
+    },
+    {
       "id": "docs-contract-summary",
       "vertical": "documents",
       "kind": "card",
@@ -17036,6 +18095,69 @@
           ]
         },
         "fallback_text": "Tenancy agreement for The Clift, 2 years at S$3,300: review clause 4(c) auto-renewal (2 months' notice) and clause 7 (you pay the first S$200 of each repair)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tenancy agreement · The Clift",
+            "subtitle": "12 pages"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 12 pages",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d0c01"
+              }
+            }
+          ],
+          "fallback_text": "Reading the 12-page tenancy agreement for The Clift."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tenancy agreement · The Clift",
+            "subtitle": "2 years · S$3,300 a month"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No unusual clauses; all 14 are standard"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Tenancy agreement PDF you shared"
+              }
+            ],
+            "disclaimers": [
+              "A summary, not legal advice."
+            ]
+          },
+          "fallback_text": "Tenancy agreement for The Clift, 2 years at S$3,300 a month: no unusual clauses, all 14 are standard."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the tenancy agreement",
+            "subtitle": "The Clift"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF is a scan with no text layer. Nothing was changed."
+            }
+          ],
+          "fallback_text": "The tenancy agreement for The Clift is a scan with no text layer, so I couldn’t read it. Nothing was changed."
+        }
       }
     },
     {
@@ -17094,7 +18216,147 @@
             }
           ]
         },
-        "fallback_text": "Mutual NDA: you and Arjun Rao signed; Mei Lin hasn't opened it since 24 Sep."
+        "fallback_text": "Mutual NDA, 2 of 3 signed: you signed 24 Sep, Arjun Rao signed 25 Sep; Mei Lin hasn’t opened it since it was sent on 24 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Mutual NDA · Straits Lab",
+            "subtitle": "DocuSign"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 3 signers",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d0c02"
+              }
+            }
+          ],
+          "fallback_text": "Checking the 3 signers on the Straits Lab mutual NDA in DocuSign."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Mutual NDA · Straits Lab",
+            "subtitle": "2 of 3 signers checked · Mei’s status didn’t load"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "You",
+                  "secondary": "24 Sep",
+                  "trailing": "Signed"
+                },
+                {
+                  "label": "Arjun Rao",
+                  "secondary": "25 Sep",
+                  "trailing": "Signed"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in DocuSign",
+                "url": "https://app.docusign.com/documents"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DocuSign envelope, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Mutual NDA, 2 of 3 signers checked: you signed 24 Sep, Arjun Rao signed 25 Sep. Mei Lin’s status didn’t load from DocuSign."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Mutual NDA · Straits Lab",
+            "subtitle": "2 of 3 signed · as of 09:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "You",
+                  "secondary": "24 Sep",
+                  "trailing": "Signed"
+                },
+                {
+                  "label": "Arjun Rao",
+                  "secondary": "25 Sep",
+                  "trailing": "Signed"
+                },
+                {
+                  "label": "Mei Lin",
+                  "secondary": "Sent 24 Sep",
+                  "trailing": "Not opened"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in DocuSign",
+                "url": "https://app.docusign.com/documents"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DocuSign envelope, 26 Sep 2026 09:10"
+              }
+            ]
+          },
+          "fallback_text": "Mutual NDA as of 09:10 (couldn’t refresh), 2 of 3 signed: you signed 24 Sep, Arjun Rao signed 25 Sep; Mei Lin hasn’t opened it since it was sent on 24 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Mutual NDA · Straits Lab",
+            "subtitle": "DocuSign"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Not sent for signing yet"
+            }
+          ],
+          "fallback_text": "The Straits Lab mutual NDA hasn’t been sent for signing in DocuSign yet, so nobody has signed it."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check the NDA",
+            "subtitle": "DocuSign"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "DocuSign sign-in expired. Nothing was sent."
+            }
+          ],
+          "fallback_text": "The DocuSign sign-in expired, so I couldn’t check the NDA signatures. Nothing was sent."
+        }
       }
     },
     {
@@ -17102,7 +18364,7 @@
       "vertical": "documents",
       "kind": "card",
       "request": "Which health insurance plan should I pick?",
-      "says": "Plan B covers the most for the premium.",
+      "says": "PRUShield A is the cheapest, with the same S$3,500 deductible.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -17143,14 +18405,131 @@
           "sources": [
             {
               "label": "MOH comparison of Integrated Shield Plans, 26 Sep 2026 10:30",
-              "url": "https://www.moh.gov.sg/"
+              "url": "https://www.moh.gov.sg/healthcare-schemes-subsidies/medishield-life/integrated-shield-plans"
             }
           ],
           "disclaimers": [
             "Premiums before MediShield Life; not financial advice."
           ]
         },
-        "fallback_text": "Integrated Shield plans for age 35: Prudential PRUShield A S$398/yr (pick); Great Eastern Supreme S$412/yr; AIA HealthShield Gold S$436/yr."
+        "fallback_text": "Integrated Shield plans for age 35 as of 10:30, each with a S$3,500 deductible and as-charged cover: Prudential PRUShield A S$398/yr (pick, panel bonus); Great Eastern Supreme S$412/yr; AIA HealthShield Gold S$436/yr. Premiums before MediShield Life."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Integrated Shield plans",
+            "subtitle": "Age 35 · private hospital cover"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 3 insurers’ premiums",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d2c02"
+              }
+            }
+          ],
+          "fallback_text": "Reading the premiums of 3 Integrated Shield plans for age 35 from the MOH comparison."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Integrated Shield plans",
+            "subtitle": "Age 35 · 2 of 3 insurers read · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Great Eastern Supreme",
+                  "secondary": "S$3,500 deductible · as-charged",
+                  "trailing": "S$412/yr"
+                },
+                {
+                  "label": "Prudential PRUShield A",
+                  "secondary": "S$3,500 deductible · as-charged, panel bonus",
+                  "trailing": "S$398/yr"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MOH comparison of Integrated Shield Plans, 26 Sep 2026 10:30",
+                "url": "https://www.moh.gov.sg/healthcare-schemes-subsidies/medishield-life/integrated-shield-plans"
+              }
+            ],
+            "disclaimers": [
+              "Premiums before MediShield Life; not financial advice."
+            ]
+          },
+          "fallback_text": "Integrated Shield plans for age 35, 2 of 3 insurers read at 10:30, each with a S$3,500 deductible and as-charged cover: Great Eastern Supreme S$412/yr, Prudential PRUShield A S$398/yr (panel bonus). AIA not in yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Integrated Shield plans",
+            "subtitle": "Age 35 · as of 25 Sep 10:30 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Great Eastern Supreme",
+                  "secondary": "S$3,500 deductible · as-charged",
+                  "trailing": "S$412/yr"
+                },
+                {
+                  "label": "Prudential PRUShield A",
+                  "secondary": "S$3,500 deductible · as-charged, panel bonus",
+                  "trailing": "S$398/yr",
+                  "mark": "pick"
+                },
+                {
+                  "label": "AIA HealthShield Gold",
+                  "secondary": "S$3,500 deductible · as-charged",
+                  "trailing": "S$436/yr"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MOH comparison of Integrated Shield Plans, 25 Sep 2026 10:30",
+                "url": "https://www.moh.gov.sg/healthcare-schemes-subsidies/medishield-life/integrated-shield-plans"
+              }
+            ],
+            "disclaimers": [
+              "Premiums before MediShield Life; not financial advice."
+            ]
+          },
+          "fallback_text": "Integrated Shield plans for age 35 as of 25 Sep 10:30 (couldn’t refresh), each with a S$3,500 deductible and as-charged cover: Prudential PRUShield A S$398/yr (pick, panel bonus); Great Eastern Supreme S$412/yr; AIA HealthShield Gold S$436/yr."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t compare the plans",
+            "subtitle": "Integrated Shield"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The MOH comparison page didn’t load. Nothing was bought."
+            }
+          ],
+          "fallback_text": "The MOH comparison page didn’t load, so I couldn’t compare Integrated Shield plans. Nothing was bought."
+        }
       }
     },
     {
@@ -17187,7 +18566,7 @@
               {
                 "heading": "What it means for you",
                 "paragraphs": [
-                  "Public charging costs about S$0.60–0.75 per kWh against about S$0.35 at home. Check your car park's rollout date before you buy."
+                  "Public charging cost about S$0.60–0.75 per kWh in an August survey, against about S$0.35 at home on the Jul–Sep tariff. Check your car park’s rollout date before you buy."
                 ]
               }
             ]
@@ -17205,15 +18584,156 @@
           "sources": [
             {
               "label": "LTA EV statistics",
-              "url": "https://www.lta.gov.sg/"
+              "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles.html"
             },
             {
-              "label": "SP Group tariffs",
-              "url": "https://www.spgroup.com.sg/"
+              "label": "SP Group electricity tariffs",
+              "url": "https://www.spgroup.com.sg/our-services/utilities/tariff-information"
+            },
+            {
+              "label": "The Straits Times, EV charging price survey",
+              "url": "https://www.straitstimes.com/singapore/transport/ev-charging-prices-survey-2026"
+            },
+            {
+              "label": "LTA EV Common Charger Grant",
+              "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles/ecc-grant.html"
+            },
+            {
+              "label": "HDB EV charger rollout",
+              "url": "https://www.hdb.gov.sg/car-parks/shortterm-parking/electric-vehicle-charging"
             }
           ]
         },
-        "fallback_text": "EVs in Singapore 2026: 15,000+ public chargers, mostly in HDB car parks; fast chargers rare; public charging costs about twice home charging."
+        "fallback_text": "EVs in Singapore 2026: public chargers passed 15,000 points, mostly in HDB car parks; fast chargers are scarce outside big malls. Public charging cost about S$0.60–0.75 per kWh in August against about S$0.35 at home (Jul–Sep tariff). Check your car park’s rollout date before you buy."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "Research brief"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 5 sources",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d0c03"
+              }
+            }
+          ],
+          "fallback_text": "Reading 5 sources for the brief on EVs in Singapore."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "Research brief · 3 of 5 sources read"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "summary": "Charging is now broad but slow; costs still being checked.",
+              "sections": [
+                {
+                  "heading": "Where things stand",
+                  "paragraphs": [
+                    "Public chargers passed 15,000 points this year, most in HDB car parks. Fast chargers remain scarce outside big malls."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LTA EV statistics",
+                "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles.html"
+              }
+            ]
+          },
+          "fallback_text": "EVs in Singapore 2026, 3 of 5 sources read: 15,000+ public chargers, mostly in HDB car parks; fast chargers rare. Costs still being checked."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "Research brief · as of 25 Sep 18:20 · couldn’t recheck sources"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "summary": "Charging is now broad but slow; the saving depends on charging near home.",
+              "sections": [
+                {
+                  "heading": "Where things stand",
+                  "paragraphs": [
+                    "Public chargers passed 15,000 points this year, most in HDB car parks. Fast chargers remain scarce outside big malls."
+                  ]
+                },
+                {
+                  "heading": "What it means for you",
+                  "paragraphs": [
+                    "Public charging cost about S$0.60–0.75 per kWh in an August survey, against about S$0.35 at home on the Jul–Sep tariff. Check your car park’s rollout date before you buy."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open as document",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000009c5"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LTA EV statistics",
+                "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles.html"
+              },
+              {
+                "label": "SP Group electricity tariffs",
+                "url": "https://www.spgroup.com.sg/our-services/utilities/tariff-information"
+              },
+              {
+                "label": "The Straits Times, EV charging price survey",
+                "url": "https://www.straitstimes.com/singapore/transport/ev-charging-prices-survey-2026"
+              },
+              {
+                "label": "LTA EV Common Charger Grant",
+                "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles/ecc-grant.html"
+              },
+              {
+                "label": "HDB EV charger rollout",
+                "url": "https://www.hdb.gov.sg/car-parks/shortterm-parking/electric-vehicle-charging"
+              }
+            ]
+          },
+          "fallback_text": "EVs in Singapore 2026, as written 25 Sep 18:20 (couldn’t recheck sources): 15,000+ public chargers, mostly in HDB car parks; fast chargers scarce outside big malls. Public charging about S$0.60–0.75 per kWh in August against about S$0.35 at home (Jul–Sep tariff). Check your car park’s rollout date before you buy."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t finish the brief",
+            "subtitle": "EVs in Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Every source timed out. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Every source timed out, so the EV brief isn’t finished. Nothing was saved."
+        }
       }
     },
     {
@@ -17273,6 +18793,125 @@
           }
         ],
         "fallback_text": "The EV brief is now a 6-slide deck, in PowerPoint and PDF in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "6 slides · PPTX and PDF"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Laying out slide 4 of 6",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d0c04"
+              }
+            }
+          ],
+          "fallback_text": "Making the 6-slide EV deck: slide 4 of 6."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "5 of 6 slides · cost chart left out · PPTX and PDF"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a01",
+                "alt": "Title slide: EVs in Singapore, 2026, with a charger photo",
+                "aspect": "16:9"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open slides",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a02"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download PowerPoint",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a03"
+              }
+            }
+          ],
+          "fallback_text": "The EV deck has 5 of 6 slides, in PowerPoint and PDF in your Library; the charging cost chart is left out because the brief has no cost table."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "6 slides · from the brief as of 25 Sep 18:20 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2d",
+                "alt": "Title slide: EVs in Singapore, 2026, with a charger photo",
+                "aspect": "16:9"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open slides",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2e"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download PowerPoint",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2f"
+              }
+            }
+          ],
+          "fallback_text": "The 6-slide EV deck (PowerPoint and PDF, in your Library) is from the brief as of 25 Sep 18:20; I couldn’t check it against the latest brief."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "Library"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No EV brief in your Library"
+            }
+          ],
+          "fallback_text": "There’s no EV brief in your Library to turn into slides. Nothing was saved."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the slides",
+            "subtitle": "EVs in Singapore, 2026"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Export timed out; may not have saved. Check your Library before retrying."
+            }
+          ],
+          "fallback_text": "The slide export timed out, so I can’t confirm whether the EV deck was saved. Check your Library before you ask me to retry."
+        }
       }
     },
     {
@@ -17327,8 +18966,1325 @@
             "A template, not legal advice. Have a lawyer check it for your case."
           ]
         },
-        "fallback_text": "A 3-page editable freelance agreement (scope, fees, IP on payment, 14 days' notice) is in your Library."
+        "fallback_text": "A 3-page editable freelance agreement (scope, fees and payment terms; IP transfers on payment; either side can end it with 14 days' notice) is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Freelance services agreement",
+            "subtitle": "Word"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing clause 6 of 9",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d0c05"
+              }
+            }
+          ],
+          "fallback_text": "Writing the freelance services agreement: clause 6 of 9."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Freelance services agreement",
+            "subtitle": "3 pages · Word · governing law left blank"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "bullets": [
+                    "Scope, fees and payment terms",
+                    "IP transfers on payment",
+                    "Either side can end it with 14 days' notice",
+                    "Clause 9, governing law, is blank: tell me the country"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "download_artifact",
+                "label": "Download Word file",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a04"
+              },
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Preview",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a04"
+              }
+            }
+          ],
+          "details": {
+            "disclaimers": [
+              "A template, not legal advice. Have a lawyer check it for your case."
+            ]
+          },
+          "fallback_text": "A 3-page editable freelance agreement (scope, fees and payment terms; IP transfers on payment; either side can end it with 14 days' notice) is in your Library. Clause 9, governing law, is blank until you tell me the country."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t save the agreement",
+            "subtitle": "Word"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Library storage is full. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Your Library storage is full, so the freelance agreement wasn’t saved. Nothing else changed."
+        }
       }
+    },
+    {
+      "id": "docs-report",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Write up our Q3 customer research as a report.",
+      "says": "The short version: the audit trail is what keeps them.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Report",
+        "PDF (fixed layout)"
+      ],
+      "rationale": "A 9-page report is a file; the card carries its summary and opens the reading view. Sections stay in the file, not on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Q3 customer research",
+          "subtitle": "Report · 9 pages · 18 interviews"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Teams switch for the shared inbox, then stay for the audit trail. Price is the top objection, but only for teams under 5 people."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Read report",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c10"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download PDF",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c10"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "18 interview notes in Notion, 1 Jul–18 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Q3 customer research, a 9-page report from 18 interviews, is in your Library. Teams switch for the shared inbox, then stay for the audit trail. Price is the top objection, but only for teams under 5 people."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "Report"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "12 of 18 interviews read",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d0c06"
+              }
+            }
+          ],
+          "fallback_text": "Writing the Q3 customer research report: 12 of 18 interview notes read."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "Notion"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No interview notes for Jul–Sep"
+            }
+          ],
+          "fallback_text": "There are no interview notes in Notion for July to September, so there is nothing to write the Q3 report from. Nothing was saved."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t write the report",
+            "subtitle": "Q3 customer research"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Notion access was removed. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Notion access was removed, so I couldn’t write the Q3 research report. Nothing was saved."
+        }
+      }
+    },
+    {
+      "id": "docs-contract-review",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "What's risky in the Harbour Labs supplier contract?",
+      "says": "The liability cap is the one to push back on.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Contract summary with clauses"
+      ],
+      "rationale": "Value and notice are the two numbers; the clauses to watch are rows with the clause number in the label and Review trailing.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Harbour Labs services agreement",
+          "subtitle": "Straits Lab and Harbour Labs · 1 Oct 2026–30 Sep 2027"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$78,000",
+                "label": "Contract value"
+              },
+              {
+                "value": "90 days",
+                "label": "Notice to end"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "§8.2 · Liability cap",
+                "secondary": "Capped at 1 month of fees, S$6,500",
+                "trailing": "Review"
+              },
+              {
+                "label": "§11.1 · Auto-renewal",
+                "secondary": "Renews for 12 months unless you give 90 days’ notice",
+                "trailing": "Review"
+              },
+              {
+                "label": "§5.4 · Late payment",
+                "secondary": "1.5% a month on unpaid invoices",
+                "trailing": "Standard"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Harbour Labs services agreement v3 PDF, 18 pages"
+            }
+          ],
+          "disclaimers": [
+            "A summary, not legal advice."
+          ]
+        },
+        "fallback_text": "Harbour Labs services agreement, 1 Oct 2026–30 Sep 2027: S$78,000, 90 days’ notice to end. Review §8.2 liability cap (1 month of fees, S$6,500) and §11.1 auto-renewal (renews for 12 months unless you give 90 days’ notice). §5.4 late payment 1.5% a month is standard."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harbour Labs services agreement",
+            "subtitle": "18 pages"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 18 pages",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d0c07"
+              }
+            }
+          ],
+          "fallback_text": "Reading the 18-page Harbour Labs services agreement."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harbour Labs services agreement",
+            "subtitle": "Pages 1–12 of 18 read"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "§8.2 · Liability cap",
+                  "secondary": "Capped at 1 month of fees, S$6,500",
+                  "trailing": "Review"
+                },
+                {
+                  "label": "§5.4 · Late payment",
+                  "secondary": "1.5% a month on unpaid invoices",
+                  "trailing": "Standard"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Harbour Labs services agreement v3 PDF, 18 pages"
+              }
+            ],
+            "disclaimers": [
+              "A summary, not legal advice."
+            ]
+          },
+          "fallback_text": "Harbour Labs agreement, pages 1–12 of 18 read: review §8.2 liability cap (1 month of fees, S$6,500); §5.4 late payment 1.5% a month is standard. Still reading."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harbour Labs services agreement",
+            "subtitle": "v3 as of 25 Sep 17:05 · couldn’t check for a newer version"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$78,000",
+                  "label": "Contract value"
+                },
+                {
+                  "value": "90 days",
+                  "label": "Notice to end"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "§8.2 · Liability cap",
+                  "secondary": "Capped at 1 month of fees, S$6,500",
+                  "trailing": "Review"
+                },
+                {
+                  "label": "§11.1 · Auto-renewal",
+                  "secondary": "Renews for 12 months unless you give 90 days’ notice",
+                  "trailing": "Review"
+                },
+                {
+                  "label": "§5.4 · Late payment",
+                  "secondary": "1.5% a month on unpaid invoices",
+                  "trailing": "Standard"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Harbour Labs services agreement v3 PDF, 18 pages, 25 Sep 2026 17:05"
+              }
+            ],
+            "disclaimers": [
+              "A summary, not legal advice."
+            ]
+          },
+          "fallback_text": "Harbour Labs agreement v3 as of 25 Sep 17:05 (couldn’t check for a newer version): S$78,000, 90 days’ notice to end. Review §8.2 liability cap (1 month of fees, S$6,500) and §11.1 auto-renewal (12 months unless 90 days’ notice). §5.4 late payment 1.5% a month is standard."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the Harbour Labs agreement",
+            "subtitle": "PDF"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF is password-protected. Nothing was changed."
+            }
+          ],
+          "fallback_text": "The Harbour Labs agreement PDF is password-protected, so I couldn’t read it. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "docs-signatures-declined",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Did the Keppel offer letter get signed?",
+      "says": "Wei Ling declined it, with a note about the start date.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Signature request preview"
+      ],
+      "rationale": "A declined signer is the answer, so that row comes first with its reason; a new envelope is an approval, not a card button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Offer letter · Tan Wei Ling",
+          "subtitle": "1 of 2 signed · 1 declined"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Tan Wei Ling",
+                "secondary": "Declined 25 Sep · asks to start 2 Nov",
+                "trailing": "Declined"
+              },
+              {
+                "label": "You",
+                "secondary": "Signed 23 Sep",
+                "trailing": "Signed"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in DocuSign",
+              "url": "https://app.docusign.com/documents/details/4f7c2a9e-1b3d-4e8a-9c21-7d5e0b6a3f18"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DocuSign envelope, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Offer letter for Tan Wei Ling: you signed 23 Sep; she declined on 25 Sep and asks to start on 2 Nov."
+      },
+      "states": {
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check the offer letter",
+            "subtitle": "DocuSign"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "DocuSign didn’t respond. Nothing was sent."
+            }
+          ],
+          "fallback_text": "DocuSign didn’t respond, so I couldn’t check the offer letter. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "docs-compare-table",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Put the three Shield plans side by side.",
+      "says": "They differ only on premium; the rest is the same.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Comparison"
+      ],
+      "rationale": "Side by side is a table on the page: plan first, three columns that matter, numbers end-aligned. No pick when the person asked to compare.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Integrated Shield plans",
+          "subtitle": "Age 35 · private hospital · as of 10:30"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Plan"
+              },
+              {
+                "label": "Premium a year",
+                "align": "end"
+              },
+              {
+                "label": "Deductible",
+                "align": "end"
+              },
+              {
+                "label": "Co-insurance",
+                "align": "end"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "Great Eastern Supreme",
+                  "S$412",
+                  "S$3,500",
+                  "10%"
+                ]
+              },
+              {
+                "cells": [
+                  "Prudential PRUShield A",
+                  "S$398",
+                  "S$3,500",
+                  "10%"
+                ]
+              },
+              {
+                "cells": [
+                  "AIA HealthShield Gold",
+                  "S$436",
+                  "S$3,500",
+                  "10%"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "MOH comparison of Integrated Shield Plans, 26 Sep 2026 10:30",
+              "url": "https://www.moh.gov.sg/healthcare-schemes-subsidies/medishield-life/integrated-shield-plans"
+            }
+          ],
+          "disclaimers": [
+            "Premiums before MediShield Life; not financial advice."
+          ]
+        },
+        "fallback_text": "Integrated Shield plans for age 35 as of 10:30: Great Eastern Supreme S$412/yr, Prudential PRUShield A S$398/yr, AIA HealthShield Gold S$436/yr; each has a S$3,500 deductible and 10% co-insurance."
+      },
+      "states": {
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Integrated Shield plans",
+            "subtitle": "Age 35 · as of 25 Sep 10:30 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Plan"
+                },
+                {
+                  "label": "Premium a year",
+                  "align": "end"
+                },
+                {
+                  "label": "Deductible",
+                  "align": "end"
+                },
+                {
+                  "label": "Co-insurance",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Great Eastern Supreme",
+                    "S$412",
+                    "S$3,500",
+                    "10%"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Prudential PRUShield A",
+                    "S$398",
+                    "S$3,500",
+                    "10%"
+                  ]
+                },
+                {
+                  "cells": [
+                    "AIA HealthShield Gold",
+                    "S$436",
+                    "S$3,500",
+                    "10%"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MOH comparison of Integrated Shield Plans, 25 Sep 2026 10:30"
+              }
+            ]
+          },
+          "fallback_text": "Integrated Shield plans for age 35 as of 25 Sep 10:30 (couldn’t refresh): Great Eastern Supreme S$412/yr, Prudential PRUShield A S$398/yr, AIA HealthShield Gold S$436/yr; each S$3,500 deductible, 10% co-insurance."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Integrated Shield plans",
+            "subtitle": "Age 35 · private hospital · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No plans shortlisted yet"
+            }
+          ],
+          "fallback_text": "For age 35 and private hospital cover, as of 10:30, you haven’t shortlisted any Integrated Shield plans yet, so there is nothing to put side by side. Name up to 3 and I’ll compare them."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t compare the plans",
+            "subtitle": "Integrated Shield"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The MOH comparison page didn’t load. Nothing was bought."
+            }
+          ],
+          "fallback_text": "The MOH comparison page didn’t load, so I couldn’t compare Integrated Shield plans. Nothing was bought."
+        }
+      }
+    },
+    {
+      "id": "docs-sources",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Which sources did the EV brief use?",
+      "says": "Three of them carry most of it; all five are listed under Details.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Citation list"
+      ],
+      "rationale": "The list is the answer, so each source is a row (who, what, when); the links stay in Details, never on the rows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sources · EVs in Singapore, 2026",
+          "subtitle": "5 sources"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "EV statistics",
+                "secondary": "LTA · updated 1 Sep 2026",
+                "trailing": "Chargers"
+              },
+              {
+                "label": "Electricity tariffs, Jul–Sep 2026",
+                "secondary": "SP Group · 30 Jun 2026",
+                "trailing": "Home cost"
+              },
+              {
+                "label": "EV charging price survey",
+                "secondary": "The Straits Times · 12 Aug 2026",
+                "trailing": "Public cost"
+              },
+              {
+                "label": "EV Common Charger Grant",
+                "secondary": "LTA · 2 Jan 2026",
+                "trailing": "Car parks"
+              },
+              {
+                "label": "Charger rollout in HDB car parks",
+                "secondary": "HDB · 18 Jun 2026",
+                "trailing": "Car parks"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LTA EV statistics",
+              "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles.html"
+            },
+            {
+              "label": "SP Group electricity tariffs",
+              "url": "https://www.spgroup.com.sg/our-services/utilities/tariff-information"
+            },
+            {
+              "label": "The Straits Times, EV charging price survey",
+              "url": "https://www.straitstimes.com/singapore/transport/ev-charging-prices-survey-2026"
+            },
+            {
+              "label": "LTA EV Common Charger Grant",
+              "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles/ecc-grant.html"
+            },
+            {
+              "label": "HDB EV charger rollout",
+              "url": "https://www.hdb.gov.sg/car-parks/shortterm-parking/electric-vehicle-charging"
+            }
+          ]
+        },
+        "fallback_text": "The EV brief used 5 sources: LTA EV statistics (updated 1 Sep 2026), SP Group electricity tariffs for Jul–Sep 2026 (30 Jun 2026), The Straits Times charging price survey (12 Aug 2026), the LTA EV Common Charger Grant (2 Jan 2026), and HDB’s car park charger rollout (18 Jun 2026)."
+      },
+      "states": {
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sources · EVs in Singapore, 2026",
+            "subtitle": "Research brief"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The brief cites no sources"
+            }
+          ],
+          "fallback_text": "The EV brief in your Library cites no sources; it was written only from your own notes."
+        }
+      }
+    },
+    {
+      "id": "file-report-pdf",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Make the Q3 research report into a PDF I can send to the board.",
+      "says": "It's 9 pages, with the summary on page one.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "PDF (fixed layout)",
+        "Report"
+      ],
+      "rationale": "A PDF to send is a fixed layout: the card shows page one and opens the file; sending is the person's own step.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Q3 customer research",
+          "subtitle": "PDF · 9 pages · A4"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c11",
+              "alt": "Page 1 of the Q3 customer research report: title, a four-line summary and a chart of reasons teams stay",
+              "aspect": "3:4"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open PDF",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c12"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download PDF",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c12"
+            }
+          }
+        ],
+        "fallback_text": "The Q3 customer research report is a 9-page A4 PDF in your Library, summary on page 1."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "PDF"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Laying out page 6 of 9",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d0c08"
+              }
+            }
+          ],
+          "fallback_text": "Making the Q3 research PDF: page 6 of 9."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "PDF · 8 of 9 pages · appendix left out · A4"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a05",
+                "alt": "Page 1 of the Q3 customer research report: title, a four-line summary and a chart of reasons teams stay",
+                "aspect": "3:4"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open PDF",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a06"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download PDF",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a06"
+              }
+            }
+          ],
+          "fallback_text": "The Q3 customer research PDF has 8 of 9 A4 pages, summary on page 1; the interview appendix is left out because 2 notes are private in Notion. It is in your Library."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "PDF · 9 pages · made 25 Sep 18:20 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c11",
+                "alt": "Page 1 of the Q3 customer research report: title, a four-line summary and a chart of reasons teams stay",
+                "aspect": "3:4"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open PDF",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c12"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download PDF",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c12"
+              }
+            }
+          ],
+          "fallback_text": "The Q3 customer research PDF (9 A4 pages, summary on page 1) was made 25 Sep 18:20; I couldn’t check it against the latest report. It is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "Library"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No Q3 research report in your Library"
+            }
+          ],
+          "fallback_text": "There’s no Q3 research report in your Library to make into a PDF. Nothing was saved."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t make the PDF",
+            "subtitle": "Q3 customer research"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "A chart image is missing from the report. Nothing was saved."
+            }
+          ],
+          "fallback_text": "A chart image is missing from the Q3 research report, so the PDF wasn’t made. Nothing was saved."
+        }
+      }
+    },
+    {
+      "id": "file-notice-letter",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Write a letter giving my landlord two months' notice.",
+      "says": "It ends the tenancy on Thursday 26 November; sign it and send it when you're ready.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Report",
+        "PDF (fixed layout)"
+      ],
+      "rationale": "A letter to print or sign is a PDF; the card shows the whole short letter word for word, and sending stays with the person.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Notice to end tenancy",
+          "subtitle": "Letter · 1 page · to Mr Lim"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Dear Mr Lim,",
+                  "I am giving two months’ notice to end my tenancy at 21 McCallum Street #12-04 under clause 4(c). My last day will be Thu 26 Nov 2026.",
+                  "Please let me know a time for the handover inspection. Kind regards, Abhinav Bansal"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download PDF",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c13"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download Word",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c14"
+            }
+          }
+        ],
+        "fallback_text": "A one-page notice letter to Mr Lim is in your Library. Dear Mr Lim, I am giving two months’ notice to end my tenancy at 21 McCallum Street #12-04 under clause 4(c). My last day will be Thu 26 Nov 2026. Please let me know a time for the handover inspection. Kind regards, Abhinav Bansal"
+      },
+      "states": {
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t write the letter",
+            "subtitle": "Notice to end tenancy"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The tenancy agreement isn’t in your Library. Nothing was saved."
+            }
+          ],
+          "fallback_text": "The tenancy agreement isn’t in your Library, so I couldn’t write the notice letter. Nothing was saved."
+        }
+      }
+    },
+    {
+      "id": "file-contracts-sheet",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Export every contract we signed this year to a spreadsheet.",
+      "says": "Four of them renew before the end of the year.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Sheet (XLSX/CSV)"
+      ],
+      "rationale": "Forty rows is a sheet; the card carries the count and the total it computed, and the sheet opens in Numbers or Excel.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Contracts signed in 2026",
+          "subtitle": "Excel · 42 rows · 7 columns"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "42",
+                "label": "Contracts"
+              },
+              {
+                "value": "S$1,284,600",
+                "label": "Total value"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open sheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c15"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download Excel",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c15"
+            }
+          }
+        ],
+        "fallback_text": "42 contracts signed in 2026 (1 Jan–26 Sep), total value S$1,284,600, exported to an Excel sheet in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Contracts signed in 2026",
+            "subtitle": "Excel"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "30 of 42 envelopes read",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d0c09"
+              }
+            }
+          ],
+          "fallback_text": "Building the contracts sheet: 30 of 42 DocuSign envelopes read."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Contracts signed in 2026",
+            "subtitle": "Excel · 38 of 42 envelopes read · 4 need a new sign-in"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "38",
+                  "label": "Contracts"
+                },
+                {
+                  "value": "S$1,161,400",
+                  "label": "Total value so far"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open sheet",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a07"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download Excel",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a07"
+              }
+            }
+          ],
+          "fallback_text": "38 of 42 contracts signed in 2026 (1 Jan–26 Sep) are in the Excel sheet in your Library, total value so far S$1,161,400. 4 envelopes are in a DocuSign account that needs a new sign-in."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Contracts signed in 2026",
+            "subtitle": "Excel · 42 rows · as of 25 Sep 18:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "42",
+                  "label": "Contracts"
+                },
+                {
+                  "value": "S$1,284,600",
+                  "label": "Total value"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open sheet",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c15"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download Excel",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c15"
+              }
+            }
+          ],
+          "fallback_text": "42 contracts signed in 2026, total value S$1,284,600, as of 25 Sep 18:00 (couldn’t refresh from DocuSign); the Excel sheet is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Contracts signed in 2026",
+            "subtitle": "DocuSign"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No completed envelopes this year"
+            }
+          ],
+          "fallback_text": "No contracts were completed in DocuSign in 2026."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t export the contracts",
+            "subtitle": "DocuSign"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "DocuSign sign-in expired. Nothing was saved."
+            }
+          ],
+          "fallback_text": "The DocuSign sign-in expired, so the contracts weren’t exported. Nothing was saved."
+        }
+      }
+    },
+    {
+      "id": "file-pricing-page",
+      "vertical": "documents",
+      "kind": "file",
+      "request": "Build me a page where I can try different prices for our three plans.",
+      "says": "It's a page with sliders for each plan; download it and open it in your browser.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Live page"
+      ],
+      "rationale": "Playing with prices is a what-if no block covers, so it is a page file with a poster; until live pages ship it opens in the browser only.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Pricing what-if",
+          "subtitle": "Interactive page · HTML"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c16",
+              "alt": "Pricing what-if page: a slider per plan and a line of monthly revenue by customer count",
+              "aspect": "16:9"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download page",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c17"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Starts from today’s prices: S$12, S$29 and S$79 a month, 1,200 customers."
+          ]
+        },
+        "fallback_text": "A pricing what-if page (a slider per plan, monthly revenue by customer count) is in your Library; download it and open it in your browser."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pricing what-if",
+            "subtitle": "Interactive page · HTML"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking the page works offline",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d2c03"
+              }
+            }
+          ],
+          "fallback_text": "Building the pricing what-if page and checking it works offline."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pricing what-if",
+            "subtitle": "Interactive page · 2 of 3 plans priced"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a08",
+                "alt": "Pricing what-if page: a slider per plan and a line of monthly revenue by customer count",
+                "aspect": "16:9"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "download_artifact",
+                "label": "Download page",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a09"
+              }
+            }
+          ],
+          "details": {
+            "assumptions": [
+              "Starts from Stripe prices: S$12 and S$29 a month; Scale has no price yet. 1,200 customers."
+            ]
+          },
+          "fallback_text": "A pricing what-if page for 2 of 3 plans (S$12 and S$29 a month, 1,200 customers) is in your Library; Scale has no price in Stripe, so set it on the page. Download it and open it in your browser."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pricing what-if",
+            "subtitle": "Interactive page · prices as of 25 Sep 18:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c16",
+                "alt": "Pricing what-if page: a slider per plan and a line of monthly revenue by customer count",
+                "aspect": "16:9"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "download_artifact",
+                "label": "Download page",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c17"
+              }
+            }
+          ],
+          "details": {
+            "assumptions": [
+              "Starts from Stripe prices as of 25 Sep 18:00: S$12, S$29 and S$79 a month, 1,200 customers."
+            ]
+          },
+          "fallback_text": "A pricing what-if page (a slider per plan, from S$12, S$29 and S$79 a month and 1,200 customers as of 25 Sep 18:00; couldn’t refresh from Stripe) is in your Library; download it and open it in your browser."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pricing what-if",
+            "subtitle": "Stripe"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No plan prices in Stripe to start from"
+            }
+          ],
+          "fallback_text": "There are no plan prices in Stripe to start the what-if page from. Tell me the three prices and I’ll build it. Nothing was saved."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t build the page",
+            "subtitle": "Pricing what-if"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The page failed its offline check. Nothing was saved."
+            }
+          ],
+          "fallback_text": "The pricing page failed its offline check, so it wasn’t saved. Nothing else changed."
+        }
+      }
+    },
+    {
+      "id": "text-define-clause",
+      "vertical": "documents",
+      "kind": "text",
+      "request": "What does 'indemnify' mean in a contract?",
+      "reply": "To indemnify is to promise to pay the other side's losses if a claim arises from what you did. It's worth checking whether it's capped.",
+      "surface": "text",
+      "components": [
+        "Contract summary with clauses"
+      ],
+      "rationale": "A definition is words; a card would only frame one sentence.",
+      "document": null
     },
     {
       "id": "data-kpis",
