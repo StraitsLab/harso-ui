@@ -173,7 +173,7 @@
             }
           ]
         },
-        "fallback_text": "Mutual NDA: you and Arjun Rao signed; Mei Lin hasn't opened it since 24 Sep."
+        "fallback_text": "Mutual NDA, 2 of 3 signed: you signed 24 Sep, Arjun Rao signed 25 Sep; Mei Lin hasn’t opened it since it was sent on 24 Sep."
       },
       "states": {
         "loading": {
@@ -194,6 +194,47 @@
             }
           ],
           "fallback_text": "Checking the 3 signers on the Straits Lab mutual NDA in DocuSign."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Mutual NDA · Straits Lab",
+            "subtitle": "2 of 3 signers checked · Mei’s status didn’t load"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "You",
+                  "secondary": "24 Sep",
+                  "trailing": "Signed"
+                },
+                {
+                  "label": "Arjun Rao",
+                  "secondary": "25 Sep",
+                  "trailing": "Signed"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in DocuSign",
+                "url": "https://app.docusign.com/documents"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DocuSign envelope, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Mutual NDA, 2 of 3 signers checked: you signed 24 Sep, Arjun Rao signed 25 Sep. Mei Lin’s status didn’t load from DocuSign."
         },
         "stale": {
           "kind": "output_blocks",
@@ -239,7 +280,23 @@
               }
             ]
           },
-          "fallback_text": "Mutual NDA as of 09:10 (couldn’t refresh): you signed 24 Sep, Arjun Rao signed 25 Sep, Mei Lin not opened since 24 Sep."
+          "fallback_text": "Mutual NDA as of 09:10 (couldn’t refresh), 2 of 3 signed: you signed 24 Sep, Arjun Rao signed 25 Sep; Mei Lin hasn’t opened it since it was sent on 24 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Mutual NDA · Straits Lab",
+            "subtitle": "DocuSign"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Not sent for signing yet"
+            }
+          ],
+          "fallback_text": "The Straits Lab mutual NDA hasn’t been sent for signing in DocuSign yet, so nobody has signed it."
         },
         "failed": {
           "kind": "output_blocks",
@@ -264,7 +321,7 @@
       "vertical": "documents",
       "kind": "card",
       "request": "Which health insurance plan should I pick?",
-      "says": "Plan B covers the most for the premium.",
+      "says": "PRUShield A is the cheapest, with the same S$3,500 deductible.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -305,16 +362,35 @@
           "sources": [
             {
               "label": "MOH comparison of Integrated Shield Plans, 26 Sep 2026 10:30",
-              "url": "https://www.moh.gov.sg/"
+              "url": "https://www.moh.gov.sg/healthcare-schemes-subsidies/medishield-life/integrated-shield-plans"
             }
           ],
           "disclaimers": [
             "Premiums before MediShield Life; not financial advice."
           ]
         },
-        "fallback_text": "Integrated Shield plans for age 35: Prudential PRUShield A S$398/yr (pick); Great Eastern Supreme S$412/yr; AIA HealthShield Gold S$436/yr."
+        "fallback_text": "Integrated Shield plans for age 35 as of 10:30, each with a S$3,500 deductible and as-charged cover: Prudential PRUShield A S$398/yr (pick, panel bonus); Great Eastern Supreme S$412/yr; AIA HealthShield Gold S$436/yr. Premiums before MediShield Life."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Integrated Shield plans",
+            "subtitle": "Age 35 · private hospital cover"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 3 insurers’ premiums",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d2c02"
+              }
+            }
+          ],
+          "fallback_text": "Reading the premiums of 3 Integrated Shield plans for age 35 from the MOH comparison."
+        },
         "partial": {
           "kind": "output_blocks",
           "major": 1,
@@ -343,14 +419,14 @@
             "sources": [
               {
                 "label": "MOH comparison of Integrated Shield Plans, 26 Sep 2026 10:30",
-                "url": "https://www.moh.gov.sg/"
+                "url": "https://www.moh.gov.sg/healthcare-schemes-subsidies/medishield-life/integrated-shield-plans"
               }
             ],
             "disclaimers": [
               "Premiums before MediShield Life; not financial advice."
             ]
           },
-          "fallback_text": "Integrated Shield plans for age 35, 2 of 3 insurers read at 10:30: Great Eastern Supreme S$412/yr, Prudential PRUShield A S$398/yr. AIA not in yet."
+          "fallback_text": "Integrated Shield plans for age 35, 2 of 3 insurers read at 10:30, each with a S$3,500 deductible and as-charged cover: Great Eastern Supreme S$412/yr, Prudential PRUShield A S$398/yr (panel bonus). AIA not in yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -385,15 +461,15 @@
           "details": {
             "sources": [
               {
-                "label": "MOH comparison of Integrated Shield Plans, 26 Sep 2026 10:30",
-                "url": "https://www.moh.gov.sg/"
+                "label": "MOH comparison of Integrated Shield Plans, 25 Sep 2026 10:30",
+                "url": "https://www.moh.gov.sg/healthcare-schemes-subsidies/medishield-life/integrated-shield-plans"
               }
             ],
             "disclaimers": [
               "Premiums before MediShield Life; not financial advice."
             ]
           },
-          "fallback_text": "Integrated Shield plans for age 35 as of 25 Sep 10:30 (couldn’t refresh): Prudential PRUShield A S$398/yr (pick); Great Eastern Supreme S$412/yr; AIA HealthShield Gold S$436/yr."
+          "fallback_text": "Integrated Shield plans for age 35 as of 25 Sep 10:30 (couldn’t refresh), each with a S$3,500 deductible and as-charged cover: Prudential PRUShield A S$398/yr (pick, panel bonus); Great Eastern Supreme S$412/yr; AIA HealthShield Gold S$436/yr."
         },
         "failed": {
           "kind": "output_blocks",
@@ -447,7 +523,7 @@
               {
                 "heading": "What it means for you",
                 "paragraphs": [
-                  "Public charging costs about S$0.60–0.75 per kWh against about S$0.35 at home. Check your car park's rollout date before you buy."
+                  "Public charging cost about S$0.60–0.75 per kWh in an August survey, against about S$0.35 at home on the Jul–Sep tariff. Check your car park’s rollout date before you buy."
                 ]
               }
             ]
@@ -485,7 +561,7 @@
             }
           ]
         },
-        "fallback_text": "EVs in Singapore 2026: 15,000+ public chargers, mostly in HDB car parks; fast chargers rare; public charging costs about twice home charging."
+        "fallback_text": "EVs in Singapore 2026: public chargers passed 15,000 points, mostly in HDB car parks; fast chargers are scarce outside big malls. Public charging cost about S$0.60–0.75 per kWh in August against about S$0.35 at home (Jul–Sep tariff). Check your car park’s rollout date before you buy."
       },
       "states": {
         "loading": {
@@ -537,6 +613,67 @@
             ]
           },
           "fallback_text": "EVs in Singapore 2026, 3 of 5 sources read: 15,000+ public chargers, mostly in HDB car parks; fast chargers rare. Costs still being checked."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "Research brief · as of 25 Sep 18:20 · couldn’t recheck sources"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "summary": "Charging is now broad but slow; the saving depends on charging near home.",
+              "sections": [
+                {
+                  "heading": "Where things stand",
+                  "paragraphs": [
+                    "Public chargers passed 15,000 points this year, most in HDB car parks. Fast chargers remain scarce outside big malls."
+                  ]
+                },
+                {
+                  "heading": "What it means for you",
+                  "paragraphs": [
+                    "Public charging cost about S$0.60–0.75 per kWh in an August survey, against about S$0.35 at home on the Jul–Sep tariff. Check your car park’s rollout date before you buy."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open as document",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000009c5"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LTA EV statistics",
+                "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles.html"
+              },
+              {
+                "label": "SP Group electricity tariffs",
+                "url": "https://www.spgroup.com.sg/our-services/utilities/tariff-information"
+              },
+              {
+                "label": "The Straits Times, EV charging price survey",
+                "url": "https://www.straitstimes.com/singapore/transport/ev-charging-prices-survey-2026"
+              },
+              {
+                "label": "LTA EV Common Charger Grant",
+                "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles/ecc-grant.html"
+              },
+              {
+                "label": "HDB EV charger rollout",
+                "url": "https://www.hdb.gov.sg/car-parks/shortterm-parking/electric-vehicle-charging"
+              }
+            ]
+          },
+          "fallback_text": "EVs in Singapore 2026, as written 25 Sep 18:20 (couldn’t recheck sources): 15,000+ public chargers, mostly in HDB car parks; fast chargers scarce. Public charging about S$0.60–0.75 per kWh in August against about S$0.35 at home (Jul–Sep tariff)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -634,21 +771,103 @@
           ],
           "fallback_text": "Making the 6-slide EV deck: slide 4 of 6."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "5 of 6 slides · cost chart left out · PPTX and PDF"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a01",
+                "alt": "Title slide: EVs in Singapore, 2026, with a charger photo",
+                "aspect": "16:9"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open slides",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a02"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download PowerPoint",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a03"
+              }
+            }
+          ],
+          "fallback_text": "The EV deck has 5 of 6 slides, in PowerPoint and PDF in your Library; the charging cost chart is left out because the brief has no cost table."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "6 slides · from the brief as of 25 Sep 18:20 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2d",
+                "alt": "Title slide: EVs in Singapore, 2026, with a charger photo",
+                "aspect": "16:9"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open slides",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2e"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download PowerPoint",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2f"
+              }
+            }
+          ],
+          "fallback_text": "The 6-slide EV deck (PowerPoint and PDF, in your Library) is from the brief as of 25 Sep 18:20; I couldn’t check it against the latest brief."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "EVs in Singapore, 2026",
+            "subtitle": "Library"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No EV brief in your Library"
+            }
+          ],
+          "fallback_text": "There’s no EV brief in your Library to turn into slides. Nothing was saved."
+        },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn’t make the slides",
+            "title": "Couldn’t confirm the slides",
             "subtitle": "EVs in Singapore, 2026"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "The brief is no longer in your Library. Nothing was saved."
+              "detail": "Export timed out; may not have saved. Check your Library before retrying."
             }
           ],
-          "fallback_text": "The EV brief is no longer in your Library, so I couldn’t make the slides. Nothing was saved."
+          "fallback_text": "The slide export timed out, so I can’t confirm whether the EV deck was saved. Check your Library before you ask me to retry."
         }
       }
     },
@@ -725,6 +944,48 @@
             }
           ],
           "fallback_text": "Writing the freelance services agreement: clause 6 of 9."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Freelance services agreement",
+            "subtitle": "3 pages · Word · governing law left blank"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "bullets": [
+                    "Scope, fees and payment terms",
+                    "IP transfers on payment",
+                    "Either side can end it with 14 days' notice",
+                    "Clause 9, governing law, is blank: tell me the country"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "download_artifact",
+                "label": "Download Word file",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a04"
+              },
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Preview",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a04"
+              }
+            }
+          ],
+          "details": {
+            "disclaimers": [
+              "A template, not legal advice. Have a lawyer check it for your case."
+            ]
+          },
+          "fallback_text": "A 3-page editable freelance agreement (scope, fees, IP on payment, 14 days' notice) is in your Library. Clause 9, governing law, is blank until you tell me the country."
         },
         "failed": {
           "kind": "output_blocks",
@@ -818,6 +1079,22 @@
           ],
           "fallback_text": "Writing the Q3 customer research report: 12 of 18 interview notes read."
         },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "Notion"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No interview notes for Jul–Sep"
+            }
+          ],
+          "fallback_text": "There are no interview notes in Notion for July to September, so there is nothing to write the Q3 report from. Nothing was saved."
+        },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
@@ -900,7 +1177,7 @@
             "A summary, not legal advice."
           ]
         },
-        "fallback_text": "Harbour Labs services agreement, 1 Oct 2026–30 Sep 2027: S$78,000, 90 days’ notice to end. Review §8.2 liability cap (1 month of fees, S$6,500) and §11.1 auto-renewal (90 days’ notice). §5.4 late payment 1.5% a month is standard."
+        "fallback_text": "Harbour Labs services agreement, 1 Oct 2026–30 Sep 2027: S$78,000, 90 days’ notice to end. Review §8.2 liability cap (1 month of fees, S$6,500) and §11.1 auto-renewal (renews for 12 months unless you give 90 days’ notice). §5.4 late payment 1.5% a month is standard."
       },
       "states": {
         "loading": {
@@ -957,6 +1234,60 @@
             ]
           },
           "fallback_text": "Harbour Labs agreement, pages 1–12 of 18 read: review §8.2 liability cap (1 month of fees, S$6,500); §5.4 late payment 1.5% a month is standard. Still reading."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harbour Labs services agreement",
+            "subtitle": "v3 as of 25 Sep 17:05 · couldn’t check for a newer version"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$78,000",
+                  "label": "Contract value"
+                },
+                {
+                  "value": "90 days",
+                  "label": "Notice to end"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "§8.2 · Liability cap",
+                  "secondary": "Capped at 1 month of fees, S$6,500",
+                  "trailing": "Review"
+                },
+                {
+                  "label": "§11.1 · Auto-renewal",
+                  "secondary": "Renews for 12 months unless you give 90 days’ notice",
+                  "trailing": "Review"
+                },
+                {
+                  "label": "§5.4 · Late payment",
+                  "secondary": "1.5% a month on unpaid invoices",
+                  "trailing": "Standard"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Harbour Labs services agreement v3 PDF, 18 pages, 25 Sep 2026 17:05"
+              }
+            ],
+            "disclaimers": [
+              "A summary, not legal advice."
+            ]
+          },
+          "fallback_text": "Harbour Labs agreement v3 as of 25 Sep 17:05 (couldn’t check for a newer version): S$78,000, 90 days’ notice to end. Review §8.2 liability cap (1 month of fees, S$6,500) and §11.1 auto-renewal (12 months unless 90 days’ notice). §5.4 late payment 1.5% a month is standard."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1193,6 +1524,22 @@
           },
           "fallback_text": "Integrated Shield plans for age 35 as of 25 Sep 10:30 (couldn’t refresh): Great Eastern Supreme S$412/yr, Prudential PRUShield A S$398/yr, AIA HealthShield Gold S$436/yr; each S$3,500 deductible, 10% co-insurance."
         },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Integrated Shield plans",
+            "subtitle": "Age 35 · private hospital · as of 10:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No plans shortlisted yet"
+            }
+          ],
+          "fallback_text": "You haven’t shortlisted any Integrated Shield plans yet, so there is nothing to put side by side. Name up to 3 and I’ll compare them."
+        },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
@@ -1216,7 +1563,7 @@
       "vertical": "documents",
       "kind": "card",
       "request": "Which sources did the EV brief use?",
-      "says": "Three of them carry most of it; all five open from Details.",
+      "says": "Three of them carry most of it; all five are listed under Details.",
       "surface": "page",
       "fresh": false,
       "components": [
@@ -1240,8 +1587,8 @@
                 "trailing": "Chargers"
               },
               {
-                "label": "Electricity tariffs, Q4 2026",
-                "secondary": "SP Group · 30 Sep 2026",
+                "label": "Electricity tariffs, Jul–Sep 2026",
+                "secondary": "SP Group · 30 Jun 2026",
                 "trailing": "Home cost"
               },
               {
@@ -1286,7 +1633,25 @@
             }
           ]
         },
-        "fallback_text": "The EV brief used 5 sources: LTA EV statistics (1 Sep 2026), SP Group Q4 2026 tariffs, The Straits Times charging price survey (12 Aug 2026), the LTA EV Common Charger Grant, and HDB’s car park charger rollout (18 Jun 2026)."
+        "fallback_text": "The EV brief used 5 sources: LTA EV statistics (updated 1 Sep 2026), SP Group electricity tariffs for Jul–Sep 2026 (30 Jun 2026), The Straits Times charging price survey (12 Aug 2026), the LTA EV Common Charger Grant (2 Jan 2026), and HDB’s car park charger rollout (18 Jun 2026)."
+      },
+      "states": {
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sources · EVs in Singapore, 2026",
+            "subtitle": "Research brief"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The brief cites no sources"
+            }
+          ],
+          "fallback_text": "The EV brief in your Library cites no sources; it was written only from your own notes."
+        }
       }
     },
     {
@@ -1354,6 +1719,88 @@
             }
           ],
           "fallback_text": "Making the Q3 research PDF: page 6 of 9."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "PDF · 8 of 9 pages · appendix left out · A4"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a05",
+                "alt": "Page 1 of the Q3 customer research report: title, a four-line summary and a chart of reasons teams stay",
+                "aspect": "3:4"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open PDF",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a06"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download PDF",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a06"
+              }
+            }
+          ],
+          "fallback_text": "The Q3 customer research PDF has 8 of 9 A4 pages, summary on page 1; the interview appendix is left out because 2 notes are private in Notion. It is in your Library."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "PDF · 9 pages · made 25 Sep 18:20 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c11",
+                "alt": "Page 1 of the Q3 customer research report: title, a four-line summary and a chart of reasons teams stay",
+                "aspect": "3:4"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open PDF",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c12"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download PDF",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c12"
+              }
+            }
+          ],
+          "fallback_text": "The Q3 customer research PDF (9 A4 pages, summary on page 1) was made 25 Sep 18:20; I couldn’t check it against the latest report. It is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q3 customer research",
+            "subtitle": "Library"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No Q3 research report in your Library"
+            }
+          ],
+          "fallback_text": "There’s no Q3 research report in your Library to make into a PDF. Nothing was saved."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1510,6 +1957,80 @@
           ],
           "fallback_text": "Building the contracts sheet: 30 of 42 DocuSign envelopes read."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Contracts signed in 2026",
+            "subtitle": "Excel · 38 of 42 envelopes read · 4 need a new sign-in"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "38",
+                  "label": "Contracts"
+                },
+                {
+                  "value": "S$1,161,400",
+                  "label": "Total value so far"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open sheet",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a07"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download Excel",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a07"
+              }
+            }
+          ],
+          "fallback_text": "38 of 42 contracts signed in 2026 (1 Jan–26 Sep) are in the Excel sheet in your Library, total value so far S$1,161,400. 4 envelopes are in a DocuSign account that needs a new sign-in."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Contracts signed in 2026",
+            "subtitle": "Excel · 42 rows · as of 25 Sep 18:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "42",
+                  "label": "Contracts"
+                },
+                {
+                  "value": "S$1,284,600",
+                  "label": "Total value"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open sheet",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c15"
+              },
+              "secondary": {
+                "kind": "download_artifact",
+                "label": "Download Excel",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c15"
+              }
+            }
+          ],
+          "fallback_text": "42 contracts signed in 2026, total value S$1,284,600, as of 25 Sep 18:00 (couldn’t refresh from DocuSign); the Excel sheet is in your Library."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
@@ -1590,6 +2111,107 @@
         "fallback_text": "A pricing what-if page (a slider per plan, monthly revenue by customer count) is in your Library; download it and open it in your browser."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pricing what-if",
+            "subtitle": "Interactive page · HTML"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking the page works offline",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d2c03"
+              }
+            }
+          ],
+          "fallback_text": "Building the pricing what-if page and checking it works offline."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pricing what-if",
+            "subtitle": "Interactive page · 2 of 3 plans priced"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a08",
+                "alt": "Pricing what-if page: a slider per plan and a line of monthly revenue by customer count",
+                "aspect": "16:9"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "download_artifact",
+                "label": "Download page",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d2a09"
+              }
+            }
+          ],
+          "details": {
+            "assumptions": [
+              "Starts from Stripe prices: S$12 and S$29 a month; Scale has no price yet. 1,200 customers."
+            ]
+          },
+          "fallback_text": "A pricing what-if page for 2 of 3 plans (S$12 and S$29 a month, 1,200 customers) is in your Library; Scale has no price in Stripe, so set it on the page. Download it and open it in your browser."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pricing what-if",
+            "subtitle": "Interactive page · prices as of 25 Sep 18:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "image",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c16",
+                "alt": "Pricing what-if page: a slider per plan and a line of monthly revenue by customer count",
+                "aspect": "16:9"
+              }
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "download_artifact",
+                "label": "Download page",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000d0c17"
+              }
+            }
+          ],
+          "details": {
+            "assumptions": [
+              "Starts from Stripe prices as of 25 Sep 18:00: S$12, S$29 and S$79 a month, 1,200 customers."
+            ]
+          },
+          "fallback_text": "A pricing what-if page (a slider per plan, from S$12, S$29 and S$79 a month and 1,200 customers as of 25 Sep 18:00; couldn’t refresh from Stripe) is in your Library; download it and open it in your browser."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pricing what-if",
+            "subtitle": "Stripe"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No plan prices in Stripe to start from"
+            }
+          ],
+          "fallback_text": "There are no plan prices in Stripe to start the what-if page from. Tell me the three prices and I’ll build it. Nothing was saved."
+        },
         "failed": {
           "kind": "output_blocks",
           "major": 1,

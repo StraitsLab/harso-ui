@@ -43,7 +43,7 @@
             ]
           }
         ],
-        "fallback_text": "Tomorrow: Design review 09:30 (Zoom), lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift 13:00. Free after 14:00."
+        "fallback_text": "Tomorrow, Sun 27 Sep: Design review 09:30 on Zoom with Mei and Arjun, lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift (21 McCallum St) 13:00. Free after 14:00."
       },
       "states": {
         "loading": {
@@ -120,7 +120,7 @@
               ]
             }
           ],
-          "fallback_text": "As of 09:10 (couldn’t refresh): Design review 09:30 on Zoom, lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift 13:00."
+          "fallback_text": "Sun 27 Sep as of 09:10 (couldn’t refresh): Design review 09:30 on Zoom with Mei and Arjun, lunch with Sam 12:00 at Tiong Bahru Bakery, viewing at The Clift (21 McCallum St) 13:00."
         },
         "empty": {
           "kind": "output_blocks",
@@ -264,6 +264,53 @@
           ],
           "fallback_text": "Design review 26 Sep, first 40 of 55 minutes: ship the rows card before charts. Actions so far: Mei drafts row states (Tue 29 Sep), Arjun checks dark contrast (Wed 30 Sep)."
         },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design review",
+            "subtitle": "26 Sep · as of 16:40 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Decided",
+                  "bullets": [
+                    "Ship the rows card before charts.",
+                    "Keep reply buttons off every card."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Draft the row states",
+                  "secondary": "Mei · Tue 29 Sep"
+                },
+                {
+                  "label": "Check dark contrast",
+                  "secondary": "Arjun · Wed 30 Sep"
+                },
+                {
+                  "label": "Share the pane mock",
+                  "secondary": "You · Fri 2 Oct"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Design review notes in Notion, 26 Sep 2026 16:40"
+              }
+            ]
+          },
+          "fallback_text": "Design review 26 Sep, notes as of 16:40 (couldn’t refresh from Notion): ship the rows card before charts; keep reply buttons off every card. Actions: Mei drafts row states (Tue 29 Sep), Arjun checks dark contrast (Wed 30 Sep), you share the pane mock (Fri 2 Oct)."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
@@ -363,6 +410,22 @@
           ],
           "fallback_text": "Reading your email thread with Nichol to draft the reply."
         },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Re: Lease viewing",
+            "subtitle": "To Nichol"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No email from Nichol in Gmail"
+            }
+          ],
+          "fallback_text": "There’s no email from Nichol in your Gmail, so there’s nothing to reply to yet. Nothing was sent."
+        },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
@@ -374,10 +437,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "No thread with Nichol in Gmail. Nothing was sent."
+              "detail": "Gmail sign-in expired. Nothing was sent."
             }
           ],
-          "fallback_text": "There is no Gmail thread with Nichol, so I couldn’t draft the reply. Nothing was sent."
+          "fallback_text": "The Gmail sign-in expired, so I couldn’t read your thread with Nichol or draft the reply. Nothing was sent."
         }
       }
     },
@@ -761,7 +824,7 @@
               ]
             }
           ],
-          "fallback_text": "Next week, Google calendar only so far: Mon 10:00 team planning; Tue 08:30 dentist, 11:00 investor call, 15:00 design review. iCloud is still loading."
+          "fallback_text": "Next week, 28 Sep–4 Oct, Google calendar only so far (1 of 2 calendars): Mon 28 Sep 10:00 team planning on Zoom; Tue 29 Sep 08:30 dentist, 11:00 investor call with Kai and Priya, 15:00 design review. iCloud is still loading."
         },
         "empty": {
           "kind": "output_blocks",
@@ -808,7 +871,7 @@
       "components": [
         "Email draft preview"
       ],
-      "rationale": "Greeting, body and sign-off as three paragraphs; the quiet link opens the saved draft, and sending stays with the person.",
+      "rationale": "Greeting, body and sign-off as three paragraphs; the quiet link opens the Gmail Drafts folder (a draft has no link of its own, WD-7), and sending stays with the person.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -833,7 +896,7 @@
             "kind": "action",
             "secondary": {
               "kind": "open_url",
-              "label": "Open in Gmail",
+              "label": "Open Gmail drafts",
               "url": "https://mail.google.com/mail/u/0/#drafts"
             }
           }
@@ -859,6 +922,68 @@
             }
           ],
           "fallback_text": "Writing the stand-up note to the design team in your Gmail drafts."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Stand-up moves to 10:00",
+            "subtitle": "To 5 of 6 in Design team · draft · no address for Ravi"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Hi all,",
+                    "From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes.",
+                    "Thanks, Abhi"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Gmail drafts",
+                "url": "https://mail.google.com/mail/u/0/#drafts"
+              }
+            }
+          ],
+          "fallback_text": "Draft saved to 5 of 6 in the design team, not sent; I found no address for Ravi. Subject: Stand-up moves to 10:00. Hi all, From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes. Thanks, Abhi"
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Stand-up moves to 10:00",
+            "subtitle": "To Design team · draft as of 09:40 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Hi all,",
+                    "From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes.",
+                    "Thanks, Abhi"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Gmail drafts",
+                "url": "https://mail.google.com/mail/u/0/#drafts"
+              }
+            }
+          ],
+          "fallback_text": "Draft to the design team as saved at 09:40, not sent (couldn’t re-read Gmail). Subject: Stand-up moves to 10:00. Hi all, From Mon 28 Sep, stand-up moves from 09:30 to 10:00 so Singapore and Bangalore can both join. Same Zoom link, same 15 minutes. Thanks, Abhi"
         },
         "failed": {
           "kind": "output_blocks",
@@ -957,7 +1082,7 @@
               ]
             }
           ],
-          "fallback_text": "Today as of 09:10 (couldn’t refresh), 2 of 5 done. Left: renew passport (overdue), Q3 numbers to Priya by 17:00, call Crown Relocations after 14:00."
+          "fallback_text": "Today, Sat 26 Sep, as of 09:10 (couldn’t refresh), 2 of 5 done. Left: renew passport (overdue since 24 Sep, ICA online), send Q3 numbers to Priya by 17:00, call Crown Relocations back after 14:00."
         },
         "empty": {
           "kind": "output_blocks",
@@ -973,7 +1098,7 @@
               "detail": "Nothing left for today"
             }
           ],
-          "fallback_text": "All 5 of today’s to-dos are done."
+          "fallback_text": "All 5 of your to-dos for Sat 26 Sep are done."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1004,7 +1129,7 @@
       "components": [
         "Kanban / status list"
       ],
-      "rationale": "Counts in the subtitle, problems first as rows with the owner trailing; the full board is Linear's, one tap away. Never columns.",
+      "rationale": "Counts in the subtitle, problems first as rows with the owner trailing; the full board is Linear's, reached by the Open in Linear link. View all only shows these rows. Never columns.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -1043,10 +1168,63 @@
             }
           }
         ],
-        "more_label": "See all 14 in Linear",
+        "more_label": "View blocked and due",
         "fallback_text": "Harso 1.0 launch, 14 issues: 2 blocked, 6 in progress, 6 done. Blocked: App Store review notes (Mei, waiting on legal), Stripe tax setup (you, needs the GST number). Next due: onboarding copy (Arjun, Wed 30 Sep)."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harso 1.0 launch",
+            "subtitle": "Linear"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 14 issues",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000d2c01"
+              }
+            }
+          ],
+          "fallback_text": "Reading the 14 issues in the Harso 1.0 launch project in Linear."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Harso 1.0 launch",
+            "subtitle": "9 of 14 issues read · 2 blocked so far"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "App Store review notes",
+                  "secondary": "Blocked · waiting on legal",
+                  "trailing": "Mei"
+                },
+                {
+                  "label": "Stripe tax setup",
+                  "secondary": "Blocked · needs the GST number",
+                  "trailing": "You"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Linear",
+                "url": "https://linear.app/straitslab/project/harso-1-0"
+              }
+            }
+          ],
+          "fallback_text": "Harso 1.0 launch, 9 of 14 issues read so far: 2 blocked. App Store review notes (Mei, waiting on legal), Stripe tax setup (you, needs the GST number). Still reading the other 5."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
@@ -1086,7 +1264,7 @@
             }
           ],
           "fallback_text": "Harso 1.0 launch, 14 issues, 2 blocked, as of 09:10 (couldn’t refresh): App Store review notes blocked on legal (Mei), Stripe tax setup needs the GST number (you), onboarding copy due Wed 30 Sep (Arjun).",
-          "more_label": "See all 14 in Linear"
+          "more_label": "View blocked and due"
         },
         "failed": {
           "kind": "output_blocks",
