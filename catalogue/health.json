@@ -76,7 +76,7 @@
             "Not medical advice."
           ]
         },
-        "fallback_text": "Resting heart rate fell from 63 to 58 bpm between 1 and 26 Sep; average 61 bpm."
+        "fallback_text": "Resting heart rate, 1–26 Sep, by week: 1 Sep 63 bpm, 8 Sep 62 bpm, 15 Sep 60 bpm, 22 Sep 58 bpm (this week). Average 61 bpm."
       },
       "states": {
         "loading": {
@@ -156,7 +156,7 @@
               "Not medical advice."
             ]
           },
-          "fallback_text": "Resting heart rate, 3 of 4 weeks reported: 63 bpm, 62 bpm, then 58 bpm this week, with no readings the week of 15 Sep. Average 61 bpm."
+          "fallback_text": "Resting heart rate, 1–26 Sep, 3 of 4 weeks reported: 1 Sep 63 bpm, 8 Sep 62 bpm, 15 Sep no readings, 22 Sep 58 bpm (this week). Average 61 bpm."
         },
         "stale": {
           "kind": "output_blocks",
@@ -303,7 +303,7 @@
             "Not medical advice."
           ]
         },
-        "fallback_text": "Sleep this week averaged 7h 12m, 24 min more than last week. Wednesday was short at 5.6 hours."
+        "fallback_text": "Sleep, last 7 nights as of 07:30, in hours: Sat 7.8, Sun 8.1, Mon 7.2, Tue 7.0, Wed 5.6 (the short night), Thu 7.4, Fri 7.3. Average 7h 12m, 24 min more than last week."
       },
       "states": {
         "loading": {
@@ -389,7 +389,7 @@
               "Not medical advice."
             ]
           },
-          "fallback_text": "Sleep, 6 of 7 nights reported (last night hasn't synced): average 7h 11m; shortest 5h 36m on Wednesday."
+          "fallback_text": "Sleep, 6 of 7 nights reported as of 07:30, in hours: Sat 7.8, Sun 8.1, Mon 7.2, Tue 7.0, Wed 5.6 (5h 36m, the shortest), Thu 7.4; last night, Fri, hasn't synced. Average of the 6 nights 7h 11m."
         },
         "stale": {
           "kind": "output_blocks",
@@ -423,7 +423,7 @@
               "Not medical advice."
             ]
           },
-          "fallback_text": "Sleep for the 7 nights to Fri 25 Sep (couldn't refresh this morning): average 7h 10m; shortest 5h 36m on Wednesday."
+          "fallback_text": "Sleep for the 7 nights to Fri 25 Sep, as of 07:30 that morning (couldn't refresh today): average 7h 10m; shortest 5h 36m on Wednesday."
         },
         "empty": {
           "kind": "output_blocks",
@@ -439,7 +439,7 @@
               "detail": "No nights in the last 7; wear your watch to bed to track sleep"
             }
           ],
-          "fallback_text": "No sleep recorded in the last 7 nights. Wear your watch to bed to track sleep."
+          "fallback_text": "No sleep recorded in the last 7 nights, as of 07:30. Wear your watch to bed to track sleep."
         },
         "failed": {
           "kind": "output_blocks",
@@ -536,7 +536,7 @@
             "Not medical advice."
           ]
         },
-        "fallback_text": "46,210 steps so far this week (Mon 21 to Sat 26 Sep, as of 18:40), a weekday average of 8,400. Best day: Wednesday, 10,250."
+        "fallback_text": "Steps this week, Mon 21 to Sat 26 Sep, as of 18:40: Mon 9,120, Tue 7,480, Wed 10,250 (the best), Thu 6,310, Fri 8,840, Sat 4,210 so far; Sun is still to come. 46,210 in all, a weekday average of 8,400."
       },
       "states": {
         "loading": {
@@ -556,7 +556,7 @@
               }
             }
           ],
-          "fallback_text": "Reading this week's steps from Apple Health."
+          "fallback_text": "Reading this week's steps, Mon 21 to Sun 27 Sep, from Apple Health."
         },
         "partial": {
           "kind": "output_blocks",
@@ -622,7 +622,7 @@
               "Not medical advice."
             ]
           },
-          "fallback_text": "Steps Mon 21 to Thu 24 Sep: 33,160, a daily average of 8,290. Friday and today haven't synced; Sunday is still to come."
+          "fallback_text": "Steps this week as of 18:40, Mon to Thu synced: Mon 9,120, Tue 7,480, Wed 10,250 (the best), Thu 6,310; 33,160 in all, a daily average of 8,290. Fri and today, Sat, haven't synced; Sun is still to come."
         },
         "stale": {
           "kind": "output_blocks",
@@ -672,7 +672,7 @@
               "detail": "Your phone and watch recorded no steps since Mon 21 Sep"
             }
           ],
-          "fallback_text": "No steps recorded since Mon 21 Sep, as of 18:40. Check that Motion & Fitness is on for your phone."
+          "fallback_text": "No steps recorded this week (Mon 21 to Sun 27 Sep) as of 18:40. Check that Motion & Fitness is on for your phone."
         },
         "failed": {
           "kind": "output_blocks",
@@ -738,7 +738,7 @@
             "Follow your doctor's instructions if they differ."
           ]
         },
-        "fallback_text": "Today: Metformin 500 mg at 08:00 (taken 08:10) and 500 mg with dinner at 19:00."
+        "fallback_text": "Today, Sat 26 Sep: Metformin 500 mg with breakfast at 08:00 (taken 08:10) and Metformin 500 mg with dinner at 19:00 (due)."
       },
       "states": {
         "empty": {
@@ -755,7 +755,7 @@
               "detail": "Add your medicines in Apple Health and I can read them"
             }
           ],
-          "fallback_text": "You have no medication list in Apple Health yet. Add your medicines there and I can read today's doses."
+          "fallback_text": "You have no medication list in Apple Health yet (Sat 26 Sep). Add your medicines there and I can read today's doses."
         },
         "failed": {
           "kind": "output_blocks",
@@ -843,9 +843,105 @@
             "Follow your doctor's instructions if they differ."
           ]
         },
-        "fallback_text": "2 of 3 taken today (as of 20:15): Metformin 500 mg at 08:10 and 19:20. Atorvastatin 20 mg is due at 22:00; I'll remind you then."
+        "fallback_text": "2 of 3 taken today, Sat 26 Sep, as of 20:15: Metformin 500 mg at 08:10 and 19:20. Atorvastatin 20 mg is due at 22:00; I'll remind you then."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Today's doses",
+            "subtitle": "Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your medication log",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000c0b"
+              }
+            }
+          ],
+          "fallback_text": "Reading today's doses (Sat 26 Sep) from your medication log."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "2 taken so far",
+            "subtitle": "Sat 26 Sep · 2 of 3 medicines read · as of 20:15"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Metformin 500 mg",
+                  "secondary": "With breakfast · taken 08:10",
+                  "trailing": "Taken"
+                },
+                {
+                  "label": "Metformin 500 mg",
+                  "secondary": "With dinner · taken 19:20",
+                  "trailing": "Taken"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Your medication log in Apple Health"
+              }
+            ],
+            "disclaimers": [
+              "Follow your doctor's instructions if they differ."
+            ]
+          },
+          "fallback_text": "Sat 26 Sep, as of 20:15, 2 of 3 medicines read: Metformin 500 mg taken at 08:10 and 19:20. Atorvastatin 20 mg is logged in another app I can't read, so check it there before you take it."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1 of 3 taken",
+            "subtitle": "Sat 26 Sep · as of 18:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Metformin 500 mg",
+                  "secondary": "With breakfast · taken 08:10",
+                  "trailing": "Taken"
+                },
+                {
+                  "label": "Metformin 500 mg",
+                  "secondary": "With dinner",
+                  "trailing": "Due 19:00"
+                },
+                {
+                  "label": "Atorvastatin 20 mg",
+                  "secondary": "At bedtime",
+                  "trailing": "Due 22:00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Your medication log in Apple Health"
+              }
+            ],
+            "disclaimers": [
+              "Follow your doctor's instructions if they differ."
+            ]
+          },
+          "fallback_text": "As of 18:00 on Sat 26 Sep (couldn't refresh, so doses logged since then don't show): 1 of 3 taken, Metformin 500 mg at 08:10. Metformin 500 mg with dinner was due at 19:00 and Atorvastatin 20 mg is due at 22:00. Check your log before taking a dose again."
+        },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
@@ -860,7 +956,7 @@
               "detail": "Apple Health didn't share your medication log. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn't check today's doses: Apple Health didn't share your medication log. Nothing was changed. Your reminders still run."
+          "fallback_text": "Couldn't check today's doses (Sat 26 Sep): Apple Health didn't share your medication log. Nothing was changed. Your reminders still run."
         }
       }
     },
@@ -942,7 +1038,7 @@
               "Harso is not a doctor. In an emergency always call 995."
             ]
           },
-          "fallback_text": "Chest tightness with sweating can be a heart attack. Call 995 for an ambulance now. Don't drive yourself; sit down and unlock your door. The first-aid guide didn't load."
+          "fallback_text": "Chest tightness with sweating for 20 minutes can be a heart attack. Call 995 for an ambulance now. Don't drive yourself; sit down and unlock your door. The first-aid guide didn't load."
         }
       }
     },
@@ -992,7 +1088,7 @@
             "Harso is not a doctor."
           ]
         },
-        "fallback_text": "Two days of sore throat without fever is most likely viral. Rest, drink plenty, use lozenges or paracetamol. See a GP if it lasts more than a week, swallowing becomes hard, or a fever above 38°C starts. Go to A&E or call 995 if breathing becomes hard."
+        "fallback_text": "2 days of sore throat without fever is most likely viral. Rest, drink plenty, use lozenges or paracetamol. See a GP if it lasts more than a week, swallowing becomes hard, or a fever above 38°C starts. Go to A&E or call 995 if breathing becomes hard."
       }
     },
     {
@@ -1041,7 +1137,7 @@
             "Stop if you feel chest pain or dizziness."
           ]
         },
-        "fallback_text": "30-minute interval run: 8 min easy warm-up, 6 × (1 min hard, 1 min easy), 10 min cool-down."
+        "fallback_text": "30-minute interval run: 8 min easy warm-up, 12 min of 6 × (1 min hard, 1 min easy), 10 min cool-down."
       }
     },
     {
