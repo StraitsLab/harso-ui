@@ -45,6 +45,14 @@
     "Place card",
     "Opening hours",
     "Menu",
+    "D1 Restaurants near me",
+    "D2 Menu section",
+    "D4 Cart before ordering",
+    "D6 Live order tracking",
+    "D9 Same dish across apps",
+    "D10 Group order with budget",
+    "D15 Grocery list to basket",
+    "D16 Quick commerce tracking",
     "Map with pins"
   ],
   "verticals": [
@@ -55,6 +63,7 @@
     "travel",
     "places",
     "food",
+    "delivery",
     "weather",
     "sports",
     "news",
