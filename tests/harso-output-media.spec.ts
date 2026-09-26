@@ -286,6 +286,28 @@ for (const mode of ["light", "dark"] as const) {
     expect(await axe(page)).toEqual([]);
   });
 
+  test(`map ${mode}: a known failed tile is disclosed while a sibling is still loading (reviewer F2 mixed case)`, async ({ page }) => {
+    // Tiles are served in request order: the 1st is held forever, the 2nd aborted, any others drawn. The note must show
+    // now, not after the held tile settles (the old phase logic let any pending tile mask a known failure).
+    let seen = 0;
+    await page.route("**/__tiles__/**", route => {
+      seen += 1;
+      if (seen === 1) return; // held: never settles
+      if (seen === 2) return route.abort();
+      return route.fulfill({ contentType: "image/svg+xml", body: DRAWN });
+    });
+    await open(page, `doc=map&net=1&mode=${mode}&width=420&generation=7`);
+    const map = card(page).locator(".hkc-output-map");
+    // At 420 the plane is two tiles: one held (still loading), one aborted (known failed). The old phase logic reported
+    // "loading" with no note here; a failure is known, so the map must say so now.
+    await expect(card(page).locator("img.hkc-output-map-tile[data-state=failed]")).toHaveCount(1);
+    await expect(card(page).locator("img.hkc-output-map-tile[data-state=loading]")).toHaveCount(1);
+    await expect(map).toHaveAttribute("data-state", "partial");
+    await expect(card(page).getByText("Part of the map didn’t load")).toBeVisible();
+    await expect(card(page).locator(".hkc-output-block-failed")).toHaveCount(0);
+    expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
+  });
+
   test(`video ${mode}: real poster and file failures show failed with Try again and Open video; the network back draws the poster`, async ({ page }) => {
     let serve: "abort" | "ok" = "abort";
     await page.route("**/__media__/**", route => serve === "abort" ? route.abort()
