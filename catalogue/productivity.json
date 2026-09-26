@@ -152,7 +152,7 @@
               "detail": "Google Calendar sign-in expired. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read your calendar for Sun 27 Sep: the Google Calendar sign-in expired. Nothing was changed."
+          "fallback_text": "The Google Calendar sign-in expired, so I couldn’t read Sun 27 Sep. Nothing was changed."
         }
       }
     },
@@ -306,7 +306,7 @@
               "detail": "The recording has no transcript yet. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t summarise the design review on 26 Sep: the recording has no transcript yet. Nothing was changed."
+          "fallback_text": "The design review recording from 26 Sep has no transcript yet, so there is nothing to summarise. Nothing was changed."
         }
       }
     },
@@ -377,7 +377,7 @@
               "detail": "No thread with Nichol in Gmail. Nothing was sent."
             }
           ],
-          "fallback_text": "Couldn’t draft the reply: there is no thread with Nichol in Gmail. Nothing was sent."
+          "fallback_text": "There is no Gmail thread with Nichol, so I couldn’t draft the reply. Nothing was sent."
         }
       }
     },
@@ -481,7 +481,7 @@
               "detail": "Things didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read your move list: Things didn’t respond. Nothing was changed."
+          "fallback_text": "Things didn’t respond, so I couldn’t read the move list. Nothing was changed."
         }
       }
     },
@@ -554,7 +554,7 @@
               "detail": "WhatsApp disconnected at 11:20. Nothing was sent."
             }
           ],
-          "fallback_text": "Stopped watching for Nichol’s reply: WhatsApp disconnected at 11:20. Nothing was sent. Reconnect WhatsApp to watch again."
+          "fallback_text": "WhatsApp disconnected at 11:20, so I stopped watching for Nichol’s reply. Nothing was sent. Reconnect WhatsApp to watch again."
         }
       }
     },
@@ -793,7 +793,7 @@
               "detail": "Google Calendar sign-in expired. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read your calendar for 28 Sep–4 Oct: the Google Calendar sign-in expired. Nothing was changed."
+          "fallback_text": "The Google Calendar sign-in expired, so I couldn’t read 28 Sep–4 Oct. Nothing was changed."
         }
       }
     },
@@ -874,7 +874,7 @@
               "detail": "Gmail sign-in expired. Nothing was sent."
             }
           ],
-          "fallback_text": "Couldn’t save the stand-up note to your drafts: the Gmail sign-in expired. Nothing was sent."
+          "fallback_text": "The Gmail sign-in expired, so the stand-up note isn’t in your drafts. Nothing was sent."
         }
       }
     },
@@ -989,7 +989,7 @@
               "detail": "Todoist didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read today’s to-dos: Todoist didn’t respond. Nothing was changed."
+          "fallback_text": "Todoist didn’t respond, so I couldn’t read today’s to-dos. Nothing was changed."
         }
       }
     },
@@ -1052,7 +1052,7 @@
           "major": 1,
           "header": {
             "title": "Harso 1.0 launch",
-            "subtitle": "14 issues · as of 09:10 · couldn’t refresh"
+            "subtitle": "14 issues · 2 blocked · as of 09:10 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -1085,7 +1085,8 @@
               }
             }
           ],
-          "fallback_text": "Harso 1.0 launch as of 09:10 (couldn’t refresh): App Store review notes blocked on legal (Mei), Stripe tax setup needs the GST number (you), onboarding copy due Wed 30 Sep (Arjun)."
+          "fallback_text": "Harso 1.0 launch, 14 issues, 2 blocked, as of 09:10 (couldn’t refresh): App Store review notes blocked on legal (Mei), Stripe tax setup needs the GST number (you), onboarding copy due Wed 30 Sep (Arjun).",
+          "more_label": "See all 14 in Linear"
         },
         "failed": {
           "kind": "output_blocks",
@@ -1101,7 +1102,7 @@
               "detail": "Linear didn’t respond. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read the Harso 1.0 launch project: Linear didn’t respond. Nothing was changed."
+          "fallback_text": "Linear didn’t respond, so I couldn’t read the Harso 1.0 launch project. Nothing was changed."
         }
       }
     },
@@ -1202,7 +1203,7 @@
               "detail": "Library storage is full. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t make the office move tracker: your Library storage is full. Nothing was saved."
+          "fallback_text": "Your Library storage is full, so the office move tracker wasn’t saved. Nothing else changed."
         }
       }
     }

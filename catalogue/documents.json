@@ -113,7 +113,7 @@
               "detail": "The PDF is a scan with no text layer. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read the tenancy agreement for The Clift: the PDF is a scan with no text layer. Nothing was changed."
+          "fallback_text": "The tenancy agreement for The Clift is a scan with no text layer, so I couldn’t read it. Nothing was changed."
         }
       }
     },
@@ -255,7 +255,7 @@
               "detail": "DocuSign sign-in expired. Nothing was sent."
             }
           ],
-          "fallback_text": "Couldn’t check the NDA signatures: the DocuSign sign-in expired. Nothing was sent."
+          "fallback_text": "The DocuSign sign-in expired, so I couldn’t check the NDA signatures. Nothing was sent."
         }
       }
     },
@@ -409,7 +409,7 @@
               "detail": "The MOH comparison page didn’t load. Nothing was bought."
             }
           ],
-          "fallback_text": "Couldn’t compare Integrated Shield plans: the MOH comparison page didn’t load. Nothing was bought."
+          "fallback_text": "The MOH comparison page didn’t load, so I couldn’t compare Integrated Shield plans. Nothing was bought."
         }
       }
     },
@@ -552,7 +552,7 @@
               "detail": "Every source timed out. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t finish the EV brief: every source timed out. Nothing was saved."
+          "fallback_text": "Every source timed out, so the EV brief isn’t finished. Nothing was saved."
         }
       }
     },
@@ -648,7 +648,7 @@
               "detail": "The brief is no longer in your Library. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t make the EV slides: the brief is no longer in your Library. Nothing was saved."
+          "fallback_text": "The EV brief is no longer in your Library, so I couldn’t make the slides. Nothing was saved."
         }
       }
     },
@@ -740,7 +740,7 @@
               "detail": "Library storage is full. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t save the freelance agreement: your Library storage is full. Nothing was saved."
+          "fallback_text": "Your Library storage is full, so the freelance agreement wasn’t saved. Nothing else changed."
         }
       }
     },
@@ -832,7 +832,7 @@
               "detail": "Notion access was removed. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t write the Q3 research report: Notion access was removed. Nothing was saved."
+          "fallback_text": "Notion access was removed, so I couldn’t write the Q3 research report. Nothing was saved."
         }
       }
     },
@@ -972,7 +972,7 @@
               "detail": "The PDF is password-protected. Nothing was changed."
             }
           ],
-          "fallback_text": "Couldn’t read the Harbour Labs agreement: the PDF is password-protected. Nothing was changed."
+          "fallback_text": "The Harbour Labs agreement PDF is password-protected, so I couldn’t read it. Nothing was changed."
         }
       }
     },
@@ -1044,7 +1044,7 @@
               "detail": "DocuSign didn’t respond. Nothing was sent."
             }
           ],
-          "fallback_text": "Couldn’t check the offer letter: DocuSign didn’t respond. Nothing was sent."
+          "fallback_text": "DocuSign didn’t respond, so I couldn’t check the offer letter. Nothing was sent."
         }
       }
     },
@@ -1207,7 +1207,7 @@
               "detail": "The MOH comparison page didn’t load. Nothing was bought."
             }
           ],
-          "fallback_text": "Couldn’t compare Integrated Shield plans: the MOH comparison page didn’t load. Nothing was bought."
+          "fallback_text": "The MOH comparison page didn’t load, so I couldn’t compare Integrated Shield plans. Nothing was bought."
         }
       }
     },
@@ -1369,7 +1369,7 @@
               "detail": "A chart image is missing from the report. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t make the Q3 research PDF: a chart image is missing from the report. Nothing was saved."
+          "fallback_text": "A chart image is missing from the Q3 research report, so the PDF wasn’t made. Nothing was saved."
         }
       }
     },
@@ -1437,7 +1437,7 @@
               "detail": "The tenancy agreement isn’t in your Library. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t write the notice letter: the tenancy agreement isn’t in your Library. Nothing was saved."
+          "fallback_text": "The tenancy agreement isn’t in your Library, so I couldn’t write the notice letter. Nothing was saved."
         }
       }
     },
@@ -1540,7 +1540,7 @@
               "detail": "DocuSign sign-in expired. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t export the contracts: the DocuSign sign-in expired. Nothing was saved."
+          "fallback_text": "The DocuSign sign-in expired, so the contracts weren’t exported. Nothing was saved."
         }
       }
     },
@@ -1604,7 +1604,7 @@
               "detail": "The page failed its offline check. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t build the pricing page: it failed its offline check. Nothing was saved."
+          "fallback_text": "The pricing page failed its offline check, so it wasn’t saved. Nothing else changed."
         }
       }
     },
