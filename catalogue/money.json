@@ -234,10 +234,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No card or bank charges came through for August"
+              "detail": "Nothing came through from your 4 accounts"
             }
           ],
-          "fallback_text": "No spending recorded in August. No card or bank charges came through for August."
+          "fallback_text": "No spending recorded in August. Nothing came through from your 4 accounts."
         },
         "failed": {
           "kind": "output_blocks",
@@ -771,7 +771,8 @@
               }
             ]
           },
-          "fallback_text": "6 of 9 holdings read (25 Sep close): NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%. The value waits for the other three."
+          "fallback_text": "6 of 9 holdings read (25 Sep close): NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%. The value waits for the other three.",
+          "more_label": "View 6 of 9"
         },
         "stale": {
           "kind": "output_blocks",
@@ -954,10 +955,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The next one is Singtel Fibre on 25 Oct"
+              "detail": "Next up: Singtel Fibre, S$49.90, on 25 Oct"
             }
           ],
-          "fallback_text": "No bills due this week. The next one is Singtel Fibre on 25 Oct."
+          "fallback_text": "No bills due this week. Next up: Singtel Fibre, S$49.90, on 25 Oct."
         },
         "failed": {
           "kind": "output_blocks",
@@ -1746,10 +1747,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No charges came through, so no sheet was made"
+              "detail": "Nothing came through, so no sheet was made"
             }
           ],
-          "fallback_text": "No expenses in August. No charges came through, so no sheet was made."
+          "fallback_text": "No expenses in August. Nothing came through, so no sheet was made."
         },
         "failed": {
           "kind": "output_blocks",
@@ -2705,6 +2706,7 @@
               }
             ]
           },
+          "more_label": "View 4 of 6",
           "fallback_text": "4 of 6 read at Fri 25 Sep close: Tesla US$241.10 −3.2%, NVIDIA US$118.60 −2.1%, Apple US$238.40 +1.8%, Microsoft US$436.20 +0.3%. Sea Ltd and Grab still loading."
         },
         "stale": {
@@ -3180,10 +3182,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No charges have come through since 1 Sep"
+              "detail": "Nothing has come through from your 4 accounts"
             }
           ],
-          "fallback_text": "No spending recorded from 1–26 Sep as of 09:00."
+          "fallback_text": "No spending yet this month (1–26 Sep, as of 09:00): nothing has come through from your 4 accounts."
         },
         "failed": {
           "kind": "output_blocks",
@@ -3623,7 +3625,7 @@
               }
             ]
           },
-          "more_label": "View all 4",
+          "more_label": "View 4 from DBS",
           "fallback_text": "From the DBS card only: 4 subscriptions, S$69.51 a month. ChatGPT Plus S$27.50, Netflix S$25.98, Spotify S$11.98, iCloud+ 200 GB S$4.05. OCBC card still to read."
         },
         "empty": {
@@ -3637,10 +3639,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No merchant charged you monthly in the last 12 months"
+              "detail": "Nothing repeats monthly on either card"
             }
           ],
-          "fallback_text": "No subscriptions found. No merchant charged you monthly in the last 12 months."
+          "fallback_text": "No subscriptions found. Nothing repeats monthly on either card."
         },
         "failed": {
           "kind": "output_blocks",
@@ -3920,10 +3922,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The next one is Singtel Fibre on 25 Oct"
+              "detail": "Next up: Singtel Fibre, S$49.90, on 25 Oct"
             }
           ],
-          "fallback_text": "No bills left this month. The next one is Singtel Fibre on 25 Oct."
+          "fallback_text": "No bills left this month. Next up: Singtel Fibre, S$49.90, on 25 Oct."
         },
         "failed": {
           "kind": "output_blocks",
