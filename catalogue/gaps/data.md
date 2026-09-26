@@ -29,7 +29,7 @@ Shot in a throwaway worktree: this branch + #11 at `0c8d7e9` + #12 at `82de6b4`.
 
 | # | Renderer | Finding | Evidence |
 |---|---|---|---|
-| R-1 | table (#11 `src/chat/output-card-charts.tsx:381`) | At 420 wide, a 3-column table whose first cell is a long CJK name (`亚麻衬衫男士长袖夏季薄款透气商务休闲`) pushes the Revenue column past the card edge. The column scrolls sideways, but nothing on screen shows that it can: "S$12…" is cut at the edge and the header is out of view. At 390 the whole column is out of view. | Probe sheet `/Volumes/MainData/AgentTools/hermes/evidence/catalogue-design/CAT-data/probe-hostile-light.png` (hostile data, not a catalogue example) |
+| R-1 | table (#11 `src/chat/output-card-charts.tsx:417` at 0c8d7e9) | At 420 wide, a 3-column table whose first cell is a long CJK name (`亚麻衬衫男士长袖夏季薄款透气商务休闲`) pushes the Revenue column past the card edge. The column scrolls sideways, but nothing on screen shows that it can: "S$12…" is cut at the edge and the header is out of view. At 390 the whole column is out of view. | Probe sheet `/Volumes/MainData/AgentTools/hermes/evidence/catalogue-design/CAT-data/probe-hostile-light.png` (hostile data, not a catalogue example) |
 | R-2 | header subtitle (kit `src/chat/output-card.tsx:212`) | A subtitle that mixes Arabic with "1–31 Aug" is drawn as "31–1": the numbers take the Arabic run's direction. Text fields need `dir="auto"` / bidi isolation. | Same probe sheet, first card |
 | R-3 | numbers | "S$1,234,567k" and "+1,234.5%" fit at 390. No finding. | Same probe |
 
