@@ -72,7 +72,7 @@
    attribution chip bottom-left in secondary on the overlay (>= 4.5:1). */
 .harso-kit .hkc-output-map { display: flex; flex-direction: column; gap: 10px; margin: 0; min-width: 0; }
 .harso-kit .hkc-output-map-frame { position: relative; }
-.harso-kit .hkc-output-map[data-state="loading"] .hkc-output-map-tile { opacity: 0; }
+.harso-kit .hkc-output-map-tile[data-state="loading"] { opacity: 0; }
 .harso-kit .hkc-output-map[data-state="loading"] .hkc-output-map-plane::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--hk-surface) 55%, transparent) 50%, transparent 70%);

@@ -485,3 +485,12 @@ test("F4 a loading bar spends none of the cap: the numbers after it still draw",
   expect(ready.querySelectorAll(".hkc-output-card-number")).toHaveLength(0);
   expect(within(ready).getByRole("button", { name: "View all 3" })).toBeVisible();
 });
+
+test("F2 map: once a tile has drawn, tiles still arriving (a wider pane) leave the map drawn, not back to loading", () => {
+  const view = render(<chat.HarsoOutputCard document={doc([tokyo])} onViewAll={() => {}} media={host} />);
+  const [first, ...rest] = tilesOf(view.container);
+  fireEvent.load(first);
+  expect(view.container.querySelector(".hkc-output-map")).toHaveAttribute("data-state", "ready");
+  expect(view.container.querySelector(".hkc-output-map")).not.toHaveAttribute("aria-busy");
+  expect(rest.every(tile => tile.dataset.state === "loading")).toBe(true);
+});

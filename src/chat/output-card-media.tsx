@@ -393,10 +393,12 @@ export function HarsoOutputMapView({ map, host }: { map: HarsoOutputMap; host: H
       }
     }
   }
-  // The plane is only as true as its tiles: loading until they arrive, a note if some didn't, failed if none did.
+  // The plane is only as true as its tiles: loading until the first arrives (a resize that adds edge tiles never blanks
+  // the ones already drawn), a note if some didn't, failed if none did.
   const phases = tiles.map(tile => loads.phase(tile.src));
   const failedTiles = phases.filter(phase => phase === "failed").length;
-  const phase = phases.includes("loading") ? "loading" : failedTiles && failedTiles === tiles.length ? "failed" : failedTiles ? "partial" : "ready";
+  const phase = phases.includes("loading") ? (phases.includes("ready") ? "ready" : "loading")
+    : failedTiles && failedTiles === tiles.length ? "failed" : failedTiles ? "partial" : "ready";
   if (phase === "failed") return <figure ref={node} className="hkc-output-map" aria-label="Map">
     <MediaFailed message="Couldn’t load the map" reason={places.map(named).join(", ")} onRetry={loads.retry} />
   </figure>;
