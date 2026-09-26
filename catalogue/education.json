@@ -792,7 +792,7 @@
       "kind": "file",
       "request": "Make me flashcards for the 20 JLPT N5 verbs I got wrong.",
       "says": "The deck is in your Library; say quiz me when you want to practise.",
-      "surface": "page",
+      "surface": "inline",
       "fresh": false,
       "components": [
         "Flashcards"
@@ -803,7 +803,7 @@
         "major": 1,
         "header": {
           "title": "JLPT N5 verbs",
-          "subtitle": "20 cards · Anki deck"
+          "subtitle": "20 cards · Anki deck · 3 shown"
         },
         "blocks": [
           {
@@ -821,8 +821,7 @@
                 "label": "待つ",
                 "secondary": "matsu · to wait"
               }
-            ],
-            "total_count": 20
+            ]
           },
           {
             "kind": "action",
@@ -833,7 +832,6 @@
             }
           }
         ],
-        "more_label": "View all 20 cards",
         "fallback_text": "A 20-card deck of the JLPT N5 verbs you missed is in your Library, for example 食べる (taberu, to eat), 飲む (nomu, to drink), 待つ (matsu, to wait)."
       },
       "states": {
