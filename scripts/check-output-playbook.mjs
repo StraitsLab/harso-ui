@@ -318,11 +318,11 @@ export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensi
   const errors = [];
   const push = (law, message) => errors.push(`${law}: ${message}`);
   const main = state === undefined;
+  if (!main && !Object.hasOwn(STATE_LAWS, state)) return [`states: ${state} is not one of ${STATES.join(", ")}`];
   const applies = main ? MAIN_LAWS : STATE_LAWS[state];
-  if (!applies) return [`states: ${state} is not one of ${STATES.join(", ")}`];
   const document = main ? example.document : example.states[state];
-  const said = main ? { says: example.says ?? "", reply: example.reply ?? "" } : {};
-  for (const [path, text] of walkStrings({ ...said, document })) {
+  const sentences = main ? { says: example.says ?? "", reply: example.reply ?? "" } : {};
+  for (const [path, text] of walkStrings({ ...sentences, document })) {
     if (text.includes("!")) push("voice", `${path} uses an exclamation mark`);
     if (BANNED.test(text)) push("voice", `${path} uses banned wording ("${text.match(BANNED)[0]}")`);
   }

@@ -42,7 +42,7 @@ const isText = (block: HarsoOutputBlock): block is HarsoOutputTextBlock => block
  * The whole answer for View all, drawn by the same card with its inline caps lifted. The card draws one text run, so
  * every text block's words (summary, headings, paragraphs, bullets, in order) become that one run, word for word.
  */
-export function wholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
+function wholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
   const words = document.blocks.filter(isText).flatMap(block => [
     ...(block.summary ? [block.summary] : []),
     ...block.sections.flatMap(section => [...(section.heading ? [section.heading] : []), ...section.paragraphs ?? [], ...section.bullets ?? []]),

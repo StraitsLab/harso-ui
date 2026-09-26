@@ -123,6 +123,7 @@ describe("the catalogue is the one source of the examples", () => {
     expect(lawErrors(example, undefined, "loading").join("\n")).toMatch(/state toString is outside the closed set/);
     example.states.partial.blocks[0].items[0].status = "constructor";
     expect(lawErrors(example, undefined, "partial").join("\n")).toMatch(/row status constructor has no meaning/);
+    expect(lawErrors(example, undefined, "toString")).toEqual(["states: toString is not one of loading, partial, stale, empty, failed"]);
   });
 });
 
