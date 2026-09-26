@@ -89,8 +89,8 @@
 }
 @media (pointer: coarse) { .harso-kit .hkc-output-card .hk-button.hkc-output-card-action { min-height: 44px; } }
 
-/* A source with a url opens through the host; it reads as a link in the Details list. */
-.harso-kit .hkc-output-card-source-link { color: var(--hk-ink); text-decoration: underline; text-decoration-color: var(--hk-faint); text-underline-offset: 3px; border-radius: 2px; }
+/* A source with a url opens through the host: a button (no href) that reads as a link in the Details list. */
+.harso-kit .hkc-output-card-source-link { appearance: none; border: 0; padding: 0; margin: 0; background: transparent; font: inherit; text-align: start; cursor: pointer; color: var(--hk-ink); text-decoration: underline; text-decoration-color: var(--hk-faint); text-underline-offset: 3px; border-radius: 2px; }
 .harso-kit .hkc-output-card-source-link:hover { text-decoration-color: currentColor; }
 
 .harso-kit .hkc-output-card-details-toggle { flex: 0 0 auto; min-width: 44px; margin: -10px -8px 0 0; padding-inline: var(--hk-space-2); font-size: var(--hk-text-chrome); }

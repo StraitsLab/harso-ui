@@ -352,10 +352,10 @@ function DetailsContent({ details, onOpenUrl }: { details: HarsoOutputDocumentDe
     {!!details.sources?.length && <ul className="hkc-output-card-details-list" aria-label="Sources">
       {details.sources.map((source, index) => <li key={index}>
         {onOpenUrl && isHttps(source.url)
-          // A real link (role, URL on hover) whose every activation goes to the host: the kit never navigates itself.
-          ? <a className="hkc-output-card-source-link" href={source.url}
-            onClick={event => { event.preventDefault(); onOpenUrl(source.url!); }}
-            onAuxClick={event => { if (event.button !== 1) return; event.preventDefault(); onOpenUrl(source.url!); }}>{source.label}</a>
+          // A button styled as a link, never an href: the host decides every open, so the browser gets no path around
+          // it (no "Open in new tab", drag or middle click). The URL is its title so the person sees where it goes.
+          ? <button type="button" className="hkc-output-card-source-link" title={source.url}
+            onClick={() => onOpenUrl(source.url!)}>{source.label}</button>
           : source.label}
       </li>)}
     </ul>}

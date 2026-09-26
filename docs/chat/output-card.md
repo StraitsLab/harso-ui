@@ -33,7 +33,7 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
 - `onOpenDetails?()` — if supplied, the Details control hands off to the host (e.g.
   a full output page). If omitted and `document.details` has content, Details is a
   local nonmodal disclosure listing sources, assumptions and disclaimers. A source
-  with an `https` url is a link through `onOpenUrl` (see rule 6); the rest is plain text.
+  with an `https` url opens through `onOpenUrl` (see rule 6); the rest is plain text.
 - `onOpenUrl?(url)`, `onOpenArtifact?(artifact)`, `onDownloadArtifact?(artifact)`,
   `onWorkControl?(control, workUnitId)`, `onRoutineControl?(control, routineId)` — the
   host acts; the kit never navigates, fetches or saves. `onOpenArtifact` is also the
@@ -87,10 +87,11 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
    right-aligned pair (primary at the trailing edge, 32px, ≥ 28 on desktop) when the
    card's content box is ≥ 348px (the 420 pane and wider). Labels are the agent's,
    one line, cut with an ellipsis; the button's accessible name and `title` are the
-   whole label. Linked sources in Details are `<a href>` links whose activation
-   (click, modified click, Enter, middle click) is cancelled and handed to `onOpenUrl`.
-   The browser's own "Open link in new tab" menu is the host's to route (e.g. an
-   Electron `setWindowOpenHandler`); the kit does not replace the context menu.
+   whole label. A linked source in Details is a `<button type="button">` styled as a
+   link, never an `<a href>`: click, Enter and Space call `onOpenUrl(url)`, and its
+   `title` is the URL so the person still sees where it goes. With no href the
+   browser has no path around the host (no "Open link in new tab", drag or middle
+   click); the host decides every open.
 7. **Fallback:** if any block is a kind the card cannot draw, or a row carries `status`
    (Overdue/Paid, not styled yet), the card renders the header plus `fallback_text` as
    plain text and **nothing else from blocks** — no rows, numbers or text, no View-all

@@ -1,4 +1,5 @@
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
 
@@ -139,6 +140,33 @@ test("a fallback card draws no actions", () => {
   expect(within(card).queryAllByRole("button")).toHaveLength(0);
 });
 
+test("pick is never drawn: not as an action, and a picked row is a mark, not a button", () => {
+  const host = hostOf();
+  const picked: chat.HarsoOutputRowsBlock = { kind: "rows", items: [{ label: "SQ 638", trailing: "S$612", mark: "pick" }] };
+  const document: chat.HarsoOutputDocument = { header: { title: "Card" }, fallback_text: "FALLBACK",
+    blocks: [picked, { kind: "action", primary: { kind: "pick", label: "Pick SQ 638" } as never, secondary: { kind: "pick", label: "Pick" } as never }] };
+  const card = renderCard(document, host);
+  expect(card).not.toHaveAttribute("data-fallback");
+  expect(within(card).queryAllByRole("button")).toHaveLength(0);
+  expect(card.textContent).not.toContain("Pick SQ 638");
+  expect(card.querySelector(".hkc-output-card-pick")).toHaveTextContent("Pick");
+  for (const callback of Object.values(host)) expect(callback).not.toHaveBeenCalled();
+});
+
+test("in the expanded answer (every row, no caps) the action is still drawn last and calls its callback", () => {
+  const host = hostOf();
+  const many: chat.HarsoOutputRowsBlock = { kind: "rows", items: Array.from({ length: 7 }, (_, index) => ({ label: `Row ${index}` })) };
+  const document: chat.HarsoOutputDocument = { header: { title: "Card" }, fallback_text: "FALLBACK",
+    blocks: [many, { kind: "action", primary: actions.open_artifact, secondary: actions.download_artifact }] };
+  const card = renderCard(document, { ...host, caps: { maxRows: Infinity } });
+  expect(within(card).getAllByRole("listitem")).toHaveLength(7);
+  expect(within(card).queryByRole("button", { name: /^View all/ })).toBeNull();
+  expect([...card.children].at(-1)).toHaveClass("hkc-output-card-actions");
+  fireEvent.click(within(card).getByRole("button", { name: "Download PDF" }));
+  expect(host.onDownloadArtifact).toHaveBeenCalledExactlyOnceWith(FILE);
+  expect(host.onOpenArtifact).not.toHaveBeenCalled();
+});
+
 // ---- linked sources ----
 
 const withSources: chat.HarsoOutputDocumentDetails = { sources: [
@@ -146,35 +174,37 @@ const withSources: chat.HarsoOutputDocumentDetails = { sources: [
   { label: "LTA statement", url: "https://www.lta.gov.sg/content/ltagov/en/newsroom.html" },
   { label: "Unsafe", url: "javascript:alert(1)" }] };
 
-test("a source with a url is a link that goes through onOpenUrl, label unchanged; without url (or unsafe) it stays text", () => {
+test("a source with a url is a button through onOpenUrl (URL as its title, label unchanged); without url (or unsafe) it stays text", () => {
   const onOpenUrl = vi.fn();
   const card = renderCard(doc(undefined, { details: withSources }), { onOpenUrl });
   fireEvent.click(within(card).getByRole("button", { name: "Details" }));
   const sources = within(card).getByRole("list", { name: "Sources" });
-  const links = within(sources).getAllByRole("link");
+  const links = within(sources).getAllByRole("button");
   expect(links.map(link => link.textContent)).toEqual(["LTA statement"]);
-  expect(links[0]).toHaveAttribute("href", "https://www.lta.gov.sg/content/ltagov/en/newsroom.html");
-  const click = new MouseEvent("click", { bubbles: true, cancelable: true });
-  links[0].dispatchEvent(click);
-  // The host opens it; the kit never navigates (the browser's own follow is cancelled).
-  expect(click.defaultPrevented).toBe(true);
+  expect(links[0]).toHaveAttribute("type", "button");
+  expect(links[0]).toHaveAttribute("title", "https://www.lta.gov.sg/content/ltagov/en/newsroom.html");
+  // No href anywhere in Details: the browser gets no path around the host (new tab, drag, middle click).
+  expect(within(card).getByRole("region", { name: "Output details" }).querySelector("a, [href]")).toBeNull();
+  fireEvent.click(links[0]);
   expect(onOpenUrl).toHaveBeenCalledExactlyOnceWith("https://www.lta.gov.sg/content/ltagov/en/newsroom.html");
-  // A middle click (a new tab in a browser) goes to the host too; a right click leaves the context menu alone.
-  const middle = new MouseEvent("auxclick", { bubbles: true, cancelable: true, button: 1 });
-  links[0].dispatchEvent(middle);
-  expect(middle.defaultPrevented).toBe(true);
-  const right = new MouseEvent("auxclick", { bubbles: true, cancelable: true, button: 2 });
-  links[0].dispatchEvent(right);
-  expect(right.defaultPrevented).toBe(false);
-  expect(onOpenUrl).toHaveBeenCalledTimes(2);
   expect(within(sources).getAllByRole("listitem").map(item => item.textContent)).toEqual(["SMRT journey planner, 26 Sep 2026", "LTA statement", "Unsafe"]);
+});
+
+test.each(["{Enter}", " "])("a source link opens through onOpenUrl from the keyboard (%s)", async key => {
+  const onOpenUrl = vi.fn();
+  const card = renderCard(doc(undefined, { details: withSources }), { onOpenUrl });
+  await userEvent.click(within(card).getByRole("button", { name: "Details" }));
+  within(within(card).getByRole("list", { name: "Sources" })).getByRole("button", { name: "LTA statement" }).focus();
+  await userEvent.keyboard(key);
+  expect(onOpenUrl).toHaveBeenCalledExactlyOnceWith("https://www.lta.gov.sg/content/ltagov/en/newsroom.html");
 });
 
 test("without onOpenUrl every source stays plain text", () => {
   const card = renderCard(doc(undefined, { details: withSources }));
   fireEvent.click(within(card).getByRole("button", { name: "Details" }));
-  expect(within(card).queryAllByRole("link")).toHaveLength(0);
-  expect(within(within(card).getByRole("list", { name: "Sources" })).getAllByRole("listitem")).toHaveLength(3);
+  const sources = within(card).getByRole("list", { name: "Sources" });
+  expect(within(sources).queryAllByRole("button")).toHaveLength(0);
+  expect(within(sources).getAllByRole("listitem")).toHaveLength(3);
 });
 
 // ---- one authority for opening a file ----

@@ -122,19 +122,29 @@ for (const mode of ["light", "dark"] as const) {
     }
   });
 
-  test(`sources ${mode}: a source with a url is a link through the host; the page never navigates`, async ({ page }) => {
+  test(`sources ${mode}: a source with a url is a button through the host (click, Enter, Space), no href; the page never navigates`, async ({ page }) => {
     await open(page, `doc=directions&mode=${mode}`, 420);
     await card(page).getByRole("button", { name: "Details" }).click();
     const sources = card(page).getByRole("list", { name: "Sources" });
-    await expect(sources.getByRole("link")).toHaveText(["LTA statement"]);
+    const lta = sources.getByRole("button", { name: "LTA statement" });
+    await expect(sources.getByRole("button")).toHaveText(["LTA statement"]);
+    await expect(lta).toHaveAttribute("title", "https://www.lta.gov.sg/content/ltagov/en/newsroom.html");
+    await expect(card(page).getByRole("region", { name: "Output details" }).locator("a, [href]")).toHaveCount(0);
     await expect(sources.getByText("SMRT journey planner, 26 Sep 2026")).toBeVisible();
+    // At rest it reads as link text, not a button: no border, no fill, underlined, the list's own type size.
+    const rest = await lta.evaluate(button => { const style = getComputedStyle(button), item = getComputedStyle(button.parentElement!);
+      return { border: style.borderTopStyle, fill: style.backgroundColor, line: style.textDecorationLine, size: style.fontSize === item.fontSize, outline: style.outlineStyle }; });
+    expect(rest).toEqual({ border: "none", fill: "rgba(0, 0, 0, 0)", line: "underline", size: true, outline: "none" });
     expect(await axe(page)).toEqual([]);
     const before = page.url();
-    await sources.getByRole("link", { name: "LTA statement" }).click();
-    await sources.getByRole("link", { name: "LTA statement" }).click({ modifiers: ["Meta"] });
+    await lta.click();
+    await lta.click({ modifiers: ["Meta"] });
+    await lta.focus();
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Space");
     expect(page.url()).toBe(before);
     expect(page.context().pages()).toHaveLength(1);
-    expect(await actions(page)).toEqual(["open_url https://www.lta.gov.sg/content/ltagov/en/newsroom.html", "open_url https://www.lta.gov.sg/content/ltagov/en/newsroom.html"]);
+    expect(await actions(page)).toEqual(Array(4).fill("open_url https://www.lta.gov.sg/content/ltagov/en/newsroom.html"));
     await card(page).screenshot({ path: resolve(shots, `sources-${mode}-420.png`) });
   });
 }
