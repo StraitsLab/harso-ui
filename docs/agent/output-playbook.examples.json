@@ -35448,8 +35448,8 @@
               },
               {
                 "label": "Next charge",
-                "secondary": "Was due Mon 12 Oct on your DBS card",
-                "trailing": "Stopped"
+                "secondary": "Due Mon 12 Oct on your DBS card",
+                "trailing": "Stops if you cancel"
               },
               {
                 "label": "Profiles and watchlist",
@@ -35469,7 +35469,7 @@
             "Cancelling ends renewal only; nothing is deleted today"
           ]
         },
-        "fallback_text": "Cancel Disney+ Premium (S$16.98 a month, DBS card), as of 10:05: access until Sun 11 Oct; refund none, Disney+ doesn't refund part of a month; the Mon 12 Oct charge is stopped; profiles and watchlist kept for 10 months if you come back. Saves S$16.98 a month. Nothing is cancelled until you say yes."
+        "fallback_text": "Cancel Disney+ Premium (S$16.98 a month, DBS card), as of 10:05: you keep Premium access until Sun 11 Oct, to the end of the month you paid for; refund none, Disney+ doesn't refund part of a month; next charge due Mon 12 Oct on your DBS card, which stops if you cancel; profiles and watchlist kept for 10 months if you come back. Would save S$16.98 a month. Nothing is cancelled until you say yes."
       },
       "states": {
         "loading": {
@@ -35522,8 +35522,8 @@
                 },
                 {
                   "label": "Next charge",
-                  "secondary": "Was due Mon 12 Oct on your DBS card",
-                  "trailing": "Stopped"
+                  "secondary": "Due Mon 12 Oct on your DBS card",
+                  "trailing": "Stops if you cancel"
                 }
               ]
             }
@@ -35535,7 +35535,7 @@
               }
             ]
           },
-          "fallback_text": "Cancel Disney+ Premium (S$16.98 a month, DBS card), as of 10:05: access until Sun 11 Oct; the Mon 12 Oct charge would stop. Saves S$16.98 a month. The refund terms haven't loaded, so I won't ask you to cancel yet."
+          "fallback_text": "Cancel Disney+ Premium (S$16.98 a month, DBS card), as of 10:05, refund terms not in yet: you keep Premium access until Sun 11 Oct, to the end of the month you paid for; next charge due Mon 12 Oct on your DBS card, which stops if you cancel. Would save S$16.98 a month. The refund terms haven't loaded, so I won't ask you to cancel yet; nothing is cancelled."
         },
         "stale": {
           "kind": "output_blocks",
@@ -35573,8 +35573,8 @@
                 },
                 {
                   "label": "Next charge",
-                  "secondary": "Was due Mon 12 Oct on your DBS card",
-                  "trailing": "Stopped"
+                  "secondary": "Due Mon 12 Oct on your DBS card",
+                  "trailing": "Stops if you cancel"
                 },
                 {
                   "label": "Profiles and watchlist",
@@ -35591,7 +35591,7 @@
               }
             ]
           },
-          "fallback_text": "As of 09:10 (couldn’t refresh): cancelling Disney+ Premium (S$16.98 a month, DBS card) keeps access until Sun 11 Oct; refund none; the Mon 12 Oct charge stops; profiles and watchlist kept 10 months. Saves S$16.98 a month. I’ll check again before cancelling."
+          "fallback_text": "As of 09:10 (couldn’t refresh): cancelling Disney+ Premium (S$16.98 a month, DBS card) keeps Premium access until Sun 11 Oct, to the end of the month you paid for; refund none, Disney+ doesn't refund part of a month; next charge due Mon 12 Oct on your DBS card, which stops if you cancel; profiles and watchlist kept for 10 months if you come back. Would save S$16.98 a month. I’ll check again before cancelling; nothing is cancelled until you say yes."
         },
         "empty": {
           "kind": "output_blocks",
@@ -35607,7 +35607,7 @@
               "detail": "Nothing renews; the last charge was 12 Aug. Nothing was changed."
             }
           ],
-          "fallback_text": "No Disney+ subscription on your account as of 10:05: nothing renews, and the last charge was on 12 Aug. Nothing was changed."
+          "fallback_text": "No Disney+ subscription on your Disney+ account as of 10:05: nothing renews, and the last charge was on 12 Aug. Nothing was changed."
         },
         "failed": {
           "kind": "output_blocks",
@@ -35839,7 +35839,7 @@
             "An offer outside this plan comes back to you before I accept"
           ]
         },
-        "fallback_text": "Certis downgrades only by phone (Premium S$59 to Basic S$39 a month, as of 10:20). Call plan: ask for Basic monitoring from the next bill, 1 Nov, S$39/mo; may agree a Premium discount to S$39 or less; may share your name, account 88-20417 and address; won’t agree a new contract, a fee or a device change, that asks you. Saves S$20 a month. I won’t call until you say yes."
+        "fallback_text": "Certis downgrades only by phone (Premium S$59 to Basic S$39 a month, as of 10:20). Call plan: ask for Basic monitoring from the next bill, 1 Nov, S$39/mo; may agree a Premium discount to S$39 or less, up to S$39; may share your name, account 88-20417 and address; won’t agree a new contract, a fee or a device change, that asks you. Target S$39 a month, saves S$20 a month. I won’t call until you say yes."
       },
       "states": {
         "loading": {
@@ -35904,7 +35904,7 @@
               }
             ]
           },
-          "fallback_text": "Certis downgrades only by phone (Premium S$59 to Basic S$39, as of 10:20): ask for Basic monitoring from 1 Nov at S$39/mo, sharing your name, account 88-20417 and address. Saves S$20 a month. Whether there’s an exit fee isn’t known yet, so I won’t ask to call."
+          "fallback_text": "Certis downgrades only by phone (Premium S$59 to Basic S$39, as of 10:20), exit fee not known. Call plan so far: ask for Basic monitoring from the next bill, 1 Nov, S$39/mo; may share your name, account 88-20417 and address. Target S$39 a month, saves S$20 a month. Whether there’s an exit fee isn’t known yet, so I won’t ask to call."
         },
         "stale": {
           "kind": "output_blocks",
@@ -35955,7 +35955,7 @@
           "details": {
             "sources": [
               {
-                "label": "Certis letter of 3 Sep and support page, 26 Sep 2026 10:20"
+                "label": "Certis letter of 3 Sep and support page, 26 Sep 2026 09:15"
               }
             ],
             "assumptions": [
@@ -35963,7 +35963,7 @@
               "An offer outside this plan comes back to you before I accept"
             ]
           },
-          "fallback_text": "As of 09:15 (couldn’t refresh): Certis downgrades only by phone, Premium S$59 to Basic S$39. Plan: ask for Basic from 1 Nov, S$39/mo; may agree a Premium discount to S$39 or less; may share name, account 88-20417, address; won’t agree a contract, fee or device change. Saves S$20 a month."
+          "fallback_text": "As of 09:15 (couldn’t refresh): Certis downgrades only by phone, Premium S$59 to Basic S$39 a month. Call plan: ask for Basic monitoring from the next bill, 1 Nov, S$39/mo; may agree a Premium discount to S$39 or less, up to S$39; may share your name, account 88-20417 and address; won’t agree a new contract, a fee or a device change, that asks you. Target S$39 a month, saves S$20 a month. I won’t call until you say yes."
         },
         "empty": {
           "kind": "output_blocks",
@@ -35995,7 +35995,7 @@
               "detail": "The Certis portal didn’t load. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn’t read your Certis home security plan: the portal didn’t load. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t read your Certis plan for the home security downgrade: the Certis portal didn’t load. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -36079,10 +36079,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "The My Singtel sign-in expired. Nothing was sent."
+              "detail": "My Singtel sign-in expired; nothing sent. Sign in again, then ask me."
             }
           ],
-          "fallback_text": "The My Singtel sign-in expired, so I couldn’t read the bill or draft the roaming dispute. Nothing was sent."
+          "fallback_text": "The My Singtel sign-in expired, so I couldn’t read your bill or draft the roaming charge dispute to Singtel billing. Nothing was sent. Sign in to My Singtel again, then ask me."
         }
       }
     },
@@ -36185,7 +36185,7 @@
               }
             ]
           },
-          "fallback_text": "As of 07:50 (couldn't refresh your Xfinity account): case 58-771204, from US$89 to US$65 a month. New price on your bill next, the 12 Oct bill; retention call Thu 24 Sep agreed US$65/mo for 12 months; your call plan approved Wed 23 Sep, target US$70/mo or less."
+          "fallback_text": "As of 07:50 (couldn't refresh your Xfinity account): Xfinity internet, case 58-771204, from US$89 to US$65 a month. New price on your bill next, Xfinity said the 12 Oct bill; retention call Thu 24 Sep agreed US$65/mo for 12 months, within your plan; your call plan approved Wed 23 Sep, target US$70/mo or less."
         },
         "empty": {
           "kind": "output_blocks",
@@ -36214,10 +36214,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "The Xfinity sign-in expired. Nothing was changed."
+              "detail": "Xfinity sign-in expired; nothing changed. Sign in again, then ask me."
             }
           ],
-          "fallback_text": "Couldn't read your Xfinity account for case 58-771204: the sign-in expired. Nothing was changed."
+          "fallback_text": "Couldn't read your Xfinity account for case 58-771204: the Xfinity sign-in expired. Nothing was changed. Sign in to Xfinity again, then ask me."
         }
       }
     },
@@ -36327,7 +36327,7 @@
               }
             ]
           },
-          "fallback_text": "From your upkeep sheet only (receipts not read yet), next 7 days: Brita Maxtra water filter cartridge, every 6 months, due Wed 30 Sep, S$24.90; 9 V smoke alarm battery, yearly, due Sat 3 Oct, S$6.50. Tasks tracked only in receipts may be missing."
+          "fallback_text": "Home upkeep due, next 7 days, 1 of 2 sources: from your upkeep sheet only (receipts not read yet): Brita Maxtra water filter cartridge, every 6 months, due Wed 30 Sep, S$24.90; 9 V smoke alarm battery, yearly, due Sat 3 Oct, S$6.50. Tasks tracked only in receipts may be missing."
         },
         "stale": {
           "kind": "output_blocks",
@@ -36395,10 +36395,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Google Sheets didn’t respond. Nothing was changed."
+              "detail": "Google Sheets didn’t respond; nothing changed. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn’t read your home upkeep list: Google Sheets didn’t respond. Nothing was changed. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t read your home upkeep list in Google Sheets: Sheets didn’t respond. Nothing was changed. Ask me again in a few minutes."
         }
       }
     },
@@ -36472,7 +36472,7 @@
             "Low means it is past your usual gap between buys"
           ]
         },
-        "fallback_text": "Running low, for a FairPrice basket as of 11:05: dishwasher tablets 60 (you buy every 5 weeks) S$18.90; kitchen towel 6 rolls, last bought 22 Aug, S$7.95; Dynamo laundry liquid 3 L, last bought 1 Sep, S$16.50; bin bags 30, last bought 18 Aug, S$4.20. Total S$52.54 with S$4.99 delivery. Nothing is added or ordered until you say yes."
+        "fallback_text": "Running low, 4 items for a FairPrice basket as of 11:05: dishwasher tablets 60, FairPrice, you buy every 5 weeks, S$18.90; kitchen towel 6 rolls, FairPrice, last bought 22 Aug, S$7.95; Dynamo laundry liquid 3 L, last bought 1 Sep, S$16.50; bin bags 30, FairPrice, last bought 18 Aug, S$4.20. Total S$52.54 with delivery S$4.99. Nothing is added or ordered until you say yes."
       },
       "states": {
         "loading": {
@@ -36492,7 +36492,7 @@
               }
             }
           ],
-          "fallback_text": "Checking your household supplies list against your receipts and FairPrice prices."
+          "fallback_text": "Checking your supplies list for what's running low, against your receipts and FairPrice prices for a FairPrice basket."
         },
         "partial": {
           "kind": "output_blocks",
@@ -36525,7 +36525,7 @@
               }
             ]
           },
-          "fallback_text": "Running low, 2 of 4 priced at FairPrice as of 11:05: dishwasher tablets 60 S$18.90; kitchen towel 6 rolls S$7.95. Laundry liquid and bin bags aren't priced yet, so there's no total and I won't ask to add them."
+          "fallback_text": "Running low, 2 of 4 priced at FairPrice as of 11:05: dishwasher tablets 60, FairPrice, you buy every 5 weeks, S$18.90; kitchen towel 6 rolls, FairPrice, last bought 22 Aug, S$7.95. Laundry liquid and bin bags aren't priced yet, so there's no basket total and I won't ask to add them."
         },
         "stale": {
           "kind": "output_blocks",
@@ -36581,7 +36581,7 @@
               }
             ]
           },
-          "fallback_text": "As of 09:30 (couldn’t refresh FairPrice prices): dishwasher tablets 60 S$18.90; kitchen towel 6 rolls S$7.95; Dynamo laundry liquid 3 L S$16.50; bin bags 30 S$4.20. Total S$52.54 with S$4.99 delivery. I’ll check prices again before adding."
+          "fallback_text": "Running low, 4 items for a FairPrice basket, as of 09:30 (couldn’t refresh FairPrice prices): dishwasher tablets 60, FairPrice, you buy every 5 weeks, S$18.90; kitchen towel 6 rolls, FairPrice, last bought 22 Aug, S$7.95; Dynamo laundry liquid 3 L, last bought 1 Sep, S$16.50; bin bags 30, FairPrice, last bought 18 Aug, S$4.20. Total S$52.54 with delivery S$4.99. I’ll check prices again before adding."
         },
         "empty": {
           "kind": "output_blocks",
@@ -36610,10 +36610,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Google Sheets didn’t respond. Nothing was added. Ask me again soon."
+              "detail": "Google Sheets didn’t respond. Nothing was added. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn’t read your household supplies list: Google Sheets didn’t respond. Nothing was added to a basket. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t read your supplies list in Google Sheets: Google Sheets didn’t respond. Nothing was added to a FairPrice basket. Ask me again in a few minutes."
         }
       }
     },
@@ -36642,19 +36642,19 @@
             "items": [
               {
                 "label": "SP Group regulated tariff",
-                "secondary": "Now · no contract · 450 kWh",
-                "trailing": "S$137/mo"
+                "secondary": "Now · no contract · 30.44¢/kWh tariff · 450 kWh",
+                "trailing": "S$137/mo · S$1,644/yr"
               },
               {
                 "label": "Geneco Power Eco Fixed",
                 "secondary": "24 months · 26.9¢/kWh fixed",
-                "trailing": "S$121/mo",
+                "trailing": "S$121/mo · S$1,452/yr",
                 "mark": "pick"
               },
               {
                 "label": "Keppel Electric DOT",
                 "secondary": "12 months · 4% off the tariff",
-                "trailing": "S$132/mo"
+                "trailing": "S$132/mo · S$1,584/yr"
               }
             ]
           }
@@ -36676,7 +36676,7 @@
             "An estimate, not an offer. Switching is its own approval."
           ]
         },
-        "fallback_text": "Electricity plans for 450 kWh a month, as of 10:30, estimates with GST: now SP Group regulated tariff, no contract, S$137/mo; Geneco Power Eco Fixed, 24 months at 26.9¢/kWh fixed, S$121/mo (pick, about S$192 a year less); Keppel Electric DOT, 12 months at 4% off the tariff, S$132/mo. Nothing is switched without your yes."
+        "fallback_text": "Electricity plans for your home, 450 kWh a month, as of 10:30, estimates with GST: now SP Group regulated tariff, no contract, 30.44¢/kWh, S$137/mo, S$1,644/yr; Geneco Power Eco Fixed, 24 months at 26.9¢/kWh fixed, S$121/mo, S$1,452/yr (pick, S$192 a year less); Keppel Electric DOT, 12 months at 4% off the tariff, S$132/mo, S$1,584/yr. An estimate, not an offer; nothing is switched without your yes."
       },
       "states": {
         "loading": {
@@ -36711,13 +36711,13 @@
               "items": [
                 {
                   "label": "SP Group regulated tariff",
-                  "secondary": "Now · no contract · 450 kWh",
-                  "trailing": "S$137/mo"
+                  "secondary": "Now · no contract · 30.44¢/kWh tariff · 450 kWh",
+                  "trailing": "S$137/mo · S$1,644/yr"
                 },
                 {
                   "label": "Geneco Power Eco Fixed",
                   "secondary": "24 months · 26.9¢/kWh fixed",
-                  "trailing": "S$121/mo"
+                  "trailing": "S$121/mo · S$1,452/yr"
                 }
               ]
             }
@@ -36739,7 +36739,7 @@
               "An estimate, not an offer. Switching is its own approval."
             ]
           },
-          "fallback_text": "Electricity plans for 450 kWh a month, 2 of 3 read at 10:30: now SP Group regulated tariff, no contract, S$137/mo; Geneco Power Eco Fixed, 24 months at 26.9¢/kWh, S$121/mo. Keppel not in yet."
+          "fallback_text": "Electricity plans for your home, 450 kWh a month, 2 of 3 retailers read as of 10:30, estimates with GST: now SP Group regulated tariff, no contract, 30.44¢/kWh, S$137/mo, S$1,644/yr; Geneco Power Eco Fixed, 24 months at 26.9¢/kWh fixed, S$121/mo, S$1,452/yr. Keppel isn't in yet, so there's no pick. An estimate, not an offer; nothing is switched."
         },
         "stale": {
           "kind": "output_blocks",
@@ -36754,19 +36754,19 @@
               "items": [
                 {
                   "label": "SP Group regulated tariff",
-                  "secondary": "Now · no contract · 450 kWh",
-                  "trailing": "S$137/mo"
+                  "secondary": "Now · no contract · 30.44¢/kWh tariff · 450 kWh",
+                  "trailing": "S$137/mo · S$1,644/yr"
                 },
                 {
                   "label": "Geneco Power Eco Fixed",
                   "secondary": "24 months · 26.9¢/kWh fixed",
-                  "trailing": "S$121/mo",
+                  "trailing": "S$121/mo · S$1,452/yr",
                   "mark": "pick"
                 },
                 {
                   "label": "Keppel Electric DOT",
                   "secondary": "12 months · 4% off the tariff",
-                  "trailing": "S$132/mo"
+                  "trailing": "S$132/mo · S$1,584/yr"
                 }
               ]
             }
@@ -36774,7 +36774,7 @@
           "details": {
             "sources": [
               {
-                "label": "Open Electricity Market plans, 26 Sep 2026 10:30",
+                "label": "Open Electricity Market plans, 25 Sep 2026 10:30",
                 "url": "https://www.openelectricitymarket.sg/residential"
               },
               {
@@ -36788,7 +36788,7 @@
               "An estimate, not an offer. Switching is its own approval."
             ]
           },
-          "fallback_text": "Electricity plans for 450 kWh a month as of 25 Sep 10:30 (couldn’t refresh): now SP Group regulated tariff S$137/mo; Geneco Power Eco Fixed, 24 months at 26.9¢/kWh, S$121/mo (pick); Keppel Electric DOT, 12 months at 4% off, S$132/mo."
+          "fallback_text": "Electricity plans for your home, 450 kWh a month, as of 25 Sep 10:30 (couldn’t refresh), estimates with GST: now SP Group regulated tariff, no contract, 30.44¢/kWh, S$137/mo, S$1,644/yr; Geneco Power Eco Fixed, 24 months at 26.9¢/kWh fixed, S$121/mo, S$1,452/yr (pick); Keppel Electric DOT, 12 months at 4% off the tariff, S$132/mo, S$1,584/yr. An estimate, not an offer; I’ll re-check before any switch."
         },
         "failed": {
           "kind": "output_blocks",
@@ -36804,7 +36804,7 @@
               "detail": "SP wants a one-time code. Approve it, then ask me again."
             }
           ],
-          "fallback_text": "Couldn’t sign in to your SP Group account to compare electricity plans: SP wants a one-time code. Approve it, then ask me again. Nothing was changed."
+          "fallback_text": "Couldn’t sign in to SP Group to compare electricity plans: SP wants a one-time code. Approve it, then ask me again. Nothing was changed."
         }
       }
     },
@@ -36813,7 +36813,7 @@
       "vertical": "home_admin",
       "kind": "card",
       "request": "Fill out the school football tryout form.",
-      "says": "I've filled 9 of 11 fields; two need you, then shall I submit?",
+      "says": "I've filled 7 of 9 fields; two need you, then shall I submit?",
       "surface": "page",
       "fresh": false,
       "components": [
@@ -36832,7 +36832,7 @@
             "kind": "numbers",
             "items": [
               {
-                "value": "9",
+                "value": "7",
                 "label": "Filled by me"
               },
               {
@@ -36845,13 +36845,33 @@
             "kind": "rows",
             "items": [
               {
-                "label": "Student",
-                "secondary": "Aarav Bansal · P4 · born 12 Mar 2017",
+                "label": "Student name",
+                "secondary": "Aarav Bansal",
                 "trailing": "Filled"
               },
               {
-                "label": "Parent contact",
-                "secondary": "Abhi Bansal · 9123 4567 · email",
+                "label": "Class",
+                "secondary": "P4",
+                "trailing": "Filled"
+              },
+              {
+                "label": "Date of birth",
+                "secondary": "12 Mar 2017",
+                "trailing": "Filled"
+              },
+              {
+                "label": "Parent name",
+                "secondary": "Abhi Bansal",
+                "trailing": "Filled"
+              },
+              {
+                "label": "Parent mobile",
+                "secondary": "9123 4567",
+                "trailing": "Filled"
+              },
+              {
+                "label": "Parent email",
+                "secondary": "abhi.bansal@gmail.com",
                 "trailing": "Filled"
               },
               {
@@ -36879,10 +36899,10 @@
             }
           ],
           "assumptions": [
-            "Filled from your saved details and memory; each field is shown before it is sent"
+            "Filled from your saved details and memory; all 9 fields are shown before anything is sent"
           ]
         },
-        "fallback_text": "Football tryout form, Rosyth School, from the 21 Sep school email, due Fri 2 Oct: 9 fields filled by me, 2 need you. Filled: student Aarav Bansal, P4, born 12 Mar 2017; parent contact Abhi Bansal, 9123 4567, email; medical conditions asthma, from his school health form. Needs you: the consent signature and a second emergency contact. Nothing is submitted until you say yes."
+        "fallback_text": "Football tryout form, Rosyth School, from the 21 Sep school email, due Fri 2 Oct: 9 fields, 7 filled by me, 2 need you. Filled: student name Aarav Bansal; class P4; date of birth 12 Mar 2017; parent name Abhi Bansal; parent mobile 9123 4567; parent email abhi.bansal@gmail.com; medical conditions asthma, from his school health form. Needs you: the consent signature (a box only you can sign) and emergency contact 2 (not in your saved details). Nothing is submitted until you say yes."
       },
       "states": {
         "loading": {
@@ -36902,25 +36922,25 @@
               }
             }
           ],
-          "fallback_text": "Filling the Rosyth School football tryout form from your saved details."
+          "fallback_text": "Filling the Rosyth School football tryout form, from the 21 Sep school email, from your saved details."
         },
         "partial": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Football tryout · Rosyth School",
-            "subtitle": "Page 1 of 2 filled · due Fri 2 Oct"
+            "subtitle": "Page 1 of 2 filled · from the 21 Sep email · due Fri 2 Oct"
           },
           "blocks": [
             {
               "kind": "numbers",
               "items": [
                 {
-                  "value": "5",
+                  "value": "6",
                   "label": "Filled by me"
                 },
                 {
-                  "value": "6",
+                  "value": "3",
                   "label": "Not reached"
                 }
               ]
@@ -36929,13 +36949,33 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "Student",
-                  "secondary": "Aarav Bansal · P4 · born 12 Mar 2017",
+                  "label": "Student name",
+                  "secondary": "Aarav Bansal",
                   "trailing": "Filled"
                 },
                 {
-                  "label": "Parent contact",
-                  "secondary": "Abhi Bansal · 9123 4567 · email",
+                  "label": "Class",
+                  "secondary": "P4",
+                  "trailing": "Filled"
+                },
+                {
+                  "label": "Date of birth",
+                  "secondary": "12 Mar 2017",
+                  "trailing": "Filled"
+                },
+                {
+                  "label": "Parent name",
+                  "secondary": "Abhi Bansal",
+                  "trailing": "Filled"
+                },
+                {
+                  "label": "Parent mobile",
+                  "secondary": "9123 4567",
+                  "trailing": "Filled"
+                },
+                {
+                  "label": "Parent email",
+                  "secondary": "abhi.bansal@gmail.com",
                   "trailing": "Filled"
                 }
               ]
@@ -36948,7 +36988,7 @@
               }
             ]
           },
-          "fallback_text": "Football tryout form, Rosyth School, due Fri 2 Oct, page 1 of 2 filled: student Aarav Bansal, P4, born 12 Mar 2017; parent contact Abhi Bansal, 9123 4567. 6 fields on page 2 not reached yet; nothing was submitted."
+          "fallback_text": "Football tryout form, Rosyth School, from the 21 Sep school email, due Fri 2 Oct, page 1 of 2 filled: 6 filled by me: student name Aarav Bansal; class P4; date of birth 12 Mar 2017; parent name Abhi Bansal; parent mobile 9123 4567; parent email abhi.bansal@gmail.com. 3 fields on page 2 not reached yet; nothing was submitted."
         },
         "empty": {
           "kind": "output_blocks",
@@ -36964,7 +37004,7 @@
               "detail": "No Rosyth School football form. Forward it to me and I'll fill it."
             }
           ],
-          "fallback_text": "No Rosyth School football tryout form in your Gmail from the last 30 days. Forward it to me and I'll fill it. Nothing was submitted."
+          "fallback_text": "No tryout form found: no Rosyth School football tryout form in your Gmail from the last 30 days. Forward it to me and I'll fill it. Nothing was submitted."
         },
         "failed": {
           "kind": "output_blocks",
@@ -36980,7 +37020,7 @@
               "detail": "The form link has expired. Nothing was submitted. Ask the school for a new one."
             }
           ],
-          "fallback_text": "Couldn’t open the Rosyth School football tryout form: the link from the 21 Sep email has expired. Nothing was submitted. Ask the school for a new link."
+          "fallback_text": "Couldn’t open the Rosyth School football tryout form: the link from the 21 Sep email has expired. Nothing was submitted. Ask the school for a new one."
         }
       }
     },
@@ -37054,7 +37094,7 @@
               },
               {
                 "label": "Sent",
-                "secondary": "11 fields, as you approved",
+                "secondary": "9 fields, as you approved",
                 "trailing": "Sat 26 Sep 15:02"
               },
               {
@@ -37080,7 +37120,7 @@
             }
           ]
         },
-        "fallback_text": "Submitted the Rosyth School football tryout form, reference RS-FB-0412: 11 fields sent as you approved, Sat 26 Sep 15:02. Tryout Tue 6 Oct 15:30 at the Rosyth School field, bring boots. The school's receipt email came at 15:02."
+        "fallback_text": "Submitted the Rosyth School football tryout form, reference RS-FB-0412: 9 fields sent as you approved, Sat 26 Sep 15:02. Tryout Tue 6 Oct 15:30 at the Rosyth School field, bring boots. The school's receipt email came at 15:02."
       },
       "states": {
         "loading": {
@@ -37088,19 +37128,19 @@
           "major": 1,
           "header": {
             "title": "Football tryout · Rosyth School",
-            "subtitle": "Submitting 11 fields"
+            "subtitle": "Submitting 9 fields"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Submitting the Rosyth School form, 11 fields",
+              "detail": "Submitting the Rosyth School form, 9 fields",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ad00b"
               }
             }
           ],
-          "fallback_text": "Submitting the Rosyth School football tryout form, 11 fields."
+          "fallback_text": "Submitting the Rosyth School football tryout form, 9 fields."
         },
         "partial": {
           "kind": "output_blocks",
@@ -37119,7 +37159,7 @@
                 },
                 {
                   "label": "Sent",
-                  "secondary": "11 fields, as you approved",
+                  "secondary": "9 fields, as you approved",
                   "trailing": "Sat 26 Sep 15:02"
                 }
               ]
@@ -37140,7 +37180,52 @@
               }
             ]
           },
-          "fallback_text": "Submitted the Rosyth School football tryout form, reference RS-FB-0412, 11 fields as you approved on Sat 26 Sep 15:02. The receipt email and tryout time haven't arrived yet."
+          "fallback_text": "Submitted the Rosyth School football tryout form, reference RS-FB-0412, 9 fields as you approved on Sat 26 Sep 15:02. The receipt email and tryout time haven't arrived yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Submitted · Football tryout",
+            "subtitle": "Rosyth School · as of 15:02 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "RS-FB-0412"
+                },
+                {
+                  "label": "Sent",
+                  "secondary": "9 fields, as you approved",
+                  "trailing": "Sat 26 Sep 15:02"
+                },
+                {
+                  "label": "Tryout",
+                  "secondary": "Rosyth School field, bring boots",
+                  "trailing": "Tue 6 Oct 15:30"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open the receipt email",
+                "url": "https://mail.google.com/mail/u/0/#search/RS-FB-0412"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Rosyth School receipt email, 26 Sep 2026 15:02"
+              }
+            ]
+          },
+          "fallback_text": "As of 15:02 (couldn’t refresh your Gmail since): submitted the Rosyth School football tryout form, reference RS-FB-0412; 9 fields sent as you approved, Sat 26 Sep 15:02. Tryout Tue 6 Oct 15:30 at the Rosyth School field, bring boots. The school's receipt email came at 15:02."
         },
         "failed": {
           "kind": "output_blocks",
@@ -37227,7 +37312,7 @@
             "A deadline counts when the email names a date to act by"
           ]
         },
-        "fallback_text": "As of 11:30, 4 deadlines to Tue 29 Sep 11:30, soonest first: sign the lease renewal by Sun 27 Sep (Nichol’s email 23 Sep, DocuSign); return 3 library books by Mon 28 Sep (NLB reminder 25 Sep); renew road tax for SJA 4821 K by Tue 29 Sep (LTA email 19 Sep); pay the URA parking fine, S$50, by Tue 29 Sep (URA notice 24 Sep). Already passed: town council S&CC GIRO form was due Fri 25 Sep (email 18 Sep)."
+        "fallback_text": "As of 11:30, 4 deadlines in the next 72 hours, to Tue 29 Sep 11:30, soonest first: sign the lease renewal by Sun 27 Sep (Nichol’s email 23 Sep, DocuSign); return library books, 3 books, by Mon 28 Sep (NLB reminder 25 Sep); renew road tax for SJA 4821 K by Tue 29 Sep (LTA email 19 Sep, Gmail); pay the URA parking fine, S$50, by Tue 29 Sep (URA notice 24 Sep). Already passed: town council S&CC GIRO form was due Fri 25 Sep (email 18 Sep)."
       },
       "states": {
         "loading": {
@@ -37247,7 +37332,7 @@
               }
             }
           ],
-          "fallback_text": "Reading 60 days of your Gmail for deadlines up to Tue 29 Sep 11:30."
+          "fallback_text": "Reading 60 days of your Gmail for deadlines in the next 72 hours, up to Tue 29 Sep 11:30."
         },
         "partial": {
           "kind": "output_blocks",
@@ -37296,7 +37381,7 @@
               }
             ]
           },
-          "fallback_text": "As of 11:30, 40 of 60 days of Gmail read: sign the lease renewal by Sun 27 Sep (Nichol’s email 23 Sep, DocuSign); return 3 library books by Mon 28 Sep (NLB 25 Sep); renew road tax for SJA 4821 K by Tue 29 Sep (LTA 19 Sep). Already passed: S&CC GIRO form, due Fri 25 Sep. Older mail still being read."
+          "fallback_text": "As of 11:30, 3 deadlines in the next 72 hours, to Tue 29 Sep 11:30, with 40 of 60 days of Gmail read: sign the lease renewal by Sun 27 Sep (Nichol’s email 23 Sep, DocuSign); return library books, 3 books, by Mon 28 Sep (NLB reminder 25 Sep); renew road tax for SJA 4821 K by Tue 29 Sep (LTA email 19 Sep, Gmail). Already passed: town council S&CC GIRO form was due Fri 25 Sep (email 18 Sep). Older mail still being read."
         },
         "stale": {
           "kind": "output_blocks",
@@ -37350,7 +37435,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:00 (couldn’t refresh Gmail): sign the lease renewal by Sun 27 Sep (Nichol, DocuSign); return 3 library books by Mon 28 Sep (NLB); renew road tax for SJA 4821 K by Tue 29 Sep (LTA); pay the URA parking fine, S$50, by Tue 29 Sep (URA). Passed: S&CC GIRO form, due Fri 25 Sep. Mail since 08:00 isn’t included."
+          "fallback_text": "As of 08:00 (couldn’t refresh Gmail), 4 deadlines in the next 72 hours, to Tue 29 Sep 11:30: sign the lease renewal by Sun 27 Sep (Nichol’s email 23 Sep, DocuSign); return library books, 3 books, by Mon 28 Sep (NLB reminder 25 Sep); renew road tax for SJA 4821 K by Tue 29 Sep (LTA email 19 Sep, Gmail); pay the URA parking fine, S$50, by Tue 29 Sep (URA notice 24 Sep). Already passed: town council S&CC GIRO form was due Fri 25 Sep (email 18 Sep). Mail since 08:00 isn’t included."
         },
         "empty": {
           "kind": "output_blocks",
@@ -37366,7 +37451,7 @@
               "detail": "The next one is renewing your passport, by 12 Oct"
             }
           ],
-          "fallback_text": "No deadlines in your Gmail up to Tue 29 Sep 11:30 as of 11:30. The next one is renewing your passport, by 12 Oct."
+          "fallback_text": "No deadlines in the next 72 hours: nothing in your Gmail up to Tue 29 Sep 11:30, as of 11:30. The next one is renewing your passport, by 12 Oct."
         },
         "failed": {
           "kind": "output_blocks",
@@ -37382,7 +37467,7 @@
               "detail": "The Gmail connection has expired. Reconnect it, then ask again."
             }
           ],
-          "fallback_text": "Couldn’t read your Gmail for deadlines up to Tue 29 Sep 11:30: the connection has expired. Reconnect Gmail, then ask me again. Nothing was changed."
+          "fallback_text": "Couldn’t read your email for deadlines to Tue 29 Sep 11:30: the Gmail connection has expired. Reconnect it, then ask me again. Nothing was changed."
         }
       }
     },
@@ -37415,7 +37500,7 @@
               },
               {
                 "value": "1",
-                "label": "Renamed"
+                "label": "To rename"
               }
             ]
           },
@@ -37434,13 +37519,13 @@
               },
               {
                 "label": "scan_0042.pdf",
-                "secondary": "Desktop → Invoices/2026-08 · renamed Certis invoice Aug.pdf",
+                "secondary": "Desktop → Invoices/2026-08 · rename to Certis invoice Aug.pdf",
                 "trailing": "Move, rename"
               }
             ]
           }
         ],
-        "fallback_text": "Proposed for a new Google Drive folder Invoices/2026-08, 3 August invoices, 3 files, 1 renamed: move Singtel invoice Aug.pdf from Downloads; copy SP Group bill 0826.pdf from its Gmail attachment; move scan_0042.pdf from the Desktop and rename it Certis invoice Aug.pdf. Nothing is moved until you say yes."
+        "fallback_text": "Proposed for a new Google Drive folder Invoices/2026-08, 3 August invoices: 3 files, 1 to rename. Move Singtel invoice Aug.pdf from Downloads → Invoices/2026-08; copy SP Group bill 0826.pdf from its Gmail attachment → Invoices/2026-08; move scan_0042.pdf from the Desktop → Invoices/2026-08 and rename to Certis invoice Aug.pdf. Nothing is moved or renamed until you say yes."
       },
       "states": {
         "loading": {
@@ -37479,7 +37564,7 @@
                 },
                 {
                   "value": "0",
-                  "label": "Renamed"
+                  "label": "To rename"
                 }
               ]
             },
@@ -37499,7 +37584,7 @@
               ]
             }
           ],
-          "fallback_text": "Proposed for Invoices/2026-08 in Google Drive, 2 of 3 August invoices found, 2 files, 0 renamed: move Singtel invoice Aug.pdf from Downloads; copy SP Group bill 0826.pdf from Gmail. The third isn't found yet; nothing was moved."
+          "fallback_text": "Proposed for a new Google Drive folder Invoices/2026-08, 2 of 3 August invoices found: 2 files, 0 to rename. Move Singtel invoice Aug.pdf from Downloads → Invoices/2026-08; copy SP Group bill 0826.pdf from its Gmail attachment → Invoices/2026-08. The third isn't found yet, so I won't ask to move them; nothing was moved."
         },
         "empty": {
           "kind": "output_blocks",
@@ -37515,7 +37600,7 @@
               "detail": "Nothing named or sent as an invoice in August. Nothing was moved."
             }
           ],
-          "fallback_text": "No August invoices in your Google Drive or Gmail: nothing named or sent as an invoice in August. Nothing was moved."
+          "fallback_text": "No August invoices found in your Google Drive or Gmail: nothing named or sent as an invoice in August. Nothing was moved."
         },
         "failed": {
           "kind": "output_blocks",
@@ -37528,10 +37613,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Google Drive didn’t respond. Nothing was moved. Ask me again soon."
+              "detail": "Google Drive didn’t respond. Nothing was moved. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn’t read your Google Drive for the August invoices: Drive didn’t respond. Nothing was moved. Ask me again in a few minutes."
+          "fallback_text": "Couldn’t read your Drive for the August invoices: Google Drive didn’t respond. Nothing was moved. Ask me again in a few minutes."
         }
       }
     },
@@ -37584,7 +37669,7 @@
             }
           }
         ],
-        "fallback_text": "Done, 26 Sep 14:12: Invoices/2026-08 in My Drive now holds 3 files (Singtel and Certis moved, SP Group copied from Gmail); scan_0042.pdf was renamed Certis invoice Aug.pdf."
+        "fallback_text": "Done, 26 Sep 14:12: the folder Invoices/2026-08 in Google Drive, My Drive, now holds 3 files, moved or copied (Singtel and Certis moved, SP Group copied from Gmail); 1 file renamed: scan_0042.pdf is now Certis invoice Aug.pdf."
       },
       "states": {
         "loading": {
@@ -37604,7 +37689,7 @@
               }
             }
           ],
-          "fallback_text": "Moving 3 August invoices into Invoices/2026-08 in Google Drive."
+          "fallback_text": "Moving 3 August invoices, 3 files, into Invoices/2026-08 in Google Drive."
         },
         "partial": {
           "kind": "output_blocks",
@@ -37626,6 +37711,11 @@
                   "label": "Moved or copied",
                   "secondary": "Singtel, SP Group",
                   "trailing": "2 files"
+                },
+                {
+                  "label": "Not moved",
+                  "secondary": "scan_0042.pdf, still on Desktop, locked by another app",
+                  "trailing": "Ask me to retry"
                 }
               ]
             },
@@ -37638,7 +37728,46 @@
               }
             }
           ],
-          "fallback_text": "2 of 3 are in Invoices/2026-08 in My Drive as of 26 Sep 14:12: Singtel moved, SP Group copied. scan_0042.pdf is still on the Desktop, not renamed; Drive said it was locked by another app. Ask me to try that one again."
+          "fallback_text": "2 of 3 are in Invoices/2026-08 in Google Drive, My Drive, as of 26 Sep 14:12: 2 files moved or copied (Singtel moved, SP Group copied from Gmail). Not moved: scan_0042.pdf is still on the Desktop and not renamed; Drive said another app has it locked. Close that app and ask me to retry that one."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Done · Invoices/2026-08",
+            "subtitle": "Google Drive · as of 26 Sep 14:12 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Folder",
+                  "secondary": "Google Drive · My Drive",
+                  "trailing": "Invoices/2026-08"
+                },
+                {
+                  "label": "Moved or copied",
+                  "secondary": "Singtel, SP Group, Certis",
+                  "trailing": "3 files"
+                },
+                {
+                  "label": "Renamed",
+                  "secondary": "scan_0042.pdf is now Certis invoice Aug.pdf",
+                  "trailing": "1 file"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open folder in Drive",
+                "url": "https://drive.google.com/drive/folders/1Invoices2026-08aB3dE"
+              }
+            }
+          ],
+          "fallback_text": "As of 26 Sep 14:12 (couldn’t refresh Google Drive since): Invoices/2026-08 in My Drive holds 3 files, moved or copied (Singtel and Certis moved, SP Group copied from Gmail); 1 file renamed: scan_0042.pdf is now Certis invoice Aug.pdf. Files changed in Drive since then aren’t shown."
         },
         "failed": {
           "kind": "output_blocks",
@@ -37654,7 +37783,7 @@
               "detail": "Drive didn’t answer after the move. I’ll check the folder before trying again."
             }
           ],
-          "fallback_text": "I couldn’t confirm moving the 3 August invoices: Google Drive didn’t answer after 14:11, so some may already be in Invoices/2026-08. I’ll check the folder before trying again."
+          "fallback_text": "I couldn’t confirm the move of the 3 August invoices into Invoices/2026-08: Google Drive didn’t answer after the move, sent at 14:11, so some may already be there. I’ll check the folder before trying again."
         }
       }
     },
@@ -37669,7 +37798,7 @@
       "components": [
         "S14 Return / refund status"
       ],
-      "rationale": "Missing first, then found, each with where it came from; what IRAS already gets from your employer is said once so you don't chase it.",
+      "rationale": "Missing first, then found, each with its source; what IRAS gets directly (IR8A; CPF relief on employee contributions under auto-inclusion) is said once.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -37710,7 +37839,7 @@
                 "heading": "IRAS gets these directly",
                 "bullets": [
                   "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
-                  "CPF relief from your employer's contributions."
+                  "CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
                 ]
               }
             ]
@@ -37719,21 +37848,22 @@
         "details": {
           "sources": [
             {
-              "label": "IRAS individual income tax rates",
-              "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-residency-and-tax-rates/individual-income-tax-rates"
+              "label": "IRAS: CPF Relief for employees",
+              "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-reliefs-rebates-and-deductions/tax-reliefs/central-provident-fund(cpf)-relief-for-employees"
             },
             {
               "label": "Gmail and Google Drive, searched 26 Sep 2026"
             }
           ],
           "assumptions": [
-            "Links to each found email are in the Library list"
+            "Links to each found email are in the Library list",
+            "Your employer is in IRAS's Auto-Inclusion Scheme; if not, you declare the IR8A income and CPF relief yourself"
           ],
           "disclaimers": [
             "Not tax advice; check what you claim against IRAS."
           ]
         },
-        "fallback_text": "Tax documents for YA 2027 (income year 2026): 3 found, 1 missing. Missing: rental income Jan–Aug, Propnex monthly statements, none since March. Found: SRS contributions, DBS SRS statement 1 Aug; CPF cash top-up S$8,000, CPF Board receipt 12 Mar; donations, 2 receipts from IPC Club Rainbow and SPCA. IRAS gets your IR8A (employer sends by 1 Mar 2027) and employer CPF relief directly."
+        "fallback_text": "Tax documents for YA 2027 (income year 2026), from Gmail and Google Drive: 3 found, 1 missing. Missing: rental income Jan–Aug, Propnex monthly statements, none since March. Found: SRS contributions, DBS SRS statement 1 Aug (Gmail); CPF cash top-up S$8,000, CPF Board receipt 12 Mar (Gmail); donations, 2 receipts from IPC Club Rainbow and SPCA (Gmail). IRAS gets these directly: your IR8A salary form, which your employer sends by 1 Mar 2027, and CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme. Not tax advice."
       },
       "states": {
         "loading": {
@@ -37760,7 +37890,7 @@
           "major": 1,
           "header": {
             "title": "Tax documents for YA 2027",
-            "subtitle": "Gmail read, Drive not yet · 2 found, 1 missing"
+            "subtitle": "Income year 2026 · Gmail read, Drive not yet · 2 found, 1 missing"
           },
           "blocks": [
             {
@@ -37790,7 +37920,7 @@
                   "heading": "IRAS gets these directly",
                   "bullets": [
                     "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
-                    "CPF relief from your employer's contributions."
+                    "CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
                   ]
                 }
               ]
@@ -37799,11 +37929,21 @@
           "details": {
             "sources": [
               {
+                "label": "IRAS: CPF Relief for employees",
+                "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-reliefs-rebates-and-deductions/tax-reliefs/central-provident-fund(cpf)-relief-for-employees"
+              },
+              {
                 "label": "Gmail, searched 26 Sep 2026; Drive still reading"
               }
+            ],
+            "assumptions": [
+              "Your employer is in IRAS's Auto-Inclusion Scheme; if not, you declare the IR8A income and CPF relief yourself"
+            ],
+            "disclaimers": [
+              "Not tax advice; check what you claim against IRAS."
             ]
           },
-          "fallback_text": "Tax documents for YA 2027, Gmail read, Drive not yet: missing rental income Jan–Aug (Propnex, none since March); found SRS contributions (DBS statement 1 Aug) and CPF cash top-up S$8,000 (receipt 12 Mar). IRAS gets your IR8A and employer CPF relief directly. Drive may hold more."
+          "fallback_text": "Tax documents for YA 2027 (income year 2026), Gmail read, Drive not yet: 2 found, 1 missing. Missing: rental income Jan–Aug, Propnex monthly statements, none since March. Found: SRS contributions, DBS SRS statement 1 Aug (Gmail); CPF cash top-up S$8,000, CPF Board receipt 12 Mar (Gmail). IRAS gets these directly: your IR8A, which your employer sends by 1 Mar 2027, and CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme. Drive may hold more."
         },
         "stale": {
           "kind": "output_blocks",
@@ -37845,7 +37985,7 @@
                   "heading": "IRAS gets these directly",
                   "bullets": [
                     "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
-                    "CPF relief from your employer's contributions."
+                    "CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
                   ]
                 }
               ]
@@ -37854,11 +37994,21 @@
           "details": {
             "sources": [
               {
+                "label": "IRAS: CPF Relief for employees",
+                "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-reliefs-rebates-and-deductions/tax-reliefs/central-provident-fund(cpf)-relief-for-employees"
+              },
+              {
                 "label": "Gmail and Google Drive, searched 24 Sep 2026 20:00"
               }
+            ],
+            "assumptions": [
+              "Your employer is in IRAS's Auto-Inclusion Scheme; if not, you declare the IR8A income and CPF relief yourself"
+            ],
+            "disclaimers": [
+              "Not tax advice; check what you claim against IRAS."
             ]
           },
-          "fallback_text": "As of Thu 24 Sep 20:00 (couldn’t refresh): YA 2027 missing rental income Jan–Aug (Propnex, none since March); found SRS contributions (DBS 1 Aug), CPF cash top-up S$8,000 (12 Mar), donations, 2 receipts (IPC Club Rainbow, SPCA). IRAS gets your IR8A and employer CPF relief directly."
+          "fallback_text": "Tax documents for YA 2027, income year 2026, as of Thu 24 Sep 20:00 (couldn’t refresh): missing rental income Jan–Aug, Propnex monthly statements, none since March. Found: SRS contributions, DBS SRS statement 1 Aug (Gmail); CPF cash top-up S$8,000, CPF Board receipt 12 Mar (Gmail); donations, 2 receipts from IPC Club Rainbow and SPCA (Gmail). IRAS gets these directly: your IR8A, which your employer sends by 1 Mar 2027, and CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
         },
         "empty": {
           "kind": "output_blocks",
@@ -37890,7 +38040,7 @@
               "detail": "The Google connection has expired. Reconnect it, then ask again."
             }
           ],
-          "fallback_text": "Couldn’t search your Gmail and Drive for YA 2027 tax documents: the Google connection has expired. Reconnect it, then ask me again. Nothing was changed."
+          "fallback_text": "Couldn’t search for tax documents for YA 2027 in your Gmail and Drive: the Google connection has expired. Reconnect it, then ask me again. Nothing was changed."
         }
       }
     },
@@ -38081,10 +38231,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Your phone’s arrival shortcut isn’t set up. No reminder was made."
+              "detail": "Arrival shortcut not set up; no reminder made. Set it up, then ask me."
             }
           ],
-          "fallback_text": "Couldn’t set the buy-milk reminder for FairPrice Tiong Bahru: your phone’s arrival shortcut isn’t set up, so I’d never know you’re there. No reminder was made. Set up the shortcut, then ask me again."
+          "fallback_text": "Couldn’t set the place reminder to buy milk near FairPrice Tiong Bahru: your phone’s arrival shortcut isn’t set up, so I’d never know you’re there. No reminder was made. Set up the shortcut, then ask me again."
         }
       }
     },
@@ -38143,7 +38293,7 @@
           }
         ],
         "more_label": "See all 4 blocks",
-        "fallback_text": "Next week, 28 Sep–4 Oct. Last week you answered 41 emails; 3 wait on you. Proposed blocks: Mon 09:30–11:30 focus on the board deck; Tue 08:30–09:00 reply to Priya and Kai (waiting since 23 Sep); Wed 14:00–16:00 focus on the pricing page; Thu 17:00–17:30 bills and forms. Nothing is added until you say yes; this recap then comes every Monday at 9:00."
+        "fallback_text": "Next week, 28 Sep–4 Oct. Last week you answered 41 emails; 3 wait on you. Proposed blocks: Mon 28 Sep 09:30–11:30 focus on the board deck, from last week’s open thread; Tue 29 Sep 08:30–09:00 reply to Priya and Kai, 2 emails waiting since 23 Sep; Wed 30 Sep 14:00–16:00 focus on the pricing page, you moved it twice last week; Thu 1 Oct 17:00–17:30 admin: bills and forms, 3 things from your deadlines list. Nothing is added until you say yes; this recap then comes every Monday at 9:00."
       },
       "states": {
         "partial": {
@@ -38170,7 +38320,7 @@
               ]
             }
           ],
-          "fallback_text": "Next week, 28 Sep–4 Oct, from your calendar only (email not read yet): Mon 09:30–11:30 focus on the board deck; Wed 14:00–16:00 focus on the pricing page. Email replies aren’t planned yet; nothing was added."
+          "fallback_text": "Next week, 28 Sep–4 Oct, calendar read, email not yet: Mon 28 Sep 09:30–11:30 focus on the board deck, from last week’s open thread; Wed 30 Sep 14:00–16:00 focus on the pricing page, you moved it twice last week. Email replies aren’t planned yet, so I won't ask to add these; nothing was added."
         },
         "empty": {
           "kind": "output_blocks",
@@ -38199,10 +38349,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Google Calendar sign-in expired. Nothing was changed."
+              "detail": "Google Calendar sign-in expired; nothing added. Reconnect, then ask me."
             }
           ],
-          "fallback_text": "The Google Calendar sign-in expired, so I couldn’t plan 28 Sep–4 Oct. Nothing was changed."
+          "fallback_text": "Couldn’t plan your week: the Google Calendar sign-in expired, so I couldn’t plan next week, 28 Sep–4 Oct. Nothing was added or changed. Reconnect Google Calendar, then ask me again."
         }
       }
     },
@@ -38268,7 +38418,7 @@
             "Not medical advice; see a doctor if you have a heart or joint condition."
           ]
         },
-        "fallback_text": "Half marathon plan, 10 weeks, 3 runs a week, race Sun 6 Dec. First run Tue 29 Sep 6:30 am, 5 km easy; check-in every Sunday 8 pm. Milestones: easy runs up to 10 km, weeks 1–4, Tue and Thu 6:30 am plus a Sunday long run, by Sun 25 Oct; long run 16 km, weeks 5–8 with a weekly tempo run, by Sun 22 Nov; taper, then the Standard Chartered Singapore half on Sun 6 Dec."
+        "fallback_text": "Half marathon plan, 10 weeks, 3 runs a week, race Sun 6 Dec. Agreed: first run Tue 29 Sep, 6:30 am, 5 km easy; check-in every Sunday at 8 pm, where I ask how the week went and adjust. Milestones: easy runs up to 10 km, weeks 1–4, Tue and Thu 6:30 am plus a Sunday long run, by Sun 25 Oct; long run 16 km, weeks 5–8, one tempo run a week, by Sun 22 Nov; weeks 9–10 taper, then race the Standard Chartered Singapore half on Sun 6 Dec."
       },
       "states": {
         "loading": {
@@ -38316,11 +38466,16 @@
                   "label": "Easy runs up to 10 km",
                   "secondary": "Weeks 1–4 · Tue, Thu 6:30 am, Sun long run",
                   "trailing": "by Sun 25 Oct"
+                },
+                {
+                  "label": "Weeks 5–10",
+                  "secondary": "Wait for your November travel dates",
+                  "trailing": "Needs you"
                 }
               ]
             }
           ],
-          "fallback_text": "Half marathon plan for Sun 6 Dec, first 4 weeks planned: first run Tue 29 Sep 6:30 am, 5 km easy; easy runs up to 10 km, Tue and Thu 6:30 am plus a Sunday long run, by Sun 25 Oct. Weeks 5–10 wait for your November travel dates."
+          "fallback_text": "Half marathon plan, race Sun 6 Dec, first 4 weeks planned. Agreed: first run Tue 29 Sep, 6:30 am, 5 km easy. Easy runs up to 10 km, weeks 1–4, Tue and Thu 6:30 am plus a Sunday long run, by Sun 25 Oct. Weeks 5–10 needs you: they wait for your November travel dates. Nothing is added to your calendar yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -38370,7 +38525,7 @@
               }
             ]
           },
-          "fallback_text": "Half marathon plan as of Thu 24 Sep 21:00 (couldn’t re-read your calendar): first run Tue 29 Sep 6:30 am, 5 km easy; Sunday 8 pm check-ins; easy runs to 10 km by Sun 25 Oct; long run 16 km by Sun 22 Nov; taper, then the Standard Chartered Singapore half on Sun 6 Dec."
+          "fallback_text": "Half marathon plan, race Sun 6 Dec, as of Thu 24 Sep 21:00 (couldn’t refresh your calendar). Agreed: first run Tue 29 Sep, 6:30 am, 5 km easy; check-in every Sunday at 8 pm, where I ask how the week went and adjust. Easy runs up to 10 km, weeks 1–4, Tue and Thu 6:30 am plus a Sunday long run, by Sun 25 Oct; long run 16 km, weeks 5–8, one tempo run a week, by Sun 22 Nov; weeks 9–10 taper, then race the Standard Chartered Singapore half on Sun 6 Dec."
         },
         "empty": {
           "kind": "output_blocks",
@@ -38386,7 +38541,7 @@
               "detail": "No free mornings before 8 am for 3 runs a week. Tell me which evenings work."
             }
           ],
-          "fallback_text": "Your calendar has no free mornings before 8 am for 3 runs a week up to Sun 6 Dec, so there’s no plan yet. Tell me which evenings work."
+          "fallback_text": "No half marathon plan yet for the race on Sun 6 Dec: your calendar has no free mornings before 8 am for 3 runs a week. Tell me which evenings work."
         },
         "failed": {
           "kind": "output_blocks",
@@ -38399,10 +38554,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Google Calendar sign-in expired. Nothing was changed."
+              "detail": "Google Calendar sign-in expired; nothing added. Reconnect, then ask me."
             }
           ],
-          "fallback_text": "The Google Calendar sign-in expired, so I couldn’t fit a half marathon plan around your schedule. Nothing was changed."
+          "fallback_text": "Couldn’t build the plan: the Google Calendar sign-in expired, so I couldn’t fit the half marathon on Sun 6 Dec around your schedule. Nothing was added or changed. Reconnect Google Calendar, then ask me again."
         }
       }
     },
@@ -38423,7 +38578,7 @@
         "major": 1,
         "header": {
           "title": "Offer: gray sectional, listed US$260",
-          "subtitle": "To Jordan on Marketplace · draft · your limit US$200"
+          "subtitle": "To Jordan on Marketplace · draft · listing read 09:40 · your limit US$200"
         },
         "blocks": [
           {
@@ -38431,13 +38586,20 @@
             "sections": [
               {
                 "paragraphs": [
-                  "Hi Jordan, is the gray sectional still available? I can pick it up this Saturday in Oakland and pay US$180 cash. Thanks, Abhi"
+                  "Hi Jordan, is the gray sectional still available? I can pick it up on Sat 3 Oct in Oakland and pay US$180 cash. Thanks, Abhi"
                 ]
               }
             ]
           }
         ],
-        "fallback_text": "Draft to Jordan on Facebook Marketplace, not sent. Gray sectional listed at US$260; your limit US$200; opening offer US$180. Hi Jordan, is the gray sectional still available? I can pick it up this Saturday in Oakland and pay US$180 cash. Thanks, Abhi"
+        "fallback_text": "Draft to Jordan on Facebook Marketplace, not sent. Offer: gray sectional, listed US$260 (listing read 09:40); your limit US$200, never in the message; opening offer US$180. Hi Jordan, is the gray sectional still available? I can pick it up on Sat 3 Oct in Oakland and pay US$180 cash. Thanks, Abhi",
+        "details": {
+          "sources": [
+            {
+              "label": "Facebook Marketplace listing, read 26 Sep 2026 09:40"
+            }
+          ]
+        }
       },
       "states": {
         "loading": {
@@ -38486,10 +38648,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Facebook signed you out in Chrome. Nothing was sent."
+              "detail": "Facebook signed you out in Chrome; nothing sent. Sign in, then ask me."
             }
           ],
-          "fallback_text": "Facebook signed you out in Chrome, so I couldn’t open the gray sectional listing or draft the offer. Nothing was sent. Sign in again, then ask me."
+          "fallback_text": "Couldn’t draft the offer: Facebook signed you out in Chrome, so I couldn’t open the gray sectional listing on Marketplace. Nothing was sent. Sign in to Facebook in Chrome again, then ask me."
         }
       }
     },
@@ -38572,7 +38734,7 @@
           "major": 1,
           "header": {
             "title": "Quotes: fallen branch removal",
-            "subtitle": "2 of 3 forms sent · 1 reply · as of 11:10"
+            "subtitle": "2 of 3 forms sent · no replies · as of 11:10"
           },
           "blocks": [
             {
@@ -38580,8 +38742,8 @@
               "items": [
                 {
                   "label": "Tree Doctor Singapore",
-                  "secondary": "Form sent 10:40 · replied 13:05 · Mon 28 Sep",
-                  "trailing": "S$280"
+                  "secondary": "Form sent 10:40",
+                  "trailing": "No reply yet"
                 },
                 {
                   "label": "GreenCut Landscaping",
@@ -38598,7 +38760,7 @@
               }
             ]
           },
-          "fallback_text": "Quotes for the fallen branch, 2 of 3 forms sent as of 11:10: Tree Doctor Singapore S$280, Mon 28 Sep (form 10:40); GreenCut Landscaping, form sent 10:44, no reply yet. Arbor Care SG’s form is still being filled."
+          "fallback_text": "Quotes for the fallen branch removal, 2 of 3 forms sent, no replies as of 11:10: Tree Doctor Singapore, form sent 10:40, no reply yet; GreenCut Landscaping, form sent 10:44, no reply yet. Arbor Care SG’s form is still being filled. Nothing is booked."
         },
         "stale": {
           "kind": "output_blocks",
@@ -38636,7 +38798,7 @@
               }
             ]
           },
-          "fallback_text": "As of 13:10 (couldn’t refresh the inbox): Tree Doctor Singapore S$280, Mon 28 Sep; GreenCut Landscaping and Arbor Care SG, forms sent 10:44 and 10:47, no reply yet. Nothing is booked."
+          "fallback_text": "Quotes to remove the fallen branch, 3 forms sent, as of 13:10 (couldn’t refresh the inbox): Tree Doctor Singapore S$280, can come Mon 28 Sep (form sent 10:40, replied 13:05); GreenCut Landscaping, form sent 10:44, no reply yet; Arbor Care SG, form sent 10:47, no reply yet. Nothing is booked."
         },
         "empty": {
           "kind": "output_blocks",
@@ -38652,7 +38814,7 @@
               "detail": "No firm has replied yet. I’ll tell you when one does."
             }
           ],
-          "fallback_text": "3 quote forms sent for the fallen branch, but no firm has replied as of 14:30. I’ll tell you when one does."
+          "fallback_text": "No quotes yet: 3 forms sent for the fallen branch removal, but no firm has replied as of 14:30. I’ll tell you when one does."
         },
         "failed": {
           "kind": "output_blocks",
@@ -38665,10 +38827,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "All 3 forms wanted a phone number check. Nothing was sent."
+              "detail": "All 3 forms want a phone check only you can do. Nothing sent; I can call them."
             }
           ],
-          "fallback_text": "Couldn’t send the quote forms for the fallen branch: all 3 wanted a phone number check that only you can do. Nothing was sent. Ask me to call them instead."
+          "fallback_text": "Couldn’t send the quote forms for the fallen branch removal: all 3 forms want a phone number check that only you can do. Nothing was sent. Do the check yourself, or ask me to call the firms instead."
         }
       }
     },
@@ -38724,7 +38886,7 @@
             "Stock can change before you get there; nothing is held for you"
           ]
         },
-        "fallback_text": "PS5 Slim near Indiranagar, as of 16:10: Croma Indiranagar, 2.1 km, in stock, checked 16:02, INR 54,990 (pick); Reliance Digital Koramangala, 4.8 km, low, 2 left, checked 16:05, INR 54,990; Sony Center MG Road, 3.4 km, out of stock, called 16:10, INR 54,990. Nothing is reserved."
+        "fallback_text": "PS5 Slim near Indiranagar, 3 stores, as of 16:10: Croma, Indiranagar, 2.1 km, in stock, checked 16:02, INR 54,990 (pick); Reliance Digital, Koramangala, 4.8 km, low, 2 left, checked 16:05, INR 54,990; Sony Center, MG Road, 3.4 km, out of stock, called 16:10, INR 54,990. Nothing is reserved."
       },
       "states": {
         "loading": {
@@ -38778,14 +38940,14 @@
               }
             ]
           },
-          "fallback_text": "PS5 Slim near Indiranagar, 2 of 3 stores checked as of 16:05: Croma Indiranagar, 2.1 km, in stock, INR 54,990; Reliance Digital Koramangala, 4.8 km, low, 2 left, INR 54,990. Sony Center hasn’t answered the call yet."
+          "fallback_text": "PS5 Slim near Indiranagar, 2 of 3 stores checked as of 16:05: Croma, Indiranagar, 2.1 km, in stock, checked 16:02, INR 54,990 (pick); Reliance Digital, Koramangala, 4.8 km, low, 2 left, checked 16:05, INR 54,990. Sony Center, MG Road hasn’t answered the call yet. Nothing is reserved."
         },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "PS5 Slim near Indiranagar",
-            "subtitle": "As of 12:30 · couldn’t refresh"
+            "subtitle": "3 stores · as of 12:30 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -38793,18 +38955,18 @@
               "items": [
                 {
                   "label": "Croma, Indiranagar",
-                  "secondary": "2.1 km · in stock · checked 16:02",
+                  "secondary": "2.1 km · in stock · checked 12:22",
                   "trailing": "INR 54,990",
                   "mark": "pick"
                 },
                 {
                   "label": "Reliance Digital, Koramangala",
-                  "secondary": "4.8 km · low, 2 left · checked 16:05",
+                  "secondary": "4.8 km · low, 2 left · checked 12:25",
                   "trailing": "INR 54,990"
                 },
                 {
                   "label": "Sony Center, MG Road",
-                  "secondary": "3.4 km · out of stock · called 16:10",
+                  "secondary": "3.4 km · out of stock · called 12:30",
                   "trailing": "INR 54,990"
                 }
               ]
@@ -38813,11 +38975,11 @@
           "details": {
             "sources": [
               {
-                "label": "Stock pages and a call, 26 Sep 2026 12:30"
+                "label": "Croma and Reliance Digital stock pages; a call to Sony Center, 26 Sep 2026 12:30"
               }
             ]
           },
-          "fallback_text": "As of 12:30 (couldn’t refresh; stock may have changed): Croma Indiranagar in stock (pick); Reliance Digital Koramangala low, 2 left; Sony Center MG Road out. All INR 54,990."
+          "fallback_text": "PS5 Slim near Indiranagar, 3 stores, as of 12:30 (couldn’t refresh; stock may have changed): Croma, Indiranagar, 2.1 km, in stock, checked 12:22, INR 54,990 (pick); Reliance Digital, Koramangala, 4.8 km, low, 2 left, checked 12:25, INR 54,990; Sony Center, MG Road, 3.4 km, out of stock, called 12:30, INR 54,990. Nothing is reserved."
         },
         "empty": {
           "kind": "output_blocks",
@@ -38833,7 +38995,7 @@
               "detail": "All 3 are out; Croma expects stock Thu 1 Oct"
             }
           ],
-          "fallback_text": "No PS5 Slim in stock at the 3 stores near Indiranagar as of 16:10. Croma Indiranagar expects stock on Thu 1 Oct."
+          "fallback_text": "No PS5 Slim near Indiranagar as of 16:10: all 3 stores are out. Croma Indiranagar expects stock on Thu 1 Oct."
         },
         "failed": {
           "kind": "output_blocks",
