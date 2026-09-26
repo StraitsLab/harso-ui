@@ -411,11 +411,12 @@ const ART: Record<string, string> = {
   "0192a3b4-5c6d-7e8f-9a0b-000000000b02": svg(`<rect width="640" height="360" fill="#d9d2c5"/><rect x="60" y="200" width="520" height="120" fill="#b8ab96"/><rect x="100" y="60" width="160" height="120" fill="#efe9dd"/>`, 640, 360),
   "0192a3b4-5c6d-7e8f-9a0b-000000000b01": clipUrl
 };
+// Roads sit on a grid that continues across tile edges (so the plane reads as one map); a park on some tiles.
 const tile = (z: number, x: number, y: number) => {
-  const seed = (x * 73856093) ^ (y * 19349663) ^ z, road = (n: number) => 32 + Math.abs((seed >> n) % 192);
-  return svg(`<rect width="256" height="256" fill="#ecebe6"/><rect x="${road(3)}" y="${road(5)}" width="48" height="36" fill="#dfe6d8"/>`
-    + `<path d="M0 ${road(1)}H256M${road(2)} 0V256M0 ${road(7)}L256 ${road(9)}" stroke="#ffffff" stroke-width="6"/>`
-    + `<path d="M0 ${road(4) / 2 + 64}C80 ${road(6)} 160 ${road(8)} 256 ${road(10) / 2 + 64}" stroke="#cdd9e0" stroke-width="10" fill="none"/>`, 256, 256);
+  const park = (x * 7 + y * 3 + z) % 4 === 0;
+  return svg(`<rect width="256" height="256" fill="#ecebe6"/>${park ? `<rect x="150" y="30" width="80" height="56" rx="6" fill="#dde5d6"/>` : ""}`
+    + `<path d="M0 96H256M0 208H256M72 0V256M184 0V256" stroke="#ffffff" stroke-width="6"/>`
+    + `<path d="M0 150H256" stroke="#d3dde3" stroke-width="10"/>`, 256, 256);
 };
 const mediaHost = (onOpen: (artifact: string) => void): HarsoOutputMediaHost => ({
   resolveArtifact: artifact => query.has("imgfail") ? "/preview/missing-image.png" : query.has("imgslow") ? "/__never__/slow.png" : ART[artifact.slice(9)],
