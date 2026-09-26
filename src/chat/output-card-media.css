@@ -1,0 +1,110 @@
+/* Packet 5c: status, progress, image, video poster and map blocks, from the B0 v4 macOS masters
+   (status/progress/image/map × 6 states). B0 macOS 15/13/12 map onto the kit's body 14 · chrome 13 · meta 12.
+   Tokens only; meaning colours are the kit's accent (in progress), positive (done) and attention (needs you, problem:
+   amber, never red). No borders: rings are inset shadows. */
+
+/* Status: a coloured dot and the state word in its meaning, the detail in secondary; timed next steps below as rows
+   on a rail, hollow rings (B0 step/next). */
+.harso-kit .hkc-output-status { --hkc-meaning: var(--hk-secondary); display: flex; flex-direction: column; gap: var(--hk-space-2); min-width: 0; }
+.harso-kit .hkc-output-status[data-meaning="in_progress"] { --hkc-meaning: var(--hk-accent); }
+.harso-kit .hkc-output-status[data-meaning="done"] { --hkc-meaning: var(--hk-positive); }
+.harso-kit .hkc-output-status[data-meaning="attention"] { --hkc-meaning: var(--hk-attention); }
+.harso-kit .hkc-output-status-line { display: flex; align-items: baseline; flex-wrap: wrap; column-gap: 6px; font-size: var(--hk-text-chrome); line-height: 20px; min-width: 0; }
+.harso-kit .hkc-output-status-dot { flex-shrink: 0; align-self: center; width: 8px; height: 8px; border-radius: var(--hk-radius-pill); background: var(--hkc-meaning); }
+.harso-kit .hkc-output-status-word { font-weight: 500; color: var(--hkc-meaning); }
+.harso-kit .hkc-output-status-detail { color: var(--hk-secondary); font-variant-numeric: tabular-nums; min-width: 0; }
+.harso-kit .hkc-output-status-steps { list-style: none; margin: 0; padding: 0; }
+.harso-kit .hkc-output-status-step {
+  position: relative; display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; column-gap: var(--hk-space-3);
+  min-height: 32px;
+}
+/* The rail in from the status line (B0 connector, muted: these are steps still to come). */
+.harso-kit .hkc-output-status-step::before { content: ""; position: absolute; left: 7px; top: -8px; height: calc(50% + 3px); width: 2px; background: var(--hk-line-strong); }
+.harso-kit .hkc-output-status-ring { position: relative; justify-self: center; width: 10px; height: 10px; border-radius: var(--hk-radius-pill); background: var(--hk-surface); box-shadow: inset 0 0 0 1.5px var(--hk-line-strong); }
+.harso-kit .hkc-output-status-step-label { min-width: 0; font-size: var(--hk-text-body); line-height: 20px; color: var(--hk-secondary); }
+.harso-kit .hkc-output-status-step-time { font-size: var(--hk-text-chrome); line-height: 20px; color: var(--hk-secondary); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Progress (B0): label left, "S$4,280 of S$5,000" right; 6px track; note under it. */
+.harso-kit .hkc-output-progress { display: flex; flex-direction: column; gap: var(--hk-space-2); min-width: 0; }
+.harso-kit .hkc-output-progress-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 2px var(--hk-space-3); line-height: 20px; }
+.harso-kit .hkc-output-progress-label { min-width: 0; font-size: var(--hk-text-chrome); color: var(--hk-secondary); }
+.harso-kit .hkc-output-progress-value { margin-left: auto; font-size: var(--hk-text-body); font-weight: 500; font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-output-progress-track { height: 6px; border-radius: var(--hk-radius-pill); overflow: hidden; background: color-mix(in srgb, var(--hk-ink) 12%, var(--hk-surface)); }
+.harso-kit .hkc-output-progress-fill { display: block; height: 100%; border-radius: inherit; background: var(--hk-ink); }
+.harso-kit .hkc-output-progress-fill[data-over] { background: var(--hk-attention); }
+.harso-kit .hkc-output-progress-note { font-size: var(--hk-text-chrome); line-height: 20px; color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
+
+/* Image and video poster: a fixed-aspect frame on the work tone, radius 12; a calm shimmer while loading. */
+.harso-kit .hkc-output-media {
+  position: relative; display: block; width: 100%; aspect-ratio: var(--hkc-media-aspect, 4 / 3); max-height: 480px;
+  margin: 0; padding: 0; border: 0; border-radius: var(--hk-radius-card); overflow: hidden;
+  background: var(--hk-field-tint); color: inherit; font: inherit;
+}
+.harso-kit .hkc-output-media-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.harso-kit .hkc-output-media[data-state="loading"] .hkc-output-media-img { opacity: 0; }
+.harso-kit .hkc-output-media[data-state="loading"]::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--hk-surface) 55%, transparent) 50%, transparent 70%);
+  background-size: 220% 100%; animation: hkc-media-shimmer 1.6s linear infinite;
+}
+@keyframes hkc-media-shimmer { from { background-position: 100% 0; } to { background-position: -120% 0; } }
+.harso-kit .hkc-output-media[data-state="ready"] .hkc-output-media-img { animation: hkc-media-arrive 180ms var(--hk-ease, ease-out); }
+@keyframes hkc-media-arrive { from { opacity: 0; } }
+.harso-kit .hkc-output-video { cursor: pointer; }
+.harso-kit .hkc-output-video-play {
+  position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px;
+  display: grid; place-items: center; border-radius: var(--hk-radius-pill);
+  background: var(--hk-glass); color: var(--hk-ink); box-shadow: var(--hk-shadow-float, var(--hk-shadow));
+}
+.harso-kit .hkc-output-video-length {
+  position: absolute; right: var(--hk-space-2); bottom: var(--hk-space-2); padding: 2px 6px; border-radius: 6px;
+  background: var(--hk-glass); color: var(--hk-ink); font-size: var(--hk-text-meta); font-weight: 500; line-height: 16px; font-variant-numeric: tabular-nums;
+}
+.harso-kit .hkc-output-video:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.harso-kit .hkc-output-video:hover .hkc-output-video-play { background: var(--hk-surface); }
+
+/* Map: a still OSM tile plane (no live map), radius 12; pins 10px, the pick 14px in ink; label capsules;
+   attribution chip bottom-left in secondary on the overlay (>= 4.5:1). */
+.harso-kit .hkc-output-map { position: relative; margin: 0; min-width: 0; }
+.harso-kit .hkc-output-map-plane { position: relative; width: 100%; overflow: hidden; border-radius: var(--hk-radius-card); background: var(--hk-field-tint); }
+.harso-kit .hkc-output-map-tile { position: absolute; width: 256px; height: 256px; max-width: none; user-select: none; }
+.harso-kit[data-mode="dark"] .hkc-output-map-tile { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) saturate(.3); }
+.harso-kit:not([data-mode="dark"]) .hkc-output-map-tile { filter: saturate(.25) contrast(.95); }
+.harso-kit .hkc-output-map-pin {
+  position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: var(--hk-radius-pill);
+  background: var(--hk-secondary); box-shadow: 0 0 0 2px var(--hk-glass);
+}
+.harso-kit .hkc-output-map-pin[data-selected] { width: 14px; height: 14px; margin: -7px 0 0 -7px; background: var(--hk-ink); }
+.harso-kit .hkc-output-map-label {
+  position: absolute; height: 22px; padding: 0 7px; overflow: hidden; border-radius: 11px;
+  background: var(--hk-glass); color: var(--hk-ink); box-shadow: var(--hk-shadow);
+  font-size: var(--hk-text-meta); line-height: 22px; white-space: nowrap; text-overflow: ellipsis;
+}
+.harso-kit .hkc-output-map-label[data-selected] { font-weight: 500; }
+.harso-kit .hkc-output-map-attribution {
+  position: absolute; left: var(--hk-space-2); bottom: var(--hk-space-2); padding: 3px 6px; border-radius: 6px;
+  background: var(--hk-glass); color: var(--hk-secondary); font-size: var(--hk-text-meta); line-height: 16px;
+}
+
+/* Loading skeletons (B0): status = three dot/two-bar/time rows; progress = label, track, note. */
+.harso-kit .hkc-output-skeleton--status .hkc-output-skeleton-step { display: grid; grid-template-columns: 16px minmax(0, 1fr) 48px; align-items: center; column-gap: var(--hk-space-3); height: 40px; background: transparent; }
+.harso-kit .hkc-output-skeleton-step i { justify-self: center; width: 10px; height: 10px; border-radius: var(--hk-radius-pill); background: var(--hk-field-tint); }
+.harso-kit .hkc-output-skeleton-step > span { display: flex; flex-direction: column; gap: 6px; background: transparent; }
+.harso-kit .hkc-output-skeleton-step > span > span { height: 10px; width: 60%; }
+.harso-kit .hkc-output-skeleton-step > span > span + span { width: 32%; }
+.harso-kit .hkc-output-skeleton-step > span:last-child { height: 10px; background: var(--hk-field-tint); }
+.harso-kit .hkc-output-skeleton--progress { gap: var(--hk-space-2); }
+.harso-kit .hkc-output-skeleton--progress span { height: 12px; }
+.harso-kit .hkc-output-skeleton--progress span:nth-child(1) { width: 40%; margin-block: 4px; }
+.harso-kit .hkc-output-skeleton--progress span:nth-child(2) { height: 6px; border-radius: var(--hk-radius-pill); }
+.harso-kit .hkc-output-skeleton--progress span:nth-child(3) { width: 50%; margin-block: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .harso-kit .hkc-output-media[data-state="loading"]::after { animation: none; background: none; }
+  .harso-kit .hkc-output-media[data-state="ready"] .hkc-output-media-img { animation: none; }
+}
+@media (forced-colors: active) {
+  .harso-kit .hkc-output-status-dot, .harso-kit .hkc-output-progress-fill, .harso-kit .hkc-output-map-pin { background: CanvasText; forced-color-adjust: none; }
+  .harso-kit .hkc-output-progress-track { outline: 1px solid CanvasText; }
+  .harso-kit .hkc-output-map-label, .harso-kit .hkc-output-map-attribution, .harso-kit .hkc-output-video-length { outline: 1px solid CanvasText; }
+}
