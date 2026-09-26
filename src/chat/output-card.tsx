@@ -3,7 +3,7 @@
 import { CaretRight } from "@phosphor-icons/react";
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Button } from "../primitives";
-import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable,
+import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
   type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
 import { HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputVideoView,
   ARTIFACT, readMedia, readProgress, readStatus, readSteps, type HarsoOutputMedia, type HarsoOutputMediaHost, type HarsoOutputMediaKind,
@@ -26,7 +26,7 @@ export interface HarsoOutputRow {
   secondary?: string;
   trailing?: string;
   mark?: "pick";
-  /** Agent-asserted row word (Overdue/Paid). Not rendered by this card yet: the document falls back. */
+  /** Agent-asserted row word, drawn after the label: "overdue" (attention) or "paid" (positive). Any other value falls back. */
   status?: string;
 }
 
@@ -243,7 +243,7 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
       }
     }
     if (isRows(block)) {
-      if (block.items.some(row => row.status != null)) return undefined;
+      if (!block.items.every(row => rowStatusOk(row.status))) return undefined;
       const shares = readShare(block.items);
       if (shares) {
         if (withoutData(state)) { parts.push({ kind: "share", items: [], shares, shown: 0, state }); continue; }
@@ -424,6 +424,7 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
                 <p className="hkc-output-card-row-line">
                   <span className="hkc-output-card-row-label">{row.label}</span>
                   {row.mark === "pick" && <span className="hkc-output-card-pick">Pick</span>}
+                  <HarsoOutputRowStatus status={row.status} />
                 </p>
                 {row.secondary && <p className="hkc-output-card-row-secondary">{row.secondary}</p>}
               </div>

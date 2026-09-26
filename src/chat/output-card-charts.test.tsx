@@ -311,11 +311,24 @@ test.each([
 
 test("tables the card cannot draw fall back", () => {
   for (const bad of [{ kind: "table", columns: [{ label: "A" }], rows: [{ cells: ["x"] }] }, { kind: "table", columns: [{ label: "A" }, { label: "B" }], rows: [{ cells: ["x"] }] },
-    { kind: "table", columns: [{ label: "A" }, { label: "B" }], rows: [{ cells: ["x", "y"], status: "overdue" }] }]) {
+    { kind: "table", columns: [{ label: "A" }, { label: "B" }], rows: [{ cells: ["x", "y"], status: "refunded" }] }]) {
     const { card: fallback } = renderDoc(doc([bad]));
     expect(fallback).toHaveAttribute("data-fallback", "true");
     cleanup();
   }
+});
+
+test("table row status words draw in the row header cell, the word itself, and go into Copy", () => {
+  const table: chat.HarsoOutputTableBlock = { kind: "table", columns: [{ label: "Payee" }, { label: "Amount", align: "end" }],
+    rows: [{ cells: ["Acme", "S$8,400"], status: "overdue" }, { cells: ["Lumen", "S$2,180"], status: "paid" }, { cells: ["Northwind", "S$2,720"] }] };
+  const { card } = renderDoc(doc([table], { header: { title: "Invoices" } }));
+  expect(card).not.toHaveAttribute("data-fallback");
+  expect(within(card).getByRole("rowheader", { name: "Acme Overdue" })).toBeVisible();
+  expect(within(card).getByRole("rowheader", { name: "Lumen Paid" })).toBeVisible();
+  expect(within(card).getByText("Overdue")).toHaveClass("hk-badge--attention");
+  expect(within(card).getByText("Paid")).toHaveClass("hk-badge--positive");
+  expect(within(card).getByRole("rowheader", { name: "Northwind" })).toBeVisible();
+  expect(chat.harsoOutputBlockPlainText(table)).toBe("Payee\tAmount\nAcme · Overdue\tS$8,400\nLumen · Paid\tS$2,180\nNorthwind\tS$2,720");
 });
 
 // ---- states: each block × each state ----
