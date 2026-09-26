@@ -3037,6 +3037,41 @@
           ],
           "fallback_text": "Reading 6 months of URA sales to estimate your 2-bed, 818 sqft unit at The Trilinq."
         },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · 2 bed · 818 sqft",
+            "subtitle": "Recent sales S$1.12–1.24M · as of 09:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$1.18M",
+                  "label": "Estimate"
+                },
+                {
+                  "value": "S$1,443",
+                  "label": "Per sqft"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "URA caveats, last 6 months, read 26 Sep 2026 09:40",
+                "url": "https://www.ura.gov.sg/property-market-information/pmiResidentialTransactionSearch"
+              }
+            ],
+            "disclaimers": [
+              "An estimate from recent sales, not a valuation."
+            ]
+          },
+          "fallback_text": "As of 09:40 (couldn't refresh URA's sales search), the last good estimate: your 2-bed, 818 sqft unit at The Trilinq was worth about S$1.18M (S$1,443 per sqft); recent sales ran S$1.12–1.24M. Newer sales may have moved it since."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
@@ -3913,6 +3948,67 @@
             ]
           },
           "fallback_text": "The Trilinq, Clementi, 4 of 5 facts found: tenure 99-year from 2013; completed 2017; facilities pool, gym and tennis; nearest MRT Clementi, 12 min. The maintenance fee is not published."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Trilinq · facts",
+            "subtitle": "Clementi · 755 units · as of 09:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Fact"
+                },
+                {
+                  "label": "Detail"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Tenure",
+                    "99-year from 2013"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Completed",
+                    "2017"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Facilities",
+                    "Pool, gym, tennis"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Nearest MRT",
+                    "Clementi · 12 min"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Maintenance",
+                    "S$380 a month"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "URA and PropertyGuru project page, read 26 Sep 2026 09:40"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:40 (couldn't refresh the project page), the last good facts: The Trilinq, Clementi, 755 units: tenure 99-year from 2013; completed 2017; facilities pool, gym and tennis; nearest MRT Clementi, 12 min; maintenance S$380 a month, which may have changed since."
         },
         "empty": {
           "kind": "output_blocks",

@@ -37,9 +37,9 @@ flag (`fresh` only says whether the subtitle carries an "as of" time).
 | `empty-search` | PropertyGuru + 99.co | ✓ | ✓ | ✓ | – | ✓ | It is itself the empty answer. |
 | `home-open-houses` | PropertyGuru open houses | ✓ | – | ✓ | ✓ | ✓ | One source: whole or failed. |
 | `home-viewing` | your calendar | ✓ | – | ✓ | ✓ | ✓ | One source. |
-| `home-value-estimate` | URA caveats, last 6 months | ✓ | – | – | ✓ | ✓ | One source; lodged sales do not change, and the estimate is recomputed on each ask. |
+| `home-value-estimate` | URA caveats, last 6 months | ✓ | – | ✓ | ✓ | ✓ | One source. Stale applies: old sales do not change, but the rolling six-month window does (new sales, older ones dropping out), so a failed refresh leaves the last good estimate, dated. |
 | `home-price-history` | HDB resale records | ✓ | – | – | ✓ | ✓ | One source; completed sales never change. |
-| `home-facts` | URA + project page | ✓ | ✓ | – | ✓ | ✓ | Tenure, completion year and facilities are fixed facts of a finished building. |
+| `home-facts` | URA + project page | ✓ | ✓ | ✓ | ✓ | ✓ | Stale applies: tenure and completion are fixed, but the monthly maintenance fee can change, so a failed refresh leaves the last good facts, dated. |
 | `home-schools` | OneMap | ✓ | – | – | ✓ | ✓ | One source; distances and schools do not change between reads. |
 | `home-affordability`, `home-monthly-cost` | your own numbers | – | – | – | – | – | Pure calculation: nothing is fetched. A bad input is a question, not a card. |
 | `file-calculator-page` | makes a file | ✓ | – | – | – | ✓ | A delivered file does not change or go stale, and making one cannot find nothing. |
@@ -74,4 +74,6 @@ needs (row G20 above). They are not examples of something the agent should send.
 ## States deliberately not drawn (superseded)
 
 The matrix above replaces the earlier reasoning that stable (`fresh: false`) records cannot go stale. That was wrong:
-application status, pipelines, interviews and viewings change after they are read, and now have stale states.
+application status, pipelines, interviews and viewings change after they are read, and now have stale states. So do
+a rolling-window value estimate and a facts card that includes a monthly fee: an immutable fact inside an answer does
+not make the whole answer immutable.
