@@ -4580,7 +4580,7 @@
               "detail": "The recipe sites didn’t respond. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t load a chicken rice recipe: the recipe sites didn’t respond. Nothing was saved."
+          "fallback_text": "Couldn’t load a chicken rice recipe for 4: the recipe sites didn’t respond. Nothing was saved."
         }
       }
     },
@@ -4595,7 +4595,7 @@
       "components": [
         "Recipe"
       ],
-      "rationale": "Built from what they have: time and servings as numbers, then ingredients and numbered steps; nothing to buy.",
+      "rationale": "Built from what they have: time and servings as numbers, then ingredients and numbered steps; the pantry basics it assumes are in Details.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -4626,7 +4626,7 @@
                   "3 eggs, beaten with a pinch of salt",
                   "2 ripe tomatoes, cut in wedges",
                   "2 cups cooked rice, a day old if you have it",
-                  "2 spring onions, sliced",
+                  "2 spring onions, sliced, if you have them",
                   "1 tbsp light soy sauce, 1 tbsp oil"
                 ]
               },
@@ -4644,10 +4644,10 @@
         ],
         "details": {
           "assumptions": [
-            "Uses only what you listed, plus oil, salt, soy sauce and spring onions."
+            "Uses what you listed plus oil, salt and soy sauce; the spring onions are optional."
           ]
         },
-        "fallback_text": "Tomato egg fried rice for 2, about 20 min, one pan. You need 3 eggs, 2 tomatoes, 2 cups cooked rice, 2 spring onions, 1 tbsp light soy sauce and 1 tbsp oil. 1. Scramble the eggs until just set, tip out. 2. Fry the tomatoes 3 min. 3. Add the rice and soy, fry 4 min. 4. Fold the eggs back in, finish with spring onions."
+        "fallback_text": "Tomato egg fried rice for 2, about 20 min, one pan. You need 3 eggs, 2 tomatoes, 2 cups cooked rice, 2 spring onions if you have them, 1 tbsp light soy sauce and 1 tbsp oil. 1. Scramble the eggs until just set, tip out. 2. Fry the tomatoes 3 min. 3. Add the rice and soy, fry 4 min. 4. Fold the eggs back in, finish with spring onions."
       },
       "states": {
         "loading": {
@@ -4673,17 +4673,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No recipe uses only these",
-            "subtitle": "Eggs, tomatoes, rice"
+            "title": "No match in 3 recipe sites",
+            "subtitle": "Eggs, tomatoes, rice · as of 18:10"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Every match needed something you don’t have"
+              "detail": "Each recipe checked also needed something you didn’t list"
             }
           ],
-          "fallback_text": "No recipe found that uses only eggs, tomatoes and rice."
+          "fallback_text": "None of the 3 recipe sites checked had a recipe using only eggs, tomatoes and rice (as of 18:10)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -4714,7 +4714,7 @@
       "components": [
         "Nutrition"
       ],
-      "rationale": "Calories and protein as numbers; fat and sodium in rows because they are the reason to care.",
+      "rationale": "Energy, fat and sodium as rows, each with its share of a day, because fat and salt are the reason to care.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -4747,12 +4747,12 @@
         "details": {
           "sources": [
             {
-              "label": "HPB Energy and Nutrient Composition of Food",
-              "url": "https://focos.hpb.gov.sg/eservices/ENCF/"
+              "label": "HPB Singapore Food Insights Database",
+              "url": "https://www.hpb.gov.sg/healthy-living/food-and-beverage/sgfoodid/"
             }
           ]
         },
-        "fallback_text": "One plate of char kway teow (about 380 g) has around 740 kcal, 38 g fat and 1,460 mg sodium."
+        "fallback_text": "One plate of char kway teow (about 380 g): 740 kcal, about a third of a day’s energy; 38 g fat, about half your daily limit; 1,460 mg sodium, over half your daily limit."
       },
       "states": {
         "loading": {
@@ -4774,21 +4774,55 @@
           ],
           "fallback_text": "Looking up char kway teow in the HPB food database."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Char kway teow · one plate",
+            "subtitle": "About 380 g · sodium not listed"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Energy",
+                  "secondary": "About a third of a day",
+                  "trailing": "740 kcal"
+                },
+                {
+                  "label": "Fat",
+                  "secondary": "About half your daily limit",
+                  "trailing": "38 g"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "HPB Singapore Food Insights Database",
+                "url": "https://www.hpb.gov.sg/healthy-living/food-and-beverage/sgfoodid/"
+              }
+            ]
+          },
+          "fallback_text": "One plate of char kway teow (about 380 g): 740 kcal, about a third of a day’s energy; 38 g fat, about half your daily limit. HPB’s entry doesn’t list sodium."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No nutrition data for this dish",
-            "subtitle": "Char kway teow with cockles"
+            "title": "No HPB entry for this version",
+            "subtitle": "Char kway teow with cockles · as of 12:30"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "HPB lists no entry for this version"
+              "detail": "HPB’s database has no entry for this version"
             }
           ],
-          "fallback_text": "HPB lists no nutrition data for char kway teow with cockles."
+          "fallback_text": "HPB’s food database has no nutrition entry for char kway teow with cockles (checked 12:30)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -5074,13 +5108,13 @@
       "components": [
         "Menu"
       ],
-      "rationale": "Three highlights with price trailing; the full menu is the restaurant's own page.",
+      "rationale": "Three highlights with price trailing; the restaurant writes its menu daily, so the link is its own site, not a menu page.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
         "header": {
           "title": "Burnt Ends · highlights",
-          "subtitle": "Modern barbecue · Dempsey · as of 10:00"
+          "subtitle": "Modern barbecue · Dempsey · today’s menu · as of 10:00"
         },
         "blocks": [
           {
@@ -5107,19 +5141,23 @@
             "kind": "action",
             "secondary": {
               "kind": "open_url",
-              "label": "Full menu",
-              "url": "https://burntends.com.sg/menu"
+              "label": "Burnt Ends website",
+              "url": "https://burntends.com.sg/burnt-ends-restaurant/"
             }
           }
         ],
         "details": {
           "sources": [
             {
-              "label": "Burnt Ends menu and Google reviews, 26 Sep 2026 10:00"
+              "label": "Burnt Ends menu and Google reviews, 26 Sep 2026 10:00",
+              "url": "https://burntends.com.sg/burnt-ends-restaurant/"
             }
+          ],
+          "assumptions": [
+            "Burnt Ends writes a new menu every day, so these dishes and prices are today’s."
           ]
         },
-        "fallback_text": "Burnt Ends highlights: the sanger S$28, leeks with hazelnut and brown butter S$24, onion rings S$18."
+        "fallback_text": "Burnt Ends highlights on today’s menu (as of 10:00): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
       },
       "states": {
         "loading": {
@@ -5141,12 +5179,12 @@
           ],
           "fallback_text": "Reading the Burnt Ends menu and recent reviews."
         },
-        "stale": {
+        "partial": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Burnt Ends · highlights",
-            "subtitle": "As of 25 Sep, 10:00 · couldn’t refresh"
+            "subtitle": "Menu and 1 of 2 review sites read · as of 10:00"
           },
           "blocks": [
             {
@@ -5173,35 +5211,89 @@
               "kind": "action",
               "secondary": {
                 "kind": "open_url",
-                "label": "Full menu",
-                "url": "https://burntends.com.sg/menu"
+                "label": "Burnt Ends website",
+                "url": "https://burntends.com.sg/burnt-ends-restaurant/"
               }
             }
           ],
           "details": {
             "sources": [
               {
-                "label": "Burnt Ends menu and Google reviews, 25 Sep 2026 10:00"
+                "label": "Burnt Ends menu and Google reviews, 26 Sep 2026 10:00",
+                "url": "https://burntends.com.sg/burnt-ends-restaurant/"
               }
+            ],
+            "assumptions": [
+              "Highlights are picked from Google reviews only; the second review site didn’t load."
             ]
           },
-          "fallback_text": "Burnt Ends highlights as of 25 Sep 10:00 (couldn’t refresh): the sanger S$28, leeks with hazelnut and brown butter S$24, onion rings S$18."
+          "fallback_text": "Burnt Ends highlights on today’s menu (as of 10:00; the menu and 1 of 2 review sites read; the second review site didn’t load): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Burnt Ends · highlights",
+            "subtitle": "Yesterday’s menu · as of 25 Sep, 10:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Burnt Ends sanger",
+                  "secondary": "Pulled pork, brioche, slaw",
+                  "trailing": "S$28"
+                },
+                {
+                  "label": "Leeks, hazelnut, brown butter",
+                  "secondary": "Smoked over almond wood",
+                  "trailing": "S$24"
+                },
+                {
+                  "label": "Onion rings",
+                  "secondary": "With smoked mayo",
+                  "trailing": "S$18"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Burnt Ends website",
+                "url": "https://burntends.com.sg/burnt-ends-restaurant/"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Burnt Ends menu and Google reviews, 25 Sep 2026 10:00",
+                "url": "https://burntends.com.sg/burnt-ends-restaurant/"
+              }
+            ],
+            "assumptions": [
+              "Burnt Ends writes a new menu every day; these are yesterday’s dishes and prices."
+            ]
+          },
+          "fallback_text": "Burnt Ends highlights on yesterday’s menu (as of 25 Sep 10:00, couldn’t refresh): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No menu online",
+            "title": "Today’s menu isn’t online",
             "subtitle": "Burnt Ends · as of 10:00"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The restaurant hasn’t published this season’s menu"
+              "detail": "Burnt Ends hasn’t posted today’s menu yet"
             }
           ],
-          "fallback_text": "Burnt Ends hasn’t published this season’s menu online (checked 10:00)."
+          "fallback_text": "Burnt Ends hasn’t posted today’s menu online yet (checked 10:00); it writes a new one daily."
         },
         "failed": {
           "kind": "output_blocks",
@@ -5294,7 +5386,7 @@
             }
           ]
         },
-        "fallback_text": "Din Tai Fung dumplings (Singapore, as of 11:00): pork xiao long bao 10 pcs S$10.80, chicken xiao long bao S$10.30, crab roe and pork S$16.80, truffle and pork 5 pcs S$28.00, vegetable and pork dumplings 8 pcs S$9.80, shrimp and pork shao mai 6 pcs S$12.80."
+        "fallback_text": "Din Tai Fung dumplings (Singapore outlets, as of 11:00): pork xiao long bao 10 pcs S$10.80, the house classic; chicken xiao long bao 10 pcs S$10.30; crab roe and pork xiao long bao 10 pcs S$16.80; truffle and pork xiao long bao 5 pcs S$28.00; vegetable and pork dumplings 8 pcs S$9.80; shrimp and pork shao mai 6 pcs S$12.80."
       },
       "states": {
         "loading": {
@@ -5315,6 +5407,69 @@
             }
           ],
           "fallback_text": "Reading the Din Tai Fung menu."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Din Tai Fung · dumplings",
+            "subtitle": "Singapore outlets · 4 of 6 prices listed · as of 11:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Pork xiao long bao",
+                  "secondary": "10 pieces · the house classic",
+                  "trailing": "S$10.80",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Chicken xiao long bao",
+                  "secondary": "10 pieces",
+                  "trailing": "S$10.30"
+                },
+                {
+                  "label": "Crab roe and pork xiao long bao",
+                  "secondary": "10 pieces",
+                  "trailing": "S$16.80"
+                },
+                {
+                  "label": "Truffle and pork xiao long bao",
+                  "secondary": "5 pieces",
+                  "trailing": "S$28.00"
+                },
+                {
+                  "label": "Vegetable and pork dumplings",
+                  "secondary": "8 pieces",
+                  "trailing": "No price listed"
+                },
+                {
+                  "label": "Shrimp and pork shao mai",
+                  "secondary": "6 pieces",
+                  "trailing": "No price listed"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full menu",
+                "url": "https://www.dintaifung.com.sg/menu"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Din Tai Fung Singapore menu, 26 Sep 2026 11:00",
+                "url": "https://www.dintaifung.com.sg/menu"
+              }
+            ]
+          },
+          "fallback_text": "Din Tai Fung dumplings (Singapore outlets, as of 11:00; 4 of 6 prices listed): pork xiao long bao 10 pcs S$10.80, the house classic; chicken xiao long bao 10 pcs S$10.30; crab roe and pork xiao long bao 10 pcs S$16.80; truffle and pork xiao long bao 5 pcs S$28.00; vegetable and pork dumplings 8 pcs, no price listed; shrimp and pork shao mai 6 pcs, no price listed."
         },
         "stale": {
           "kind": "output_blocks",
@@ -5377,7 +5532,7 @@
               }
             ]
           },
-          "fallback_text": "Din Tai Fung dumplings (Singapore, as of 24 Sep 11:00, couldn’t refresh): pork xiao long bao 10 pcs S$10.80, chicken xiao long bao S$10.30, crab roe and pork S$16.80, truffle and pork 5 pcs S$28.00, vegetable and pork dumplings 8 pcs S$9.80, shrimp and pork shao mai 6 pcs S$12.80."
+          "fallback_text": "Din Tai Fung dumplings (Singapore outlets, as of 24 Sep 11:00, couldn’t refresh): pork xiao long bao 10 pcs S$10.80, the house classic; chicken xiao long bao 10 pcs S$10.30; crab roe and pork xiao long bao 10 pcs S$16.80; truffle and pork xiao long bao 5 pcs S$28.00; vegetable and pork dumplings 8 pcs S$9.80; shrimp and pork shao mai 6 pcs S$12.80."
         },
         "failed": {
           "kind": "output_blocks",
@@ -5438,21 +5593,40 @@
         "fallback_text": "Reminder set: take the bread out at 19:42."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Take the bread out",
+            "subtitle": "Reminder"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Setting it for 19:42",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000899"
+              }
+            }
+          ],
+          "fallback_text": "Setting a reminder to take the bread out at 19:42."
+        },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn’t set the reminder",
+            "title": "Couldn’t confirm the reminder",
             "subtitle": "Take the bread out"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "The reminder service didn’t answer. Nothing was scheduled."
+              "detail": "No answer from the reminder service. Check Reminders before asking again."
             }
           ],
-          "fallback_text": "Couldn’t set the reminder to take the bread out: the reminder service didn’t answer. Nothing was scheduled."
+          "fallback_text": "Couldn’t confirm the reminder to take the bread out at 19:42: the reminder service didn’t answer, so it may or may not be set. Check Reminders before asking again."
         }
       }
     },
@@ -5480,7 +5654,7 @@
             "kind": "numbers",
             "items": [
               {
-                "value": "31°",
+                "value": "31°C",
                 "label": "Now"
               },
               {
@@ -5528,7 +5702,7 @@
             }
           ]
         },
-        "fallback_text": "Singapore, as of 12:05: 31°C now, thunderstorms from about 3 pm (70% chance), cooling to 27°C."
+        "fallback_text": "Singapore, as of 12:05: 31°C now, 70% chance of thunderstorms after 3 pm. Hour by hour: 12:00 31°C, 13:00 32°C, 14:00 32°C, 15:00 28°C, 16:00 27°C, 17:00 27°C."
       },
       "states": {
         "loading": {
@@ -5550,6 +5724,38 @@
           ],
           "fallback_text": "Reading NEA’s latest forecast for this afternoon."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore",
+            "subtitle": "Now only · hourly forecast didn’t load · as of 12:05"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "31°C",
+                  "label": "Now"
+                },
+                {
+                  "value": "70%",
+                  "label": "Rain after 3 pm"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NEA weather forecast",
+                "url": "https://www.nea.gov.sg/weather"
+              }
+            ]
+          },
+          "fallback_text": "Singapore, as of 12:05: 31°C now, 70% chance of thunderstorms after 3 pm. NEA’s hourly forecast didn’t load."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
@@ -5562,7 +5768,7 @@
               "kind": "numbers",
               "items": [
                 {
-                  "value": "31°",
+                  "value": "31°C",
                   "label": "Now"
                 },
                 {
@@ -5610,7 +5816,7 @@
               }
             ]
           },
-          "fallback_text": "Singapore, as of 10:40 (couldn’t refresh): 31°C now, thunderstorms from about 3 pm (70% chance), cooling to 27°C."
+          "fallback_text": "Singapore, as of 10:40 (couldn’t refresh): 31°C now, 70% chance of thunderstorms after 3 pm. Hour by hour: 12:00 31°C, 13:00 32°C, 14:00 32°C, 15:00 28°C, 16:00 27°C, 17:00 27°C."
         },
         "failed": {
           "kind": "output_blocks",
@@ -5654,7 +5860,7 @@
             "kind": "numbers",
             "items": [
               {
-                "value": "17°",
+                "value": "17°C",
                 "label": "High"
               },
               {
@@ -5704,7 +5910,7 @@
             }
           ]
         },
-        "fallback_text": "London, Sun 27 Sep (London time, as of 13:00): high 17°C around 15:00, 60% chance of showers after 14:00, 12°C at 09:00 and 13°C by 21:00."
+        "fallback_text": "London, Sun 27 Sep (London time, as of 13:00): high 17°C, 60% chance of showers after 14:00. Hour by hour: 09:00 12°C, 11:00 14°C, 13:00 16°C, 15:00 17°C, 17:00 16°C, 19:00 14°C, 21:00 13°C."
       },
       "states": {
         "loading": {
@@ -5726,6 +5932,38 @@
           ],
           "fallback_text": "Reading the Met Office forecast for London, Sun 27 Sep."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "London tomorrow",
+            "subtitle": "Sun 27 Sep · London time · daily summary only · as of 13:00"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "17°C",
+                  "label": "High"
+                },
+                {
+                  "value": "60%",
+                  "label": "Showers after 14:00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Met Office forecast for London, 26 Sep 2026",
+                "url": "https://weather.metoffice.gov.uk/forecast/gcpvj0v07"
+              }
+            ]
+          },
+          "fallback_text": "London, Sun 27 Sep (London time, as of 13:00): high 17°C, 60% chance of showers after 14:00. The Met Office hourly forecast didn’t load."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
@@ -5738,7 +5976,7 @@
               "kind": "numbers",
               "items": [
                 {
-                  "value": "17°",
+                  "value": "17°C",
                   "label": "High"
                 },
                 {
@@ -5788,7 +6026,7 @@
               }
             ]
           },
-          "fallback_text": "London, Sun 27 Sep (London time, as of 07:00, couldn’t refresh): high 17°C around 15:00, 60% chance of showers after 14:00, 12°C at 09:00 and 13°C by 21:00."
+          "fallback_text": "London, Sun 27 Sep (London time, as of 07:00, couldn’t refresh): high 17°C, 60% chance of showers after 14:00. Hour by hour: 09:00 12°C, 11:00 14°C, 13:00 16°C, 15:00 17°C, 17:00 16°C, 19:00 14°C, 21:00 13°C."
         },
         "failed": {
           "kind": "output_blocks",
@@ -5876,7 +6114,7 @@
             }
           ]
         },
-        "fallback_text": "Tokyo 28 Sep–4 Oct, as of 09:00: Mon sunny 19–26°C, Tue cloudy 19–25°C, Wed rain (80%) 18–22°C, Thu cloudy 18–24°C, Fri sunny 18–25°C, Sat sunny 19–26°C, Sun showers (40%) 18–23°C."
+        "fallback_text": "Tokyo 28 Sep–4 Oct, as of 09:00: Mon 28 sunny 19–26°C, Tue 29 cloudy 19–25°C, Wed 30 rain (80%) 18–22°C, Thu 1 cloudy 18–24°C, Fri 2 sunny 18–25°C, Sat 3 sunny 19–26°C, Sun 4 showers (40%) 18–23°C."
       },
       "states": {
         "loading": {
@@ -5944,7 +6182,7 @@
               }
             ]
           },
-          "fallback_text": "Tokyo 28 Sep–2 Oct, as of 09:00 (the weekend isn’t forecast yet): Mon sunny 19–26°C, Tue cloudy 19–25°C, Wed rain (80%) 18–22°C, Thu cloudy 18–24°C, Fri sunny 18–25°C."
+          "fallback_text": "Tokyo 28 Sep–2 Oct, 5 of 7 days forecast, as of 09:00 (the weekend isn’t forecast yet): Mon 28 sunny 19–26°C, Tue 29 cloudy 19–25°C, Wed 30 rain (80%) 18–22°C, Thu 1 cloudy 18–24°C, Fri 2 sunny 18–25°C."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6002,7 +6240,7 @@
               }
             ]
           },
-          "fallback_text": "Tokyo 28 Sep–4 Oct, as of 25 Sep 21:00, couldn’t refresh: Mon sunny 19–26°C, Tue cloudy 19–25°C, Wed rain (80%) 18–22°C, Thu cloudy 18–24°C, Fri sunny 18–25°C, Sat sunny 19–26°C, Sun showers (40%) 18–23°C."
+          "fallback_text": "Tokyo 28 Sep–4 Oct, as of 25 Sep 21:00 (couldn’t refresh): Mon 28 sunny 19–26°C, Tue 29 cloudy 19–25°C, Wed 30 rain (80%) 18–22°C, Thu 1 cloudy 18–24°C, Fri 2 sunny 18–25°C, Sat 3 sunny 19–26°C, Sun 4 showers (40%) 18–23°C."
         },
         "failed": {
           "kind": "output_blocks",
@@ -6061,7 +6299,7 @@
             }
           ]
         },
-        "fallback_text": "NEA heavy rain warning until 18:00 for the west and central areas; flash floods possible, avoid Bukit Timah and Dunearn Road."
+        "fallback_text": "NEA heavy rain warning (as of 13:40) until 18:00 for the west and central areas; flash floods possible, avoid Bukit Timah and Dunearn Road."
       },
       "states": {
         "loading": {
@@ -6082,6 +6320,35 @@
             }
           ],
           "fallback_text": "Checking NEA for weather warnings today."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Heavy rain warning until 18:00",
+            "subtitle": "West and central · NEA only · PUB flood alerts didn’t load · as of 13:40"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Flash floods are possible in low-lying areas. Avoid Bukit Timah Road and Dunearn Road until the rain eases."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NEA heavy rain warning",
+                "url": "https://www.nea.gov.sg/weather"
+              }
+            ]
+          },
+          "fallback_text": "NEA heavy rain warning (as of 13:40) until 18:00 for the west and central areas; flash floods possible, avoid Bukit Timah and Dunearn Road. PUB’s flood alerts didn’t load, so check them before driving."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6157,7 +6424,7 @@
       "components": [
         "Severe-weather alert"
       ],
-      "rationale": "The signal and when it starts are the title; one paragraph says what stops; the Observatory is in Details.",
+      "rationale": "The signal and when it starts are the title; one paragraph says what to do and what the MTR says it will run; the Observatory and the MTR are in Details.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -6171,7 +6438,7 @@
             "sections": [
               {
                 "paragraphs": [
-                  "Gale-force winds are expected overnight. Be indoors before the signal goes up; ferries and above-ground MTR lines stop when it does."
+                  "Gale-force winds are expected overnight; be indoors before 22:00. MTR trains keep running at first under signal 8, then at reduced frequency as the storm nears; MTR buses stop 3 hours after it goes up."
                 ]
               }
             ]
@@ -6182,18 +6449,41 @@
             {
               "label": "Hong Kong Observatory tropical cyclone warning",
               "url": "https://www.hko.gov.hk/en/wxinfo/currwx/tc.htm"
+            },
+            {
+              "label": "MTR travel tips during typhoons",
+              "url": "https://www.mtr.com.hk/en/customer/main/typhoon_readiness.html"
             }
           ]
         },
-        "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 17:30). Gale-force winds overnight; ferries and above-ground MTR lines stop when the signal goes up."
+        "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 17:30). Gale-force winds overnight; be indoors before 22:00. MTR trains keep running at first, then at reduced frequency as the storm nears; MTR buses stop 3 hours after the signal goes up."
       },
       "states": {
-        "stale": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Typhoon signals",
+            "subtitle": "Hong Kong"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking the Hong Kong Observatory",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f003c"
+              }
+            }
+          ],
+          "fallback_text": "Checking the Hong Kong Observatory for typhoon signals."
+        },
+        "partial": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Typhoon signal No. 8 from 22:00",
-            "subtitle": "Hong Kong · HKO · as of 16:00 · couldn’t refresh"
+            "subtitle": "Hong Kong · HKO only · MTR update didn’t load · as of 17:30"
           },
           "blocks": [
             {
@@ -6201,7 +6491,7 @@
               "sections": [
                 {
                   "paragraphs": [
-                    "Gale-force winds are expected overnight. Be indoors before the signal goes up; ferries and above-ground MTR lines stop when it does."
+                    "Gale-force winds are expected overnight; be indoors before 22:00. The MTR’s service update didn’t load."
                   ]
                 }
               ]
@@ -6215,7 +6505,40 @@
               }
             ]
           },
-          "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 16:00, couldn’t refresh). Gale-force winds overnight; ferries and above-ground MTR lines stop when the signal goes up."
+          "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 17:30). Gale-force winds overnight; be indoors before 22:00. The MTR’s service update didn’t load."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Typhoon signal No. 8 from 22:00",
+            "subtitle": "Hong Kong · HKO · as of 16:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Gale-force winds are expected overnight; be indoors before 22:00. MTR trains keep running at first under signal 8, then at reduced frequency as the storm nears; MTR buses stop 3 hours after it goes up."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Hong Kong Observatory tropical cyclone warning",
+                "url": "https://www.hko.gov.hk/en/wxinfo/currwx/tc.htm"
+              },
+              {
+                "label": "MTR travel tips during typhoons",
+                "url": "https://www.mtr.com.hk/en/customer/main/typhoon_readiness.html"
+              }
+            ]
+          },
+          "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 16:00, couldn’t refresh). Gale-force winds overnight; be indoors before 22:00. MTR trains keep running at first, then at reduced frequency as the storm nears; MTR buses stop 3 hours after the signal goes up."
         },
         "empty": {
           "kind": "output_blocks",
@@ -6305,7 +6628,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal 2–1 Chelsea, full time. Ødegaard 23', Palmer 55', Saka 78'."
+        "fallback_text": "Arsenal 2–1 Chelsea, full time, as of 21:52. Ødegaard 23', Palmer 55', Saka 78'."
       },
       "states": {
         "loading": {
@@ -6326,6 +6649,37 @@
             }
           ],
           "fallback_text": "Checking the Arsenal v Chelsea score."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal v Chelsea",
+            "subtitle": "Full time · Premier League · scorers didn’t load · as of 21:52"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "2",
+                  "label": "Arsenal"
+                },
+                {
+                  "value": "1",
+                  "label": "Chelsea"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal 2–1 Chelsea, full time (as of 21:52). The scorers didn’t load."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6357,6 +6711,22 @@
             ]
           },
           "fallback_text": "Arsenal 1–1 Chelsea at 71', as of 21:05 (couldn’t refresh). Ødegaard 23', Palmer 55'."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Arsenal match today",
+            "subtitle": "Next: v Tottenham, Sat 3 Oct · as of 21:52"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Arsenal haven’t played today"
+            }
+          ],
+          "fallback_text": "Arsenal haven’t played today (as of 21:52); next is v Tottenham, Sat 3 Oct 19:30 Singapore time."
         },
         "failed": {
           "kind": "output_blocks",
@@ -6420,6 +6790,56 @@
         "fallback_text": "Liverpool 1–1 Man City at 67', as of 23:12. Salah 12', Haaland 48'."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Liverpool v Man City",
+            "subtitle": "Premier League · live"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking the live score",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f003d"
+              }
+            }
+          ],
+          "fallback_text": "Checking the Liverpool v Man City score."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Liverpool v Man City",
+            "subtitle": "67' · second half · scorers didn’t load · as of 23:12"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "1",
+                  "label": "Liverpool"
+                },
+                {
+                  "value": "1",
+                  "label": "Man City"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026 23:12"
+              }
+            ]
+          },
+          "fallback_text": "Liverpool 1–1 Man City at 67', as of 23:12. The scorers didn’t load."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
@@ -6533,7 +6953,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal 2–1 Chelsea, full time: Saka goal 78' (Chelsea down to 10 after Caicedo's red card, 71'), Palmer goal 55', Ødegaard goal 23'."
+        "fallback_text": "Arsenal 2–1 Chelsea, full time (as of 21:52): Saka goal 78' (Chelsea down to 10 after Caicedo's red card, 71'), Palmer goal 55', Ødegaard goal 23'."
       },
       "states": {
         "loading": {
@@ -6554,6 +6974,98 @@
             }
           ],
           "fallback_text": "Reading the Arsenal v Chelsea match report."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal 2–1 Chelsea",
+            "subtitle": "Full time · goals only · cards didn’t load · as of 21:52"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Goal · Saka",
+                  "secondary": "Arsenal",
+                  "trailing": "78'"
+                },
+                {
+                  "label": "Goal · Palmer",
+                  "secondary": "Chelsea",
+                  "trailing": "55'"
+                },
+                {
+                  "label": "Goal · Ødegaard",
+                  "secondary": "Arsenal",
+                  "trailing": "23'"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026 21:52"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal 2–1 Chelsea, full time (as of 21:52): Saka goal 78', Palmer goal 55', Ødegaard goal 23'. Cards and other events didn’t load."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal 1–1 Chelsea",
+            "subtitle": "71' · as of 21:05 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Red card · Caicedo",
+                  "secondary": "Chelsea down to 10",
+                  "trailing": "71'"
+                },
+                {
+                  "label": "Goal · Palmer",
+                  "secondary": "Chelsea",
+                  "trailing": "55'"
+                },
+                {
+                  "label": "Goal · Ødegaard",
+                  "secondary": "Arsenal",
+                  "trailing": "23'"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026 21:05"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal 1–1 Chelsea at 71', as of 21:05 (couldn’t refresh): Caicedo red card 71', Chelsea down to 10; Palmer goal 55'; Ødegaard goal 23'."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Arsenal match today",
+            "subtitle": "Next: v Tottenham, Sat 3 Oct · as of 21:52"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Arsenal haven’t played today"
+            }
+          ],
+          "fallback_text": "Arsenal haven’t played today, as of 21:52, so there is no match report; next is v Tottenham, Sat 3 Oct."
         },
         "failed": {
           "kind": "output_blocks",
@@ -6671,7 +7183,7 @@
             }
           ]
         },
-        "fallback_text": "Premier League after 6 games: 1 Liverpool 16, 2 Arsenal 14, 3 Man City 13, 4 Chelsea 11, 5 Newcastle 10."
+        "fallback_text": "Premier League after 6 games (as of 26 Sep 08:00): 1 Liverpool 16, 2 Arsenal 14, 3 Man City 13, 4 Chelsea 11, 5 Newcastle 10."
       },
       "states": {
         "loading": {
@@ -6692,6 +7204,94 @@
             }
           ],
           "fallback_text": "Reading the Premier League table."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Premier League table",
+            "subtitle": "Round 6 · 8 of 10 matches played · as of 26 Sep, 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Pos"
+                },
+                {
+                  "label": "Team"
+                },
+                {
+                  "label": "Played",
+                  "align": "end"
+                },
+                {
+                  "label": "Pts",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "1",
+                    "Liverpool",
+                    "6",
+                    "16"
+                  ]
+                },
+                {
+                  "cells": [
+                    "2",
+                    "Arsenal",
+                    "6",
+                    "14"
+                  ]
+                },
+                {
+                  "cells": [
+                    "3",
+                    "Man City",
+                    "5",
+                    "12"
+                  ]
+                },
+                {
+                  "cells": [
+                    "4",
+                    "Chelsea",
+                    "6",
+                    "11"
+                  ]
+                },
+                {
+                  "cells": [
+                    "5",
+                    "Newcastle",
+                    "5",
+                    "9"
+                  ]
+                }
+              ],
+              "total_count": 20
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full table",
+                "url": "https://www.premierleague.com/tables"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League, 26 Sep 2026 08:00"
+              }
+            ]
+          },
+          "fallback_text": "Premier League, round 6 with 8 of 10 matches played (as of 26 Sep 08:00): 1 Liverpool 16 pts from 6, 2 Arsenal 14 from 6, 3 Man City 12 from 5, 4 Chelsea 11 from 6, 5 Newcastle 9 from 5. Man City and Newcastle play later today."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6898,7 +7498,7 @@
             }
           ]
         },
-        "fallback_text": "Drivers’ championship after 17 of 24 races (as of 08:00): 1 Norris 312 pts, 2 Piastri 298, 3 Verstappen 271, 4 Russell 205, 5 Leclerc 164."
+        "fallback_text": "Drivers’ championship after 17 of 24 races (as of 08:00): 1 Norris 312 pts, 6 wins; 2 Piastri 298 pts, 5 wins; 3 Verstappen 271 pts, 4 wins; 4 Russell 205 pts, 2 wins; 5 Leclerc 164 pts, no wins."
       },
       "states": {
         "loading": {
@@ -6919,6 +7519,86 @@
             }
           ],
           "fallback_text": "Reading the F1 drivers’ standings."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Drivers’ championship",
+            "subtitle": "After 17 of 24 races · points only · wins didn’t load · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Pos"
+                },
+                {
+                  "label": "Driver"
+                },
+                {
+                  "label": "Pts",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "1",
+                    "Lando Norris",
+                    "312"
+                  ]
+                },
+                {
+                  "cells": [
+                    "2",
+                    "Oscar Piastri",
+                    "298"
+                  ]
+                },
+                {
+                  "cells": [
+                    "3",
+                    "Max Verstappen",
+                    "271"
+                  ]
+                },
+                {
+                  "cells": [
+                    "4",
+                    "George Russell",
+                    "205"
+                  ]
+                },
+                {
+                  "cells": [
+                    "5",
+                    "Charles Leclerc",
+                    "164"
+                  ]
+                }
+              ],
+              "total_count": 22
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full standings",
+                "url": "https://www.formula1.com/en/results/2026/drivers"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Formula 1 driver standings, 26 Sep 2026",
+                "url": "https://www.formula1.com/en/results/2026/drivers"
+              }
+            ]
+          },
+          "fallback_text": "Drivers’ championship after 17 of 24 races (as of 08:00; race wins didn’t load): 1 Norris 312 pts, 2 Piastri 298 pts, 3 Verstappen 271 pts, 4 Russell 205 pts, 5 Leclerc 164 pts."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7007,7 +7687,7 @@
               }
             ]
           },
-          "fallback_text": "Drivers’ championship after 16 of 24 races, as of 14 Sep 08:00 (couldn’t refresh): 1 Norris 297 pts, 2 Piastri 273, 3 Verstappen 259, 4 Russell 195, 5 Leclerc 158."
+          "fallback_text": "Drivers’ championship after 16 of 24 races, as of 14 Sep 08:00 (couldn’t refresh): 1 Norris 297 pts, 6 wins; 2 Piastri 273 pts, 4 wins; 3 Verstappen 259 pts, 4 wins; 4 Russell 195 pts, 2 wins; 5 Leclerc 158 pts, no wins."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7075,7 +7755,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal next: v Tottenham Sat 3 Oct 19:30 (home); v PSV Thu 8 Oct 03:00 (away, Champions League); v Brighton Sun 18 Oct 21:00 (away)."
+        "fallback_text": "Arsenal next (Singapore time, as of 08:00): v Tottenham Sat 3 Oct 19:30 at the Emirates (home); v PSV Thu 8 Oct 03:00, Champions League (away); v Brighton Sun 18 Oct 21:00 (away)."
       },
       "states": {
         "loading": {
@@ -7096,6 +7776,39 @@
             }
           ],
           "fallback_text": "Reading Arsenal’s fixtures."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal · next 2",
+            "subtitle": "Singapore time · Premier League only · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "v Tottenham",
+                  "secondary": "Sat 3 Oct · 19:30 · Emirates",
+                  "trailing": "Home"
+                },
+                {
+                  "label": "v Brighton",
+                  "secondary": "Sun 18 Oct · 21:00",
+                  "trailing": "Away"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Arsenal fixtures, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal’s next 2 in the Premier League (Singapore time, as of 08:00): v Tottenham Sat 3 Oct 19:30 at the Emirates (home); v Brighton Sun 18 Oct 21:00 (away). Champions League fixtures didn’t load."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7133,7 +7846,7 @@
               }
             ]
           },
-          "fallback_text": "Arsenal next (as of 24 Sep 08:00, couldn’t refresh): v Tottenham Sat 3 Oct 19:30 (home); v PSV Thu 8 Oct 03:00 (away, Champions League); v Brighton Sun 18 Oct 21:00 (away)."
+          "fallback_text": "Arsenal next (Singapore time, as of 24 Sep 08:00, couldn’t refresh): v Tottenham Sat 3 Oct 19:30 at the Emirates (home); v PSV Thu 8 Oct 03:00, Champions League (away); v Brighton Sun 18 Oct 21:00 (away)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7204,12 +7917,64 @@
         "fallback_text": "Singapore Grand Prix, Marina Bay (Singapore time, as of 08:00): Practice 1 Fri 9 Oct 17:30, qualifying Sat 10 Oct 21:00, race Sun 11 Oct 20:00."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore Grand Prix",
+            "subtitle": "Marina Bay · Singapore time"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the race timetable",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f003e"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Singapore Grand Prix timetable."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore Grand Prix",
+            "subtitle": "Marina Bay · Singapore time · practice times not out yet · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Qualifying",
+                  "secondary": "Sat 10 Oct",
+                  "trailing": "21:00"
+                },
+                {
+                  "label": "Race",
+                  "secondary": "Sun 11 Oct",
+                  "trailing": "20:00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Formula 1 Singapore Grand Prix timetable, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Singapore Grand Prix, Marina Bay (Singapore time, as of 08:00): qualifying Sat 10 Oct 21:00, race Sun 11 Oct 20:00. Formula 1 hasn’t published the practice times yet."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Singapore Grand Prix",
-            "subtitle": "Marina Bay · as of 19 Sep, 08:00 · couldn’t refresh"
+            "subtitle": "Marina Bay · Singapore time · as of 19 Sep, 08:00 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -7284,7 +8049,7 @@
       "components": [
         "Story cluster (brief)"
       ],
-      "rationale": "What happened and what is still unknown are two short sections; every outlet is behind Details, linked.",
+      "rationale": "What happened and what is still unknown are two short sections; every outlet is named in Details.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -7315,20 +8080,17 @@
         "details": {
           "sources": [
             {
-              "label": "LTA statement",
-              "url": "https://www.lta.gov.sg/content/ltagov/en/newsroom.html"
+              "label": "LTA statement, 26 Sep 2026"
             },
             {
-              "label": "The Straits Times",
-              "url": "https://www.straitstimes.com/singapore/transport"
+              "label": "The Straits Times, 26 Sep 2026"
             },
             {
-              "label": "CNA",
-              "url": "https://www.channelnewsasia.com/singapore"
+              "label": "CNA, 26 Sep 2026"
             }
           ]
         },
-        "fallback_text": "East–West line: a power fault stopped trains between Jurong East and Buona Vista from 06:50; service resumed at 09:15. Cause under investigation."
+        "fallback_text": "East–West line, as of 09:40 (3 sources): a power fault stopped trains between Jurong East and Buona Vista from 06:50; service resumed at 09:15. Cause under investigation."
       },
       "states": {
         "loading": {
@@ -7373,12 +8135,10 @@
           "details": {
             "sources": [
               {
-                "label": "LTA statement",
-                "url": "https://www.lta.gov.sg/content/ltagov/en/newsroom.html"
+                "label": "LTA statement, 26 Sep 2026"
               },
               {
-                "label": "The Straits Times",
-                "url": "https://www.straitstimes.com/singapore/transport"
+                "label": "The Straits Times, 26 Sep 2026"
               }
             ]
           },
@@ -7408,36 +8168,33 @@
           "details": {
             "sources": [
               {
-                "label": "LTA statement",
-                "url": "https://www.lta.gov.sg/content/ltagov/en/newsroom.html"
+                "label": "LTA statement, 26 Sep 2026"
               },
               {
-                "label": "The Straits Times",
-                "url": "https://www.straitstimes.com/singapore/transport"
+                "label": "The Straits Times, 26 Sep 2026"
               },
               {
-                "label": "CNA",
-                "url": "https://www.channelnewsasia.com/singapore"
+                "label": "CNA, 26 Sep 2026"
               }
             ]
           },
-          "fallback_text": "East–West line, as of 08:10 (couldn’t refresh): a power fault stopped trains between Jurong East and Buona Vista from 06:50; free bridging buses are running."
+          "fallback_text": "East–West line, as of 08:10 (couldn’t refresh; 3 sources): a power fault stopped trains between Jurong East and Buona Vista from 06:50; free bridging buses are running."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No MRT breakdown reported today",
+            "title": "No MRT breakdown reported",
             "subtitle": "LTA, Straits Times, CNA · as of 09:40"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "All lines are running normally"
+              "detail": "None of the 3 sources reports an MRT breakdown today"
             }
           ],
-          "fallback_text": "No MRT breakdown reported today by LTA, The Straits Times or CNA, as of 09:40."
+          "fallback_text": "None of LTA, The Straits Times or CNA reports an MRT breakdown today, as of 09:40."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7510,16 +8267,14 @@
               "url": "https://www.haze.gov.sg/"
             },
             {
-              "label": "The Straits Times",
-              "url": "https://www.straitstimes.com/singapore/environment"
+              "label": "The Straits Times, 26 Sep 2026"
             },
             {
-              "label": "ASEAN Specialised Meteorological Centre",
-              "url": "https://asmc.asean.org/home/"
+              "label": "ASEAN Specialised Meteorological Centre hotspot update, 26 Sep 2026"
             }
           ]
         },
-        "fallback_text": "Haze, as of 08:00: the 24-hour PSI reached 112 overnight (unhealthy) as Sumatra hotspots rose. Cut long outdoor exercise until it is under 100; an N95 helps for long stretches outdoors. Whether winds shift before the weekend is unclear; NEA updates at 12:00."
+        "fallback_text": "Haze, as of 08:00 (3 sources): the 24-hour PSI reached 112 overnight (unhealthy) as Sumatra hotspots rose. Cut long outdoor exercise until it is under 100; an N95 helps for long stretches outdoors. Whether winds shift before the weekend is unclear; NEA updates at 12:00."
       },
       "states": {
         "loading": {
@@ -7540,6 +8295,52 @@
             }
           ],
           "fallback_text": "Reading the latest on the haze."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Haze over Singapore",
+            "subtitle": "PSI and outlook · 2 of 3 sources read · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "What happened",
+                  "bullets": [
+                    "The 24-hour PSI reached 112 overnight, in the unhealthy range."
+                  ]
+                },
+                {
+                  "heading": "What to do",
+                  "bullets": [
+                    "Cut long outdoor exercise until the PSI is under 100.",
+                    "An N95 mask helps if you are outdoors for hours."
+                  ]
+                },
+                {
+                  "heading": "Still unclear",
+                  "bullets": [
+                    "Whether the winds shift before the weekend; NEA updates at 12:00."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NEA haze update",
+                "url": "https://www.haze.gov.sg/"
+              },
+              {
+                "label": "The Straits Times, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Haze, as of 08:00 (2 of 3 sources read; ASMC’s hotspot update didn’t load): the 24-hour PSI reached 112 overnight (unhealthy). Cut long outdoor exercise until it is under 100; an N95 helps for long stretches outdoors. Whether winds shift before the weekend is unclear; NEA updates at 12:00."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7568,16 +8369,30 @@
                 "url": "https://www.haze.gov.sg/"
               },
               {
-                "label": "The Straits Times",
-                "url": "https://www.straitstimes.com/singapore/environment"
+                "label": "The Straits Times, 26 Sep 2026"
               },
               {
-                "label": "ASEAN Specialised Meteorological Centre",
-                "url": "https://asmc.asean.org/home/"
+                "label": "ASEAN Specialised Meteorological Centre hotspot update, 26 Sep 2026"
               }
             ]
           },
-          "fallback_text": "Haze, as of 05:00 (couldn’t refresh): the 24-hour PSI reached 104 overnight, in the unhealthy range."
+          "fallback_text": "Haze, as of 05:00 (couldn’t refresh; 3 sources): the 24-hour PSI reached 104 overnight, in the unhealthy range."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No haze reported",
+            "subtitle": "Singapore · NEA · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "NEA reports no haze over Singapore this morning"
+            }
+          ],
+          "fallback_text": "NEA reports no haze over Singapore this morning, as of 08:00."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7602,13 +8417,13 @@
       "vertical": "news",
       "kind": "card",
       "request": "How has the Grab–GoTo merger story developed?",
-      "says": "It went from rumour to signed deal in six weeks.",
+      "says": "The most recent turn here is January’s snag over Telkomsel’s stake.",
       "surface": "inline",
       "fresh": true,
       "components": [
         "Story timeline"
       ],
-      "rationale": "Newest first, date trailing, outlet secondary; three events are enough to understand the arc.",
+      "rationale": "Newest first, date trailing, outlet secondary; each row’s article is in Details in row order.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -7621,19 +8436,19 @@
             "kind": "rows",
             "items": [
               {
-                "label": "Deal signed, pending approval",
-                "secondary": "Reuters",
-                "trailing": "24 Sep"
+                "label": "Deal hits snag over Telkomsel stake",
+                "secondary": "The Straits Times",
+                "trailing": "23 Jan 2026"
               },
               {
-                "label": "Boards agree terms",
-                "secondary": "Bloomberg",
-                "trailing": "2 Sep"
+                "label": "Jakarta backs the merger",
+                "secondary": "The Business Times",
+                "trailing": "12 Nov 2025"
               },
               {
-                "label": "Talks reported",
-                "secondary": "The Information",
-                "trailing": "14 Aug"
+                "label": "Jakarta confirms merger talks",
+                "secondary": "The Business Times",
+                "trailing": "7 Nov 2025"
               }
             ]
           }
@@ -7641,16 +8456,20 @@
         "details": {
           "sources": [
             {
-              "label": "Reuters",
-              "url": "https://www.reuters.com/"
+              "label": "The Straits Times, 23 Jan 2026",
+              "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
             },
             {
-              "label": "Bloomberg",
-              "url": "https://www.bloomberg.com/"
+              "label": "The Business Times, 12 Nov 2025",
+              "url": "https://www.businesstimes.com.sg/international/asean/indonesia-government-backs-planned-merger-grab-and-goto-sources"
+            },
+            {
+              "label": "The Business Times, 7 Nov 2025",
+              "url": "https://www.businesstimes.com.sg/companies-markets/indonesia-discussing-plan-merger-grab-and-goto-official"
             }
           ]
         },
-        "fallback_text": "Grab–GoTo: talks reported 14 Aug, boards agreed terms 2 Sep, deal signed pending approval 24 Sep."
+        "fallback_text": "Grab–GoTo, 3 key moments as of 08:00: Indonesia confirmed merger talks 7 Nov 2025 (The Business Times); the government backed the merger 12 Nov 2025 (The Business Times); the deal hit a snag over Telkomsel’s stake 23 Jan 2026 (The Straits Times)."
       },
       "states": {
         "loading": {
@@ -7664,13 +8483,51 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 3 outlets’ coverage since August",
+              "detail": "Reading 3 outlets’ coverage",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0033"
               }
             }
           ],
           "fallback_text": "Tracing the Grab–GoTo story."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab–GoTo merger",
+            "subtitle": "2 of 3 outlets read · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Jakarta backs the merger",
+                  "secondary": "The Business Times",
+                  "trailing": "12 Nov 2025"
+                },
+                {
+                  "label": "Jakarta confirms merger talks",
+                  "secondary": "The Business Times",
+                  "trailing": "7 Nov 2025"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "The Business Times, 12 Nov 2025",
+                "url": "https://www.businesstimes.com.sg/international/asean/indonesia-government-backs-planned-merger-grab-and-goto-sources"
+              },
+              {
+                "label": "The Business Times, 7 Nov 2025",
+                "url": "https://www.businesstimes.com.sg/companies-markets/indonesia-discussing-plan-merger-grab-and-goto-official"
+              }
+            ]
+          },
+          "fallback_text": "Grab–GoTo, as of 08:00 (2 of 3 outlets read; The Straits Times didn’t load): Indonesia confirmed merger talks 7 Nov 2025; the government backed the merger 12 Nov 2025 (both The Business Times)."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7684,19 +8541,19 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "Deal signed, pending approval",
-                  "secondary": "Reuters",
-                  "trailing": "24 Sep"
+                  "label": "Deal hits snag over Telkomsel stake",
+                  "secondary": "The Straits Times",
+                  "trailing": "23 Jan 2026"
                 },
                 {
-                  "label": "Boards agree terms",
-                  "secondary": "Bloomberg",
-                  "trailing": "2 Sep"
+                  "label": "Jakarta backs the merger",
+                  "secondary": "The Business Times",
+                  "trailing": "12 Nov 2025"
                 },
                 {
-                  "label": "Talks reported",
-                  "secondary": "The Information",
-                  "trailing": "14 Aug"
+                  "label": "Jakarta confirms merger talks",
+                  "secondary": "The Business Times",
+                  "trailing": "7 Nov 2025"
                 }
               ]
             }
@@ -7704,16 +8561,36 @@
           "details": {
             "sources": [
               {
-                "label": "Reuters",
-                "url": "https://www.reuters.com/"
+                "label": "The Straits Times, 23 Jan 2026",
+                "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
               },
               {
-                "label": "Bloomberg",
-                "url": "https://www.bloomberg.com/"
+                "label": "The Business Times, 12 Nov 2025",
+                "url": "https://www.businesstimes.com.sg/international/asean/indonesia-government-backs-planned-merger-grab-and-goto-sources"
+              },
+              {
+                "label": "The Business Times, 7 Nov 2025",
+                "url": "https://www.businesstimes.com.sg/companies-markets/indonesia-discussing-plan-merger-grab-and-goto-official"
               }
             ]
           },
-          "fallback_text": "Grab–GoTo (as of 25 Sep 08:00, couldn’t refresh): talks reported 14 Aug, boards agreed terms 2 Sep, deal signed pending approval 24 Sep."
+          "fallback_text": "Grab–GoTo, as of 25 Sep 08:00, couldn’t refresh: Indonesia confirmed merger talks 7 Nov 2025 (The Business Times); the government backed the merger 12 Nov 2025 (The Business Times); the deal hit a snag over Telkomsel’s stake 23 Jan 2026 (The Straits Times)."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No coverage in 3 outlets",
+            "subtitle": "Grab–GoTo merger · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "None of the 3 outlets checked has covered it"
+            }
+          ],
+          "fallback_text": "None of the 3 outlets checked has covered a Grab–GoTo merger, as of 08:00."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7745,7 +8622,7 @@
         "Story cluster (brief)",
         "Source list"
       ],
-      "rationale": "Three headlines as rows with the outlet secondary; no summaries of summaries; sources linked in Details.",
+      "rationale": "Three headlines as rows with the outlet secondary; no summaries of summaries; each front page read is named in Details.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -7775,20 +8652,17 @@
         "details": {
           "sources": [
             {
-              "label": "Business Times",
-              "url": "https://www.businesstimes.com.sg/"
+              "label": "Business Times front page, 26 Sep 2026 08:00"
             },
             {
-              "label": "CNA",
-              "url": "https://www.channelnewsasia.com/"
+              "label": "CNA front page, 26 Sep 2026 08:00"
             },
             {
-              "label": "Reuters",
-              "url": "https://www.reuters.com/"
+              "label": "Reuters front page, 26 Sep 2026 08:00"
             }
           ]
         },
-        "fallback_text": "This morning: MAS holds SGD policy; East–West line fault delayed commuters; Fed signals one more cut this year."
+        "fallback_text": "This morning in Singapore (as of 08:00): MAS keeps the Singapore dollar policy unchanged (Business Times); East–West line fault delays the morning commute (CNA); Fed signals one more rate cut this year (Reuters)."
       },
       "states": {
         "loading": {
@@ -7810,12 +8684,46 @@
           ],
           "fallback_text": "Reading this morning’s front pages."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "This morning",
+            "subtitle": "Singapore · 2 of 3 front pages read · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "MAS keeps the Singapore dollar policy unchanged",
+                  "secondary": "Business Times"
+                },
+                {
+                  "label": "East–West line fault delays morning commute",
+                  "secondary": "CNA"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Business Times front page, 26 Sep 2026 08:00"
+              },
+              {
+                "label": "CNA front page, 26 Sep 2026 08:00"
+              }
+            ]
+          },
+          "fallback_text": "This morning in Singapore (as of 08:00; 2 of 3 front pages read, Reuters didn’t load): MAS keeps the Singapore dollar policy unchanged (Business Times); East–West line fault delays the morning commute (CNA)."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "This morning",
-            "subtitle": "Singapore · as of 06:30 · couldn’t refresh"
+            "subtitle": "Singapore · as of 07:15 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -7839,20 +8747,17 @@
           "details": {
             "sources": [
               {
-                "label": "Business Times",
-                "url": "https://www.businesstimes.com.sg/"
+                "label": "Business Times front page, 26 Sep 2026 07:15"
               },
               {
-                "label": "CNA",
-                "url": "https://www.channelnewsasia.com/"
+                "label": "CNA front page, 26 Sep 2026 07:15"
               },
               {
-                "label": "Reuters",
-                "url": "https://www.reuters.com/"
+                "label": "Reuters front page, 26 Sep 2026 07:15"
               }
             ]
           },
-          "fallback_text": "This morning (as of 06:30, couldn’t refresh): MAS holds SGD policy; East–West line fault delayed commuters; Fed signals one more cut this year."
+          "fallback_text": "This morning in Singapore (as of 07:15, couldn’t refresh): MAS keeps the Singapore dollar policy unchanged (Business Times); East–West line fault delays the morning commute (CNA); Fed signals one more rate cut this year (Reuters)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7877,38 +8782,38 @@
       "vertical": "news",
       "kind": "card",
       "request": "Who's reporting on the Grab–GoTo deal?",
-      "says": "Reuters had it first; the other two build on its numbers.",
+      "says": "Two Singapore papers had it the same day; the Indonesian follow-up came three days later.",
       "surface": "inline",
       "fresh": true,
       "components": [
         "Source list"
       ],
-      "rationale": "When the outlets are the answer: outlet, headline, date; each link is in Details because a row cannot open one.",
+      "rationale": "When the outlets are the answer: outlet, headline, date; each article is in Details in row order because a row cannot open one.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
         "header": {
           "title": "Grab–GoTo deal · who’s reporting",
-          "subtitle": "3 outlets · as of 08:00"
+          "subtitle": "3 outlets · 2026 · as of 08:00"
         },
         "blocks": [
           {
             "kind": "rows",
             "items": [
               {
-                "label": "Reuters",
-                "secondary": "Grab and GoTo sign merger agreement, pending regulators",
-                "trailing": "24 Sep"
-              },
-              {
-                "label": "Bloomberg",
-                "secondary": "What the Grab–GoTo deal means for drivers and riders",
-                "trailing": "25 Sep"
+                "label": "The Straits Times",
+                "secondary": "Grab takeover deal for Gojek parent GoTo hits snag",
+                "trailing": "23 Jan"
               },
               {
                 "label": "The Business Times",
-                "secondary": "Singapore regulator to review Grab–GoTo tie-up",
-                "trailing": "25 Sep"
+                "secondary": "Grab-GoTo deal hits snag caused by state-backed holder’s stake",
+                "trailing": "23 Jan"
+              },
+              {
+                "label": "Fintech News Indonesia",
+                "secondary": "Grab-GoTo deal stalls over Telkomsel stake",
+                "trailing": "26 Jan"
               }
             ]
           }
@@ -7916,20 +8821,20 @@
         "details": {
           "sources": [
             {
-              "label": "Reuters",
-              "url": "https://www.reuters.com/business/grab-goto-merger-agreement"
+              "label": "The Straits Times, 23 Jan 2026",
+              "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
             },
             {
-              "label": "Bloomberg",
-              "url": "https://www.bloomberg.com/news/grab-goto-deal-drivers-riders"
+              "label": "The Business Times, 23 Jan 2026",
+              "url": "https://www.businesstimes.com.sg/international/asean/grab-goto-deal-hits-snag-caused-state-backed-holders-stake"
             },
             {
-              "label": "The Business Times",
-              "url": "https://www.businesstimes.com.sg/companies-markets/grab-goto-review"
+              "label": "Fintech News Indonesia, 26 Jan 2026",
+              "url": "https://fintechnews.id/109256/fintech/grab-goto-deal-telkomsel-stake/"
             }
           ]
         },
-        "fallback_text": "Reporting the Grab–GoTo deal (as of 08:00): Reuters, 24 Sep, merger agreement signed pending regulators; Bloomberg, 25 Sep, what it means for drivers and riders; The Business Times, 25 Sep, Singapore regulator to review the tie-up."
+        "fallback_text": "3 outlets reporting the Grab–GoTo snag in 2026 (as of 08:00): The Straits Times, 23 Jan, Grab takeover deal for Gojek parent GoTo hits snag; The Business Times, 23 Jan, Grab-GoTo deal hits snag caused by state-backed holder’s stake; Fintech News Indonesia, 26 Jan, Grab-GoTo deal stalls over Telkomsel stake."
       },
       "states": {
         "loading": {
@@ -7949,23 +8854,108 @@
               }
             }
           ],
-          "fallback_text": "Searching the news for the Grab–GoTo deal."
+          "fallback_text": "Searching 40 news outlets for the Grab–GoTo deal."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab–GoTo deal · who’s reporting",
+            "subtitle": "31 of 40 outlets searched · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Straits Times",
+                  "secondary": "Grab takeover deal for Gojek parent GoTo hits snag",
+                  "trailing": "23 Jan"
+                },
+                {
+                  "label": "The Business Times",
+                  "secondary": "Grab-GoTo deal hits snag caused by state-backed holder’s stake",
+                  "trailing": "23 Jan"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "The Straits Times, 23 Jan 2026",
+                "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
+              },
+              {
+                "label": "The Business Times, 23 Jan 2026",
+                "url": "https://www.businesstimes.com.sg/international/asean/grab-goto-deal-hits-snag-caused-state-backed-holders-stake"
+              }
+            ]
+          },
+          "fallback_text": "Reporting the Grab–GoTo snag (as of 08:00; 31 of 40 outlets searched): The Straits Times, 23 Jan, Grab takeover deal for Gojek parent GoTo hits snag; The Business Times, 23 Jan, Grab-GoTo deal hits snag caused by state-backed holder’s stake."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab–GoTo deal · who’s reporting",
+            "subtitle": "As of 25 Sep, 08:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "The Straits Times",
+                  "secondary": "Grab takeover deal for Gojek parent GoTo hits snag",
+                  "trailing": "23 Jan"
+                },
+                {
+                  "label": "The Business Times",
+                  "secondary": "Grab-GoTo deal hits snag caused by state-backed holder’s stake",
+                  "trailing": "23 Jan"
+                },
+                {
+                  "label": "Fintech News Indonesia",
+                  "secondary": "Grab-GoTo deal stalls over Telkomsel stake",
+                  "trailing": "26 Jan"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "The Straits Times, 23 Jan 2026",
+                "url": "https://www.straitstimes.com/business/companies-markets/grab-takeover-deal-for-gojek-parent-goto-hits-snag-sources-say"
+              },
+              {
+                "label": "The Business Times, 23 Jan 2026",
+                "url": "https://www.businesstimes.com.sg/international/asean/grab-goto-deal-hits-snag-caused-state-backed-holders-stake"
+              },
+              {
+                "label": "Fintech News Indonesia, 26 Jan 2026",
+                "url": "https://fintechnews.id/109256/fintech/grab-goto-deal-telkomsel-stake/"
+              }
+            ]
+          },
+          "fallback_text": "Reporting the Grab–GoTo snag (as of 25 Sep 08:00, couldn’t refresh): The Straits Times, 23 Jan, Grab takeover deal for Gojek parent GoTo hits snag; The Business Times, 23 Jan, Grab-GoTo deal hits snag caused by state-backed holder’s stake; Fintech News Indonesia, 26 Jan, Grab-GoTo deal stalls over Telkomsel stake."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No one has reported it yet",
+            "title": "No coverage in 40 outlets",
             "subtitle": "Grab–GoTo deal · as of 08:00"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No outlet has covered this deal"
+              "detail": "None of the 40 outlets searched has covered it"
             }
           ],
-          "fallback_text": "No outlet has reported on the Grab–GoTo deal, as of 08:00."
+          "fallback_text": "None of the 40 news outlets searched has reported on the Grab–GoTo deal, as of 08:00."
         },
         "failed": {
           "kind": "output_blocks",

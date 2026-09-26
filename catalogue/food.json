@@ -104,7 +104,7 @@
               "detail": "The recipe sites didn’t respond. Nothing was saved."
             }
           ],
-          "fallback_text": "Couldn’t load a chicken rice recipe: the recipe sites didn’t respond. Nothing was saved."
+          "fallback_text": "Couldn’t load a chicken rice recipe for 4: the recipe sites didn’t respond. Nothing was saved."
         }
       }
     },
@@ -119,7 +119,7 @@
       "components": [
         "Recipe"
       ],
-      "rationale": "Built from what they have: time and servings as numbers, then ingredients and numbered steps; nothing to buy.",
+      "rationale": "Built from what they have: time and servings as numbers, then ingredients and numbered steps; the pantry basics it assumes are in Details.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -150,7 +150,7 @@
                   "3 eggs, beaten with a pinch of salt",
                   "2 ripe tomatoes, cut in wedges",
                   "2 cups cooked rice, a day old if you have it",
-                  "2 spring onions, sliced",
+                  "2 spring onions, sliced, if you have them",
                   "1 tbsp light soy sauce, 1 tbsp oil"
                 ]
               },
@@ -168,10 +168,10 @@
         ],
         "details": {
           "assumptions": [
-            "Uses only what you listed, plus oil, salt, soy sauce and spring onions."
+            "Uses what you listed plus oil, salt and soy sauce; the spring onions are optional."
           ]
         },
-        "fallback_text": "Tomato egg fried rice for 2, about 20 min, one pan. You need 3 eggs, 2 tomatoes, 2 cups cooked rice, 2 spring onions, 1 tbsp light soy sauce and 1 tbsp oil. 1. Scramble the eggs until just set, tip out. 2. Fry the tomatoes 3 min. 3. Add the rice and soy, fry 4 min. 4. Fold the eggs back in, finish with spring onions."
+        "fallback_text": "Tomato egg fried rice for 2, about 20 min, one pan. You need 3 eggs, 2 tomatoes, 2 cups cooked rice, 2 spring onions if you have them, 1 tbsp light soy sauce and 1 tbsp oil. 1. Scramble the eggs until just set, tip out. 2. Fry the tomatoes 3 min. 3. Add the rice and soy, fry 4 min. 4. Fold the eggs back in, finish with spring onions."
       },
       "states": {
         "loading": {
@@ -197,17 +197,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No recipe uses only these",
-            "subtitle": "Eggs, tomatoes, rice"
+            "title": "No match in 3 recipe sites",
+            "subtitle": "Eggs, tomatoes, rice · as of 18:10"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Every match needed something you don’t have"
+              "detail": "Each recipe checked also needed something you didn’t list"
             }
           ],
-          "fallback_text": "No recipe found that uses only eggs, tomatoes and rice."
+          "fallback_text": "None of the 3 recipe sites checked had a recipe using only eggs, tomatoes and rice (as of 18:10)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -238,7 +238,7 @@
       "components": [
         "Nutrition"
       ],
-      "rationale": "Calories and protein as numbers; fat and sodium in rows because they are the reason to care.",
+      "rationale": "Energy, fat and sodium as rows, each with its share of a day, because fat and salt are the reason to care.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -271,12 +271,12 @@
         "details": {
           "sources": [
             {
-              "label": "HPB Energy and Nutrient Composition of Food",
-              "url": "https://focos.hpb.gov.sg/eservices/ENCF/"
+              "label": "HPB Singapore Food Insights Database",
+              "url": "https://www.hpb.gov.sg/healthy-living/food-and-beverage/sgfoodid/"
             }
           ]
         },
-        "fallback_text": "One plate of char kway teow (about 380 g) has around 740 kcal, 38 g fat and 1,460 mg sodium."
+        "fallback_text": "One plate of char kway teow (about 380 g): 740 kcal, about a third of a day’s energy; 38 g fat, about half your daily limit; 1,460 mg sodium, over half your daily limit."
       },
       "states": {
         "loading": {
@@ -298,21 +298,55 @@
           ],
           "fallback_text": "Looking up char kway teow in the HPB food database."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Char kway teow · one plate",
+            "subtitle": "About 380 g · sodium not listed"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Energy",
+                  "secondary": "About a third of a day",
+                  "trailing": "740 kcal"
+                },
+                {
+                  "label": "Fat",
+                  "secondary": "About half your daily limit",
+                  "trailing": "38 g"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "HPB Singapore Food Insights Database",
+                "url": "https://www.hpb.gov.sg/healthy-living/food-and-beverage/sgfoodid/"
+              }
+            ]
+          },
+          "fallback_text": "One plate of char kway teow (about 380 g): 740 kcal, about a third of a day’s energy; 38 g fat, about half your daily limit. HPB’s entry doesn’t list sodium."
+        },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No nutrition data for this dish",
-            "subtitle": "Char kway teow with cockles"
+            "title": "No HPB entry for this version",
+            "subtitle": "Char kway teow with cockles · as of 12:30"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "HPB lists no entry for this version"
+              "detail": "HPB’s database has no entry for this version"
             }
           ],
-          "fallback_text": "HPB lists no nutrition data for char kway teow with cockles."
+          "fallback_text": "HPB’s food database has no nutrition entry for char kway teow with cockles (checked 12:30)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -598,13 +632,13 @@
       "components": [
         "Menu"
       ],
-      "rationale": "Three highlights with price trailing; the full menu is the restaurant's own page.",
+      "rationale": "Three highlights with price trailing; the restaurant writes its menu daily, so the link is its own site, not a menu page.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
         "header": {
           "title": "Burnt Ends · highlights",
-          "subtitle": "Modern barbecue · Dempsey · as of 10:00"
+          "subtitle": "Modern barbecue · Dempsey · today’s menu · as of 10:00"
         },
         "blocks": [
           {
@@ -631,19 +665,23 @@
             "kind": "action",
             "secondary": {
               "kind": "open_url",
-              "label": "Full menu",
-              "url": "https://burntends.com.sg/menu"
+              "label": "Burnt Ends website",
+              "url": "https://burntends.com.sg/burnt-ends-restaurant/"
             }
           }
         ],
         "details": {
           "sources": [
             {
-              "label": "Burnt Ends menu and Google reviews, 26 Sep 2026 10:00"
+              "label": "Burnt Ends menu and Google reviews, 26 Sep 2026 10:00",
+              "url": "https://burntends.com.sg/burnt-ends-restaurant/"
             }
+          ],
+          "assumptions": [
+            "Burnt Ends writes a new menu every day, so these dishes and prices are today’s."
           ]
         },
-        "fallback_text": "Burnt Ends highlights: the sanger S$28, leeks with hazelnut and brown butter S$24, onion rings S$18."
+        "fallback_text": "Burnt Ends highlights on today’s menu (as of 10:00): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
       },
       "states": {
         "loading": {
@@ -665,12 +703,12 @@
           ],
           "fallback_text": "Reading the Burnt Ends menu and recent reviews."
         },
-        "stale": {
+        "partial": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Burnt Ends · highlights",
-            "subtitle": "As of 25 Sep, 10:00 · couldn’t refresh"
+            "subtitle": "Menu and 1 of 2 review sites read · as of 10:00"
           },
           "blocks": [
             {
@@ -697,35 +735,89 @@
               "kind": "action",
               "secondary": {
                 "kind": "open_url",
-                "label": "Full menu",
-                "url": "https://burntends.com.sg/menu"
+                "label": "Burnt Ends website",
+                "url": "https://burntends.com.sg/burnt-ends-restaurant/"
               }
             }
           ],
           "details": {
             "sources": [
               {
-                "label": "Burnt Ends menu and Google reviews, 25 Sep 2026 10:00"
+                "label": "Burnt Ends menu and Google reviews, 26 Sep 2026 10:00",
+                "url": "https://burntends.com.sg/burnt-ends-restaurant/"
               }
+            ],
+            "assumptions": [
+              "Highlights are picked from Google reviews only; the second review site didn’t load."
             ]
           },
-          "fallback_text": "Burnt Ends highlights as of 25 Sep 10:00 (couldn’t refresh): the sanger S$28, leeks with hazelnut and brown butter S$24, onion rings S$18."
+          "fallback_text": "Burnt Ends highlights on today’s menu (as of 10:00; the menu and 1 of 2 review sites read; the second review site didn’t load): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Burnt Ends · highlights",
+            "subtitle": "Yesterday’s menu · as of 25 Sep, 10:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Burnt Ends sanger",
+                  "secondary": "Pulled pork, brioche, slaw",
+                  "trailing": "S$28"
+                },
+                {
+                  "label": "Leeks, hazelnut, brown butter",
+                  "secondary": "Smoked over almond wood",
+                  "trailing": "S$24"
+                },
+                {
+                  "label": "Onion rings",
+                  "secondary": "With smoked mayo",
+                  "trailing": "S$18"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Burnt Ends website",
+                "url": "https://burntends.com.sg/burnt-ends-restaurant/"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Burnt Ends menu and Google reviews, 25 Sep 2026 10:00",
+                "url": "https://burntends.com.sg/burnt-ends-restaurant/"
+              }
+            ],
+            "assumptions": [
+              "Burnt Ends writes a new menu every day; these are yesterday’s dishes and prices."
+            ]
+          },
+          "fallback_text": "Burnt Ends highlights on yesterday’s menu (as of 25 Sep 10:00, couldn’t refresh): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No menu online",
+            "title": "Today’s menu isn’t online",
             "subtitle": "Burnt Ends · as of 10:00"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The restaurant hasn’t published this season’s menu"
+              "detail": "Burnt Ends hasn’t posted today’s menu yet"
             }
           ],
-          "fallback_text": "Burnt Ends hasn’t published this season’s menu online (checked 10:00)."
+          "fallback_text": "Burnt Ends hasn’t posted today’s menu online yet (checked 10:00); it writes a new one daily."
         },
         "failed": {
           "kind": "output_blocks",
@@ -818,7 +910,7 @@
             }
           ]
         },
-        "fallback_text": "Din Tai Fung dumplings (Singapore, as of 11:00): pork xiao long bao 10 pcs S$10.80, chicken xiao long bao S$10.30, crab roe and pork S$16.80, truffle and pork 5 pcs S$28.00, vegetable and pork dumplings 8 pcs S$9.80, shrimp and pork shao mai 6 pcs S$12.80."
+        "fallback_text": "Din Tai Fung dumplings (Singapore outlets, as of 11:00): pork xiao long bao 10 pcs S$10.80, the house classic; chicken xiao long bao 10 pcs S$10.30; crab roe and pork xiao long bao 10 pcs S$16.80; truffle and pork xiao long bao 5 pcs S$28.00; vegetable and pork dumplings 8 pcs S$9.80; shrimp and pork shao mai 6 pcs S$12.80."
       },
       "states": {
         "loading": {
@@ -839,6 +931,69 @@
             }
           ],
           "fallback_text": "Reading the Din Tai Fung menu."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Din Tai Fung · dumplings",
+            "subtitle": "Singapore outlets · 4 of 6 prices listed · as of 11:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Pork xiao long bao",
+                  "secondary": "10 pieces · the house classic",
+                  "trailing": "S$10.80",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Chicken xiao long bao",
+                  "secondary": "10 pieces",
+                  "trailing": "S$10.30"
+                },
+                {
+                  "label": "Crab roe and pork xiao long bao",
+                  "secondary": "10 pieces",
+                  "trailing": "S$16.80"
+                },
+                {
+                  "label": "Truffle and pork xiao long bao",
+                  "secondary": "5 pieces",
+                  "trailing": "S$28.00"
+                },
+                {
+                  "label": "Vegetable and pork dumplings",
+                  "secondary": "8 pieces",
+                  "trailing": "No price listed"
+                },
+                {
+                  "label": "Shrimp and pork shao mai",
+                  "secondary": "6 pieces",
+                  "trailing": "No price listed"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full menu",
+                "url": "https://www.dintaifung.com.sg/menu"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Din Tai Fung Singapore menu, 26 Sep 2026 11:00",
+                "url": "https://www.dintaifung.com.sg/menu"
+              }
+            ]
+          },
+          "fallback_text": "Din Tai Fung dumplings (Singapore outlets, as of 11:00; 4 of 6 prices listed): pork xiao long bao 10 pcs S$10.80, the house classic; chicken xiao long bao 10 pcs S$10.30; crab roe and pork xiao long bao 10 pcs S$16.80; truffle and pork xiao long bao 5 pcs S$28.00; vegetable and pork dumplings 8 pcs, no price listed; shrimp and pork shao mai 6 pcs, no price listed."
         },
         "stale": {
           "kind": "output_blocks",
@@ -901,7 +1056,7 @@
               }
             ]
           },
-          "fallback_text": "Din Tai Fung dumplings (Singapore, as of 24 Sep 11:00, couldn’t refresh): pork xiao long bao 10 pcs S$10.80, chicken xiao long bao S$10.30, crab roe and pork S$16.80, truffle and pork 5 pcs S$28.00, vegetable and pork dumplings 8 pcs S$9.80, shrimp and pork shao mai 6 pcs S$12.80."
+          "fallback_text": "Din Tai Fung dumplings (Singapore outlets, as of 24 Sep 11:00, couldn’t refresh): pork xiao long bao 10 pcs S$10.80, the house classic; chicken xiao long bao 10 pcs S$10.30; crab roe and pork xiao long bao 10 pcs S$16.80; truffle and pork xiao long bao 5 pcs S$28.00; vegetable and pork dumplings 8 pcs S$9.80; shrimp and pork shao mai 6 pcs S$12.80."
         },
         "failed": {
           "kind": "output_blocks",
@@ -962,21 +1117,40 @@
         "fallback_text": "Reminder set: take the bread out at 19:42."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Take the bread out",
+            "subtitle": "Reminder"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Setting it for 19:42",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000899"
+              }
+            }
+          ],
+          "fallback_text": "Setting a reminder to take the bread out at 19:42."
+        },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Couldn’t set the reminder",
+            "title": "Couldn’t confirm the reminder",
             "subtitle": "Take the bread out"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "failed",
-              "detail": "The reminder service didn’t answer. Nothing was scheduled."
+              "detail": "No answer from the reminder service. Check Reminders before asking again."
             }
           ],
-          "fallback_text": "Couldn’t set the reminder to take the bread out: the reminder service didn’t answer. Nothing was scheduled."
+          "fallback_text": "Couldn’t confirm the reminder to take the bread out at 19:42: the reminder service didn’t answer, so it may or may not be set. Check Reminders before asking again."
         }
       }
     }

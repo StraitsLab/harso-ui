@@ -51,7 +51,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal 2–1 Chelsea, full time. Ødegaard 23', Palmer 55', Saka 78'."
+        "fallback_text": "Arsenal 2–1 Chelsea, full time, as of 21:52. Ødegaard 23', Palmer 55', Saka 78'."
       },
       "states": {
         "loading": {
@@ -72,6 +72,37 @@
             }
           ],
           "fallback_text": "Checking the Arsenal v Chelsea score."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal v Chelsea",
+            "subtitle": "Full time · Premier League · scorers didn’t load · as of 21:52"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "2",
+                  "label": "Arsenal"
+                },
+                {
+                  "value": "1",
+                  "label": "Chelsea"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal 2–1 Chelsea, full time (as of 21:52). The scorers didn’t load."
         },
         "stale": {
           "kind": "output_blocks",
@@ -103,6 +134,22 @@
             ]
           },
           "fallback_text": "Arsenal 1–1 Chelsea at 71', as of 21:05 (couldn’t refresh). Ødegaard 23', Palmer 55'."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Arsenal match today",
+            "subtitle": "Next: v Tottenham, Sat 3 Oct · as of 21:52"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Arsenal haven’t played today"
+            }
+          ],
+          "fallback_text": "Arsenal haven’t played today (as of 21:52); next is v Tottenham, Sat 3 Oct 19:30 Singapore time."
         },
         "failed": {
           "kind": "output_blocks",
@@ -166,6 +213,56 @@
         "fallback_text": "Liverpool 1–1 Man City at 67', as of 23:12. Salah 12', Haaland 48'."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Liverpool v Man City",
+            "subtitle": "Premier League · live"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking the live score",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f003d"
+              }
+            }
+          ],
+          "fallback_text": "Checking the Liverpool v Man City score."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Liverpool v Man City",
+            "subtitle": "67' · second half · scorers didn’t load · as of 23:12"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "1",
+                  "label": "Liverpool"
+                },
+                {
+                  "value": "1",
+                  "label": "Man City"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026 23:12"
+              }
+            ]
+          },
+          "fallback_text": "Liverpool 1–1 Man City at 67', as of 23:12. The scorers didn’t load."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
@@ -279,7 +376,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal 2–1 Chelsea, full time: Saka goal 78' (Chelsea down to 10 after Caicedo's red card, 71'), Palmer goal 55', Ødegaard goal 23'."
+        "fallback_text": "Arsenal 2–1 Chelsea, full time (as of 21:52): Saka goal 78' (Chelsea down to 10 after Caicedo's red card, 71'), Palmer goal 55', Ødegaard goal 23'."
       },
       "states": {
         "loading": {
@@ -300,6 +397,98 @@
             }
           ],
           "fallback_text": "Reading the Arsenal v Chelsea match report."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal 2–1 Chelsea",
+            "subtitle": "Full time · goals only · cards didn’t load · as of 21:52"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Goal · Saka",
+                  "secondary": "Arsenal",
+                  "trailing": "78'"
+                },
+                {
+                  "label": "Goal · Palmer",
+                  "secondary": "Chelsea",
+                  "trailing": "55'"
+                },
+                {
+                  "label": "Goal · Ødegaard",
+                  "secondary": "Arsenal",
+                  "trailing": "23'"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026 21:52"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal 2–1 Chelsea, full time (as of 21:52): Saka goal 78', Palmer goal 55', Ødegaard goal 23'. Cards and other events didn’t load."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal 1–1 Chelsea",
+            "subtitle": "71' · as of 21:05 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Red card · Caicedo",
+                  "secondary": "Chelsea down to 10",
+                  "trailing": "71'"
+                },
+                {
+                  "label": "Goal · Palmer",
+                  "secondary": "Chelsea",
+                  "trailing": "55'"
+                },
+                {
+                  "label": "Goal · Ødegaard",
+                  "secondary": "Arsenal",
+                  "trailing": "23'"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League match centre, 26 Sep 2026 21:05"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal 1–1 Chelsea at 71', as of 21:05 (couldn’t refresh): Caicedo red card 71', Chelsea down to 10; Palmer goal 55'; Ødegaard goal 23'."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Arsenal match today",
+            "subtitle": "Next: v Tottenham, Sat 3 Oct · as of 21:52"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Arsenal haven’t played today"
+            }
+          ],
+          "fallback_text": "Arsenal haven’t played today, as of 21:52, so there is no match report; next is v Tottenham, Sat 3 Oct."
         },
         "failed": {
           "kind": "output_blocks",
@@ -417,7 +606,7 @@
             }
           ]
         },
-        "fallback_text": "Premier League after 6 games: 1 Liverpool 16, 2 Arsenal 14, 3 Man City 13, 4 Chelsea 11, 5 Newcastle 10."
+        "fallback_text": "Premier League after 6 games (as of 26 Sep 08:00): 1 Liverpool 16, 2 Arsenal 14, 3 Man City 13, 4 Chelsea 11, 5 Newcastle 10."
       },
       "states": {
         "loading": {
@@ -438,6 +627,94 @@
             }
           ],
           "fallback_text": "Reading the Premier League table."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Premier League table",
+            "subtitle": "Round 6 · 8 of 10 matches played · as of 26 Sep, 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Pos"
+                },
+                {
+                  "label": "Team"
+                },
+                {
+                  "label": "Played",
+                  "align": "end"
+                },
+                {
+                  "label": "Pts",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "1",
+                    "Liverpool",
+                    "6",
+                    "16"
+                  ]
+                },
+                {
+                  "cells": [
+                    "2",
+                    "Arsenal",
+                    "6",
+                    "14"
+                  ]
+                },
+                {
+                  "cells": [
+                    "3",
+                    "Man City",
+                    "5",
+                    "12"
+                  ]
+                },
+                {
+                  "cells": [
+                    "4",
+                    "Chelsea",
+                    "6",
+                    "11"
+                  ]
+                },
+                {
+                  "cells": [
+                    "5",
+                    "Newcastle",
+                    "5",
+                    "9"
+                  ]
+                }
+              ],
+              "total_count": 20
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full table",
+                "url": "https://www.premierleague.com/tables"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Premier League, 26 Sep 2026 08:00"
+              }
+            ]
+          },
+          "fallback_text": "Premier League, round 6 with 8 of 10 matches played (as of 26 Sep 08:00): 1 Liverpool 16 pts from 6, 2 Arsenal 14 from 6, 3 Man City 12 from 5, 4 Chelsea 11 from 6, 5 Newcastle 9 from 5. Man City and Newcastle play later today."
         },
         "stale": {
           "kind": "output_blocks",
@@ -644,7 +921,7 @@
             }
           ]
         },
-        "fallback_text": "Drivers’ championship after 17 of 24 races (as of 08:00): 1 Norris 312 pts, 2 Piastri 298, 3 Verstappen 271, 4 Russell 205, 5 Leclerc 164."
+        "fallback_text": "Drivers’ championship after 17 of 24 races (as of 08:00): 1 Norris 312 pts, 6 wins; 2 Piastri 298 pts, 5 wins; 3 Verstappen 271 pts, 4 wins; 4 Russell 205 pts, 2 wins; 5 Leclerc 164 pts, no wins."
       },
       "states": {
         "loading": {
@@ -665,6 +942,86 @@
             }
           ],
           "fallback_text": "Reading the F1 drivers’ standings."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Drivers’ championship",
+            "subtitle": "After 17 of 24 races · points only · wins didn’t load · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "table",
+              "columns": [
+                {
+                  "label": "Pos"
+                },
+                {
+                  "label": "Driver"
+                },
+                {
+                  "label": "Pts",
+                  "align": "end"
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "1",
+                    "Lando Norris",
+                    "312"
+                  ]
+                },
+                {
+                  "cells": [
+                    "2",
+                    "Oscar Piastri",
+                    "298"
+                  ]
+                },
+                {
+                  "cells": [
+                    "3",
+                    "Max Verstappen",
+                    "271"
+                  ]
+                },
+                {
+                  "cells": [
+                    "4",
+                    "George Russell",
+                    "205"
+                  ]
+                },
+                {
+                  "cells": [
+                    "5",
+                    "Charles Leclerc",
+                    "164"
+                  ]
+                }
+              ],
+              "total_count": 22
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Full standings",
+                "url": "https://www.formula1.com/en/results/2026/drivers"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Formula 1 driver standings, 26 Sep 2026",
+                "url": "https://www.formula1.com/en/results/2026/drivers"
+              }
+            ]
+          },
+          "fallback_text": "Drivers’ championship after 17 of 24 races (as of 08:00; race wins didn’t load): 1 Norris 312 pts, 2 Piastri 298 pts, 3 Verstappen 271 pts, 4 Russell 205 pts, 5 Leclerc 164 pts."
         },
         "stale": {
           "kind": "output_blocks",
@@ -753,7 +1110,7 @@
               }
             ]
           },
-          "fallback_text": "Drivers’ championship after 16 of 24 races, as of 14 Sep 08:00 (couldn’t refresh): 1 Norris 297 pts, 2 Piastri 273, 3 Verstappen 259, 4 Russell 195, 5 Leclerc 158."
+          "fallback_text": "Drivers’ championship after 16 of 24 races, as of 14 Sep 08:00 (couldn’t refresh): 1 Norris 297 pts, 6 wins; 2 Piastri 273 pts, 4 wins; 3 Verstappen 259 pts, 4 wins; 4 Russell 195 pts, 2 wins; 5 Leclerc 158 pts, no wins."
         },
         "failed": {
           "kind": "output_blocks",
@@ -821,7 +1178,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal next: v Tottenham Sat 3 Oct 19:30 (home); v PSV Thu 8 Oct 03:00 (away, Champions League); v Brighton Sun 18 Oct 21:00 (away)."
+        "fallback_text": "Arsenal next (Singapore time, as of 08:00): v Tottenham Sat 3 Oct 19:30 at the Emirates (home); v PSV Thu 8 Oct 03:00, Champions League (away); v Brighton Sun 18 Oct 21:00 (away)."
       },
       "states": {
         "loading": {
@@ -842,6 +1199,39 @@
             }
           ],
           "fallback_text": "Reading Arsenal’s fixtures."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Arsenal · next 2",
+            "subtitle": "Singapore time · Premier League only · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "v Tottenham",
+                  "secondary": "Sat 3 Oct · 19:30 · Emirates",
+                  "trailing": "Home"
+                },
+                {
+                  "label": "v Brighton",
+                  "secondary": "Sun 18 Oct · 21:00",
+                  "trailing": "Away"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Arsenal fixtures, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Arsenal’s next 2 in the Premier League (Singapore time, as of 08:00): v Tottenham Sat 3 Oct 19:30 at the Emirates (home); v Brighton Sun 18 Oct 21:00 (away). Champions League fixtures didn’t load."
         },
         "stale": {
           "kind": "output_blocks",
@@ -879,7 +1269,7 @@
               }
             ]
           },
-          "fallback_text": "Arsenal next (as of 24 Sep 08:00, couldn’t refresh): v Tottenham Sat 3 Oct 19:30 (home); v PSV Thu 8 Oct 03:00 (away, Champions League); v Brighton Sun 18 Oct 21:00 (away)."
+          "fallback_text": "Arsenal next (Singapore time, as of 24 Sep 08:00, couldn’t refresh): v Tottenham Sat 3 Oct 19:30 at the Emirates (home); v PSV Thu 8 Oct 03:00, Champions League (away); v Brighton Sun 18 Oct 21:00 (away)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -950,12 +1340,64 @@
         "fallback_text": "Singapore Grand Prix, Marina Bay (Singapore time, as of 08:00): Practice 1 Fri 9 Oct 17:30, qualifying Sat 10 Oct 21:00, race Sun 11 Oct 20:00."
       },
       "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore Grand Prix",
+            "subtitle": "Marina Bay · Singapore time"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the race timetable",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f003e"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Singapore Grand Prix timetable."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore Grand Prix",
+            "subtitle": "Marina Bay · Singapore time · practice times not out yet · as of 08:00"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Qualifying",
+                  "secondary": "Sat 10 Oct",
+                  "trailing": "21:00"
+                },
+                {
+                  "label": "Race",
+                  "secondary": "Sun 11 Oct",
+                  "trailing": "20:00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Formula 1 Singapore Grand Prix timetable, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Singapore Grand Prix, Marina Bay (Singapore time, as of 08:00): qualifying Sat 10 Oct 21:00, race Sun 11 Oct 20:00. Formula 1 hasn’t published the practice times yet."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Singapore Grand Prix",
-            "subtitle": "Marina Bay · as of 19 Sep, 08:00 · couldn’t refresh"
+            "subtitle": "Marina Bay · Singapore time · as of 19 Sep, 08:00 · couldn’t refresh"
           },
           "blocks": [
             {

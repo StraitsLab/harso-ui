@@ -32,7 +32,7 @@
             "kind": "numbers",
             "items": [
               {
-                "value": "31°",
+                "value": "31°C",
                 "label": "Now"
               },
               {
@@ -80,7 +80,7 @@
             }
           ]
         },
-        "fallback_text": "Singapore, as of 12:05: 31°C now, thunderstorms from about 3 pm (70% chance), cooling to 27°C."
+        "fallback_text": "Singapore, as of 12:05: 31°C now, 70% chance of thunderstorms after 3 pm. Hour by hour: 12:00 31°C, 13:00 32°C, 14:00 32°C, 15:00 28°C, 16:00 27°C, 17:00 27°C."
       },
       "states": {
         "loading": {
@@ -102,6 +102,38 @@
           ],
           "fallback_text": "Reading NEA’s latest forecast for this afternoon."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore",
+            "subtitle": "Now only · hourly forecast didn’t load · as of 12:05"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "31°C",
+                  "label": "Now"
+                },
+                {
+                  "value": "70%",
+                  "label": "Rain after 3 pm"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NEA weather forecast",
+                "url": "https://www.nea.gov.sg/weather"
+              }
+            ]
+          },
+          "fallback_text": "Singapore, as of 12:05: 31°C now, 70% chance of thunderstorms after 3 pm. NEA’s hourly forecast didn’t load."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
@@ -114,7 +146,7 @@
               "kind": "numbers",
               "items": [
                 {
-                  "value": "31°",
+                  "value": "31°C",
                   "label": "Now"
                 },
                 {
@@ -162,7 +194,7 @@
               }
             ]
           },
-          "fallback_text": "Singapore, as of 10:40 (couldn’t refresh): 31°C now, thunderstorms from about 3 pm (70% chance), cooling to 27°C."
+          "fallback_text": "Singapore, as of 10:40 (couldn’t refresh): 31°C now, 70% chance of thunderstorms after 3 pm. Hour by hour: 12:00 31°C, 13:00 32°C, 14:00 32°C, 15:00 28°C, 16:00 27°C, 17:00 27°C."
         },
         "failed": {
           "kind": "output_blocks",
@@ -206,7 +238,7 @@
             "kind": "numbers",
             "items": [
               {
-                "value": "17°",
+                "value": "17°C",
                 "label": "High"
               },
               {
@@ -256,7 +288,7 @@
             }
           ]
         },
-        "fallback_text": "London, Sun 27 Sep (London time, as of 13:00): high 17°C around 15:00, 60% chance of showers after 14:00, 12°C at 09:00 and 13°C by 21:00."
+        "fallback_text": "London, Sun 27 Sep (London time, as of 13:00): high 17°C, 60% chance of showers after 14:00. Hour by hour: 09:00 12°C, 11:00 14°C, 13:00 16°C, 15:00 17°C, 17:00 16°C, 19:00 14°C, 21:00 13°C."
       },
       "states": {
         "loading": {
@@ -278,6 +310,38 @@
           ],
           "fallback_text": "Reading the Met Office forecast for London, Sun 27 Sep."
         },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "London tomorrow",
+            "subtitle": "Sun 27 Sep · London time · daily summary only · as of 13:00"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "17°C",
+                  "label": "High"
+                },
+                {
+                  "value": "60%",
+                  "label": "Showers after 14:00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Met Office forecast for London, 26 Sep 2026",
+                "url": "https://weather.metoffice.gov.uk/forecast/gcpvj0v07"
+              }
+            ]
+          },
+          "fallback_text": "London, Sun 27 Sep (London time, as of 13:00): high 17°C, 60% chance of showers after 14:00. The Met Office hourly forecast didn’t load."
+        },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
@@ -290,7 +354,7 @@
               "kind": "numbers",
               "items": [
                 {
-                  "value": "17°",
+                  "value": "17°C",
                   "label": "High"
                 },
                 {
@@ -340,7 +404,7 @@
               }
             ]
           },
-          "fallback_text": "London, Sun 27 Sep (London time, as of 07:00, couldn’t refresh): high 17°C around 15:00, 60% chance of showers after 14:00, 12°C at 09:00 and 13°C by 21:00."
+          "fallback_text": "London, Sun 27 Sep (London time, as of 07:00, couldn’t refresh): high 17°C, 60% chance of showers after 14:00. Hour by hour: 09:00 12°C, 11:00 14°C, 13:00 16°C, 15:00 17°C, 17:00 16°C, 19:00 14°C, 21:00 13°C."
         },
         "failed": {
           "kind": "output_blocks",
@@ -428,7 +492,7 @@
             }
           ]
         },
-        "fallback_text": "Tokyo 28 Sep–4 Oct, as of 09:00: Mon sunny 19–26°C, Tue cloudy 19–25°C, Wed rain (80%) 18–22°C, Thu cloudy 18–24°C, Fri sunny 18–25°C, Sat sunny 19–26°C, Sun showers (40%) 18–23°C."
+        "fallback_text": "Tokyo 28 Sep–4 Oct, as of 09:00: Mon 28 sunny 19–26°C, Tue 29 cloudy 19–25°C, Wed 30 rain (80%) 18–22°C, Thu 1 cloudy 18–24°C, Fri 2 sunny 18–25°C, Sat 3 sunny 19–26°C, Sun 4 showers (40%) 18–23°C."
       },
       "states": {
         "loading": {
@@ -496,7 +560,7 @@
               }
             ]
           },
-          "fallback_text": "Tokyo 28 Sep–2 Oct, as of 09:00 (the weekend isn’t forecast yet): Mon sunny 19–26°C, Tue cloudy 19–25°C, Wed rain (80%) 18–22°C, Thu cloudy 18–24°C, Fri sunny 18–25°C."
+          "fallback_text": "Tokyo 28 Sep–2 Oct, 5 of 7 days forecast, as of 09:00 (the weekend isn’t forecast yet): Mon 28 sunny 19–26°C, Tue 29 cloudy 19–25°C, Wed 30 rain (80%) 18–22°C, Thu 1 cloudy 18–24°C, Fri 2 sunny 18–25°C."
         },
         "stale": {
           "kind": "output_blocks",
@@ -554,7 +618,7 @@
               }
             ]
           },
-          "fallback_text": "Tokyo 28 Sep–4 Oct, as of 25 Sep 21:00, couldn’t refresh: Mon sunny 19–26°C, Tue cloudy 19–25°C, Wed rain (80%) 18–22°C, Thu cloudy 18–24°C, Fri sunny 18–25°C, Sat sunny 19–26°C, Sun showers (40%) 18–23°C."
+          "fallback_text": "Tokyo 28 Sep–4 Oct, as of 25 Sep 21:00 (couldn’t refresh): Mon 28 sunny 19–26°C, Tue 29 cloudy 19–25°C, Wed 30 rain (80%) 18–22°C, Thu 1 cloudy 18–24°C, Fri 2 sunny 18–25°C, Sat 3 sunny 19–26°C, Sun 4 showers (40%) 18–23°C."
         },
         "failed": {
           "kind": "output_blocks",
@@ -613,7 +677,7 @@
             }
           ]
         },
-        "fallback_text": "NEA heavy rain warning until 18:00 for the west and central areas; flash floods possible, avoid Bukit Timah and Dunearn Road."
+        "fallback_text": "NEA heavy rain warning (as of 13:40) until 18:00 for the west and central areas; flash floods possible, avoid Bukit Timah and Dunearn Road."
       },
       "states": {
         "loading": {
@@ -634,6 +698,35 @@
             }
           ],
           "fallback_text": "Checking NEA for weather warnings today."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Heavy rain warning until 18:00",
+            "subtitle": "West and central · NEA only · PUB flood alerts didn’t load · as of 13:40"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Flash floods are possible in low-lying areas. Avoid Bukit Timah Road and Dunearn Road until the rain eases."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NEA heavy rain warning",
+                "url": "https://www.nea.gov.sg/weather"
+              }
+            ]
+          },
+          "fallback_text": "NEA heavy rain warning (as of 13:40) until 18:00 for the west and central areas; flash floods possible, avoid Bukit Timah and Dunearn Road. PUB’s flood alerts didn’t load, so check them before driving."
         },
         "stale": {
           "kind": "output_blocks",
@@ -709,7 +802,7 @@
       "components": [
         "Severe-weather alert"
       ],
-      "rationale": "The signal and when it starts are the title; one paragraph says what stops; the Observatory is in Details.",
+      "rationale": "The signal and when it starts are the title; one paragraph says what to do and what the MTR says it will run; the Observatory and the MTR are in Details.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -723,7 +816,7 @@
             "sections": [
               {
                 "paragraphs": [
-                  "Gale-force winds are expected overnight. Be indoors before the signal goes up; ferries and above-ground MTR lines stop when it does."
+                  "Gale-force winds are expected overnight; be indoors before 22:00. MTR trains keep running at first under signal 8, then at reduced frequency as the storm nears; MTR buses stop 3 hours after it goes up."
                 ]
               }
             ]
@@ -734,18 +827,41 @@
             {
               "label": "Hong Kong Observatory tropical cyclone warning",
               "url": "https://www.hko.gov.hk/en/wxinfo/currwx/tc.htm"
+            },
+            {
+              "label": "MTR travel tips during typhoons",
+              "url": "https://www.mtr.com.hk/en/customer/main/typhoon_readiness.html"
             }
           ]
         },
-        "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 17:30). Gale-force winds overnight; ferries and above-ground MTR lines stop when the signal goes up."
+        "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 17:30). Gale-force winds overnight; be indoors before 22:00. MTR trains keep running at first, then at reduced frequency as the storm nears; MTR buses stop 3 hours after the signal goes up."
       },
       "states": {
-        "stale": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Typhoon signals",
+            "subtitle": "Hong Kong"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking the Hong Kong Observatory",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f003c"
+              }
+            }
+          ],
+          "fallback_text": "Checking the Hong Kong Observatory for typhoon signals."
+        },
+        "partial": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Typhoon signal No. 8 from 22:00",
-            "subtitle": "Hong Kong · HKO · as of 16:00 · couldn’t refresh"
+            "subtitle": "Hong Kong · HKO only · MTR update didn’t load · as of 17:30"
           },
           "blocks": [
             {
@@ -753,7 +869,7 @@
               "sections": [
                 {
                   "paragraphs": [
-                    "Gale-force winds are expected overnight. Be indoors before the signal goes up; ferries and above-ground MTR lines stop when it does."
+                    "Gale-force winds are expected overnight; be indoors before 22:00. The MTR’s service update didn’t load."
                   ]
                 }
               ]
@@ -767,7 +883,40 @@
               }
             ]
           },
-          "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 16:00, couldn’t refresh). Gale-force winds overnight; ferries and above-ground MTR lines stop when the signal goes up."
+          "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 17:30). Gale-force winds overnight; be indoors before 22:00. The MTR’s service update didn’t load."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Typhoon signal No. 8 from 22:00",
+            "subtitle": "Hong Kong · HKO · as of 16:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "paragraphs": [
+                    "Gale-force winds are expected overnight; be indoors before 22:00. MTR trains keep running at first under signal 8, then at reduced frequency as the storm nears; MTR buses stop 3 hours after it goes up."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Hong Kong Observatory tropical cyclone warning",
+                "url": "https://www.hko.gov.hk/en/wxinfo/currwx/tc.htm"
+              },
+              {
+                "label": "MTR travel tips during typhoons",
+                "url": "https://www.mtr.com.hk/en/customer/main/typhoon_readiness.html"
+              }
+            ]
+          },
+          "fallback_text": "Hong Kong Observatory: typhoon signal No. 8 from 22:00 tonight (as of 16:00, couldn’t refresh). Gale-force winds overnight; be indoors before 22:00. MTR trains keep running at first, then at reduced frequency as the storm nears; MTR buses stop 3 hours after the signal goes up."
         },
         "empty": {
           "kind": "output_blocks",
