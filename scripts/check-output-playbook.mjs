@@ -483,12 +483,13 @@ export function periodErrors(example, referenceDate) {
 }
 
 // ---------------------------------------------------------------------------------------------------------------
-export function checkPlaybook(file = EXAMPLES_PATH, schemaFile = SCHEMA_PATH) {
+/** `built` is what the catalogue generates; the default playbook file must equal it byte for byte. */
+export function checkPlaybook(file = EXAMPLES_PATH, schemaFile = SCHEMA_PATH, built = file === EXAMPLES_PATH ? buildPlaybook() : undefined) {
   const schemaText = readFileSync(schemaFile);
   const sha = createHash("sha256").update(schemaText).digest("hex");
   const text = readFileSync(file, "utf8");
   const result = checkPlaybookData(JSON.parse(text), JSON.parse(schemaText.toString("utf8")), sha, schemaFile);
-  if (file === EXAMPLES_PATH && text !== buildPlaybook()) result.findings.unshift("catalogue: docs/agent/output-playbook.examples.json is stale; run node scripts/build-catalogue.mjs");
+  if (built !== undefined && text !== built) result.findings.unshift("catalogue: docs/agent/output-playbook.examples.json is stale; run node scripts/build-catalogue.mjs");
   return result;
 }
 
