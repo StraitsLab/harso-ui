@@ -3,6 +3,8 @@
 import { CaretRight } from "@phosphor-icons/react";
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { Button } from "../primitives";
+import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable,
+  type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
 import "./output-card.css";
 
 /*
@@ -40,10 +42,10 @@ export interface HarsoOutputActionSpec { kind: string; label: string; text?: str
 
 export interface HarsoOutputActionBlock { kind: "action"; primary?: HarsoOutputActionSpec; secondary?: HarsoOutputActionSpec }
 
-/** Any other block kind (visual, table, status, …) is carried opaquely and triggers the fallback. */
+/** Any other block kind (map, image, status, …) is carried opaquely and triggers the fallback; charts and tables are read by shape. */
 export interface HarsoOutputOtherBlock { kind: string; [key: string]: unknown }
 
-export type HarsoOutputBlock = HarsoOutputRowsBlock | HarsoOutputNumbersBlock | HarsoOutputTextBlock | HarsoOutputActionBlock | HarsoOutputOtherBlock;
+export type HarsoOutputBlock = HarsoOutputRowsBlock | HarsoOutputNumbersBlock | HarsoOutputTextBlock | HarsoOutputActionBlock | HarsoOutputVisualBlock | HarsoOutputTable | HarsoOutputOtherBlock;
 
 export interface HarsoOutputSource { label: string; url?: string }
 
@@ -75,6 +77,11 @@ export interface HarsoOutputCardProps {
   onViewAll: () => void;
   /** When supplied, Details hands off to the host; otherwise Details discloses inline. */
   onOpenDetails?: () => void;
+  /**
+   * Host-owned state per block, keyed by the block's index in `document.blocks` (the contract has no per-block state
+   * yet, G20). Charts, shares and tables draw loading/empty/partial/stale/failed as B0 does; absent means ready.
+   */
+  blockStates?: Readonly<Record<number, HarsoOutputBlockState>>;
   className?: string;
 }
 
@@ -89,7 +96,13 @@ const isAction = (block: HarsoOutputBlock): block is HarsoOutputActionBlock => b
 type CardPart =
   | { kind: "rows"; items: HarsoOutputRow[] }
   | { kind: "numbers"; items: HarsoOutputNumber[] }
-  | { kind: "text"; text: string };
+  | { kind: "text"; text: string }
+  | { kind: "chart"; chart: HarsoOutputChart; state?: HarsoOutputBlockState }
+  | { kind: "share"; items: HarsoOutputRow[]; shares: number[]; shown: number; state?: HarsoOutputBlockState }
+  | { kind: "table"; table: HarsoOutputTable; shown: number; state?: HarsoOutputBlockState };
+
+/** A block in one of these states shows no data of its own, so it counts nothing toward View all. */
+const withoutData = (state?: HarsoOutputBlockState) => state?.state === "loading" || state?.state === "empty" || state?.state === "failed";
 
 /** First `max` code points, backed off to a word boundary when one is near, then an ellipsis. */
 function clip(text: string, max: number) {
@@ -112,22 +125,46 @@ function readText(block: HarsoOutputTextBlock) {
 }
 
 /**
- * Supported = only rows/numbers/text/action blocks, and no row field this card would otherwise drop silently.
- * Blocks render in agent order under one running budget per kind. Action blocks are skipped unread.
- * `total` counts every row and key number the agent says exists; `clamped` marks text that continues off the card.
+ * Supported = rows/numbers/text/action blocks, bar and line charts, and tables, with no row field this card would
+ * otherwise drop silently. Rows that are shares of a whole (N% secondary, largest first, adding to 100%) draw as a share.
+ * Blocks render in agent order under one running budget per kind; table body rows share the row budget, and a
+ * Total row always shows. Action blocks are skipped unread. `total` counts every row and key number the agent says
+ * exists; `clamped` marks text that continues off the card.
  */
-function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps) {
+function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, states: Readonly<Record<number, HarsoOutputBlockState>> = {}) {
   const parts: CardPart[] = [];
   let rowBudget = Math.max(0, caps.maxRows), numberBudget = Math.max(0, caps.maxNumbers);
   let total = 0, shown = 0, clamped = false, textShown = false;
-  for (const block of blocks) {
+  for (const [index, block] of blocks.entries()) {
+    const state = states[index];
     if (isRows(block)) {
       if (block.items.some(row => row.status != null)) return undefined;
+      const shares = readShare(block.items);
+      if (shares) {
+        if (withoutData(state)) { parts.push({ kind: "share", items: [], shares, shown: 0, state }); continue; }
+        const count = Math.min(block.items.length, rowBudget);
+        rowBudget -= count;
+        total += Math.max(block.items.length, Number.isInteger(block.total_count) ? block.total_count! : 0);
+        shown += count;
+        parts.push({ kind: "share", items: block.items, shares, shown: count, state });
+        continue;
+      }
       const items = block.items.slice(0, rowBudget);
       rowBudget -= items.length;
       total += Math.max(block.items.length, Number.isInteger(block.total_count) ? block.total_count! : 0);
       shown += items.length;
       if (items.length) parts.push({ kind: "rows", items });
+    } else if (readChart(block)) {
+      parts.push({ kind: "chart", chart: readChart(block)!, state });
+    } else if (readTable(block)) {
+      const table = readTable(block)!;
+      if (withoutData(state)) { parts.push({ kind: "table", table, shown: 0, state }); continue; }
+      const body = table.rows.length - (isTotalRow(table, table.rows.length - 1) ? 1 : 0);
+      const count = Math.min(body, rowBudget);
+      rowBudget -= count;
+      total += Math.max(body, Number.isInteger(table.total_count) ? table.total_count! : 0);
+      shown += count;
+      parts.push({ kind: "table", table, shown: count, state });
     } else if (isNumbers(block)) {
       const items = block.items.slice(0, numberBudget);
       numberBudget -= items.length;
@@ -185,13 +222,13 @@ function DetailsContent({ details }: { details: HarsoOutputDocumentDetails }) {
   </>;
 }
 
-export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, className = "" }: HarsoOutputCardProps) {
+export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, className = "" }: HarsoOutputCardProps) {
   const id = useId();
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const [textClipped, setTextClipped] = useState(false);
   const limits = { ...HARSO_OUTPUT_CARD_CAPS, ...caps };
-  const content = readBlocks(document.blocks, limits);
+  const content = readBlocks(document.blocks, limits, blockStates);
   const details = hasDetails(document.details) ? document.details : undefined;
   const inlineDetails = details && !onOpenDetails;
   const hasMore = !!content && (content.hidden > 0 || content.clamped || textClipped);
@@ -220,7 +257,13 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, clas
     </div>}
     {content
       ? <>
-        {content.parts.map((part, partIndex) => part.kind === "rows"
+        {content.parts.map((part, partIndex) => part.kind === "chart"
+          ? <HarsoOutputBlockFrame key={partIndex} kind="chart" state={part.state}><HarsoOutputChartView chart={part.chart} /></HarsoOutputBlockFrame>
+          : part.kind === "share"
+          ? <HarsoOutputBlockFrame key={partIndex} kind="share" state={part.state}><HarsoOutputShareView items={part.items} shares={part.shares} shown={part.shown} /></HarsoOutputBlockFrame>
+          : part.kind === "table"
+          ? <HarsoOutputBlockFrame key={partIndex} kind="table" state={part.state}><HarsoOutputTableView table={part.table} shown={part.shown} label={document.header.title} /></HarsoOutputBlockFrame>
+          : part.kind === "rows"
           ? <ul key={partIndex} className="hkc-output-card-rows">
             {part.items.map((row, index) => <li key={row.id ?? index} className="hkc-output-card-row">
               <div className="hkc-output-card-row-main">

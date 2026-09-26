@@ -210,7 +210,8 @@ test("display-only: a reply action (or any action) renders no button and no text
   expect(within(second).getAllByRole("listitem")).toHaveLength(3);
 });
 
-test.each([["failed status", failed], ["spending numbers/visual", spending]] as const)("unsupported block (%s) shows fallback_text and no rows or actions", (_, document) => {
+// Packet 5b: the spending example (numbers → bar → rows) now renders; a status block still falls back (5c).
+test.each([["failed status", failed]] as const)("unsupported block (%s) shows fallback_text and no rows or actions", (_, document) => {
   const onViewAll = vi.fn();
   const { card } = renderCard({ document, onViewAll });
   expect(within(card).getByRole("heading", { name: document.header.title })).toBeVisible();

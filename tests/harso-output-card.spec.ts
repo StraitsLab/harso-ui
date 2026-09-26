@@ -98,7 +98,8 @@ test("host-owned Details: onOpenDetails is called and no inline region renders",
   await expect(page.getByRole("region", { name: "Output details" })).toHaveCount(0);
 });
 
-for (const [doc, mode] of [["failed", "light"], ["spending", "dark"]] as const) {
+// Packet 5b: the spending document (numbers → bar → rows) now renders; status still falls back until 5c.
+for (const [doc, mode] of [["failed", "light"], ["failed", "dark"]] as const) {
   test(`${doc} ${mode}: unsupported blocks render fallback_text only, axe clean`, async ({ page }) => {
     await page.setViewportSize({ width: 420, height: 720 });
     await page.goto(`${fixture}?doc=${doc}&mode=${mode}`);
