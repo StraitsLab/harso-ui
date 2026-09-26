@@ -171,7 +171,7 @@
             "Uses what you listed plus oil, salt and soy sauce; the spring onions are optional."
           ]
         },
-        "fallback_text": "Tomato egg fried rice for 2, about 20 min, one pan. You need 3 eggs, 2 tomatoes, 2 cups cooked rice, 2 spring onions if you have them, 1 tbsp light soy sauce and 1 tbsp oil. 1. Scramble the eggs until just set, tip out. 2. Fry the tomatoes 3 min. 3. Add the rice and soy, fry 4 min. 4. Fold the eggs back in, finish with spring onions."
+        "fallback_text": "Tomato egg fried rice for 2, about 20 min, one pan. You need 3 eggs beaten with a pinch of salt, 2 tomatoes, 2 cups cooked rice, 2 spring onions if you have them, 1 tbsp light soy sauce and 1 tbsp oil. 1. Scramble the eggs until just set, tip out. 2. Fry the tomatoes 3 min. 3. Add the rice and soy, fry 4 min. 4. Fold the eggs back in, finish with spring onions."
       },
       "states": {
         "loading": {
@@ -681,7 +681,7 @@
             "Burnt Ends writes a new menu every day, so these dishes and prices are today’s."
           ]
         },
-        "fallback_text": "Burnt Ends highlights on today’s menu (as of 10:00): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
+        "fallback_text": "Burnt Ends, modern barbecue in Dempsey, highlights on today’s menu (as of 10:00): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
       },
       "states": {
         "loading": {

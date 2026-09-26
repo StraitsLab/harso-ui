@@ -606,7 +606,7 @@
             }
           ]
         },
-        "fallback_text": "Premier League after 6 games (as of 26 Sep 08:00): 1 Liverpool 16, 2 Arsenal 14, 3 Man City 13, 4 Chelsea 11, 5 Newcastle 10."
+        "fallback_text": "Premier League after 6 games (as of 26 Sep 08:00): 1 Liverpool 16 pts, 2 Arsenal 14 pts, 3 Man City 13 pts, 4 Chelsea 11 pts, 5 Newcastle 10 pts."
       },
       "states": {
         "loading": {
@@ -802,7 +802,7 @@
               }
             ]
           },
-          "fallback_text": "Premier League after 5 games, as of 20 Sep 08:00 (couldn’t refresh): 1 Liverpool 13, 2 Arsenal 13, 3 Man City 12, 4 Chelsea 10, 5 Newcastle 9."
+          "fallback_text": "Premier League after 5 games, as of 20 Sep 08:00 (couldn’t refresh): 1 Liverpool 13 pts, 2 Arsenal 13 pts, 3 Man City 12 pts, 4 Chelsea 10 pts, 5 Newcastle 9 pts."
         },
         "failed": {
           "kind": "output_blocks",

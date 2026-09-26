@@ -4647,7 +4647,7 @@
             "Uses what you listed plus oil, salt and soy sauce; the spring onions are optional."
           ]
         },
-        "fallback_text": "Tomato egg fried rice for 2, about 20 min, one pan. You need 3 eggs, 2 tomatoes, 2 cups cooked rice, 2 spring onions if you have them, 1 tbsp light soy sauce and 1 tbsp oil. 1. Scramble the eggs until just set, tip out. 2. Fry the tomatoes 3 min. 3. Add the rice and soy, fry 4 min. 4. Fold the eggs back in, finish with spring onions."
+        "fallback_text": "Tomato egg fried rice for 2, about 20 min, one pan. You need 3 eggs beaten with a pinch of salt, 2 tomatoes, 2 cups cooked rice, 2 spring onions if you have them, 1 tbsp light soy sauce and 1 tbsp oil. 1. Scramble the eggs until just set, tip out. 2. Fry the tomatoes 3 min. 3. Add the rice and soy, fry 4 min. 4. Fold the eggs back in, finish with spring onions."
       },
       "states": {
         "loading": {
@@ -5157,7 +5157,7 @@
             "Burnt Ends writes a new menu every day, so these dishes and prices are today’s."
           ]
         },
-        "fallback_text": "Burnt Ends highlights on today’s menu (as of 10:00): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
+        "fallback_text": "Burnt Ends, modern barbecue in Dempsey, highlights on today’s menu (as of 10:00): Burnt Ends sanger, pulled pork, brioche and slaw, S$28; leeks with hazelnut and brown butter, smoked over almond wood, S$24; onion rings with smoked mayo, S$18."
       },
       "states": {
         "loading": {
@@ -7183,7 +7183,7 @@
             }
           ]
         },
-        "fallback_text": "Premier League after 6 games (as of 26 Sep 08:00): 1 Liverpool 16, 2 Arsenal 14, 3 Man City 13, 4 Chelsea 11, 5 Newcastle 10."
+        "fallback_text": "Premier League after 6 games (as of 26 Sep 08:00): 1 Liverpool 16 pts, 2 Arsenal 14 pts, 3 Man City 13 pts, 4 Chelsea 11 pts, 5 Newcastle 10 pts."
       },
       "states": {
         "loading": {
@@ -7379,7 +7379,7 @@
               }
             ]
           },
-          "fallback_text": "Premier League after 5 games, as of 20 Sep 08:00 (couldn’t refresh): 1 Liverpool 13, 2 Arsenal 13, 3 Man City 12, 4 Chelsea 10, 5 Newcastle 9."
+          "fallback_text": "Premier League after 5 games, as of 20 Sep 08:00 (couldn’t refresh): 1 Liverpool 13 pts, 2 Arsenal 13 pts, 3 Man City 12 pts, 4 Chelsea 10 pts, 5 Newcastle 9 pts."
         },
         "failed": {
           "kind": "output_blocks",
@@ -8090,7 +8090,7 @@
             }
           ]
         },
-        "fallback_text": "East–West line, as of 09:40 (3 sources): a power fault stopped trains between Jurong East and Buona Vista from 06:50; service resumed at 09:15. Cause under investigation."
+        "fallback_text": "East–West line, as of 09:40 (3 sources): a power fault stopped trains between Jurong East and Buona Vista from 06:50; free bridging buses ran until service resumed at 09:15. The cause is still unclear; LTA expects a report within a week."
       },
       "states": {
         "loading": {
@@ -8274,7 +8274,7 @@
             }
           ]
         },
-        "fallback_text": "Haze, as of 08:00 (3 sources): the 24-hour PSI reached 112 overnight (unhealthy) as Sumatra hotspots rose. Cut long outdoor exercise until it is under 100; an N95 helps for long stretches outdoors. Whether winds shift before the weekend is unclear; NEA updates at 12:00."
+        "fallback_text": "Haze, as of 08:00 (3 sources): the 24-hour PSI reached 112 overnight (unhealthy) as Sumatra hotspots rose after two dry weeks, with winds carrying the smoke east. Cut long outdoor exercise until it is under 100; an N95 helps for long stretches outdoors. Whether winds shift before the weekend is unclear; NEA updates at 12:00."
       },
       "states": {
         "loading": {
@@ -8483,7 +8483,7 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading 3 outlets’ coverage",
+              "detail": "Reading 3 articles",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000000f0033"
               }
@@ -8496,7 +8496,7 @@
           "major": 1,
           "header": {
             "title": "Grab–GoTo merger",
-            "subtitle": "2 of 3 outlets read · as of 08:00"
+            "subtitle": "2 of 3 articles read · as of 08:00"
           },
           "blocks": [
             {
@@ -8527,7 +8527,7 @@
               }
             ]
           },
-          "fallback_text": "Grab–GoTo, as of 08:00 (2 of 3 outlets read; The Straits Times didn’t load): Indonesia confirmed merger talks 7 Nov 2025; the government backed the merger 12 Nov 2025 (both The Business Times)."
+          "fallback_text": "Grab–GoTo, as of 08:00 (2 of 3 articles read; The Straits Times article didn’t load): Indonesia confirmed merger talks 7 Nov 2025; the government backed the merger 12 Nov 2025 (both The Business Times)."
         },
         "stale": {
           "kind": "output_blocks",
@@ -8580,17 +8580,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No coverage in 3 outlets",
+            "title": "No coverage in 2 outlets",
             "subtitle": "Grab–GoTo merger · as of 08:00"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "None of the 3 outlets checked has covered it"
+              "detail": "Neither The Straits Times nor The Business Times has covered it"
             }
           ],
-          "fallback_text": "None of the 3 outlets checked has covered a Grab–GoTo merger, as of 08:00."
+          "fallback_text": "Neither of the 2 outlets checked (The Straits Times, The Business Times) has covered a Grab–GoTo merger, as of 08:00."
         },
         "failed": {
           "kind": "output_blocks",
