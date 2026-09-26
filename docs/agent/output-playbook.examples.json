@@ -4723,7 +4723,7 @@
         "D1 Restaurants near me",
         "S10 Rating"
       ],
-      "rationale": "Only open places; distance, the app's time estimate and the fee on every row; offers are a word, not a badge.",
+      "rationale": "Only open places; rating with its count, distance, the app's time estimate and the fee on every row; offers are a word, not a badge.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -4737,18 +4737,18 @@
             "items": [
               {
                 "label": "Meghana Foods",
-                "secondary": "rated 4.5/5 · 2.4 km · 30–35 min",
+                "secondary": "4.5/5 from 10K+ ratings · 2.4 km · 30–35 min",
                 "trailing": "INR 39 fee",
                 "mark": "pick"
               },
               {
                 "label": "Nagarjuna",
-                "secondary": "rated 4.3/5 · 3.1 km · 35–40 min",
+                "secondary": "4.3/5 from 5K+ ratings · 3.1 km · 35–40 min",
                 "trailing": "INR 49 fee"
               },
               {
                 "label": "Behrouz Biryani",
-                "secondary": "rated 4.2/5 · 1.2 km · 25–30 min · 20% off",
+                "secondary": "4.2/5 from 1K+ ratings · 1.2 km · 25–30 min · 20% off",
                 "trailing": "INR 29 fee"
               }
             ]
@@ -4770,10 +4770,10 @@
           ],
           "assumptions": [
             "Only places Swiggy marks open are listed; 2 closed places were left out",
-            "Delivery times are Swiggy's estimates, not a promise"
+            "Delivery times are Swiggy's estimate, not a promise"
           ]
         },
-        "fallback_text": "Biryani that delivers to Home in Indiranagar, open as of 19:40 on Swiggy: Meghana Foods, rated 4.5/5, 2.4 km, 30–35 min, INR 39 delivery fee (pick); Nagarjuna, rated 4.3/5, 3.1 km, 35–40 min, INR 49 fee; Behrouz Biryani, rated 4.2/5, 1.2 km, 25–30 min, 20% off, INR 29 fee. Two closed places were left out. Times are Swiggy's estimates."
+        "fallback_text": "Biryani delivering to Home in Indiranagar on Swiggy, open places only, as of 19:40: Meghana Foods, 4.5/5 from 10K+ ratings, 2.4 km, 30–35 min, INR 39 fee (pick); Nagarjuna, 4.3/5 from 5K+ ratings, 3.1 km, 35–40 min, INR 49 fee; Behrouz Biryani, 4.2/5 from 1K+ ratings, 1.2 km, 25–30 min, 20% off, INR 29 fee. Two closed places were left out. Times are Swiggy's estimates."
       },
       "states": {
         "loading": {
@@ -4787,13 +4787,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Searching Swiggy near Home",
+              "detail": "Searching Swiggy for biryani near Home in Indiranagar",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d01"
               }
             }
           ],
-          "fallback_text": "Searching Swiggy near Home."
+          "fallback_text": "Searching Swiggy for biryani near Home in Indiranagar."
         },
         "partial": {
           "kind": "output_blocks",
@@ -4808,12 +4808,12 @@
               "items": [
                 {
                   "label": "Meghana Foods",
-                  "secondary": "rated 4.5/5 · 2.4 km · 30–35 min",
+                  "secondary": "4.5/5 from 10K+ ratings · 2.4 km · 30–35 min",
                   "trailing": "INR 39 fee"
                 },
                 {
                   "label": "Nagarjuna",
-                  "secondary": "rated 4.3/5 · 3.1 km · 35–40 min",
+                  "secondary": "4.3/5 from 5K+ ratings · 3.1 km · 35–40 min",
                   "trailing": "Fee not in yet"
                 }
               ]
@@ -4832,9 +4832,12 @@
               {
                 "label": "Swiggy search for Home (Indiranagar), 26 Sep 2026 19:40; results still loading"
               }
+            ],
+            "assumptions": [
+              "Delivery times are Swiggy's estimate, not a promise"
             ]
           },
-          "fallback_text": "As of 19:40 on Swiggy, open and delivering to Home: Meghana Foods, rated 4.5/5, 2.4 km, 30–35 min, INR 39 fee; Nagarjuna, rated 4.3/5, 3.1 km, 35–40 min, fee not loaded yet. Swiggy is still returning the rest."
+          "fallback_text": "As of 19:40 on Swiggy, open and delivering to Home, 1 fee not in yet: Meghana Foods, 4.5/5 from 10K+ ratings, 2.4 km, 30–35 min, INR 39 fee; Nagarjuna, 4.3/5 from 5K+ ratings, 3.1 km, 35–40 min, fee not in yet. Times are Swiggy's estimates. Swiggy is still returning the rest."
         },
         "stale": {
           "kind": "output_blocks",
@@ -4849,18 +4852,18 @@
               "items": [
                 {
                   "label": "Meghana Foods",
-                  "secondary": "rated 4.5/5 · 2.4 km · 30–35 min",
+                  "secondary": "4.5/5 from 10K+ ratings · 2.4 km · 30–35 min",
                   "trailing": "INR 39 fee",
                   "mark": "pick"
                 },
                 {
                   "label": "Nagarjuna",
-                  "secondary": "rated 4.3/5 · 3.1 km · 35–40 min",
+                  "secondary": "4.3/5 from 5K+ ratings · 3.1 km · 35–40 min",
                   "trailing": "INR 49 fee"
                 },
                 {
                   "label": "Behrouz Biryani",
-                  "secondary": "rated 4.2/5 · 1.2 km · 25–30 min · 20% off",
+                  "secondary": "4.2/5 from 1K+ ratings · 1.2 km · 25–30 min · 20% off",
                   "trailing": "INR 29 fee"
                 }
               ]
@@ -4882,26 +4885,26 @@
             ],
             "assumptions": [
               "Only places Swiggy marks open are listed; 2 closed places were left out",
-              "Delivery times are Swiggy's estimates, not a promise"
+              "Delivery times are Swiggy's estimate, not a promise"
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 19:05. Biryani that delivers to Home in Indiranagar, open as of 19:05 on Swiggy: Meghana Foods, rated 4.5/5, 2.4 km, 30–35 min, INR 39 delivery fee (pick); Nagarjuna, rated 4.3/5, 3.1 km, 35–40 min, INR 49 fee; Behrouz Biryani, rated 4.2/5, 1.2 km, 25–30 min, 20% off, INR 29 fee. Two closed places were left out. Times are Swiggy's estimates."
+          "fallback_text": "Couldn't refresh; this is from 19:05. Biryani delivering to Home in Indiranagar on Swiggy, open places only, as of 19:05: Meghana Foods, 4.5/5 from 10K+ ratings, 2.4 km, 30–35 min, INR 39 fee (pick); Nagarjuna, 4.3/5 from 5K+ ratings, 3.1 km, 35–40 min, INR 49 fee; Behrouz Biryani, 4.2/5 from 1K+ ratings, 1.2 km, 25–30 min, 20% off, INR 29 fee. Two closed places were left out. Times are Swiggy's estimates."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No biryani under 40 minutes to Home",
+            "title": "No biryani estimated under 40 min",
             "subtitle": "Indiranagar · as of 19:40"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The nearest open one is Nagarjuna at 45–50 min"
+              "detail": "Swiggy's quickest estimate is Nagarjuna at 45–50 min"
             }
           ],
-          "fallback_text": "As of 19:40, no open biryani place on Swiggy can reach Home in Indiranagar within 40 minutes. The nearest open one is Nagarjuna at 45–50 minutes."
+          "fallback_text": "As of 19:40, Swiggy estimates no open biryani place near Home in Indiranagar at under 40 minutes. Swiggy's quickest estimate is Nagarjuna at 45–50 min."
         },
         "failed": {
           "kind": "output_blocks",
@@ -4934,7 +4937,7 @@
         "D3 Dietary filter",
         "Menu"
       ],
-      "rationale": "One menu section filtered to Jain, prices trailing; the restaurant's own label is trusted and said to be theirs.",
+      "rationale": "One menu filtered to Jain; each row opens with its menu category and veg mark as words, then the variant and add-on prices; the restaurant's own label is trusted and said to be theirs.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -4948,17 +4951,17 @@
             "items": [
               {
                 "label": "Paneer biryani, Jain",
-                "secondary": "No onion, garlic or root vegetables",
+                "secondary": "Biryani · Veg · No onion, garlic or root vegetables · half INR 190",
                 "trailing": "INR 330"
               },
               {
                 "label": "Veg meals, Jain",
-                "secondary": "Rice, dal, 2 curries, curd",
+                "secondary": "Meals · Veg · Rice, dal, 2 curries, curd · add papad INR 20",
                 "trailing": "INR 260"
               },
               {
                 "label": "Gobi manchurian, dry",
-                "secondary": "Made without onion or garlic on request",
+                "secondary": "Starters · Veg · Made without onion or garlic on request",
                 "trailing": "INR 240"
               }
             ]
@@ -4979,10 +4982,10 @@
             }
           ],
           "disclaimers": [
-            "Jain is the restaurant's own label; ask them if it matters for a fast"
+            "Jain and Veg are the restaurant's own labels; ask them if it matters for a fast"
           ]
         },
-        "fallback_text": "Meghana Foods (Residency Road) Jain options on Zomato as of 19:42: paneer biryani Jain INR 330 (no onion, garlic or root vegetables); veg meals Jain INR 260; gobi manchurian dry INR 240, made without onion or garlic on request. 5 Jain dishes in all; the other 2 are on Zomato."
+        "fallback_text": "Meghana Foods (Residency Road) Jain options on Zomato as of 19:42, 3 of 5 Jain dishes, all veg: Biryani: paneer biryani Jain, no onion, garlic or root vegetables, INR 330, or half INR 190. Meals: veg meals Jain INR 260, rice, dal, 2 curries, curd; add papad INR 20. Starters: gobi manchurian dry INR 240, made without onion or garlic on request. The other 2 Jain dishes are on Zomato."
       },
       "states": {
         "loading": {
@@ -4996,13 +4999,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading the Zomato menu",
+              "detail": "Reading the Meghana Foods (Residency Road) menu on Zomato",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d02"
               }
             }
           ],
-          "fallback_text": "Reading the Zomato menu."
+          "fallback_text": "Reading the Meghana Foods (Residency Road) menu on Zomato."
         },
         "partial": {
           "kind": "output_blocks",
@@ -5017,12 +5020,12 @@
               "items": [
                 {
                   "label": "Paneer biryani, Jain",
-                  "secondary": "No onion, garlic or root vegetables",
+                  "secondary": "Biryani · Veg · No onion, garlic or root vegetables",
                   "trailing": "INR 330"
                 },
                 {
                   "label": "Veg meals, Jain",
-                  "secondary": "Rice, dal, 2 curries, curd",
+                  "secondary": "Meals · Veg · Rice, dal, 2 curries, curd",
                   "trailing": "Price not in yet"
                 }
               ]
@@ -5043,7 +5046,7 @@
               }
             ]
           },
-          "fallback_text": "Meghana Foods Jain options on Zomato as of 19:42: paneer biryani Jain INR 330; veg meals Jain, price not loaded yet. The rest of the menu is still loading."
+          "fallback_text": "Meghana Foods Jain options on Zomato as of 19:42, 1 price not in yet: Biryani: paneer biryani Jain, veg, no onion, garlic or root vegetables, INR 330. Meals: veg meals Jain, veg, rice, dal, 2 curries, curd, price not in yet. The rest of the menu is still loading."
         },
         "stale": {
           "kind": "output_blocks",
@@ -5058,17 +5061,17 @@
               "items": [
                 {
                   "label": "Paneer biryani, Jain",
-                  "secondary": "No onion, garlic or root vegetables",
+                  "secondary": "Biryani · Veg · No onion, garlic or root vegetables · half INR 190",
                   "trailing": "INR 330"
                 },
                 {
                   "label": "Veg meals, Jain",
-                  "secondary": "Rice, dal, 2 curries, curd",
+                  "secondary": "Meals · Veg · Rice, dal, 2 curries, curd · add papad INR 20",
                   "trailing": "INR 260"
                 },
                 {
                   "label": "Gobi manchurian, dry",
-                  "secondary": "Made without onion or garlic on request",
+                  "secondary": "Starters · Veg · Made without onion or garlic on request",
                   "trailing": "INR 240"
                 }
               ]
@@ -5089,10 +5092,10 @@
               }
             ],
             "disclaimers": [
-              "Jain is the restaurant's own label; ask them if it matters for a fast"
+              "Jain and Veg are the restaurant's own labels; ask them if it matters for a fast"
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 18:30. Meghana Foods (Residency Road) Jain options on Zomato as of 18:30: paneer biryani Jain INR 330 (no onion, garlic or root vegetables); veg meals Jain INR 260; gobi manchurian dry INR 240, made without onion or garlic on request. 5 Jain dishes in all; the other 2 are on Zomato."
+          "fallback_text": "Couldn't refresh; this is from 18:30. Meghana Foods (Residency Road) Jain options on Zomato as of 18:30, 3 of 5 Jain dishes, all veg: Biryani: paneer biryani Jain, no onion, garlic or root vegetables, INR 330, or half INR 190. Meals: veg meals Jain INR 260, rice, dal, 2 curries, curd; add papad INR 20. Starters: gobi manchurian dry INR 240, made without onion or garlic on request. The other 2 Jain dishes are on Zomato."
         },
         "empty": {
           "kind": "output_blocks",
@@ -5108,7 +5111,7 @@
               "detail": "12 vegetarian dishes; none marked Jain"
             }
           ],
-          "fallback_text": "As of 19:42, Meghana Foods lists no dishes marked Jain on Zomato. It has 12 vegetarian dishes; ask the restaurant about onion and garlic."
+          "fallback_text": "As of 19:42, Meghana Foods (Residency Road) lists no dishes marked Jain on Zomato. It has 12 vegetarian dishes; none marked Jain, so ask the restaurant about onion and garlic."
         },
         "failed": {
           "kind": "output_blocks",
@@ -5141,7 +5144,7 @@
         "S11 Cart / checkout summary",
         "X3 Total row"
       ],
-      "rationale": "Every line, coupon and fee separately, address and payment in the subtitle; the card has no Order button: the question follows.",
+      "rationale": "Every line with its veg mark, variant and add-on; coupon and each fee separately; address and payment in the subtitle; the card has no Order button: the question follows.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -5168,17 +5171,17 @@
             "items": [
               {
                 "label": "Chicken biryani",
-                "secondary": "× 1 · extra raita",
+                "secondary": "× 1 · Non-veg · full · extra raita",
                 "trailing": "INR 330"
               },
               {
                 "label": "Paneer biryani, Jain",
-                "secondary": "× 1",
+                "secondary": "× 1 · Veg · full",
                 "trailing": "INR 280"
               },
               {
                 "label": "Gulab jamun",
-                "secondary": "× 2",
+                "secondary": "× 2 · Veg",
                 "trailing": "INR 90"
               },
               {
@@ -5214,7 +5217,7 @@
             "Pays cash on delivery, the saved method on this account"
           ]
         },
-        "fallback_text": "Swiggy cart from Meghana Foods as of 19:48, to Home in Indiranagar, cash on delivery: chicken biryani with extra raita INR 330, paneer biryani Jain INR 280, gulab jamun ×2 INR 90, coupon MEGHANA100 −INR 100, delivery INR 39, packaging INR 30 and platform fee INR 10 (INR 40), GST INR 35. Total to pay INR 714, of which INR 114 is fees and taxes. Nothing is ordered until you say yes."
+        "fallback_text": "Swiggy cart from Meghana Foods as of 19:48, to Home in Indiranagar, cash on delivery: chicken biryani ×1, non-veg, full, extra raita, INR 330; paneer biryani Jain ×1, veg, full, INR 280; gulab jamun ×2, veg, INR 90; coupon MEGHANA100 applied −INR 100; delivery fee 2.4 km INR 39; packaging and platform INR 30 plus INR 10 (INR 40); GST on food and fees INR 35. Total to pay INR 714, of which INR 114 is fees and taxes. Nothing is ordered until you say yes."
       },
       "states": {
         "loading": {
@@ -5228,13 +5231,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Adding 4 items to your Swiggy cart",
+              "detail": "Adding 4 items from Meghana Foods to your Swiggy cart, to Home, Indiranagar",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d03"
               }
             }
           ],
-          "fallback_text": "Adding 4 items to your Swiggy cart."
+          "fallback_text": "Adding 4 items from Meghana Foods to your Swiggy cart, to Home, Indiranagar."
         },
         "partial": {
           "kind": "output_blocks",
@@ -5262,17 +5265,17 @@
               "items": [
                 {
                   "label": "Chicken biryani",
-                  "secondary": "× 1 · extra raita",
+                  "secondary": "× 1 · Non-veg · full · extra raita",
                   "trailing": "INR 330"
                 },
                 {
                   "label": "Paneer biryani, Jain",
-                  "secondary": "× 1",
+                  "secondary": "× 1 · Veg · full",
                   "trailing": "INR 280"
                 },
                 {
                   "label": "Gulab jamun",
-                  "secondary": "× 2",
+                  "secondary": "× 2 · Veg",
                   "trailing": "INR 90"
                 },
                 {
@@ -5290,7 +5293,7 @@
               }
             ]
           },
-          "fallback_text": "Swiggy cart from Meghana Foods as of 19:48: chicken biryani INR 330, paneer biryani Jain INR 280, gulab jamun ×2 INR 90, coupon −INR 100, so INR 600 food after the coupon across 3 dishes. Delivery, packaging and GST haven't loaded, so there is no total yet and I won't ask you to order."
+          "fallback_text": "Swiggy cart from Meghana Foods to Home as of 19:48, fees not in yet: chicken biryani ×1, non-veg, full, extra raita, INR 330; paneer biryani Jain ×1, veg, full, INR 280; gulab jamun ×2, veg, INR 90; coupon MEGHANA100 applied −INR 100. That is INR 600 food after coupon across 3 dishes. Delivery, packaging and GST haven't loaded, so there is no total yet and I won't ask you to order."
         },
         "stale": {
           "kind": "output_blocks",
@@ -5318,17 +5321,17 @@
               "items": [
                 {
                   "label": "Chicken biryani",
-                  "secondary": "× 1 · extra raita",
+                  "secondary": "× 1 · Non-veg · full · extra raita",
                   "trailing": "INR 330"
                 },
                 {
                   "label": "Paneer biryani, Jain",
-                  "secondary": "× 1",
+                  "secondary": "× 1 · Veg · full",
                   "trailing": "INR 280"
                 },
                 {
                   "label": "Gulab jamun",
-                  "secondary": "× 2",
+                  "secondary": "× 2 · Veg",
                   "trailing": "INR 90"
                 },
                 {
@@ -5364,7 +5367,7 @@
               "Pays cash on delivery, the saved method on this account"
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 19:20. Swiggy cart from Meghana Foods as of 19:20, to Home in Indiranagar, cash on delivery: chicken biryani with extra raita INR 330, paneer biryani Jain INR 280, gulab jamun ×2 INR 90, coupon MEGHANA100 −INR 100, delivery INR 39, packaging INR 30 and platform fee INR 10 (INR 40), GST INR 35. Total to pay INR 714, of which INR 114 is fees and taxes. Nothing is ordered until you say yes."
+          "fallback_text": "Couldn't refresh; this is from 19:20. Swiggy cart from Meghana Foods as of 19:20, to Home in Indiranagar, cash on delivery: chicken biryani ×1, non-veg, full, extra raita, INR 330; paneer biryani Jain ×1, veg, full, INR 280; gulab jamun ×2, veg, INR 90; coupon MEGHANA100 applied −INR 100; delivery fee 2.4 km INR 39; packaging and platform INR 30 plus INR 10 (INR 40); GST on food and fees INR 35. Total to pay INR 714, of which INR 114 is fees and taxes. Nothing is ordered until you say yes."
         },
         "empty": {
           "kind": "output_blocks",
@@ -5380,7 +5383,7 @@
               "detail": "Meghana Foods dropped the items; it may have closed"
             }
           ],
-          "fallback_text": "Your Swiggy cart is empty as of 19:48: Meghana Foods removed the items, which usually means it closed. Nothing was ordered."
+          "fallback_text": "Your Swiggy cart is empty as of 19:48: Meghana Foods dropped the items; it may have closed. Nothing was ordered."
         },
         "failed": {
           "kind": "output_blocks",
@@ -5393,7 +5396,7 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Swiggy didn't answer. Nothing was ordered."
+              "detail": "Swiggy didn't answer. Nothing was ordered. Ask me again in a few minutes."
             }
           ],
           "fallback_text": "Couldn't build the Swiggy cart from Meghana Foods: Swiggy didn't answer before an order was placed, so nothing was ordered. Ask me again in a few minutes."
@@ -5441,7 +5444,7 @@
             }
           ],
           "assumptions": [
-            "The time is Swiggy's estimate"
+            "Delivery times are Swiggy's estimate, not a promise"
           ]
         },
         "fallback_text": "Swiggy order 1827364 from Meghana Foods is placed as of 19:50: INR 714 cash on delivery, expected by 20:25 (Swiggy's estimate)."
@@ -5452,19 +5455,19 @@
           "major": 1,
           "header": {
             "title": "Placing your Swiggy order",
-            "subtitle": "Meghana Foods"
+            "subtitle": "Meghana Foods · INR 714"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "working",
-              "detail": "Placing the order with Swiggy",
+              "detail": "Placing the INR 714 Meghana Foods order with Swiggy",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d04"
               }
             }
           ],
-          "fallback_text": "Placing the order with Swiggy."
+          "fallback_text": "Placing the INR 714 Meghana Foods order with Swiggy."
         },
         "partial": {
           "kind": "output_blocks",
@@ -5524,9 +5527,12 @@
               {
                 "label": "Swiggy order confirmation, 26 Sep 2026 19:50"
               }
+            ],
+            "assumptions": [
+              "Delivery times are Swiggy's estimate, not a promise"
             ]
           },
-          "fallback_text": "As of 19:50 (couldn't refresh since): Swiggy order 1827364 from Meghana Foods, INR 714 cash on delivery, expected by 20:25."
+          "fallback_text": "As of 19:50 (couldn't refresh since): Swiggy order 1827364 from Meghana Foods, INR 714 cash on delivery, expected by 20:25 (Swiggy's estimate)."
         },
         "failed": {
           "kind": "output_blocks",
@@ -5542,7 +5548,7 @@
               "detail": "Swiggy didn't answer. I'll check your orders before trying again."
             }
           ],
-          "fallback_text": "I couldn't confirm the order: Swiggy didn't answer after I sent it, so it may or may not be placed. I'll check your Swiggy orders before trying again."
+          "fallback_text": "I couldn't confirm the order: Swiggy didn't answer after I sent the Meghana Foods order (INR 714), so it may or may not be placed. I'll check your Swiggy orders before trying again."
         }
       }
     },
@@ -5596,10 +5602,10 @@
             }
           ],
           "assumptions": [
-            "The time is Swiggy's estimate"
+            "Delivery times are Swiggy's estimate, not a promise"
           ]
         },
-        "fallback_text": "As of 20:13, Swiggy order 1827364 is about 12 minutes away (Swiggy's estimate). Ravi picked it up at 20:06 and is 1.8 km away; it was ready at 20:02 and accepted at 19:51."
+        "fallback_text": "As of 20:13, Swiggy order 1827364 is arriving in about 12 min (Swiggy's estimate); Ravi, 1.8 km away. Picked up: Ravi left Meghana Foods at 20:06. Ready: packed at the restaurant, 20:02. Preparing: Meghana Foods accepted, 19:51."
       },
       "states": {
         "loading": {
@@ -5613,13 +5619,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Checking Swiggy tracking",
+              "detail": "Checking Swiggy tracking for order 1827364 from Meghana Foods",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d05"
               }
             }
           ],
-          "fallback_text": "Checking Swiggy tracking."
+          "fallback_text": "Checking Swiggy tracking for order 1827364 from Meghana Foods."
         },
         "partial": {
           "kind": "output_blocks",
@@ -5652,7 +5658,7 @@
               }
             ]
           },
-          "fallback_text": "As of 20:13, Ravi picked up Swiggy order 1827364 at 20:06; it was accepted at 19:51. Swiggy hasn't sent an arrival time or his location."
+          "fallback_text": "As of 20:13, Swiggy order 1827364, Ravi. Picked up: Ravi left Meghana Foods at 20:06. Preparing: Meghana Foods accepted, 19:51. Swiggy hasn't sent an arrival time or his location."
         },
         "stale": {
           "kind": "output_blocks",
@@ -5688,9 +5694,12 @@
               {
                 "label": "Swiggy tracking, 26 Sep 2026 20:07"
               }
+            ],
+            "assumptions": [
+              "Delivery times are Swiggy's estimate, not a promise"
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 20:07. Swiggy order 1827364 was about 18 minutes away (Swiggy's estimate): Ravi picked it up at 20:06; it was ready at 20:02 and accepted at 19:51."
+          "fallback_text": "Couldn't refresh; this is from 20:07. Swiggy order 1827364 was arriving in about 18 min (Swiggy's estimate). Picked up: Ravi left Meghana Foods at 20:06. Ready: packed at the restaurant, 20:02. Preparing: Meghana Foods accepted, 19:51."
         },
         "empty": {
           "kind": "output_blocks",
@@ -5767,7 +5776,7 @@
             }
           ]
         },
-        "fallback_text": "Your GrabFood order from Tian Tian Chicken Rice was delivered to the Tanjong Pagar office at 12:41; S$18.60 paid by card."
+        "fallback_text": "Your GrabFood order from Tian Tian Chicken Rice was delivered to Tanjong Pagar office at 12:41; S$18.60 paid by card."
       },
       "states": {
         "loading": {
@@ -5781,13 +5790,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Reading your GrabFood orders",
+              "detail": "Reading your GrabFood orders for Tian Tian Chicken Rice",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d06"
               }
             }
           ],
-          "fallback_text": "Reading your GrabFood orders."
+          "fallback_text": "Reading your GrabFood orders for Tian Tian Chicken Rice."
         },
         "partial": {
           "kind": "output_blocks",
@@ -5847,9 +5856,12 @@
               {
                 "label": "GrabFood order history, 26 Sep 2026 12:30"
               }
+            ],
+            "assumptions": [
+              "Delivery times are GrabFood's estimate, not a promise"
             ]
           },
-          "fallback_text": "As of 12:30 (couldn't refresh since), your GrabFood order from Tian Tian Chicken Rice was on the way, S$18.60 paid, expected by 12:40."
+          "fallback_text": "As of 12:30 (couldn't refresh since), your GrabFood order from Tian Tian Chicken Rice was on the way, S$18.60 paid, expected by 12:40 (GrabFood's estimate)."
         },
         "empty": {
           "kind": "output_blocks",
@@ -5881,7 +5893,7 @@
               "detail": "Grab didn't answer. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't check your GrabFood order: Grab didn't answer, so I can't say whether it arrived. Ask me again in a few minutes."
+          "fallback_text": "Couldn't check your GrabFood order from Tian Tian Chicken Rice: Grab didn't answer, so I can't say whether it arrived. Ask me again in a few minutes."
         }
       }
     },
@@ -5908,7 +5920,7 @@
           {
             "kind": "status",
             "state": "failed",
-            "detail": "Swiggy didn't answer after the order was sent. Not retried."
+            "detail": "No reply after it was sent. I'll check your orders before trying again."
           }
         ],
         "details": {
@@ -5918,7 +5930,7 @@
             }
           ]
         },
-        "fallback_text": "I couldn't confirm the order: Swiggy didn't answer after I sent it at 19:49 (Meghana Foods, INR 714), so it may or may not be placed. I'll check your Swiggy orders before trying again, so you aren't charged twice."
+        "fallback_text": "I couldn't confirm the order: Swiggy didn't answer after it was sent at 19:49 (Meghana Foods, INR 714), so it may or may not be placed. I'll check your Swiggy orders before trying again, so you aren't charged twice."
       },
       "states": {
         "loading": {
@@ -5932,13 +5944,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Looking for the order sent at 19:49",
+              "detail": "Looking for the Meghana Foods order, INR 714, sent at 19:49",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d07"
               }
             }
           ],
-          "fallback_text": "Looking for the order sent at 19:49."
+          "fallback_text": "Looking for the Meghana Foods order, INR 714, sent at 19:49."
         }
       }
     },
@@ -5991,10 +6003,10 @@
           ],
           "assumptions": [
             "Totals include delivery, service fees and tax, before tip",
-            "Times are each app's estimate"
+            "Times are each app's estimate, not a promise"
           ]
         },
-        "fallback_text": "Souvla chicken salad to 1 Market St, before tip: Uber Eats US$16.50 plus US$5.48 fees, US$21.98, 35–45 min (read 18:03); DoorDash US$17.25 plus US$7.10 fees, US$24.35, 25–35 min (read 18:02). Times are each app's estimate."
+        "fallback_text": "Souvla chicken salad to 1 Market St, before tip: Uber Eats US$16.50 plus US$5.48 fees, US$21.98, 35–45 min (read 18:03); DoorDash US$17.25 plus US$7.10 fees, US$24.35, 25–35 min (read DoorDash 18:02). Times are each app's estimate."
       },
       "states": {
         "loading": {
@@ -6008,13 +6020,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Pricing it on DoorDash and Uber Eats",
+              "detail": "Pricing the Souvla chicken salad to 1 Market St on DoorDash and Uber Eats",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d08"
               }
             }
           ],
-          "fallback_text": "Pricing it on DoorDash and Uber Eats."
+          "fallback_text": "Pricing the Souvla chicken salad to 1 Market St on DoorDash and Uber Eats."
         },
         "partial": {
           "kind": "output_blocks",
@@ -6045,9 +6057,12 @@
               {
                 "label": "Uber Eats checkout preview, 26 Sep 2026 18:03; DoorDash didn't answer"
               }
+            ],
+            "assumptions": [
+              "Delivery times are Uber Eats's estimate, not a promise"
             ]
           },
-          "fallback_text": "Only Uber Eats answered as of 18:03: Souvla chicken salad US$16.50 plus US$5.48 fees, US$21.98 before tip, 35–45 min. DoorDash didn't answer, so I can't say which is cheaper."
+          "fallback_text": "1 of 2 apps priced as of 18:03. Uber Eats: Souvla chicken salad US$16.50 plus US$5.48 fees, US$21.98 before tip, 35–45 min (Uber Eats' estimate). DoorDash didn't answer, so its price is not known and I can't say which is cheaper."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6078,9 +6093,12 @@
               {
                 "label": "Uber Eats and DoorDash checkout previews, 26 Sep 2026 17:20"
               }
+            ],
+            "assumptions": [
+              "Times are each app's estimate, not a promise"
             ]
           },
-          "fallback_text": "Couldn't refresh; these are from 17:20. Souvla chicken salad before tip: Uber Eats US$16.50 plus US$5.48 fees, US$21.98, 35–45 min; DoorDash US$17.25 plus US$6.10 fees, US$23.35, 25–35 min. Fees change with demand."
+          "fallback_text": "Couldn't refresh; these are from 17:20. Souvla chicken salad before tip: Uber Eats US$16.50 plus US$5.48 fees, US$21.98, 35–45 min; DoorDash US$17.25 plus US$6.10 fees, US$23.35, 25–35 min. Times are each app's estimate. Fees change with demand."
         },
         "empty": {
           "kind": "output_blocks",
@@ -6096,7 +6114,7 @@
               "detail": "Closed on both apps until 11:00 tomorrow"
             }
           ],
-          "fallback_text": "As of 18:03, Souvla is closed on both DoorDash and Uber Eats until 11:00 tomorrow, so neither can deliver the chicken salad."
+          "fallback_text": "As of 18:03, Souvla is closed on both apps (DoorDash and Uber Eats) until 11:00 tomorrow, so neither can deliver the chicken salad to 1 Market St."
         },
         "failed": {
           "kind": "output_blocks",
@@ -6184,7 +6202,7 @@
             }
           ]
         },
-        "fallback_text": "GrabFood group order from Tian Tian Chicken Rice for 6, to the Tanjong Pagar office, as of 11:20: chicken rice set ×6 S$51.00, char siew large ×2 S$24.00, barley ×6 S$13.20, delivery S$3.99, platform S$0.60 and GST S$8.35 (S$12.94). Total S$101.14, S$18.86 left of the S$120 budget. Nothing is ordered until you say yes."
+        "fallback_text": "GrabFood group order from Tian Tian Chicken Rice for 6, to the office (Tanjong Pagar), as of 11:20: chicken rice set ×6, one each, S$51.00; char siew, large ×2, to share, S$24.00; barley drink ×6 S$13.20; delivery, platform, GST S$3.99 plus S$0.60 plus S$8.35, S$12.94. Total S$101.14, S$18.86 left of the S$120 budget. Nothing is ordered until you say yes."
       },
       "states": {
         "loading": {
@@ -6198,13 +6216,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Building the GrabFood group order",
+              "detail": "Building the GrabFood group order for 6 from Tian Tian",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d09"
               }
             }
           ],
-          "fallback_text": "Building the GrabFood group order."
+          "fallback_text": "Building the GrabFood group order for 6 from Tian Tian."
         },
         "partial": {
           "kind": "output_blocks",
@@ -6255,7 +6273,7 @@
               }
             ]
           },
-          "fallback_text": "GrabFood group order from Tian Tian for 6 as of 11:20: chicken rice set ×6 S$51.00, char siew ×2 S$24.00, barley ×6 S$13.20, S$88.20 food. Delivery, platform fee and GST haven't loaded, so I can't say it fits S$120 yet."
+          "fallback_text": "GrabFood group order from Tian Tian for 6 people as of 11:20, fees not in yet: chicken rice set ×6, one each, S$51.00; char siew, large ×2, to share, S$24.00; barley drink ×6 S$13.20; S$88.20 food. Delivery, platform fee and GST haven't loaded, so I can't say it fits S$120 yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6311,7 +6329,7 @@
               }
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 10:55. GrabFood group order from Tian Tian Chicken Rice for 6, to the Tanjong Pagar office, as of 10:55: chicken rice set ×6 S$51.00, char siew large ×2 S$24.00, barley ×6 S$13.20, delivery S$3.99, platform S$0.60 and GST S$8.35 (S$12.94). Total S$101.14, S$18.86 left of the S$120 budget. Nothing is ordered until you say yes."
+          "fallback_text": "Couldn't refresh; this is from 10:55. GrabFood group order from Tian Tian Chicken Rice for 6, to the office (Tanjong Pagar), as of 10:55: chicken rice set ×6, one each, S$51.00; char siew, large ×2, to share, S$24.00; barley drink ×6 S$13.20; delivery, platform, GST S$3.99 plus S$0.60 plus S$8.35, S$12.94. Total S$101.14, S$18.86 left of the S$120 budget. Nothing is ordered until you say yes."
         },
         "empty": {
           "kind": "output_blocks",
@@ -6327,7 +6345,7 @@
               "detail": "Group orders open at 10:00 and close at 11:00"
             }
           ],
-          "fallback_text": "As of 11:20, Tian Tian Chicken Rice isn't taking GrabFood group orders; they run 10:00 to 11:00. Nothing was ordered."
+          "fallback_text": "As of 11:20, Tian Tian Chicken Rice isn't taking GrabFood group orders; group orders open at 10:00 and close at 11:00. Nothing was ordered."
         },
         "failed": {
           "kind": "output_blocks",
@@ -6340,10 +6358,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Grab didn't answer. Nothing was ordered."
+              "detail": "Grab didn't answer. Nothing was ordered. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't build the GrabFood group order from Tian Tian: Grab didn't answer before anything was placed, so nothing was ordered. Ask me again in a few minutes."
+          "fallback_text": "Couldn't build the GrabFood group order for 6 from Tian Tian: Grab didn't answer before anything was placed, so nothing was ordered. Ask me again in a few minutes."
         }
       }
     },
@@ -6352,7 +6370,7 @@
       "vertical": "delivery",
       "kind": "card",
       "request": "Reorder my usual from Truffles.",
-      "says": "Same as last Friday but INR 40 more; shall I order it?",
+      "says": "Same as your Fri 18 Sep order but INR 40 more; shall I order it?",
       "surface": "page",
       "fresh": true,
       "components": [
@@ -6386,12 +6404,12 @@
             "items": [
               {
                 "label": "All-American cheese burger",
-                "secondary": "× 2 · up INR 20 each",
+                "secondary": "× 2 · Non-veg · up INR 20 each",
                 "trailing": "INR 620"
               },
               {
                 "label": "Peri peri fries",
-                "secondary": "× 1",
+                "secondary": "× 1 · Veg",
                 "trailing": "INR 180"
               },
               {
@@ -6414,7 +6432,7 @@
             }
           ]
         },
-        "fallback_text": "Your usual from Truffles Koramangala on Zomato as of 20:10: cheese burger ×2 INR 620 (up INR 20 each since Fri 18 Sep), peri peri fries INR 180, delivery INR 35, packaging INR 20 and GST INR 37 (INR 92), Gold discount −INR 150. INR 742 to pay, INR 40 more than last time. Nothing is ordered until you say yes."
+        "fallback_text": "Your usual from Truffles Koramangala on Zomato, last ordered Fri 18 Sep, as of 20:10: All-American cheese burger ×2, non-veg, up INR 20 each, INR 620; peri peri fries ×1, veg, INR 180; delivery, packaging, GST INR 35 plus INR 20 plus INR 37, INR 92; Gold discount applied −INR 150. INR 742 total to pay, INR 40 more than last time. Nothing is ordered until you say yes."
       },
       "states": {
         "loading": {
@@ -6428,13 +6446,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Rebuilding your Fri 18 Sep order",
+              "detail": "Rebuilding your Fri 18 Sep Truffles order on Zomato",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0a"
               }
             }
           ],
-          "fallback_text": "Rebuilding your Fri 18 Sep order."
+          "fallback_text": "Rebuilding your Fri 18 Sep Truffles order on Zomato."
         },
         "partial": {
           "kind": "output_blocks",
@@ -6449,7 +6467,7 @@
               "items": [
                 {
                   "label": "All-American cheese burger",
-                  "secondary": "× 2 · up INR 20 each",
+                  "secondary": "× 2 · Non-veg · up INR 20 each",
                   "trailing": "INR 620"
                 },
                 {
@@ -6467,7 +6485,7 @@
               }
             ]
           },
-          "fallback_text": "Your usual from Truffles as of 20:10: cheese burger ×2 INR 620 is in the cart; peri peri fries are sold out, so I haven't priced the cart. Nothing is ordered."
+          "fallback_text": "Your usual from Truffles on Zomato as of 20:10, 1 of 2 dishes available: All-American cheese burger ×2, non-veg, up INR 20 each, INR 620, is in the cart; peri peri fries sold out tonight, not added, so I haven't priced the cart. Nothing is ordered."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6495,12 +6513,12 @@
               "items": [
                 {
                   "label": "All-American cheese burger",
-                  "secondary": "× 2 · up INR 20 each",
+                  "secondary": "× 2 · Non-veg · up INR 20 each",
                   "trailing": "INR 620"
                 },
                 {
                   "label": "Peri peri fries",
-                  "secondary": "× 1",
+                  "secondary": "× 1 · Veg",
                   "trailing": "INR 180"
                 },
                 {
@@ -6523,7 +6541,7 @@
               }
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 19:30. Your usual from Truffles Koramangala on Zomato as of 19:30: cheese burger ×2 INR 620 (up INR 20 each since Fri 18 Sep), peri peri fries INR 180, delivery INR 35, packaging INR 20 and GST INR 37 (INR 92), Gold discount −INR 150. INR 742 to pay, INR 40 more than last time. Nothing is ordered until you say yes."
+          "fallback_text": "Couldn't refresh; this is from 19:30. Your usual from Truffles Koramangala on Zomato, last ordered Fri 18 Sep, as of 19:30: All-American cheese burger ×2, non-veg, up INR 20 each, INR 620; peri peri fries ×1, veg, INR 180; delivery, packaging, GST INR 35 plus INR 20 plus INR 37, INR 92; Gold discount applied −INR 150. INR 742 total to pay, INR 40 more than last time. Nothing is ordered until you say yes."
         },
         "empty": {
           "kind": "output_blocks",
@@ -6536,7 +6554,7 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Your Zomato history has no Truffles order"
+              "detail": "No Truffles order in your history. Tell me what you'd like."
             }
           ],
           "fallback_text": "As of 20:10 your Zomato history has no Truffles order, so there is no usual to repeat. Tell me what you'd like."
@@ -6552,7 +6570,7 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Zomato didn't answer. Nothing was ordered."
+              "detail": "Zomato didn't answer. Nothing was ordered. Ask me again in a few minutes."
             }
           ],
           "fallback_text": "Couldn't rebuild your usual from Truffles: Zomato didn't answer, and nothing was ordered. Ask me again in a few minutes."
@@ -6608,7 +6626,7 @@
             }
           ]
         },
-        "fallback_text": "As of 19:47, SWIGGYIT (−INR 120) needs UPI or card, and this cart pays cash on delivery. MEGHANA100 (−INR 100, any payment, orders over INR 499) does apply. TRYNEW is for a first order here, so it doesn't."
+        "fallback_text": "As of 19:47, for this Meghana Foods cart paid cash on delivery: SWIGGYIT (−INR 120) needs UPI or card, so it doesn't apply. MEGHANA100 (−INR 100, any payment, orders over INR 499) does apply. TRYNEW is for a first order at this restaurant only, so it is not eligible."
       },
       "states": {
         "loading": {
@@ -6622,13 +6640,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Checking Swiggy coupons",
+              "detail": "Checking Swiggy coupons for your Meghana Foods cart",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0b"
               }
             }
           ],
-          "fallback_text": "Checking Swiggy coupons."
+          "fallback_text": "Checking Swiggy coupons for your Meghana Foods cart."
         },
         "partial": {
           "kind": "output_blocks",
@@ -6661,7 +6679,7 @@
               }
             ]
           },
-          "fallback_text": "As of 19:47, SWIGGYIT (−INR 120) needs UPI or card; MEGHANA100 (−INR 100) applies to cash. Swiggy is still checking one more coupon."
+          "fallback_text": "As of 19:47, 2 of 3 coupons checked for this Meghana Foods cart: SWIGGYIT (−INR 120) needs UPI or card; MEGHANA100 (−INR 100, any payment, orders over INR 499) applies to cash. Swiggy is still checking one more coupon."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6700,7 +6718,7 @@
               }
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 19:10. As of 19:10, SWIGGYIT (−INR 120) needs UPI or card, and this cart pays cash on delivery. MEGHANA100 (−INR 100, any payment, orders over INR 499) does apply. TRYNEW is for a first order here, so it doesn't."
+          "fallback_text": "Couldn't refresh; this is from 19:10. As of 19:10, for this Meghana Foods cart paid cash on delivery: SWIGGYIT (−INR 120) needs UPI or card, so it doesn't apply. MEGHANA100 (−INR 100, any payment, orders over INR 499) does apply. TRYNEW is for a first order at this restaurant only, so it is not eligible."
         },
         "empty": {
           "kind": "output_blocks",
@@ -6716,7 +6734,7 @@
               "detail": "SWIGGYIT needs UPI or card; no other coupon applies"
             }
           ],
-          "fallback_text": "As of 19:47, SWIGGYIT needs UPI or card, and no other Swiggy coupon applies to this cash-on-delivery cart."
+          "fallback_text": "As of 19:47, SWIGGYIT needs UPI or card, and no other Swiggy coupon applies to this Meghana Foods cash-on-delivery cart."
         },
         "failed": {
           "kind": "output_blocks",
@@ -6797,7 +6815,7 @@
             }
           ]
         },
-        "fallback_text": "As of 08:40, your DoorDash cart at Tartine is US$11.50; the minimum is US$15, so add US$3.50 or more. Options: morning bun US$5.25 (most ordered), drip coffee US$4.00, chocolate chip cookie US$4.50."
+        "fallback_text": "As of 08:40, your DoorDash cart at Tartine is US$11.50; the minimum US$15 means add US$3.50 or more. Options: morning bun US$5.25 (most ordered), drip coffee 12 oz US$4.00, chocolate chip cookie US$4.50."
       },
       "states": {
         "loading": {
@@ -6810,13 +6828,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Adding a croissant and a latte",
+              "detail": "Adding a croissant and a latte from Tartine on DoorDash",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0c"
               }
             }
           ],
-          "fallback_text": "Adding a croissant and a latte."
+          "fallback_text": "Adding a croissant and a latte from Tartine on DoorDash."
         },
         "partial": {
           "kind": "output_blocks",
@@ -6847,7 +6865,7 @@
               }
             ]
           },
-          "fallback_text": "As of 08:40 your DoorDash cart at Tartine is US$11.50; the minimum is US$15, so add US$3.50 or more. DoorDash hasn't loaded the menu suggestions yet."
+          "fallback_text": "As of 08:40 your DoorDash cart at Tartine is US$11.50; the minimum is US$15, so add US$3.50 or more. DoorDash's suggestions not in yet: the menu is still loading."
         },
         "stale": {
           "kind": "output_blocks",
@@ -6898,7 +6916,7 @@
               }
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 08:15. As of 08:15, your DoorDash cart at Tartine is US$11.50; the minimum is US$15, so add US$3.50 or more. Options: morning bun US$5.25 (most ordered), drip coffee US$4.00, chocolate chip cookie US$4.50."
+          "fallback_text": "Couldn't refresh; this is from 08:15. As of 08:15, your DoorDash cart at Tartine is US$11.50; the minimum US$15 means add US$3.50 or more. Options: morning bun US$5.25 (most ordered), drip coffee 12 oz US$4.00, chocolate chip cookie US$4.50."
         },
         "failed": {
           "kind": "output_blocks",
@@ -6911,10 +6929,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "DoorDash didn't answer. Nothing was ordered."
+              "detail": "DoorDash didn't answer. Nothing was ordered. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't add your croissant and latte: DoorDash didn't answer, and nothing was ordered. Ask me again in a few minutes."
+          "fallback_text": "Couldn't add your croissant and latte from Tartine: DoorDash didn't answer, and nothing was ordered. Ask me again in a few minutes."
         }
       }
     },
@@ -6930,7 +6948,7 @@
         "D14 Outside delivery area",
         "D1 Restaurants near me"
       ],
-      "rationale": "The boundary is the title; open alternatives that do deliver are the rows, with the app's times and fees.",
+      "rationale": "The boundary is the title; open alternatives that do deliver are the rows, with rating counts, the app's times and fees.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -6944,18 +6962,18 @@
             "items": [
               {
                 "label": "Boon Tong Kee",
-                "secondary": "Chicken rice · rated 4.4/5 · 25–35 min",
+                "secondary": "Chicken rice · 4.4/5 from 2K+ ratings · 25–35 min",
                 "trailing": "S$2.99 fee",
                 "mark": "pick"
               },
               {
                 "label": "Wee Nam Kee",
-                "secondary": "Chicken rice · rated 4.3/5 · 30–40 min",
+                "secondary": "Chicken rice · 4.3/5 from 1K+ ratings · 30–40 min",
                 "trailing": "S$3.49 fee"
               },
               {
                 "label": "Loy Kee",
-                "secondary": "Chicken rice · rated 4.1/5 · 20–30 min",
+                "secondary": "Chicken rice · 4.1/5 from 500+ ratings · 20–30 min",
                 "trailing": "S$1.99 fee"
               }
             ]
@@ -6976,10 +6994,10 @@
             }
           ],
           "assumptions": [
-            "Times are GrabFood's estimates"
+            "Delivery times are GrabFood's estimate, not a promise"
           ]
         },
-        "fallback_text": "As of 18:30, Tian Tian Chicken Rice doesn't deliver to Punggol on GrabFood (21 km from Maxwell). Chicken rice that does: Boon Tong Kee, rated 4.4/5, 25–35 min, S$2.99 fee; Wee Nam Kee, rated 4.3/5, 30–40 min, S$3.49 fee; Loy Kee, rated 4.1/5, 20–30 min, S$1.99 fee."
+        "fallback_text": "As of 18:30, Tian Tian Chicken Rice doesn't deliver to Punggol on GrabFood (21 km from Maxwell). Chicken rice that does: Boon Tong Kee, 4.4/5 from 2K+ ratings, 25–35 min, S$2.99 fee; Wee Nam Kee, 4.3/5 from 1K+ ratings, 30–40 min, S$3.49 fee; Loy Kee, 4.1/5 from 500+ ratings, 20–30 min, S$1.99 fee. Times are GrabFood's estimates."
       },
       "states": {
         "loading": {
@@ -6993,13 +7011,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Checking GrabFood for Punggol",
+              "detail": "Checking whether Tian Tian delivers to Punggol on GrabFood",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0d"
               }
             }
           ],
-          "fallback_text": "Checking GrabFood for Punggol."
+          "fallback_text": "Checking whether Tian Tian delivers to Punggol on GrabFood."
         },
         "partial": {
           "kind": "output_blocks",
@@ -7014,7 +7032,7 @@
               "items": [
                 {
                   "label": "Boon Tong Kee",
-                  "secondary": "Chicken rice · rated 4.4/5 · 25–35 min",
+                  "secondary": "Chicken rice · 4.4/5 from 2K+ ratings · 25–35 min",
                   "trailing": "S$2.99 fee"
                 }
               ]
@@ -7025,9 +7043,12 @@
               {
                 "label": "GrabFood, 26 Sep 2026 18:30; 2 still checking"
               }
+            ],
+            "assumptions": [
+              "Delivery times are GrabFood's estimate, not a promise"
             ]
           },
-          "fallback_text": "As of 18:30, Tian Tian doesn't deliver to Punggol on GrabFood. Boon Tong Kee does: rated 4.4/5, 25–35 min, S$2.99 fee; two others are still being checked."
+          "fallback_text": "As of 18:30, Tian Tian doesn't deliver to Punggol on GrabFood; 1 of 3 alternatives checked. Boon Tong Kee does: chicken rice, 4.4/5 from 2K+ ratings, 25–35 min (GrabFood's estimate), S$2.99 fee; two others are still being checked."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7042,18 +7063,18 @@
               "items": [
                 {
                   "label": "Boon Tong Kee",
-                  "secondary": "Chicken rice · rated 4.4/5 · 25–35 min",
+                  "secondary": "Chicken rice · 4.4/5 from 2K+ ratings · 25–35 min",
                   "trailing": "S$2.99 fee",
                   "mark": "pick"
                 },
                 {
                   "label": "Wee Nam Kee",
-                  "secondary": "Chicken rice · rated 4.3/5 · 30–40 min",
+                  "secondary": "Chicken rice · 4.3/5 from 1K+ ratings · 30–40 min",
                   "trailing": "S$3.49 fee"
                 },
                 {
                   "label": "Loy Kee",
-                  "secondary": "Chicken rice · rated 4.1/5 · 20–30 min",
+                  "secondary": "Chicken rice · 4.1/5 from 500+ ratings · 20–30 min",
                   "trailing": "S$1.99 fee"
                 }
               ]
@@ -7074,10 +7095,10 @@
               }
             ],
             "assumptions": [
-              "Times are GrabFood's estimates"
+              "Delivery times are GrabFood's estimate, not a promise"
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 17:45. As of 17:45, Tian Tian Chicken Rice doesn't deliver to Punggol on GrabFood (21 km from Maxwell). Chicken rice that does: Boon Tong Kee, rated 4.4/5, 25–35 min, S$2.99 fee; Wee Nam Kee, rated 4.3/5, 30–40 min, S$3.49 fee; Loy Kee, rated 4.1/5, 20–30 min, S$1.99 fee."
+          "fallback_text": "Couldn't refresh; this is from 17:45. As of 17:45, Tian Tian Chicken Rice doesn't deliver to Punggol on GrabFood (21 km from Maxwell). Chicken rice that does: Boon Tong Kee, 4.4/5 from 2K+ ratings, 25–35 min, S$2.99 fee; Wee Nam Kee, 4.3/5 from 1K+ ratings, 30–40 min, S$3.49 fee; Loy Kee, 4.1/5 from 500+ ratings, 20–30 min, S$1.99 fee. Times are GrabFood's estimates."
         },
         "empty": {
           "kind": "output_blocks",
@@ -7125,7 +7146,7 @@
         "D15 Grocery list to basket",
         "S11 Cart / checkout summary"
       ],
-      "rationale": "Every substitution and missing item is named on its row; the total and the app's time lead; the order waits for a yes.",
+      "rationale": "Pack size in the name, unit price and every substitution or missing item on its row; the total and the app's time lead; the order waits for a yes.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -7143,7 +7164,7 @@
               },
               {
                 "value": "10 min",
-                "label": "Swiggy's estimate"
+                "label": "Next slot, estimated"
               }
             ]
           },
@@ -7152,21 +7173,21 @@
             "items": [
               {
                 "label": "Amul Taaza milk 1 L",
-                "secondary": "× 1",
+                "secondary": "× 1 · INR 68/L",
                 "trailing": "INR 68"
               },
               {
                 "label": "Paneer 200 g",
-                "secondary": "Milky Mist out · swapped for Amul",
+                "secondary": "Milky Mist out · swapped for Amul · INR 45/100 g",
                 "trailing": "INR 90"
               },
               {
                 "label": "Tomatoes 500 g",
-                "secondary": "× 2",
+                "secondary": "× 2 · INR 110/kg",
                 "trailing": "INR 110"
               },
               {
-                "label": "Coriander",
+                "label": "Coriander 100 g",
                 "secondary": "× 1",
                 "trailing": "INR 45"
               },
@@ -7181,7 +7202,7 @@
                 "trailing": "Not added"
               },
               {
-                "label": "Bread",
+                "label": "Bread 400 g",
                 "secondary": "× 1",
                 "trailing": "INR 36"
               },
@@ -7198,9 +7219,13 @@
             {
               "label": "Swiggy Instamart cart, 26 Sep 2026 18:05"
             }
+          ],
+          "assumptions": [
+            "Delivery slot: the next one Instamart offers; later slots are on Instamart",
+            "Delivery times are Swiggy's estimate, not a promise"
           ]
         },
-        "fallback_text": "Instamart basket to Home as of 18:05, 6 of 7 items: Amul Taaza milk 1 L INR 68; paneer 200 g INR 90 (Milky Mist out, swapped for Amul); tomatoes 500 g ×2 INR 110; coriander INR 45; India Gate basmati 1 kg INR 120; bread INR 36; eggs out of stock, not added; handling INR 15, delivery free. INR 484 to pay, about 10 min (Swiggy's estimate). Nothing is ordered until you say yes."
+        "fallback_text": "Instamart basket to Home as of 18:05, 6 of 7 items, 1 swap, 1 missing: Amul Taaza milk 1 L ×1, INR 68/L, INR 68; paneer 200 g, Milky Mist out, swapped for Amul, INR 45/100 g, INR 90; tomatoes 500 g ×2, INR 110/kg, INR 110; coriander 100 g INR 45; basmati rice 1 kg, India Gate, same as last time, INR 120; eggs, 6, out of stock, no swap, not added; bread 400 g INR 36; handling fee INR 15, delivery free over INR 199. INR 484 total to pay; next slot, estimated 10 min (Swiggy's estimate). Nothing is ordered until you say yes."
       },
       "states": {
         "loading": {
@@ -7214,13 +7239,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Finding 7 items on Instamart",
+              "detail": "Finding 7 items on Instamart for delivery to Home, Indiranagar",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0e"
               }
             }
           ],
-          "fallback_text": "Finding 7 items on Instamart."
+          "fallback_text": "Finding 7 items on Instamart for delivery to Home, Indiranagar."
         },
         "partial": {
           "kind": "output_blocks",
@@ -7235,21 +7260,21 @@
               "items": [
                 {
                   "label": "Amul Taaza milk 1 L",
-                  "secondary": "× 1",
+                  "secondary": "× 1 · INR 68/L",
                   "trailing": "INR 68"
                 },
                 {
                   "label": "Paneer 200 g",
-                  "secondary": "Milky Mist out · swapped for Amul",
+                  "secondary": "Milky Mist out · swapped for Amul · INR 45/100 g",
                   "trailing": "INR 90"
                 },
                 {
                   "label": "Tomatoes 500 g",
-                  "secondary": "× 2",
+                  "secondary": "× 2 · INR 110/kg",
                   "trailing": "INR 110"
                 },
                 {
-                  "label": "Coriander",
+                  "label": "Coriander 100 g",
                   "secondary": "× 1",
                   "trailing": "INR 45"
                 }
@@ -7263,7 +7288,7 @@
               }
             ]
           },
-          "fallback_text": "Instamart basket as of 18:05, 4 of 7 found so far: Amul Taaza milk INR 68; paneer INR 90 (swapped for Amul); tomatoes ×2 INR 110; coriander INR 45. Still searching for rice, eggs and bread; no total yet."
+          "fallback_text": "Instamart basket to Home as of 18:05, still searching, 4 of 7 found so far: Amul Taaza milk 1 L ×1, INR 68/L, INR 68; paneer 200 g, Milky Mist out, swapped for Amul, INR 45/100 g, INR 90; tomatoes 500 g ×2, INR 110/kg, INR 110; coriander 100 g INR 45. Rice, eggs and bread not found yet; no total yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7282,7 +7307,7 @@
                 },
                 {
                   "value": "10 min",
-                  "label": "Swiggy's estimate"
+                  "label": "Next slot, estimated"
                 }
               ]
             },
@@ -7291,21 +7316,21 @@
               "items": [
                 {
                   "label": "Amul Taaza milk 1 L",
-                  "secondary": "× 1",
+                  "secondary": "× 1 · INR 68/L",
                   "trailing": "INR 68"
                 },
                 {
                   "label": "Paneer 200 g",
-                  "secondary": "Milky Mist out · swapped for Amul",
+                  "secondary": "Milky Mist out · swapped for Amul · INR 45/100 g",
                   "trailing": "INR 90"
                 },
                 {
                   "label": "Tomatoes 500 g",
-                  "secondary": "× 2",
+                  "secondary": "× 2 · INR 110/kg",
                   "trailing": "INR 110"
                 },
                 {
-                  "label": "Coriander",
+                  "label": "Coriander 100 g",
                   "secondary": "× 1",
                   "trailing": "INR 45"
                 },
@@ -7320,7 +7345,7 @@
                   "trailing": "Not added"
                 },
                 {
-                  "label": "Bread",
+                  "label": "Bread 400 g",
                   "secondary": "× 1",
                   "trailing": "INR 36"
                 },
@@ -7337,9 +7362,13 @@
               {
                 "label": "Swiggy Instamart cart, 26 Sep 2026 17:30"
               }
+            ],
+            "assumptions": [
+              "Delivery slot: the next one Instamart offers; later slots are on Instamart",
+              "Delivery times are Swiggy's estimate, not a promise"
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 17:30. Instamart basket to Home as of 17:30, 6 of 7 items: Amul Taaza milk 1 L INR 68; paneer 200 g INR 90 (Milky Mist out, swapped for Amul); tomatoes 500 g ×2 INR 110; coriander INR 45; India Gate basmati 1 kg INR 120; bread INR 36; eggs out of stock, not added; handling INR 15, delivery free. INR 484 to pay, about 10 min (Swiggy's estimate). Nothing is ordered until you say yes."
+          "fallback_text": "Couldn't refresh; this is from 17:30. Instamart basket to Home as of 17:30, 6 of 7 items, 1 swap, 1 missing: Amul Taaza milk 1 L ×1, INR 68/L, INR 68; paneer 200 g, Milky Mist out, swapped for Amul, INR 45/100 g, INR 90; tomatoes 500 g ×2, INR 110/kg, INR 110; coriander 100 g INR 45; basmati rice 1 kg, India Gate, same as last time, INR 120; eggs, 6, out of stock, no swap, not added; bread 400 g INR 36; handling fee INR 15, delivery free over INR 199. INR 484 total to pay; next slot, estimated 10 min (Swiggy's estimate). Nothing is ordered until you say yes."
         },
         "empty": {
           "kind": "output_blocks",
@@ -7355,7 +7384,7 @@
               "detail": "The store near you is closed until 06:00"
             }
           ],
-          "fallback_text": "As of 18:05, Swiggy Instamart isn't delivering to Home in Indiranagar; the nearest store is closed until 06:00. Nothing was ordered."
+          "fallback_text": "As of 18:05, Swiggy Instamart isn't delivering to Home in Indiranagar; the store near you is closed until 06:00. Nothing was ordered."
         },
         "failed": {
           "kind": "output_blocks",
@@ -7368,10 +7397,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Swiggy didn't answer. Nothing was ordered."
+              "detail": "Swiggy didn't answer. Nothing was ordered. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't build your Instamart basket: Swiggy didn't answer, and nothing was ordered. Ask me again in a few minutes."
+          "fallback_text": "Couldn't build your Instamart basket of 7 items: Swiggy didn't answer, and nothing was ordered. Ask me again in a few minutes."
         }
       }
     },
@@ -7425,10 +7454,10 @@
             }
           ],
           "assumptions": [
-            "The time is Blinkit's estimate"
+            "Delivery times are Blinkit's estimate, not a promise"
           ]
         },
-        "fallback_text": "As of 18:14 your Blinkit order 5520931 is about 4 minutes away (Blinkit's estimate). Arjun left the store at 18:12; it was packed at 18:10 (7 items) and placed at 18:08, INR 412 paid by UPI."
+        "fallback_text": "As of 18:14 your Blinkit order 5520931 is arriving in about 4 min (Blinkit's estimate), with Arjun. On the way: Arjun left the store at 18:12. Packed: 7 items, 18:10. Order placed: INR 412, paid by UPI, 18:08."
       },
       "states": {
         "loading": {
@@ -7441,13 +7470,13 @@
             {
               "kind": "status",
               "state": "working",
-              "detail": "Checking Blinkit tracking",
+              "detail": "Checking Blinkit tracking for order 5520931",
               "subject": {
                 "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000d0f"
               }
             }
           ],
-          "fallback_text": "Checking Blinkit tracking."
+          "fallback_text": "Checking Blinkit tracking for order 5520931."
         },
         "partial": {
           "kind": "output_blocks",
@@ -7480,7 +7509,7 @@
               }
             ]
           },
-          "fallback_text": "As of 18:14 your Blinkit order 5520931 left the store at 18:12; it was placed at 18:08, INR 412 by UPI. Blinkit hasn't sent an arrival time."
+          "fallback_text": "As of 18:14 your Blinkit order 5520931. On the way: left the store at 18:12. Order placed: INR 412, paid by UPI, 18:08. Blinkit hasn't sent an arrival time."
         },
         "stale": {
           "kind": "output_blocks",
@@ -7511,9 +7540,12 @@
               {
                 "label": "Blinkit tracking, 26 Sep 2026 18:10"
               }
+            ],
+            "assumptions": [
+              "Delivery times are Blinkit's estimate, not a promise"
             ]
           },
-          "fallback_text": "Couldn't refresh; this is from 18:10. Blinkit order 5520931 was about 8 minutes away (Blinkit's estimate): packed at 18:10 (7 items), placed at 18:08, INR 412 paid by UPI."
+          "fallback_text": "Couldn't refresh; this is from 18:10. Blinkit order 5520931 was arriving in about 8 min (Blinkit's estimate). Packed: 7 items, 18:10. Order placed: INR 412, paid by UPI, 18:08."
         },
         "empty": {
           "kind": "output_blocks",
@@ -7529,7 +7561,7 @@
               "detail": "Your last order was delivered Thu 24 Sep"
             }
           ],
-          "fallback_text": "As of 18:14 there is no Blinkit order on the way. Your last one was delivered Thu 24 Sep."
+          "fallback_text": "As of 18:14 there is no Blinkit order on the way. Your last order was delivered Thu 24 Sep."
         },
         "failed": {
           "kind": "output_blocks",
