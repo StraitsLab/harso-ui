@@ -4,7 +4,9 @@
     "places-cafe",
     "places-dinner-options",
     "places-hours",
-    "places-nearby-map"
+    "places-nearby-map",
+    "places-card-photo",
+    "places-table-booked"
   ],
   "examples": [
     {
@@ -73,6 +75,292 @@
           ]
         },
         "fallback_text": "Apartment Coffee, 161 Lavender St, 6 min walk, open until 18:00, 4.7 stars; quiet on weekdays with power at the bar."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Quiet cafes near you",
+            "subtitle": "Within a 15 min walk"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 8 cafes",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000e14"
+              }
+            }
+          ],
+          "fallback_text": "Looking for a quiet cafe within a 15-minute walk."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Apartment Coffee",
+            "subtitle": "Cafe · 4.7★ · as of 11:05 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "apt",
+                    "label": "Apartment Coffee",
+                    "lat": "1.3031",
+                    "lon": "103.8587"
+                  }
+                ],
+                "selected_place_id": "apt"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Address",
+                  "secondary": "161 Lavender St · 6 min walk"
+                },
+                {
+                  "label": "Good for",
+                  "secondary": "Quiet weekdays, power at the bar"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Maps",
+                "url": "https://maps.apple.com/?q=Apartment+Coffee+Singapore"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Maps, 26 Sep 2026 11:05"
+              }
+            ]
+          },
+          "fallback_text": "Apartment Coffee, 161 Lavender St, 6 min walk, 4.7 stars, as of 11:05; couldn’t refresh today’s hours."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No quiet cafes near you",
+            "subtitle": "Within a 15 min walk · as of 14:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The nearest is a 22 min walk, in Kampong Glam"
+            }
+          ],
+          "fallback_text": "No quiet cafes within a 15-minute walk as of 14:20. The nearest is a 22-minute walk, in Kampong Glam."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t search cafes near you",
+            "subtitle": "Within a 15 min walk"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Maps didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t search cafes near you: Maps didn’t respond. Nothing was changed."
+        }
+      }
+    },
+    {
+      "id": "places-card-photo",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Tell me about Din Tai Fung at Taipei 101.",
+      "says": "Go before 11:30 or after 14:00; the wait is shortest then.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Place card",
+        "Opening hours"
+      ],
+      "rationale": "What it looks like matters for a restaurant, so the photo is the one visual; hours today and the queue are rows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "鼎泰豐 Din Tai Fung, Taipei 101",
+          "subtitle": "Dumplings · open until 21:30 · 4.5★ · as of 10:20"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000e30",
+              "alt": "Din Tai Fung Taipei 101: a steamer of xiaolongbao on a wooden table",
+              "aspect": "4:3"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Address",
+                "secondary": "B1, Taipei 101 Mall, 45 Shifu Rd"
+              },
+              {
+                "label": "Hours today",
+                "trailing": "11:00–21:30"
+              },
+              {
+                "label": "Usual wait",
+                "secondary": "Take a number at the desk",
+                "trailing": "40–60 min"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Maps",
+              "url": "https://maps.apple.com/?q=Din+Tai+Fung+Taipei+101"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Maps, 26 Sep 2026 10:20"
+            }
+          ]
+        },
+        "fallback_text": "Din Tai Fung (鼎泰豐), B1 Taipei 101 Mall, 45 Shifu Rd: open 11:00–21:30 today, 4.5 stars, usual wait 40–60 min, as of 10:20."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Din Tai Fung, Taipei 101",
+            "subtitle": "Dumplings"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading hours and waits",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000e19"
+              }
+            }
+          ],
+          "fallback_text": "Reading Din Tai Fung Taipei 101’s hours and waits."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "鼎泰豐 Din Tai Fung, Taipei 101",
+            "subtitle": "Dumplings · open until 21:30 · wait not in yet · as of 10:20"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Address",
+                  "secondary": "B1, Taipei 101 Mall, 45 Shifu Rd"
+                },
+                {
+                  "label": "Hours today",
+                  "trailing": "11:00–21:30"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Maps",
+                "url": "https://maps.apple.com/?q=Din+Tai+Fung+Taipei+101"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Maps, 26 Sep 2026 10:20"
+              }
+            ]
+          },
+          "fallback_text": "Din Tai Fung (鼎泰豐), B1 Taipei 101 Mall: open 11:00–21:30 today as of 10:20. The usual wait isn’t in yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "鼎泰豐 Din Tai Fung, Taipei 101",
+            "subtitle": "Dumplings · as of 25 Sep 20:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Address",
+                  "secondary": "B1, Taipei 101 Mall, 45 Shifu Rd"
+                },
+                {
+                  "label": "Hours today",
+                  "trailing": "11:00–21:30"
+                },
+                {
+                  "label": "Usual wait",
+                  "secondary": "Take a number at the desk",
+                  "trailing": "40–60 min"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Maps, 25 Sep 2026 20:10"
+              }
+            ]
+          },
+          "fallback_text": "Din Tai Fung (鼎泰豐), B1 Taipei 101 Mall, as of 25 Sep 20:10 (couldn’t refresh): 11:00–21:30, usual wait 40–60 min."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read Din Tai Fung",
+            "subtitle": "Taipei 101"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Maps didn’t respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn’t read Din Tai Fung Taipei 101: Maps didn’t respond. Nothing was changed."
+        }
       }
     },
     {
@@ -132,6 +420,176 @@
           ]
         },
         "fallback_text": "Tanjong Pagar to Jewel by MRT: about 42 min. East–West line to Tanah Merah, change to the Changi Airport line, 5 min walk."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "To Jewel by MRT",
+            "subtitle": "From Tanjong Pagar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Planning the route",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000e15"
+              }
+            }
+          ],
+          "fallback_text": "Planning the MRT route from Tanjong Pagar to Jewel."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No MRT route to Jewel from here",
+            "subtitle": "From Tanjong Pagar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Trains stop at 23:45; a taxi takes 25 min"
+            }
+          ],
+          "fallback_text": "No MRT route to Jewel from Tanjong Pagar now: trains stop at 23:45. A taxi takes about 25 min."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t plan the route to Jewel",
+            "subtitle": "From Tanjong Pagar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The journey planner didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t plan the route to Jewel from Tanjong Pagar: the journey planner didn’t respond."
+        }
+      }
+    },
+    {
+      "id": "places-walk-map",
+      "vertical": "places",
+      "kind": "card",
+      "request": "How do I walk from Ueno station to the Gracery?",
+      "says": "Take the Park exit; it's a straight walk down Chuo-dori.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Directions"
+      ],
+      "rationale": "A short walk: two pins show where, the legs are rows, and the walking directions hand off to Maps.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "8 min walk to Hotel Gracery Ueno",
+          "subtitle": "From JR Ueno · 650 m"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "a",
+                  "label": "JR Ueno, Park exit",
+                  "lat": "35.7141",
+                  "lon": "139.7770"
+                },
+                {
+                  "id": "b",
+                  "label": "Hotel Gracery Ueno",
+                  "lat": "35.7118",
+                  "lon": "139.7745"
+                }
+              ],
+              "selected_place_id": "b"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Park exit to Chuo-dori",
+                "secondary": "Down the steps, turn left",
+                "trailing": "2 min"
+              },
+              {
+                "label": "Chuo-dori south",
+                "secondary": "Past Ameyoko on your left",
+                "trailing": "5 min"
+              },
+              {
+                "label": "Hotel entrance",
+                "secondary": "Beside the Keisei Ueno exit",
+                "trailing": "1 min"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Walk in Maps",
+              "url": "https://maps.apple.com/?saddr=JR+Ueno+Station&daddr=Hotel+Gracery+Ueno&dirflg=w"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Apple Maps walking route, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "JR Ueno to Hotel Gracery Ueno: 8 min, 650 m. Park exit to Chuo-dori 2 min, south on Chuo-dori 5 min, entrance beside Keisei Ueno 1 min."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "To Hotel Gracery Ueno",
+            "subtitle": "From JR Ueno"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Planning the walk",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000e1a"
+              }
+            }
+          ],
+          "fallback_text": "Planning the walk from JR Ueno to Hotel Gracery Ueno."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t plan the walk",
+            "subtitle": "JR Ueno to Hotel Gracery Ueno"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Maps didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t plan the walk from JR Ueno to Hotel Gracery Ueno: Maps didn’t respond."
+        }
       }
     },
     {
@@ -185,6 +643,244 @@
           ]
         },
         "fallback_text": "Tables for 4 in Tiong Bahru tonight: Merci Marcel 7:30 (pick); Bincho 7:45; Tiong Bahru Bakery Diner 7:30."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dinner in Tiong Bahru",
+            "subtitle": "4 people · 7:30 pm"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking tables at 6 restaurants",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000e16"
+              }
+            }
+          ],
+          "fallback_text": "Checking tables for 4 in Tiong Bahru at 7:30 pm."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dinner in Tiong Bahru",
+            "subtitle": "4 people · 7:30 pm · 2 of 3 checked · as of 16:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Merci Marcel",
+                  "secondary": "French · 4.5★ · table at 7:30",
+                  "trailing": "S$$",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Bincho",
+                  "secondary": "Yakitori · 4.6★ · table at 7:45",
+                  "trailing": "S$$$"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Chope and Google Maps availability, 26 Sep 2026 16:05"
+              }
+            ]
+          },
+          "fallback_text": "Tables for 4 in Tiong Bahru, 2 of 3 checked as of 16:05: Merci Marcel 7:30; Bincho 7:45."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dinner in Tiong Bahru",
+            "subtitle": "4 people · 7:30 pm · as of 15:20 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Merci Marcel",
+                  "secondary": "French · 4.5★ · table at 7:30",
+                  "trailing": "S$$",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Bincho",
+                  "secondary": "Yakitori · 4.6★ · table at 7:45",
+                  "trailing": "S$$$"
+                },
+                {
+                  "label": "Tiong Bahru Bakery Diner",
+                  "secondary": "Brunch-style · 4.3★ · table at 7:30",
+                  "trailing": "S$$"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Chope and Google Maps availability, 26 Sep 2026 15:20"
+              }
+            ]
+          },
+          "fallback_text": "Tables for 4 in Tiong Bahru as of 15:20 (couldn’t refresh): Merci Marcel 7:30; Bincho 7:45; Tiong Bahru Bakery Diner 7:30."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No tables for 4 in Tiong Bahru",
+            "subtitle": "7:30 pm · as of 16:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The earliest is 9:00 pm at Bincho"
+            }
+          ],
+          "fallback_text": "No tables for 4 in Tiong Bahru at 7:30 pm as of 16:05. The earliest is 9:00 pm at Bincho."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check tables",
+            "subtitle": "Tiong Bahru · 4 people"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Chope didn’t respond. Nothing was booked."
+            }
+          ],
+          "fallback_text": "Couldn’t check tables in Tiong Bahru: Chope didn’t respond. Nothing was booked."
+        }
+      }
+    },
+    {
+      "id": "places-table-booked",
+      "vertical": "places",
+      "kind": "card",
+      "request": "Book Merci Marcel for 4 at 7:30 tonight.",
+      "says": "Done. Your table is held until 7:45.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Reservation",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the approval, the result is the booking: time and reference in the header, the terms people forget as rows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked · Merci Marcel",
+          "subtitle": "Sat 26 Sep · 7:30 pm · 4 people · as of 16:12"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Reference",
+                "trailing": "CH-88213"
+              },
+              {
+                "label": "Table held",
+                "secondary": "Released 15 min after",
+                "trailing": "until 7:45 pm"
+              },
+              {
+                "label": "Cancel",
+                "secondary": "Free on Chope before 5:30 pm",
+                "trailing": "No fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Manage on Chope",
+              "url": "https://www.chope.co/singapore-restaurants/restaurant/merci-marcel-tiong-bahru"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Chope confirmation, 26 Sep 2026 16:12"
+            }
+          ]
+        },
+        "fallback_text": "Booked Merci Marcel, Sat 26 Sep 7:30 pm for 4, ref CH-88213, as of 16:12. Table held until 7:45 pm; free to cancel on Chope before 5:30 pm."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Merci Marcel",
+            "subtitle": "Sat 26 Sep · 7:30 pm · 4 people"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Waiting for Chope to confirm",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000e1b"
+              }
+            }
+          ],
+          "fallback_text": "Waiting for Chope to confirm Merci Marcel, 7:30 pm for 4."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "7:30 pm at Merci Marcel just went",
+            "subtitle": "Sat 26 Sep · 4 people · as of 16:12"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The nearest is 8:15 pm; nothing was booked"
+            }
+          ],
+          "fallback_text": "The 7:30 pm table for 4 at Merci Marcel just went as of 16:12. The nearest is 8:15 pm; nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t book Merci Marcel",
+            "subtitle": "Sat 26 Sep · 7:30 pm"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Chope didn’t respond. Nothing was booked."
+            }
+          ],
+          "fallback_text": "Couldn’t book Merci Marcel for 7:30 pm: Chope didn’t respond. Nothing was booked."
+        }
       }
     },
     {
@@ -231,6 +927,76 @@
           ]
         },
         "fallback_text": "Singapore Botanic Gardens: open daily 05:00 to midnight, free. National Orchid Garden 08:30–19:00, last entry 18:00, S$15."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore Botanic Gardens",
+            "subtitle": "Hours"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading NParks",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000e17"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Botanic Gardens’ hours from NParks."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singapore Botanic Gardens",
+            "subtitle": "Every day · as of 24 Sep 18:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Gardens",
+                  "trailing": "05:00–00:00"
+                },
+                {
+                  "label": "National Orchid Garden",
+                  "secondary": "Last entry 18:00 · S$15",
+                  "trailing": "08:30–19:00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "NParks, 24 Sep 2026 18:00",
+                "url": "https://www.nparks.gov.sg/sbg"
+              }
+            ]
+          },
+          "fallback_text": "Singapore Botanic Gardens, as of 24 Sep 18:00 (couldn’t refresh): gardens 05:00 to midnight; National Orchid Garden 08:30–19:00, last entry 18:00, S$15."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the Gardens’ hours",
+            "subtitle": "Singapore Botanic Gardens"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "NParks didn’t respond."
+            }
+          ],
+          "fallback_text": "Couldn’t read the Singapore Botanic Gardens’ hours: NParks didn’t respond."
+        }
       }
     },
     {
@@ -311,6 +1077,180 @@
           ]
         },
         "fallback_text": "24-hour clinics nearby: Raffles Medical Holland Village 8 min; Fullerton Health Novena 12 min; Parkway Shenton Bukit Timah 15 min (call first)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "24-hour clinics near you",
+            "subtitle": "Within 20 min"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 5 clinics",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000000e18"
+              }
+            }
+          ],
+          "fallback_text": "Looking for 24-hour clinics near you."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "24-hour clinics near you",
+            "subtitle": "2 of 3 confirmed open · as of 23:10"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "c1",
+                    "label": "Raffles Medical Holland V",
+                    "lat": "1.3113",
+                    "lon": "103.7960"
+                  },
+                  {
+                    "id": "c2",
+                    "label": "Fullerton Health Novena",
+                    "lat": "1.3203",
+                    "lon": "103.8436"
+                  }
+                ],
+                "selected_place_id": "c1"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Raffles Medical",
+                  "secondary": "Holland Village · walk-in",
+                  "trailing": "8 min",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Fullerton Health",
+                  "secondary": "Novena · walk-in",
+                  "trailing": "12 min"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MOH clinic directory and Google Maps, 26 Sep 2026 23:10"
+              }
+            ]
+          },
+          "fallback_text": "24-hour clinics, 2 of 3 confirmed as of 23:10: Raffles Medical Holland Village 8 min; Fullerton Health Novena 12 min."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "24-hour clinics near you",
+            "subtitle": "as of 21:40 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "c1",
+                    "label": "Raffles Medical Holland V",
+                    "lat": "1.3113",
+                    "lon": "103.7960"
+                  },
+                  {
+                    "id": "c2",
+                    "label": "Fullerton Health Novena",
+                    "lat": "1.3203",
+                    "lon": "103.8436"
+                  },
+                  {
+                    "id": "c3",
+                    "label": "Parkway Shenton Bukit Timah",
+                    "lat": "1.3294",
+                    "lon": "103.8025"
+                  }
+                ],
+                "selected_place_id": "c1"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Raffles Medical",
+                  "secondary": "Holland Village · walk-in",
+                  "trailing": "8 min",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Fullerton Health",
+                  "secondary": "Novena · walk-in",
+                  "trailing": "12 min"
+                },
+                {
+                  "label": "Parkway Shenton",
+                  "secondary": "Bukit Timah · call first",
+                  "trailing": "15 min"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MOH clinic directory and Google Maps, 26 Sep 2026 21:40"
+              }
+            ]
+          },
+          "fallback_text": "24-hour clinics as of 21:40 (couldn’t refresh): Raffles Medical Holland Village 8 min; Fullerton Health Novena 12 min; Parkway Shenton Bukit Timah 15 min."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 24-hour clinics within 20 min",
+            "subtitle": "as of 23:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "For an emergency, call 995 or go to NUH A&E"
+            }
+          ],
+          "fallback_text": "No 24-hour clinics within 20 minutes as of 23:10. For an emergency, call 995 or go to NUH A&E."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t find clinics near you",
+            "subtitle": "24-hour clinics"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The clinic directory didn’t respond. For an emergency, call 995."
+            }
+          ],
+          "fallback_text": "Couldn’t find clinics near you: the clinic directory didn’t respond. For an emergency, call 995."
+        }
       }
     },
     {
