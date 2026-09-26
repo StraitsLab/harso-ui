@@ -96,8 +96,12 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
    under a coarse pointer and 28 × 28px when the Details content box is ≥ 348px, so a
    short label ("CNA", one letter) is as easy to hit as a long one. The label stays at
    the start of its box; a long label wraps inside its own box.
-7. **Fallback:** if any block is a kind the card cannot draw, or a row carries `status`
-   (Overdue/Paid, not styled yet), the card renders the header plus `fallback_text` as
+7. **Row status:** a row's or table row's `status` draws as its word after the label
+   (`overdue` → "Overdue" in the attention tone, `paid` → "Paid" in the positive tone),
+   using the kit `Badge`: the word is text, so meaning never rests on colour, and Copy
+   carries it. A status row beyond the cap still counts toward View all.
+   **Fallback:** if any block is a kind the card cannot draw, or a row carries a `status`
+   other than those two, the card renders the header plus `fallback_text` as
    plain text and **nothing else from blocks** — no rows, numbers or text, no View-all
    row, no actions, never raw JSON.
 8. Plain text only: no markdown, no HTML; React escaping is the only processing.

@@ -361,14 +361,31 @@ test("text is plain: markup-looking strings render literally, never as HTML", ()
   expect(container.querySelector("b, img, strong, em")).toBeNull();
 });
 
-test("a row status word (overdue/paid), even beyond the visible cap, falls back instead of dropping the assertion", () => {
-  for (const status of ["overdue", "paid"] as const) {
-    const document = { ...flights, blocks: [{ kind: "rows", items: [{ label: "Pacific Freight", trailing: "S$1" }, { label: "Hidden", status }] }, flights.blocks[1]] };
-    const { unmount } = render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} caps={{ maxRows: 1 }} onViewAll={() => {}} />);
-    expect(screen.getByText(flights.fallback_text)).toBeVisible();
-    expect(screen.queryByRole("listitem")).toBeNull();
-    unmount();
-  }
+// Row status words used to fall back (they had no drawing); now the word draws on its row in the kit Badge.
+test.each([["overdue", "Overdue", "attention"], ["paid", "Paid", "positive"]] as const)("row status %s draws the word %s on its row, in the %s tone", (status, word, tone) => {
+  const document = { ...flights, blocks: [{ kind: "rows", items: [{ label: "SP Group", secondary: "Was due 21 Sep", trailing: "S$212.40", status }] }] };
+  const { container } = render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} onViewAll={() => {}} />);
+  expect(container.querySelector("[data-fallback]")).toBeNull();
+  const row = screen.getByRole("listitem");
+  // The word, not colour alone: it is in the row's text, so the row's accessible name carries it.
+  expect(row.textContent).toBe(`SP Group${word}Was due 21 SepS$212.40`);
+  expect(within(row).getByText(word)).toHaveClass("hk-badge", `hk-badge--${tone}`);
+  expect(chat.harsoOutputBlockPlainText(document.blocks[0])).toBe(`SP Group · ${word} · Was due 21 Sep · S$212.40`);
+});
+
+test("a status row beyond the visible cap still counts: View all says there are more", () => {
+  const document = { ...flights, more_label: undefined, blocks: [{ kind: "rows", items: [{ label: "Pacific Freight", trailing: "S$1" }, { label: "Hidden", status: "overdue" }] }] };
+  render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} caps={{ maxRows: 1 }} onViewAll={() => {}} />);
+  expect(screen.getAllByRole("listitem")).toHaveLength(1);
+  expect(screen.queryByText("Overdue")).toBeNull();
+  expect(screen.getByRole("button", { name: "View all 2" })).toBeVisible();
+});
+
+test("a row status the card cannot say still falls back rather than dropping it", () => {
+  const document = { ...flights, blocks: [{ kind: "rows", items: [{ label: "Pacific Freight", trailing: "S$1" }, { label: "Hidden", status: "refunded" }] }] };
+  render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} caps={{ maxRows: 1 }} onViewAll={() => {}} />);
+  expect(screen.getByText(flights.fallback_text)).toBeVisible();
+  expect(screen.queryByRole("listitem")).toBeNull();
 });
 
 test("every text sink is plain text: fallback, subtitle, View-all label and Details never become markup", () => {
