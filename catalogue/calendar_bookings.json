@@ -1,0 +1,3328 @@
+{
+  "vertical": "calendar_bookings",
+  "fresh": [
+    "cal-find-time-priya",
+    "book-dentist-slots",
+    "book-dentist-booked",
+    "book-salon-home-india",
+    "book-ica-passport",
+    "book-dmv-real-id",
+    "book-tickets-seats",
+    "book-cancel-lunch",
+    "book-cancelled",
+    "book-airport-ride"
+  ],
+  "examples": [
+    {
+      "id": "cal-conflicts-next-week",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Find double-booked meetings next week and suggest fixes.",
+      "says": "Two clashes; shall I move the design review to 14:00 and draft Priya a note about board prep?",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "C2 Calendar conflicts",
+        "Schedule / calendar"
+      ],
+      "rationale": "Which two events clash, when, and the one fix for each on the row; nothing moves until the yes; an event someone else owns gets a note.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Clashes next week · 28 Sep–4 Oct",
+          "subtitle": "2 clashes, 4 of 9 events · nothing moved yet"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Investor call and design review",
+                "secondary": "Tue 29 Sep · 11:00 and 11:30 · move the review to 14:00",
+                "trailing": "30 min overlap"
+              },
+              {
+                "label": "Board prep and school pickup",
+                "secondary": "Thu 1 Oct · 14:00 and 14:30 · Priya owns board prep",
+                "trailing": "30 min overlap"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open calendar",
+              "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Calendar, 26 Sep 2026 09:40"
+            }
+          ],
+          "assumptions": [
+            "14:00 on Tue 29 Sep is free for you and the review's guests",
+            "Board prep is organised by Priya, so it can't be moved from your calendar"
+          ]
+        },
+        "fallback_text": "Clashes next week, 28 Sep–4 Oct: 2 clashes, 4 of 9 events, nothing moved yet. Investor call and design review, Tue 29 Sep, 11:00 and 11:30, 30 min overlap: move the review to 14:00 (free). Board prep and school pickup, Thu 1 Oct, 14:00 and 14:30, 30 min overlap: Priya owns board prep, so I'd draft her a note instead."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Clashes next week · 28 Sep–4 Oct",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 2 calendars for clashes, 28 Sep–4 Oct",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cac201"
+              }
+            }
+          ],
+          "fallback_text": "Clashes next week: reading your Google and iCloud calendars, 28 Sep–4 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Clashes next week · 28 Sep–4 Oct",
+            "subtitle": "1 of 2 calendars read · iCloud still loading"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Investor call and design review",
+                  "secondary": "Tue 29 Sep · 11:00 and 11:30 · move the review to 14:00",
+                  "trailing": "30 min overlap"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 26 Sep 2026 09:40; iCloud still loading"
+              }
+            ]
+          },
+          "fallback_text": "Clashes next week, 28 Sep–4 Oct, 1 of 2 calendars read (Google), iCloud still loading, nothing moved yet: investor call and design review, Tue 29 Sep, 11:00 and 11:30, 30 min overlap: move the review to 14:00."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Clashes next week · 28 Sep–4 Oct",
+            "subtitle": "2 clashes · as of 09:10 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Investor call and design review",
+                  "secondary": "Tue 29 Sep · 11:00 and 11:30 · move the review to 14:00",
+                  "trailing": "30 min overlap"
+                },
+                {
+                  "label": "Board prep and school pickup",
+                  "secondary": "Thu 1 Oct · 14:00 and 14:30 · Priya owns board prep",
+                  "trailing": "30 min overlap"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 26 Sep 2026 09:10"
+              }
+            ],
+            "assumptions": [
+              "14:00 on Tue 29 Sep is free for you and the review's guests",
+              "Board prep is organised by Priya, so it can't be moved from your calendar"
+            ]
+          },
+          "fallback_text": "As of 09:10 (couldn't refresh): Clashes next week, 28 Sep–4 Oct: 2 clashes, 4 of 9 events, nothing moved yet. Investor call and design review, Tue 29 Sep, 11:00 and 11:30, 30 min overlap: move the review to 14:00 (free). Board prep and school pickup, Thu 1 Oct, 14:00 and 14:30, 30 min overlap: Priya owns board prep, so I'd draft her a note instead."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No clashes next week",
+            "subtitle": "28 Sep–4 Oct · 9 events"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "None of the 9 events overlap. I can check the week after."
+            }
+          ],
+          "fallback_text": "No clashes next week, 28 Sep–4 Oct: none of your 9 events overlap, so there is nothing to move. I can check the week after."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your calendar",
+            "subtitle": "Next week · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Sign in again and ask me. Nothing was moved."
+            }
+          ],
+          "fallback_text": "Couldn't read your calendar: the Google Calendar sign-in expired, so I couldn't check next week, 28 Sep–4 Oct, for clashes. Sign in again and ask me. Nothing was moved."
+        }
+      }
+    },
+    {
+      "id": "cal-find-time-priya",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Find 30 minutes with Priya next week and draft the invite.",
+      "says": "Tuesday at 2 is the earliest that suits you both; shall I send Priya the invite for it?",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "C3 Find a time",
+        "Schedule / calendar"
+      ],
+      "rationale": "Three slots in both time zones with one pick; the invite goes after the yes, never from a button on the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "30 min with Priya · next week",
+          "subtitle": "28 Sep–4 Oct · both free · as of 10:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Tue 29 Sep",
+                "secondary": "14:00 SGT · 11:30 IST for Priya",
+                "trailing": "14:00–14:30",
+                "mark": "pick"
+              },
+              {
+                "label": "Wed 30 Sep",
+                "secondary": "16:00 SGT · 13:30 IST for Priya",
+                "trailing": "16:00–16:30"
+              },
+              {
+                "label": "Fri 2 Oct",
+                "secondary": "15:00 SGT · 12:30 IST for Priya",
+                "trailing": "15:00–15:30"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your Google Calendar and Priya's shared free/busy, 26 Sep 2026 10:20"
+            }
+          ],
+          "assumptions": [
+            "Priya is in Bengaluru, IST, 2 h 30 min behind Singapore",
+            "Working hours are 09:00–18:00 where each of you is"
+          ],
+          "disclaimers": [
+            "Free/busy can change before she accepts. Nothing is sent until you say yes."
+          ]
+        },
+        "fallback_text": "30 min with Priya next week, 28 Sep–4 Oct, both free as of 10:20: Tue 29 Sep 14:00–14:30, 14:00 SGT, 11:30 IST for Priya (pick); Wed 30 Sep 16:00–16:30, 16:00 SGT, 13:30 IST for Priya; Fri 2 Oct 15:00–15:30, 15:00 SGT, 12:30 IST for Priya. Nothing is sent until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "30 min with Priya · next week",
+            "subtitle": "28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your calendar and Priya's free/busy for 28 Sep–4 Oct",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cac301"
+              }
+            }
+          ],
+          "fallback_text": "30 min with Priya next week: reading your calendar and Priya's free/busy, 28 Sep–4 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "30 min with Priya · next week",
+            "subtitle": "28 Sep–4 Oct · your free times only · as of 10:20"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Tue 29 Sep",
+                  "secondary": "14:00 SGT · 11:30 IST · Priya's not known",
+                  "trailing": "14:00–14:30"
+                },
+                {
+                  "label": "Wed 30 Sep",
+                  "secondary": "16:00 SGT · 13:30 IST · Priya's not known",
+                  "trailing": "16:00–16:30"
+                },
+                {
+                  "label": "Fri 2 Oct",
+                  "secondary": "15:00 SGT · 12:30 IST · Priya's not known",
+                  "trailing": "15:00–15:30"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Your Google Calendar, 26 Sep 2026 10:20; Priya's free/busy is not shared"
+              }
+            ]
+          },
+          "fallback_text": "30 min with Priya next week, 28 Sep–4 Oct, your free times only as of 10:20; Priya's not known, she doesn't share free/busy: Tue 29 Sep 14:00–14:30 SGT (11:30 IST), Wed 30 Sep 16:00–16:30 SGT (13:30 IST), Fri 2 Oct 15:00–15:30 SGT (12:30 IST). I can offer her all three by email instead."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "30 min with Priya · next week",
+            "subtitle": "28 Sep–4 Oct · as of 09:05 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Tue 29 Sep",
+                  "secondary": "14:00 SGT · 11:30 IST for Priya",
+                  "trailing": "14:00–14:30",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Wed 30 Sep",
+                  "secondary": "16:00 SGT · 13:30 IST for Priya",
+                  "trailing": "16:00–16:30"
+                },
+                {
+                  "label": "Fri 2 Oct",
+                  "secondary": "15:00 SGT · 12:30 IST for Priya",
+                  "trailing": "15:00–15:30"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Your Google Calendar and Priya's shared free/busy, 26 Sep 2026 09:05"
+              }
+            ],
+            "assumptions": [
+              "Priya is in Bengaluru, IST, 2 h 30 min behind Singapore",
+              "Working hours are 09:00–18:00 where each of you is"
+            ],
+            "disclaimers": [
+              "Free/busy can change before she accepts. Nothing is sent until you say yes."
+            ]
+          },
+          "fallback_text": "As of 09:05 (couldn't refresh): 30 min with Priya next week, 28 Sep–4 Oct, both free: Tue 29 Sep 14:00–14:30, 14:00 SGT, 11:30 IST for Priya (pick); Wed 30 Sep 16:00–16:30, 16:00 SGT, 13:30 IST for Priya; Fri 2 Oct 15:00–15:30, 15:00 SGT, 12:30 IST for Priya. Nothing is sent until you say yes."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 30 min free with Priya",
+            "subtitle": "28 Sep–4 Oct · as of 10:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Both free first on Mon 5 Oct, 14:00 SGT; say if I should offer it."
+            }
+          ],
+          "fallback_text": "No 30 min free with Priya next week, 28 Sep–4 Oct, as of 10:20. You're both free first on Mon 5 Oct, 14:00 SGT (11:30 IST for Priya); say if I should offer it. Nothing was sent."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check times with Priya",
+            "subtitle": "Next week · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar didn't answer. Ask me again in a few minutes. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Couldn't check times with Priya for next week, 28 Sep–4 Oct: Google Calendar didn't answer. Ask me again in a few minutes. Nothing was sent."
+        }
+      }
+    },
+    {
+      "id": "cal-move-event",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Move my Monday 1:1 with Mei to Tuesday, same time.",
+      "says": "Mei is free then and Arjun is optional; shall I move it and send both the update?",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "C4 Add / move event",
+        "Schedule / calendar"
+      ],
+      "rationale": "The change as was and now, who gets the update and whether each is free; nothing moves until the yes; the question follows the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Move 1:1 with Mei",
+          "subtitle": "Mon 28 Sep → Tue 29 Sep · not moved yet"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "10:00",
+                "label": "Same time"
+              },
+              {
+                "value": "2",
+                "label": "Guests to notify"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Now",
+                "secondary": "Mon 28 Sep · Zoom",
+                "trailing": "10:00–10:30"
+              },
+              {
+                "label": "Moves to",
+                "secondary": "Tue 29 Sep · Zoom",
+                "trailing": "10:00–10:30"
+              },
+              {
+                "label": "Mei Lin",
+                "secondary": "Guest · gets the update",
+                "trailing": "Free then"
+              },
+              {
+                "label": "Arjun Rao",
+                "secondary": "Optional guest · gets the update",
+                "trailing": "Busy 10:00–11:00"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Calendar event and guests' free/busy, 26 Sep 2026 11:15"
+            }
+          ],
+          "assumptions": [
+            "You organise this event, so moving it sends both guests an update"
+          ]
+        },
+        "fallback_text": "Move 1:1 with Mei, Mon 28 Sep to Tue 29 Sep, not moved yet. Now: Mon 28 Sep 10:00–10:30 on Zoom; moves to Tue 29 Sep 10:00–10:30 on Zoom, same time. 2 guests to notify, each gets the update: Mei Lin, guest, free then; Arjun Rao, optional guest, busy 10:00–11:00. Nothing changes until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Move 1:1 with Mei",
+            "subtitle": "Mon 28 Sep → Tue 29 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Finding the Mon 28 Sep 1:1 with Mei and checking Tue 29 Sep",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cac401"
+              }
+            }
+          ],
+          "fallback_text": "Move 1:1 with Mei: finding the Mon 28 Sep 1:1 and checking Tue 29 Sep at the same time."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Move 1:1 with Mei",
+            "subtitle": "Mon 28 Sep → Tue 29 Sep · not moved yet"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "10:00",
+                  "label": "Same time"
+                },
+                {
+                  "value": "2",
+                  "label": "Guests to notify"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Now",
+                  "secondary": "Mon 28 Sep · Zoom",
+                  "trailing": "10:00–10:30"
+                },
+                {
+                  "label": "Moves to",
+                  "secondary": "Tue 29 Sep · Zoom",
+                  "trailing": "10:00–10:30"
+                },
+                {
+                  "label": "Mei Lin",
+                  "secondary": "Guest · gets the update",
+                  "trailing": "Free then"
+                },
+                {
+                  "label": "Arjun Rao",
+                  "secondary": "Optional guest · calendar not shared",
+                  "trailing": "Not known"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar event, 26 Sep 2026 11:15; Arjun's free/busy is not shared"
+              }
+            ]
+          },
+          "fallback_text": "Move 1:1 with Mei, Mon 28 Sep to Tue 29 Sep, not moved yet. Now: Mon 28 Sep 10:00–10:30 on Zoom; moves to Tue 29 Sep 10:00–10:30 on Zoom, same time. 2 guests to notify, each gets the update: Mei Lin, guest, free then; Arjun Rao, optional guest, calendar not shared, so whether he's free is not known. Nothing changes until you say yes."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Move 1:1 with Mei",
+            "subtitle": "Mon 28 Sep → Tue 29 Sep · as of 10:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "10:00",
+                  "label": "Same time"
+                },
+                {
+                  "value": "2",
+                  "label": "Guests to notify"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Now",
+                  "secondary": "Mon 28 Sep · Zoom",
+                  "trailing": "10:00–10:30"
+                },
+                {
+                  "label": "Moves to",
+                  "secondary": "Tue 29 Sep · Zoom",
+                  "trailing": "10:00–10:30"
+                },
+                {
+                  "label": "Mei Lin",
+                  "secondary": "Guest · gets the update",
+                  "trailing": "Free then"
+                },
+                {
+                  "label": "Arjun Rao",
+                  "secondary": "Optional guest · gets the update",
+                  "trailing": "Busy 10:00–11:00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar event and guests' free/busy, 26 Sep 2026 10:40"
+              }
+            ],
+            "assumptions": [
+              "You organise this event, so moving it sends both guests an update"
+            ]
+          },
+          "fallback_text": "As of 10:40 (couldn't refresh): Move 1:1 with Mei, Mon 28 Sep to Tue 29 Sep, not moved yet. Now: Mon 28 Sep 10:00–10:30 on Zoom; moves to Tue 29 Sep 10:00–10:30 on Zoom, same time. 2 guests to notify, each gets the update: Mei Lin, guest, free then; Arjun Rao, optional guest, busy 10:00–11:00. Nothing changes until you say yes."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 1:1 with Mei on Mon 28 Sep",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Next is Mon 5 Oct 10:00; say if I should move that one. Nothing moved."
+            }
+          ],
+          "fallback_text": "There's no 1:1 with Mei on Mon 28 Sep in your Google or iCloud calendars. The next is Mon 5 Oct 10:00; say if I should move that one. Nothing was moved."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your calendar",
+            "subtitle": "1:1 with Mei · Mon 28 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Sign in and ask me again. Nothing was moved."
+            }
+          ],
+          "fallback_text": "Couldn't read your calendar: the Google Calendar sign-in expired, so I couldn't find the Mon 28 Sep 1:1 with Mei. Sign in and ask me again. Nothing was moved."
+        }
+      }
+    },
+    {
+      "id": "cal-event-moved",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Yes, move it.",
+      "says": "Moved. Mei has already accepted.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "C4 Add / move event",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: the new time in the header, each guest's reply as rows; a timeout is 'couldn't confirm', never 'not moved'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Moved · 1:1 with Mei",
+          "subtitle": "Tue 29 Sep · 10:00–10:30 · Zoom"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Mei Lin",
+                "secondary": "Update sent",
+                "trailing": "Accepted"
+              },
+              {
+                "label": "Arjun Rao",
+                "secondary": "Optional · update sent",
+                "trailing": "No reply yet"
+              },
+              {
+                "label": "Mon 28 Sep 10:00",
+                "secondary": "Old time",
+                "trailing": "Removed"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Calendar",
+              "url": "https://calendar.google.com/calendar/r/day/2026/9/29"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Calendar event update, 26 Sep 2026 11:17"
+            }
+          ]
+        },
+        "fallback_text": "Moved 1:1 with Mei to Tue 29 Sep 10:00–10:30 on Zoom, as of 11:17. Mei Lin: update sent, accepted. Arjun Rao, optional: update sent, no reply yet. Mon 28 Sep 10:00, the old time: removed."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1:1 with Mei",
+            "subtitle": "Mon 28 Sep → Tue 29 Sep 10:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Moving the 1:1 with Mei to Tue 29 Sep 10:00 and updating 2 guests",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cac402"
+              }
+            }
+          ],
+          "fallback_text": "Moving the 1:1 with Mei from Mon 28 Sep to Tue 29 Sep 10:00–10:30 and sending the update to Mei and Arjun."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Moved · 1:1 with Mei",
+            "subtitle": "Tue 29 Sep · 10:00–10:30 · Zoom"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Mei Lin",
+                  "secondary": "Update sent",
+                  "trailing": "No reply yet"
+                },
+                {
+                  "label": "Arjun Rao",
+                  "secondary": "Optional · update sent",
+                  "trailing": "No reply yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/9/29"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar event update, 26 Sep 2026 11:17"
+              }
+            ]
+          },
+          "fallback_text": "Moved 1:1 with Mei to Tue 29 Sep 10:00–10:30 on Zoom, as of 11:17. Mei Lin: update sent, no reply yet. Arjun Rao, optional: update sent, no reply yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Moved · 1:1 with Mei",
+            "subtitle": "Tue 29 Sep 10:00 · as of 11:17 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Mei Lin",
+                  "secondary": "Update sent",
+                  "trailing": "Accepted"
+                },
+                {
+                  "label": "Arjun Rao",
+                  "secondary": "Optional · update sent",
+                  "trailing": "No reply yet"
+                },
+                {
+                  "label": "Mon 28 Sep 10:00",
+                  "secondary": "Old time",
+                  "trailing": "Removed"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/9/29"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar event update, 26 Sep 2026 11:17"
+              }
+            ]
+          },
+          "fallback_text": "As of 11:17 (couldn't refresh): Moved 1:1 with Mei to Tue 29 Sep 10:00–10:30 on Zoom. Mei Lin: update sent, accepted. Arjun Rao, optional: update sent, no reply yet. Mon 28 Sep 10:00, the old time: removed."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 1:1 with Mei to move",
+            "subtitle": "Mon 28 Sep 10:00 · as of 11:17"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "It's gone from your calendar. Nothing moved; ask me to set it up again."
+            }
+          ],
+          "fallback_text": "No 1:1 with Mei to move: the Mon 28 Sep 10:00 event is gone from your calendar, as of 11:17. Nothing was moved and no update was sent; ask me to set it up again."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the move",
+            "subtitle": "1:1 with Mei · Tue 29 Sep 10:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Calendar didn't answer. I'll check the event before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the move of the 1:1 with Mei to Tue 29 Sep 10:00: Google Calendar didn't answer after the change was sent, so it may have moved and Mei and Arjun may have the update. So nobody gets it twice: I'll check the event before trying again."
+        }
+      }
+    },
+    {
+      "id": "cal-focus-blocks",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Block deep-work time next week and keep a 30-min buffer before yoga.",
+      "says": "Four blocks and both yoga buffers fit; Tuesday is too full. Shall I add them?",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "C5 Focus time and buffers",
+        "Schedule / calendar"
+      ],
+      "rationale": "The proposed blocks in day order with times trailing; the full day that got none is named; nothing is added until the yes.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Proposed focus time · 28 Sep–4 Oct",
+          "subtitle": "4 deep-work blocks, 11 h · 2 buffers · Tue full · none added yet"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Deep work",
+                "secondary": "Mon 28 Sep",
+                "trailing": "08:00–10:00"
+              },
+              {
+                "label": "Deep work",
+                "secondary": "Wed 30 Sep",
+                "trailing": "09:00–12:00"
+              },
+              {
+                "label": "Buffer before yoga",
+                "secondary": "Wed 30 Sep · yoga 18:30",
+                "trailing": "18:00–18:30"
+              },
+              {
+                "label": "Deep work",
+                "secondary": "Thu 1 Oct",
+                "trailing": "09:00–12:00"
+              },
+              {
+                "label": "Deep work",
+                "secondary": "Fri 2 Oct",
+                "trailing": "13:00–16:00"
+              },
+              {
+                "label": "Buffer before yoga",
+                "secondary": "Sat 3 Oct · yoga 09:00",
+                "trailing": "08:30–09:00"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open calendar",
+              "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+            }
+          }
+        ],
+        "more_label": "See all 6 blocks",
+        "fallback_text": "Proposed focus time, 28 Sep–4 Oct, none added yet: 4 deep-work blocks, 11 h, of at least 2 h inside 08:00–18:00, and 2 buffers. Deep work Mon 28 Sep 08:00–10:00, Wed 30 Sep 09:00–12:00, Thu 1 Oct 09:00–12:00, Fri 2 Oct 13:00–16:00. Buffer before yoga Wed 30 Sep 18:00–18:30 (yoga 18:30) and Sat 3 Oct 08:30–09:00 (yoga 09:00). Tue full: no 2-hour gap."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Proposed focus time · 28 Sep–4 Oct",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Finding 2-hour gaps and yoga buffers, 28 Sep–4 Oct",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cac501"
+              }
+            }
+          ],
+          "fallback_text": "Proposed focus time: reading your Google and iCloud calendars for 2-hour deep-work gaps and 30-min buffers before yoga, 28 Sep–4 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Proposed focus time · 28 Sep–4 Oct",
+            "subtitle": "1 of 2 calendars read · none added yet"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Deep work",
+                  "secondary": "Mon 28 Sep",
+                  "trailing": "08:00–10:00"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Wed 30 Sep",
+                  "trailing": "09:00–12:00"
+                },
+                {
+                  "label": "Buffer before yoga",
+                  "secondary": "Wed 30 Sep · yoga 18:30",
+                  "trailing": "18:00–18:30"
+                }
+              ]
+            }
+          ],
+          "fallback_text": "Proposed focus time, 28 Sep–4 Oct, 1 of 2 calendars read (Google; iCloud still loading), none added yet: deep work Mon 28 Sep 08:00–10:00 and Wed 30 Sep 09:00–12:00; buffer before yoga Wed 30 Sep 18:00–18:30 (yoga 18:30)."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Proposed focus time · 28 Sep–4 Oct",
+            "subtitle": "As of 09:10 · couldn't refresh · none added"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Deep work",
+                  "secondary": "Mon 28 Sep",
+                  "trailing": "08:00–10:00"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Wed 30 Sep",
+                  "trailing": "09:00–12:00"
+                },
+                {
+                  "label": "Buffer before yoga",
+                  "secondary": "Wed 30 Sep · yoga 18:30",
+                  "trailing": "18:00–18:30"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Thu 1 Oct",
+                  "trailing": "09:00–12:00"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Fri 2 Oct",
+                  "trailing": "13:00–16:00"
+                },
+                {
+                  "label": "Buffer before yoga",
+                  "secondary": "Sat 3 Oct · yoga 09:00",
+                  "trailing": "08:30–09:00"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+              }
+            }
+          ],
+          "more_label": "See all 6 blocks",
+          "fallback_text": "As of 09:10 (couldn't refresh): Proposed focus time, 28 Sep–4 Oct, none added yet: 4 deep-work blocks, 11 h, of at least 2 h inside 08:00–18:00, and 2 buffers. Deep work Mon 28 Sep 08:00–10:00, Wed 30 Sep 09:00–12:00, Thu 1 Oct 09:00–12:00, Fri 2 Oct 13:00–16:00. Buffer before yoga Wed 30 Sep 18:00–18:30 (yoga 18:30) and Sat 3 Oct 08:30–09:00 (yoga 09:00). Tue full: no 2-hour gap."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No 2-hour gaps next week",
+            "subtitle": "28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Longest gap: 90 min, Thu 1 Oct. I can add just the yoga buffers."
+            }
+          ],
+          "fallback_text": "No 2-hour gaps next week, 28 Sep–4 Oct, for deep work; the longest is 90 min on Thu 1 Oct. Both yoga buffers fit. I can add just the yoga buffers. Nothing was added."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your calendar",
+            "subtitle": "Focus time · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Sign in and ask me again. Nothing was added."
+            }
+          ],
+          "fallback_text": "Couldn't read your calendar: the Google Calendar sign-in expired, so I couldn't plan focus time for next week, 28 Sep–4 Oct. Sign in and ask me again. Nothing was added."
+        }
+      }
+    },
+    {
+      "id": "book-dentist-slots",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Get me a dentist cleaning next week after 5pm.",
+      "says": "Tuesday at 17:30 with Dr Tan is the first; shall I book it?",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R2 Appointment slots",
+        "Schedule / calendar"
+      ],
+      "rationale": "Slots as rows with the dentist and the price, one pick; the booking waits for the yes; no Book button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Dentist cleaning after 17:00",
+          "subtitle": "Q & M Dental, Tampines · 28 Sep–4 Oct · as of 14:05"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Tue 29 Sep",
+                "secondary": "Scale and polish · Dr Tan · S$107 incl GST",
+                "trailing": "17:30",
+                "mark": "pick"
+              },
+              {
+                "label": "Wed 30 Sep",
+                "secondary": "Scale and polish · Dr Lim · S$107 incl GST",
+                "trailing": "18:15"
+              },
+              {
+                "label": "Fri 2 Oct",
+                "secondary": "Scale and polish · Dr Tan · S$107 incl GST",
+                "trailing": "17:45"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Q & M Dental online booking, Tampines, 26 Sep 2026 14:05"
+            }
+          ],
+          "assumptions": [
+            "Your usual clinic, from past bookings",
+            "Slots after 17:00, 28 Sep–4 Oct, all 30 min"
+          ],
+          "disclaimers": [
+            "Slots go quickly. Nothing is booked until you say yes."
+          ]
+        },
+        "fallback_text": "Dentist cleaning after 17:00 at Q & M Dental, Tampines, 28 Sep–4 Oct, as of 14:05; scale and polish, S$107 incl GST: Tue 29 Sep 17:30 with Dr Tan (pick); Wed 30 Sep 18:15 with Dr Lim; Fri 2 Oct 17:45 with Dr Tan. Nothing is booked until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dentist cleaning after 17:00",
+            "subtitle": "Q & M Dental, Tampines · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking Q & M Dental Tampines for slots after 17:00, 28 Sep–4 Oct",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab201"
+              }
+            }
+          ],
+          "fallback_text": "Dentist cleaning after 17:00: checking Q & M Dental, Tampines, for slots 28 Sep–4 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dentist cleaning after 17:00",
+            "subtitle": "Tampines · Mon–Wed checked · as of 14:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Tue 29 Sep",
+                  "secondary": "Scale and polish · Dr Tan · S$107 incl GST",
+                  "trailing": "17:30",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Wed 30 Sep",
+                  "secondary": "Scale and polish · Dr Lim · S$107 incl GST",
+                  "trailing": "18:15"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Q & M Dental, Tampines, 26 Sep 2026 14:05; Thu to Sat still loading"
+              }
+            ],
+            "assumptions": [
+              "Your usual clinic, from past bookings",
+              "Slots after 17:00, 28 Sep–4 Oct, all 30 min"
+            ],
+            "disclaimers": [
+              "Slots go quickly. Nothing is booked until you say yes."
+            ]
+          },
+          "fallback_text": "Dentist cleaning after 17:00 at Q & M Dental, Tampines, 28 Sep–4 Oct, Mon–Wed checked as of 14:05 (Mon has none); scale and polish, S$107 incl GST: Tue 29 Sep 17:30 with Dr Tan (pick); Wed 30 Sep 18:15 with Dr Lim. Thu to Sat still loading. Nothing is booked."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Dentist cleaning after 17:00",
+            "subtitle": "Tampines · 28 Sep–4 Oct · as of 13:20 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Tue 29 Sep",
+                  "secondary": "Scale and polish · Dr Tan · S$107 incl GST",
+                  "trailing": "17:30",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Wed 30 Sep",
+                  "secondary": "Scale and polish · Dr Lim · S$107 incl GST",
+                  "trailing": "18:15"
+                },
+                {
+                  "label": "Fri 2 Oct",
+                  "secondary": "Scale and polish · Dr Tan · S$107 incl GST",
+                  "trailing": "17:45"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Q & M Dental online booking, Tampines, 26 Sep 2026 13:20"
+              }
+            ],
+            "assumptions": [
+              "Your usual clinic, from past bookings",
+              "Slots after 17:00, 28 Sep–4 Oct, all 30 min"
+            ],
+            "disclaimers": [
+              "Slots go quickly. Nothing is booked until you say yes."
+            ]
+          },
+          "fallback_text": "As of 13:20 (couldn't refresh): Dentist cleaning after 17:00 at Q & M Dental, Tampines, 28 Sep–4 Oct; scale and polish, S$107 incl GST: Tue 29 Sep 17:30 with Dr Tan (pick); Wed 30 Sep 18:15 with Dr Lim; Fri 2 Oct 17:45 with Dr Tan. Nothing is booked until you say yes."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No cleaning after 17:00 next week",
+            "subtitle": "Q & M Dental, Tampines · as of 14:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nearest: Mon 5 Oct 17:30. Say if I should book it. Nothing was booked."
+            }
+          ],
+          "fallback_text": "No cleaning after 17:00 next week, 28 Sep–4 Oct, at Q & M Dental, Tampines, as of 14:05. Nearest: Mon 5 Oct 17:30. Say if I should book it. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check dentist slots",
+            "subtitle": "Q & M Dental, Tampines · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The clinic's booking page didn't load. Ask me again soon. Nothing was booked."
+            }
+          ],
+          "fallback_text": "Couldn't check dentist slots at Q & M Dental, Tampines, for 28 Sep–4 Oct: the clinic's booking page didn't load. Ask me again soon. Nothing was booked."
+        }
+      }
+    },
+    {
+      "id": "book-dentist-booked",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Yes, book Tuesday.",
+      "says": "Booked, and it's on your calendar.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R2 Appointment booked",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: time and clinic in the header, reference, what to bring and the change terms as rows; a timeout is 'couldn't confirm'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked · Q & M Dental, Tampines",
+          "subtitle": "Tue 29 Sep · 17:30 · Dr Tan · as of 14:08"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Reference",
+                "trailing": "QM-551203"
+              },
+              {
+                "label": "Bring",
+                "secondary": "NRIC and your CHAS card, 10 min early",
+                "trailing": "17:20"
+              },
+              {
+                "label": "Change or cancel",
+                "secondary": "Free until 24 h before",
+                "trailing": "No fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Calendar",
+              "url": "https://calendar.google.com/calendar/r/day/2026/9/29"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Q & M Dental booking confirmation, 26 Sep 2026 14:08"
+            }
+          ]
+        },
+        "fallback_text": "Booked · Q & M Dental, Tampines: scale and polish, Tue 29 Sep 17:30 with Dr Tan, S$107 incl GST, as of 14:08. Reference QM-551203. Bring NRIC and your CHAS card, 10 min early: 17:20. Change or cancel: free until 24 h before, no fee. Added to your calendar with a reminder."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Q & M Dental, Tampines",
+            "subtitle": "Tue 29 Sep · 17:30 · Dr Tan"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Waiting for Q & M Dental to confirm Tue 29 Sep 17:30",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab202"
+              }
+            }
+          ],
+          "fallback_text": "Waiting for Q & M Dental, Tampines, to confirm your cleaning on Tue 29 Sep at 17:30 with Dr Tan."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · Q & M Dental, Tampines",
+            "subtitle": "Tue 29 Sep · 17:30 · Dr Tan · as of 14:08"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "QM-551203"
+                },
+                {
+                  "label": "Bring and cancel terms",
+                  "secondary": "The clinic hasn't sent them yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/9/29"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Q & M Dental booking confirmation, 26 Sep 2026 14:08"
+              }
+            ]
+          },
+          "fallback_text": "Booked · Q & M Dental, Tampines: scale and polish, Tue 29 Sep 17:30 with Dr Tan, S$107 incl GST, as of 14:08. Reference QM-551203. Bring and cancel terms: not in yet; the clinic hasn't sent them yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · Q & M Dental, Tampines",
+            "subtitle": "Tue 29 Sep · 17:30 · as of 14:08 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "QM-551203"
+                },
+                {
+                  "label": "Bring",
+                  "secondary": "NRIC and your CHAS card, 10 min early",
+                  "trailing": "17:20"
+                },
+                {
+                  "label": "Change or cancel",
+                  "secondary": "Free until 24 h before",
+                  "trailing": "No fee"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/9/29"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Q & M Dental booking confirmation, 26 Sep 2026 14:08"
+              }
+            ]
+          },
+          "fallback_text": "As of 14:08 (couldn't refresh): Booked · Q & M Dental, Tampines: scale and polish, Tue 29 Sep 17:30 with Dr Tan, S$107 incl GST. Reference QM-551203. Bring NRIC and your CHAS card, 10 min early: 17:20. Change or cancel: free until 24 h before, no fee. Added to your calendar with a reminder."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tue 17:30 at Q & M Dental was taken",
+            "subtitle": "Tampines · Dr Tan · as of 14:08"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nearest: Wed 30 Sep 18:15, Dr Lim. Say if I should book it. Nothing booked."
+            }
+          ],
+          "fallback_text": "Tue 17:30 at Q & M Dental, Tampines, with Dr Tan was taken before the clinic confirmed, as of 14:08 (Tue 29 Sep). Nearest: Wed 30 Sep 18:15, Dr Lim. Say if I should book it. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the dentist booking",
+            "subtitle": "Q & M Dental, Tampines · Tue 29 Sep 17:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The clinic didn't answer. I'll check your bookings before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the dentist booking at Q & M Dental, Tampines, Tue 29 Sep 17:30: the clinic didn't answer after the booking was sent, so it may be booked. So it isn't booked twice: I'll check your bookings before trying again."
+        }
+      }
+    },
+    {
+      "id": "book-clinic-call-plan",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Draft a call to Smile Dental to book the cleaning; they don't book online.",
+      "says": "Here's what I'd say; nothing is called until you approve it.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R2 Call plan",
+        "Email draft preview"
+      ],
+      "rationale": "The call plan is the draft: who, what I'll ask and what I'll share, word for word; the call waits for the yes.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Call plan · Smile Dental, Tiong Bahru",
+          "subtitle": "To +65 6221 4480 · draft · not called"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "paragraphs": [
+                  "Hello, this is Harso, an AI assistant calling for Abhi Bansal. He'd like a scale and polish next week, Mon 28 Sep to Fri 2 Oct, after 17:00. I can share his name and mobile number, nothing else. If a time is free, I'll confirm it with him before booking."
+                ]
+              }
+            ]
+          }
+        ],
+        "fallback_text": "Call plan for Smile Dental, Tiong Bahru, to +65 6221 4480, draft, not called yet. Hello, this is Harso, an AI assistant calling for Abhi Bansal. He'd like a scale and polish next week, Mon 28 Sep to Fri 2 Oct, after 17:00. I can share his name and mobile number, nothing else. If a time is free, I'll confirm it with him before booking."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Call plan · Smile Dental, Tiong Bahru",
+            "subtitle": "Writing"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing the call plan for Smile Dental, Tiong Bahru",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab203"
+              }
+            }
+          ],
+          "fallback_text": "Writing the call plan for Smile Dental, Tiong Bahru."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No phone number for Smile Dental",
+            "subtitle": "Tiong Bahru"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No number on its site or Google. Tell me the number or pick another clinic."
+            }
+          ],
+          "fallback_text": "No phone number for Smile Dental, Tiong Bahru, on its site or Google, so there is no call plan. Tell me the number or pick another clinic. Nothing was called."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't write the call plan",
+            "subtitle": "Smile Dental, Tiong Bahru"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Your calendar didn't load, so I don't know your free times. Ask me again soon."
+            }
+          ],
+          "fallback_text": "Couldn't write the call plan for Smile Dental, Tiong Bahru: your calendar didn't load, so I don't know your free times. Ask me again soon. Nothing was called."
+        }
+      }
+    },
+    {
+      "id": "book-salon-home-india",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Find a men's haircut at home in Indiranagar after 4pm today and book it.",
+      "says": "Ravi at 16:30 is the best-rated; shall I book him for INR 499?",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R3 Salon / wellness slots",
+        "S10 Rating"
+      ],
+      "rationale": "Pros with rating, slot and all-in price, one pick; booking waits for the yes; INR as the code (the face lacks the rupee sign).",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Haircut at home · today",
+          "subtitle": "Indiranagar · after 16:00 · as of 13:10"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Ravi K.",
+                "secondary": "Urban Company · 4.9/5 from 1K+ ratings · slot 16:30",
+                "trailing": "INR 499",
+                "mark": "pick"
+              },
+              {
+                "label": "Imran S.",
+                "secondary": "Urban Company · 4.8/5 from 2K+ ratings · slot 17:00",
+                "trailing": "INR 449"
+              },
+              {
+                "label": "Deepak M.",
+                "secondary": "Urban Company · 4.6/5 from 500+ ratings · slot 18:30",
+                "trailing": "INR 399"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Salon on Urban Company",
+              "url": "https://www.urbancompany.com/bangalore"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Urban Company, men's salon at home, Indiranagar, 26 Sep 2026 13:10"
+            }
+          ],
+          "assumptions": [
+            "Haircut and beard trim, prices include taxes and the visit fee"
+          ]
+        },
+        "fallback_text": "Men's haircut and beard at home today, Sat 26 Sep, after 16:00 in Indiranagar on Urban Company, as of 13:10, prices incl taxes and visit fee: Ravi K., 4.9/5 from 1K+ ratings, slot 16:30, INR 499 (pick); Imran S., 4.8/5 from 2K+ ratings, slot 17:00, INR 449; Deepak M., 4.6/5 from 500+ ratings, slot 18:30, INR 399."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Haircut at home · today",
+            "subtitle": "Indiranagar · after 16:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking Urban Company for haircut slots after 16:00 in Indiranagar",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab301"
+              }
+            }
+          ],
+          "fallback_text": "Checking Urban Company for a men's haircut at home in Indiranagar after 16:00 today."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Haircut at home · today",
+            "subtitle": "Indiranagar · 1 price not in yet · as of 13:10"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Ravi K.",
+                  "secondary": "Urban Company · 4.9/5 from 1K+ ratings · slot 16:30",
+                  "trailing": "INR 499",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Imran S.",
+                  "secondary": "Urban Company · 4.8/5 from 2K+ ratings · slot 17:00",
+                  "trailing": "Price not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Salon on Urban Company",
+                "url": "https://www.urbancompany.com/bangalore"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Urban Company, Indiranagar, 26 Sep 2026 13:10; still loading"
+              }
+            ],
+            "assumptions": [
+              "Haircut and beard trim, prices include taxes and the visit fee"
+            ]
+          },
+          "fallback_text": "Haircut at home today in Indiranagar after 16:00, as of 13:10 on Urban Company, 1 price not in yet: Ravi K., 4.9/5 from 1K+ ratings, slot 16:30, INR 499 incl taxes and visit fee (pick); Imran S., 4.8/5 from 2K+ ratings, slot 17:00, price not in yet. More still loading."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Haircut at home · today",
+            "subtitle": "Indiranagar · as of 12:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Ravi K.",
+                  "secondary": "Urban Company · 4.9/5 from 1K+ ratings · slot 16:30",
+                  "trailing": "INR 499",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Imran S.",
+                  "secondary": "Urban Company · 4.8/5 from 2K+ ratings · slot 17:00",
+                  "trailing": "INR 449"
+                },
+                {
+                  "label": "Deepak M.",
+                  "secondary": "Urban Company · 4.6/5 from 500+ ratings · slot 18:30",
+                  "trailing": "INR 399"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Salon on Urban Company",
+                "url": "https://www.urbancompany.com/bangalore"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Urban Company, Indiranagar, 26 Sep 2026 12:30"
+              }
+            ],
+            "assumptions": [
+              "Haircut and beard trim, prices include taxes and the visit fee"
+            ]
+          },
+          "fallback_text": "As of 12:30 (couldn't refresh): Men's haircut and beard at home today, Sat 26 Sep, after 16:00 in Indiranagar on Urban Company, prices incl taxes and visit fee: Ravi K., 4.9/5 from 1K+ ratings, slot 16:30, INR 499 (pick); Imran S., 4.8/5 from 2K+ ratings, slot 17:00, INR 449; Deepak M., 4.6/5 from 500+ ratings, slot 18:30, INR 399."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No haircut at home after 16:00 today",
+            "subtitle": "Indiranagar · as of 13:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "First slot: tomorrow, Sun 27 Sep, 10:00. Say if I should book it."
+            }
+          ],
+          "fallback_text": "No haircut at home after 16:00 today in Indiranagar on Urban Company, as of 13:10. First slot: tomorrow, Sun 27 Sep, 10:00. Say if I should book it. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check haircut slots",
+            "subtitle": "Indiranagar · today after 16:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Urban Company didn't answer. Ask me again in a few minutes. Nothing was booked."
+            }
+          ],
+          "fallback_text": "Couldn't check haircut slots at home in Indiranagar for today after 16:00: Urban Company didn't answer. Ask me again in a few minutes. Nothing was booked."
+        }
+      }
+    },
+    {
+      "id": "book-ica-passport",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Find the earliest ICA slot to collect my new passport.",
+      "says": "Monday 08:30 is the earliest; shall I open the booking up to the Singpass step?",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "R4 Government appointment",
+        "Checklist / to-do"
+      ],
+      "rationale": "Slots earliest first, then what to bring; Singpass is the person's own step; nothing is submitted without the yes.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Passport collection · ICA",
+          "subtitle": "ICA Building, Lavender · earliest first · as of 15:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Mon 28 Sep",
+                "secondary": "ICA Building, Lavender · passport collection",
+                "trailing": "08:30"
+              },
+              {
+                "label": "Mon 28 Sep",
+                "secondary": "ICA Building, Lavender · passport collection",
+                "trailing": "11:10"
+              },
+              {
+                "label": "Tue 29 Sep",
+                "secondary": "ICA Building, Lavender · passport collection",
+                "trailing": "09:40"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Bring",
+                "bullets": [
+                  "Your old passport, even if it has expired",
+                  "Your NRIC",
+                  "The collection SMS or letter with your application number"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Passport collection at ICA",
+              "url": "https://www.ica.gov.sg/documents/passport/collect"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "ICA e-Appointment, passport collection, 26 Sep 2026 15:20"
+            }
+          ],
+          "assumptions": [
+            "Booking needs your Singpass login; you do that step yourself, I never see it"
+          ]
+        },
+        "fallback_text": "Passport collection slots at the ICA Building, Lavender, earliest first, as of 15:20: Mon 28 Sep 08:30, Mon 28 Sep 11:10, Tue 29 Sep 09:40. Bring your old passport, even if it has expired, your NRIC, and the collection SMS or letter with your application number. Nothing is booked until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Passport collection · ICA",
+            "subtitle": "ICA Building, Lavender"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking ICA e-Appointment for passport collection slots",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab401"
+              }
+            }
+          ],
+          "fallback_text": "Passport collection at ICA: checking ICA e-Appointment for the earliest slots at the ICA Building, Lavender."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Passport collection · ICA",
+            "subtitle": "Lavender · 1 of 2 weeks checked · as of 15:20"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Mon 28 Sep",
+                  "secondary": "ICA Building, Lavender · passport collection",
+                  "trailing": "08:30"
+                },
+                {
+                  "label": "Mon 28 Sep",
+                  "secondary": "ICA Building, Lavender · passport collection",
+                  "trailing": "11:10"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Bring",
+                  "bullets": [
+                    "Your old passport, even if it has expired",
+                    "Your NRIC",
+                    "The collection SMS or letter with your application number"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Passport collection at ICA",
+                "url": "https://www.ica.gov.sg/documents/passport/collect"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "ICA e-Appointment, 26 Sep 2026 15:20; the second week is still loading"
+              }
+            ],
+            "assumptions": [
+              "Booking needs your Singpass login; you do that step yourself, I never see it"
+            ]
+          },
+          "fallback_text": "Passport collection at the ICA Building, Lavender, 1 of 2 weeks checked as of 15:20: Mon 28 Sep 08:30 and 11:10. Bring your old passport, even if it has expired, your NRIC, and the collection SMS or letter with your application number. Nothing is booked."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Passport collection · ICA",
+            "subtitle": "Lavender · as of 14:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Mon 28 Sep",
+                  "secondary": "ICA Building, Lavender · passport collection",
+                  "trailing": "08:30"
+                },
+                {
+                  "label": "Mon 28 Sep",
+                  "secondary": "ICA Building, Lavender · passport collection",
+                  "trailing": "11:10"
+                },
+                {
+                  "label": "Tue 29 Sep",
+                  "secondary": "ICA Building, Lavender · passport collection",
+                  "trailing": "09:40"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Bring",
+                  "bullets": [
+                    "Your old passport, even if it has expired",
+                    "Your NRIC",
+                    "The collection SMS or letter with your application number"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Passport collection at ICA",
+                "url": "https://www.ica.gov.sg/documents/passport/collect"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "ICA e-Appointment, passport collection, 26 Sep 2026 14:30"
+              }
+            ],
+            "assumptions": [
+              "Booking needs your Singpass login; you do that step yourself, I never see it"
+            ]
+          },
+          "fallback_text": "As of 14:30 (couldn't refresh): Passport collection slots at the ICA Building, Lavender, earliest first: Mon 28 Sep 08:30, Mon 28 Sep 11:10, Tue 29 Sep 09:40. Bring your old passport, even if it has expired, your NRIC, and the collection SMS or letter with your application number. Nothing is booked until you say yes."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No passport collection slots for 2 weeks",
+            "subtitle": "ICA Building, Lavender · as of 15:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "None in the next 2 weeks. Ask me to check again tomorrow."
+            }
+          ],
+          "fallback_text": "No passport collection slots for 2 weeks at the ICA Building, Lavender, as of 15:20. Ask me to check again tomorrow. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check ICA slots",
+            "subtitle": "Passport collection · Lavender"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "ICA e-Appointment didn't load. Ask me again soon. Nothing was booked."
+            }
+          ],
+          "fallback_text": "Couldn't check ICA slots for passport collection at the ICA Building, Lavender: ICA e-Appointment didn't load. Ask me again soon. Nothing was booked."
+        }
+      }
+    },
+    {
+      "id": "book-dmv-real-id",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Find the earliest DMV appointment for a REAL ID near San Francisco.",
+      "says": "Daly City on 8 Oct is five days sooner than Fell St; shall I prepare it for your approval?",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "R4 Government appointment",
+        "Checklist / to-do"
+      ],
+      "rationale": "Same shape as the ICA card: offices earliest first, then the documents and fee; nothing is submitted without the yes.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "REAL ID appointments · near San Francisco",
+          "subtitle": "Earliest first · Pacific time · as of 00:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Daly City DMV",
+                "secondary": "1500 Sullivan Ave · 8 mi",
+                "trailing": "Thu 8 Oct · 14:40"
+              },
+              {
+                "label": "San Francisco DMV",
+                "secondary": "1377 Fell St · 2 mi",
+                "trailing": "Tue 13 Oct · 09:10"
+              },
+              {
+                "label": "San Mateo DMV",
+                "secondary": "300 N San Mateo Dr · 19 mi",
+                "trailing": "Wed 14 Oct · 10:20"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Bring",
+                "bullets": [
+                  "US passport or birth certificate",
+                  "Your Social Security number",
+                  "Two proofs of California address",
+                  "The confirmation code from your online application; fee US$45"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "DMV appointments",
+              "url": "https://www.dmv.ca.gov/portal/appointments/select-appointment-type"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "California DMV appointments, REAL ID, 26 Sep 2026 00:20 PT"
+            }
+          ],
+          "assumptions": [
+            "Times are Pacific; the fee is paid at the office"
+          ]
+        },
+        "fallback_text": "REAL ID appointments near San Francisco, earliest first, Pacific time, as of 00:20: Daly City DMV, 1500 Sullivan Ave, 8 mi, Thu 8 Oct 14:40; San Francisco DMV, 1377 Fell St, 2 mi, Tue 13 Oct 09:10; San Mateo DMV, 300 N San Mateo Dr, 19 mi, Wed 14 Oct 10:20. Bring a US passport or birth certificate, your Social Security number, two proofs of California address and the confirmation code from your online application; fee US$45."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "REAL ID appointments · near San Francisco",
+            "subtitle": "Pacific time"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 3 DMV offices near San Francisco for REAL ID slots",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab402"
+              }
+            }
+          ],
+          "fallback_text": "REAL ID appointments near San Francisco, Pacific time: checking the California DMV for the earliest at 3 offices."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "REAL ID appointments · near San Francisco",
+            "subtitle": "2 of 3 offices checked · as of 00:20"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Daly City DMV",
+                  "secondary": "1500 Sullivan Ave · 8 mi",
+                  "trailing": "Thu 8 Oct · 14:40"
+                },
+                {
+                  "label": "San Francisco DMV",
+                  "secondary": "1377 Fell St · 2 mi",
+                  "trailing": "Tue 13 Oct · 09:10"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Bring",
+                  "bullets": [
+                    "US passport or birth certificate",
+                    "Your Social Security number",
+                    "Two proofs of California address",
+                    "The confirmation code from your online application; fee US$45"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "DMV appointments",
+                "url": "https://www.dmv.ca.gov/portal/appointments/select-appointment-type"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "California DMV appointments, 26 Sep 2026 00:20 PT; San Mateo still loading"
+              }
+            ],
+            "assumptions": [
+              "Times are Pacific; the fee is paid at the office"
+            ]
+          },
+          "fallback_text": "REAL ID appointments near San Francisco, 2 of 3 offices checked, Pacific time, as of 00:20: Daly City DMV, 1500 Sullivan Ave, 8 mi, Thu 8 Oct 14:40; San Francisco DMV, 1377 Fell St, 2 mi, Tue 13 Oct 09:10. San Mateo still loading. Bring a US passport or birth certificate, your Social Security number, two proofs of California address and the confirmation code from your online application; fee US$45."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "REAL ID appointments · near San Francisco",
+            "subtitle": "As of 23:40 Fri · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Daly City DMV",
+                  "secondary": "1500 Sullivan Ave · 8 mi",
+                  "trailing": "Thu 8 Oct · 14:40"
+                },
+                {
+                  "label": "San Francisco DMV",
+                  "secondary": "1377 Fell St · 2 mi",
+                  "trailing": "Tue 13 Oct · 09:10"
+                },
+                {
+                  "label": "San Mateo DMV",
+                  "secondary": "300 N San Mateo Dr · 19 mi",
+                  "trailing": "Wed 14 Oct · 10:20"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Bring",
+                  "bullets": [
+                    "US passport or birth certificate",
+                    "Your Social Security number",
+                    "Two proofs of California address",
+                    "The confirmation code from your online application; fee US$45"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "DMV appointments",
+                "url": "https://www.dmv.ca.gov/portal/appointments/select-appointment-type"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "California DMV appointments, 25 Sep 2026 23:40 PT"
+              }
+            ],
+            "assumptions": [
+              "Times are Pacific; the fee is paid at the office"
+            ]
+          },
+          "fallback_text": "As of 23:40 PT Fri 25 Sep (couldn't refresh): REAL ID appointments near San Francisco, earliest first, Pacific time: Daly City DMV, 1500 Sullivan Ave, 8 mi, Thu 8 Oct 14:40; San Francisco DMV, 1377 Fell St, 2 mi, Tue 13 Oct 09:10; San Mateo DMV, 300 N San Mateo Dr, 19 mi, Wed 14 Oct 10:20. Bring a US passport or birth certificate, your Social Security number, two proofs of California address and the confirmation code from your online application; fee US$45."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No REAL ID slots near San Francisco",
+            "subtitle": "Next 90 days · as of 00:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The DMV adds slots daily; I can watch for one and tell you."
+            }
+          ],
+          "fallback_text": "No REAL ID slots near San Francisco at the 3 DMV offices in the next 90 days, as of 00:20 PT. The DMV adds slots daily; I can watch for one and tell you. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check DMV appointments",
+            "subtitle": "REAL ID · near San Francisco"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The DMV site asked for a CAPTCHA. Pass it there, then tell me; I'll continue."
+            }
+          ],
+          "fallback_text": "Couldn't check DMV appointments for REAL ID near San Francisco: the DMV site asked for a CAPTCHA, which I don't solve. Pass it there, then tell me; I'll continue. Nothing was booked."
+        }
+      }
+    },
+    {
+      "id": "book-tickets-seats",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Get me two tickets to the Chris Isaak show next month, under S$200 each.",
+      "says": "Row K is the best pair under your S$200; shall I buy them for S$348?",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "R5 Event tickets",
+        "S11 Cart / checkout summary",
+        "X3 Total row"
+      ],
+      "rationale": "Seats, each fee and the all-in total before the yes; the rows add up to the total; no Buy button: the question follows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Chris Isaak · Sat 17 Oct 20:00",
+          "subtitle": "Esplanade Concert Hall · SISTIC · as of 18:30"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$348.00",
+                "label": "Total to pay"
+              },
+              {
+                "value": "S$12.00",
+                "label": "Fees"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Cat 2 · Row K, seats 14–15",
+                "secondary": "× 2 · S$168 each",
+                "trailing": "S$336.00"
+              },
+              {
+                "label": "Booking fee",
+                "secondary": "S$4 a ticket",
+                "trailing": "S$8.00"
+              },
+              {
+                "label": "Card fee",
+                "secondary": "Visa ending 4417",
+                "trailing": "S$4.00"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SISTIC seat map, 26 Sep 2026 18:30"
+            }
+          ],
+          "assumptions": [
+            "Seats are held for 10 min once you say yes",
+            "Pays with the Visa saved at SISTIC; Harso keeps no card"
+          ]
+        },
+        "fallback_text": "Chris Isaak, Sat 17 Oct 20:00, Esplanade Concert Hall, SISTIC, as of 18:30, nothing bought yet: Cat 2, Row K, seats 14–15, × 2 at S$168 each = S$336.00; booking fee S$4 a ticket, S$8.00; card fee on Visa ending 4417, S$4.00. Total to pay S$348.00, of which S$12.00 is fees. E-tickets by email."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Chris Isaak · Sat 17 Oct 20:00",
+            "subtitle": "Esplanade Concert Hall · SISTIC"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Finding 2 seats under S$200 each on SISTIC for Sat 17 Oct",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab501"
+              }
+            }
+          ],
+          "fallback_text": "Finding 2 seats under S$200 each for Chris Isaak at the Esplanade Concert Hall, Sat 17 Oct 20:00, on SISTIC."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Chris Isaak · Sat 17 Oct 20:00",
+            "subtitle": "Esplanade · fees not in yet · as of 18:30"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$336.00",
+                  "label": "Seats"
+                },
+                {
+                  "value": "Not in yet",
+                  "label": "Fees"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Cat 2 · Row K, seats 14–15",
+                  "secondary": "× 2 · S$168 each",
+                  "trailing": "S$336.00"
+                },
+                {
+                  "label": "Booking and card fees",
+                  "secondary": "SISTIC adds them at checkout",
+                  "trailing": "Not in yet"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "SISTIC seat map, 26 Sep 2026 18:30; fees not shown yet"
+              }
+            ],
+            "assumptions": [
+              "Seats are held for 10 min once you say yes",
+              "Pays with the Visa saved at SISTIC; Harso keeps no card"
+            ]
+          },
+          "fallback_text": "Chris Isaak, Sat 17 Oct 20:00, Esplanade Concert Hall, SISTIC, as of 18:30, nothing bought yet: Cat 2, Row K, seats 14–15, × 2 at S$168 each = S$336.00. Booking and card fees not in yet: SISTIC adds them at checkout, so there is no total yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Chris Isaak · Sat 17 Oct 20:00",
+            "subtitle": "Esplanade · as of 18:05 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$348.00",
+                  "label": "Total to pay"
+                },
+                {
+                  "value": "S$12.00",
+                  "label": "Fees"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Cat 2 · Row K, seats 14–15",
+                  "secondary": "× 2 · S$168 each",
+                  "trailing": "S$336.00"
+                },
+                {
+                  "label": "Booking fee",
+                  "secondary": "S$4 a ticket",
+                  "trailing": "S$8.00"
+                },
+                {
+                  "label": "Card fee",
+                  "secondary": "Visa ending 4417",
+                  "trailing": "S$4.00"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "SISTIC seat map, 26 Sep 2026 18:05"
+              }
+            ],
+            "assumptions": [
+              "Seats are held for 10 min once you say yes",
+              "Pays with the Visa saved at SISTIC; Harso keeps no card"
+            ]
+          },
+          "fallback_text": "Couldn't refresh; seats may have gone. Chris Isaak, Sat 17 Oct 20:00, Esplanade Concert Hall, SISTIC, as of 18:05, nothing bought yet: Cat 2, Row K, seats 14–15, × 2 at S$168 each = S$336.00; booking fee S$4 a ticket, S$8.00; card fee on Visa ending 4417, S$4.00. Total to pay S$348.00, of which S$12.00 is fees. E-tickets by email."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No pair under S$200 for Chris Isaak",
+            "subtitle": "Sat 17 Oct · Esplanade · as of 18:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Cheapest pair left: Cat 1, S$228 each. Say if I should get those."
+            }
+          ],
+          "fallback_text": "No pair under S$200 each for Chris Isaak, Esplanade Concert Hall, Sat 17 Oct 20:00, on SISTIC as of 18:30. Cheapest pair left: Cat 1, S$228 each. Say if I should get those. Nothing was bought."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check Chris Isaak seats",
+            "subtitle": "Sat 17 Oct · Esplanade · SISTIC"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "SISTIC's queue needs a check only you can pass; tell me when you're through."
+            }
+          ],
+          "fallback_text": "Couldn't check Chris Isaak seats, Esplanade Concert Hall, Sat 17 Oct 20:00, on SISTIC: SISTIC's queue needs a check only you can pass; tell me when you're through. Nothing was bought."
+        }
+      }
+    },
+    {
+      "id": "book-tickets-confirmed",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Did the Chris Isaak tickets go through?",
+      "says": "Yes, both tickets are yours.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "R5 Tickets confirmed",
+        "S12 Order confirmation / receipt"
+      ],
+      "rationale": "The paid total and the show time are the two numbers; the e-tickets open from the card; a missing email is never 'no order'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tickets bought · Chris Isaak",
+          "subtitle": "Cat 2 · Row K, seats 14–15 · SISTIC order 7730152"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$348.00",
+                "label": "Paid"
+              },
+              {
+                "value": "Sat 17 Oct",
+                "label": "Show, 20:00"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open e-tickets",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000cab502"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "SISTIC confirmation email, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Tickets bought · Chris Isaak: SISTIC order 7730152, 2 tickets, Cat 2, Row K, seats 14–15, Esplanade Concert Hall, Sat 17 Oct, show 20:00. S$348.00 paid on Visa ending 4417. E-tickets in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Chris Isaak tickets",
+            "subtitle": "SISTIC"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your SISTIC emails for the Chris Isaak order",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab503"
+              }
+            }
+          ],
+          "fallback_text": "Chris Isaak tickets: reading your SISTIC emails for the order."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tickets bought · Chris Isaak",
+            "subtitle": "SISTIC order 7730152 · as of 18:41"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$348.00",
+                  "label": "Paid"
+                },
+                {
+                  "value": "Sat 17 Oct",
+                  "label": "Show, 20:00"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open receipt",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000cab504"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "SISTIC receipt email, 26 Sep 2026 18:41; e-ticket email not in yet"
+              }
+            ]
+          },
+          "fallback_text": "Tickets bought · Chris Isaak: SISTIC order 7730152, 2 tickets, Sat 17 Oct, show 20:00, S$348.00 paid, as of 18:41. The e-tickets haven't arrived yet; the receipt is in your Library."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tickets bought · Chris Isaak",
+            "subtitle": "Order 7730152 · as of 18:41 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$348.00",
+                  "label": "Paid"
+                },
+                {
+                  "value": "Sat 17 Oct",
+                  "label": "Show, 20:00"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open e-tickets",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000cab502"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "SISTIC confirmation email, 26 Sep 2026 18:41"
+              }
+            ]
+          },
+          "fallback_text": "As of 18:41 (couldn't refresh): Tickets bought · Chris Isaak: SISTIC order 7730152, 2 tickets, Cat 2, Row K, seats 14–15, Esplanade Concert Hall, Sat 17 Oct, show 20:00. S$348.00 paid on Visa ending 4417. E-tickets in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No SISTIC confirmation found",
+            "subtitle": "Chris Isaak · as of 18:50"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No SISTIC email since 18:30. Check SISTIC before buying again."
+            }
+          ],
+          "fallback_text": "No SISTIC confirmation found for the Chris Isaak tickets as of 18:50: no SISTIC email since 18:30. That doesn't prove nothing was bought. Check SISTIC before buying again."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the Chris Isaak tickets",
+            "subtitle": "SISTIC · S$348.00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "SISTIC didn't answer after paying. I'll check your orders before retrying."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the Chris Isaak tickets on SISTIC: it didn't answer after the S$348.00 payment was sent, so they may be bought. So you aren't charged twice: I'll check your orders before retrying."
+        }
+      }
+    },
+    {
+      "id": "book-cancel-lunch",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Cancel Saturday's lunch reservation.",
+      "says": "It's free to cancel today and the deposit comes back; shall I cancel it?",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "R6 Reschedule or cancel",
+        "Reservation"
+      ],
+      "rationale": "The booking, the policy and the fee before the yes, and what can't be undone; the question follows the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Cancel lunch at Candlenut",
+          "subtitle": "Sat 3 Oct · 12:30 · 2 people · as of 16:35"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$0",
+                "label": "Fee if cancelled now"
+              },
+              {
+                "value": "S$20",
+                "label": "Deposit refunded"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Candlenut · Sat 3 Oct",
+                "secondary": "12:30 · 2 people · Chope CH-90412",
+                "trailing": "Booked"
+              },
+              {
+                "label": "Policy",
+                "secondary": "Free until Fri 2 Oct 12:30, then S$25 a person",
+                "trailing": "Free now"
+              },
+              {
+                "label": "After cancelling",
+                "secondary": "The table is released to others",
+                "trailing": "Can't undo"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Chope booking email and manage page, 26 Sep 2026 16:35"
+            }
+          ]
+        },
+        "fallback_text": "Cancel lunch at Candlenut, Sat 3 Oct 12:30, 2 people, Chope CH-90412, booked; as of 16:35, not cancelled yet. Fee if cancelled now S$0; S$20 deposit refunded. Policy: free until Fri 2 Oct 12:30, then S$25 a person, so free now. After cancelling, the table is released to others: can't undo."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lunch on Sat 3 Oct",
+            "subtitle": "Gmail and Chope"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Finding Saturday's lunch booking in Gmail and Chope",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab601"
+              }
+            }
+          ],
+          "fallback_text": "Lunch on Sat 3 Oct: finding Saturday's booking in your Gmail and Chope."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancel lunch at Candlenut",
+            "subtitle": "Sat 3 Oct · 12:30 · policy not in yet · as of 16:35"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "Not known",
+                  "label": "Fee if cancelled now"
+                },
+                {
+                  "value": "S$20",
+                  "label": "Deposit held"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Candlenut · Sat 3 Oct",
+                  "secondary": "12:30 · 2 people · Chope CH-90412",
+                  "trailing": "Booked"
+                },
+                {
+                  "label": "Policy",
+                  "secondary": "Chope's manage page didn't load",
+                  "trailing": "Not in yet"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Chope booking email, 26 Sep 2026 16:35; manage page didn't load"
+              }
+            ]
+          },
+          "fallback_text": "Cancel lunch at Candlenut, Sat 3 Oct 12:30, 2 people, Chope CH-90412, booked, S$20 deposit held; as of 16:35. Policy not in yet: Chope's manage page didn't load, so the fee if cancelled now is not known. Nothing cancelled."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancel lunch at Candlenut",
+            "subtitle": "Sat 3 Oct · 12:30 · as of 15:50 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$0",
+                  "label": "Fee if cancelled now"
+                },
+                {
+                  "value": "S$20",
+                  "label": "Deposit refunded"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Candlenut · Sat 3 Oct",
+                  "secondary": "12:30 · 2 people · Chope CH-90412",
+                  "trailing": "Booked"
+                },
+                {
+                  "label": "Policy",
+                  "secondary": "Free until Fri 2 Oct 12:30, then S$25 a person",
+                  "trailing": "Free now"
+                },
+                {
+                  "label": "After cancelling",
+                  "secondary": "The table is released to others",
+                  "trailing": "Can't undo"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Chope booking email and manage page, 26 Sep 2026 15:50"
+              }
+            ]
+          },
+          "fallback_text": "As of 15:50 (couldn't refresh): Cancel lunch at Candlenut, Sat 3 Oct 12:30, 2 people, Chope CH-90412, booked; not cancelled yet. Fee if cancelled now S$0; S$20 deposit refunded. Policy: free until Fri 2 Oct 12:30, then S$25 a person, so free now. After cancelling, the table is released to others: can't undo."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No lunch booking on Sat 3 Oct",
+            "subtitle": "Gmail and Chope · as of 16:35"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Your next booking is Burnt Ends, Fri 2 Oct 19:30. Say if it's that one."
+            }
+          ],
+          "fallback_text": "No lunch booking on Sat 3 Oct in Gmail and Chope, as of 16:35. Your next booking is Burnt Ends, Fri 2 Oct 19:30. Say if it's that one. Nothing was cancelled."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't find Saturday's lunch",
+            "subtitle": "Sat 3 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired. Sign in and ask me again. Nothing was cancelled."
+            }
+          ],
+          "fallback_text": "Couldn't find Saturday's lunch, Sat 3 Oct: the Gmail sign-in expired. Sign in and ask me again. Nothing was cancelled."
+        }
+      }
+    },
+    {
+      "id": "book-cancelled",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Yes, cancel it.",
+      "says": "Cancelled. Chope has confirmed it.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R6 Reschedule or cancel",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: what was cancelled in the header, the refund and the venue's own confirmation as rows; a timeout is 'couldn't confirm'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Cancelled · Candlenut",
+          "subtitle": "Sat 3 Oct · 12:30 · 2 people · as of 16:40"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Reference",
+                "trailing": "CH-90412"
+              },
+              {
+                "label": "Deposit",
+                "secondary": "Refund to Visa ending 4417 in 5–7 working days",
+                "trailing": "S$20"
+              },
+              {
+                "label": "Chope email",
+                "secondary": "Cancellation confirmed",
+                "trailing": "Received"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Manage on Chope",
+              "url": "https://www.chope.co/singapore-restaurants/restaurant/candlenut"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Chope cancellation email, 26 Sep 2026 16:40"
+            }
+          ]
+        },
+        "fallback_text": "Cancelled · Candlenut: lunch Sat 3 Oct 12:30, 2 people, as of 16:40, no fee. Reference CH-90412. Deposit S$20: refund to Visa ending 4417 in 5–7 working days. Chope email: cancellation confirmed, received."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Candlenut",
+            "subtitle": "Sat 3 Oct · 12:30 · 2 people"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Cancelling on Chope and waiting for its email",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab602"
+              }
+            }
+          ],
+          "fallback_text": "Cancelling lunch at Candlenut, Sat 3 Oct 12:30, 2 people, on Chope and waiting for its confirmation email."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancelled · Candlenut",
+            "subtitle": "Sat 3 Oct · 12:30 · 2 people · as of 16:40"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "CH-90412"
+                },
+                {
+                  "label": "Deposit",
+                  "secondary": "Refund to Visa ending 4417 in 5–7 working days",
+                  "trailing": "S$20"
+                },
+                {
+                  "label": "Chope email",
+                  "secondary": "Not arrived yet; the manage page says cancelled",
+                  "trailing": "Waiting"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Manage on Chope",
+                "url": "https://www.chope.co/singapore-restaurants/restaurant/candlenut"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Chope manage page, 26 Sep 2026 16:40; email not in yet"
+              }
+            ]
+          },
+          "fallback_text": "Cancelled · Candlenut: lunch Sat 3 Oct 12:30, 2 people, as of 16:40, no fee. Reference CH-90412. Deposit S$20: refund to Visa ending 4417 in 5–7 working days. Chope email: waiting, not arrived yet; the manage page says cancelled."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Cancelled · Candlenut",
+            "subtitle": "Sat 3 Oct · 12:30 · as of 16:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "CH-90412"
+                },
+                {
+                  "label": "Deposit",
+                  "secondary": "Refund to Visa ending 4417 in 5–7 working days",
+                  "trailing": "S$20"
+                },
+                {
+                  "label": "Chope email",
+                  "secondary": "Cancellation confirmed",
+                  "trailing": "Received"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Manage on Chope",
+                "url": "https://www.chope.co/singapore-restaurants/restaurant/candlenut"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Chope cancellation email, 26 Sep 2026 16:40"
+              }
+            ]
+          },
+          "fallback_text": "As of 16:40 (couldn't refresh): Cancelled · Candlenut: lunch Sat 3 Oct 12:30, 2 people, no fee. Reference CH-90412. Deposit S$20: refund to Visa ending 4417 in 5–7 working days. Chope email: cancellation confirmed, received."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Candlenut was already cancelled",
+            "subtitle": "Sat 3 Oct · 12:30 · as of 16:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Chope shows it cancelled Thu 24 Sep. Nothing changed; tell me if that's wrong."
+            }
+          ],
+          "fallback_text": "Candlenut was already cancelled: lunch Sat 3 Oct 12:30, ref CH-90412, cancelled on Chope on Thu 24 Sep, as of 16:40. Nothing changed; tell me if that's wrong."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the cancellation",
+            "subtitle": "Candlenut · Sat 3 Oct 12:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Chope didn't answer. I'll check Chope and your email before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the cancellation of lunch at Candlenut, Sat 3 Oct 12:30: Chope didn't answer after the request was sent, so it may be cancelled. I'll check Chope and your email before trying again."
+        }
+      }
+    },
+    {
+      "id": "book-airport-ride",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Book a ride to the airport for my Tokyo flight on Friday that adjusts if it's delayed.",
+      "says": "Pickup at 05:40 gets you to T3 two hours early; shall I book the GrabCar?",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "T7 Airport ride timed to the flight",
+        "S11 Cart / checkout summary"
+      ],
+      "rationale": "The pickup time worked back from the flight, row by row, then the ride and fare; booked only after the yes; a delay brings a new card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Ride to Changi · Fri 2 Oct",
+          "subtitle": "SQ 638 · from Home · as of 17:05"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "05:40",
+                "label": "Pickup"
+              },
+              {
+                "value": "S$32–38",
+                "label": "GrabCar fare"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "SQ 638 departs",
+                "secondary": "Changi T3 · Fri 2 Oct",
+                "trailing": "08:35"
+              },
+              {
+                "label": "Be at Changi T3",
+                "secondary": "2 h before, Singapore Airlines' advice",
+                "trailing": "06:35"
+              },
+              {
+                "label": "Drive from Home",
+                "secondary": "25–35 min at that hour, plus 20 min spare",
+                "trailing": "Leave 05:40"
+              },
+              {
+                "label": "GrabCar Advance",
+                "secondary": "4 seats · fare fixed when booked",
+                "trailing": "S$32–38"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your SQ 638 booking email; Grab Advance Booking fare, 26 Sep 2026 17:05"
+            }
+          ],
+          "assumptions": [
+            "Pickup at Home, Tiong Bahru",
+            "I'll watch SQ 638 and propose a new pickup if it's delayed; nothing changes without your yes"
+          ]
+        },
+        "fallback_text": "Ride to Changi, Fri 2 Oct, SQ 638, from Home, as of 17:05, not booked yet. SQ 638 departs Changi T3 08:35. Be at Changi T3 by 06:35, 2 h before, Singapore Airlines' advice. Drive from Home 25–35 min at that hour, plus 20 min spare: leave 05:40, pickup 05:40. GrabCar Advance, 4 seats, S$32–38 GrabCar fare, fixed when booked."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Ride to Changi · Fri 2 Oct",
+            "subtitle": "SQ 638 · from Home"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your SQ 638 booking and pricing a Grab to Changi T3",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-000000cab701"
+              }
+            }
+          ],
+          "fallback_text": "Ride to Changi, Fri 2 Oct: reading your SQ 638 booking and pricing a Grab from Home to Changi T3."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Ride to Changi · Fri 2 Oct",
+            "subtitle": "SQ 638 · fare not in yet · as of 17:05"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "05:40",
+                  "label": "Pickup"
+                },
+                {
+                  "value": "Not in yet",
+                  "label": "GrabCar fare"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "SQ 638 departs",
+                  "secondary": "Changi T3 · Fri 2 Oct",
+                  "trailing": "08:35"
+                },
+                {
+                  "label": "Be at Changi T3",
+                  "secondary": "2 h before, Singapore Airlines' advice",
+                  "trailing": "06:35"
+                },
+                {
+                  "label": "Drive from Home",
+                  "secondary": "25–35 min at that hour, plus 20 min spare",
+                  "trailing": "Leave 05:40"
+                },
+                {
+                  "label": "GrabCar Advance",
+                  "secondary": "Grab hasn't priced it yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Your SQ 638 booking email, 26 Sep 2026 17:05; Grab fare not in yet"
+              }
+            ],
+            "assumptions": [
+              "Pickup at Home, Tiong Bahru",
+              "I'll watch SQ 638 and propose a new pickup if it's delayed; nothing changes without your yes"
+            ]
+          },
+          "fallback_text": "Ride to Changi, Fri 2 Oct, SQ 638, from Home, as of 17:05, not booked yet. SQ 638 departs Changi T3 08:35. Be at Changi T3 by 06:35, 2 h before, Singapore Airlines' advice. Drive from Home 25–35 min at that hour, plus 20 min spare: leave 05:40, pickup 05:40. GrabCar Advance: GrabCar fare not in yet, Grab hasn't priced it yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Ride to Changi · Fri 2 Oct",
+            "subtitle": "SQ 638 · as of 16:20 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "05:40",
+                  "label": "Pickup"
+                },
+                {
+                  "value": "S$32–38",
+                  "label": "GrabCar fare"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "SQ 638 departs",
+                  "secondary": "Changi T3 · Fri 2 Oct",
+                  "trailing": "08:35"
+                },
+                {
+                  "label": "Be at Changi T3",
+                  "secondary": "2 h before, Singapore Airlines' advice",
+                  "trailing": "06:35"
+                },
+                {
+                  "label": "Drive from Home",
+                  "secondary": "25–35 min at that hour, plus 20 min spare",
+                  "trailing": "Leave 05:40"
+                },
+                {
+                  "label": "GrabCar Advance",
+                  "secondary": "4 seats · fare fixed when booked",
+                  "trailing": "S$32–38"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Your SQ 638 booking email; Grab fare, 26 Sep 2026 16:20"
+              }
+            ],
+            "assumptions": [
+              "Pickup at Home, Tiong Bahru",
+              "I'll watch SQ 638 and propose a new pickup if it's delayed; nothing changes without your yes"
+            ]
+          },
+          "fallback_text": "As of 16:20 (couldn't refresh): Ride to Changi, Fri 2 Oct, SQ 638, from Home, not booked yet. SQ 638 departs Changi T3 08:35. Be at Changi T3 by 06:35, 2 h before, Singapore Airlines' advice. Drive from Home 25–35 min at that hour, plus 20 min spare: leave 05:40, pickup 05:40. GrabCar Advance, 4 seats, S$32–38 GrabCar fare, fixed when booked."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No GrabCar for 05:40 on Fri 2 Oct",
+            "subtitle": "SQ 638 · from Home · as of 17:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No advance GrabCar at 05:40. A CDG Zig taxi can; say if I should book it."
+            }
+          ],
+          "fallback_text": "No GrabCar for 05:40 on Fri 2 Oct from Home for SQ 638 (08:35, T3), as of 17:05. A CDG Zig taxi can be booked for 05:40; say if I should book it. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't plan the airport ride",
+            "subtitle": "SQ 638 · Fri 2 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "No SQ 638 booking in Gmail. Forward it or tell me the flight time."
+            }
+          ],
+          "fallback_text": "Couldn't plan the airport ride to Changi for SQ 638 on Fri 2 Oct: no SQ 638 booking in Gmail. Forward it or tell me the flight time. Nothing was booked."
+        }
+      }
+    }
+  ]
+}
