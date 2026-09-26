@@ -190,12 +190,14 @@ const sourcesDoc = { kind: "output_blocks", major: 1, header: { title: "Trains a
     { label: "LTA statement", url: "https://www.lta.gov.sg/content/ltagov/en/newsroom.html" },
     { label: "The Straits Times", url: "https://www.straitstimes.com/singapore/transport" },
     { label: "CNA", url: "https://www.channelnewsasia.com/singapore" },
+    { label: "X", url: "https://x.com/SMRT_Singapore" },
+    { label: "新", url: "https://www.zaobao.com.sg/" },
     { label: "SMRT service update for the East-West Line between Tanjong Pagar and Jurong East, 26 Sep 2026, 14:10", url: "https://www.smrt.com.sg/" },
     { label: "Commuter reports (not linked)" }],
   assumptions: ["Times are SGT."] } };
 async function sourceBoxes(page: Page) {
   return card(page).getByRole("region", { name: "Output details" }).evaluate(region => {
-    const box = (node: Element) => { const r = node.getBoundingClientRect(); return { x: r.x, y: r.y, right: r.right, bottom: r.bottom, height: r.height }; };
+    const box = (node: Element) => { const r = node.getBoundingClientRect(); return { x: r.x, y: r.y, right: r.right, bottom: r.bottom, width: r.width, height: r.height }; };
     const buttons = [...region.querySelectorAll(".hkc-output-card-source-link")].map(box);
     const lines = [...region.querySelectorAll("li")].map(box);
     const leaves = [...buttons, ...lines.filter((_, i) => !region.querySelectorAll("li")[i].querySelector("button"))];
@@ -207,20 +209,21 @@ async function sourceBoxes(page: Page) {
       const text = range.getBoundingClientRect(), own = node.getBoundingClientRect();
       return text.top < own.top - .5 || text.bottom > own.bottom + .5 || text.right > own.right + .5;
     }).length;
-    const lastLines = (() => { const range = document.createRange(); range.selectNodeContents(region.querySelectorAll(".hkc-output-card-source-link")[3]);
+    const lastLines = (() => { const range = document.createRange(); range.selectNodeContents([...region.querySelectorAll(".hkc-output-card-source-link")].find(node => node.textContent!.startsWith("SMRT"))!);
       return new Set([...range.getClientRects()].map(r => Math.round(r.top))).size; })();
-    return { heights: buttons.map(b => b.height), overlaps, outside, spill, lastLines };
+    return { widths: buttons.map(b => b.width), heights: buttons.map(b => b.height), overlaps, outside, spill, lastLines };
   });
 }
 for (const mode of ["light", "dark"] as const) {
   for (const width of [390, 420] as const) {
-    test(`source targets ${mode} ${width}: adjacent linked sources each >= ${width === 390 ? 44 : 28}px, no overlap`, async ({ page }) => {
+    test(`source targets ${mode} ${width}: adjacent linked sources (short Latin and CJK labels too) each >= ${width === 390 ? 44 : 28}px wide and tall, no overlap`, async ({ page }) => {
       await open(page, `doc=directions&mode=${mode}`, width);
       await page.evaluate(doc => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput(doc), sourcesDoc);
       await card(page).getByRole("button", { name: "Details" }).click();
       const l = await sourceBoxes(page);
-      expect(l.heights).toHaveLength(4);
+      expect(l.heights).toHaveLength(6);
       for (const height of l.heights) expect(height).toBeGreaterThanOrEqual(width === 390 ? 44 : 28);
+      for (const w of l.widths) expect(w).toBeGreaterThanOrEqual(width === 390 ? 44 : 28);
       // The long label wraps to more than one line and stays inside its own box.
       expect(l.lastLines).toBeGreaterThan(1);
       expect(l.spill).toBe(0);
@@ -236,13 +239,15 @@ for (const mode of ["light", "dark"] as const) {
 
 test.describe("coarse pointer", () => {
   test.use({ hasTouch: true, isMobile: true });
-  test("source targets are 44px in the 420 pane under a touch pointer", async ({ page }) => {
+  test("source targets are 44px wide and tall in the 420 pane under a touch pointer", async ({ page }) => {
     await open(page, "doc=directions", 420);
     expect(await page.evaluate(() => matchMedia("(pointer: coarse)").matches)).toBe(true);
     await page.evaluate(doc => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput(doc), sourcesDoc);
     await card(page).getByRole("button", { name: "Details" }).click();
     const l = await sourceBoxes(page);
+    expect(l.widths).toHaveLength(6);
     for (const height of l.heights) expect(height).toBeGreaterThanOrEqual(44);
+    for (const w of l.widths) expect(w).toBeGreaterThanOrEqual(44);
     expect(l.overlaps).toBe(0);
   });
 });
@@ -252,10 +257,11 @@ test("the real news brief: its three linked sources are separate 28px targets in
   await page.goto("/#/catalogue/news?mode=light");
   const frame = page.locator('[data-example="news-brief"] .hkl-cat-frame').first();
   await frame.getByRole("button", { name: "Details", exact: true }).click();
-  const boxes = await frame.locator(".hkc-output-card-source-link").evaluateAll(nodes => nodes.map(node => { const r = node.getBoundingClientRect(); return { y: r.y, bottom: r.bottom, height: r.height }; }));
+  const boxes = await frame.locator(".hkc-output-card-source-link").evaluateAll(nodes => nodes.map(node => { const r = node.getBoundingClientRect(); return { y: r.y, bottom: r.bottom, width: r.width, height: r.height }; }));
   expect(boxes.length).toBeGreaterThanOrEqual(3);
   for (const [i, b] of boxes.entries()) {
     expect(b.height).toBeGreaterThanOrEqual(28);
+    expect(b.width).toBeGreaterThanOrEqual(28);
     if (i) expect(b.y).toBeGreaterThanOrEqual(boxes[i - 1].bottom - .5);
   }
 });

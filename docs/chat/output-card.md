@@ -92,9 +92,10 @@ types it reads. Mount inside `KitProvider` and load `@harso/ui/styles.css`.
    `title` is the URL so the person still sees where it goes. With no href the
    browser has no path around the host (no "Open link in new tab", drag or middle
    click); the host decides every open. Each source is its own target, a real layout
-   box (not an overlapping pseudo extension): 44px tall on the 390 card and under a
-   coarse pointer, 28px when the Details content box is ≥ 348px; a long label wraps
-   inside its own box.
+   box (not an overlapping pseudo extension), at least 44 × 44px on the 390 card and
+   under a coarse pointer and 28 × 28px when the Details content box is ≥ 348px, so a
+   short label ("CNA", one letter) is as easy to hit as a long one. The label stays at
+   the start of its box; a long label wraps inside its own box.
 7. **Fallback:** if any block is a kind the card cannot draw, or a row carries `status`
    (Overdue/Paid, not styled yet), the card renders the header plus `fallback_text` as
    plain text and **nothing else from blocks** — no rows, numbers or text, no View-all
