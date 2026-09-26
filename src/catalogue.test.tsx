@@ -175,14 +175,16 @@ describe("catalogue gallery overflow and routes", () => {
   }, 60_000);
 
   // Review round 1 (F3): `mode in MODES` accepted inherited keys, and the page then crashed on them.
+  // The route and the page are what is under test, not a vertical's size: the smallest vertical keeps each case well
+  // inside the default timeout now that the big verticals carry every state (money alone timed out on CI).
   test.each(["toString", "constructor", "__proto__", "hasOwnProperty", "valueOf", "bogus"])("mode=%s falls back to both appearances", mode => {
-    window.location.hash = `#/catalogue/money?mode=${mode}`;
+    window.location.hash = `#/catalogue/news?mode=${mode}`;
     const route = catalogueRouteFromHash()!;
-    expect(route).toEqual({ vertical: "money", mode: "both" });
+    expect(route).toEqual({ vertical: "news", mode: "both" });
     const { container } = render(<CataloguePage {...route} />);
     expect(container.querySelectorAll(".hkl-cat-example").length).toBeGreaterThan(0);
     // The page itself fails closed too, whatever it is handed.
-    const direct = render(<CataloguePage vertical="money" mode={mode} />);
+    const direct = render(<CataloguePage vertical="news" mode={mode} />);
     const frames = [...direct.container.querySelectorAll(".hkl-cat-frame")].slice(0, 4).map(frame => frame.getAttribute("data-mode"));
     expect(frames).toEqual(["light", "light", "dark", "dark"]);
   });
