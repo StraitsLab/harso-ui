@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { moduleSource } from "./helpers/module-source";
 
 const sourceFiles = ["preview/chat-thread-example.tsx", "preview/chat-composer-example.tsx", "preview/consumer-readiness-examples.tsx", "src/chat/composer.tsx", "src/question.tsx", "src/misc-surfaces.tsx", "tests/boundaryless-ai-consumer-completion.spec.ts"];
 const hashes = () => Object.fromEntries(sourceFiles.map(file => [file, createHash("sha256").update(readFileSync(resolve(import.meta.dirname, "..", file))).digest("hex")]));
@@ -69,7 +70,7 @@ test("runtime composer preserves mounted drafts, attachments and host refusal", 
 
 test("AI CONSUMER Question native disabled option emits no callback and recovers without remount", async ({ page }) => {
   await page.goto("/#vercel:question");
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^\"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^\"]+)"/)?.[1];
   const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^\"]*)?"/)?.[1];

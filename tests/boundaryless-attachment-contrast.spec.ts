@@ -1,10 +1,11 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 async function attachmentConsumer(page: Page, appearance: string, palette: string, longName = false) {
   await page.goto("/#vercel:attachments");
   await page.getByLabel("Appearance", { exact: true }).selectOption(appearance);
   await page.getByLabel("Palette", { exact: true }).selectOption(palette);
-  const entry = await (await page.request.get("/preview/main.tsx")).text();
+  const entry = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = entry.match(/from "([^"]+\/react\.js\?[^\"]+)"/)?.[1];
   const domUrl = entry.match(/from "([^"]+\/react-dom_client\.js\?[^\"]+)"/)?.[1];
   expect(reactUrl).toBeTruthy();

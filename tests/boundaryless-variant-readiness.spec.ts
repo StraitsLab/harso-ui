@@ -1,4 +1,5 @@
 import { test, expect, type Page, type Locator } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 async function rectangle(locator: Locator) {
   await expect(locator).toBeVisible();
@@ -9,7 +10,7 @@ async function rectangle(locator: Locator) {
 
 async function consumer(page: Page, kind: "radio" | "input" | "attachments") {
   await page.goto(`/#${kind === "attachments" ? "vercel" : "boardui"}:${kind}`);
-  const entry = await (await page.request.get("/preview/main.tsx")).text();
+  const entry = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = entry.match(/from "([^"]+\/react\.js\?[^\"]+)"/)?.[1];
   const domUrl = entry.match(/from "([^"]+\/react-dom_client\.js\?[^\"]+)"/)?.[1];
   const producerUrl = entry.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];

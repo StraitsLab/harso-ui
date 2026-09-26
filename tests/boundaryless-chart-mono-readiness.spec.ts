@@ -1,12 +1,13 @@
 import { expect, test } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 for (const component of ["BarListCard", "FunnelChartCard", "StageBarsCard"]) for (const palette of ["clean", "cozy"]) {
   test(`MONO ${component} ${palette} computed paint and raw values`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 1000 });
     await page.emulateMedia({ colorScheme: "light", reducedMotion: "reduce" });
     await page.goto("/#boardui:bar-list-card");
-    const entry = await (await page.request.get("/preview/main.tsx")).text();
-    const example = await (await page.request.get("/preview/shared-chart-example.tsx")).text();
+    const entry = await moduleSource(page, "/preview/main.tsx");
+    const example = await moduleSource(page, "/preview/shared-chart-example.tsx");
     const reactUrl = entry.match(/from "([^"]*\/deps\/react\.js[^"]*)"/)?.[1];
     const domUrl = entry.match(/from "([^"]*\/deps\/react-dom_client\.js[^"]*)"/)?.[1];
     const producerUrl = example.match(/from "([^"]*\/src\/index\.ts[^"]*)"/)?.[1];

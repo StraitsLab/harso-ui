@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { resolve } from "node:path";
+import { moduleSource } from "./helpers/module-source";
 
 const wave = Buffer.alloc(44 + 32000);
 wave.write("RIFF");
@@ -24,7 +25,7 @@ async function mountAudio(page: Page, source: "speech" | "remote" | "invalid", a
     return route.fulfill({ status: range ? 206 : 200, contentType: "audio/wav", body: wave.subarray(start, end + 1), headers: { "Accept-Ranges": "bytes", ...(range ? { "Content-Range": `bytes ${start}-${end}/${wave.length}` } : {}) } });
   });
   await page.goto("/#vercel:audio-player");
-  const entry = await (await page.request.get("/preview/main.tsx")).text();
+  const entry = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = entry.match(/from "([^"]*\/deps\/react\.js[^"]*)"/)?.[1];
   const domUrl = entry.match(/from "([^"]*\/deps\/react-dom_client\.js[^"]*)"/)?.[1];
   if (!reactUrl || !domUrl) throw new Error("The native audio proof requires the coordinated Vite dev server.");

@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { moduleSource } from "./helpers/module-source";
 
 async function localSpeechEvents(page: Page) {
   await page.addInitScript(() => {
@@ -29,7 +30,7 @@ async function localSpeechEvents(page: Page) {
 }
 
 async function mountSpeechStates(page: Page) {
-  const source = await (await page.request.get("/preview/main.tsx")).text();
+  const source = await moduleSource(page, "/preview/main.tsx");
   const reactUrl = source.match(/from "([^"]+\/react\.js\?[^"]+)"/)?.[1];
   const domUrl = source.match(/from "([^"]+\/react-dom_client\.js\?[^"]+)"/)?.[1];
   const producerUrl = source.match(/import "([^"]*\/src\/)primitives\.css(?:\?[^"]*)?"/)?.[1];
