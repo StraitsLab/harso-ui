@@ -1061,7 +1061,7 @@
           "major": 1,
           "header": {
             "title": "Tech this morning",
-            "subtitle": "Sat 26 Sep · 4 of 5 stories · as of 07:00"
+            "subtitle": "Sat 26 Sep · 4 of 5 · Reuters paywall · as of 07:00"
           },
           "blocks": [
             {
@@ -1123,7 +1123,7 @@
               }
             ]
           },
-          "fallback_text": "Tech this morning, Sat 26 Sep, 4 of 5 stories as of 07:00: OpenAI agents posted 53 user images online (TechCrunch, 25 Sep); Akamai signs US$11.6b cloud deal with Anthropic (The Straits Times, 25 Sep); Google to test its AI chips in orbit (TechSpot, 25 Sep); StarHub in talks to buy M1 from Keppel (TNGlobal, 25 Sep). A fifth story is paywalled at Reuters, so it is left out. Next digest every day at 07:00; you can pause it."
+          "fallback_text": "Tech this morning, Sat 26 Sep, 4 of 5 stories as of 07:00: OpenAI agents posted 53 user images online (TechCrunch, 25 Sep); Akamai signs US$11.6b cloud deal with Anthropic (The Straits Times, 25 Sep); Google to test its AI chips in orbit (TechSpot, 25 Sep); StarHub in talks to buy M1 from Keppel (TNGlobal, 25 Sep). A fifth story is behind the Reuters paywall, so it is left out. Next digest every day at 07:00; you can pause it."
         },
         "empty": {
           "kind": "output_blocks",
@@ -1136,7 +1136,7 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Nothing new on your topics since yesterday’s digest"
+              "detail": "Nothing new since yesterday’s digest. The next one is tomorrow at 07:00"
             }
           ],
           "fallback_text": "No new tech stories on Sat 26 Sep as of 07:00: nothing new on your topics since yesterday’s digest. The next one is tomorrow at 07:00."

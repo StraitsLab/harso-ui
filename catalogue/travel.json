@@ -2519,7 +2519,7 @@
             "Charged the S$612 you approved at 10:38; nothing else was bought."
           ]
         },
-        "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612 (the total you approved at 10:38), 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. The e-ticket is in your Library."
+        "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. Charged the S$612 you approved at 10:38; nothing else was bought. The e-ticket is in your Library."
       },
       "states": {
         "loading": {
@@ -2570,9 +2570,12 @@
               {
                 "label": "Singapore Airlines booking page, 26 Sep 2026 10:40"
               }
+            ],
+            "assumptions": [
+              "Charged the S$612 you approved at 10:38; nothing else was bought."
             ]
           },
-          "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612 (the total you approved at 10:38), 1 adult, economy Flexi, Visa ending 4412. Seat: aisle asked for; SIA hasn't assigned it, not yet. Status: e-ticket not in yet, as the airline's email hasn't arrived."
+          "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412. Seat: aisle asked for; SIA hasn't assigned it, not yet. Status: e-ticket not in yet, as the airline's email hasn't arrived. Charged the S$612 you approved at 10:38; nothing else was bought."
         },
         "stale": {
           "kind": "output_blocks",
@@ -2616,9 +2619,12 @@
               {
                 "label": "Singapore Airlines e-ticket email, 26 Sep 2026 10:41"
               }
+            ],
+            "assumptions": [
+              "Charged the S$612 you approved at 10:38; nothing else was bought."
             ]
           },
-          "fallback_text": "As of 10:41 (couldn’t refresh with Singapore Airlines): SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612 (the total you approved at 10:38), 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. The e-ticket is in your Library."
+          "fallback_text": "As of 10:41 (couldn’t refresh with Singapore Airlines): SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. Charged the S$612 you approved at 10:38; nothing else was bought. The e-ticket is in your Library."
         },
         "empty": {
           "kind": "output_blocks",
@@ -2792,6 +2798,9 @@
               {
                 "label": "Booking.com, 26 Sep 2026 20:00; cancel terms still loading"
               }
+            ],
+            "assumptions": [
+              "Can’t tell if it is refundable, so I won’t offer to rebook yet."
             ]
           },
           "fallback_text": "Gracery Ueno rate dropped for 12–18 Oct, same room, as of 20:00: your booking, Ref ABX-4471, free cancel until 9 Oct, S$1,620; now on Booking.com, same room, S$1,380, cancel terms not in yet, so I can’t tell if it is refundable and won’t offer to rebook yet. Watching every 12 hours since 26 Sep."
@@ -2882,7 +2891,7 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Booking.com didn’t respond. Your booking wasn’t changed"
+              "detail": "Booking.com didn’t respond. Your booking wasn’t changed; next check is at 08:00"
             }
           ],
           "fallback_text": "Couldn’t check the Gracery Ueno rate for 12–18 Oct: Booking.com didn’t respond. Your booking wasn’t changed; the next check is at 08:00."

@@ -16195,7 +16195,7 @@
             "Charged the S$612 you approved at 10:38; nothing else was bought."
           ]
         },
-        "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612 (the total you approved at 10:38), 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. The e-ticket is in your Library."
+        "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. Charged the S$612 you approved at 10:38; nothing else was bought. The e-ticket is in your Library."
       },
       "states": {
         "loading": {
@@ -16246,9 +16246,12 @@
               {
                 "label": "Singapore Airlines booking page, 26 Sep 2026 10:40"
               }
+            ],
+            "assumptions": [
+              "Charged the S$612 you approved at 10:38; nothing else was bought."
             ]
           },
-          "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612 (the total you approved at 10:38), 1 adult, economy Flexi, Visa ending 4412. Seat: aisle asked for; SIA hasn't assigned it, not yet. Status: e-ticket not in yet, as the airline's email hasn't arrived."
+          "fallback_text": "SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412. Seat: aisle asked for; SIA hasn't assigned it, not yet. Status: e-ticket not in yet, as the airline's email hasn't arrived. Charged the S$612 you approved at 10:38; nothing else was bought."
         },
         "stale": {
           "kind": "output_blocks",
@@ -16292,9 +16295,12 @@
               {
                 "label": "Singapore Airlines e-ticket email, 26 Sep 2026 10:41"
               }
+            ],
+            "assumptions": [
+              "Charged the S$612 you approved at 10:38; nothing else was bought."
             ]
           },
-          "fallback_text": "As of 10:41 (couldn’t refresh with Singapore Airlines): SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612 (the total you approved at 10:38), 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. The e-ticket is in your Library."
+          "fallback_text": "As of 10:41 (couldn’t refresh with Singapore Airlines): SQ 638 to Tokyo is booked, Ref 6XK2QP, Mon 12 Oct 08:35: total paid S$612, 1 adult, economy Flexi, Visa ending 4412; seat 31C, aisle, KrisFlyer ending 0932 added; refundable until departure, S$100 fee. Charged the S$612 you approved at 10:38; nothing else was bought. The e-ticket is in your Library."
         },
         "empty": {
           "kind": "output_blocks",
@@ -16468,6 +16474,9 @@
               {
                 "label": "Booking.com, 26 Sep 2026 20:00; cancel terms still loading"
               }
+            ],
+            "assumptions": [
+              "Can’t tell if it is refundable, so I won’t offer to rebook yet."
             ]
           },
           "fallback_text": "Gracery Ueno rate dropped for 12–18 Oct, same room, as of 20:00: your booking, Ref ABX-4471, free cancel until 9 Oct, S$1,620; now on Booking.com, same room, S$1,380, cancel terms not in yet, so I can’t tell if it is refundable and won’t offer to rebook yet. Watching every 12 hours since 26 Sep."
@@ -16558,7 +16567,7 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Booking.com didn’t respond. Your booking wasn’t changed"
+              "detail": "Booking.com didn’t respond. Your booking wasn’t changed; next check is at 08:00"
             }
           ],
           "fallback_text": "Couldn’t check the Gracery Ueno rate for 12–18 Oct: Booking.com didn’t respond. Your booking wasn’t changed; the next check is at 08:00."
@@ -18143,7 +18152,7 @@
             "Nothing is booked; call or ask me to message the one you choose."
           ]
         },
-        "fallback_text": "Aircon servicing near Tampines, 3 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit."
+        "fallback_text": "Aircon servicing near Tampines, 3 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit. Price is each firm’s listed general service for one wall unit; a chemical wash costs more. Nothing is booked; call or ask me to message the one you choose."
       },
       "states": {
         "loading": {
@@ -18201,7 +18210,7 @@
               "Nothing is booked; call or ask me to message the one you choose."
             ]
           },
-          "fallback_text": "Aircon servicing near Tampines, 2 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit. Carousell blocked my search, so firms listed only there are missing."
+          "fallback_text": "Aircon servicing near Tampines, 2 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit. Carousell blocked my search, so firms listed only there are missing. Price is each firm’s listed general service for one wall unit; a chemical wash costs more. Nothing is booked; call or ask me to message the one you choose."
         },
         "stale": {
           "kind": "output_blocks",
@@ -18247,7 +18256,7 @@
               "Nothing is booked; call or ask me to message the one you choose."
             ]
           },
-          "fallback_text": "As of 09:05 (couldn’t refresh; prices may have changed): aircon servicing near Tampines, 3 firms, general service, wall unit: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit."
+          "fallback_text": "As of 09:05 (couldn’t refresh; prices may have changed): aircon servicing near Tampines, 3 firms, general service, wall unit: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit. Price is each firm’s listed general service for one wall unit; a chemical wash costs more. Nothing is booked; call or ask me to message the one you choose."
         },
         "empty": {
           "kind": "output_blocks",
@@ -19505,7 +19514,7 @@
                   "Chickpeas, 2 cans",
                   "Toor dal 500 g",
                   "Basmati rice 1 kg",
-                  "Wholewheat wraps, 6"
+                  "Wraps, 6"
                 ]
               }
             ]
@@ -19513,11 +19522,12 @@
         ],
         "details": {
           "assumptions": [
-            "Vegetarian, cooking for 2: what you told me on 12 Sep",
-            "Assumes you have atta, oil, ginger, garlic and spices"
+            "Vegetarian, for 2: per your 12 Sep note.",
+            "Assumes you have atta, oil, ginger, garlic and spices.",
+            "Nothing is ordered until you say yes."
           ]
         },
-        "fallback_text": "Vegetarian dinners next week for 2, 28 Sep–2 Oct: Mon 28 Sep palak paneer with rice, 35 min; Tue 29 Sep chana masala with rotis, 30 min; Wed 30 Sep vegetable pulao with raita, 40 min; Thu 1 Oct dal tadka with rice, 30 min; Fri 2 Oct paneer tikka wraps, 25 min. 12 groceries: vegetables: spinach 500 g, tomatoes 1 kg, onions 1 kg, capsicum, 2, cucumber, 1, coriander, 1 bunch; dairy and pantry: paneer 400 g, curd 500 g, chickpeas, 2 cans, toor dal 500 g, basmati rice 1 kg, wholewheat wraps, 6. Nothing is ordered until you say yes."
+        "fallback_text": "Vegetarian dinners next week for 2 (per your 12 Sep note), 28 Sep–2 Oct: Mon 28 Sep palak paneer with rice, 35 min; Tue 29 Sep chana masala with rotis, 30 min; Wed 30 Sep vegetable pulao with raita, 40 min; Thu 1 Oct dal tadka with rice, 30 min; Fri 2 Oct paneer tikka wraps, 25 min. 12 groceries: vegetables: spinach 500 g, tomatoes 1 kg, onions 1 kg, capsicum, 2, cucumber, 1, coriander, 1 bunch; dairy and pantry: paneer 400 g, curd 500 g, chickpeas, 2 cans, toor dal 500 g, basmati rice 1 kg, wraps, 6. Assumes you have atta, oil, ginger, garlic and spices. Nothing is ordered until you say yes."
       },
       "states": {
         "loading": {
@@ -25887,7 +25897,7 @@
           "major": 1,
           "header": {
             "title": "Tech this morning",
-            "subtitle": "Sat 26 Sep · 4 of 5 stories · as of 07:00"
+            "subtitle": "Sat 26 Sep · 4 of 5 · Reuters paywall · as of 07:00"
           },
           "blocks": [
             {
@@ -25949,7 +25959,7 @@
               }
             ]
           },
-          "fallback_text": "Tech this morning, Sat 26 Sep, 4 of 5 stories as of 07:00: OpenAI agents posted 53 user images online (TechCrunch, 25 Sep); Akamai signs US$11.6b cloud deal with Anthropic (The Straits Times, 25 Sep); Google to test its AI chips in orbit (TechSpot, 25 Sep); StarHub in talks to buy M1 from Keppel (TNGlobal, 25 Sep). A fifth story is paywalled at Reuters, so it is left out. Next digest every day at 07:00; you can pause it."
+          "fallback_text": "Tech this morning, Sat 26 Sep, 4 of 5 stories as of 07:00: OpenAI agents posted 53 user images online (TechCrunch, 25 Sep); Akamai signs US$11.6b cloud deal with Anthropic (The Straits Times, 25 Sep); Google to test its AI chips in orbit (TechSpot, 25 Sep); StarHub in talks to buy M1 from Keppel (TNGlobal, 25 Sep). A fifth story is behind the Reuters paywall, so it is left out. Next digest every day at 07:00; you can pause it."
         },
         "empty": {
           "kind": "output_blocks",
@@ -25962,7 +25972,7 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Nothing new on your topics since yesterday’s digest"
+              "detail": "Nothing new since yesterday’s digest. The next one is tomorrow at 07:00"
             }
           ],
           "fallback_text": "No new tech stories on Sat 26 Sep as of 07:00: nothing new on your topics since yesterday’s digest. The next one is tomorrow at 07:00."

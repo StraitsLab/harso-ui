@@ -1588,7 +1588,7 @@
             "Nothing is booked; call or ask me to message the one you choose."
           ]
         },
-        "fallback_text": "Aircon servicing near Tampines, 3 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit."
+        "fallback_text": "Aircon servicing near Tampines, 3 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit. Price is each firm’s listed general service for one wall unit; a chemical wash costs more. Nothing is booked; call or ask me to message the one you choose."
       },
       "states": {
         "loading": {
@@ -1646,7 +1646,7 @@
               "Nothing is booked; call or ask me to message the one you choose."
             ]
           },
-          "fallback_text": "Aircon servicing near Tampines, 2 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit. Carousell blocked my search, so firms listed only there are missing."
+          "fallback_text": "Aircon servicing near Tampines, 2 firms, general service, wall unit, as of 11:20: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit. Carousell blocked my search, so firms listed only there are missing. Price is each firm’s listed general service for one wall unit; a chemical wash costs more. Nothing is booked; call or ask me to message the one you choose."
         },
         "stale": {
           "kind": "output_blocks",
@@ -1692,7 +1692,7 @@
               "Nothing is booked; call or ask me to message the one you choose."
             ]
           },
-          "fallback_text": "As of 09:05 (couldn’t refresh; prices may have changed): aircon servicing near Tampines, 3 firms, general service, wall unit: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit."
+          "fallback_text": "As of 09:05 (couldn’t refresh; prices may have changed): aircon servicing near Tampines, 3 firms, general service, wall unit: CoolBreeze Aircon (pick), 4.8★, 1,240 reviews, NEA cert (certified technicians), 6123 4567, S$30/unit; Tampines Aircon Care, 4.6★, 310 reviews, NEA cert (certified technicians), 8123 4567, S$25/unit; FrostLine Engineering, 4.9★, 85 reviews, not NEA-listed, 9123 4568, S$40/unit. Price is each firm’s listed general service for one wall unit; a chemical wash costs more. Nothing is booked; call or ask me to message the one you choose."
         },
         "empty": {
           "kind": "output_blocks",
