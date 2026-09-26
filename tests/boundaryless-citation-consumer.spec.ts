@@ -12,9 +12,12 @@ for (const width of [390, 1440]) test(`hover-only citation remains reachable at 
   const origin = { x: start.x + start.width / 2, y: start.y + start.height / 2 };
   const destination = { x: Math.max(end.x + 5, Math.min(origin.x, end.x + end.width - 5)), y: end.y > origin.y ? end.y + 5 : end.y + end.height - 5 };
   const steps = Math.ceil(Math.hypot(destination.x - origin.x, destination.y - origin.y) / 150 * 1000 / 50);
+  // Pace each 50 ms step against the clock: a fixed sleep after each move adds the move's own cost, which on a loaded
+  // CI runner stretched this 150 px/s crossing past the card's close delay.
+  const began = Date.now();
   for (let step = 1; step <= steps; step++) {
     await page.mouse.move(origin.x + (destination.x - origin.x) * step / steps, origin.y + (destination.y - origin.y) * step / steps);
-    await page.waitForTimeout(50);
+    await page.waitForTimeout(Math.max(0, began + step * 50 - Date.now()));
   }
   await expect(content).toBeVisible();
   await expect(trigger).not.toBeFocused();
