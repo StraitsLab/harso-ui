@@ -242,7 +242,7 @@
       "components": [
         "Story timeline"
       ],
-      "rationale": "The match's moments in order, minute trailing; three inline and the rest on the page; no play-by-play.",
+      "rationale": "The match's moments newest first, so the winner shows inline; minute trailing; the rest on the page; no play-by-play.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
@@ -255,14 +255,9 @@
             "kind": "rows",
             "items": [
               {
-                "label": "Goal · Ødegaard",
+                "label": "Goal · Saka",
                 "secondary": "Arsenal",
-                "trailing": "23'"
-              },
-              {
-                "label": "Goal · Palmer",
-                "secondary": "Chelsea",
-                "trailing": "55'"
+                "trailing": "78'"
               },
               {
                 "label": "Red card · Caicedo",
@@ -270,9 +265,14 @@
                 "trailing": "71'"
               },
               {
-                "label": "Goal · Saka",
+                "label": "Goal · Palmer",
+                "secondary": "Chelsea",
+                "trailing": "55'"
+              },
+              {
+                "label": "Goal · Ødegaard",
                 "secondary": "Arsenal",
-                "trailing": "78'"
+                "trailing": "23'"
               }
             ]
           }
@@ -284,7 +284,7 @@
             }
           ]
         },
-        "fallback_text": "Arsenal 2–1 Chelsea, full time: Ødegaard goal 23', Palmer goal 55', Caicedo red card 71', Saka goal 78'."
+        "fallback_text": "Arsenal 2–1 Chelsea, full time: Saka goal 78', Caicedo red card 71', Palmer goal 55', Ødegaard goal 23'."
       },
       "states": {
         "loading": {
@@ -853,7 +853,7 @@
           "major": 1,
           "header": {
             "title": "Arsenal · next 3",
-            "subtitle": "As of 24 Sep, 08:00 · couldn’t refresh"
+            "subtitle": "Singapore time · as of 24 Sep, 08:00 · couldn’t refresh"
           },
           "blocks": [
             {
