@@ -1,0 +1,19 @@
+/* Catalogue gallery (#/catalogue/<vertical>): every example of a vertical, drawn by the real HarsoOutputCard. */
+.hkl-cat-root { min-height: 100dvh; background: var(--hk-canvas-deep); color: var(--hk-ink); font-family: var(--hk-font); }
+.hkl-cat-header { display: flex; align-items: baseline; gap: var(--hk-space-4); padding: var(--hk-space-3) var(--hk-space-6); border-bottom: 1px solid var(--hk-line); background: var(--hk-panel); }
+.hkl-cat-title { margin: 0; font-size: var(--hk-text-md); font-weight: 600; }
+.hkl-cat-stage { display: flex; flex-direction: column; gap: var(--hk-space-6); padding: var(--hk-space-6); }
+.hkl-cat-index { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--hk-space-2); margin: 0; padding: 0; list-style: none; }
+.hkl-cat-index li { display: flex; justify-content: space-between; padding: var(--hk-space-3) var(--hk-space-4); border-radius: var(--hk-radius-row); background: var(--hk-surface); }
+.hkl-cat-index a { color: inherit; }
+.hkl-cat-count { color: var(--hk-tertiary); font-variant-numeric: tabular-nums; }
+.hkl-cat-example { display: flex; flex-direction: column; gap: var(--hk-space-3); }
+.hkl-cat-request { display: flex; flex-direction: column; gap: var(--hk-space-1); }
+.hkl-cat-asked { margin: 0; font-size: var(--hk-text-md); font-weight: 600; }
+.hkl-cat-meta, .hkl-cat-state-name { margin: 0; color: var(--hk-tertiary); font-size: var(--hk-text-sm); }
+.hkl-cat-state { display: flex; flex-direction: column; gap: var(--hk-space-2); }
+.hkl-cat-grid { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--hk-space-4); }
+.hkl-cat-frame { box-sizing: border-box; flex: none; padding: var(--hk-space-3); border-radius: var(--hk-radius-card); background: var(--hk-canvas); color: var(--hk-ink); }
+.hkl-cat-reply { margin: 0; padding: var(--hk-space-3) var(--hk-space-4); font-size: var(--hk-text-body); line-height: 1.5; }
+.hkl-cat-full { display: flex; flex-direction: column; align-items: flex-start; gap: var(--hk-space-2); border-radius: var(--hk-radius-card); }
+.hkl-cat-full > .hkc-output-card { align-self: stretch; }

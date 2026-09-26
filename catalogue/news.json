@@ -1,0 +1,182 @@
+{
+  "vertical": "news",
+  "fresh": [
+    "news-brief",
+    "news-timeline",
+    "news-headlines"
+  ],
+  "examples": [
+    {
+      "id": "news-brief",
+      "vertical": "news",
+      "kind": "card",
+      "request": "What's happening with the MRT breakdown?",
+      "says": "Service on the East–West line is back; LTA is investigating the power fault.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Story cluster (brief)"
+      ],
+      "rationale": "What happened and what is still unknown are two short sections; every outlet is behind Details, linked.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "East–West line disruption",
+          "subtitle": "As of 09:40 · 3 sources"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "What happened",
+                "bullets": [
+                  "A power fault stopped trains between Jurong East and Buona Vista from 06:50.",
+                  "Free bridging buses ran until service resumed at 09:15."
+                ]
+              },
+              {
+                "heading": "Still unclear",
+                "bullets": [
+                  "What caused the fault; LTA expects a report within a week."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LTA statement",
+              "url": "https://www.lta.gov.sg/content/ltagov/en/newsroom.html"
+            },
+            {
+              "label": "The Straits Times",
+              "url": "https://www.straitstimes.com/singapore/transport"
+            },
+            {
+              "label": "CNA",
+              "url": "https://www.channelnewsasia.com/singapore"
+            }
+          ]
+        },
+        "fallback_text": "East–West line: a power fault stopped trains between Jurong East and Buona Vista from 06:50; service resumed at 09:15. Cause under investigation."
+      }
+    },
+    {
+      "id": "news-timeline",
+      "vertical": "news",
+      "kind": "card",
+      "request": "How has the Grab–GoTo merger story developed?",
+      "says": "It went from rumour to signed deal in six weeks.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Story timeline"
+      ],
+      "rationale": "Newest first, date trailing, outlet secondary; three events are enough to understand the arc.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Grab–GoTo merger",
+          "subtitle": "3 key moments · as of 08:00"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Deal signed, pending approval",
+                "secondary": "Reuters",
+                "trailing": "24 Sep"
+              },
+              {
+                "label": "Boards agree terms",
+                "secondary": "Bloomberg",
+                "trailing": "2 Sep"
+              },
+              {
+                "label": "Talks reported",
+                "secondary": "The Information",
+                "trailing": "14 Aug"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Reuters",
+              "url": "https://www.reuters.com/"
+            },
+            {
+              "label": "Bloomberg",
+              "url": "https://www.bloomberg.com/"
+            }
+          ]
+        },
+        "fallback_text": "Grab–GoTo: talks reported 14 Aug, boards agreed terms 2 Sep, deal signed pending approval 24 Sep."
+      }
+    },
+    {
+      "id": "news-headlines",
+      "vertical": "news",
+      "kind": "card",
+      "request": "Any big news this morning?",
+      "says": "Three stories worth knowing.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Story cluster (brief)",
+        "Source list"
+      ],
+      "rationale": "Three headlines as rows with the outlet secondary; no summaries of summaries; sources linked in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "This morning",
+          "subtitle": "Singapore · as of 08:00"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "MAS keeps the Singapore dollar policy unchanged",
+                "secondary": "Business Times"
+              },
+              {
+                "label": "East–West line fault delays morning commute",
+                "secondary": "CNA"
+              },
+              {
+                "label": "Fed signals one more rate cut this year",
+                "secondary": "Reuters"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Business Times",
+              "url": "https://www.businesstimes.com.sg/"
+            },
+            {
+              "label": "CNA",
+              "url": "https://www.channelnewsasia.com/"
+            },
+            {
+              "label": "Reuters",
+              "url": "https://www.reuters.com/"
+            }
+          ]
+        },
+        "fallback_text": "This morning: MAS holds SGD policy; East–West line fault delayed commuters; Fed signals one more cut this year."
+      }
+    }
+  ]
+}

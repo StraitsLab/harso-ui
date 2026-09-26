@@ -167,7 +167,7 @@ describe("agent output playbook examples", () => {
     // An unknown id in the verdict list is a finding, so the list cannot rot.
     const copy = structuredClone(examplesFile as any);
     copy.examples = copy.examples.filter((item: Example) => item.id !== "food-menu");
-    expect(checkPlaybookData(copy, schema, SCHEMA_SHA256).findings.join()).toMatch(/FRESH_EXAMPLES names food-menu/);
+    expect(checkPlaybookData(copy, schema, SCHEMA_SHA256).findings.join()).toMatch(/the fresh list names food-menu/);
   });
 
   test("links open a specific page, never a home page or a placeholder", () => {

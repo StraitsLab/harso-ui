@@ -1,0 +1,861 @@
+{
+  "vertical": "shopping",
+  "fresh": [
+    "shop-vacuum-options",
+    "shop-product-detail",
+    "shop-compare-phones",
+    "shop-price-history",
+    "shop-price-watch",
+    "shop-delivery",
+    "shop-cart-summary",
+    "shop-buyers-guide",
+    "shop-deal",
+    "partial-sources"
+  ],
+  "examples": [
+    {
+      "id": "shop-vacuum-options",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Find me a quiet stick vacuum under S$400.",
+      "says": "Three fit; the Dyson V8 is the quietest you can get at that price.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S1 Product options",
+        "S10 Rating",
+        "S2 Product grid / carousel (as rows)",
+        "X4 Item thumbnail (degraded: no row image)"
+      ],
+      "rationale": "Three options, one pick, price trailing, the trade-off on the secondary line; choosing goes through the question card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Quiet stick vacuums under S$400",
+          "subtitle": "Sorted by noise · as of 10:05"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Dyson V8 Origin",
+                "secondary": "72 dB · 40 min · 4.6★ (12k)",
+                "trailing": "S$379",
+                "mark": "pick"
+              },
+              {
+                "label": "Xiaomi G11",
+                "secondary": "74 dB · 60 min · 4.4★ (3k)",
+                "trailing": "S$299"
+              },
+              {
+                "label": "Samsung Jet 60",
+                "secondary": "76 dB · 40 min · 4.5★ (5k)",
+                "trailing": "S$349"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Courts, Lazada and Shopee listings, 26 Sep 2026 10:05"
+            },
+            {
+              "label": "RTINGS noise measurements"
+            }
+          ]
+        },
+        "fallback_text": "Quiet stick vacuums under S$400: Dyson V8 Origin S$379, 72 dB (pick); Xiaomi G11 S$299, 74 dB; Samsung Jet 60 S$349, 76 dB."
+      }
+    },
+    {
+      "id": "shop-product-detail",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Tell me more about the Dyson V8.",
+      "says": "It's the quietest in range and in stock at Courts.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S3 Product detail",
+        "S9 Review summary"
+      ],
+      "rationale": "Photo first, then why it fits and what buyers say; offers are rows with the best price picked.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Dyson V8 Origin",
+          "subtitle": "S$379 at Courts · in stock · as of 10:05"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
+              "alt": "Dyson V8 Origin stick vacuum, purple wand, front view",
+              "aspect": "4:3"
+            }
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Why it fits",
+                "bullets": [
+                  "Quietest under S$400 at 72 dB.",
+                  "40 minutes is enough for a 4-room flat.",
+                  "Wall dock keeps it out of the way."
+                ]
+              },
+              {
+                "heading": "What buyers say",
+                "bullets": [
+                  "Strong on hard floors and pet hair.",
+                  "Some mention the bin is small."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Courts",
+                "secondary": "Delivery Tue",
+                "trailing": "S$379",
+                "mark": "pick"
+              },
+              {
+                "label": "Lazada Dyson Store",
+                "secondary": "Delivery Thu",
+                "trailing": "S$389"
+              },
+              {
+                "label": "Shopee Mall",
+                "secondary": "Delivery Fri",
+                "trailing": "S$399"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Buy at Courts",
+              "url": "https://www.courts.com.sg/dyson-v8-origin-cordless-vacuum"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Courts, Lazada and Shopee, 26 Sep 2026 10:05"
+            },
+            {
+              "label": "Summarised from 12,394 reviews"
+            }
+          ]
+        },
+        "fallback_text": "Dyson V8 Origin: S$379 at Courts (in stock, delivery Tue); 72 dB, 40 min runtime. Buyers praise suction, some say the bin is small."
+      }
+    },
+    {
+      "id": "shop-compare-phones",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "iPhone 17 or Pixel 11 for photos?",
+      "says": "For photos, the Pixel wins on zoom; the iPhone on video.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S4 Comparison"
+      ],
+      "rationale": "Four attributes across two products is a table on the page; the verdict lives in the sentence, not a score.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "iPhone 17 vs Pixel 11",
+          "subtitle": "Camera differences only · as of 10:05"
+        },
+        "blocks": [
+          {
+            "kind": "table",
+            "columns": [
+              {
+                "label": "Camera"
+              },
+              {
+                "label": "iPhone 17"
+              },
+              {
+                "label": "Pixel 11"
+              }
+            ],
+            "rows": [
+              {
+                "cells": [
+                  "Price",
+                  "S$1,299",
+                  "S$1,249"
+                ]
+              },
+              {
+                "cells": [
+                  "Zoom",
+                  "2x optical",
+                  "5x optical"
+                ]
+              },
+              {
+                "cells": [
+                  "Low light",
+                  "Very good",
+                  "Best in class"
+                ]
+              },
+              {
+                "cells": [
+                  "Video",
+                  "Best in class",
+                  "Good"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DXOMARK camera scores, Sep 2026"
+            },
+            {
+              "label": "Apple and Google Singapore store prices, 26 Sep 2026 10:05"
+            }
+          ]
+        },
+        "fallback_text": "iPhone 17 (S$1,299) vs Pixel 11 (S$1,249): Pixel has 5x zoom and better low light; iPhone has better video."
+      }
+    },
+    {
+      "id": "shop-price-history",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Is S$379 a good price for the Dyson V8?",
+      "says": "Yes. That's the lowest in 90 days.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S6 Price history / insight"
+      ],
+      "rationale": "The verdict word leads the title; the line with today highlighted is the proof; no strike-through 'was' price.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "S$379 is low for this vacuum",
+          "subtitle": "Typical S$420–460 · last 90 days · as of 10:05"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$",
+              "x_labels": [
+                "Jul",
+                "Aug",
+                "Early Sep",
+                "Today"
+              ],
+              "series": [
+                {
+                  "label": "Price",
+                  "values": [
+                    "449",
+                    "429",
+                    "419",
+                    "379"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Price tracking across Courts, Lazada, Shopee, Jul–Sep 2026, checked 26 Sep 10:05"
+            }
+          ]
+        },
+        "fallback_text": "S$379 for the Dyson V8 Origin is the lowest in 90 days; it usually sells for S$420–460."
+      }
+    },
+    {
+      "id": "shop-price-watch",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Tell me if the AirPods Pro drop below S$300.",
+      "says": "Okay. I'll tell you here if it drops.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S7 Price watch"
+      ],
+      "rationale": "A watch shows its live state bound to the routine and one quiet Pause; the target is a row, not a paragraph.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "AirPods Pro price watch",
+          "subtitle": "Apple, Lazada, Shopee · as of 10:30"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "since 26 Sep",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000709"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Target",
+                "secondary": "Now S$339 at Lazada",
+                "trailing": "Under S$300"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-000000000709",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Checks twice a day; stops after 31 Dec."
+          ]
+        },
+        "fallback_text": "Watching AirPods Pro at Apple, Lazada and Shopee; you'll hear here when it drops below S$300 (now S$339)."
+      }
+    },
+    {
+      "id": "shop-delivery",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Where's my Uniqlo order?",
+      "says": "It's on the van now.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S13 Delivery tracking",
+        "X2 Domain state word"
+      ],
+      "rationale": "Arrival time is the answer and sits in the title; carrier link is the one action; no live van map.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Arriving today by 6 pm",
+          "subtitle": "Uniqlo · order 88213 · Ninja Van · as of 11:05"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Out for delivery",
+                "secondary": "Left the Tuas hub 08:12"
+              },
+              {
+                "label": "Shipped",
+                "secondary": "Wed 23 Sep"
+              },
+              {
+                "label": "Ordered",
+                "secondary": "Tue 22 Sep"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Track with Ninja Van",
+              "url": "https://www.ninjavan.co/en-sg/tracking"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Ninja Van tracking, 26 Sep 2026 11:05"
+            }
+          ]
+        },
+        "fallback_text": "Your Uniqlo order 88213 is out for delivery with Ninja Van and should arrive by 6 pm today."
+      }
+    },
+    {
+      "id": "shop-refund",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Has Lazada refunded the headphones yet?",
+      "says": "Yes, it's back on your card.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "S14 Return / refund status"
+      ],
+      "rationale": "One row with the paid state word answers it; no timeline needed once it is done.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Refund for Sony WH-1000XM6",
+          "subtitle": "Lazada return 5521"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "S$129.00",
+                "secondary": "To Visa ··4417 on 26 Sep",
+                "trailing": "Refunded"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Lazada return 5521 and DBS card feed, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Lazada refunded S$129.00 for the Sony headphones to Visa ending 4417 on 26 Sep."
+      }
+    },
+    {
+      "id": "shop-cart-summary",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "What's in my FairPrice cart and how much is it?",
+      "says": "It's ready to check out for Monday morning.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S11 Cart / checkout summary",
+        "X3 Total row"
+      ],
+      "rationale": "They asked what is in it and the total: every line with its quantity and price, the total up front, checkout at FairPrice.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "FairPrice cart",
+          "subtitle": "14 items · delivery Mon 9–11 am · as of 10:12"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$86.40",
+                "label": "Total"
+              },
+              {
+                "value": "S$4.99",
+                "label": "Delivery"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Chicken thigh 1 kg",
+                "secondary": "× 2",
+                "trailing": "S$19.80"
+              },
+              {
+                "label": "Jasmine rice 5 kg",
+                "secondary": "× 1",
+                "trailing": "S$14.50"
+              },
+              {
+                "label": "Fresh milk 2 L",
+                "secondary": "× 2",
+                "trailing": "S$11.90"
+              },
+              {
+                "label": "Greek yoghurt",
+                "secondary": "× 2",
+                "trailing": "S$9.90"
+              },
+              {
+                "label": "Tissue, 10 packs",
+                "secondary": "× 1",
+                "trailing": "S$5.96"
+              },
+              {
+                "label": "Wholemeal bread",
+                "secondary": "× 2",
+                "trailing": "S$5.60"
+              },
+              {
+                "label": "Eggs, 10",
+                "secondary": "× 1",
+                "trailing": "S$3.95"
+              },
+              {
+                "label": "Dish soap",
+                "secondary": "× 1",
+                "trailing": "S$3.60"
+              },
+              {
+                "label": "Baby spinach",
+                "secondary": "× 1",
+                "trailing": "S$3.25"
+              },
+              {
+                "label": "Bananas 1 kg",
+                "secondary": "× 1",
+                "trailing": "S$2.95"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Check out",
+              "url": "https://www.fairprice.com.sg/cart"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "FairPrice cart, 26 Sep 2026 10:12"
+            }
+          ]
+        },
+        "fallback_text": "FairPrice cart, 14 items, S$86.40 including S$4.99 delivery on Monday 9–11 am: chicken thigh 1 kg ×2 S$19.80, jasmine rice 5 kg S$14.50, fresh milk 2 L ×2 S$11.90, Greek yoghurt ×2 S$9.90, tissue S$5.96, wholemeal bread ×2 S$5.60, eggs S$3.95, dish soap S$3.60, baby spinach S$3.25, bananas 1 kg S$2.95."
+      }
+    },
+    {
+      "id": "text-clarify-free",
+      "vertical": "shopping",
+      "kind": "text",
+      "request": "Get me a gift for my mum.",
+      "reply": "Happy to. What's your budget, and does she prefer things for the home or for herself?",
+      "surface": "text",
+      "components": [
+        "Clarifying question"
+      ],
+      "rationale": "Missing inputs are asked in words or the question card, never a speculative results card.",
+      "document": null
+    },
+    {
+      "id": "file-logo",
+      "vertical": "shopping",
+      "kind": "file",
+      "request": "Make a logo for my bakery, Crumb & Co.",
+      "says": "Here's a first direction.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Image deliverable"
+      ],
+      "rationale": "The image is the result; one Download; asking for another direction is a chat message, not a button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Crumb & Co logo",
+          "subtitle": "Direction 1 · wheat ear and ampersand"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31",
+              "alt": "Crumb & Co logo: a wheat ear forming an ampersand, warm brown on cream",
+              "aspect": "square"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a31"
+            }
+          }
+        ],
+        "fallback_text": "Crumb & Co logo, direction 1: a wheat ear forming an ampersand. Saved to your Library."
+      }
+    },
+    {
+      "id": "partial-sources",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Compare TV prices across the big stores.",
+      "says": "Three of four stores answered; Best Denki's site was down.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Partial state",
+        "S1 Product options"
+      ],
+      "rationale": "Partial is honest in the subtitle ('3 of 4 stores'); the rows show what is known; the gap is in the sentence.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sony Bravia 8 II 65\"",
+          "subtitle": "3 of 4 stores checked · as of 11:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Courts",
+                "secondary": "In stock · delivery Tue",
+                "trailing": "S$3,999",
+                "mark": "pick"
+              },
+              {
+                "label": "Harvey Norman",
+                "secondary": "In stock · delivery Thu",
+                "trailing": "S$4,099"
+              },
+              {
+                "label": "Challenger",
+                "secondary": "Pre-order · 10 Oct",
+                "trailing": "S$4,049"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Store websites, 26 Sep 2026 11:20"
+            }
+          ]
+        },
+        "fallback_text": "Sony Bravia 8 II 65\": Courts S$3,999 (pick), Challenger S$4,049, Harvey Norman S$4,099. Best Denki didn't respond."
+      }
+    },
+    {
+      "id": "shop-buyers-guide",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "What's the best robot vacuum for a small HDB flat?",
+      "says": "The Roborock Q7 is the best fit for most small flats.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S5 Buyer's guide"
+      ],
+      "rationale": "Top picks are rows with price; the why and the trade-offs are short sections on the page.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Robot vacuums for a small flat",
+          "subtitle": "Under S$800 · 3 picks · as of 10:15"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Why the Q7",
+                "bullets": [
+                  "Mops and vacuums in one pass.",
+                  "Maps rooms, so you can skip the bedroom.",
+                  "Quiet enough to run while you work."
+                ]
+              },
+              {
+                "heading": "Trade-offs",
+                "bullets": [
+                  "The Eufy is cheaper but can't mop.",
+                  "The Dreame empties itself but costs twice as much."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Roborock Q7 Max",
+                "secondary": "Vacuum and mop · 4.5★",
+                "trailing": "S$399",
+                "mark": "pick"
+              },
+              {
+                "label": "Eufy 11S",
+                "secondary": "Vacuum only · 4.3★",
+                "trailing": "S$229"
+              },
+              {
+                "label": "Dreame L10s",
+                "secondary": "Self-emptying · 4.6★",
+                "trailing": "S$799"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "RTINGS reviews and Lazada listings, checked 26 Sep 2026 10:15"
+            }
+          ]
+        },
+        "fallback_text": "Robot vacuums for a small flat: Roborock Q7 Max S$399 (pick, vacuums and mops); Eufy 11S S$229 (vacuum only); Dreame L10s S$799 (self-emptying)."
+      }
+    },
+    {
+      "id": "shop-deal",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Is the Nintendo Switch 2 deal at Shopee real?",
+      "says": "Yes, it's a real drop, but it ends tomorrow.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S8 Deal"
+      ],
+      "rationale": "The honest reference is the typical price in the subtitle, not a struck-through 'was' price.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Nintendo Switch 2 at S$589",
+          "subtitle": "Usually S$649 · ends Sun 27 Sep · as of 10:40"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "chart",
+              "chart": "line",
+              "unit": "S$",
+              "x_labels": [
+                "Jul",
+                "Aug",
+                "Sep",
+                "Now"
+              ],
+              "series": [
+                {
+                  "label": "Price",
+                  "values": [
+                    "649",
+                    "649",
+                    "649",
+                    "589"
+                  ]
+                }
+              ],
+              "highlight_index": 3
+            }
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "View on Shopee",
+              "url": "https://shopee.sg/nintendo-switch-2-console"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Shopee Mall and Courts price history, Jul–Sep 2026, checked 26 Sep 10:40"
+            }
+          ]
+        },
+        "fallback_text": "The Nintendo Switch 2 is S$589 at Shopee until Sun 27 Sep, S$60 below its usual S$649."
+      }
+    },
+    {
+      "id": "shop-order-confirmed",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Did my Courts order go through?",
+      "says": "Yes, it went through.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "S12 Order confirmation / receipt"
+      ],
+      "rationale": "Total and arrival are the two numbers; the receipt is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Order placed · Courts",
+          "subtitle": "Dyson V8 Origin · order 1044218"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$379",
+                "label": "Paid"
+              },
+              {
+                "value": "Wed 30 Sep",
+                "label": "Arrives"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open receipt",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a8e"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Courts confirmation email, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Courts order 1044218 for the Dyson V8 Origin: S$379 paid, arriving Wed 30 Sep. Receipt in your Library."
+      }
+    }
+  ]
+}

@@ -1,0 +1,661 @@
+{
+  "vertical": "travel",
+  "fresh": [
+    "travel-flights",
+    "travel-stay-areas",
+    "travel-hotel-detail",
+    "travel-flight-status"
+  ],
+  "examples": [
+    {
+      "id": "travel-flights",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Flights to Tokyo on 12 Oct?",
+      "says": "Three direct options. SQ 638 has the best times for your morning start.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Flight options"
+      ],
+      "rationale": "Three fares, one pick, the trade-off on the secondary line; holding a seat is a question then an approval, never a card button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Flights to Tokyo",
+          "subtitle": "12 Oct · 1 adult · economy · as of 09:12"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Singapore Airlines",
+                "secondary": "SQ 638 · 08:35 · 7h 05m direct",
+                "trailing": "S$612",
+                "mark": "pick"
+              },
+              {
+                "label": "ANA",
+                "secondary": "NH 842 · 22:30 · 6h 55m direct",
+                "trailing": "S$548"
+              },
+              {
+                "label": "ZIPAIR",
+                "secondary": "ZG 52 · 23:55 · 7h 10m direct",
+                "trailing": "S$326"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Flights, 26 Sep 2026 09:12"
+            }
+          ],
+          "disclaimers": [
+            "Fares change often. Nothing is booked until you confirm with the airline."
+          ]
+        },
+        "fallback_text": "Flights to Tokyo, 12 Oct: Singapore Airlines SQ 638 08:35 S$612 (pick); ANA NH 842 22:30 S$548; ZIPAIR ZG 52 23:55 S$326."
+      }
+    },
+    {
+      "id": "travel-stay-areas",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Where should I stay in Tokyo?",
+      "says": "I'd stay near Ueno. It fits your budget and has the easiest airport train.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Stay comparison",
+        "Map with pins"
+      ],
+      "rationale": "Areas are about place, so the map leads; three priced rows with one pick; no Explore button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Where to stay in Tokyo",
+          "subtitle": "6 nights in Oct · S$2,000 budget · as of 09:20"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "ueno",
+                  "label": "Ueno",
+                  "lat": "35.7141",
+                  "lon": "139.7774"
+                },
+                {
+                  "id": "asakusa",
+                  "label": "Asakusa",
+                  "lat": "35.7148",
+                  "lon": "139.7967"
+                },
+                {
+                  "id": "shinjuku",
+                  "label": "Shinjuku",
+                  "lat": "35.6938",
+                  "lon": "139.7034"
+                }
+              ],
+              "selected_place_id": "ueno"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Ueno",
+                "secondary": "Skyliner to Narita in 41 min",
+                "trailing": "S$1,500–1,800",
+                "mark": "pick"
+              },
+              {
+                "label": "Asakusa",
+                "secondary": "Quiet at night, older hotels",
+                "trailing": "S$1,200–1,500"
+              },
+              {
+                "label": "Shinjuku",
+                "secondary": "Busiest, most choice",
+                "trailing": "S$1,800–2,200"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Booking.com price sample, 26 Sep 2026 09:20"
+            }
+          ],
+          "assumptions": [
+            "Per stay for 6 nights, one room, before tax."
+          ]
+        },
+        "fallback_text": "Where to stay in Tokyo for 6 nights in October: Ueno S$1,500–1,800 (pick); Asakusa S$1,200–1,500; Shinjuku S$1,800–2,200."
+      }
+    },
+    {
+      "id": "travel-hotel-detail",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Tell me about Hotel Gracery Ueno.",
+      "says": "It's a 3-minute walk from the Skyliner and free to cancel until 9 Oct.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Single hotel / stay detail"
+      ],
+      "rationale": "Photo, then total and nightly price; the cancellation deadline is the fact people forget, so it is in the subtitle.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Hotel Gracery Ueno",
+          "subtitle": "12–18 Oct · free cancellation to 9 Oct · as of 09:25"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000835",
+              "alt": "Hotel Gracery Ueno double room with a city view",
+              "aspect": "4:3"
+            }
+          },
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1,620",
+                "label": "Total"
+              },
+              {
+                "value": "S$270",
+                "label": "Per night"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "View on Booking.com",
+              "url": "https://www.booking.com/hotel/jp/gracery-ueno.html"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Booking.com, 26 Sep 2026 09:25"
+            }
+          ],
+          "assumptions": [
+            "Double room, 2 adults, taxes included."
+          ]
+        },
+        "fallback_text": "Hotel Gracery Ueno, 12–18 Oct: S$1,620 for 6 nights (S$270 a night) as of 09:25, free cancellation until 9 Oct."
+      }
+    },
+    {
+      "id": "travel-itinerary",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Plan 4 days in Kyoto for me.",
+      "says": "Here's a calm 4-day plan, one area per day.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Itinerary / day-by-day plan"
+      ],
+      "rationale": "The map shows how the days cluster; days are headed sections; the printable plan is a file for the trip.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Kyoto in 4 days",
+          "subtitle": "14–17 Oct · one area a day"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "d1",
+                  "label": "Higashiyama",
+                  "lat": "34.9967",
+                  "lon": "135.7850"
+                },
+                {
+                  "id": "d2",
+                  "label": "Arashiyama",
+                  "lat": "35.0094",
+                  "lon": "135.6668"
+                },
+                {
+                  "id": "d3",
+                  "label": "Fushimi Inari",
+                  "lat": "34.9671",
+                  "lon": "135.7727"
+                },
+                {
+                  "id": "d4",
+                  "label": "Nishiki and Gion",
+                  "lat": "35.0050",
+                  "lon": "135.7650"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Day 1 · Higashiyama",
+                "bullets": [
+                  "09:00 Kiyomizu-dera before the crowds",
+                  "12:30 Lunch on Ninenzaka",
+                  "16:00 Yasaka Shrine at dusk"
+                ]
+              },
+              {
+                "heading": "Day 2 · Arashiyama",
+                "bullets": [
+                  "08:30 Bamboo grove",
+                  "11:00 Tenryu-ji garden",
+                  "14:00 Hozu river boat"
+                ]
+              },
+              {
+                "heading": "Day 3 · Fushimi Inari",
+                "bullets": [
+                  "07:30 Walk the torii gates to Yotsutsuji",
+                  "13:00 Tofuku-ji"
+                ]
+              },
+              {
+                "heading": "Day 4 · Nishiki and Gion",
+                "bullets": [
+                  "10:00 Nishiki Market",
+                  "15:00 Tea at Ippodo",
+                  "18:00 Gion evening walk"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open plan",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000836"
+            }
+          }
+        ],
+        "details": {
+          "assumptions": [
+            "Early starts to avoid crowds; trains and buses between areas."
+          ]
+        },
+        "fallback_text": "Kyoto, 14–17 Oct: Day 1 Higashiyama, Day 2 Arashiyama, Day 3 Fushimi Inari, Day 4 Nishiki and Gion. The full plan is in your Library."
+      }
+    },
+    {
+      "id": "travel-flight-status",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Is my flight on time?",
+      "says": "No, it's running late, but you have nothing to change.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Flight status / disruption"
+      ],
+      "rationale": "New time and gate are the answer and sit in the title and subtitle; old vs new is two rows; rebooking leaves for the airline.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "SQ 638 departs 09:20",
+          "subtitle": "Delayed 45 min · Gate B6 · as of 07:10"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Was",
+                "trailing": "08:35"
+              },
+              {
+                "label": "Now",
+                "secondary": "Gate changed from A12",
+                "trailing": "09:20 · B6"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Manage booking",
+              "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/your-booking/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines flight status, 26 Sep 2026 07:10"
+            }
+          ]
+        },
+        "fallback_text": "SQ 638 is delayed 45 min: now departs 09:20 from Gate B6 (was 08:35, Gate A12), as of 07:10."
+      }
+    },
+    {
+      "id": "travel-visa",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Do I need a visa for Japan on a Singapore passport?",
+      "says": "You're fine for a normal holiday.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Visa / entry requirements"
+      ],
+      "rationale": "The verdict is the title; the three things to do before flying are bullets; the official source is linked in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Japan · Singapore passport",
+          "subtitle": "Visa-free up to 90 days"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Before you fly",
+                "bullets": [
+                  "Passport valid for your whole stay.",
+                  "Fill in Visit Japan Web for fast immigration.",
+                  "Return or onward ticket on hand."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Ministry of Foreign Affairs of Japan",
+              "url": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html"
+            }
+          ],
+          "disclaimers": [
+            "Rules can change; check before you fly."
+          ]
+        },
+        "fallback_text": "Singapore passport holders visit Japan visa-free for up to 90 days. Passport valid for the stay, Visit Japan Web, onward ticket."
+      }
+    },
+    {
+      "id": "travel-packing",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "What should I pack for Tokyo on 12 Oct?",
+      "says": "Pack layers and a light rain jacket; mid-October is mild with some rain.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Packing list"
+      ],
+      "rationale": "A short list, no tick-boxes; the trip is beyond a reliable forecast, so the subtitle gives typical weather.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tokyo · 6 nights",
+          "subtitle": "12–18 Oct · usually 15–22°C"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Light layers and one warm jumper",
+                  "Packable rain jacket",
+                  "Comfortable walking shoes",
+                  "Suica on your phone",
+                  "Type A plug adapter"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Japan Meteorological Agency, October climate normals"
+            }
+          ],
+          "assumptions": [
+            "Too far out for a forecast; ask again the week before for one."
+          ]
+        },
+        "fallback_text": "Pack for Tokyo 12–18 Oct (usually 15–22°C, some rain): light layers, a jumper, rain jacket, walking shoes, Suica on your phone, Type A adapter."
+      }
+    },
+    {
+      "id": "travel-booking-confirmed",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Did the Gracery booking go through?",
+      "says": "Yes, it's confirmed and free to cancel until 9 Oct.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "The reference and total are what people look for later; the confirmation PDF is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked · Hotel Gracery Ueno",
+          "subtitle": "Ref ABX-4471 · 12–18 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1,620",
+                "label": "Total"
+              },
+              {
+                "value": "6",
+                "label": "Nights"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open confirmation",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000837"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Booking.com confirmation email, 26 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Hotel Gracery Ueno is booked, ref ABX-4471, 12–18 Oct, S$1,620 for 6 nights. Confirmation is in your Library."
+      }
+    },
+    {
+      "id": "text-time",
+      "vertical": "travel",
+      "kind": "text",
+      "request": "What time is it in Tokyo?",
+      "reply": "It's 3:40 pm in Tokyo, an hour ahead of you.",
+      "surface": "text",
+      "components": [
+        "Time zone"
+      ],
+      "rationale": "The answer is one time; a card adds chrome and nothing else.",
+      "document": null
+    },
+    {
+      "id": "file-itinerary-pdf",
+      "vertical": "travel",
+      "kind": "file",
+      "request": "Make me a printable itinerary for Kyoto.",
+      "says": "It's a two-page PDF with a map and one page per two days.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Itinerary / day-by-day plan",
+        "Document (PDF)"
+      ],
+      "rationale": "Printable means a file; the card shows its first page and opens it.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Kyoto itinerary",
+          "subtitle": "14–17 Oct · 2 pages · PDF"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "image",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2b",
+              "alt": "First page of the Kyoto itinerary: map of four areas and the Day 1 plan",
+              "aspect": "3:4"
+            }
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open itinerary",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2c"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a2c"
+            }
+          }
+        ],
+        "fallback_text": "Your Kyoto itinerary for 14–17 Oct is a 2-page PDF in your Library."
+      }
+    },
+    {
+      "id": "fail-fares",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Any cheaper flights to Tokyo on 12 Oct?",
+      "says": "I couldn't reach the fare site just now; ask me again in a few minutes.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Failed state"
+      ],
+      "rationale": "The card says what failed and that nothing was booked; the final sentence says what to do next; no reply button.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Couldn't check flight prices",
+          "subtitle": "12 Oct · 1 adult · economy"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "failed",
+            "detail": "The fare site didn't respond. Nothing was booked."
+          }
+        ],
+        "fallback_text": "Couldn't check flight prices for 12 Oct: the fare site didn't respond. Nothing was booked."
+      }
+    },
+    {
+      "id": "travel-boarding-pass",
+      "vertical": "travel",
+      "kind": "file",
+      "request": "Get my boarding pass for SQ 638.",
+      "says": "It's in your Library; add it to Wallet for the gate.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Boarding pass / ticket"
+      ],
+      "rationale": "A boarding pass is a Wallet file, not a card block; the card shows seat and gate and downloads the pass.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "SQ 638 · Singapore to Tokyo",
+          "subtitle": "Mon 28 Sep · boards 07:55 · Terminal 3"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Seat",
+                "trailing": "31A"
+              },
+              {
+                "label": "Gate",
+                "secondary": "Shown on the day, after 06:30",
+                "trailing": "Not yet"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "download_artifact",
+              "label": "Add to Wallet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000a92"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines check-in, 26 Sep 2026 10:15"
+            }
+          ]
+        },
+        "fallback_text": "SQ 638 boarding pass: Mon 28 Sep, boards 07:55 at Terminal 3, seat 31A; the gate is shown on the day. The pass is in your Library."
+      }
+    }
+  ]
+}
