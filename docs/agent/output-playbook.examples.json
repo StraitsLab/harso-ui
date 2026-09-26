@@ -91,6 +91,7 @@
     "home-open-houses",
     "jobs-results",
     "jobs-posting",
+    "jobs-remote-results",
     "travel-flights",
     "travel-stay-areas",
     "travel-hotel-detail",
@@ -4178,6 +4179,139 @@
           ]
         },
         "fallback_text": "Product design lead roles in Singapore: Grab Lead Product Designer S$11–14k (pick); Wise Design Lead S$10–13k; Shopee Principal Designer S$9–12k."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Product design lead roles",
+            "subtitle": "Singapore · posted this week"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking LinkedIn and MyCareersFuture",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b20"
+              }
+            }
+          ],
+          "fallback_text": "Checking LinkedIn and MyCareersFuture for product design lead roles in Singapore."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Product design lead roles",
+            "subtitle": "1 of 2 sites checked · as of 08:30"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Lead Product Designer",
+                  "secondary": "Grab · Hybrid · 2 days ago",
+                  "trailing": "S$11–14k/mo",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Design Lead, Payments",
+                  "secondary": "Wise · Hybrid · 4 days ago",
+                  "trailing": "S$10–13k/mo"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn, 26 Sep 2026 08:30"
+              }
+            ]
+          },
+          "fallback_text": "LinkedIn only, as of 08:30; MyCareersFuture hasn't answered yet: Grab Lead Product Designer S$11–14k (pick); Wise Design Lead S$10–13k."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Product design lead roles",
+            "subtitle": "Singapore · as of 08:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Lead Product Designer",
+                  "secondary": "Grab · Hybrid · 2 days ago",
+                  "trailing": "S$11–14k/mo",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Design Lead, Payments",
+                  "secondary": "Wise · Hybrid · 4 days ago",
+                  "trailing": "S$10–13k/mo"
+                },
+                {
+                  "label": "Principal Designer",
+                  "secondary": "Shopee · On-site · 5 days ago",
+                  "trailing": "S$9–12k/mo"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn and MyCareersFuture, 26 Sep 2026 08:30"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:30 (couldn't refresh): Product design lead roles in Singapore: Grab Lead Product Designer S$11–14k (pick); Wise Design Lead S$10–13k; Shopee Principal Designer S$9–12k."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No design lead roles posted this week",
+            "subtitle": "Singapore · as of 08:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The last one was posted on 17 Sep"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn and MyCareersFuture, 26 Sep 2026 08:30"
+              }
+            ]
+          },
+          "fallback_text": "No product design lead roles in Singapore posted this week, as of 08:30. The last one was posted on 17 Sep."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search for design lead roles",
+            "subtitle": "LinkedIn and MyCareersFuture"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Neither site answered. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't search for design lead roles: neither LinkedIn nor MyCareersFuture answered. Nothing was saved."
+        }
       }
     },
     {
@@ -4252,6 +4386,126 @@
           ]
         },
         "fallback_text": "Grab Lead Product Designer, hybrid Singapore, S$11–14k a month, apply by 10 Oct. You match on experience and fintech; Bahasa is a plus you lack."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lead Product Designer · Grab",
+            "subtitle": "Grab careers"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the posting",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b21"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Grab Lead Product Designer posting."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lead Product Designer · Grab",
+            "subtitle": "Hybrid · Singapore · as of 08:30 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$11–14k",
+                  "label": "Monthly"
+                },
+                {
+                  "value": "10 Oct",
+                  "label": "Apply by"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "What you'd do",
+                  "bullets": [
+                    "Lead design for GrabPay checkout.",
+                    "Manage four designers.",
+                    "Own the payments design system."
+                  ]
+                },
+                {
+                  "heading": "Where you fit",
+                  "bullets": [
+                    "You match: 8 years, fintech, team lead.",
+                    "Gap: no Bahasa Indonesia, listed as a plus."
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "Apply on Grab",
+                "url": "https://grab.careers/jobs/lead-product-designer-singapore"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Grab careers posting, 26 Sep 2026 08:30",
+                "url": "https://grab.careers/"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:30 (couldn't refresh): Grab Lead Product Designer, hybrid Singapore, S$11–14k a month, apply by 10 Oct. You match on experience and fintech; Bahasa is a plus you lack."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Grab role is no longer posted",
+            "subtitle": "Grab careers · as of 11:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Taken down this morning; your CV is still in Library"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Grab careers, 26 Sep 2026 11:20"
+              }
+            ]
+          },
+          "fallback_text": "The Grab Lead Product Designer posting was taken down this morning, as of 11:20. Your CV is still in Library."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't open the Grab posting",
+            "subtitle": "Grab careers"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Grab's careers site didn't respond. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't open the Grab Lead Product Designer posting: Grab's careers site didn't respond. Nothing was saved."
+        }
       }
     },
     {
@@ -4299,6 +4553,69 @@
           ]
         },
         "fallback_text": "Senior data analysts in Singapore earn a median S$7,800 a month (S$94k a year); most earn S$6,500–9,200."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Senior data analyst pay",
+            "subtitle": "Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading MOM wage tables and Glassdoor",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b22"
+              }
+            }
+          ],
+          "fallback_text": "Reading MOM wage tables and Glassdoor for senior data analyst pay."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Too few salaries to say",
+            "subtitle": "Senior data analyst · Tampines only"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "7 salaries reported; pay is set island-wide"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "MOM Occupational Wage Table 2025"
+              },
+              {
+                "label": "Glassdoor, 412 salaries, Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "Only 7 salaries reported for senior data analysts in Tampines, too few to say; pay is set island-wide."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read salary data",
+            "subtitle": "MOM and Glassdoor"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Neither source answered. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't read senior data analyst salary data: neither MOM nor Glassdoor answered. Nothing was saved."
+        }
       }
     },
     {
@@ -4348,6 +4665,90 @@
           ]
         },
         "fallback_text": "Applications: Grab interview Thu 1 Oct; Wise viewed, applied 12 Sep; Shopee not selected on 22 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your applications",
+            "subtitle": "LinkedIn and Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading LinkedIn and Gmail",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b23"
+              }
+            }
+          ],
+          "fallback_text": "Reading your applications in LinkedIn and Gmail."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your applications",
+            "subtitle": "LinkedIn read · Gmail not yet"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Wise · Design Lead",
+                  "secondary": "Applied 12 Sep · viewed"
+                },
+                {
+                  "label": "Shopee · Principal Designer",
+                  "secondary": "Not selected, 22 Sep"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn applications, 26 Sep 2026"
+              }
+            ]
+          },
+          "fallback_text": "From LinkedIn only; Gmail isn't read yet: Wise viewed, applied 12 Sep; Shopee not selected on 22 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No applications this month",
+            "subtitle": "LinkedIn and Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The last one was Stripe on 18 Aug"
+            }
+          ],
+          "fallback_text": "No job applications this month in LinkedIn or Gmail. The last one was Stripe on 18 Aug."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your applications",
+            "subtitle": "LinkedIn and Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The LinkedIn connection has expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your applications: the LinkedIn connection has expired. Nothing was changed."
+        }
       }
     },
     {
@@ -4423,6 +4824,43 @@
           ]
         },
         "fallback_text": "Offers, year one: Grab S$201,600 (base S$156k, bonus S$15.6k, equity S$30k); Wise S$210,000 (base S$168k, bonus S$20k, equity S$22k)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab vs Wise offer",
+            "subtitle": "Reading both offer letters"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading the Grab and Wise offer letters",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b24"
+              }
+            }
+          ],
+          "fallback_text": "Reading the Grab and Wise offer letters."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read the Wise offer letter",
+            "subtitle": "Grab vs Wise offer"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF is password-protected. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't compare the offers: the Wise offer letter PDF is password-protected. Nothing was changed."
+        }
       }
     },
     {
@@ -4472,6 +4910,43 @@
           }
         ],
         "fallback_text": "Your CV is tailored for Grab: payments work first, team leadership added, older role shortened. PDF and Word in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "CV · Grab Lead Product Designer",
+            "subtitle": "PDF and Word"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Tailoring your CV",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b25"
+              }
+            }
+          ],
+          "fallback_text": "Tailoring your CV for the Grab role."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't tailor your CV",
+            "subtitle": "CV · Grab Lead Product Designer"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Your CV in Library is a scanned image I can't edit. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't tailor your CV: the one in Library is a scanned image I can't edit. Nothing was changed."
+        }
       }
     },
     {
@@ -4516,6 +4991,59 @@
           }
         ],
         "fallback_text": "Grab Lead Product Designer: final round Thu 1 Oct; portfolio review (22 Sep) and recruiter call (15 Sep) passed."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Grab · Lead Product Designer",
+            "subtitle": "Reading Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading messages from Grab",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b26"
+              }
+            }
+          ],
+          "fallback_text": "Reading your messages from Grab."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Grab process in your email",
+            "subtitle": "Gmail · last 90 days"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No messages from Grab recruiting"
+            }
+          ],
+          "fallback_text": "No Grab application process in your Gmail for the last 90 days: no messages from Grab recruiting."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your email",
+            "subtitle": "Gmail"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Gmail connection has expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't check the Grab process: the Gmail connection has expired. Nothing was changed."
+        }
       }
     },
     {
@@ -4555,6 +5083,59 @@
           }
         ],
         "fallback_text": "Interviews next week: Grab final round Thu 1 Oct 15:00 (Google Meet); Wise hiring manager Fri 2 Oct 10:00 (Zoom)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Interviews next week",
+            "subtitle": "28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your calendar",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b27"
+              }
+            }
+          ],
+          "fallback_text": "Reading your calendar for interviews next week."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No interviews next week",
+            "subtitle": "28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The next one is Wise on Tue 6 Oct"
+            }
+          ],
+          "fallback_text": "No interviews next week (28 Sep–4 Oct). The next one is Wise on Tue 6 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your calendar",
+            "subtitle": "Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The calendar connection has expired. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't read your interviews: the Google Calendar connection has expired. Nothing was changed."
+        }
       }
     },
     {
@@ -4605,6 +5186,319 @@
           }
         ],
         "fallback_text": "Watching LinkedIn and MyCareersFuture every morning for design lead roles in Singapore paying S$10k+ a month."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Design lead roles",
+            "subtitle": "Setting up the alert"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Setting up a morning check",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b28"
+              }
+            }
+          ],
+          "fallback_text": "Setting up a morning check for design lead roles."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't set up the alert",
+            "subtitle": "Design lead roles"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "MyCareersFuture refused the saved search. No alert was made."
+            }
+          ],
+          "fallback_text": "Couldn't set up the design lead alert: MyCareersFuture refused the saved search. No alert was made."
+        }
+      }
+    },
+    {
+      "id": "jobs-remote-results",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Find remote senior frontend roles I can do from Singapore.",
+      "says": "Canva pays the most; 18 more are on LinkedIn.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "J1 Job results"
+      ],
+      "rationale": "Five best of 23 as rows with where you can work in the secondary line; the rest stay on LinkedIn's own search, one link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Remote senior frontend roles",
+          "subtitle": "Open to Singapore · posted this week · as of 08:45"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Senior Frontend Engineer",
+                "secondary": "Canva · Remote, APAC · 1 day ago",
+                "trailing": "S$12–15k/mo",
+                "mark": "pick"
+              },
+              {
+                "label": "Staff Frontend Engineer",
+                "secondary": "Xendit · Remote, SEA · 3 days ago",
+                "trailing": "S$11–14k/mo"
+              },
+              {
+                "label": "Senior Web Engineer",
+                "secondary": "Deel · Remote, global · 2 days ago",
+                "trailing": "S$9–12k/mo"
+              },
+              {
+                "label": "Senior Frontend Engineer",
+                "secondary": "Airwallex · Remote, APAC · 5 days ago",
+                "trailing": "S$10–13k/mo"
+              },
+              {
+                "label": "Frontend Lead",
+                "secondary": "Ninja Van · Remote, SG · 6 days ago",
+                "trailing": "S$9–11k/mo"
+              }
+            ],
+            "total_count": 23
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "See all 23 on LinkedIn",
+              "url": "https://www.linkedin.com/jobs/search/?keywords=senior%20frontend&f_WT=2&location=Singapore"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "LinkedIn, 26 Sep 2026 08:45"
+            }
+          ],
+          "assumptions": [
+            "Sorted by fit to your CV, then pay."
+          ]
+        },
+        "fallback_text": "23 remote senior frontend roles open to Singapore this week; top 5: Canva S$12–15k (pick), Xendit S$11–14k, Deel S$9–12k, Airwallex S$10–13k, Ninja Van S$9–11k."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Remote senior frontend roles",
+            "subtitle": "Open to Singapore"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking LinkedIn",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b29"
+              }
+            }
+          ],
+          "fallback_text": "Checking LinkedIn for remote senior frontend roles."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Remote senior frontend roles",
+            "subtitle": "As of 08:45 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Senior Frontend Engineer",
+                  "secondary": "Canva · Remote, APAC · 1 day ago",
+                  "trailing": "S$12–15k/mo",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Staff Frontend Engineer",
+                  "secondary": "Xendit · Remote, SEA · 3 days ago",
+                  "trailing": "S$11–14k/mo"
+                },
+                {
+                  "label": "Senior Web Engineer",
+                  "secondary": "Deel · Remote, global · 2 days ago",
+                  "trailing": "S$9–12k/mo"
+                },
+                {
+                  "label": "Senior Frontend Engineer",
+                  "secondary": "Airwallex · Remote, APAC · 5 days ago",
+                  "trailing": "S$10–13k/mo"
+                },
+                {
+                  "label": "Frontend Lead",
+                  "secondary": "Ninja Van · Remote, SG · 6 days ago",
+                  "trailing": "S$9–11k/mo"
+                }
+              ],
+              "total_count": 23
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "See all 23 on LinkedIn",
+                "url": "https://www.linkedin.com/jobs/search/?keywords=senior%20frontend&f_WT=2&location=Singapore"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn, 26 Sep 2026 08:45"
+              }
+            ]
+          },
+          "fallback_text": "As of 08:45 (couldn't refresh): 23 remote senior frontend roles; Canva S$12–15k, Xendit S$11–14k, Deel S$9–12k, Airwallex S$10–13k, Ninja Van S$9–11k."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No remote senior frontend roles this week",
+            "subtitle": "Open to Singapore · as of 08:45"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "12 are hybrid in Singapore"
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "LinkedIn, 26 Sep 2026 08:45"
+              }
+            ]
+          },
+          "fallback_text": "No remote senior frontend roles open to Singapore this week, as of 08:45. 12 are hybrid in Singapore."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't search LinkedIn",
+            "subtitle": "Remote senior frontend roles"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "LinkedIn didn't respond. Nothing was saved."
+            }
+          ],
+          "fallback_text": "Couldn't search for remote senior frontend roles: LinkedIn didn't respond. Nothing was saved."
+        }
+      }
+    },
+    {
+      "id": "jobs-fit",
+      "vertical": "jobs",
+      "kind": "card",
+      "request": "Am I a good fit for the Wise design lead role?",
+      "says": "Mostly; the gap is the regulated-payments experience they ask for.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "J9 Fit / match summary"
+      ],
+      "rationale": "What matches and what is missing, as short bullets side by side; no match percentage to argue with.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Wise · Design Lead",
+          "subtitle": "Your CV against the posting"
+        },
+        "blocks": [
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "bullets": [
+                  "Matches: 8 years in product design, 4 leading a team",
+                  "Matches: shipped a checkout used in 3 markets",
+                  "Missing: 2 years in a regulated payments team",
+                  "Plus you have: design systems work, which they list as nice to have"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Wise careers posting, read 26 Sep 2026"
+            },
+            {
+              "label": "Your CV in Library, 24 Sep 2026"
+            }
+          ]
+        },
+        "fallback_text": "Wise Design Lead against your CV: matches on 8 years in design (4 leading) and a 3-market checkout; missing 2 years in a regulated payments team; your design systems work is a listed plus."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Wise · Design Lead",
+            "subtitle": "Reading the posting and your CV"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Comparing your CV with the posting",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-0000004e0b2a"
+              }
+            }
+          ],
+          "fallback_text": "Comparing your CV with the Wise Design Lead posting."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read the Wise posting",
+            "subtitle": "Wise · Design Lead"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Wise's careers site didn't respond. Nothing was changed."
+            }
+          ],
+          "fallback_text": "Couldn't check your fit for the Wise Design Lead role: Wise's careers site didn't respond. Nothing was changed."
+        }
       }
     },
     {
