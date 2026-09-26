@@ -2412,7 +2412,7 @@
         "major": 1,
         "header": {
           "title": "iPhone 17 vs Pixel 11",
-          "subtitle": "Camera differences only · as of 10:05"
+          "subtitle": "Price and camera · as of 10:05"
         },
         "blocks": [
           {
@@ -2478,7 +2478,7 @@
           "major": 1,
           "header": {
             "title": "iPhone 17 vs Pixel 11",
-            "subtitle": "Camera differences only"
+            "subtitle": "Price and camera"
           },
           "blocks": [
             {
@@ -2769,7 +2769,7 @@
       "vertical": "shopping",
       "kind": "card",
       "request": "Is S$379 a good price for the Dyson V8?",
-      "says": "Yes. That's the lowest in 90 days.",
+      "says": "Yes. It hasn't been this cheap since July.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -3292,10 +3292,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "The watch wasn't created, so nothing is being checked."
+              "detail": "The watch wasn't saved. Ask me again to set it up."
             }
           ],
-          "fallback_text": "Couldn't start the price watch: The watch wasn't created, so nothing is being checked."
+          "fallback_text": "Couldn't start the price watch: The watch wasn't saved. Ask me again to set it up."
         }
       }
     },
@@ -3433,17 +3433,17 @@
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "No robot vacuum under S$150 that mops",
+            "title": "None of the 3 picks is in stock",
             "subtitle": "Lazada, Shopee, Courts · as of 10:15"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "The cheapest that mops is the Roborock Q7 Max at S$399"
+              "detail": "Courts restocks the Roborock Q7 Max on Thu 1 Oct"
             }
           ],
-          "fallback_text": "No robot vacuum under S$150 mops (10:15). The cheapest that does is the Roborock Q7 Max at S$399."
+          "fallback_text": "None of the 3 picks under S$800 is in stock at Lazada, Shopee or Courts (10:15). Courts restocks the Roborock Q7 Max on Thu 1 Oct."
         },
         "failed": {
           "kind": "output_blocks",
