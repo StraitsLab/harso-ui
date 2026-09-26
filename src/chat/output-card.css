@@ -89,12 +89,16 @@
 }
 @media (pointer: coarse) { .harso-kit .hkc-output-card .hk-button.hkc-output-card-action { min-height: 44px; } }
 
-/* A source with a url opens through the host: a button (no href) that reads as a link in the Details list. */
-.harso-kit .hkc-output-card-source-link { appearance: none; border: 0; padding: 0; margin: 0; background: transparent; font: inherit; text-align: start; cursor: pointer; color: var(--hk-ink); text-decoration: underline; text-decoration-color: var(--hk-faint); text-underline-offset: 3px; border-radius: 2px; }
+/* A source with a url opens through the host: a button (no href) that reads as a link in the Details list. Its target
+   is a real layout box like the actions' (not an overlapping pseudo extension), so adjacent sources never share one:
+   44px on the inline phone card and under a coarse pointer, 28px from the same 348px content width that pairs the actions. */
+.harso-kit .hkc-output-card-source-link { appearance: none; display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; vertical-align: top; border: 0; padding: 0; margin: 0; background: transparent; font: inherit; text-align: start; cursor: pointer; color: var(--hk-ink); text-decoration: underline; text-decoration-color: var(--hk-faint); text-underline-offset: 3px; border-radius: 2px; }
 .harso-kit .hkc-output-card-source-link:hover { text-decoration-color: currentColor; }
+@container hkc-output-details (min-width: 348px) { .harso-kit .hkc-output-card-source-link { min-height: 28px; } }
+@media (pointer: coarse) { .harso-kit .hkc-output-card-source-link { min-height: 44px; } }
 
 .harso-kit .hkc-output-card-details-toggle { flex: 0 0 auto; min-width: 44px; margin: -10px -8px 0 0; padding-inline: var(--hk-space-2); font-size: var(--hk-text-chrome); }
-.harso-kit .hkc-output-card-details { display: flex; flex-direction: column; gap: var(--hk-space-2); font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
+.harso-kit .hkc-output-card-details { container: hkc-output-details / inline-size; display: flex; flex-direction: column; gap: var(--hk-space-2); font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
 .harso-kit .hkc-output-card-details[hidden] { display: none; }
 .harso-kit .hkc-output-card-details-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-1); }
 
