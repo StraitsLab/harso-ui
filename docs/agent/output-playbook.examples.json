@@ -655,7 +655,7 @@
           "major": 1,
           "header": {
             "title": "Apple · AAPL",
-            "subtitle": "Nasdaq · as of Thu 24 Sep close · couldn’t refresh"
+            "subtitle": "As of Thu 24 Sep close · couldn’t refresh"
           },
           "blocks": [
             {
@@ -802,7 +802,8 @@
             }
           ]
         },
-        "fallback_text": "Portfolio US$84,210, down 0.6% this week (25 Sep close). NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%, VOO +0.2%, IWDA +0.1%, BIL 0.0%."
+        "fallback_text": "Portfolio US$84,210, down 0.6% this week (25 Sep close). NVIDIA −4.1%, Tesla −2.6%, Alphabet +1.2%, Microsoft +0.8%, Apple +0.6%, Amazon −0.4%, VOO +0.2%, IWDA +0.1%, BIL 0.0%.",
+        "more_label": "View all 9 holdings"
       },
       "states": {
         "loading": {
@@ -1086,7 +1087,7 @@
       "vertical": "money",
       "kind": "card",
       "request": "How much will Priya get if I send S$1,000 to India?",
-      "says": "Wise is the cheapest way to send it today.",
+      "says": "Wise is the cheapest of the three I checked.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -1098,7 +1099,7 @@
         "major": 1,
         "header": {
           "title": "S$1,000 to Priya",
-          "subtitle": "1 SGD = 61.92 INR · arrives by Tuesday · as of 10:05"
+          "subtitle": "Rate 61.92 · arrives by Tue 29 Sep · as of 10:05"
         },
         "blocks": [
           {
@@ -1127,14 +1128,20 @@
           "sources": [
             {
               "label": "Wise quote, 26 Sep 2026 10:05",
-              "url": "https://wise.com/"
+              "url": "https://wise.com/sg/send-money/send-money-to-india"
+            },
+            {
+              "label": "Revolut quote, 26 Sep 2026 10:05: Priya gets INR 61,210"
+            },
+            {
+              "label": "DBS Remit quote, 26 Sep 2026 10:05: Priya gets INR 60,980"
             }
           ],
           "assumptions": [
             "Rate is held for 24 hours once you start the transfer."
           ]
         },
-        "fallback_text": "Sending S$1,000: Priya gets about INR 61,540 at 61.92, fee S$6.20, arrives by Tuesday."
+        "fallback_text": "Priya gets INR 61,540 for S$1,000 with Wise, fee S$6.20, rate 61.92 INR per SGD, arriving by Tue 29 Sep (as of 10:05)."
       },
       "states": {
         "loading": {
@@ -1161,7 +1168,7 @@
           "major": 1,
           "header": {
             "title": "S$1,000 to Priya",
-            "subtitle": "1 SGD = 61.80 INR · as of 08:40 · couldn’t refresh"
+            "subtitle": "Rate 61.80 · as of 08:40 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -1594,7 +1601,7 @@
           "major": 1,
           "header": {
             "title": "INV-2041 · Acme Pte Ltd",
-            "subtitle": "Due 20 Sep · synced 24 Sep 09:00 · couldn’t refresh"
+            "subtitle": "Synced 24 Sep 09:00 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -3002,7 +3009,7 @@
           "major": 1,
           "header": {
             "title": "DBS Altitude card",
-            "subtitle": "21–27 Sep · as of Thu 24 Sep 20:00 · couldn’t refresh"
+            "subtitle": "As of Thu 24 Sep 20:00 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -3056,6 +3063,7 @@
               }
             ]
           },
+          "more_label": "View all 5 charges",
           "fallback_text": "DBS Altitude card to Thu 24 Sep 20:00: 5 charges, S$569.70. Burnt Ends S$312.00, Shell S$88.50, Uniqlo S$79.80, Toast Box S$9.40, Watsons S$80.00. Couldn’t refresh."
         },
         "empty": {
@@ -3240,7 +3248,7 @@
           "major": 1,
           "header": {
             "title": "September so far",
-            "subtitle": "1–24 Sep · as of Thu 24 Sep 18:00 · couldn’t refresh"
+            "subtitle": "As of Thu 24 Sep 18:00 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -3369,7 +3377,7 @@
           "major": 1,
           "header": {
             "title": "DBS Multiplier ··5521",
-            "subtitle": "Savings · as of Thu 24 Sep 21:00 · couldn’t refresh"
+            "subtitle": "As of Thu 24 Sep 21:00 · couldn’t refresh"
           },
           "blocks": [
             {
@@ -3720,6 +3728,7 @@
               }
             ]
           },
+          "more_label": "View all 4",
           "fallback_text": "From the DBS card only: 4 subscriptions, S$69.51 a month. ChatGPT Plus S$27.50, Netflix S$25.98, Spotify S$11.98, iCloud+ 200 GB S$4.05. OCBC card still to read."
         },
         "empty": {
