@@ -228,6 +228,26 @@ test("figures wider than the plot are drawn whole and inside the card at 320px",
   }
 });
 
+// Review round 1 (F5): chart text is measured in whatever font the kit tokens resolve to. With --hk-font swapped for a
+// wider face, axis figures still end before the plot and x labels still stand apart.
+test("measurement follows the font token: a wider --hk-font keeps axis figures clear of the plot", async ({ page }) => {
+  for (const width of [320, 420]) {
+    await open(page, "doc=short", width);
+    await page.waitForFunction(() => "renderOutput" in window);
+    await page.locator(".harso-kit").first().evaluate(node => (node as HTMLElement).style.setProperty("--hk-font", "\"Geist Mono Variable\", monospace"));
+    await page.evaluate(() => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput({ header: { title: "Mono" },
+      blocks: [{ kind: "visual", visual: { kind: "chart", chart: "bar", unit: "transactions", x_labels: ["1–7 Aug", "8–14 Aug", "15–21 Aug", "22–31 Aug"], series: [{ label: "Count", values: ["980000", "1040000", "1460000", "800000"] }], highlight_index: 2 } }], fallback_text: "F" }));
+    await page.evaluate(() => document.fonts.ready);
+    await expect(card(page).locator(".hkc-chart-svg")).toHaveCSS("font-family", /Geist Mono/);
+    const clear = await card(page).evaluate(root => {
+      const plotRight = Math.max(...[...root.querySelectorAll(".hkc-chart-grid, .hkc-chart-baseline")].map(node => node.getBoundingClientRect().right));
+      return [...root.querySelectorAll(".hkc-chart-axis")].map(node => Math.round(node.getBoundingClientRect().left - plotRight));
+    });
+    for (const gap of clear) expect(gap, `${width}px`).toBeGreaterThanOrEqual(0);
+    expect(await geometry(page), `${width}px`).toEqual({ overlaps: [], outside: [], bordered: [] });
+  }
+});
+
 // Hostile content (CJK without spaces, a 300-character word, emoji, RTL, negatives, 9-digit values) at four widths:
 // chart text never overlaps, never leaves the card's content box, and the page never scrolls sideways.
 for (const width of [320, 400, 560, 900]) {

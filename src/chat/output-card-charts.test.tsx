@@ -3,7 +3,6 @@ import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
 import { formatValue, periodNotes, readShare, scale } from "./output-card-charts";
 import chartStyles from "./output-card-charts.css?raw";
-import cardStyles from "./output-card.css?raw";
 
 afterEach(cleanup);
 
@@ -368,18 +367,14 @@ test("plain text for Copy carries every value with its unit", () => {
   expect(chat.harsoOutputBlockPlainText({ kind: "status" })).toBeUndefined();
 });
 
-test("styles: tokens only, no borders or !important; tabular figures; header 500; hairline above View all; 28px bordered retry", () => {
+test("styles: tokens only, no borders or !important; 44px retry on touch", () => {
   const source = chartStyles.replace(/\/\*[\s\S]*?\*\//g, "");
   const normal = source.split("@media (forced-colors: active)")[0];
   expect(normal).not.toMatch(/#[0-9a-f]{3,8}\b|rgb\(|hsl\(/i);
   expect(normal).not.toMatch(/!important/);
   const lines = [...normal.matchAll(/(?:^|[;{\s])((?:border|outline)(?:-(?:top|right|bottom|left))?(?:-(?:width|style))?)\s*:\s*([^;}]+)/g)].map(m => `${m[1]}: ${m[2].trim()}`);
   expect(lines.filter(line => !/^(border|outline)[a-z-]*: (0|none)$/.test(line) && !line.startsWith("outline: 2px solid var(--hk-accent)"))).toEqual([]);
-  expect(source).toMatch(/\.hkc-output-table thead th \{[^}]*font-weight: 500/);
-  expect(source).toMatch(/\.hkc-output-table \{[^}]*font-variant-numeric: tabular-nums/);
-  expect(source).toMatch(/\.hkc-output-table-scroll \{[^}]*overflow-x: auto/);
-  expect(source).toMatch(/\.hk-button\.hkc-output-block-retry \{[^}]*min-height: 28px[^}]*box-shadow: inset 0 0 0 1px var\(--hk-control-line\)/);
+  // Header weight, tabular figures, in-block scroll, the 28px bordered retry, the amber glyph and the View-all hairline
+  // are measured on computed styles in tests/harso-output-charts.spec.ts. The touch size is not emulated there.
   expect(source).toMatch(/pointer: coarse\) \{[^}]*hkc-output-block-retry \{ min-height: 44px/);
-  expect(source).toMatch(/\.hkc-output-block-failed-glyph \{[^}]*color: var\(--hk-attention\)/);
-  expect(cardStyles).toMatch(/\.hkc-output-card-view-all::before \{[^}]*left: calc\(-1 \* var\(--hk-space-4\)\); right: calc\(-1 \* var\(--hk-space-4\)\); height: 1px;\s*background: var\(--hk-line\)/);
 });
