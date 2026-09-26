@@ -21,13 +21,41 @@ are referenced, not repeated.
 or `status` block, or a row with `status`, makes the whole card draw `fallback_text` as a paragraph. So the charts in
 `health-resting-hr`, `health-sleep`, `health-steps-week`, `edu-lesson`, `edu-progress`, the images in `edu-diagram`
 and `file-lesson-handout`, and every loading/empty/failed state (a status block) show as their fallback paragraph on
-the contact sheets. That is why every fallback here carries each number the chart shows. Across the whole catalogue,
+the contact sheets. So every fallback here names each chart reading with its label and unit (a day, week or year),
+every number the card shows, and each reading that is missing ("15 Sep no readings", "Fri hasn't synced"). The
+rework probe (in the PR) checks this for every document in both files. Across the whole catalogue,
 75 of 163 documents (main answers plus states) fall back this way. The fix is the output-card renderer lanes (charts,
 status, media), not new examples.
 
 The same card skips `action` blocks unread (`src/chat/output-card.tsx:114-116`, `:145`), so `file-flashcards-deck`'s
 Download deck and `health-meds-taken`'s Pause reminders do not draw on the sheets either. The documents carry them;
 the renderer lane draws them.
+
+## Which states each component has
+
+`yes` = the catalogue has that state (example id). `n/a` = the state cannot happen for that component, with the reason.
+No state is invented to fill the grid.
+
+| Component | Loading | Partial | Stale | Empty | Failed |
+|---|---|---|---|---|---|
+| K01 Lesson | yes `edu-lesson-notes` | yes (2 pages unreadable) | yes (older copy of the notes) | yes (no chapter 4) | yes (PDF locked) |
+| K01 Lesson, general topic (`edu-lesson`) | n/a: explained from knowledge, nothing to read | n/a | n/a: not time-bound | n/a | n/a: the same answer as `edu-lesson-notes` when a source fails |
+| K02 Flashcards (deck file) | yes `file-flashcards-deck` | n/a: the file is written whole or not at all | n/a: a file does not age | n/a: made from misses the person names | yes |
+| K02 Flashcards (recall) | n/a: a sentence (`text-flashcards`), no card | n/a | n/a | n/a | n/a |
+| K03 Quiz | yes `edu-quiz-result` | yes (stopped after 7 of 10) | yes (study log couldn't refresh) | yes (no quiz yet) | yes (study log didn't load) |
+| K03 Quiz review (`edu-quiz-review`) | n/a: same read as `edu-quiz-result`, whose states cover it | n/a | n/a | n/a: with no misses the answer is the result card | n/a |
+| K04 Progress / streak | yes `edu-progress` | yes (Fri not synced, `null` bar) | yes | yes (nothing logged in 7 days) | yes |
+| K05 Worked example | n/a: computed in the answer, nothing to read | n/a | n/a: maths does not age | n/a | n/a |
+| K06 Glossary, general terms (`edu-glossary`) | n/a: from knowledge | n/a | n/a | n/a | n/a |
+| K06 Glossary from a document | yes `edu-glossary-insurance` | n/a: terms are listed whole | n/a: a letter does not age | n/a: a letter with no terms is a sentence | yes (photo too blurred) |
+| K07 Diagram | yes `edu-diagram` | n/a: an image renders whole or not at all | n/a | n/a | yes |
+| Lesson handout (worksheet file) | yes `file-lesson-handout` | n/a: the PDF is written whole | n/a | n/a | yes |
+| K08 Metric trend | yes: all three of `health-resting-hr`, `health-sleep`, `health-steps-week` | yes | yes | yes | yes |
+| K09 Workout plan | n/a: planned from the request, nothing to read | n/a | n/a: a plan for tomorrow does not age | n/a | n/a |
+| K10 Medication schedule | yes `health-meds-taken` | yes (one medicine logged in another app) | yes (log as of 18:00, don't double-dose) | yes `health-meds` (no list) | yes (both) |
+| K11 Symptom check | n/a: advice must not wait; an urgent answer never shows a loading card | n/a | n/a: advice does not age | n/a | yes `health-symptom` (guide failed, 995 still first) |
+
+Loading states exist only where the agent reads something slow (a file, Apple Health, the study log) or makes a file.
 
 ## Decided on purpose (no gap)
 
