@@ -1707,14 +1707,14 @@
           "details": {
             "sources": [
               {
-                "label": "Google Calendar, 4 events added 26 Sep 2026 09:04"
+                "label": "Google Calendar, 2 of 4 events confirmed added 26 Sep 2026 09:04"
               }
             ],
             "assumptions": [
               "The recap comes every Monday at 9:00; blocks are added only after your yes"
             ]
           },
-          "fallback_text": "Next week 28 Sep–4 Oct, 2 of 4 blocks confirmed on your Google Calendar: Mon 28 Sep 09:30–11:30 focus on the board deck; Tue 29 Sep 08:30–09:00 reply to Priya and Kai. Couldn't confirm yet: Wed 30 Sep 14:00–16:00 pricing page and Thu 1 Oct 17:00–17:30 admin; I'll check before adding them again."
+          "fallback_text": "Next week 28 Sep–4 Oct, 2 of 4 blocks confirmed on your Google Calendar: Mon 28 Sep 09:30–11:30 focus on the board deck; Tue 29 Sep 08:30–09:00 reply to Priya and Kai. Couldn't confirm yet: Wed 30 Sep 14:00–16:00 focus on the pricing page and Thu 1 Oct 17:00–17:30 admin: bills and forms; I'll check before adding them again."
         },
         "stale": {
           "kind": "output_blocks",
