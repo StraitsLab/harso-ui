@@ -119,6 +119,8 @@
     "shop-india-cod",
     "shop-us-amazon",
     "shop-return-windows",
+    "shop-headphones-compare",
+    "shop-arriving",
     "home-listing-results",
     "home-listing-card",
     "home-rent-listings",
@@ -135,6 +137,9 @@
     "travel-hotels-ueno",
     "travel-flight-cancelled",
     "travel-rate-drop-rebook",
+    "travel-tokyo-5-days",
+    "travel-airport-ride-booked",
+    "travel-airport-ride-reschedule",
     "places-cafe",
     "places-dinner-options",
     "places-hours",
@@ -10158,6 +10163,698 @@
       }
     },
     {
+      "id": "shop-headphones-compare",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Find me noise-cancelling headphones under S$300, with links.",
+      "says": "Three fit; the Sony XM4 blocks the most noise for the money.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S1 Product options",
+        "S10 Rating",
+        "S2 Product grid / carousel (as rows)",
+        "X4 Item thumbnail (degraded: no row image)"
+      ],
+      "rationale": "Three options from three shops, one pick, price trailing; each product's own page is a source in Details, since rows carry no link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Noise-cancelling headphones under S$300",
+          "subtitle": "Sorted by noise cancelling · as of 10:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Sony WH-1000XM4",
+                "secondary": "Courts · 30 h · rated 4.7/5",
+                "trailing": "S$299",
+                "mark": "pick"
+              },
+              {
+                "label": "Sennheiser Accentum Plus",
+                "secondary": "Shopee Mall · 50 h · rated 4.4/5",
+                "trailing": "S$259"
+              },
+              {
+                "label": "Soundcore Space One",
+                "secondary": "LazMall · 40 h · rated 4.5/5",
+                "trailing": "S$139"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Sony WH-1000XM4 on Courts, 26 Sep 2026 10:20",
+              "url": "https://www.courts.com.sg/sony-wh-1000xm4-wireless-noise-cancelling-headphones-black"
+            },
+            {
+              "label": "Sennheiser Accentum Plus on Shopee Mall, 26 Sep 2026 10:20",
+              "url": "https://shopee.sg/Sennheiser-Accentum-Plus-Wireless-i.318204559.23874019255"
+            },
+            {
+              "label": "Soundcore Space One on LazMall, 26 Sep 2026 10:20",
+              "url": "https://www.lazada.sg/products/soundcore-space-one-i2981734563.html"
+            },
+            {
+              "label": "RTINGS noise cancelling measurements"
+            },
+            {
+              "label": "Ratings from 21,410, 1,302 and 6,885 reviews"
+            }
+          ]
+        },
+        "fallback_text": "Noise-cancelling headphones under S$300 (10:20): Sony WH-1000XM4 S$299 at Courts, 30 h, rated 4.7/5 (pick); Sennheiser Accentum Plus S$259 at Shopee Mall, 50 h, rated 4.4/5; Soundcore Space One S$139 at LazMall, 40 h, rated 4.5/5. Each product page is linked in Details."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Noise-cancelling headphones under S$300",
+            "subtitle": "Courts, Shopee, Lazada"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 3 stores for noise-cancelling headphones",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a0101"
+              }
+            }
+          ],
+          "fallback_text": "Checking 3 stores for noise-cancelling headphones under S$300."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Noise-cancelling headphones under S$300",
+            "subtitle": "2 of 3 stores checked · as of 10:20"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sony WH-1000XM4",
+                  "secondary": "Courts · 30 h · rated 4.7/5",
+                  "trailing": "S$299",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Sennheiser Accentum Plus",
+                  "secondary": "Shopee Mall · 50 h · rated 4.4/5",
+                  "trailing": "S$259"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Sony WH-1000XM4 on Courts, 26 Sep 2026 10:20",
+                "url": "https://www.courts.com.sg/sony-wh-1000xm4-wireless-noise-cancelling-headphones-black"
+              },
+              {
+                "label": "Sennheiser Accentum Plus on Shopee Mall, 26 Sep 2026 10:20",
+                "url": "https://shopee.sg/Sennheiser-Accentum-Plus-Wireless-i.318204559.23874019255"
+              }
+            ]
+          },
+          "fallback_text": "Noise-cancelling headphones under S$300, 2 of 3 stores checked (10:20): Sony WH-1000XM4 S$299 at Courts, 30 h, rated 4.7/5 (pick); Sennheiser Accentum Plus S$259 at Shopee Mall, 50 h, rated 4.4/5. Lazada hasn't answered yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Noise-cancelling headphones under S$300",
+            "subtitle": "As of 08:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sony WH-1000XM4",
+                  "secondary": "Courts · 30 h · rated 4.7/5",
+                  "trailing": "S$299",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Sennheiser Accentum Plus",
+                  "secondary": "Shopee Mall · 50 h · rated 4.4/5",
+                  "trailing": "S$259"
+                },
+                {
+                  "label": "Soundcore Space One",
+                  "secondary": "LazMall · 40 h · rated 4.5/5",
+                  "trailing": "S$139"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Sony WH-1000XM4 on Courts, 26 Sep 2026 08:40",
+                "url": "https://www.courts.com.sg/sony-wh-1000xm4-wireless-noise-cancelling-headphones-black"
+              },
+              {
+                "label": "Sennheiser Accentum Plus on Shopee Mall, 26 Sep 2026 08:40",
+                "url": "https://shopee.sg/Sennheiser-Accentum-Plus-Wireless-i.318204559.23874019255"
+              },
+              {
+                "label": "Soundcore Space One on LazMall, 26 Sep 2026 08:40",
+                "url": "https://www.lazada.sg/products/soundcore-space-one-i2981734563.html"
+              }
+            ]
+          },
+          "fallback_text": "Noise-cancelling headphones under S$300 as of 08:40 (couldn't refresh): Sony WH-1000XM4 S$299 at Courts, 30 h, rated 4.7/5 (pick); Sennheiser Accentum Plus S$259 at Shopee Mall, 50 h, rated 4.4/5; Soundcore Space One S$139 at LazMall, 40 h, rated 4.5/5."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No noise-cancelling headphones in stock under S$300",
+            "subtitle": "Courts, Shopee, Lazada · as of 10:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Courts restocks the Sony WH-1000XM4 on Thu 1 Oct"
+            }
+          ],
+          "fallback_text": "None of the noise-cancelling headphones under S$300 is in stock at Courts, Shopee or Lazada (10:20). Courts restocks the Sony WH-1000XM4 on Thu 1 Oct."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check headphone prices",
+            "subtitle": "Courts, Shopee, Lazada"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "None of the 3 stores answered. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't check headphone prices: none of the 3 stores (Courts, Shopee, Lazada) answered. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "shop-arriving",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "What's arriving?",
+      "says": "Four parcels are on their way; the Uniqlo shoes come today.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S13 Delivery tracking"
+      ],
+      "rationale": "One row per order, soonest first: the carrier's own status on the line, the expected day trailing; each carrier's tracking page is in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "4 orders on their way",
+          "subtitle": "Soonest first · as of 11:05"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Running shoes · Uniqlo",
+                "secondary": "Ninja Van: out for delivery · left Tuas hub 08:12",
+                "trailing": "today by 6 pm"
+              },
+              {
+                "label": "Desk lamp · Amazon.sg",
+                "secondary": "J&T Express: at the Changi hub · sorted 06:40",
+                "trailing": "Mon 28 Sep"
+              },
+              {
+                "label": "Phone case · Temu",
+                "secondary": "SingPost: cleared customs in Singapore · 04:15",
+                "trailing": "Tue 29–Wed 30 Sep"
+              },
+              {
+                "label": "Charger · AliExpress",
+                "secondary": "Cainiao: left Shenzhen · Thu 24 Sep",
+                "trailing": "Fri 2–Mon 5 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Not shipped yet",
+                "bullets": [
+                  "Kettle from Shopee Mall: the seller hasn't handed it to a carrier; Shopee says it ships by Tue 29 Sep."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Ninja Van tracking, Uniqlo order 88213, 26 Sep 2026 11:05",
+              "url": "https://www.ninjavan.co/en-sg/tracking?id=NVSGUNIQ88213"
+            },
+            {
+              "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 11:05",
+              "url": "https://www.jtexpress.sg/tracking?billcode=JTSG0041772930"
+            },
+            {
+              "label": "SingPost tracking, Temu order, 26 Sep 2026 11:05",
+              "url": "https://www.singpost.com/track-items?trackingid=LP00471822035SG"
+            },
+            {
+              "label": "Cainiao tracking, AliExpress order, 26 Sep 2026 11:05",
+              "url": "https://global.cainiao.com/newDetail.htm?mailNoList=LP00471822999CN"
+            },
+            {
+              "label": "Shopee order page, 26 Sep 2026 11:05",
+              "url": "https://shopee.sg/user/purchase/order/140927735521"
+            }
+          ],
+          "assumptions": [
+            "Each status is the carrier's own words; the arrival is the carrier's estimate, or the shop's when the carrier gives none."
+          ]
+        },
+        "fallback_text": "As of 11:05, 4 orders are on their way, soonest first: running shoes from Uniqlo today by 6 pm (Ninja Van: out for delivery, left Tuas hub 08:12); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15); charger from AliExpress Fri 2–Mon 5 Oct (Cainiao: left Shenzhen Thu 24 Sep). Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Orders on their way",
+            "subtitle": "Uniqlo, Amazon.sg, Temu, AliExpress, Shopee"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 5 shops' orders with their carriers",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a0401"
+              }
+            }
+          ],
+          "fallback_text": "Orders on their way: checking 5 shops' orders with their carriers."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3 orders on their way",
+            "subtitle": "3 of 4 carriers · soonest first · as of 11:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Running shoes · Uniqlo",
+                  "secondary": "Ninja Van: out for delivery · left Tuas hub 08:12",
+                  "trailing": "today by 6 pm"
+                },
+                {
+                  "label": "Desk lamp · Amazon.sg",
+                  "secondary": "J&T Express: at the Changi hub · sorted 06:40",
+                  "trailing": "Mon 28 Sep"
+                },
+                {
+                  "label": "Phone case · Temu",
+                  "secondary": "SingPost: cleared customs in Singapore · 04:15",
+                  "trailing": "Tue 29–Wed 30 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Not shipped yet",
+                  "bullets": [
+                    "Kettle from Shopee Mall: the seller hasn't handed it to a carrier; Shopee says it ships by Tue 29 Sep."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Ninja Van tracking, Uniqlo order 88213, 26 Sep 2026 11:05",
+                "url": "https://www.ninjavan.co/en-sg/tracking?id=NVSGUNIQ88213"
+              },
+              {
+                "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 11:05",
+                "url": "https://www.jtexpress.sg/tracking?billcode=JTSG0041772930"
+              },
+              {
+                "label": "SingPost tracking, Temu order, 26 Sep 2026 11:05",
+                "url": "https://www.singpost.com/track-items?trackingid=LP00471822035SG"
+              },
+              {
+                "label": "Shopee order page, 26 Sep 2026 11:05",
+                "url": "https://shopee.sg/user/purchase/order/140927735521"
+              },
+              {
+                "label": "Cainiao didn't answer"
+              }
+            ],
+            "assumptions": [
+              "Each status is the carrier's own words; the arrival is the carrier's estimate, or the shop's when the carrier gives none."
+            ]
+          },
+          "fallback_text": "As of 11:05, 3 of 4 carriers checked, 3 orders are on their way: running shoes from Uniqlo today by 6 pm (Ninja Van: out for delivery, left Tuas hub 08:12); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15). Cainiao hasn't answered for the AliExpress charger. Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "4 orders on their way",
+            "subtitle": "Soonest first · as of 08:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Running shoes · Uniqlo",
+                  "secondary": "Ninja Van: out for delivery · left Tuas hub 08:12",
+                  "trailing": "today by 6 pm"
+                },
+                {
+                  "label": "Desk lamp · Amazon.sg",
+                  "secondary": "J&T Express: at the Changi hub · sorted 06:40",
+                  "trailing": "Mon 28 Sep"
+                },
+                {
+                  "label": "Phone case · Temu",
+                  "secondary": "SingPost: cleared customs in Singapore · 04:15",
+                  "trailing": "Tue 29–Wed 30 Sep"
+                },
+                {
+                  "label": "Charger · AliExpress",
+                  "secondary": "Cainiao: left Shenzhen · Thu 24 Sep",
+                  "trailing": "Fri 2–Mon 5 Oct"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Not shipped yet",
+                  "bullets": [
+                    "Kettle from Shopee Mall: the seller hasn't handed it to a carrier; Shopee says it ships by Tue 29 Sep."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Ninja Van tracking, Uniqlo order 88213, 26 Sep 2026 08:00",
+                "url": "https://www.ninjavan.co/en-sg/tracking?id=NVSGUNIQ88213"
+              },
+              {
+                "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 08:00",
+                "url": "https://www.jtexpress.sg/tracking?billcode=JTSG0041772930"
+              },
+              {
+                "label": "SingPost tracking, Temu order, 26 Sep 2026 08:00",
+                "url": "https://www.singpost.com/track-items?trackingid=LP00471822035SG"
+              },
+              {
+                "label": "Cainiao tracking, AliExpress order, 26 Sep 2026 08:00",
+                "url": "https://global.cainiao.com/newDetail.htm?mailNoList=LP00471822999CN"
+              },
+              {
+                "label": "Shopee order page, 26 Sep 2026 08:00",
+                "url": "https://shopee.sg/user/purchase/order/140927735521"
+              }
+            ],
+            "assumptions": [
+              "Each status is the carrier's own words; the arrival is the carrier's estimate, or the shop's when the carrier gives none."
+            ]
+          },
+          "fallback_text": "As of 08:00 (couldn't refresh, so a scan since then won't show), 4 orders are on their way: running shoes from Uniqlo today by 6 pm (Ninja Van: out for delivery, left Tuas hub 08:12); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15); charger from AliExpress Fri 2–Mon 5 Oct (Cainiao: left Shenzhen Thu 24 Sep). Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing on its way",
+            "subtitle": "Uniqlo, Amazon.sg, Temu, AliExpress, Shopee · as of 11:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Every order you placed has been delivered. Ask me when you order again."
+            }
+          ],
+          "fallback_text": "Nothing is on its way, as of 11:05: every order at Uniqlo, Amazon.sg, Temu, AliExpress and Shopee has been delivered. Ask me when you order again."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check your deliveries",
+            "subtitle": "Uniqlo, Amazon.sg, Temu, AliExpress, Shopee"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired, so no orders were found. Sign in and ask me again."
+            }
+          ],
+          "fallback_text": "Couldn't check your deliveries: your Gmail sign-in expired, so I couldn't find the Uniqlo, Amazon.sg, Temu, AliExpress and Shopee orders. Sign in and ask me again."
+        }
+      }
+    },
+    {
+      "id": "shop-marketplace-offer-sent",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Yes, send Jordan the US$180 offer.",
+      "says": "Sent. I'll tell you when Jordan replies.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Sent receipt",
+        "Uncertain send"
+      ],
+      "rationale": "After the yes: the Marketplace thread it landed in, when it went and the reply watch as rows; the words are the approved draft, never re-worded.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sent · Offer on the gray sectional",
+          "subtitle": "To Jordan on Marketplace · Sat 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Thread",
+                "secondary": "Gray sectional, listed US$260",
+                "trailing": "2 messages"
+              },
+              {
+                "label": "Sent from",
+                "secondary": "Your Facebook Marketplace · as approved",
+                "trailing": "09:52"
+              },
+              {
+                "label": "Reply watch",
+                "secondary": "I'll tell you here when Jordan answers",
+                "trailing": "Until Sat 3 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Marketplace inbox",
+              "url": "https://www.facebook.com/marketplace/inbox/?thread=8812470953"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Facebook Marketplace inbox, 26 Sep 2026 09:52"
+            }
+          ]
+        },
+        "fallback_text": "Sent to Jordan on Facebook Marketplace on Sat 26 Sep at 09:52, word for word as you approved: \"Hi Jordan, is the gray sectional still available? I can pick it up on Sat 3 Oct in Oakland and pay US$180 cash. Thanks, Abhi\" It's in the gray sectional thread (listed US$260, 2 messages). Reply watch: I'll tell you here when Jordan answers, until Sat 3 Oct."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sending to Jordan",
+            "subtitle": "Offer on the gray sectional"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Sending your US$180 offer to Jordan on Marketplace",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a0701"
+              }
+            }
+          ],
+          "fallback_text": "Sending your US$180 offer on the gray sectional to Jordan on Facebook Marketplace."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sent · Offer on the gray sectional",
+            "subtitle": "To Jordan on Marketplace · Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sent from",
+                  "secondary": "Your Facebook Marketplace · as approved",
+                  "trailing": "09:52"
+                },
+                {
+                  "label": "Thread",
+                  "secondary": "Marketplace hasn't shown it in the thread yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Marketplace inbox",
+                "url": "https://www.facebook.com/marketplace/inbox/"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Facebook Marketplace send reply, 26 Sep 2026 09:52"
+              }
+            ]
+          },
+          "fallback_text": "Sent to Jordan on Facebook Marketplace on Sat 26 Sep at 09:52, as you approved: \"Hi Jordan, is the gray sectional still available? I can pick it up on Sat 3 Oct in Oakland and pay US$180 cash. Thanks, Abhi\" Marketplace hasn't shown it in the thread yet, so the thread is not in yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sent · Offer on the gray sectional",
+            "subtitle": "To Jordan on Marketplace · Sat 26 Sep · as of 09:52 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Thread",
+                  "secondary": "Gray sectional, listed US$260",
+                  "trailing": "2 messages"
+                },
+                {
+                  "label": "Sent from",
+                  "secondary": "Your Facebook Marketplace · as approved",
+                  "trailing": "09:52"
+                },
+                {
+                  "label": "Reply watch",
+                  "secondary": "I'll tell you here when Jordan answers",
+                  "trailing": "Until Sat 3 Oct"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Marketplace inbox",
+                "url": "https://www.facebook.com/marketplace/inbox/?thread=8812470953"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Facebook Marketplace inbox, 26 Sep 2026 09:52"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:52 (couldn't refresh, so a reply since then won't show). Sent to Jordan on Facebook Marketplace on Sat 26 Sep at 09:52, as you approved: \"Hi Jordan, is the gray sectional still available? I can pick it up on Sat 3 Oct in Oakland and pay US$180 cash. Thanks, Abhi\" In the gray sectional thread (listed US$260, 2 messages). Reply watch until Sat 3 Oct."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Not sent · Offer on the gray sectional",
+            "subtitle": "To Jordan on Marketplace"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Jordan marked the sectional sold before it went. Nothing was sent."
+            }
+          ],
+          "fallback_text": "Not sent: Jordan marked the gray sectional sold on Facebook Marketplace before your US$180 offer went. Nothing was sent. Ask me to look for another one."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm it sent",
+            "subtitle": "To Jordan on Marketplace · Offer on the gray sectional"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Marketplace didn't answer. I'll check the thread before trying again."
+            }
+          ],
+          "fallback_text": "I couldn't confirm your US$180 offer on the gray sectional reached Jordan on Facebook Marketplace: Marketplace didn't answer after it was sent at 09:52, so it may or may not have gone. I'll check the thread before trying again, so Jordan doesn't get it twice."
+        }
+      }
+    },
+    {
       "id": "home-listing-results",
       "vertical": "real_estate",
       "kind": "card",
@@ -16592,6 +17289,1561 @@
             }
           ],
           "fallback_text": "Couldn’t check the Gracery Ueno rate for 12–18 Oct: Booking.com didn’t respond. Your booking wasn’t changed; the next check is at 08:00."
+        }
+      }
+    },
+    {
+      "id": "travel-tokyo-5-days",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Plan 5 days in Tokyo from 12 Oct, with flights and a hotel.",
+      "says": "Here's the 5-day plan; the flight and hotel together come to S$2,166.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Itinerary / day-by-day plan",
+        "Flight options",
+        "Stay comparison"
+      ],
+      "rationale": "The travel-itinerary plan with the chosen flight and hotel as priced rows; each price's own page is a source in Details, and the plan is a file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tokyo in 5 days",
+          "subtitle": "Mon 12–Fri 16 Oct · prices as of 09:12"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "d1",
+                  "label": "Asakusa and Ueno",
+                  "lat": "35.7148",
+                  "lon": "139.7967"
+                },
+                {
+                  "id": "d2",
+                  "label": "Shibuya and Harajuku",
+                  "lat": "35.6595",
+                  "lon": "139.7005"
+                },
+                {
+                  "id": "d3",
+                  "label": "Kamakura",
+                  "lat": "35.3192",
+                  "lon": "139.5467"
+                },
+                {
+                  "id": "d4",
+                  "label": "Shinjuku",
+                  "lat": "35.6938",
+                  "lon": "139.7034"
+                },
+                {
+                  "id": "d5",
+                  "label": "Ginza and Tsukiji",
+                  "lat": "35.6717",
+                  "lon": "139.7650"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "SQ 638 out, SQ 637 back",
+                "secondary": "Mon 12 Oct 08:35 · Fri 16 Oct 22:50 · economy",
+                "trailing": "S$1,086"
+              },
+              {
+                "label": "Hotel Gracery Ueno",
+                "secondary": "4 nights · free cancel until 9 Oct",
+                "trailing": "S$1,080"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Day 1 · Mon 12 Oct · Asakusa and Ueno",
+                "bullets": [
+                  "16:40 Land at Haneda, check in at Ueno",
+                  "19:00 Senso-ji lit up at night"
+                ]
+              },
+              {
+                "heading": "Day 2 · Tue 13 Oct · Shibuya and Harajuku",
+                "bullets": [
+                  "09:00 Meiji Jingu",
+                  "15:00 Shibuya Sky at dusk"
+                ]
+              },
+              {
+                "heading": "Day 3 · Wed 14 Oct · Kamakura",
+                "bullets": [
+                  "09:30 Great Buddha",
+                  "13:00 Hase-dera and the coast"
+                ]
+              },
+              {
+                "heading": "Day 4 · Thu 15 Oct · Shinjuku",
+                "bullets": [
+                  "10:00 Shinjuku Gyoen",
+                  "18:00 Omoide Yokocho"
+                ]
+              },
+              {
+                "heading": "Day 5 · Fri 16 Oct · Ginza and Tsukiji",
+                "bullets": [
+                  "08:00 Tsukiji outer market",
+                  "20:00 Leave for Haneda"
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open plan",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c6a1001"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines fare SQ 638 and SQ 637, 26 Sep 2026 09:12",
+              "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/book-flight/?from=SIN&to=HND&depart=2026-10-12&return=2026-10-16"
+            },
+            {
+              "label": "Hotel Gracery Ueno on Booking.com, 26 Sep 2026 09:12",
+              "url": "https://www.booking.com/hotel/jp/gracery-ueno.en-gb.html?checkin=2026-10-12&checkout=2026-10-16"
+            }
+          ],
+          "assumptions": [
+            "Nothing is booked; the fare and the rate hold only until you book.",
+            "Trains between areas; Kamakura is 1 h from Shinjuku."
+          ]
+        },
+        "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, prices as of 09:12, nothing booked: SQ 638 out Mon 12 Oct 08:35 and SQ 637 back Fri 16 Oct 22:50, economy, S$1,086; Hotel Gracery Ueno, 4 nights, free cancel until 9 Oct, S$1,080. Day 1 Mon Asakusa and Ueno; Day 2 Tue Shibuya and Harajuku; Day 3 Wed Kamakura; Day 4 Thu Shinjuku; Day 5 Fri Ginza and Tsukiji. The plan is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo in 5 days",
+            "subtitle": "Mon 12–Fri 16 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Pricing the flight and hotel, then planning day 1 of 5",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a1001"
+              }
+            }
+          ],
+          "fallback_text": "Planning your 5 days in Tokyo, Mon 12–Fri 16 Oct: pricing the flight and hotel first."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo in 5 days",
+            "subtitle": "Mon 12–Fri 16 Oct · 2 of 5 days planned · as of 09:12"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "d1",
+                    "label": "Asakusa and Ueno",
+                    "lat": "35.7148",
+                    "lon": "139.7967"
+                  },
+                  {
+                    "id": "d2",
+                    "label": "Shibuya and Harajuku",
+                    "lat": "35.6595",
+                    "lon": "139.7005"
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "SQ 638 out, SQ 637 back",
+                  "secondary": "Mon 12 Oct 08:35 · Fri 16 Oct 22:50 · economy",
+                  "trailing": "S$1,086"
+                },
+                {
+                  "label": "Hotel Gracery Ueno",
+                  "secondary": "4 nights · free cancel until 9 Oct",
+                  "trailing": "S$1,080"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Day 1 · Mon 12 Oct · Asakusa and Ueno",
+                  "bullets": [
+                    "16:40 Land at Haneda, check in at Ueno",
+                    "19:00 Senso-ji lit up at night"
+                  ]
+                },
+                {
+                  "heading": "Day 2 · Tue 13 Oct · Shibuya and Harajuku",
+                  "bullets": [
+                    "09:00 Meiji Jingu",
+                    "15:00 Shibuya Sky at dusk"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines fare SQ 638 and SQ 637, 26 Sep 2026 09:12",
+                "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/book-flight/?from=SIN&to=HND&depart=2026-10-12&return=2026-10-16"
+              },
+              {
+                "label": "Hotel Gracery Ueno on Booking.com, 26 Sep 2026 09:12",
+                "url": "https://www.booking.com/hotel/jp/gracery-ueno.en-gb.html?checkin=2026-10-12&checkout=2026-10-16"
+              }
+            ],
+            "assumptions": [
+              "Nothing is booked; the fare and the rate hold only until you book."
+            ]
+          },
+          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, 2 of 5 days planned, prices as of 09:12, nothing booked: SQ 638 out Mon 12 Oct 08:35 and SQ 637 back Fri 16 Oct 22:50, economy, S$1,086; Hotel Gracery Ueno, 4 nights, free cancel until 9 Oct, S$1,080. Day 1 Mon Asakusa and Ueno; Day 2 Tue Shibuya and Harajuku. Days 3 to 5 are still being planned."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo in 5 days",
+            "subtitle": "Mon 12–Fri 16 Oct · prices as of 08:10 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "d1",
+                    "label": "Asakusa and Ueno",
+                    "lat": "35.7148",
+                    "lon": "139.7967"
+                  },
+                  {
+                    "id": "d2",
+                    "label": "Shibuya and Harajuku",
+                    "lat": "35.6595",
+                    "lon": "139.7005"
+                  },
+                  {
+                    "id": "d3",
+                    "label": "Kamakura",
+                    "lat": "35.3192",
+                    "lon": "139.5467"
+                  },
+                  {
+                    "id": "d4",
+                    "label": "Shinjuku",
+                    "lat": "35.6938",
+                    "lon": "139.7034"
+                  },
+                  {
+                    "id": "d5",
+                    "label": "Ginza and Tsukiji",
+                    "lat": "35.6717",
+                    "lon": "139.7650"
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "SQ 638 out, SQ 637 back",
+                  "secondary": "Mon 12 Oct 08:35 · Fri 16 Oct 22:50 · economy",
+                  "trailing": "S$1,086"
+                },
+                {
+                  "label": "Hotel Gracery Ueno",
+                  "secondary": "4 nights · free cancel until 9 Oct",
+                  "trailing": "S$1,080"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Day 1 · Mon 12 Oct · Asakusa and Ueno",
+                  "bullets": [
+                    "16:40 Land at Haneda, check in at Ueno",
+                    "19:00 Senso-ji lit up at night"
+                  ]
+                },
+                {
+                  "heading": "Day 2 · Tue 13 Oct · Shibuya and Harajuku",
+                  "bullets": [
+                    "09:00 Meiji Jingu",
+                    "15:00 Shibuya Sky at dusk"
+                  ]
+                },
+                {
+                  "heading": "Day 3 · Wed 14 Oct · Kamakura",
+                  "bullets": [
+                    "09:30 Great Buddha",
+                    "13:00 Hase-dera and the coast"
+                  ]
+                },
+                {
+                  "heading": "Day 4 · Thu 15 Oct · Shinjuku",
+                  "bullets": [
+                    "10:00 Shinjuku Gyoen",
+                    "18:00 Omoide Yokocho"
+                  ]
+                },
+                {
+                  "heading": "Day 5 · Fri 16 Oct · Ginza and Tsukiji",
+                  "bullets": [
+                    "08:00 Tsukiji outer market",
+                    "20:00 Leave for Haneda"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines fare SQ 638 and SQ 637, 26 Sep 2026 08:10",
+                "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/book-flight/?from=SIN&to=HND&depart=2026-10-12&return=2026-10-16"
+              },
+              {
+                "label": "Hotel Gracery Ueno on Booking.com, 26 Sep 2026 08:10",
+                "url": "https://www.booking.com/hotel/jp/gracery-ueno.en-gb.html?checkin=2026-10-12&checkout=2026-10-16"
+              }
+            ],
+            "assumptions": [
+              "Nothing is booked; the fare and the rate hold only until you book.",
+              "Trains between areas; Kamakura is 1 h from Shinjuku."
+            ],
+            "disclaimers": [
+              "The fare and the rate may have changed since 08:10; the linked pages have today's."
+            ]
+          },
+          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, prices as of 08:10 (couldn't refresh), nothing booked: SQ 638 out Mon 12 Oct 08:35 and SQ 637 back Fri 16 Oct 22:50, economy, S$1,086; Hotel Gracery Ueno, 4 nights, free cancel until 9 Oct, S$1,080. Day 1 Mon Asakusa and Ueno; Day 2 Tue Shibuya and Harajuku; Day 3 Wed Kamakura; Day 4 Thu Shinjuku; Day 5 Fri Ginza and Tsukiji. Check both prices before you book."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No direct flight to Tokyo on 12 Oct",
+            "subtitle": "Singapore Airlines, ANA, ZIPAIR · as of 09:12"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "All three are full on Mon 12 Oct; Tue 13 Oct has seats. Plan from then?"
+            }
+          ],
+          "fallback_text": "No direct flight to Tokyo on Mon 12 Oct has seats at Singapore Airlines, ANA or ZIPAIR, as of 09:12. Tue 13 Oct has seats; say if I should plan the 5 days from then. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't finish the Tokyo plan",
+            "subtitle": "Mon 12–Fri 16 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Booking.com didn't answer, so the hotel has no price. Nothing was booked."
+            }
+          ],
+          "fallback_text": "Couldn't finish the Tokyo plan for Mon 12–Fri 16 Oct: Booking.com didn't answer, so the hotel has no price. Nothing was booked. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "travel-trip-from-mails",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Make my Tokyo trip plan from the booking emails.",
+      "says": "Here's the trip from your two booking emails; there's no flight home among them.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Itinerary / day-by-day plan",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "The travel-itinerary plan built from the mails: each booking's local time and ref under its day, what the mails lack said plainly, the plan as a file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tokyo trip from your bookings",
+          "subtitle": "Mon 12–Sun 18 Oct · 2 booking emails"
+        },
+        "blocks": [
+          {
+            "kind": "visual",
+            "visual": {
+              "kind": "map",
+              "places": [
+                {
+                  "id": "hnd",
+                  "label": "Haneda T3",
+                  "lat": "35.5494",
+                  "lon": "139.7798"
+                },
+                {
+                  "id": "htl",
+                  "label": "Hotel Gracery Ueno",
+                  "lat": "35.7110",
+                  "lon": "139.7740"
+                }
+              ]
+            }
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Mon 12 Oct · fly and check in",
+                "bullets": [
+                  "08:35 Singapore time: SQ 638 leaves Changi T3 · ref 6XK2QP",
+                  "16:40 Tokyo time: land at Haneda T3",
+                  "From 15:00 Tokyo time: check in at Hotel Gracery Ueno · ref ABX-4471"
+                ]
+              },
+              {
+                "heading": "Sun 18 Oct · check out",
+                "bullets": [
+                  "By 11:00 Tokyo time: check out · free cancel until 9 Oct"
+                ]
+              },
+              {
+                "heading": "Not in your mails",
+                "bullets": [
+                  "No flight home: I found only the outbound e-ticket."
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open plan",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c6a5001"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines e-ticket email, 26 Sep 2026 10:41"
+            },
+            {
+              "label": "Booking.com confirmation email, 26 Sep 2026 10:02"
+            }
+          ],
+          "assumptions": [
+            "Tokyo is 1 hour ahead of Singapore; each time is local to where you are then."
+          ]
+        },
+        "fallback_text": "Tokyo trip from your 2 booking emails, Mon 12–Sun 18 Oct. Mon 12 Oct: SQ 638 leaves Changi T3 08:35 Singapore time, ref 6XK2QP, lands Haneda T3 16:40 Tokyo time; check in at Hotel Gracery Ueno from 15:00 Tokyo time, ref ABX-4471. Sun 18 Oct: check out by 11:00 Tokyo time, free cancel until 9 Oct. Not in your mails: no flight home, only the outbound e-ticket. The plan is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo trip from your bookings",
+            "subtitle": "Mon 12–Sun 18 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading booking email 2 of 2",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a5001"
+              }
+            }
+          ],
+          "fallback_text": "Making your Tokyo trip plan from your booking emails: reading email 2 of 2."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo trip from your bookings",
+            "subtitle": "Mon 12 Oct · 1 of 2 booking emails read"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "hnd",
+                    "label": "Haneda T3",
+                    "lat": "35.5494",
+                    "lon": "139.7798"
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Mon 12 Oct · fly",
+                  "bullets": [
+                    "08:35 Singapore time: SQ 638 leaves Changi T3 · ref 6XK2QP",
+                    "16:40 Tokyo time: land at Haneda T3"
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines e-ticket email, 26 Sep 2026 10:41"
+              }
+            ],
+            "assumptions": [
+              "Tokyo is 1 hour ahead of Singapore; each time is local to where you are then."
+            ]
+          },
+          "fallback_text": "Tokyo trip from your bookings, 1 of 2 emails read. Mon 12 Oct: SQ 638 leaves Changi T3 08:35 Singapore time, ref 6XK2QP, lands Haneda T3 16:40 Tokyo time. The Booking.com email is still being read."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo trip from your bookings",
+            "subtitle": "Mon 12–Sun 18 Oct · as of 10:45 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "visual",
+              "visual": {
+                "kind": "map",
+                "places": [
+                  {
+                    "id": "hnd",
+                    "label": "Haneda T3",
+                    "lat": "35.5494",
+                    "lon": "139.7798"
+                  },
+                  {
+                    "id": "htl",
+                    "label": "Hotel Gracery Ueno",
+                    "lat": "35.7110",
+                    "lon": "139.7740"
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Mon 12 Oct · fly and check in",
+                  "bullets": [
+                    "08:35 Singapore time: SQ 638 leaves Changi T3 · ref 6XK2QP",
+                    "16:40 Tokyo time: land at Haneda T3",
+                    "From 15:00 Tokyo time: check in at Hotel Gracery Ueno · ref ABX-4471"
+                  ]
+                },
+                {
+                  "heading": "Sun 18 Oct · check out",
+                  "bullets": [
+                    "By 11:00 Tokyo time: check out · free cancel until 9 Oct"
+                  ]
+                },
+                {
+                  "heading": "Not in your mails",
+                  "bullets": [
+                    "No flight home: I found only the outbound e-ticket."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines e-ticket email, 26 Sep 2026 10:41"
+              },
+              {
+                "label": "Booking.com confirmation email, 26 Sep 2026 10:02"
+              }
+            ],
+            "assumptions": [
+              "Tokyo is 1 hour ahead of Singapore; each time is local to where you are then."
+            ],
+            "disclaimers": [
+              "A change the airline or hotel mailed after 10:45 isn't in this plan."
+            ]
+          },
+          "fallback_text": "Tokyo trip from your bookings, as of 10:45 (couldn't refresh, so a change mailed since won't show). Mon 12 Oct: SQ 638 leaves Changi T3 08:35 Singapore time, ref 6XK2QP, lands Haneda T3 16:40 Tokyo time; check in at Hotel Gracery Ueno from 15:00 Tokyo time, ref ABX-4471. Sun 18 Oct: check out by 11:00 Tokyo time, free cancel until 9 Oct. Not in your mails: no flight home, only the outbound e-ticket."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No Tokyo booking emails",
+            "subtitle": "Gmail · as of 10:45"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No airline or hotel mail for Tokyo. Forward them and ask me again."
+            }
+          ],
+          "fallback_text": "No Tokyo booking emails in your Gmail, as of 10:45: nothing from an airline or hotel for Tokyo. Forward the booking emails to yourself and ask me again."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't read your booking emails",
+            "subtitle": "Tokyo trip"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Your Gmail sign-in expired. Sign in and ask me again."
+            }
+          ],
+          "fallback_text": "Couldn't read your Tokyo booking emails: your Gmail sign-in expired. Sign in and ask me again. No plan was made."
+        }
+      }
+    },
+    {
+      "id": "travel-trip-events-added",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Yes, add the trip to my calendar.",
+      "says": "Added. Each one shows at its local time.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "C4 Add / move event",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: the trip's events as rows with their local times, open in Calendar; a timeout is 'couldn't confirm', never 'not added'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Added · Tokyo trip",
+          "subtitle": "Mon 12–Sun 18 Oct · 3 events · Google Calendar"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "SQ 638 to Tokyo",
+                "secondary": "Mon 12 Oct · 08:35 Singapore to 16:40 Tokyo",
+                "trailing": "Added"
+              },
+              {
+                "label": "Hotel Gracery Ueno",
+                "secondary": "Mon 12 Oct 15:00 to Sun 18 Oct 11:00 Tokyo",
+                "trailing": "Added"
+              },
+              {
+                "label": "Check out · ref ABX-4471",
+                "secondary": "Sun 18 Oct · 11:00 Tokyo",
+                "trailing": "Added"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Calendar",
+              "url": "https://calendar.google.com/calendar/r/week/2026/10/12"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Calendar, 26 Sep 2026 10:47"
+            }
+          ]
+        },
+        "fallback_text": "Added the Tokyo trip, Mon 12–Sun 18 Oct, 3 events to Google Calendar, as of 10:47. SQ 638 to Tokyo, Mon 12 Oct 08:35 Singapore to 16:40 Tokyo: added. Hotel Gracery Ueno, Mon 12 Oct 15:00 to Sun 18 Oct 11:00 Tokyo: added. Check out, ref ABX-4471, Sun 18 Oct 11:00 Tokyo: added."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tokyo trip",
+            "subtitle": "Mon 12–Sun 18 Oct · 3 events"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Adding the flight and hotel to Google Calendar",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a5002"
+              }
+            }
+          ],
+          "fallback_text": "Adding the Tokyo trip, Mon 12–Sun 18 Oct, to Google Calendar: SQ 638 and Hotel Gracery Ueno."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Added · Tokyo trip",
+            "subtitle": "Mon 12–Sun 18 Oct · 2 of 3 events · Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "SQ 638 to Tokyo",
+                  "secondary": "Mon 12 Oct · 08:35 Singapore to 16:40 Tokyo",
+                  "trailing": "Added"
+                },
+                {
+                  "label": "Hotel Gracery Ueno",
+                  "secondary": "Mon 12 Oct 15:00 to Sun 18 Oct 11:00 Tokyo",
+                  "trailing": "Added"
+                },
+                {
+                  "label": "Check out · ref ABX-4471",
+                  "secondary": "Calendar hasn't confirmed it yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/10/12"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 26 Sep 2026 10:47"
+              }
+            ]
+          },
+          "fallback_text": "Added 2 of 3 Tokyo trip events to Google Calendar, as of 10:47. SQ 638 to Tokyo, Mon 12 Oct 08:35 Singapore to 16:40 Tokyo: added. Hotel Gracery Ueno, Mon 12 Oct 15:00 to Sun 18 Oct 11:00 Tokyo: added. Check out, ref ABX-4471: Calendar hasn't confirmed it yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Added · Tokyo trip",
+            "subtitle": "Mon 12–Sun 18 Oct · as of 10:47 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "SQ 638 to Tokyo",
+                  "secondary": "Mon 12 Oct · 08:35 Singapore to 16:40 Tokyo",
+                  "trailing": "Added"
+                },
+                {
+                  "label": "Hotel Gracery Ueno",
+                  "secondary": "Mon 12 Oct 15:00 to Sun 18 Oct 11:00 Tokyo",
+                  "trailing": "Added"
+                },
+                {
+                  "label": "Check out · ref ABX-4471",
+                  "secondary": "Sun 18 Oct · 11:00 Tokyo",
+                  "trailing": "Added"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/10/12"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 26 Sep 2026 10:47"
+              }
+            ]
+          },
+          "fallback_text": "As of 10:47 (couldn't refresh): added the Tokyo trip to Google Calendar. SQ 638 to Tokyo, Mon 12 Oct 08:35 Singapore to 16:40 Tokyo: added. Hotel Gracery Ueno, Mon 12 Oct 15:00 to Sun 18 Oct 11:00 Tokyo: added. Check out, ref ABX-4471, Sun 18 Oct 11:00 Tokyo: added."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing to add · Tokyo trip",
+            "subtitle": "Mon 12–Sun 18 Oct · as of 10:47"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "SQ 638 and the hotel are already in your calendar. Nothing added twice."
+            }
+          ],
+          "fallback_text": "Nothing to add for the Tokyo trip, Mon 12–Sun 18 Oct, as of 10:47: SQ 638 and Hotel Gracery Ueno are already in your Google Calendar. Nothing was added twice."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the trip was added",
+            "subtitle": "Tokyo trip · Mon 12–Sun 18 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Calendar didn't answer. I'll check it before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the Tokyo trip events were added: Google Calendar didn't answer after they were sent, so SQ 638 and Hotel Gracery Ueno may already be there. So nothing is added twice: I'll check the calendar before trying again."
+        }
+      }
+    },
+    {
+      "id": "travel-rebooked-lower-rate",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Yes, cancel the old one once the new booking is confirmed.",
+      "says": "Done. You have one booking now, S$240 cheaper.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "The booking-confirmed card for the new rate, plus the old booking's cancellation as rows (book-cancelled): one booking left, the saving trailing.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Rebooked · Hotel Gracery Ueno",
+          "subtitle": "Ref ABX-5902 · 12–18 Oct"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$1,380",
+                "label": "Total"
+              },
+              {
+                "value": "6",
+                "label": "Nights"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Old booking ABX-4471",
+                "secondary": "Cancelled free after the new one was confirmed",
+                "trailing": "S$1,620"
+              },
+              {
+                "label": "Booking.com email",
+                "secondary": "Cancellation of ABX-4471 confirmed",
+                "trailing": "Received"
+              },
+              {
+                "label": "You saved",
+                "secondary": "Same room · free cancel until 9 Oct",
+                "trailing": "S$240"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open confirmation",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c6a6001"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Booking.com confirmation email ABX-5902, 26 Sep 2026 20:12"
+            },
+            {
+              "label": "Booking.com cancellation email ABX-4471, 26 Sep 2026 20:14"
+            }
+          ],
+          "assumptions": [
+            "Booked at S$1,380 and cancelled ABX-4471 after your two yeses at 20:10; nothing else changed."
+          ]
+        },
+        "fallback_text": "Hotel Gracery Ueno is rebooked, ref ABX-5902, 12–18 Oct, S$1,380 for 6 nights, same room, free cancel until 9 Oct. The old booking ABX-4471 (S$1,620) was cancelled free after the new one was confirmed; Booking.com's cancellation email was received. You saved S$240. The confirmation is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Hotel Gracery Ueno",
+            "subtitle": "12–18 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Booking the S$1,380 rate, then cancelling ABX-4471",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a6001"
+              }
+            }
+          ],
+          "fallback_text": "Booking Hotel Gracery Ueno at S$1,380 for 12–18 Oct; ABX-4471 is cancelled only after that is confirmed."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Rebooked · Hotel Gracery Ueno",
+            "subtitle": "Ref ABX-5902 · 12–18 Oct · old one not cancelled yet"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$1,380",
+                  "label": "Total"
+                },
+                {
+                  "value": "6",
+                  "label": "Nights"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Old booking ABX-4471",
+                  "secondary": "Cancellation sent; Booking.com hasn't confirmed",
+                  "trailing": "Not in yet"
+                },
+                {
+                  "label": "You'd save",
+                  "secondary": "Once ABX-4471 is cancelled",
+                  "trailing": "S$240"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Booking.com confirmation email ABX-5902, 26 Sep 2026 20:12"
+              }
+            ]
+          },
+          "fallback_text": "Hotel Gracery Ueno is rebooked, ref ABX-5902, 12–18 Oct, S$1,380 for 6 nights. The cancellation of the old booking ABX-4471 was sent, but Booking.com hasn't confirmed it, so you may hold both for now. You'd save S$240 once it's cancelled."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Rebooked · Hotel Gracery Ueno",
+            "subtitle": "Ref ABX-5902 · 12–18 Oct · as of 20:14 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$1,380",
+                  "label": "Total"
+                },
+                {
+                  "value": "6",
+                  "label": "Nights"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Old booking ABX-4471",
+                  "secondary": "Cancelled free after the new one was confirmed",
+                  "trailing": "S$1,620"
+                },
+                {
+                  "label": "Booking.com email",
+                  "secondary": "Cancellation of ABX-4471 confirmed",
+                  "trailing": "Received"
+                },
+                {
+                  "label": "You saved",
+                  "secondary": "Same room · free cancel until 9 Oct",
+                  "trailing": "S$240"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open confirmation",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000c6a6001"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Booking.com confirmation email ABX-5902, 26 Sep 2026 20:12"
+              },
+              {
+                "label": "Booking.com cancellation email ABX-4471, 26 Sep 2026 20:14"
+              }
+            ],
+            "assumptions": [
+              "Booked at S$1,380 and cancelled ABX-4471 after your two yeses at 20:10; nothing else changed."
+            ]
+          },
+          "fallback_text": "As of 20:14 (couldn't refresh with Booking.com): Hotel Gracery Ueno is rebooked, ref ABX-5902, 12–18 Oct, S$1,380 for 6 nights, same room, free cancel until 9 Oct. The old booking ABX-4471 (S$1,620) was cancelled free after the new one was confirmed; Booking.com's cancellation email was received. You saved S$240."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The S$1,380 rate was gone",
+            "subtitle": "Hotel Gracery Ueno · 12–18 Oct · as of 20:11"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing booked or cancelled; ABX-4471 at S$1,620 stays. I'm still watching."
+            }
+          ],
+          "fallback_text": "The S$1,380 rate at Hotel Gracery Ueno for 12–18 Oct was gone before it could be booked, as of 20:11. Nothing was booked or cancelled: your booking ABX-4471 at S$1,620 stays, and I'm still watching the rate."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the new booking",
+            "subtitle": "Hotel Gracery Ueno · 12–18 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Booking.com didn't answer. ABX-4471 is not cancelled. I'll check first."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the new Hotel Gracery Ueno booking at S$1,380: Booking.com didn't answer, so it may or may not exist. Your booking ABX-4471 at S$1,620 is not cancelled. I'll check your Booking.com trips before trying again, so you aren't booked twice."
+        }
+      }
+    },
+    {
+      "id": "travel-airport-ride-booked",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Yes, book the 05:40 ride to Changi.",
+      "says": "Booked. I'll watch SQ 638 and tell you if the pickup should move.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "Reservation",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes, the result is the booking: pickup and reference in the header, the fare and cancel terms people forget as rows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked · GrabCar to Changi T3",
+          "subtitle": "Fri 2 Oct · pickup 05:40 · from Home · as of 17:08"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Reference",
+                "trailing": "A-7K2QX9"
+              },
+              {
+                "label": "Fare",
+                "secondary": "Fixed when booked · Visa ending 4412",
+                "trailing": "S$35"
+              },
+              {
+                "label": "Cancel",
+                "secondary": "Free on Grab until 04:40",
+                "trailing": "No fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Manage in Grab",
+              "url": "https://www.grab.com/sg/transport/advance-booking/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Grab Advance Booking confirmation, 26 Sep 2026 17:08"
+            }
+          ]
+        },
+        "fallback_text": "As of 17:08: GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. I'm watching SQ 638 and will propose a new pickup if it's delayed."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "GrabCar to Changi T3",
+            "subtitle": "Fri 2 Oct · pickup 05:40 · from Home"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Waiting for Grab to confirm",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a7001"
+              }
+            }
+          ],
+          "fallback_text": "Waiting for Grab to confirm your 05:40 GrabCar to Changi T3 on Fri 2 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · GrabCar to Changi T3",
+            "subtitle": "Fri 2 Oct · pickup 05:40 · from Home · as of 17:08"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "A-7K2QX9"
+                },
+                {
+                  "label": "Fare and cancel terms",
+                  "secondary": "Grab hasn't sent them yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Manage in Grab",
+                "url": "https://www.grab.com/sg/transport/advance-booking/"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Grab Advance Booking confirmation, 26 Sep 2026 17:08"
+              }
+            ]
+          },
+          "fallback_text": "Booked a GrabCar to Changi T3 for Fri 2 Oct, pickup 05:40 from Home, ref A-7K2QX9, as of 17:08. The fixed fare and the cancel terms aren't in from Grab yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · GrabCar to Changi T3",
+            "subtitle": "Fri 2 Oct · pickup 05:40 · from Home · as of 17:08 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "A-7K2QX9"
+                },
+                {
+                  "label": "Fare",
+                  "secondary": "Fixed when booked · Visa ending 4412",
+                  "trailing": "S$35"
+                },
+                {
+                  "label": "Cancel",
+                  "secondary": "Free on Grab until 04:40",
+                  "trailing": "No fee"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Manage in Grab",
+                "url": "https://www.grab.com/sg/transport/advance-booking/"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Grab Advance Booking confirmation, 26 Sep 2026 17:08"
+              }
+            ]
+          },
+          "fallback_text": "As of 17:08 (couldn't refresh with Grab): GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. I'm watching SQ 638 and will propose a new pickup if it's delayed."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No GrabCar for 05:40 on Fri 2 Oct",
+            "subtitle": "From Home to Changi T3 · as of 17:08"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Grab has no advance car then; the nearest is 05:20. Nothing was booked."
+            }
+          ],
+          "fallback_text": "Grab has no advance GrabCar from Home to Changi T3 at 05:40 on Fri 2 Oct, as of 17:08. The nearest is 05:20; nothing was booked. Say if I should book that one."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the Changi ride",
+            "subtitle": "Fri 2 Oct · pickup 05:40 · from Home"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Grab didn't answer. Check Grab before booking again"
+            }
+          ],
+          "fallback_text": "I couldn't confirm whether the GrabCar to Changi T3 is booked for 05:40 on Fri 2 Oct: Grab didn't answer after the request was sent. Check your Grab bookings before trying again, so you aren't booked twice."
+        }
+      }
+    },
+    {
+      "id": "travel-airport-ride-reschedule",
+      "vertical": "travel",
+      "kind": "card",
+      "request": "Watch my flight and move the Changi ride if it's delayed.",
+      "says": "SQ 638 slipped 45 min; shall I move your pickup to 06:25?",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "Flight status / disruption",
+        "Reservation"
+      ],
+      "rationale": "The change as now and moves to, with the delay that caused it; nothing moves until the yes; the question follows the card.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Move your Changi ride",
+          "subtitle": "SQ 638 delayed · Fri 2 Oct · not moved yet · as of 04:10"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "06:25",
+                "label": "New pickup"
+              },
+              {
+                "value": "45 min",
+                "label": "SQ 638 delay"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Now",
+                "secondary": "Fri 2 Oct · GrabCar A-7K2QX9",
+                "trailing": "05:40"
+              },
+              {
+                "label": "Moves to",
+                "secondary": "Fri 2 Oct · same booking, from Home",
+                "trailing": "06:25"
+              },
+              {
+                "label": "SQ 638",
+                "secondary": "Now departs 09:20 · Gate B6",
+                "trailing": "was 08:35"
+              },
+              {
+                "label": "Be at Changi T3",
+                "secondary": "2 h before, Singapore Airlines' advice",
+                "trailing": "07:20"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Singapore Airlines flight status, 2 Oct 2026 04:10"
+            },
+            {
+              "label": "Grab Advance Booking A-7K2QX9, 2 Oct 2026 04:10"
+            }
+          ],
+          "assumptions": [
+            "Drive 25–35 min at that hour plus 20 min spare, as for the 05:40 pickup.",
+            "Nothing moves until you say yes; if you don't, the 05:40 pickup stays."
+          ]
+        },
+        "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to 06:25, same booking, from Home, new pickup 06:25. SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Move your Changi ride",
+            "subtitle": "SQ 638 · Fri 2 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking SQ 638's new time and Grab's slots",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a7002"
+              }
+            }
+          ],
+          "fallback_text": "Move your Changi ride: checking SQ 638's new departure time and Grab's slots for Fri 2 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Move your Changi ride",
+            "subtitle": "SQ 638 delayed · Fri 2 Oct · not moved yet · as of 04:10"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "06:25",
+                  "label": "New pickup"
+                },
+                {
+                  "value": "45 min",
+                  "label": "SQ 638 delay"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Now",
+                  "secondary": "Fri 2 Oct · GrabCar A-7K2QX9",
+                  "trailing": "05:40"
+                },
+                {
+                  "label": "Moves to",
+                  "secondary": "Fri 2 Oct · same booking, from Home",
+                  "trailing": "06:25"
+                },
+                {
+                  "label": "Grab slot at 06:25",
+                  "secondary": "Grab hasn't said if it's free",
+                  "trailing": "Not known"
+                },
+                {
+                  "label": "Be at Changi T3",
+                  "secondary": "2 h before, Singapore Airlines' advice",
+                  "trailing": "07:20"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines flight status, 2 Oct 2026 04:10"
+              }
+            ]
+          },
+          "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: GrabCar A-7K2QX9 at 05:40; moves to 06:25, new pickup 06:25. Grab hasn't said if 06:25 is free, so that is not known. Be at Changi T3 by 07:20. Nothing changes until you say yes."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Move your Changi ride",
+            "subtitle": "SQ 638 delayed · Fri 2 Oct · as of 03:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "06:25",
+                  "label": "New pickup"
+                },
+                {
+                  "value": "45 min",
+                  "label": "SQ 638 delay"
+                }
+              ]
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Now",
+                  "secondary": "Fri 2 Oct · GrabCar A-7K2QX9",
+                  "trailing": "05:40"
+                },
+                {
+                  "label": "Moves to",
+                  "secondary": "Fri 2 Oct · same booking, from Home",
+                  "trailing": "06:25"
+                },
+                {
+                  "label": "SQ 638",
+                  "secondary": "Now departs 09:20 · Gate B6",
+                  "trailing": "was 08:35"
+                },
+                {
+                  "label": "Be at Changi T3",
+                  "secondary": "2 h before, Singapore Airlines' advice",
+                  "trailing": "07:20"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Singapore Airlines flight status, 2 Oct 2026 03:40"
+              },
+              {
+                "label": "Grab Advance Booking A-7K2QX9, 2 Oct 2026 03:40"
+              }
+            ],
+            "assumptions": [
+              "Drive 25–35 min at that hour plus 20 min spare, as for the 05:40 pickup.",
+              "Nothing moves until you say yes; if you don't, the 05:40 pickup stays."
+            ]
+          },
+          "fallback_text": "As of 03:40 (couldn't refresh, so a newer delay won't show): Move your Changi ride: SQ 638 is delayed 45 min, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to 06:25, same booking, from Home, new pickup 06:25. SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "SQ 638 is on time",
+            "subtitle": "Fri 2 Oct · 08:35 · as of 04:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Your 05:40 pickup still fits. Nothing moved; I'm watching until you leave."
+            }
+          ],
+          "fallback_text": "SQ 638 is on time for 08:35 on Fri 2 Oct, as of 04:10. Your 05:40 GrabCar pickup still fits; nothing was moved, and I'm watching until you leave."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check SQ 638",
+            "subtitle": "Changi ride · Fri 2 Oct 05:40"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The airline didn't answer. The 05:40 pickup stays; I'll check in 10 min."
+            }
+          ],
+          "fallback_text": "Couldn't check SQ 638: Singapore Airlines didn't answer. Your 05:40 GrabCar pickup on Fri 2 Oct stays; nothing was moved. I'll check the flight again in 10 minutes."
         }
       }
     },
