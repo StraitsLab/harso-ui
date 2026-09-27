@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { KitProvider } from "../src";
 import { Button } from "../src/primitives";
-import { HarsoOutputCard, type HarsoOutputBlock, type HarsoOutputCardCaps, type HarsoOutputCardProps, type HarsoOutputDocument, type HarsoOutputTextBlock } from "../src/chat/output-card";
+import { HARSO_OUTPUT_CARD_UNCAPPED, HarsoOutputCard, harsoOutputWholeAnswer, type HarsoOutputCardProps, type HarsoOutputDocument } from "../src/chat/output-card";
 import index from "../catalogue/index.json";
 import "./catalogue-gallery.css";
 
@@ -32,28 +32,6 @@ export function catalogueRouteFromHash(): { vertical?: string; mode: string } | 
   if (!match) return undefined;
   const mode = new URLSearchParams(query).get("mode") ?? "both";
   return { vertical: match[1], mode: MODES.has(mode) ? mode : "both" };
-}
-
-/** No inline budget: every row and number, and the text unclipped (the line cap is a CSS clamp, so a finite number). */
-const UNCAPPED: HarsoOutputCardCaps = { maxRows: Infinity, maxNumbers: Infinity, maxTextChars: Infinity, maxTextLines: 10_000 };
-const isText = (block: HarsoOutputBlock): block is HarsoOutputTextBlock => block.kind === "text" && Array.isArray((block as HarsoOutputTextBlock).sections);
-
-/**
- * The whole answer for View all, drawn by the same card with its inline caps lifted. The card draws one text run, so
- * every text block's words (summary, headings, paragraphs, bullets, in order) become that one run, word for word.
- */
-function wholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
-  const words = document.blocks.filter(isText).flatMap(block => [
-    ...(block.summary ? [block.summary] : []),
-    ...block.sections.flatMap(section => [...(section.heading ? [section.heading] : []), ...section.paragraphs ?? [], ...section.bullets ?? []]),
-  ]);
-  const firstText = document.blocks.findIndex(isText);
-  // The whole answer is everything the agent sent. Rows it did not send (total_count) are reached through the answer's
-  // link or file, so the expanded card never offers a View all that has nothing left to open.
-  const sent = (block: HarsoOutputBlock): HarsoOutputBlock => "total_count" in block ? { ...block, total_count: undefined } as HarsoOutputBlock : block;
-  const blocks = document.blocks.flatMap((block, index): HarsoOutputBlock[] => !isText(block) ? [sent(block)]
-    : index === firstText ? [{ kind: "text", sections: [{ paragraphs: words }] }] : []);
-  return { ...document, blocks };
 }
 
 type Host = Pick<HarsoOutputCardProps, "onOpenUrl" | "onOpenArtifact" | "onDownloadArtifact" | "onWorkControl" | "onRoutineControl">;
@@ -95,7 +73,7 @@ function Answer({ example, document }: { example: CatalogueExample; document: Ha
     {open
       ? <div className="hkl-cat-full" role="region" aria-label={`${document.header.title}, full answer`} tabIndex={-1}
         onKeyDown={event => { if (event.key === "Escape") { event.stopPropagation(); close(); } }}>
-        <HarsoOutputCard document={wholeAnswer(document)} caps={UNCAPPED} onViewAll={close} {...host} />
+        <HarsoOutputCard document={harsoOutputWholeAnswer(document)} caps={HARSO_OUTPUT_CARD_UNCAPPED} onViewAll={close} {...host} />
         <Button variant="ghost" size="small" className="hkl-cat-less" onClick={close}>Show less</Button>
       </div>
       : <HarsoOutputCard document={document} onViewAll={() => setOpen(true)} {...host} />}

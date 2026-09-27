@@ -490,11 +490,132 @@ test("the research brief shows its summary inline, and Read brief because the se
   expect(within(card).queryByText(/Check your car park/)).toBeNull();
   expect(within(card).getByRole("button", { name: "Read brief" })).toBeVisible();
   expect(within(card).queryByRole("button", { name: /Open as document/ })).toBeNull();
-  // Headings or bullets also continue off the card even when the prose itself fits.
+  // A short heading and bullet now fit on the card whole, so nothing continues off it.
   cleanup();
   const { card: second } = renderCard({ document: textDoc({ sections: [{ heading: "Before you buy", bullets: ["Check the rollout date."] }] }) });
-  expect(within(second).getByText("Check the rollout date.")).toBeVisible();
-  expect(within(second).getByRole("button", { name: "View all" })).toBeVisible();
+  expect(within(second).getByRole("heading", { name: "Before you buy" })).toBeVisible();
+  expect(within(second).getByRole("listitem")).toHaveTextContent("Check the rollout date.");
+  expect(within(second).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+// K1 (journey walk): checklists, day plans and drafts keep their headings, paragraphs and bullets instead of one run-on
+// line, inline and in View all. Shapes copied from catalogue travel-itinerary and comms-reply-draft.
+const itinerary = textDoc({ sections: [
+  { heading: "Day 1 · Higashiyama", bullets: ["09:00 Kiyomizu-dera before the crowds", "12:30 Lunch on Ninenzaka", "16:00 Yasaka Shrine at dusk"] },
+  { heading: "Day 2 · Arashiyama", bullets: ["08:30 Bamboo grove", "11:00 Tenryu-ji garden", "14:00 Hozu river boat"] },
+  { heading: "Day 3 · Fushimi Inari", bullets: ["07:30 Walk the torii gates to Yotsutsuji", "11:00 Sake tasting in Fushimi"] }] });
+const draft = textDoc({ sections: [{ paragraphs: ["Dear Mrs Tan,", "Tuesday 29 Sep at 6:30 pm works for me. I'll bring the signed renewal form.", "Best regards, Abhi"] }] });
+const allText = (document: chat.HarsoOutputDocument) => (document.blocks[0] as chat.HarsoOutputTextBlock).sections
+  .flatMap(section => [section.heading ?? [], section.paragraphs ?? [], section.bullets ?? []].flat());
+
+test("a text block's bullets draw as a real list and its heading as a heading, not one run of prose", () => {
+  const { card } = renderCard({ document: itinerary });
+  expect(card.querySelector(".hkc-output-card-text")).toBeNull();
+  expect(within(card).getByRole("heading", { level: 3, name: "Day 1 · Higashiyama" })).toBeVisible();
+  const items = within(within(card).getByRole("list")).getAllByRole("listitem");
+  expect(items.map(item => item.textContent)).toEqual(["09:00 Kiyomizu-dera before the crowds", "12:30 Lunch on Ninenzaka", "16:00 Yasaka Shrine at dusk"]);
+  // No item text is glued to the next one.
+  expect(card.textContent).not.toContain("crowds 12:30");
+});
+
+test("paragraphs stay paragraphs: a drafted letter keeps its greeting and sign-off on their own lines", () => {
+  const { card } = renderCard({ document: draft });
+  const paragraphs = [...card.querySelectorAll(".hkc-output-card-sections p")].map(node => node.textContent);
+  expect(paragraphs).toEqual(allText(draft));
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test("inline, a structured block keeps ~4 lines of whole items, never ends on a heading or mid-word, and offers View all", () => {
+  const { card } = renderCard({ document: itinerary });
+  const section = card.querySelector(".hkc-output-card-sections")!;
+  const shown = [...section.querySelectorAll("h3, p, li")].map(node => node.textContent!);
+  // Heading + three bullets = 4 lines; Day 2 would be a fifth, so it waits for View all rather than dangling.
+  expect(shown).toEqual(["Day 1 · Higashiyama", "09:00 Kiyomizu-dera before the crowds", "12:30 Lunch on Ninenzaka", "16:00 Yasaka Shrine at dusk"]);
+  expect(section.lastElementChild!.lastElementChild!.tagName).not.toBe("H3");
+  for (const text of shown) expect(allText(itinerary)).toContain(text);
+  expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
+});
+
+test("a first item too long for the card is cut on a word boundary; the rest waits for View all", () => {
+  const document = textDoc({ sections: [{ heading: "Notes", paragraphs: [longParagraph, "Second paragraph."] }] });
+  const { card } = renderCard({ document });
+  expect(within(card).getByRole("heading", { name: "Notes" })).toBeVisible();
+  const [first, ...rest] = [...card.querySelectorAll(".hkc-output-card-sections p")].map(node => node.textContent!);
+  expect(rest).toEqual([]);
+  expect(first).toMatch(/\S…$/);
+  expect(longParagraph.startsWith(first.slice(0, -1))).toBe(true);
+  expect(longParagraph[first.length - 1]).toBe(" ");
+  expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
+});
+
+// Round 2, F2: a cut inside a structured item never ends inside a word, whatever the space before it looks like.
+const word = "pneumonoultramicroscopicsilicovolcanoconiosis";
+const cutCases: [string, chat.HarsoOutputTextSection[], string][] = [
+  ["the only space is early (first paragraph)", [{ heading: "Notes", paragraphs: [`Please bring ${word.repeat(4)}`, "Next paragraph."] }], "Please bring…"],
+  ["the only space is early (bullet)", [{ heading: "Notes", bullets: [`Please bring ${word.repeat(4)}`, "Next bullet."] }], "Please bring…"],
+  ["a no-break space separates the words", [{ paragraphs: [`Please\u00a0bring ${word.repeat(4)}`, "Next."] }], "Please\u00a0bring…"],
+  ["an ideographic space separates the words", [{ paragraphs: [`持参\u3000${word.repeat(4)}`, "Next."] }], "持参…"],
+];
+for (const [name, sections, expected] of cutCases) test(`a cut item ends on a whole word: ${name}`, () => {
+  const { card } = renderCard({ document: textDoc({ sections }) });
+  const items = [...card.querySelectorAll(".hkc-output-card-sections p, .hkc-output-card-sections li")].map(node => node.textContent);
+  expect(items).toEqual([expected]);
+  expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
+});
+
+test("a cut item with no word that fits waits for View all instead of showing half a word", () => {
+  const { card } = renderCard({ document: textDoc({ sections: [{ heading: "Notes", paragraphs: [word.repeat(6), "Next."] }] }) });
+  expect(card.querySelector(".hkc-output-card-sections")).toBeNull();
+  expect(card.textContent).not.toContain("pneumono");
+  expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
+});
+
+test("Chinese with no spaces is cut between two words, never inside one", () => {
+  // A three-character lead-in puts the old code-point cut inside 费用.
+  const text = `请注意${"公共充电设施持续增加家庭充电费用较低".repeat(8)}`;
+  const { card } = renderCard({ document: textDoc({ sections: [{ paragraphs: [text, "下一段。"] }] }) });
+  const [shown] = [...card.querySelectorAll(".hkc-output-card-sections p")].map(node => node.textContent!);
+  const prefix = shown.slice(0, -1);
+  expect(shown.endsWith("…")).toBe(true);
+  expect(text.startsWith(prefix)).toBe(true);
+  const ends = new Set([...new Intl.Segmenter(undefined, { granularity: "word" }).segment(text)].map(s => s.index + s.segment.length));
+  expect(ends.has(prefix.length)).toBe(true);
+});
+
+test("the summary keeps the unchanged plain clip (a guard: structured items alone use whole words)", () => {
+  const summary = `Please bring ${word.repeat(4)}`;
+  const { card } = renderCard({ document: textDoc({ summary, sections: [{ paragraphs: ["x", "y"] }] }) });
+  // Legacy: the first 180 code points, backed off to a space only when one is late in the slice; the CSS clamp bounds it.
+  expect(card.querySelector(".hkc-output-card-text")!.textContent).toBe(`${summary.slice(0, 180)}…`);
+});
+
+test("with uncapped caps (View all) every heading, paragraph and bullet shows with its structure", () => {
+  const { card } = renderCard({ document: chat.harsoOutputWholeAnswer(itinerary), caps: chat.HARSO_OUTPUT_CARD_UNCAPPED });
+  expect(within(card).getAllByRole("heading", { level: 3 }).map(node => node.textContent)).toEqual(["Day 1 · Higashiyama", "Day 2 · Arashiyama", "Day 3 · Fushimi Inari"]);
+  expect(within(card).getAllByRole("list")).toHaveLength(3);
+  expect(within(card).getAllByRole("listitem")).toHaveLength(8);
+  expect([...card.querySelectorAll(".hkc-output-card-sections h3, .hkc-output-card-sections li")].map(node => node.textContent)).toEqual(allText(itinerary));
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test("the whole answer keeps every text block's summary and sections, in order, as structure", () => {
+  const second = { kind: "text", sections: [{ heading: "Also", bullets: ["Book the boat ahead."] }] } as chat.HarsoOutputTextBlock;
+  const withSummary = { ...itinerary, blocks: [{ ...(itinerary.blocks[0] as chat.HarsoOutputTextBlock), summary: "Three easy days." }, { kind: "rows", items: [{ label: "Hotel" }], total_count: 4 }, second] } as chat.HarsoOutputDocument;
+  const whole = chat.harsoOutputWholeAnswer(withSummary);
+  expect(whole.blocks.map(block => block.kind)).toEqual(["text", "rows"]);
+  const text = whole.blocks[0] as chat.HarsoOutputTextBlock;
+  expect(text.summary).toBeUndefined();
+  expect(text.sections).toEqual([{ paragraphs: ["Three easy days."] }, ...(itinerary.blocks[0] as chat.HarsoOutputTextBlock).sections, ...second.sections]);
+  expect((whole.blocks[1] as chat.HarsoOutputRowsBlock).total_count).toBeUndefined();
+});
+
+test("a summary stays the one inline run exactly as sent, with View all for the sections", () => {
+  const document = textDoc({ summary: "Three easy days around Kyoto.", sections: (itinerary.blocks[0] as chat.HarsoOutputTextBlock).sections });
+  const { card } = renderCard({ document });
+  const text = card.querySelector(".hkc-output-card-text")!;
+  expect(text.textContent).toBe("Three easy days around Kyoto.");
+  expect(card.querySelector(".hkc-output-card-sections")).toBeNull();
+  expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
 });
 
 test("numbers and text keep agent order with rows and still fall back on any unsupported kind", () => {

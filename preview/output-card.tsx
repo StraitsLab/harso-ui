@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { KitProvider } from "../src/theme";
-import { HarsoOutputCard, type HarsoOutputDocument, type HarsoOutputRowsBlock } from "../src/chat/output-card";
+import { HARSO_OUTPUT_CARD_UNCAPPED, HarsoOutputCard, harsoOutputWholeAnswer, type HarsoOutputDocument, type HarsoOutputRowsBlock } from "../src/chat/output-card";
 import type { HarsoOutputBlockState } from "../src/chat/output-card-charts";
 import type { HarsoOutputMediaHost } from "../src/chat/output-card-media";
 import clipUrl from "./output-card-clip.mp4";
@@ -518,7 +518,8 @@ function Fixture() {
       <div className="output-card-transcript" data-testid="transcript">
         <p className="output-card-user">Flights to Tokyo on 12 Oct?</p>
         <p>Three direct options. SQ 638 has the best times for your morning start.</p>
-        <HarsoOutputCard document={document} onViewAll={() => setViewAllOpened(value => value + 1)}
+        <HarsoOutputCard document={query.has("full") ? harsoOutputWholeAnswer(document) : document} caps={query.has("full") ? HARSO_OUTPUT_CARD_UNCAPPED : undefined}
+          onViewAll={() => setViewAllOpened(value => value + 1)}
           onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} {...host} />
       </div>
       <output aria-label="Fixture callbacks">{JSON.stringify({ viewAllOpened, detailsOpened, retried, opened, actions })}</output>
