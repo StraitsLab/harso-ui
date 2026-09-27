@@ -13,12 +13,15 @@ import "./output-card-media.css";
  */
 
 export type HarsoOutputStatusState = "working" | "needs_you" | "ready" | "needs_attention" | "stopped_by_you" | "failed" | "watching" | "scheduled" | "empty";
+export type HarsoOutputStatusSubject = { work_unit_id: string } | { routine_id: string };
 export interface HarsoOutputStatusBlock {
   kind: "status";
   state: HarsoOutputStatusState;
   detail?: string;
-  subject?: { work_unit_id: string } | { routine_id: string };
+  subject?: HarsoOutputStatusSubject;
 }
+/** The host's live word for a status block's subject (a paused routine), drawn instead of the emitted snapshot. */
+export interface HarsoOutputSubjectState { word: string; meaning?: HarsoOutputMeaning }
 export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string }
 export interface HarsoOutputMap { kind: "map"; places: HarsoOutputPlace[]; selected_place_id?: string }
 export interface HarsoOutputImage { kind: "image"; artifact: string; alt: string; aspect?: "square" | "4:3" | "16:9" | "3:4" }
@@ -73,20 +76,22 @@ export function readSteps<T extends Row>(status: HarsoOutputStatusBlock | undefi
   return items.every(row => row.label?.trim() && row.trailing?.trim() && !row.secondary && row.mark == null && row.status == null) ? items : undefined;
 }
 
-export function HarsoOutputStatusView({ status, steps }: { status: HarsoOutputStatusBlock; steps?: Row[] }) {
-  const { word, meaning } = STATUS[status.state];
-  if (status.state === "empty") return <p className="hkc-output-block-note hkc-output-block-note--empty" data-state="empty">
-    <span className="hkc-output-block-ring" aria-hidden="true" />{status.detail || word}
+export function HarsoOutputStatusView({ status, steps, live }: { status: HarsoOutputStatusBlock; steps?: Row[]; live?: HarsoOutputSubjectState }) {
+  const { word, meaning } = live ?? STATUS[status.state];
+  // The emitted detail describes the emitted state ("since 26 Sep", "rings at 19:42"), so a live word drops it.
+  const detail = live ? undefined : status.detail;
+  if (!live && status.state === "empty") return <p className="hkc-output-block-note hkc-output-block-note--empty" data-state="empty">
+    <span className="hkc-output-block-ring" aria-hidden="true" />{detail || word}
   </p>;
   if (meaning === "problem") return <div className="hkc-output-block-failed" data-meaning="problem">
     <WarningCircle className="hkc-output-block-failed-glyph" size={16} weight="bold" aria-hidden="true" />
-    <div className="hkc-output-block-failed-text"><p className="hkc-output-block-failed-message">{status.detail || word}</p></div>
+    <div className="hkc-output-block-failed-text"><p className="hkc-output-block-failed-message">{detail || word}</p></div>
   </div>;
   return <div className="hkc-output-status" data-meaning={meaning}>
     <p className="hkc-output-status-line">
       <span className="hkc-output-status-dot" aria-hidden="true" />
       <span className="hkc-output-status-word">{word}</span>
-      {status.detail && <span className="hkc-output-status-detail"> · {status.detail}</span>}
+      {detail && <span className="hkc-output-status-detail"> · {detail}</span>}
     </p>
     {steps && <ol className="hkc-output-status-steps" aria-label="Next">
       {steps.map((step, index) => <li key={index} className="hkc-output-status-step">

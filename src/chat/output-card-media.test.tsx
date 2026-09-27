@@ -91,6 +91,39 @@ test("steps share the inline row budget; the rest are counted into View all", ()
   expect(within(card).getByRole("button", { name: "View all 4" })).toBeVisible();
 });
 
+// K2: the status block is the agent's snapshot; the host owns the subject's live state (a routine paused later).
+test("a host subject state replaces the emitted word, detail and timed steps; the steps stay as ordinary rows", () => {
+  const subjectState = vi.fn(() => ({ word: "Paused" }));
+  const card = renderDoc(doc([watch, stopsAfter]), { subjectState });
+  expect(subjectState).toHaveBeenCalledWith(watch.subject);
+  const status = card.querySelector(".hkc-output-status")!;
+  expect(status.textContent).toBe("Paused");
+  expect(status).not.toHaveAttribute("data-meaning");
+  expect(within(card).queryByRole("list", { name: "Next" })).toBeNull();
+  expect(card.querySelector(".hkc-output-card-rows")!.textContent).toBe("Stops afterFri 6 PM");
+  cleanup();
+  const colored = renderDoc(doc([watch]), { subjectState: () => ({ word: "Scheduled", meaning: "in_progress" }) });
+  expect(colored.querySelector(".hkc-output-status")).toHaveAttribute("data-meaning", "in_progress");
+  cleanup();
+  // A live word with the problem meaning takes the problem drawing, as an emitted failed state does.
+  const broken = renderDoc(doc([watch]), { subjectState: () => ({ word: "Couldn’t resume", meaning: "problem" }) });
+  expect(broken.querySelector(".hkc-output-block-failed")!.textContent).toBe("Couldn’t resume");
+});
+
+test("a subject state of undefined, or no subject on the block, keeps the emitted status exactly as without the prop", () => {
+  // useId advances per render, so the title id is the one attribute allowed to differ.
+  const html = (card: HTMLElement) => card.innerHTML.replace(/_r_\w+_/g, "ID");
+  const plain = html(renderDoc(doc([watch, stopsAfter, working])));
+  cleanup();
+  const subjectState = vi.fn(() => undefined);
+  expect(html(renderDoc(doc([watch, stopsAfter, working]), { subjectState }))).toBe(plain);
+  expect(subjectState).toHaveBeenCalledTimes(2);
+  cleanup();
+  const never = vi.fn(() => ({ word: "Paused" }));
+  expect(renderDoc(doc([failedFares]), { subjectState: never }).querySelector(".hkc-output-block-failed")!.textContent).toBe(failedFares.detail);
+  expect(never).not.toHaveBeenCalled();
+});
+
 // ---- progress ----
 
 test("progress: the budget pair (money-spending-month) reads as spent of target with the remainder", () => {
