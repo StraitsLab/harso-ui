@@ -506,6 +506,8 @@ function Fixture() {
   const [media] = useState(mediaHost);
   const log = (entry: string) => setActions(list => [...list, entry]);
   const without = new Set((query.get("without") ?? "").split(","));
+  // `?paused=1`: the host says every routine is paused, as the app does after Pause (K2).
+  const subjectState = query.has("paused") ? (subject: object) => "routine_id" in subject ? { word: "Paused" } : undefined : undefined;
   const host = {
     onOpenUrl: without.has("url") ? undefined : (url: string) => log(`open_url ${url}`),
     onOpenArtifact: without.has("open") ? undefined : (artifact: string) => { setOpened(list => [...list, artifact]); log(`open_artifact ${artifact}`); },
@@ -520,7 +522,7 @@ function Fixture() {
         <p>Three direct options. SQ 638 has the best times for your morning start.</p>
         <HarsoOutputCard document={query.has("full") ? harsoOutputWholeAnswer(document) : document} caps={query.has("full") ? HARSO_OUTPUT_CARD_UNCAPPED : undefined}
           onViewAll={() => setViewAllOpened(value => value + 1)}
-          onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} {...host} />
+          onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} subjectState={subjectState} {...host} />
       </div>
       <output aria-label="Fixture callbacks">{JSON.stringify({ viewAllOpened, detailsOpened, retried, opened, actions })}</output>
     </main>

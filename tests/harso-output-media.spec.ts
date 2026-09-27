@@ -56,6 +56,18 @@ async function contrast(page: Page, selector: string, property: "color" | "backg
 const axe = async (page: Page) => (await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations;
 
 for (const mode of ["light", "dark"] as const) {
+  test(`status ${mode}: a routine the host says is paused reads Paused on its own card, in the quiet meaning; its steps fall back to rows`, async ({ page }) => {
+    await open(page, `doc=watch&paused=1&mode=${mode}&width=512`);
+    const status = card(page).locator(".hkc-output-status");
+    await expect(status).toHaveText("Paused");
+    await expect(status).not.toHaveAttribute("data-meaning");
+    await expect(card(page).getByRole("list", { name: "Next" })).toHaveCount(0);
+    await expect(card(page).locator(".hkc-output-card-row")).toHaveText(["Stops afterFri 6 PM"]);
+    for (const ratio of await contrast(page, ".hkc-output-status-word", "color")) expect(ratio).toBeGreaterThanOrEqual(4.5);
+    expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
+    expect(await axe(page)).toEqual([]);
+  });
+
   test(`status ${mode}: meaning dot and word, detail, timed steps on one rail; four meanings in token colours, problem amber; axe clean`, async ({ page }) => {
     await open(page, `doc=status&mode=${mode}&width=512`);
     const status = card(page).locator(".hkc-output-status");

@@ -7,7 +7,7 @@ import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputRowStatus, Hars
   type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
 import { HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputVideoView,
   ARTIFACT, readMedia, readProgress, readStatus, readSteps, type HarsoOutputMedia, type HarsoOutputMediaHost, type HarsoOutputMediaKind,
-  type HarsoOutputProgress, type HarsoOutputStatusBlock } from "./output-card-media";
+  type HarsoOutputProgress, type HarsoOutputStatusBlock, type HarsoOutputStatusSubject, type HarsoOutputSubjectState } from "./output-card-media";
 import "./output-card.css";
 
 /*
@@ -113,6 +113,11 @@ export interface HarsoOutputCardProps {
   onWorkControl?: (control: HarsoOutputWorkControl, workUnitId: string) => void;
   /** Pauses or resumes the routine a `routine_control` action names. */
   onRoutineControl?: (control: HarsoOutputRoutineControl, routineId: string) => void;
+  /**
+   * The live state of a status block's subject, which the host owns (a routine paused after the card was emitted).
+   * A value replaces the emitted word, detail and timed steps; undefined keeps what the agent sent.
+   */
+  subjectState?: (subject: HarsoOutputStatusSubject) => HarsoOutputSubjectState | undefined;
   className?: string;
 }
 
@@ -166,7 +171,7 @@ type CardPart =
   | { kind: "chart"; chart: HarsoOutputChart; state?: HarsoOutputBlockState }
   | { kind: "share"; items: HarsoOutputRow[]; shares: number[]; shown: number; state?: HarsoOutputBlockState }
   | { kind: "table"; table: HarsoOutputTable; shown: number; state?: HarsoOutputBlockState }
-  | { kind: "status"; status: HarsoOutputStatusBlock; steps?: HarsoOutputRow[]; state?: HarsoOutputBlockState }
+  | { kind: "status"; status: HarsoOutputStatusBlock; steps?: HarsoOutputRow[]; live?: HarsoOutputSubjectState; state?: HarsoOutputBlockState }
   | { kind: "progress"; progress: HarsoOutputProgress; state?: HarsoOutputBlockState }
   | { kind: "media"; media: HarsoOutputMedia; state?: HarsoOutputBlockState };
 
@@ -268,7 +273,7 @@ const loneParagraph = ([section, ...rest]: HarsoOutputTextSection[]) =>
  * agent says exists; `clamped` marks text that continues off the card.
  */
 function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, states: Readonly<Record<number, HarsoOutputBlockState>> = {}, host: HarsoOutputMediaHost = {},
-  openArtifact?: (artifact: string) => void) {
+  openArtifact?: (artifact: string) => void, subjectState?: HarsoOutputCardProps["subjectState"]) {
   const parts: CardPart[] = [];
   let rowBudget = Math.max(0, caps.maxRows), numberBudget = Math.max(0, caps.maxNumbers);
   let total = 0, shown = 0, clamped = false, textShown = false, stepsAt = -1;
@@ -278,9 +283,11 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
     const state = states[index];
     const status = readStatus(block);
     if (status) {
-      // Timed steps the playbook sends as the rows right after a running status (G16) draw on its rail.
+      const live = status.subject ? subjectState?.(status.subject) : undefined;
+      // Timed steps the playbook sends as the rows right after a running status (G16) draw on its rail; under a live
+      // word they are no longer what comes next, so they stay ordinary rows.
       const next = blocks[index + 1];
-      const steps = next && isRows(next) ? readSteps(status, next.items) : undefined;
+      const steps = !live && next && isRows(next) ? readSteps(status, next.items) : undefined;
       let drawn: HarsoOutputRow[] | undefined;
       if (steps) {
         stepsAt = index + 1;
@@ -291,7 +298,7 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
           total += Math.max(steps.length, Number.isInteger((next as HarsoOutputRowsBlock).total_count) ? (next as HarsoOutputRowsBlock).total_count! : 0);
         }
       }
-      parts.push({ kind: "status", status, steps: drawn, state });
+      parts.push({ kind: "status", status, steps: drawn, live, state });
       continue;
     }
     const media = readMedia(block, host, !!openArtifact);
@@ -536,13 +543,13 @@ function DetailsContent({ details, onOpenUrl }: { details: HarsoOutputDocumentDe
   </>;
 }
 
-export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, className = "", ...host }: HarsoOutputCardProps) {
+export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
   const id = useId();
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const [textClipped, setTextClipped] = useState(false);
   const limits = { ...HARSO_OUTPUT_CARD_CAPS, ...caps };
-  const content = readBlocks(document.blocks, limits, blockStates, media, host.onOpenArtifact);
+  const content = readBlocks(document.blocks, limits, blockStates, media, host.onOpenArtifact, subjectState);
   const details = hasDetails(document.details) ? document.details : undefined;
   const inlineDetails = details && !onOpenDetails;
   const hasMore = !!content && (content.hidden > 0 || content.clamped || textClipped);
@@ -573,7 +580,7 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
       ? <>
         {content.parts.map((part, partIndex) => part.kind === "status" || part.kind === "progress" || part.kind === "media"
           ? <MediaFrame key={partIndex} state={part.state} kind={part.kind === "media" ? part.media.kind : part.kind}>
-            {part.kind === "status" ? <HarsoOutputStatusView status={part.status} steps={part.steps} />
+            {part.kind === "status" ? <HarsoOutputStatusView status={part.status} steps={part.steps} live={part.live} />
               : part.kind === "progress" ? <HarsoOutputProgressView progress={part.progress} />
               : part.media.kind === "map" ? <HarsoOutputMapView map={part.media} host={media!} />
               : part.media.kind === "video" ? <HarsoOutputVideoView video={part.media} host={media!} onOpen={host.onOpenArtifact!} />
