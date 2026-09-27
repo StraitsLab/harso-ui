@@ -27,7 +27,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "tokens": "node scripts/gen-tokens.mjs",
-    "check": "node scripts/gen-tokens.mjs --check && npm run typecheck && npm test && npm run build"
+    "check": "node scripts/gen-tokens.mjs --check && npm run typecheck && npm test && npm run build",
+    "check:journeys": "node scripts/check-journeys.mjs"
   },
   "peerDependencies": {
     "react": "^19.2.0",
