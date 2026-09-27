@@ -20,7 +20,9 @@
     "shop-cross-border-tracking",
     "shop-india-cod",
     "shop-us-amazon",
-    "shop-return-windows"
+    "shop-return-windows",
+    "shop-headphones-compare",
+    "shop-arriving"
   ],
   "examples": [
     {
@@ -5157,6 +5159,691 @@
             }
           ],
           "fallback_text": "Couldn't check your return windows: None of the 5 marketplaces answered. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "shop-headphones-compare",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Find me noise-cancelling headphones under S$300, with links.",
+      "says": "Three fit, all in stock; my pick has the longest battery.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "S1 Product options",
+        "S2 Product grid / carousel (as rows)",
+        "X4 Item thumbnail (degraded: no row image)"
+      ],
+      "rationale": "Three options from three shops, one pick, price trailing; each product's own page is a source in Details, since rows carry no link.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Noise-cancelling headphones under S$300",
+          "subtitle": "Pick first, then by price · as of 10:20"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Sennheiser Accentum Plus",
+                "secondary": "Challenger · 50 h battery · in stock",
+                "trailing": "S$239",
+                "mark": "pick"
+              },
+              {
+                "label": "Soundcore Space One",
+                "secondary": "Lazada · 40 h battery · in stock",
+                "trailing": "S$119"
+              },
+              {
+                "label": "Sony WH-CH720N",
+                "secondary": "Courts · 35 h battery · in stock",
+                "trailing": "S$149"
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Sennheiser Accentum Plus on Challenger, 26 Sep 2026 10:20",
+              "url": "https://online.challenger.sg/products/sennheiser-accentum-plus-wireless-black"
+            },
+            {
+              "label": "Soundcore Space One on Lazada, 26 Sep 2026 10:20",
+              "url": "https://www.lazada.sg/products/soundcore-space-one-noise-cancelling-headphones-1-year-local-warranty-i3342475400.html"
+            },
+            {
+              "label": "Sony WH-CH720N on Courts, 26 Sep 2026 10:20",
+              "url": "https://www.courts.com.sg/sony-wh-ch720n-bce-wireless-noise-cancellation-headphones-black-ip182171"
+            }
+          ]
+        },
+        "fallback_text": "Noise-cancelling headphones under S$300 (10:20): Sennheiser Accentum Plus S$239 at Challenger, 50 h battery, in stock (pick); Soundcore Space One S$119 at Lazada, 40 h battery, in stock; Sony WH-CH720N S$149 at Courts, 35 h battery, in stock. Each product page is linked in Details."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Noise-cancelling headphones under S$300",
+            "subtitle": "Challenger, Lazada, Courts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 3 stores for noise-cancelling headphones",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a0101"
+              }
+            }
+          ],
+          "fallback_text": "Checking Challenger, Lazada and Courts for noise-cancelling headphones under S$300."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Noise-cancelling headphones under S$300",
+            "subtitle": "2 of 3 stores checked · as of 10:20"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sennheiser Accentum Plus",
+                  "secondary": "Challenger · 50 h battery · in stock",
+                  "trailing": "S$239",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Soundcore Space One",
+                  "secondary": "Lazada · 40 h battery · in stock",
+                  "trailing": "S$119"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Sennheiser Accentum Plus on Challenger, 26 Sep 2026 10:20",
+                "url": "https://online.challenger.sg/products/sennheiser-accentum-plus-wireless-black"
+              },
+              {
+                "label": "Soundcore Space One on Lazada, 26 Sep 2026 10:20",
+                "url": "https://www.lazada.sg/products/soundcore-space-one-noise-cancelling-headphones-1-year-local-warranty-i3342475400.html"
+              }
+            ]
+          },
+          "fallback_text": "Noise-cancelling headphones under S$300, 2 of 3 stores checked (10:20): Sennheiser Accentum Plus S$239 at Challenger, 50 h battery, in stock (pick); Soundcore Space One S$119 at Lazada, 40 h battery, in stock. Courts hasn't answered yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Noise-cancelling headphones under S$300",
+            "subtitle": "As of 08:40 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sennheiser Accentum Plus",
+                  "secondary": "Challenger · 50 h battery · in stock",
+                  "trailing": "S$239",
+                  "mark": "pick"
+                },
+                {
+                  "label": "Soundcore Space One",
+                  "secondary": "Lazada · 40 h battery · in stock",
+                  "trailing": "S$119"
+                },
+                {
+                  "label": "Sony WH-CH720N",
+                  "secondary": "Courts · 35 h battery · in stock",
+                  "trailing": "S$149"
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Sennheiser Accentum Plus on Challenger, 26 Sep 2026 08:40",
+                "url": "https://online.challenger.sg/products/sennheiser-accentum-plus-wireless-black"
+              },
+              {
+                "label": "Soundcore Space One on Lazada, 26 Sep 2026 08:40",
+                "url": "https://www.lazada.sg/products/soundcore-space-one-noise-cancelling-headphones-1-year-local-warranty-i3342475400.html"
+              },
+              {
+                "label": "Sony WH-CH720N on Courts, 26 Sep 2026 08:40",
+                "url": "https://www.courts.com.sg/sony-wh-ch720n-bce-wireless-noise-cancellation-headphones-black-ip182171"
+              }
+            ]
+          },
+          "fallback_text": "Noise-cancelling headphones under S$300 as of 08:40 (couldn't refresh): Sennheiser Accentum Plus S$239 at Challenger, 50 h battery, in stock (pick); Soundcore Space One S$119 at Lazada, 40 h battery, in stock; Sony WH-CH720N S$149 at Courts, 35 h battery, in stock."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No noise-cancelling headphones in stock under S$300",
+            "subtitle": "Challenger, Lazada, Courts · as of 10:20"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Challenger restocks the Sennheiser Accentum Plus on Thu 1 Oct. Ask me then."
+            }
+          ],
+          "fallback_text": "None of the noise-cancelling headphones under S$300 is in stock at Challenger, Lazada or Courts (10:20). Challenger restocks the Sennheiser Accentum Plus on Thu 1 Oct. Ask me then."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check headphone prices",
+            "subtitle": "Challenger, Lazada, Courts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "None of the 3 stores answered. Ask me again in a few minutes."
+            }
+          ],
+          "fallback_text": "Couldn't check headphone prices: none of the 3 stores (Challenger, Lazada, Courts) answered. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "shop-arriving",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "What's arriving?",
+      "says": "Four parcels are on their way; the Uniqlo shoes come today.",
+      "surface": "page",
+      "fresh": true,
+      "components": [
+        "S13 Delivery tracking"
+      ],
+      "rationale": "One row per order, soonest first: the carrier's own status on the line, the expected day trailing; each carrier's tracking page is in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "4 orders on their way",
+          "subtitle": "Soonest first · as of 11:05"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Running shoes · Uniqlo",
+                "secondary": "Ninja Van: out for delivery · left Tuas hub 08:12",
+                "trailing": "today by 6 pm"
+              },
+              {
+                "label": "Desk lamp · Amazon.sg",
+                "secondary": "J&T Express: at the Changi hub · sorted 06:40",
+                "trailing": "Mon 28 Sep"
+              },
+              {
+                "label": "Phone case · Temu",
+                "secondary": "SingPost: cleared customs in Singapore · 04:15",
+                "trailing": "Tue 29–Wed 30 Sep"
+              },
+              {
+                "label": "Charger · AliExpress",
+                "secondary": "Cainiao: left Shenzhen · Thu 24 Sep",
+                "trailing": "Fri 2–Mon 5 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Not shipped yet",
+                "bullets": [
+                  "Kettle from Shopee Mall: the seller hasn't handed it to a carrier; Shopee says it ships by Tue 29 Sep."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Ninja Van tracking, Uniqlo order 88213, 26 Sep 2026 11:05",
+              "url": "https://www.ninjavan.co/en-sg/tracking?id=NVSGUNIQ88213"
+            },
+            {
+              "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 11:05",
+              "url": "https://www.jtexpress.sg/trackmyparcel"
+            },
+            {
+              "label": "SingPost tracking, Temu order, 26 Sep 2026 11:05",
+              "url": "https://www.singpost.com/track-items?trackingid=LP00471822035SG"
+            },
+            {
+              "label": "Cainiao tracking, AliExpress order, 26 Sep 2026 11:05",
+              "url": "https://global.cainiao.com/newDetail.htm?mailNoList=LP00471822999CN"
+            },
+            {
+              "label": "Shopee order page, 26 Sep 2026 11:05",
+              "url": "https://shopee.sg/user/purchase/order/140927735521"
+            }
+          ],
+          "assumptions": [
+            "Each status is the carrier's own words; the arrival is the carrier's estimate, or the shop's when the carrier gives none."
+          ]
+        },
+        "fallback_text": "As of 11:05, 4 orders are on their way, soonest first: running shoes from Uniqlo today by 6 pm (Ninja Van: out for delivery, left Tuas hub 08:12); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15); charger from AliExpress Fri 2–Mon 5 Oct (Cainiao: left Shenzhen Thu 24 Sep). Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Orders on their way",
+            "subtitle": "Uniqlo, Amazon.sg, Temu, AliExpress, Shopee"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 5 shops' orders with their carriers",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a0401"
+              }
+            }
+          ],
+          "fallback_text": "Orders on their way: checking your Uniqlo, Amazon.sg, Temu, AliExpress and Shopee orders with their carriers."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "3 orders on their way",
+            "subtitle": "3 of 4 carriers · soonest first · as of 11:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Running shoes · Uniqlo",
+                  "secondary": "Ninja Van: out for delivery · left Tuas hub 08:12",
+                  "trailing": "today by 6 pm"
+                },
+                {
+                  "label": "Desk lamp · Amazon.sg",
+                  "secondary": "J&T Express: at the Changi hub · sorted 06:40",
+                  "trailing": "Mon 28 Sep"
+                },
+                {
+                  "label": "Phone case · Temu",
+                  "secondary": "SingPost: cleared customs in Singapore · 04:15",
+                  "trailing": "Tue 29–Wed 30 Sep"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Not shipped yet",
+                  "bullets": [
+                    "Kettle from Shopee Mall: the seller hasn't handed it to a carrier; Shopee says it ships by Tue 29 Sep."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Ninja Van tracking, Uniqlo order 88213, 26 Sep 2026 11:05",
+                "url": "https://www.ninjavan.co/en-sg/tracking?id=NVSGUNIQ88213"
+              },
+              {
+                "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 11:05",
+                "url": "https://www.jtexpress.sg/trackmyparcel"
+              },
+              {
+                "label": "SingPost tracking, Temu order, 26 Sep 2026 11:05",
+                "url": "https://www.singpost.com/track-items?trackingid=LP00471822035SG"
+              },
+              {
+                "label": "Shopee order page, 26 Sep 2026 11:05",
+                "url": "https://shopee.sg/user/purchase/order/140927735521"
+              },
+              {
+                "label": "Cainiao didn't answer"
+              }
+            ],
+            "assumptions": [
+              "Each status is the carrier's own words; the arrival is the carrier's estimate, or the shop's when the carrier gives none."
+            ]
+          },
+          "fallback_text": "As of 11:05, 3 of 4 carriers checked, 3 orders are on their way: running shoes from Uniqlo today by 6 pm (Ninja Van: out for delivery, left Tuas hub 08:12); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15). Cainiao hasn't answered for the AliExpress charger. Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "4 orders on their way",
+            "subtitle": "Soonest first · as of 08:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Running shoes · Uniqlo",
+                  "secondary": "Ninja Van: at the Tuas hub · sorted 07:30",
+                  "trailing": "today by 6 pm"
+                },
+                {
+                  "label": "Desk lamp · Amazon.sg",
+                  "secondary": "J&T Express: at the Changi hub · sorted 06:40",
+                  "trailing": "Mon 28 Sep"
+                },
+                {
+                  "label": "Phone case · Temu",
+                  "secondary": "SingPost: cleared customs in Singapore · 04:15",
+                  "trailing": "Tue 29–Wed 30 Sep"
+                },
+                {
+                  "label": "Charger · AliExpress",
+                  "secondary": "Cainiao: left Shenzhen · Thu 24 Sep",
+                  "trailing": "Fri 2–Mon 5 Oct"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "Not shipped yet",
+                  "bullets": [
+                    "Kettle from Shopee Mall: the seller hasn't handed it to a carrier; Shopee says it ships by Tue 29 Sep."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Ninja Van tracking, Uniqlo order 88213, 26 Sep 2026 08:00",
+                "url": "https://www.ninjavan.co/en-sg/tracking?id=NVSGUNIQ88213"
+              },
+              {
+                "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 08:00",
+                "url": "https://www.jtexpress.sg/trackmyparcel"
+              },
+              {
+                "label": "SingPost tracking, Temu order, 26 Sep 2026 08:00",
+                "url": "https://www.singpost.com/track-items?trackingid=LP00471822035SG"
+              },
+              {
+                "label": "Cainiao tracking, AliExpress order, 26 Sep 2026 08:00",
+                "url": "https://global.cainiao.com/newDetail.htm?mailNoList=LP00471822999CN"
+              },
+              {
+                "label": "Shopee order page, 26 Sep 2026 08:00",
+                "url": "https://shopee.sg/user/purchase/order/140927735521"
+              }
+            ],
+            "assumptions": [
+              "Each status is the carrier's own words; the arrival is the carrier's estimate, or the shop's when the carrier gives none."
+            ]
+          },
+          "fallback_text": "As of 08:00 (couldn't refresh, so a scan since then won't show), 4 orders are on their way: running shoes from Uniqlo today by 6 pm (Ninja Van: at the Tuas hub, sorted 07:30); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15); charger from AliExpress Fri 2–Mon 5 Oct (Cainiao: left Shenzhen Thu 24 Sep). Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Nothing on its way",
+            "subtitle": "Uniqlo, Amazon.sg, Temu, AliExpress, Shopee · as of 11:05"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Every order you placed has been delivered. Ask me when you order again."
+            }
+          ],
+          "fallback_text": "Nothing is on its way, as of 11:05: every order at Uniqlo, Amazon.sg, Temu, AliExpress and Shopee has been delivered. Ask me when you order again."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't check your deliveries",
+            "subtitle": "Uniqlo, Amazon.sg, Temu, AliExpress, Shopee"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail sign-in expired, so no orders were found. Sign in and ask me again."
+            }
+          ],
+          "fallback_text": "Couldn't check your deliveries: your Gmail sign-in expired, so I couldn't find the Uniqlo, Amazon.sg, Temu, AliExpress and Shopee orders. Sign in and ask me again."
+        }
+      }
+    },
+    {
+      "id": "shop-marketplace-offer-sent",
+      "vertical": "shopping",
+      "kind": "card",
+      "request": "Yes, send Jordan the US$180 offer.",
+      "says": "Sent. I'll tell you when Jordan replies.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Sent receipt",
+        "Uncertain send"
+      ],
+      "rationale": "After the yes: the Marketplace thread it landed in, when it went and the reply watch as rows; the words are the approved draft, never re-worded.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sent · Offer on the gray sectional",
+          "subtitle": "To Jordan on Marketplace · Sat 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Thread",
+                "secondary": "Gray sectional, listed US$260",
+                "trailing": "2 messages"
+              },
+              {
+                "label": "Sent from",
+                "secondary": "Your Facebook Marketplace · as approved",
+                "trailing": "09:52"
+              },
+              {
+                "label": "Reply watch",
+                "secondary": "I'll tell you here when Jordan answers",
+                "trailing": "Until Sat 3 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Marketplace inbox",
+              "url": "https://www.facebook.com/marketplace/inbox/"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Facebook Marketplace inbox, 26 Sep 2026 09:52"
+            }
+          ]
+        },
+        "fallback_text": "Sent to Jordan on Facebook Marketplace on Sat 26 Sep at 09:52, word for word as you approved: \"Hi Jordan, is the gray sectional still available? I can pick it up on Sat 3 Oct in Oakland and pay US$180 cash. Thanks, Abhi\" It's in the gray sectional thread (listed US$260, 2 messages). Reply watch: I'll tell you here when Jordan answers, until Sat 3 Oct."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sending to Jordan",
+            "subtitle": "Offer on the gray sectional"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Sending your US$180 offer to Jordan on Marketplace",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c6a0701"
+              }
+            }
+          ],
+          "fallback_text": "Sending your US$180 offer on the gray sectional to Jordan on Facebook Marketplace."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sent · Offer on the gray sectional",
+            "subtitle": "To Jordan on Marketplace · Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sent from",
+                  "secondary": "Your Facebook Marketplace · as approved",
+                  "trailing": "09:52"
+                },
+                {
+                  "label": "Thread",
+                  "secondary": "Marketplace hasn't shown it in the thread yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Marketplace inbox",
+                "url": "https://www.facebook.com/marketplace/inbox/"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Facebook Marketplace send reply, 26 Sep 2026 09:52"
+              }
+            ]
+          },
+          "fallback_text": "Sent to Jordan on Facebook Marketplace on Sat 26 Sep at 09:52, as you approved: \"Hi Jordan, is the gray sectional still available? I can pick it up on Sat 3 Oct in Oakland and pay US$180 cash. Thanks, Abhi\" Marketplace hasn't shown it in the thread yet, so the thread is not in yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sent · Offer on the gray sectional",
+            "subtitle": "To Jordan on Marketplace · Sat 26 Sep · as of 09:52 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Thread",
+                  "secondary": "Gray sectional, listed US$260",
+                  "trailing": "2 messages"
+                },
+                {
+                  "label": "Sent from",
+                  "secondary": "Your Facebook Marketplace · as approved",
+                  "trailing": "09:52"
+                },
+                {
+                  "label": "Reply watch",
+                  "secondary": "I'll tell you here when Jordan answers",
+                  "trailing": "Until Sat 3 Oct"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Marketplace inbox",
+                "url": "https://www.facebook.com/marketplace/inbox/"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Facebook Marketplace inbox, 26 Sep 2026 09:52"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:52 (couldn't refresh, so a reply since then won't show). Sent to Jordan on Facebook Marketplace on Sat 26 Sep at 09:52, as you approved: \"Hi Jordan, is the gray sectional still available? I can pick it up on Sat 3 Oct in Oakland and pay US$180 cash. Thanks, Abhi\" In the gray sectional thread (listed US$260, 2 messages). Reply watch until Sat 3 Oct."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Not sent · Offer on the gray sectional",
+            "subtitle": "To Jordan on Marketplace"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Jordan marked it sold before it went; nothing sent. Ask me to find another."
+            }
+          ],
+          "fallback_text": "Not sent: Jordan marked the gray sectional sold on Facebook Marketplace before your US$180 offer went. Nothing was sent. Ask me to look for another one."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm it sent",
+            "subtitle": "To Jordan on Marketplace · Offer on the gray sectional"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Marketplace didn't answer. I'll check the thread before trying again."
+            }
+          ],
+          "fallback_text": "I couldn't confirm your US$180 offer on the gray sectional reached Jordan on Facebook Marketplace: Marketplace didn't answer after it was sent at 09:52, so it may or may not have gone. I'll check the thread before trying again, so Jordan doesn't get it twice."
         }
       }
     }

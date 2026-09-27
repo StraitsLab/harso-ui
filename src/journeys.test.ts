@@ -19,7 +19,7 @@ const committed = JSON.parse(readFileSync(JOURNEYS_PATH, "utf8")) as { journeys:
 const gapsText = readFileSync(GAPS_PATH, "utf8");
 const exampleIds = new Set<string>(JSON.parse(buildPlaybook()).examples.map((example: { id: string }) => example.id));
 const gaps = gapIds(gapsText) as Set<string>;
-const GAPS = ["S1", "S4", "S7", "T1", "T5", "T6", "T7"];
+const GAPS: string[] = [];
 
 const edited = (edit: (journeys: Journey[]) => void, from = committed) => {
   const copy = structuredClone(from);
@@ -50,11 +50,11 @@ function cli(data: unknown, gapsMarkdown = gapsText): { status: number; out: str
 }
 
 describe("every journey names its catalogue example", () => {
-  test("the committed map: 53 covered, and the 7 missing are exactly the declared gaps", () => {
+  test("the committed map: all 60 covered, no declared gaps", () => {
     const result = checkJourneys() as Result;
     expect(JOURNEYS).toHaveLength(60);
     expect(result.findings).toEqual([]);
-    expect(result.covered).toBe(53);
+    expect(result.covered).toBe(60);
     expect(result.missing).toEqual(GAPS);
     expect(result.gaps).toEqual(GAPS);
   });
@@ -62,8 +62,8 @@ describe("every journey names its catalogue example", () => {
   test("CLI: a fully covered map exits 0; missing coverage exits 1, declared or not", () => {
     expect(cli(fullyCovered(), "").status).toBe(0);
     const declared = cli(committed);
-    expect(declared.status).toBe(1);
-    expect(declared.out).toContain(`no example yet: ${GAPS.join(", ")}`);
+    expect(declared.status).toBe(0);
+    expect(declared.out).toContain("60 of 60 journeys have an example; 0 missing; 0 finding(s)");
     const oneDeclared = cli(fullyCovered(journeys => { at(journeys, "S2").examples = []; }), "## S2\n");
     expect(oneDeclared.status).toBe(1);
     expect(oneDeclared.out).toContain("no example yet: S2");
