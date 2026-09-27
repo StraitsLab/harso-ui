@@ -3626,6 +3626,769 @@
           "fallback_text": "Couldn’t check PS5 Slim stock near Indiranagar: the store pages didn’t load and no call was made. Ask me again in a few minutes."
         }
       }
+    },
+    {
+      "id": "home-bill-dispute-called",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Yes, call Singtel about the roaming charge.",
+      "says": "Singtel agreed to reverse it; the credit shows on your next bill.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Call outcome"
+      ],
+      "rationale": "After the dispute call: who answered, what was agreed within your plan and what happens next as rows; the transcript is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Reversal agreed by phone · Singtel",
+          "subtitle": "Roaming S$38.52 · account 1-88231455"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Answered by",
+                "secondary": "Farah, billing support",
+                "trailing": "11:40, 9 min"
+              },
+              {
+                "label": "Agreed",
+                "secondary": "Full reversal, within your plan",
+                "trailing": "S$38.52 credit"
+              },
+              {
+                "label": "Next step",
+                "secondary": "Credit on the October bill",
+                "trailing": "Mon 26 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open transcript",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90001"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Harso call to Singtel billing, 26 Sep 2026 11:40"
+            }
+          ],
+          "assumptions": [
+            "Harso said it was calling for you at the start of the call",
+            "Your plan: ask for a full reversal; accept no less than half as a credit"
+          ]
+        },
+        "fallback_text": "Reversal agreed by phone at Singtel for the roaming charge of S$38.52 on account 1-88231455. Answered by Farah, billing support, at 11:40, 9 min; agreed: full reversal, within your plan, a S$38.52 credit; next step, the credit shows on your next bill on Mon 26 Oct. The transcript is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Calling Singtel billing",
+            "subtitle": "Roaming S$38.52 · account 1-88231455"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Calling Singtel to dispute the S$38.52 roaming charge",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90002"
+              }
+            }
+          ],
+          "fallback_text": "Calling Singtel billing to dispute the S$38.52 roaming charge on account 1-88231455."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Reversal agreed by phone · Singtel",
+            "subtitle": "Roaming S$38.52 · account 1-88231455"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Answered by",
+                  "secondary": "Farah, billing support",
+                  "trailing": "11:40, 9 min"
+                },
+                {
+                  "label": "Credit date",
+                  "secondary": "Not said on the call",
+                  "trailing": "Not known"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open transcript",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90001"
+              }
+            }
+          ],
+          "fallback_text": "Reversal agreed by phone at Singtel for the roaming charge of S$38.52 on account 1-88231455. Answered by Farah, billing support, at 11:40, 9 min. When the credit shows was not said on the call, so it's not known. The transcript is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singtel refused the reversal",
+            "subtitle": "Roaming S$38.52 · account 1-88231455"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "They say roaming was used on 14 Sep. Nothing agreed. I can dispute in writing."
+            }
+          ],
+          "fallback_text": "Singtel refused to reverse the S$38.52 roaming charge on account 1-88231455: they say roaming was used on 14 Sep. Nothing was agreed, and that is outside your plan's floor of half as a credit. Say yes and I'll dispute it in writing."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No answer at Singtel billing",
+            "subtitle": "Roaming S$38.52 · account 1-88231455"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Cut off after 20 min on hold. Nothing agreed. Say yes and I'll call at 14:00."
+            }
+          ],
+          "fallback_text": "No answer at Singtel billing when I called at 11:40 to dispute the S$38.52 roaming charge on account 1-88231455: on hold for 20 minutes, then cut off at 12:02. Nothing was agreed. Say yes and I'll call again at 14:00."
+        }
+      }
+    },
+    {
+      "id": "home-bill-lower-called",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Call Xfinity and get my internet bill down, within the plan I approved.",
+      "says": "Xfinity agreed to US$65 a month; the new price starts on the 12 Oct bill.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Call outcome"
+      ],
+      "rationale": "After the retention call: who answered, the agreed price against the old one and when it shows as rows; the transcript is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Lowered by phone · Xfinity",
+          "subtitle": "Internet · case 58-771204 · Thu 24 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Answered by",
+                "secondary": "Jordan, retention team",
+                "trailing": "10:05 ET, 22 min"
+              },
+              {
+                "label": "Agreed",
+                "secondary": "US$65 a month for 12 months, was US$89",
+                "trailing": "Within your plan"
+              },
+              {
+                "label": "Next step",
+                "secondary": "New price on the next bill",
+                "trailing": "Mon 12 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open transcript",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90003"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Harso call to Xfinity, 24 Sep 2026 10:05 ET"
+            }
+          ],
+          "assumptions": [
+            "Harso said it was calling for you at the start of the call",
+            "Your plan: US$70 a month or less, no new contract"
+          ]
+        },
+        "fallback_text": "Lowered by phone at Xfinity, internet, case 58-771204, Thu 24 Sep. Answered by Jordan, retention team, at 10:05 ET, 22 min; agreed: US$65 a month for 12 months, was US$89, within your plan (US$70 or less); next step, the new price is on the next bill, Mon 12 Oct. The transcript is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Calling Xfinity",
+            "subtitle": "Internet · case 58-771204"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Calling Xfinity to lower your internet bill from US$89",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90004"
+              }
+            }
+          ],
+          "fallback_text": "Calling Xfinity to lower your internet bill from US$89 a month, case 58-771204."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lowered by phone · Xfinity",
+            "subtitle": "Internet · case 58-771204 · Thu 24 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Answered by",
+                  "secondary": "Jordan, retention team",
+                  "trailing": "10:05 ET, 22 min"
+                },
+                {
+                  "label": "Start date",
+                  "secondary": "Not said on the call",
+                  "trailing": "Not known"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open transcript",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90003"
+              }
+            }
+          ],
+          "fallback_text": "Lowered by phone at Xfinity, internet, case 58-771204, Thu 24 Sep. Answered by Jordan, retention team, at 10:05 ET, 22 min. Which bill the new price starts on was not said on the call, so it's not known. The transcript is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Xfinity refused to lower the price",
+            "subtitle": "Internet · case 58-771204"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Best offer was US$79, above your US$70 plan. Nothing was agreed."
+            }
+          ],
+          "fallback_text": "Xfinity refused to lower the internet price within your plan, case 58-771204: the best offer was US$79 a month, above your US$70 limit, so nothing was agreed. Say yes and I'll compare other providers."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No answer at Xfinity",
+            "subtitle": "Internet · case 58-771204"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Call dropped at 10:31 ET before an offer. Nothing agreed. I can call again."
+            }
+          ],
+          "fallback_text": "No answer at Xfinity: the call about case 58-771204 dropped at 10:31 ET before an offer was made. Nothing was agreed. Say yes and I'll call again tomorrow at 10:00 ET."
+        }
+      }
+    },
+    {
+      "id": "home-supplies-updated",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Keep my supplies list up to date from my grocery receipts.",
+      "says": "Today's FairPrice receipt is on your list.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After a receipt arrives, the result reads like a receipt: which list, which rows changed and from what, and a quiet link to the list.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Updated · Household supplies",
+          "subtitle": "Google Sheets · 26 Sep 18:05"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "List",
+                "secondary": "Google Sheets · Home",
+                "trailing": "Household supplies"
+              },
+              {
+                "label": "Restocked",
+                "secondary": "Dish liquid, toilet rolls, rice 5 kg",
+                "trailing": "3 rows"
+              },
+              {
+                "label": "From receipt",
+                "secondary": "FairPrice Xtra, 26 Sep 17:48",
+                "trailing": "S$64.35"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open list in Sheets",
+              "url": "https://docs.google.com/spreadsheets/d/1HouseholdSupplies8kQ2/edit"
+            }
+          }
+        ],
+        "fallback_text": "Updated 26 Sep 18:05: Household supplies in Google Sheets, Home, now shows 3 rows restocked (dish liquid, toilet rolls, rice 5 kg) from your FairPrice Xtra receipt of 26 Sep 17:48, S$64.35. The 4 other items on it aren't on your list, so they were left off."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Household supplies",
+            "subtitle": "Google Sheets · FairPrice receipt"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Adding the FairPrice receipt to Household supplies",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90005"
+              }
+            }
+          ],
+          "fallback_text": "Adding the household items from your FairPrice Xtra receipt to Household supplies in Google Sheets."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "2 of 3 on Household supplies",
+            "subtitle": "Google Sheets · 26 Sep 18:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "List",
+                  "secondary": "Google Sheets · Home",
+                  "trailing": "Household supplies"
+                },
+                {
+                  "label": "Restocked",
+                  "secondary": "Dish liquid, toilet rolls",
+                  "trailing": "2 rows"
+                },
+                {
+                  "label": "Not added",
+                  "secondary": "SONGHE 5KG on the receipt, not on your list",
+                  "trailing": "Ask me to add it"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open list in Sheets",
+                "url": "https://docs.google.com/spreadsheets/d/1HouseholdSupplies8kQ2/edit"
+              }
+            }
+          ],
+          "fallback_text": "2 of 3 household items from your FairPrice Xtra receipt of 26 Sep 17:48 are on Household supplies in Google Sheets, Home, as of 18:05: dish liquid and toilet rolls restocked. Not added: the receipt line SONGHE 5KG matches nothing on your list; ask me to add it as rice 5 kg."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Updated · Household supplies",
+            "subtitle": "Google Sheets · as of 26 Sep 18:05 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "List",
+                  "secondary": "Google Sheets · Home",
+                  "trailing": "Household supplies"
+                },
+                {
+                  "label": "Restocked",
+                  "secondary": "Dish liquid, toilet rolls, rice 5 kg",
+                  "trailing": "3 rows"
+                },
+                {
+                  "label": "From receipt",
+                  "secondary": "FairPrice Xtra, 26 Sep 17:48",
+                  "trailing": "S$64.35"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open list in Sheets",
+                "url": "https://docs.google.com/spreadsheets/d/1HouseholdSupplies8kQ2/edit"
+              }
+            }
+          ],
+          "fallback_text": "As of 26 Sep 18:05 (couldn’t refresh Google Sheets since): Household supplies in Home shows 3 rows restocked (dish liquid, toilet rolls, rice 5 kg) from your FairPrice Xtra receipt of 26 Sep 17:48, S$64.35. Edits made in Sheets since then aren’t shown."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the list update",
+            "subtitle": "Household supplies · sent at 18:04"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Sheets didn’t answer after the edit. I’ll check the list before trying again."
+            }
+          ],
+          "fallback_text": "I couldn’t confirm the update to Household supplies from your FairPrice Xtra receipt: Google Sheets didn’t answer after the edit, sent at 18:04, so some rows may already be changed. I’ll check the list before trying again."
+        }
+      }
+    },
+    {
+      "id": "home-tax-docs-linked",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Collect my tax documents for this year and link each one.",
+      "says": "One is still missing: the rental statements since March.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "S14 Return / refund status"
+      ],
+      "rationale": "The tax checklist with a link to every found mail or file in Details, in row order; missing first, what IRAS gets directly said once.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tax documents for YA 2027",
+          "subtitle": "Income year 2026 · 3 found, 1 missing"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Rental income, Jan–Aug",
+                "secondary": "Propnex monthly statements · none since March",
+                "trailing": "Missing"
+              },
+              {
+                "label": "SRS contributions",
+                "secondary": "DBS SRS statement, 1 Aug · Gmail",
+                "trailing": "Found"
+              },
+              {
+                "label": "CPF cash top-up, S$8,000",
+                "secondary": "CPF Board receipt, 12 Mar · Gmail",
+                "trailing": "Found"
+              },
+              {
+                "label": "Donations, 2 receipts",
+                "secondary": "IPC Club Rainbow in Gmail, SPCA in Drive",
+                "trailing": "Found"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "IRAS gets these directly",
+                "bullets": [
+                  "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
+                  "CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS SRS statement, 1 Aug 2026 · Gmail",
+              "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXJWDsKmnbDtRqHwLvZpNcQbvB"
+            },
+            {
+              "label": "CPF Board cash top-up receipt, 12 Mar 2026 · Gmail",
+              "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXKcNrTvLpWbHqZmDsXjYgFkRt"
+            },
+            {
+              "label": "IPC Club Rainbow donation receipt · Gmail",
+              "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXLpBdWsNkVhGtRcMzQjXfHyKs"
+            },
+            {
+              "label": "SPCA donation receipt · Google Drive",
+              "url": "https://drive.google.com/file/d/1SPCAreceipt2026Xy/view"
+            },
+            {
+              "label": "IRAS: CPF Relief for employees",
+              "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-reliefs-rebates-and-deductions/tax-reliefs/central-provident-fund(cpf)-relief-for-employees"
+            },
+            {
+              "label": "Gmail and Google Drive, searched 26 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Your employer is in IRAS's Auto-Inclusion Scheme; if not, you declare the IR8A income and CPF relief yourself"
+          ],
+          "disclaimers": [
+            "Not tax advice; check what you claim against IRAS."
+          ]
+        },
+        "fallback_text": "Tax documents for YA 2027 (income year 2026), 3 found, 1 missing, each found one linked. Missing: rental income Jan–Aug, Propnex statements, none since March. Found: DBS SRS statement 1 Aug (Gmail); CPF Board receipt for the S$8,000 top-up, 12 Mar (Gmail); donation receipts from IPC Club Rainbow (Gmail) and SPCA (Drive). IRAS gets your IR8A from your employer by 1 Mar 2027, and CPF relief if your employer is in the Auto-Inclusion Scheme. Not tax advice."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tax documents for YA 2027",
+            "subtitle": "Gmail and Google Drive"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Searching Gmail and Drive for 2026 tax documents",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90006"
+              }
+            }
+          ],
+          "fallback_text": "Searching your Gmail and Google Drive for 2026 tax documents for YA 2027."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tax documents for YA 2027",
+            "subtitle": "Income year 2026 · Gmail read, Drive not yet · 2 found, 1 missing"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Rental income, Jan–Aug",
+                  "secondary": "Propnex monthly statements · none since March",
+                  "trailing": "Missing"
+                },
+                {
+                  "label": "SRS contributions",
+                  "secondary": "DBS SRS statement, 1 Aug · Gmail",
+                  "trailing": "Found"
+                },
+                {
+                  "label": "CPF cash top-up, S$8,000",
+                  "secondary": "CPF Board receipt, 12 Mar · Gmail",
+                  "trailing": "Found"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "IRAS gets these directly",
+                  "bullets": [
+                    "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
+                    "CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS SRS statement, 1 Aug 2026 · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXJWDsKmnbDtRqHwLvZpNcQbvB"
+              },
+              {
+                "label": "CPF Board cash top-up receipt, 12 Mar 2026 · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXKcNrTvLpWbHqZmDsXjYgFkRt"
+              },
+              {
+                "label": "IRAS: CPF Relief for employees",
+                "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-reliefs-rebates-and-deductions/tax-reliefs/central-provident-fund(cpf)-relief-for-employees"
+              },
+              {
+                "label": "Gmail, searched 26 Sep 2026; Drive still reading"
+              }
+            ],
+            "assumptions": [
+              "Your employer is in IRAS's Auto-Inclusion Scheme; if not, you declare the IR8A income and CPF relief yourself"
+            ],
+            "disclaimers": [
+              "Not tax advice; check what you claim against IRAS."
+            ]
+          },
+          "fallback_text": "Tax documents for YA 2027 (income year 2026), Gmail read, Drive not yet: 2 found, 1 missing. Missing: rental income Jan–Aug, Propnex monthly statements, none since March. Found: SRS contributions, DBS SRS statement 1 Aug (Gmail); CPF cash top-up S$8,000, CPF Board receipt 12 Mar (Gmail). IRAS gets these directly: your IR8A, which your employer sends by 1 Mar 2027, and CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme. Drive may hold more."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tax documents for YA 2027",
+            "subtitle": "Income year 2026 · as of Thu 24 Sep 20:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Rental income, Jan–Aug",
+                  "secondary": "Propnex monthly statements · none since March",
+                  "trailing": "Missing"
+                },
+                {
+                  "label": "SRS contributions",
+                  "secondary": "DBS SRS statement, 1 Aug · Gmail",
+                  "trailing": "Found"
+                },
+                {
+                  "label": "CPF cash top-up, S$8,000",
+                  "secondary": "CPF Board receipt, 12 Mar · Gmail",
+                  "trailing": "Found"
+                },
+                {
+                  "label": "Donations, 2 receipts",
+                  "secondary": "IPC Club Rainbow in Gmail, SPCA in Drive",
+                  "trailing": "Found"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "IRAS gets these directly",
+                  "bullets": [
+                    "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
+                    "CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS SRS statement, 1 Aug 2026 · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXJWDsKmnbDtRqHwLvZpNcQbvB"
+              },
+              {
+                "label": "CPF Board cash top-up receipt, 12 Mar 2026 · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXKcNrTvLpWbHqZmDsXjYgFkRt"
+              },
+              {
+                "label": "IPC Club Rainbow donation receipt · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXLpBdWsNkVhGtRcMzQjXfHyKs"
+              },
+              {
+                "label": "SPCA donation receipt · Google Drive",
+                "url": "https://drive.google.com/file/d/1SPCAreceipt2026Xy/view"
+              },
+              {
+                "label": "IRAS: CPF Relief for employees",
+                "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-reliefs-rebates-and-deductions/tax-reliefs/central-provident-fund(cpf)-relief-for-employees"
+              },
+              {
+                "label": "Gmail and Google Drive, searched 24 Sep 2026 20:00"
+              }
+            ],
+            "assumptions": [
+              "Your employer is in IRAS's Auto-Inclusion Scheme; if not, you declare the IR8A income and CPF relief yourself"
+            ],
+            "disclaimers": [
+              "Not tax advice; check what you claim against IRAS."
+            ]
+          },
+          "fallback_text": "Tax documents for YA 2027, income year 2026, as of Thu 24 Sep 20:00 (couldn’t refresh; the links may have moved): missing rental income Jan–Aug, Propnex statements, none since March. Found and linked: DBS SRS statement 1 Aug (Gmail); CPF Board receipt for the S$8,000 top-up, 12 Mar (Gmail); donation receipts from IPC Club Rainbow (Gmail) and SPCA (Drive). IRAS gets your IR8A from your employer by 1 Mar 2027, and CPF relief if your employer is in the Auto-Inclusion Scheme."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No tax documents for 2026 yet",
+            "subtitle": "Gmail and Google Drive"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Your IR8A comes from your employer by 1 Mar 2027"
+            }
+          ],
+          "fallback_text": "No tax documents for income year 2026 in your Gmail or Drive yet. Your IR8A comes from your employer by 1 Mar 2027."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t search for tax documents",
+            "subtitle": "YA 2027"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Google connection has expired. Reconnect it, then ask again."
+            }
+          ],
+          "fallback_text": "Couldn’t search for tax documents for YA 2027 in your Gmail and Drive: the Google connection has expired. Reconnect it, then ask me again. Nothing was changed."
+        }
+      }
     }
   ]
 }

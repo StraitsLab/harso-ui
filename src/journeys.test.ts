@@ -19,7 +19,7 @@ const committed = JSON.parse(readFileSync(JOURNEYS_PATH, "utf8")) as { journeys:
 const gapsText = readFileSync(GAPS_PATH, "utf8");
 const exampleIds = new Set<string>(JSON.parse(buildPlaybook()).examples.map((example: { id: string }) => example.id));
 const gaps = gapIds(gapsText) as Set<string>;
-const GAPS = ["S1", "S4", "S7", "T1", "T5", "T6", "T7", "R4", "E3", "E6", "C1", "C3", "C5", "B3", "B4", "B5", "Q3", "F1", "P1", "P2", "P3", "M2", "M3"];
+const GAPS = ["S1", "S4", "S7", "T1", "T5", "T6", "T7", "R4", "E3", "E6", "C1", "C3", "C5", "M2"];
 
 const edited = (edit: (journeys: Journey[]) => void, from = committed) => {
   const copy = structuredClone(from);
@@ -50,11 +50,11 @@ function cli(data: unknown, gapsMarkdown = gapsText): { status: number; out: str
 }
 
 describe("every journey names its catalogue example", () => {
-  test("the committed map: 37 covered, and the 23 missing are exactly the declared gaps", () => {
+  test("the committed map: 46 covered, and the 14 missing are exactly the declared gaps", () => {
     const result = checkJourneys() as Result;
     expect(JOURNEYS).toHaveLength(60);
     expect(result.findings).toEqual([]);
-    expect(result.covered).toBe(37);
+    expect(result.covered).toBe(46);
     expect(result.missing).toEqual(GAPS);
     expect(result.gaps).toEqual(GAPS);
   });

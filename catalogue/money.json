@@ -21,7 +21,8 @@
     "money-pay-bill",
     "money-subscriptions",
     "money-invoices-owed",
-    "money-bills-month"
+    "money-bills-month",
+    "money-charge-alert"
   ],
   "examples": [
     {
@@ -4835,6 +4836,513 @@
             }
           ],
           "fallback_text": "无法读取8月支出：星展银行没有回应。我没有做任何更改。"
+        }
+      }
+    },
+    {
+      "id": "money-bill-reminder",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Remind me 2 days before each M1 bill is due.",
+      "says": "Okay. I'll remind you on your phone before each M1 bill.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Reply watch",
+        "F10 Bill / subscription due"
+      ],
+      "rationale": "A bill reminder is a routine: status bound to it, the bill it read and the rule as rows, one quiet Pause. Nothing is paid.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Pay the M1 bill",
+          "subtitle": "2 days before each due date · 9:00 am"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "scheduled",
+            "detail": "next on Tue 13 Oct, 9:00 am",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90007"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "This bill",
+                "secondary": "M1 mobile, from your 25 Sep bill mail",
+                "trailing": "S$42.80 due 15 Oct"
+              },
+              {
+                "label": "Then",
+                "secondary": "2 days before each new M1 due date",
+                "trailing": "Monthly"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90007",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "M1 bill mail in Gmail, 25 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Sent to your phone by SMS until the Harso app can notify you",
+            "Each new due date is read from that month's M1 bill mail"
+          ]
+        },
+        "fallback_text": "Reminder set: pay the M1 bill, 2 days before each due date at 9:00 am. Next: Tue 13 Oct, for M1 mobile, S$42.80 due Thu 15 Oct, from your 25 Sep bill mail; then 2 days before each new M1 due date, monthly. It reaches your phone by SMS. Nothing is paid. You can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pay the M1 bill",
+            "subtitle": "2 days before each due date · 9:00 am"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your M1 bill mail for the due date",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90007"
+              }
+            }
+          ],
+          "fallback_text": "Setting a reminder to pay the M1 bill 2 days before each due date at 9:00 am; reading your M1 bill mail for the due date."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the reminder",
+            "subtitle": "Pay the M1 bill · 2 days before it’s due"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "No answer from the reminder service. Check Reminders before asking again."
+            }
+          ],
+          "fallback_text": "Couldn’t confirm the reminder to pay the M1 bill 2 days before each due date: the reminder service didn’t answer, so it may or may not be set. Check Reminders before asking again."
+        }
+      }
+    },
+    {
+      "id": "file-receipts-sheet",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Put this month's receipts in a spreadsheet with totals by category.",
+      "says": "All 38 receipts are in a sheet, with a total per category.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Sheet",
+        "F8 Budget by category"
+      ],
+      "rationale": "38 receipts is a sheet; the card gives the total, the category totals as rows, and opens the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "September receipts",
+          "subtitle": "1–26 Sep · 38 receipts · XLSX"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$827.35",
+                "label": "Total"
+              },
+              {
+                "value": "38",
+                "label": "Receipts"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Groceries",
+                "secondary": "FairPrice, Cold Storage · 14 receipts",
+                "trailing": "S$412.60"
+              },
+              {
+                "label": "Dining",
+                "secondary": "Toast Box, Din Tai Fung · 17 receipts",
+                "trailing": "S$286.40"
+              },
+              {
+                "label": "Household",
+                "secondary": "Daiso, Mr DIY · 7 receipts",
+                "trailing": "S$128.35"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open sheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90008"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90008"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Receipts in Gmail and photos you sent, to 26 Sep 2026 18:00"
+            }
+          ],
+          "assumptions": [
+            "Card charges with no receipt are left out"
+          ]
+        },
+        "fallback_text": "September receipts (1–26 Sep): 38 receipts totalling S$827.35, in a spreadsheet in your Library. By category: groceries S$412.60 (FairPrice, Cold Storage, 14 receipts); dining S$286.40 (Toast Box, Din Tai Fung, 17 receipts); household S$128.35 (Daiso, Mr DIY, 7 receipts)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "September receipts",
+            "subtitle": "XLSX"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 38 receipts from Gmail and your photos",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90009"
+              }
+            }
+          ],
+          "fallback_text": "Reading September's receipts from Gmail and your photos."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "September receipts",
+            "subtitle": "1–26 Sep · 30 of 38 receipts read · XLSX"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$651.20",
+                  "label": "Total so far"
+                },
+                {
+                  "value": "30",
+                  "label": "Receipts"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open sheet",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca9000a"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Receipts in Gmail and photos you sent, to 26 Sep 2026 18:00"
+              }
+            ]
+          },
+          "fallback_text": "A sheet of September receipts (1–26 Sep) is in your Library with 30 of 38 read: S$651.20 so far. 8 receipt photos are too blurred to read, so they and their categories are not in it; send clearer photos and I'll add them."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No receipts in September",
+            "subtitle": "1–26 Sep · Gmail and photos"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "None found, so no sheet was made"
+            }
+          ],
+          "fallback_text": "No receipts for September (1–26 Sep) in your Gmail or the photos you sent. None found, so no sheet was made."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t make the sheet",
+            "subtitle": "September receipts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google connection expired. No file was made. Reconnect, then ask again."
+            }
+          ],
+          "fallback_text": "Couldn’t make the sheet of September receipts: the Google connection has expired. No file was made. Reconnect it, then ask me again."
+        }
+      }
+    },
+    {
+      "id": "money-charge-alert",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Tell me whenever a charge on my DBS card is over S$200.",
+      "says": "A S$1,249 charge just went through at Harvey Norman.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F9 Transactions list",
+        "Alert fired"
+      ],
+      "rationale": "The watch firing: the charge and the rule it broke as rows; still bound to the routine with one Pause. Disputing is a question, then an approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Charge over S$200 · DBS card",
+          "subtitle": "Altitude ··4410 · as of 14:32"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every charge since 20 Sep",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Harvey Norman",
+                "secondary": "Sat 26 Sep 14:31 · Shopping",
+                "trailing": "S$1,249.00"
+              },
+              {
+                "label": "Your rule",
+                "secondary": "Any single charge over S$200 on ··4410",
+                "trailing": "Over S$200"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS Altitude card ··4410, 26 Sep 2026 14:32"
+            }
+          ],
+          "assumptions": [
+            "Nothing is disputed or blocked unless you ask.",
+            "Not yours? DBS blocks the card on 1800 111 1111."
+          ]
+        },
+        "fallback_text": "Charge over S$200 on your DBS Altitude card ··4410, as of 14:32: Harvey Norman, S$1,249.00, Sat 26 Sep 14:31, shopping; your rule is any single charge over S$200 on ··4410. Watching every charge since 20 Sep. Nothing is disputed or blocked unless you ask; if it isn't yours, DBS blocks the card on 1800 111 1111."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "DBS card charges",
+            "subtitle": "Altitude ··4410"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading new charges on your DBS Altitude card",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000c"
+              }
+            }
+          ],
+          "fallback_text": "Reading new charges on your DBS Altitude card ··4410."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Charge over S$200 · DBS card",
+            "subtitle": "Altitude ··4410 · merchant not in yet · as of 14:32"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every charge since 20 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Card purchase",
+                  "secondary": "Sat 26 Sep 14:31 · merchant name not in yet",
+                  "trailing": "S$1,249.00"
+                },
+                {
+                  "label": "Your rule",
+                  "secondary": "Any single charge over S$200 on ··4410",
+                  "trailing": "Over S$200"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS Altitude card ··4410, 26 Sep 2026 14:32; merchant still loading"
+              }
+            ],
+            "assumptions": [
+              "Nothing is disputed or blocked unless you ask.",
+              "Not yours? DBS blocks the card on 1800 111 1111."
+            ]
+          },
+          "fallback_text": "Charge over S$200 on your DBS Altitude card ··4410, as of 14:32: S$1,249.00, Sat 26 Sep 14:31; DBS hasn't sent the merchant name yet. Your rule is any single charge over S$200. Watching every charge since 20 Sep. If it isn't yours, DBS blocks the card on 1800 111 1111."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Charge over S$200 · DBS card",
+            "subtitle": "Altitude ··4410 · as of 14:32 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every charge since 20 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Harvey Norman",
+                  "secondary": "Sat 26 Sep 14:31 · Shopping",
+                  "trailing": "S$1,249.00"
+                },
+                {
+                  "label": "Your rule",
+                  "secondary": "Any single charge over S$200 on ··4410",
+                  "trailing": "Over S$200"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS Altitude card ··4410, 26 Sep 2026 14:32"
+              }
+            ],
+            "assumptions": [
+              "Nothing is disputed or blocked unless you ask.",
+              "Not yours? DBS blocks the card on 1800 111 1111."
+            ]
+          },
+          "fallback_text": "As of 14:32 (couldn’t refresh with DBS since): charge over S$200 on your DBS Altitude card ··4410: Harvey Norman, S$1,249.00, Sat 26 Sep 14:31, shopping. Watching every charge since 20 Sep. Nothing is disputed or blocked unless you ask; if it isn't yours, DBS blocks the card on 1800 111 1111."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The S$1,249 charge was reversed",
+            "subtitle": "Altitude ··4410 · as of 15:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Harvey Norman reversed it at 15:05. Nothing was changed; I’m still watching"
+            }
+          ],
+          "fallback_text": "The S$1,249.00 Harvey Norman charge on your DBS Altitude card ··4410 was reversed at 15:05, as of 15:10. Nothing was changed on your side; I’m still watching for charges over S$200."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your DBS card",
+            "subtitle": "Altitude ··4410"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "DBS didn’t respond. Nothing was changed; next check at 15:00"
+            }
+          ],
+          "fallback_text": "Couldn’t read new charges on your DBS Altitude card ··4410: DBS didn’t respond. Nothing was changed; the next check is at 15:00."
         }
       }
     }
