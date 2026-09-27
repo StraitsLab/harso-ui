@@ -1384,6 +1384,425 @@
           "fallback_text": "Your Library storage is full, so the office move tracker wasn’t saved. Nothing else changed."
         }
       }
+    },
+    {
+      "id": "prod-meeting-brief",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Every evening at 8, brief me on tomorrow's meetings and who I'm meeting.",
+      "says": "Two meetings tomorrow, each with one thing to prepare.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Schedule / calendar"
+      ],
+      "rationale": "One brief per evening run: each meeting with its people and one prep note in the secondary line, time trailing; still bound to the routine with one Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tomorrow · Sun 27 Sep",
+          "subtitle": "2 meetings · brief of 20:00"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every evening at 20:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Design review",
+                "secondary": "Zoom · Mei Lin, Arjun Rao · prep: read Mei's 3 comments on v2",
+                "trailing": "09:30"
+              },
+              {
+                "label": "Lunch with Sam",
+                "secondary": "Tiong Bahru Bakery · Sam Lee · prep: bring the Tokyo restaurant list",
+                "trailing": "12:00"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01",
+              "control": "pause"
+            }
+          }
+        ],
+        "fallback_text": "Tomorrow, Sun 27 Sep, 2 meetings, brief of 20:00. Design review 09:30 on Zoom with Mei Lin and Arjun Rao; prep: read Mei's 3 comments on v2. Lunch with Sam 12:00 at Tiong Bahru Bakery with Sam Lee; prep: bring the Tokyo restaurant list. Next brief every evening at 20:00; you can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing tomorrow's brief from 2 calendars",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0405"
+              }
+            }
+          ],
+          "fallback_text": "Writing the brief for Sun 27 Sep from your Google and iCloud calendars."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "1 of 2 calendars read · iCloud still loading"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every evening at 20:00",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Design review",
+                  "secondary": "Zoom · Mei Lin, Arjun Rao · prep: read Mei's 3 comments on v2",
+                  "trailing": "09:30"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01",
+                "control": "pause"
+              }
+            }
+          ],
+          "fallback_text": "Sun 27 Sep, Google calendar only so far: Design review 09:30 on Zoom with Mei Lin and Arjun Rao; prep: read Mei's 3 comments on v2. iCloud is still loading, so a meeting there is not in this brief yet. Next brief every evening at 20:00; you can pause it."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "2 meetings · as of 20:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every evening at 20:00",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Design review",
+                  "secondary": "Zoom · Mei Lin, Arjun Rao · prep: read Mei's 3 comments on v2",
+                  "trailing": "09:30"
+                },
+                {
+                  "label": "Lunch with Sam",
+                  "secondary": "Tiong Bahru Bakery · Sam Lee · prep: bring the Tokyo restaurant list",
+                  "trailing": "12:00"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01",
+                "control": "pause"
+              }
+            }
+          ],
+          "fallback_text": "Sun 27 Sep as of 20:00 (couldn't refresh, so a change since then won't show): Design review 09:30 on Zoom with Mei Lin and Arjun Rao; prep: read Mei's 3 comments on v2. Lunch with Sam 12:00 at Tiong Bahru Bakery with Sam Lee; prep: bring the Tokyo restaurant list."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No meetings on either calendar. The next brief is at 20:00 tomorrow."
+            }
+          ],
+          "fallback_text": "No meetings on your Google or iCloud calendars for Sun 27 Sep, so there is nothing to prepare. The next brief is at 20:00 tomorrow."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't write tomorrow's brief",
+            "subtitle": "Tomorrow · Sun 27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Sign in and ask me for the brief."
+            }
+          ],
+          "fallback_text": "Couldn't write the brief for Sun 27 Sep: the Google Calendar sign-in expired, so I couldn't read tomorrow's meetings. Nothing was changed. Sign in and ask me for the brief."
+        }
+      }
+    },
+    {
+      "id": "prod-week-planned",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Yes, add the 4 blocks.",
+      "says": "Your week is planned; the recap comes again Monday at 9.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Schedule / calendar",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: the week and last week's recap in the header, each added block as a row with why and its time; a timeout is 'couldn't confirm'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Added · your week 28 Sep–4 Oct",
+          "subtitle": "Last week: 41 emails answered · 3 waiting on you"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Focus: board deck",
+                "secondary": "Mon 28 Sep · from last week’s open thread",
+                "trailing": "09:30–11:30"
+              },
+              {
+                "label": "Reply to Priya and Kai",
+                "secondary": "Tue 29 Sep · 2 emails waiting since 23 Sep",
+                "trailing": "08:30–09:00"
+              },
+              {
+                "label": "Focus: pricing page",
+                "secondary": "Wed 30 Sep · you moved it twice last week",
+                "trailing": "14:00–16:00"
+              },
+              {
+                "label": "Admin: bills and forms",
+                "secondary": "Thu 1 Oct · 3 things from your deadlines list",
+                "trailing": "17:00–17:30"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Calendar",
+              "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Calendar, 4 events added 26 Sep 2026 09:04"
+            }
+          ],
+          "assumptions": [
+            "The recap comes every Monday at 9:00; blocks are added only after your yes"
+          ]
+        },
+        "fallback_text": "Added to your Google Calendar, next week 28 Sep–4 Oct. Last week you answered 41 emails; 3 wait on you. Blocks: Mon 28 Sep 09:30–11:30 focus on the board deck; Tue 29 Sep 08:30–09:00 reply to Priya and Kai; Wed 30 Sep 14:00–16:00 focus on the pricing page; Thu 1 Oct 17:00–17:30 admin: bills and forms. The recap and plan come every Monday at 9:00; blocks are added only after your yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your week · 28 Sep–4 Oct",
+            "subtitle": "4 blocks · Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Adding 4 blocks to your calendar, 28 Sep–4 Oct",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0408"
+              }
+            }
+          ],
+          "fallback_text": "Adding next week's 4 planned blocks to your Google Calendar, 28 Sep–4 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Added · your week 28 Sep–4 Oct",
+            "subtitle": "2 of 4 confirmed · Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Focus: board deck",
+                  "secondary": "Mon 28 Sep · from last week’s open thread",
+                  "trailing": "09:30–11:30"
+                },
+                {
+                  "label": "Reply to Priya and Kai",
+                  "secondary": "Tue 29 Sep · 2 emails waiting since 23 Sep",
+                  "trailing": "08:30–09:00"
+                },
+                {
+                  "label": "Focus: pricing page",
+                  "secondary": "Wed 30 Sep · couldn't confirm yet",
+                  "trailing": "14:00–16:00"
+                },
+                {
+                  "label": "Admin: bills and forms",
+                  "secondary": "Thu 1 Oct · couldn't confirm yet",
+                  "trailing": "17:00–17:30"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 2 of 4 events confirmed added 26 Sep 2026 09:04"
+              }
+            ],
+            "assumptions": [
+              "The recap comes every Monday at 9:00; blocks are added only after your yes"
+            ]
+          },
+          "fallback_text": "Next week 28 Sep–4 Oct, 2 of 4 blocks confirmed on your Google Calendar: Mon 28 Sep 09:30–11:30 focus on the board deck; Tue 29 Sep 08:30–09:00 reply to Priya and Kai. Couldn't confirm yet: Wed 30 Sep 14:00–16:00 focus on the pricing page and Thu 1 Oct 17:00–17:30 admin: bills and forms; I'll check before adding them again."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Added · your week 28 Sep–4 Oct",
+            "subtitle": "As of 09:04 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Focus: board deck",
+                  "secondary": "Mon 28 Sep · from last week’s open thread",
+                  "trailing": "09:30–11:30"
+                },
+                {
+                  "label": "Reply to Priya and Kai",
+                  "secondary": "Tue 29 Sep · 2 emails waiting since 23 Sep",
+                  "trailing": "08:30–09:00"
+                },
+                {
+                  "label": "Focus: pricing page",
+                  "secondary": "Wed 30 Sep · you moved it twice last week",
+                  "trailing": "14:00–16:00"
+                },
+                {
+                  "label": "Admin: bills and forms",
+                  "secondary": "Thu 1 Oct · 3 things from your deadlines list",
+                  "trailing": "17:00–17:30"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 4 events added 26 Sep 2026 09:04"
+              }
+            ],
+            "assumptions": [
+              "The recap comes every Monday at 9:00; blocks are added only after your yes"
+            ]
+          },
+          "fallback_text": "As of 09:04 (couldn't refresh): added to your Google Calendar, next week 28 Sep–4 Oct. Blocks: Mon 28 Sep 09:30–11:30 focus on the board deck; Tue 29 Sep 08:30–09:00 reply to Priya and Kai; Wed 30 Sep 14:00–16:00 focus on the pricing page; Thu 1 Oct 17:00–17:30 admin: bills and forms."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No blocks added",
+            "subtitle": "Your week · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "New meetings took all 4 slots. Nothing added; ask me to re-plan."
+            }
+          ],
+          "fallback_text": "No blocks added for next week, 28 Sep–4 Oct: new meetings took all 4 planned slots after I proposed them, so nothing was added. Ask me to re-plan the week."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm your week was added",
+            "subtitle": "Your week · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Calendar didn't answer. I'll check your week before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm next week's 4 blocks, 28 Sep–4 Oct, were added: Google Calendar didn't answer after they were sent, so some may be there. So none are added twice: I'll check your week before trying again."
+        }
+      }
     }
   ]
 }

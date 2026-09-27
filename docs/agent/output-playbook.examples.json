@@ -157,6 +157,8 @@
     "book-cancel-lunch",
     "book-cancelled",
     "book-airport-ride",
+    "book-ica-passport-booked",
+    "book-dmv-real-id-booked",
     "food-menu",
     "food-nutrition-week",
     "food-menu-section",
@@ -23884,6 +23886,867 @@
       }
     },
     {
+      "id": "book-ica-passport-booked",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Yes, book Monday 08:30. I've done the Singpass step.",
+      "says": "Booked for Monday morning, and it's on your calendar.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R4 Government appointment",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes and the person's own Singpass step: time and office in the header, the ICA reference, what to bring and the change terms as rows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked · ICA passport collection",
+          "subtitle": "Mon 28 Sep · 08:30 · ICA Building, Lavender · as of 15:32"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Reference",
+                "trailing": "ICA-26092841"
+              },
+              {
+                "label": "Bring",
+                "secondary": "Old passport, NRIC, collection letter · 10 min early",
+                "trailing": "08:20"
+              },
+              {
+                "label": "Change or cancel",
+                "secondary": "On ICA e-Appointment, with your Singpass",
+                "trailing": "No fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Calendar",
+              "url": "https://calendar.google.com/calendar/r/day/2026/9/28"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "ICA e-Appointment confirmation page, 26 Sep 2026 15:32"
+            }
+          ],
+          "assumptions": [
+            "You logged in with Singpass yourself in the live view; I never saw it"
+          ]
+        },
+        "fallback_text": "Booked · ICA passport collection: Mon 28 Sep 08:30 at the ICA Building, Lavender, as of 15:32, from the ICA confirmation page. Reference ICA-26092841. Bring your old passport, NRIC and the collection letter, 10 min early: 08:20. Change or cancel on ICA e-Appointment with your Singpass, no fee. Added to your calendar with a reminder."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "ICA passport collection",
+            "subtitle": "Mon 28 Sep · 08:30 · ICA Building, Lavender"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Waiting for ICA to confirm Mon 28 Sep 08:30",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0401"
+              }
+            }
+          ],
+          "fallback_text": "Waiting for ICA to confirm your passport collection on Mon 28 Sep at 08:30 at the ICA Building, Lavender."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · ICA passport collection",
+            "subtitle": "Mon 28 Sep · 08:30 · ICA Building, Lavender · as of 15:32"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "ICA-26092841"
+                },
+                {
+                  "label": "Bring and change terms",
+                  "secondary": "ICA hasn't emailed the confirmation yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "ICA e-Appointment confirmation page, 26 Sep 2026 15:32"
+              }
+            ],
+            "assumptions": [
+              "You logged in with Singpass yourself in the live view; I never saw it"
+            ]
+          },
+          "fallback_text": "Booked · ICA passport collection: Mon 28 Sep 08:30 at the ICA Building, Lavender, as of 15:32. Reference ICA-26092841. Bring and change terms: not in yet; ICA hasn't emailed the confirmation yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · ICA passport collection",
+            "subtitle": "Mon 28 Sep · 08:30 · as of 15:32 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Reference",
+                  "trailing": "ICA-26092841"
+                },
+                {
+                  "label": "Bring",
+                  "secondary": "Old passport, NRIC, collection letter · 10 min early",
+                  "trailing": "08:20"
+                },
+                {
+                  "label": "Change or cancel",
+                  "secondary": "On ICA e-Appointment, with your Singpass",
+                  "trailing": "No fee"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "ICA e-Appointment confirmation page, 26 Sep 2026 15:32"
+              }
+            ],
+            "assumptions": [
+              "You logged in with Singpass yourself in the live view; I never saw it"
+            ]
+          },
+          "fallback_text": "As of 15:32 (couldn't refresh): Booked · ICA passport collection: Mon 28 Sep 08:30 at the ICA Building, Lavender. Reference ICA-26092841. Bring your old passport, NRIC and the collection letter, 10 min early: 08:20. Change or cancel on ICA e-Appointment with your Singpass, no fee. Added to your calendar with a reminder."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Mon 08:30 at ICA was taken",
+            "subtitle": "ICA Building, Lavender · as of 15:32"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nearest: Mon 28 Sep 11:10. Say if I should book it. Nothing booked."
+            }
+          ],
+          "fallback_text": "Mon 28 Sep 08:30 for passport collection at the ICA Building, Lavender, was taken before ICA confirmed, as of 15:32. Nearest: Mon 28 Sep 11:10. Say if I should book it. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the ICA booking",
+            "subtitle": "Passport collection · Mon 28 Sep 08:30"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "ICA didn't answer. I'll check your ICA bookings before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the ICA passport collection booking for Mon 28 Sep 08:30 at the ICA Building, Lavender: ICA e-Appointment didn't answer after the booking was submitted, so it may be booked. So it isn't booked twice: I'll check your ICA bookings before trying again."
+        }
+      }
+    },
+    {
+      "id": "book-dmv-real-id-booked",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Yes, book Daly City on Thursday 8 Oct.",
+      "says": "Booked at Daly City, and it's on your calendar.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R4 Government appointment",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: time and office in the header, the DMV confirmation, what to bring with the fee and the change terms as rows.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Booked · Daly City DMV",
+          "subtitle": "Thu 8 Oct · 14:40 PT · REAL ID · as of 00:34"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Confirmation",
+                "trailing": "DC-7731-0482"
+              },
+              {
+                "label": "Bring",
+                "secondary": "Passport, SSN, 2 proofs of address, US$45 fee · 10 min early",
+                "trailing": "14:30"
+              },
+              {
+                "label": "Change or cancel",
+                "secondary": "Online, up to the day before",
+                "trailing": "No fee"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Calendar",
+              "url": "https://calendar.google.com/calendar/r/day/2026/10/8"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "California DMV appointment confirmation, 26 Sep 2026 00:34 PT"
+            }
+          ],
+          "assumptions": [
+            "Times are Pacific; the fee is paid at the office"
+          ]
+        },
+        "fallback_text": "Booked · Daly City DMV, 1500 Sullivan Ave: REAL ID, Thu 8 Oct 14:40 Pacific time, as of 00:34. Confirmation DC-7731-0482. Bring your passport, Social Security number, 2 proofs of California address and the US$45 fee, 10 min early: 14:30. Change or cancel online, up to the day before, no fee. Added to your calendar with a reminder."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Daly City DMV",
+            "subtitle": "Thu 8 Oct · 14:40 PT · REAL ID"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Waiting for the DMV to confirm Thu 8 Oct 14:40",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0402"
+              }
+            }
+          ],
+          "fallback_text": "Waiting for the California DMV to confirm your REAL ID appointment at Daly City DMV on Thu 8 Oct at 14:40 Pacific time."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · Daly City DMV",
+            "subtitle": "Thu 8 Oct · 14:40 PT · REAL ID · as of 00:34"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Confirmation",
+                  "trailing": "DC-7731-0482"
+                },
+                {
+                  "label": "Bring and change terms",
+                  "secondary": "The DMV hasn't emailed them yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/10/8"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "California DMV appointment confirmation, 26 Sep 2026 00:34 PT"
+              }
+            ],
+            "assumptions": [
+              "Times are Pacific; the fee is paid at the office"
+            ]
+          },
+          "fallback_text": "Booked · Daly City DMV, 1500 Sullivan Ave: REAL ID, Thu 8 Oct 14:40 Pacific time, as of 00:34. Confirmation DC-7731-0482. Bring and change terms: not in yet; the DMV hasn't emailed them yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Booked · Daly City DMV",
+            "subtitle": "Thu 8 Oct · 14:40 PT · as of 00:34 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Confirmation",
+                  "trailing": "DC-7731-0482"
+                },
+                {
+                  "label": "Bring",
+                  "secondary": "Passport, SSN, 2 proofs of address, US$45 fee · 10 min early",
+                  "trailing": "14:30"
+                },
+                {
+                  "label": "Change or cancel",
+                  "secondary": "Online, up to the day before",
+                  "trailing": "No fee"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/10/8"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "California DMV appointment confirmation, 26 Sep 2026 00:34 PT"
+              }
+            ],
+            "assumptions": [
+              "Times are Pacific; the fee is paid at the office"
+            ]
+          },
+          "fallback_text": "As of 00:34 (couldn't refresh): Booked · Daly City DMV, 1500 Sullivan Ave: REAL ID, Thu 8 Oct 14:40 Pacific time. Confirmation DC-7731-0482. Bring your passport, Social Security number, 2 proofs of California address and the US$45 fee, 10 min early: 14:30. Change or cancel online, up to the day before, no fee. Added to your calendar with a reminder."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Thu 14:40 at Daly City was taken",
+            "subtitle": "REAL ID · Pacific time · as of 00:34"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nearest: Tue 13 Oct 09:10, San Francisco DMV. Say if I should book it."
+            }
+          ],
+          "fallback_text": "Thu 8 Oct 14:40 for REAL ID at Daly City DMV was taken before the DMV confirmed, as of 00:34 Pacific time. Nearest: Tue 13 Oct 09:10 at San Francisco DMV, 1377 Fell St. Say if I should book it. Nothing was booked."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the DMV booking",
+            "subtitle": "Daly City DMV · Thu 8 Oct 14:40 PT"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The DMV site didn't answer. I'll check your DMV bookings before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the REAL ID booking at Daly City DMV, Thu 8 Oct 14:40 Pacific time: the DMV site didn't answer after the booking was submitted, so it may be booked. So it isn't booked twice: I'll check your DMV bookings before trying again."
+        }
+      }
+    },
+    {
+      "id": "cal-invite-accepted",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Yes, send Priya the invite for Tuesday at 2.",
+      "says": "Sent. Priya has already accepted.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "C3 Find a time",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: the agreed time in the header, each calendar's state as rows; a timeout is 'couldn't confirm', never 'not sent'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Invite sent · 30 min with Priya",
+          "subtitle": "Tue 29 Sep · 14:00–14:30 SGT · Google Meet"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Priya Sharma",
+                "secondary": "Invite sent · 11:30–12:00 IST for her",
+                "trailing": "Accepted"
+              },
+              {
+                "label": "Your calendar",
+                "secondary": "Organiser · Meet link added",
+                "trailing": "Added"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Calendar",
+              "url": "https://calendar.google.com/calendar/r/day/2026/9/29"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Calendar event and Priya's reply, 26 Sep 2026 10:26"
+            }
+          ]
+        },
+        "fallback_text": "Invite sent: 30 min with Priya Sharma, Tue 29 Sep 14:00–14:30 SGT (11:30–12:00 IST for her) on Google Meet, as of 10:26. Priya Sharma: invite sent, accepted, so it is on her calendar. Your calendar: added, you are the organiser, Meet link added."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "30 min with Priya",
+            "subtitle": "Tue 29 Sep · 14:00–14:30 SGT"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Sending Priya the invite for Tue 29 Sep 14:00 SGT",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0406"
+              }
+            }
+          ],
+          "fallback_text": "Sending Priya Sharma the invite for 30 min on Tue 29 Sep 14:00–14:30 SGT (11:30–12:00 IST for her) on Google Meet."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Invite sent · 30 min with Priya",
+            "subtitle": "Tue 29 Sep · 14:00–14:30 SGT · Google Meet"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Priya Sharma",
+                  "secondary": "Invite sent · 11:30–12:00 IST for her",
+                  "trailing": "No reply yet"
+                },
+                {
+                  "label": "Your calendar",
+                  "secondary": "Organiser · Meet link added",
+                  "trailing": "Added"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/9/29"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar event, invite sent 26 Sep 2026 10:26; no reply from Priya yet"
+              }
+            ]
+          },
+          "fallback_text": "Invite sent: 30 min with Priya Sharma, Tue 29 Sep 14:00–14:30 SGT (11:30–12:00 IST for her) on Google Meet, as of 10:26. Priya Sharma: invite sent, no reply yet. Your calendar: added, you are the organiser, Meet link added."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Invite sent · 30 min with Priya",
+            "subtitle": "Tue 29 Sep 14:00 SGT · as of 10:26 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Priya Sharma",
+                  "secondary": "Invite sent · 11:30–12:00 IST for her",
+                  "trailing": "Accepted"
+                },
+                {
+                  "label": "Your calendar",
+                  "secondary": "Organiser · Meet link added",
+                  "trailing": "Added"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/day/2026/9/29"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar event and Priya's reply, 26 Sep 2026 10:26"
+              }
+            ]
+          },
+          "fallback_text": "As of 10:26 (couldn't refresh): Invite sent: 30 min with Priya Sharma, Tue 29 Sep 14:00–14:30 SGT (11:30–12:00 IST for her) on Google Meet. Priya Sharma: invite sent, accepted. Your calendar: added, you are the organiser, Meet link added."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tue 14:00 is no longer free for Priya",
+            "subtitle": "30 min · as of 10:26"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Nothing sent. Both still free Wed 30 Sep 16:00 SGT; say if I should send it."
+            }
+          ],
+          "fallback_text": "Tue 29 Sep 14:00 SGT is no longer free for Priya Sharma, as of 10:26, so no invite was sent. You are both still free Wed 30 Sep 16:00–16:30 SGT (13:30 IST for her); say if I should send that one."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the invite sent",
+            "subtitle": "30 min with Priya · Tue 29 Sep 14:00"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Calendar didn't answer. I'll check the event before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the invite to Priya Sharma for Tue 29 Sep 14:00–14:30 SGT went out: Google Calendar didn't answer after it was sent, so she may have it. So she doesn't get it twice: I'll check the event before trying again."
+        }
+      }
+    },
+    {
+      "id": "cal-focus-added",
+      "vertical": "calendar_bookings",
+      "kind": "card",
+      "request": "Yes, add them, and do this every week.",
+      "says": "All six are on your calendar; Tuesday had no room.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "C5 Focus time and buffers",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: the week and count in the header, each added block as a row in day order with its time; a timeout is 'couldn't confirm', never 'not added'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Added · focus time 28 Sep–4 Oct",
+          "subtitle": "4 deep-work blocks, 11 h · 2 yoga buffers · Tue full"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Deep work",
+                "secondary": "Mon 28 Sep",
+                "trailing": "08:00–10:00"
+              },
+              {
+                "label": "Deep work",
+                "secondary": "Wed 30 Sep",
+                "trailing": "09:00–12:00"
+              },
+              {
+                "label": "Buffer before yoga",
+                "secondary": "Wed 30 Sep · yoga 18:30",
+                "trailing": "18:00–18:30"
+              },
+              {
+                "label": "Deep work",
+                "secondary": "Thu 1 Oct",
+                "trailing": "09:00–12:00"
+              },
+              {
+                "label": "Deep work",
+                "secondary": "Fri 2 Oct",
+                "trailing": "13:00–16:00"
+              },
+              {
+                "label": "Buffer before yoga",
+                "secondary": "Sat 3 Oct · yoga 09:00",
+                "trailing": "08:30–09:00"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Calendar",
+              "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Calendar, 6 events added 26 Sep 2026 11:02"
+            }
+          ],
+          "assumptions": [
+            "The rule is saved: each Friday I propose the next week's blocks for your yes"
+          ]
+        },
+        "fallback_text": "Added to your Google Calendar, focus time 28 Sep–4 Oct: 4 deep-work blocks, 11 h, and 2 yoga buffers. Deep work Mon 28 Sep 08:00–10:00, Wed 30 Sep 09:00–12:00, Thu 1 Oct 09:00–12:00, Fri 2 Oct 13:00–16:00. Buffer before yoga Wed 30 Sep 18:00–18:30 (yoga 18:30) and Sat 3 Oct 08:30–09:00 (yoga 09:00). Tue full: no 2-hour gap, so none there. Each Friday I'll propose the next week's blocks for your yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Focus time · 28 Sep–4 Oct",
+            "subtitle": "6 blocks · Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Adding 4 deep-work blocks and 2 yoga buffers, 28 Sep–4 Oct",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0407"
+              }
+            }
+          ],
+          "fallback_text": "Adding focus time to your Google Calendar, 28 Sep–4 Oct: 4 deep-work blocks and 2 buffers before yoga."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Added · focus time 28 Sep–4 Oct",
+            "subtitle": "4 of 6 confirmed · Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Deep work",
+                  "secondary": "Mon 28 Sep",
+                  "trailing": "08:00–10:00"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Wed 30 Sep",
+                  "trailing": "09:00–12:00"
+                },
+                {
+                  "label": "Buffer before yoga",
+                  "secondary": "Wed 30 Sep · yoga 18:30",
+                  "trailing": "18:00–18:30"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Thu 1 Oct",
+                  "trailing": "09:00–12:00"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Fri 2 Oct · couldn't confirm yet",
+                  "trailing": "13:00–16:00"
+                },
+                {
+                  "label": "Buffer before yoga",
+                  "secondary": "Sat 3 Oct · couldn't confirm yet",
+                  "trailing": "08:30–09:00"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 4 of 6 events confirmed added 26 Sep 2026 11:02"
+              }
+            ],
+            "assumptions": [
+              "The rule is saved: each Friday I propose the next week's blocks for your yes"
+            ]
+          },
+          "fallback_text": "Focus time 28 Sep–4 Oct, 4 of 6 confirmed on your Google Calendar: deep work Mon 28 Sep 08:00–10:00, Wed 30 Sep 09:00–12:00, Thu 1 Oct 09:00–12:00; buffer before yoga Wed 30 Sep 18:00–18:30. Couldn't confirm yet: deep work Fri 2 Oct 13:00–16:00 and the buffer Sat 3 Oct 08:30–09:00; I'll check before adding them again."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Added · focus time 28 Sep–4 Oct",
+            "subtitle": "As of 11:02 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Deep work",
+                  "secondary": "Mon 28 Sep",
+                  "trailing": "08:00–10:00"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Wed 30 Sep",
+                  "trailing": "09:00–12:00"
+                },
+                {
+                  "label": "Buffer before yoga",
+                  "secondary": "Wed 30 Sep · yoga 18:30",
+                  "trailing": "18:00–18:30"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Thu 1 Oct",
+                  "trailing": "09:00–12:00"
+                },
+                {
+                  "label": "Deep work",
+                  "secondary": "Fri 2 Oct",
+                  "trailing": "13:00–16:00"
+                },
+                {
+                  "label": "Buffer before yoga",
+                  "secondary": "Sat 3 Oct · yoga 09:00",
+                  "trailing": "08:30–09:00"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 6 events added 26 Sep 2026 11:02"
+              }
+            ],
+            "assumptions": [
+              "The rule is saved: each Friday I propose the next week's blocks for your yes"
+            ]
+          },
+          "fallback_text": "As of 11:02 (couldn't refresh): added to your Google Calendar, focus time 28 Sep–4 Oct: 4 deep-work blocks, 11 h, and 2 yoga buffers. Deep work Mon 28 Sep 08:00–10:00, Wed 30 Sep 09:00–12:00, Thu 1 Oct 09:00–12:00, Fri 2 Oct 13:00–16:00. Buffer before yoga Wed 30 Sep 18:00–18:30 (yoga 18:30) and Sat 3 Oct 08:30–09:00 (yoga 09:00). Tue full: no 2-hour gap."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No focus blocks added",
+            "subtitle": "28 Sep–4 Oct · as of 11:02"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "New meetings took every gap. Nothing added; ask me to re-plan the week."
+            }
+          ],
+          "fallback_text": "No focus blocks added for 28 Sep–4 Oct, as of 11:02: new meetings took every proposed gap after I proposed them, so nothing was added. Ask me to re-plan the week."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm the blocks were added",
+            "subtitle": "Focus time · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Calendar didn't answer. I'll check your week before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm the 6 focus blocks for 28 Sep–4 Oct were added: Google Calendar didn't answer after they were sent, so some may be there. So none are added twice: I'll check your week before trying again."
+        }
+      }
+    },
+    {
       "id": "food-recipe",
       "vertical": "food",
       "kind": "card",
@@ -35344,6 +36207,425 @@
       }
     },
     {
+      "id": "prod-meeting-brief",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Every evening at 8, brief me on tomorrow's meetings and who I'm meeting.",
+      "says": "Two meetings tomorrow, each with one thing to prepare.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Schedule / calendar"
+      ],
+      "rationale": "One brief per evening run: each meeting with its people and one prep note in the secondary line, time trailing; still bound to the routine with one Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tomorrow · Sun 27 Sep",
+          "subtitle": "2 meetings · brief of 20:00"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every evening at 20:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Design review",
+                "secondary": "Zoom · Mei Lin, Arjun Rao · prep: read Mei's 3 comments on v2",
+                "trailing": "09:30"
+              },
+              {
+                "label": "Lunch with Sam",
+                "secondary": "Tiong Bahru Bakery · Sam Lee · prep: bring the Tokyo restaurant list",
+                "trailing": "12:00"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01",
+              "control": "pause"
+            }
+          }
+        ],
+        "fallback_text": "Tomorrow, Sun 27 Sep, 2 meetings, brief of 20:00. Design review 09:30 on Zoom with Mei Lin and Arjun Rao; prep: read Mei's 3 comments on v2. Lunch with Sam 12:00 at Tiong Bahru Bakery with Sam Lee; prep: bring the Tokyo restaurant list. Next brief every evening at 20:00; you can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing tomorrow's brief from 2 calendars",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0405"
+              }
+            }
+          ],
+          "fallback_text": "Writing the brief for Sun 27 Sep from your Google and iCloud calendars."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "1 of 2 calendars read · iCloud still loading"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every evening at 20:00",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Design review",
+                  "secondary": "Zoom · Mei Lin, Arjun Rao · prep: read Mei's 3 comments on v2",
+                  "trailing": "09:30"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01",
+                "control": "pause"
+              }
+            }
+          ],
+          "fallback_text": "Sun 27 Sep, Google calendar only so far: Design review 09:30 on Zoom with Mei Lin and Arjun Rao; prep: read Mei's 3 comments on v2. iCloud is still loading, so a meeting there is not in this brief yet. Next brief every evening at 20:00; you can pause it."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "2 meetings · as of 20:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every evening at 20:00",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Design review",
+                  "secondary": "Zoom · Mei Lin, Arjun Rao · prep: read Mei's 3 comments on v2",
+                  "trailing": "09:30"
+                },
+                {
+                  "label": "Lunch with Sam",
+                  "secondary": "Tiong Bahru Bakery · Sam Lee · prep: bring the Tokyo restaurant list",
+                  "trailing": "12:00"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0c01",
+                "control": "pause"
+              }
+            }
+          ],
+          "fallback_text": "Sun 27 Sep as of 20:00 (couldn't refresh, so a change since then won't show): Design review 09:30 on Zoom with Mei Lin and Arjun Rao; prep: read Mei's 3 comments on v2. Lunch with Sam 12:00 at Tiong Bahru Bakery with Sam Lee; prep: bring the Tokyo restaurant list."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tomorrow · Sun 27 Sep",
+            "subtitle": "Google and iCloud"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No meetings on either calendar. The next brief is at 20:00 tomorrow."
+            }
+          ],
+          "fallback_text": "No meetings on your Google or iCloud calendars for Sun 27 Sep, so there is nothing to prepare. The next brief is at 20:00 tomorrow."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't write tomorrow's brief",
+            "subtitle": "Tomorrow · Sun 27 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Calendar sign-in expired. Sign in and ask me for the brief."
+            }
+          ],
+          "fallback_text": "Couldn't write the brief for Sun 27 Sep: the Google Calendar sign-in expired, so I couldn't read tomorrow's meetings. Nothing was changed. Sign in and ask me for the brief."
+        }
+      }
+    },
+    {
+      "id": "prod-week-planned",
+      "vertical": "productivity",
+      "kind": "card",
+      "request": "Yes, add the 4 blocks.",
+      "says": "Your week is planned; the recap comes again Monday at 9.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Schedule / calendar",
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After the yes: the week and last week's recap in the header, each added block as a row with why and its time; a timeout is 'couldn't confirm'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Added · your week 28 Sep–4 Oct",
+          "subtitle": "Last week: 41 emails answered · 3 waiting on you"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Focus: board deck",
+                "secondary": "Mon 28 Sep · from last week’s open thread",
+                "trailing": "09:30–11:30"
+              },
+              {
+                "label": "Reply to Priya and Kai",
+                "secondary": "Tue 29 Sep · 2 emails waiting since 23 Sep",
+                "trailing": "08:30–09:00"
+              },
+              {
+                "label": "Focus: pricing page",
+                "secondary": "Wed 30 Sep · you moved it twice last week",
+                "trailing": "14:00–16:00"
+              },
+              {
+                "label": "Admin: bills and forms",
+                "secondary": "Thu 1 Oct · 3 things from your deadlines list",
+                "trailing": "17:00–17:30"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open in Calendar",
+              "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Google Calendar, 4 events added 26 Sep 2026 09:04"
+            }
+          ],
+          "assumptions": [
+            "The recap comes every Monday at 9:00; blocks are added only after your yes"
+          ]
+        },
+        "fallback_text": "Added to your Google Calendar, next week 28 Sep–4 Oct. Last week you answered 41 emails; 3 wait on you. Blocks: Mon 28 Sep 09:30–11:30 focus on the board deck; Tue 29 Sep 08:30–09:00 reply to Priya and Kai; Wed 30 Sep 14:00–16:00 focus on the pricing page; Thu 1 Oct 17:00–17:30 admin: bills and forms. The recap and plan come every Monday at 9:00; blocks are added only after your yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Your week · 28 Sep–4 Oct",
+            "subtitle": "4 blocks · Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Adding 4 blocks to your calendar, 28 Sep–4 Oct",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0408"
+              }
+            }
+          ],
+          "fallback_text": "Adding next week's 4 planned blocks to your Google Calendar, 28 Sep–4 Oct."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Added · your week 28 Sep–4 Oct",
+            "subtitle": "2 of 4 confirmed · Google Calendar"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Focus: board deck",
+                  "secondary": "Mon 28 Sep · from last week’s open thread",
+                  "trailing": "09:30–11:30"
+                },
+                {
+                  "label": "Reply to Priya and Kai",
+                  "secondary": "Tue 29 Sep · 2 emails waiting since 23 Sep",
+                  "trailing": "08:30–09:00"
+                },
+                {
+                  "label": "Focus: pricing page",
+                  "secondary": "Wed 30 Sep · couldn't confirm yet",
+                  "trailing": "14:00–16:00"
+                },
+                {
+                  "label": "Admin: bills and forms",
+                  "secondary": "Thu 1 Oct · couldn't confirm yet",
+                  "trailing": "17:00–17:30"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 2 of 4 events confirmed added 26 Sep 2026 09:04"
+              }
+            ],
+            "assumptions": [
+              "The recap comes every Monday at 9:00; blocks are added only after your yes"
+            ]
+          },
+          "fallback_text": "Next week 28 Sep–4 Oct, 2 of 4 blocks confirmed on your Google Calendar: Mon 28 Sep 09:30–11:30 focus on the board deck; Tue 29 Sep 08:30–09:00 reply to Priya and Kai. Couldn't confirm yet: Wed 30 Sep 14:00–16:00 focus on the pricing page and Thu 1 Oct 17:00–17:30 admin: bills and forms; I'll check before adding them again."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Added · your week 28 Sep–4 Oct",
+            "subtitle": "As of 09:04 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Focus: board deck",
+                  "secondary": "Mon 28 Sep · from last week’s open thread",
+                  "trailing": "09:30–11:30"
+                },
+                {
+                  "label": "Reply to Priya and Kai",
+                  "secondary": "Tue 29 Sep · 2 emails waiting since 23 Sep",
+                  "trailing": "08:30–09:00"
+                },
+                {
+                  "label": "Focus: pricing page",
+                  "secondary": "Wed 30 Sep · you moved it twice last week",
+                  "trailing": "14:00–16:00"
+                },
+                {
+                  "label": "Admin: bills and forms",
+                  "secondary": "Thu 1 Oct · 3 things from your deadlines list",
+                  "trailing": "17:00–17:30"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open in Calendar",
+                "url": "https://calendar.google.com/calendar/r/week/2026/9/28"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Google Calendar, 4 events added 26 Sep 2026 09:04"
+              }
+            ],
+            "assumptions": [
+              "The recap comes every Monday at 9:00; blocks are added only after your yes"
+            ]
+          },
+          "fallback_text": "As of 09:04 (couldn't refresh): added to your Google Calendar, next week 28 Sep–4 Oct. Blocks: Mon 28 Sep 09:30–11:30 focus on the board deck; Tue 29 Sep 08:30–09:00 reply to Priya and Kai; Wed 30 Sep 14:00–16:00 focus on the pricing page; Thu 1 Oct 17:00–17:30 admin: bills and forms."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No blocks added",
+            "subtitle": "Your week · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "New meetings took all 4 slots. Nothing added; ask me to re-plan."
+            }
+          ],
+          "fallback_text": "No blocks added for next week, 28 Sep–4 Oct: new meetings took all 4 planned slots after I proposed them, so nothing was added. Ask me to re-plan the week."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm your week was added",
+            "subtitle": "Your week · 28 Sep–4 Oct"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Calendar didn't answer. I'll check your week before trying again."
+            }
+          ],
+          "fallback_text": "Couldn't confirm next week's 4 blocks, 28 Sep–4 Oct, were added: Google Calendar didn't answer after they were sent, so some may be there. So none are added twice: I'll check your week before trying again."
+        }
+      }
+    },
+    {
       "id": "comms-inbox-brief",
       "vertical": "comms",
       "kind": "card",
@@ -37619,6 +38901,389 @@
             }
           ],
           "fallback_text": "Google Calendar didn't respond, so I couldn't read the RSVPs for Maya turns 6. Nothing was sent. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "comms-nudge-sent",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Yes, send the nudge to Dave.",
+      "says": "Sent in the bid thread. I'll tell you when Dave replies.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Sent receipt",
+        "Follow-up nudge"
+      ],
+      "rationale": "After the yes on the 2-day nudge: the thread it landed in, when it went, and the reply watch as rows; a send that may have landed is never 'not sent'.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Sent · Backyard bid nudge",
+          "subtitle": "To Dave Ortiz, Green Acre · Sat 26 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Thread",
+                "secondary": "Backyard bid, from 18 Sep",
+                "trailing": "4 messages"
+              },
+              {
+                "label": "Sent from",
+                "secondary": "Your Gmail · the 2-day nudge you set on Thu 24 Sep",
+                "trailing": "09:00"
+              },
+              {
+                "label": "Reply watch",
+                "secondary": "I'll tell you here when Dave answers",
+                "trailing": "Until Fri 2 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open thread in Gmail",
+              "url": "https://mail.google.com/mail/u/0/#sent/19a2c4f7e3b1d0bb"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail Sent, 26 Sep 2026 09:00"
+            }
+          ]
+        },
+        "fallback_text": "Sent to Dave Ortiz, Green Acre, on Sat 26 Sep at 09:00 from your Gmail: the backyard bid nudge, 2 days after you set it on Thu 24 Sep, in the Backyard bid thread from 18 Sep (4 messages). Reply watch: I'll tell you here when Dave answers, until Fri 2 Oct."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sending to Dave Ortiz",
+            "subtitle": "Backyard bid nudge"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Sending the backyard bid nudge to Dave Ortiz from your Gmail",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0403"
+              }
+            }
+          ],
+          "fallback_text": "Sending the backyard bid nudge to Dave Ortiz, Green Acre, from your Gmail."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sent · Backyard bid nudge",
+            "subtitle": "To Dave Ortiz, Green Acre · Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Sent from",
+                  "secondary": "Your Gmail",
+                  "trailing": "09:00"
+                },
+                {
+                  "label": "Thread",
+                  "secondary": "Gmail hasn't put it in its thread yet",
+                  "trailing": "Not in yet"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open Sent in Gmail",
+                "url": "https://mail.google.com/mail/u/0/#sent"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail send reply, 26 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "Sent to Dave Ortiz, Green Acre, on Sat 26 Sep at 09:00 from your Gmail: the backyard bid nudge. Gmail hasn't put it in its thread yet, so the thread is not in yet."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Sent · Backyard bid nudge",
+            "subtitle": "To Dave Ortiz · Sat 26 Sep · as of 09:00 · couldn't refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Thread",
+                  "secondary": "Backyard bid, from 18 Sep",
+                  "trailing": "4 messages"
+                },
+                {
+                  "label": "Sent from",
+                  "secondary": "Your Gmail · the 2-day nudge you set on Thu 24 Sep",
+                  "trailing": "09:00"
+                },
+                {
+                  "label": "Reply watch",
+                  "secondary": "I'll tell you here when Dave answers",
+                  "trailing": "Until Fri 2 Oct"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open thread in Gmail",
+                "url": "https://mail.google.com/mail/u/0/#sent/19a2c4f7e3b1d0bb"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail Sent, 26 Sep 2026 09:00"
+              }
+            ]
+          },
+          "fallback_text": "As of 09:00 (couldn't refresh, so a reply since then won't show). Sent to Dave Ortiz, Green Acre, on Sat 26 Sep at 09:00 from your Gmail: the backyard bid nudge, 2 days after you set it on Thu 24 Sep, in the Backyard bid thread from 18 Sep (4 messages). Reply watch: I'll tell you here when Dave answers, until Fri 2 Oct."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Not sent · Backyard bid nudge",
+            "subtitle": "To Dave Ortiz, Green Acre"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Dave replied at 08:41, so nothing was sent. His reply is in the thread."
+            }
+          ],
+          "fallback_text": "Not sent: Dave Ortiz, Green Acre, replied in the Backyard bid thread at 08:41 on Sat 26 Sep, before the nudge was due, so nothing was sent. His reply is in the thread."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't confirm it sent",
+            "subtitle": "To Dave Ortiz · Backyard bid nudge"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Gmail didn't answer. I'll check Sent before trying again."
+            }
+          ],
+          "fallback_text": "I couldn't confirm the backyard bid nudge to Dave Ortiz, Green Acre, went out: Gmail didn't answer after it was sent at 09:00, so it may or may not have gone. I'll check Sent before trying again. That way Dave doesn't get it twice."
+        }
+      }
+    },
+    {
+      "id": "comms-leads-appended",
+      "vertical": "comms",
+      "kind": "card",
+      "request": "Log every photography inquiry into my Client Tracker sheet.",
+      "says": "Two new inquiries came in today; both are in Client Tracker.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Lead extraction",
+        "Sheet (XLSX/CSV)"
+      ],
+      "rationale": "One run of the inquiry watch: each new inquiry is a row added to the person's own named Sheet, row number trailing; open the Sheet or pause the watch.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Added to Client Tracker",
+          "subtitle": "Sat 26 Sep · 2 new inquiries · Google Sheets"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every new photography inquiry email",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0e06"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Hannah Koh",
+                "secondary": "Wedding, 14 Mar 2027 · budget S$4,000 · emailed 10:12",
+                "trailing": "Row 24"
+              },
+              {
+                "label": "Daniel Lim",
+                "secondary": "Family portrait, October · budget S$600 · emailed 11:40",
+                "trailing": "Row 25"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "Open Client Tracker",
+              "url": "https://docs.google.com/spreadsheets/d/1cT7rK9mQ2vLx8Hn4pWz0aBf6EjY3uDs5gRiNo1kVtXe/edit"
+            },
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0e06",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Gmail inquiries of 26 Sep 2026 and Client Tracker in Google Sheets"
+            }
+          ],
+          "assumptions": [
+            "You allowed me once to add rows to Client Tracker; nothing else in it is changed"
+          ]
+        },
+        "fallback_text": "Added to Client Tracker, your Google Sheet, on Sat 26 Sep: 2 new photography inquiries. Row 24: Hannah Koh, wedding on 14 Mar 2027, budget S$4,000, emailed 10:12. Row 25: Daniel Lim, family portrait in October, budget S$600, emailed 11:40. The watch adds every new photography inquiry email; you can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Client Tracker",
+            "subtitle": "Sat 26 Sep · Google Sheets"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Adding the 11:40 inquiry to Client Tracker",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0404"
+              }
+            }
+          ],
+          "fallback_text": "Adding the photography inquiry emailed at 11:40 on Sat 26 Sep to Client Tracker, your Google Sheet."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Added to Client Tracker",
+            "subtitle": "Sat 26 Sep · 1 of 2 confirmed · Google Sheets"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every new photography inquiry email",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0e06"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Hannah Koh",
+                  "secondary": "Wedding, 14 Mar 2027 · budget S$4,000 · emailed 10:12",
+                  "trailing": "Row 24"
+                },
+                {
+                  "label": "Daniel Lim",
+                  "secondary": "Sheets didn't answer; I'll check the sheet before adding it again",
+                  "trailing": "Not confirmed"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "Open Client Tracker",
+                "url": "https://docs.google.com/spreadsheets/d/1cT7rK9mQ2vLx8Hn4pWz0aBf6EjY3uDs5gRiNo1kVtXe/edit"
+              },
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000c9a0e06",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Gmail inquiries of 26 Sep 2026 and Client Tracker in Google Sheets"
+              }
+            ],
+            "assumptions": [
+              "You allowed me once to add rows to Client Tracker; nothing else in it is changed"
+            ]
+          },
+          "fallback_text": "Client Tracker, your Google Sheet, Sat 26 Sep, 1 of 2 new inquiries confirmed. Row 24: Hannah Koh, wedding on 14 Mar 2027, budget S$4,000, emailed 10:12. Daniel Lim, emailed 11:40: couldn't confirm the row was added because Google Sheets didn't answer; I'll check the sheet before adding it again, so it isn't added twice."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No new inquiries",
+            "subtitle": "Client Tracker · Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No inquiry emails since row 23 on 25 Sep. I'll add the next one."
+            }
+          ],
+          "fallback_text": "No new photography inquiries for Client Tracker on Sat 26 Sep: no inquiry emails since row 23, added on 25 Sep. Nothing was added; I'll add the next one when it arrives."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn't add to Client Tracker",
+            "subtitle": "2 inquiries · Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google Sheets sign-in expired. Sign in and I'll add both from Gmail."
+            }
+          ],
+          "fallback_text": "Couldn't add 2 new photography inquiries, emailed 10:12 and 11:40 on Sat 26 Sep, to Client Tracker: the Google Sheets sign-in expired, so nothing was added. They are still in Gmail; sign in and I'll add both."
         }
       }
     },
