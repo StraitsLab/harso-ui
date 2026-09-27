@@ -1,6 +1,6 @@
 # Journeys with no honest example yet
 
-The 24 journeys below have no catalogue example that shows the moment their success check describes. No card was
+The 23 journeys below have no catalogue example that shows the moment their success check describes. No card was
 designed for them (reuse law, founder 2026-09-27): each is new data in the shape of the existing example named under
 "Closest pattern", for a data-only lane. `scripts/check-journeys.mjs` reads the `## <ID>` headings: a journey with no
 example must be listed here, a journey listed here must have none, and the check exits 1 while any is listed. Delete
@@ -151,14 +151,6 @@ Answer from my documents.
 - Success check [957]: "Tester picks their lease; the answer quotes the clause and page."
 - Why no example fits: docs-contract-summary and docs-contract-review paraphrase clauses in rows; neither quotes the clause's words, and docs-contract-review cites only '18 pages'.
 - Closest pattern: `docs-contract-summary` (clause rows, the PDF and page in details sources) with a text block quoting the clause and its page.
-
-## F3
-
-Paperwork deadlines from mail.
-
-- Success check [998]: "Tester sends a mail with a deadline; an alert with the date appears within the watch interval."
-- Why no example fits: home-deadlines-mail is a search the person asked for; nothing shows the alert when a mail with a deadline arrives.
-- Closest pattern: `comms-alert-fired` (the watched mail arrived: what it says, when) with the deadline from `home-deadlines-mail`.
 
 ## P1
 

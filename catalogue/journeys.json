@@ -43,7 +43,7 @@
     {"id": "Q3", "title": "Watch listings (apartments, jobs, cars)", "examples": [], "note": "jobs-alert sets a listings watch and home-rent-listings is a one-off search; no alert for a new listing. See catalogue/gaps/journeys.md."},
     {"id": "F1", "title": "Answer from my documents", "examples": [], "note": "docs-contract-summary and docs-contract-review paraphrase clauses; neither quotes a clause with its page. See catalogue/gaps/journeys.md."},
     {"id": "F2", "title": "Fill a web form", "examples": ["home-form-submitted"], "note": "Submitted as approved, with the reference and the school's receipt email."},
-    {"id": "F3", "title": "Paperwork deadlines from mail", "examples": [], "note": "home-deadlines-mail is a search on request; no example is the alert when a mail with a deadline arrives. See catalogue/gaps/journeys.md."},
+    {"id": "F3", "title": "Paperwork deadlines from mail", "examples": ["comms-alert-fired"], "note": "The watched mail as it arrives (14:02) with its deadline on the card: sign-up closes Wed 30 Sep."},
     {"id": "F4", "title": "Organize files", "examples": ["home-files-done"], "note": "The Drive folder with the 3 invoices."},
     {"id": "P1", "title": "Spending tracker from receipts", "examples": [], "note": "file-expenses-sheet is built from linked accounts, not receipts, and has no category totals. See catalogue/gaps/journeys.md."},
     {"id": "P2", "title": "Bank/card transaction monitoring", "examples": [], "note": "money-card-charges lists a week's charges; no example sets a charge-over-threshold watch or shows its alert. See catalogue/gaps/journeys.md."},
