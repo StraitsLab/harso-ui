@@ -393,3 +393,31 @@ test("text: the budget is measured again after a resize and a font-size change",
   await expect(card(page).getByRole("listitem")).toHaveCount(1);
   await expect(card(page).getByRole("button", { name: "View all", exact: true })).toBeVisible();
 });
+
+test("text: any font change re-measures, and text cut away at a large size comes back when the size is restored", async ({ page }) => {
+  const render = async (items: string[]) => {
+    const doc = { header: { title: "Font" }, fallback_text: "x", blocks: [{ kind: "text", sections: [{ bullets: items }] }] };
+    await page.evaluate(d => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput(d), doc);
+  };
+  const body = (value: string, prop: "fontFamily" | "fontSize") => card(page).evaluate((node, [v, k]) => {
+    ((node.querySelector(".hkc-output-card-sections") as HTMLElement).style as unknown as Record<string, string>)[k] = v;
+  }, [value, prop] as const);
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto(`${fixture}?width=390`);
+  // Narrow glyphs fit four bullets; a wider family (same size and line height) must still stay within the budget.
+  await render(Array(4).fill("iiiiiiiiii iiiiiiiiii iiiiiiiiii iiiiiiiiii"));
+  await expect(card(page).getByRole("listitem")).toHaveCount(4);
+  await body("monospace", "fontFamily");
+  await expect.poll(() => renderedLines(page)).toBeLessThanOrEqual(4);
+  await expect(card(page).getByRole("button", { name: "View all", exact: true })).toBeVisible();
+  // One unbreakable word: at 28px even the first bullet waits for View all (an empty body), and at 14px again the
+  // bullets that fit come back. The trimmed body is zero height there, so this needs more than its own resize.
+  await render(["W".repeat(65), "Next item."]);
+  await body("14px", "fontSize");
+  const fitting = await card(page).getByRole("listitem").allTextContents();
+  expect(fitting.length).toBeGreaterThan(0);
+  await body("28px", "fontSize");
+  await expect(card(page).getByRole("button", { name: "View all", exact: true })).toBeVisible();
+  await body("14px", "fontSize");
+  await expect.poll(() => card(page).getByRole("listitem").allTextContents()).toEqual(fitting);
+});

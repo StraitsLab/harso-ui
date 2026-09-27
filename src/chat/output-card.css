@@ -59,7 +59,9 @@
 
 /* A text block with structure (checklists, day plans, drafts): headings as small headings, paragraphs as paragraphs,
    bullets as a real list with the markers hanging in a gutter. Inline, the renderer keeps whole items within ~4 lines. */
-.harso-kit .hkc-output-card-sections { display: flex; flex-direction: column; gap: var(--hk-space-3); min-width: 0; font-size: var(--hk-text-body); line-height: 1.5; }
+.harso-kit .hkc-output-card-sections { display: flex; flex-direction: column; gap: var(--hk-space-3); position: relative; min-width: 0; font-size: var(--hk-text-body); line-height: 1.5; }
+/* Font sample CardSections watches for typography changes (see output-card.tsx); never visible, never read, no layout. */
+.harso-kit .hkc-output-card-sections-probe { position: absolute; inset-block-start: 0; inset-inline-start: 0; visibility: hidden; pointer-events: none; white-space: nowrap; }
 .harso-kit .hkc-output-card-section { display: flex; flex-direction: column; gap: var(--hk-space-1); min-width: 0; }
 .harso-kit .hkc-output-card-section-heading { margin: 0; font-size: var(--hk-text-chrome); font-weight: 600; line-height: 1.4; color: var(--hk-secondary); }
 .harso-kit .hkc-output-card-sections :where(p, ul) { margin: 0; }

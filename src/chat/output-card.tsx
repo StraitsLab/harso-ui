@@ -423,6 +423,7 @@ const renderedLines = (node: Element) => {
  */
 function CardSections({ sections, lines, onClip }: { sections: HarsoOutputTextSection[]; lines: number; onClip: (clipped: boolean) => void }) {
   const node = useRef<HTMLDivElement>(null);
+  const probe = useRef<HTMLSpanElement>(null);
   const [cut, setCut] = useState<{ keep: number; chars?: number; key: string }>();
   // What the rendered wrap depends on besides the text: the width and the font (size and line height).
   const [layout, setLayout] = useState("");
@@ -451,18 +452,26 @@ function CardSections({ sections, lines, onClip }: { sections: HarsoOutputTextSe
     const view = element?.ownerDocument.defaultView;
     if (!element || !view) return;
     // A new width or font changes how the whole candidate wraps, so the key changes and it is measured afresh. Its own
-    // cuts change only the height, never this. Web fonts arriving change every wrap without changing the width, so
-    // they count into the key too.
+    // cuts change only the height, never this. The trimmed body cannot be the only thing watched: a cut can leave it
+    // empty (zero height), and then no later font change would ever resize it. So a hidden sample of the body's own
+    // font, never trimmed, is watched too: any change of family, size, weight or spacing, or a web font arriving,
+    // changes its box and puts the whole candidate back to be measured again.
     let live = true, fonts = 0;
-    const read = () => { const style = view.getComputedStyle(element); setLayout(`${element.clientWidth}/${style.fontSize}/${style.lineHeight}/${fonts}`); };
+    const read = () => {
+      const style = view.getComputedStyle(element), sample = probe.current?.getBoundingClientRect();
+      setLayout([element.clientWidth, style.fontFamily, style.fontSize, style.fontWeight, style.fontStyle, style.letterSpacing,
+        style.wordSpacing, style.lineHeight, sample ? `${sample.width}x${sample.height}` : "", fonts].join("/"));
+    };
     read();
     const observer = view.ResizeObserver ? new view.ResizeObserver(read) : undefined;
     observer?.observe(element);
+    if (probe.current) observer?.observe(probe.current);
     void element.ownerDocument.fonts?.ready.then(() => { if (live) { fonts += 1; read(); } });
     return () => { live = false; observer?.disconnect(); };
   }, []);
   useLayoutEffect(() => () => onClip(false), [onClip]);
   return <div ref={node} className="hkc-output-card-sections">
+    <span ref={probe} className="hkc-output-card-sections-probe" aria-hidden="true">Hamburgefonstiv 0123</span>
     {shown.map((section, index) => <div key={index} className="hkc-output-card-section">
       {section.heading && <h3 className="hkc-output-card-section-heading">{section.heading}</h3>}
       {section.paragraphs?.map((text, line) => <p key={line}>{text}</p>)}
