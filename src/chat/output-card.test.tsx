@@ -548,6 +548,47 @@ test("a first item too long for the card is cut on a word boundary; the rest wai
   expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
 });
 
+// Round 2, F2: a cut inside a structured item never ends inside a word, whatever the space before it looks like.
+const word = "pneumonoultramicroscopicsilicovolcanoconiosis";
+const cutCases: [string, chat.HarsoOutputTextSection[], string][] = [
+  ["the only space is early (first paragraph)", [{ heading: "Notes", paragraphs: [`Please bring ${word.repeat(4)}`, "Next paragraph."] }], "Please bring…"],
+  ["the only space is early (bullet)", [{ heading: "Notes", bullets: [`Please bring ${word.repeat(4)}`, "Next bullet."] }], "Please bring…"],
+  ["a no-break space separates the words", [{ paragraphs: [`Please\u00a0bring ${word.repeat(4)}`, "Next."] }], "Please\u00a0bring…"],
+  ["an ideographic space separates the words", [{ paragraphs: [`持参\u3000${word.repeat(4)}`, "Next."] }], "持参…"],
+];
+for (const [name, sections, expected] of cutCases) test(`a cut item ends on a whole word: ${name}`, () => {
+  const { card } = renderCard({ document: textDoc({ sections }) });
+  const items = [...card.querySelectorAll(".hkc-output-card-sections p, .hkc-output-card-sections li")].map(node => node.textContent);
+  expect(items).toEqual([expected]);
+  expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
+});
+
+test("a cut item with no word that fits waits for View all instead of showing half a word", () => {
+  const { card } = renderCard({ document: textDoc({ sections: [{ heading: "Notes", paragraphs: [word.repeat(6), "Next."] }] }) });
+  expect(card.querySelector(".hkc-output-card-sections")).toBeNull();
+  expect(card.textContent).not.toContain("pneumono");
+  expect(within(card).getByRole("button", { name: "View all" })).toBeVisible();
+});
+
+test("Chinese with no spaces is cut between two words, never inside one", () => {
+  // A three-character lead-in puts the old code-point cut inside 费用.
+  const text = `请注意${"公共充电设施持续增加家庭充电费用较低".repeat(8)}`;
+  const { card } = renderCard({ document: textDoc({ sections: [{ paragraphs: [text, "下一段。"] }] }) });
+  const [shown] = [...card.querySelectorAll(".hkc-output-card-sections p")].map(node => node.textContent!);
+  const prefix = shown.slice(0, -1);
+  expect(shown.endsWith("…")).toBe(true);
+  expect(text.startsWith(prefix)).toBe(true);
+  const ends = new Set([...new Intl.Segmenter(undefined, { granularity: "word" }).segment(text)].map(s => s.index + s.segment.length));
+  expect(ends.has(prefix.length)).toBe(true);
+});
+
+test("the summary keeps the unchanged plain clip (a guard: structured items alone use whole words)", () => {
+  const summary = `Please bring ${word.repeat(4)}`;
+  const { card } = renderCard({ document: textDoc({ summary, sections: [{ paragraphs: ["x", "y"] }] }) });
+  // Legacy: the first 180 code points, backed off to a space only when one is late in the slice; the CSS clamp bounds it.
+  expect(card.querySelector(".hkc-output-card-text")!.textContent).toBe(`${summary.slice(0, 180)}…`);
+});
+
 test("with uncapped caps (View all) every heading, paragraph and bullet shows with its structure", () => {
   const { card } = renderCard({ document: chat.harsoOutputWholeAnswer(itinerary), caps: chat.HARSO_OUTPUT_CARD_UNCAPPED });
   expect(within(card).getAllByRole("heading", { level: 3 }).map(node => node.textContent)).toEqual(["Day 1 · Higashiyama", "Day 2 · Arashiyama", "Day 3 · Fushimi Inari"]);

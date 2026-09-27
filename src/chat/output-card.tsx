@@ -201,6 +201,29 @@ export function harsoOutputWholeAnswer(document: HarsoOutputDocument): HarsoOutp
     : index === first ? [{ kind: "text", sections }] : []) };
 }
 
+/** Scripts written without spaces between words: a cut may fall between two of their words. */
+const UNSPACED = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}\p{Script=Lao}\p{Script=Khmer}\p{Script=Myanmar}]/u;
+const SPACE = /^[\s\p{Z}]/u;
+
+/**
+ * Structured snippets never end inside a word: the longest prefix of at most `max` code points that ends before a space
+ * (any Unicode separator) or between two words of an unspaced script, then an ellipsis. Undefined when not even one
+ * whole word fits, so the item waits for View all instead.
+ */
+function clipWords(text: string, max: number) {
+  if (Array.from(text).length <= max) return text;
+  const segments = [...new Intl.Segmenter(undefined, { granularity: "word" }).segment(text)];
+  let count = 0, end = 0;
+  for (const [index, { segment }] of segments.entries()) {
+    count += Array.from(segment).length;
+    if (count > max) break;
+    const next = segments[index + 1]?.segment ?? "";
+    if (SPACE.test(next) || (UNSPACED.test(segment.at(-1) ?? "") && UNSPACED.test(next[0] ?? ""))) end = segments[index + 1]!.index;
+  }
+  const kept = text.slice(0, end).trimEnd();
+  return kept ? `${kept}…` : undefined;
+}
+
 /** Rough rendered width of a line: a wide (CJK) character takes about two Latin ones. */
 const widthOf = (text: string) => Array.from(text).reduce((sum, point) => sum + (point.codePointAt(0)! >= 0x2e80 ? 2 : 1), 0);
 
@@ -220,7 +243,7 @@ function fitText(sections: HarsoOutputTextSection[], caps: HarsoOutputCardCaps) 
     // The item that does not fit is cut on a word boundary when it is the first line of body or at least two lines
     // remain; otherwise it is left for View all. A heading is never cut, and one with no body after it is dropped.
     if (heading || (body && lines < 2)) return undefined;
-    return clip(text, Math.floor(Math.min(chars, lines * perLine) * size / width)) || undefined;
+    return clipWords(text, Math.floor(Math.min(chars, lines * perLine) * size / width));
   };
   const fitted: HarsoOutputTextSection[] = [];
   for (const section of sections) {
@@ -367,12 +390,80 @@ function CardText({ text, lines, onClip }: { text: string; lines: number; onClip
 }
 
 /**
- * A text block with its structure: each section's heading as a small heading, paragraphs as paragraphs, bullets as a
- * real list. Inline it arrives already fitted to the line budget (`fitText`); uncapped it is the whole block.
+ * The first `keep` body items of `sections` in reading order, the last one cut to `chars` on a word boundary; a heading
+ * whose body is all gone goes with it. `keep` undefined: everything.
  */
-function CardSections({ sections }: { sections: HarsoOutputTextSection[] }) {
-  return <div className="hkc-output-card-sections">
-    {sections.map((section, index) => <div key={index} className="hkc-output-card-section">
+function trimSections(sections: HarsoOutputTextSection[], keep?: number, chars?: number) {
+  if (keep == null) return sections;
+  let left = keep;
+  const take = (items: string[] = []) => items.flatMap(text => {
+    if (left <= 0) return [];
+    left -= 1;
+    const cut = left === 0 && chars != null ? clipWords(text, chars) : text;
+    return cut ? [cut] : [];
+  });
+  return sections.flatMap(section => {
+    const paragraphs = take(section.paragraphs), bullets = take(section.bullets);
+    return paragraphs.length || bullets.length
+      ? [{ ...section.heading && { heading: section.heading }, ...paragraphs.length && { paragraphs }, ...bullets.length && { bullets } }] : [];
+  });
+}
+
+/** Rendered lines of one heading, paragraph or bullet; 0 where there is no layout (jsdom). */
+const renderedLines = (node: Element) => {
+  const height = node.getBoundingClientRect().height, line = parseFloat(node.ownerDocument.defaultView?.getComputedStyle(node).lineHeight ?? "");
+  return height > 0 && line > 0 ? Math.round(height / line) : 0;
+};
+
+/**
+ * A text block with its structure: each section's heading as a small heading, paragraphs as paragraphs, bullets as a
+ * real list. Inline it arrives pre-fitted by characters (`fitText`), then the rendered lines are measured and it is
+ * tightened to `lines`: trailing items wait for View all, and a first item that alone is too tall is cut on a word
+ * boundary. Measured again when the width or the fonts change. Uncapped it is the whole block.
+ */
+function CardSections({ sections, lines, onClip }: { sections: HarsoOutputTextSection[]; lines: number; onClip: (clipped: boolean) => void }) {
+  const node = useRef<HTMLDivElement>(null);
+  const [cut, setCut] = useState<{ keep: number; chars?: number; key: string }>();
+  // What the rendered wrap depends on besides the text: the width and the font (size and line height).
+  const [layout, setLayout] = useState("");
+  const key = `${lines}|${layout}|${JSON.stringify(sections)}`;
+  const active = cut?.key === key ? cut : undefined;
+  const shown = trimSections(sections, active?.keep, active?.chars);
+  useLayoutEffect(() => {
+    const element = node.current;
+    if (!element) return;
+    let used = 0, body = 0;
+    for (const item of element.querySelectorAll("h3, p, li")) {
+      const size = renderedLines(item);
+      if (item.tagName === "H3") { used += size; continue; }
+      if (used + size <= lines) { used += size; body += 1; continue; }
+      // This item does not fit: later items wait for View all; a first item is cut shorter on a word boundary.
+      const length = Array.from((item.textContent ?? "").replace(/…$/, "")).length;
+      const chars = body ? undefined : Math.min(length - 1, Math.floor(length * Math.max(0, lines - used) / size));
+      setCut({ keep: body || (chars! > 0 ? 1 : 0), chars, key });
+      onClip(true);
+      return;
+    }
+    onClip(!!active);
+  }, [key, active?.keep, active?.chars]);
+  useLayoutEffect(() => {
+    const element = node.current;
+    const view = element?.ownerDocument.defaultView;
+    if (!element || !view) return;
+    // A new width or font changes how the whole candidate wraps, so the key changes and it is measured afresh. Its own
+    // cuts change only the height, never this. Web fonts arriving change every wrap without changing the width, so
+    // they count into the key too.
+    let live = true, fonts = 0;
+    const read = () => { const style = view.getComputedStyle(element); setLayout(`${element.clientWidth}/${style.fontSize}/${style.lineHeight}/${fonts}`); };
+    read();
+    const observer = view.ResizeObserver ? new view.ResizeObserver(read) : undefined;
+    observer?.observe(element);
+    void element.ownerDocument.fonts?.ready.then(() => { if (live) { fonts += 1; read(); } });
+    return () => { live = false; observer?.disconnect(); };
+  }, []);
+  useLayoutEffect(() => () => onClip(false), [onClip]);
+  return <div ref={node} className="hkc-output-card-sections">
+    {shown.map((section, index) => <div key={index} className="hkc-output-card-section">
       {section.heading && <h3 className="hkc-output-card-section-heading">{section.heading}</h3>}
       {section.paragraphs?.map((text, line) => <p key={line}>{text}</p>)}
       {!!section.bullets?.length && <ul className="hkc-output-card-bullets">
@@ -508,7 +599,7 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
               </li>)}
             </ul>
             : part.kind === "sections"
-            ? <CardSections key={partIndex} sections={part.sections} />
+            ? <CardSections key={partIndex} sections={part.sections} lines={limits.maxTextLines} onClip={setTextClipped} />
             : <CardText key={partIndex} text={part.text} lines={limits.maxTextLines} onClip={setTextClipped} />)}
         {hasMore && <Button variant="ghost" className="hkc-output-card-view-all" onClick={onViewAll}
           trailingIcon={<CaretRight size={14} weight="bold" />}>{viewAllLabel}</Button>}

@@ -331,3 +331,65 @@ for (const mode of ["light", "dark"] as const) for (const width of [390, 420]) {
     }
   });
 }
+
+// Round 2, F1: the inline budget is the RENDERED lines of the structured block, not a character estimate. Each case fits
+// the contract; each must stay within maxTextLines rendered lines (plus the gaps between items) and offer View all.
+const wide = "WWW WWW WWW WWW WWW WWW WWW WWW WWW WWW WWW";
+const budgetCases: [string, unknown[]][] = [
+  ["wide bullets", [{ bullets: Array(4).fill(wide) }]],
+  ["wide paragraphs", [{ paragraphs: Array(4).fill(wide) }]],
+  ["wide headings", Array(2).fill({ heading: wide, paragraphs: ["Body."] })],
+  ["CJK bullets", [{ bullets: Array(4).fill("公共充电设施持续增加家庭充电费用较低公共充电") }]],
+  ["RTL paragraphs", [{ paragraphs: Array(4).fill("مرحبا بالعالم، هذه فقرة طويلة بعض الشيء لتلتف على سطرين") }]],
+  ["one long token", [{ heading: "Notes", paragraphs: ["x".repeat(170), "Next."] }]],
+];
+/** Rendered text lines of the inline block (each h3/p/li's height over its own line height), and what it shows. */
+const inlineText = (page: Page) => card(page).evaluate(root => {
+  const nodes = [...root.querySelectorAll(".hkc-output-card-sections :is(h3, p, li)")];
+  return { lines: nodes.reduce((sum, node) => sum + Math.round(node.getBoundingClientRect().height / parseFloat(getComputedStyle(node).lineHeight)), 0),
+    body: nodes.filter(node => node.tagName !== "H3").map(node => node.textContent!), last: nodes.at(-1)?.tagName,
+    more: !!root.querySelector(".hkc-output-card-view-all") };
+});
+const renderedLines = async (page: Page) => (await inlineText(page)).lines;
+for (const mode of ["light", "dark"] as const) for (const width of [390, 420]) {
+  test(`text ${mode} ${width}: contract-sized wide, CJK, RTL and long-token blocks stay within 4 rendered lines, View all exactly when cut`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(`${fixture}?mode=${mode}&width=${width}`);
+    for (const [name, sections] of budgetCases) {
+      await page.evaluate(doc => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput(doc),
+        { header: { title: name }, fallback_text: "x", blocks: [{ kind: "text", sections }] });
+      await expect(card(page).getByRole("heading", { name, level: 2 })).toBeVisible();
+      await expect.poll(() => renderedLines(page), { message: name }).toBeLessThanOrEqual(4);
+      const facts = await inlineText(page);
+      const sent = (sections as { paragraphs?: string[]; bullets?: string[] }[]).flatMap(s => [...s.paragraphs ?? [], ...s.bullets ?? []]);
+      const whole = facts.body.length === sent.length && facts.body.every((text, index) => text === sent[index]);
+      expect(facts.more, `${name}: View all exactly when something is left out`).toBe(!whole);
+      expect(facts.last, name).not.toBe("H3");
+    }
+  });
+}
+
+test("text: the budget is measured again after a resize and a font-size change", async ({ page }) => {
+  const sections = [{ heading: "Bring", bullets: ["Your old passport, even if it has expired", "Your NRIC"] }];
+  const doc = { header: { title: "Passport" }, fallback_text: "x", blocks: [{ kind: "text", sections }] };
+  await page.setViewportSize({ width: 420, height: 900 });
+  await page.goto(`${fixture}?width=420`);
+  await page.evaluate(d => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput(d), doc);
+  // At the pane width everything fits on three lines, nothing continues.
+  await expect(card(page).getByRole("listitem")).toHaveCount(2);
+  await expect(card(page).getByRole("button", { name: /View all/ })).toHaveCount(0);
+  // Narrow the card: the first bullet wraps onto three lines, the second no longer fits and waits for View all.
+  await card(page).evaluate(node => { node.style.width = "160px"; });
+  await expect.poll(() => renderedLines(page)).toBeLessThanOrEqual(4);
+  await expect(card(page).getByRole("listitem")).toHaveCount(1);
+  await expect(card(page).getByRole("button", { name: "View all", exact: true })).toBeVisible();
+  // Back to the pane width: the whole list comes back.
+  await card(page).evaluate(node => { node.style.width = ""; });
+  await expect(card(page).getByRole("listitem")).toHaveCount(2);
+  await expect(card(page).getByRole("button", { name: /View all/ })).toHaveCount(0);
+  // Larger text (the person's text size): measured again at the new font size, and the second bullet waits again.
+  await card(page).evaluate(node => { (node.querySelector(".hkc-output-card-sections") as HTMLElement).style.fontSize = "40px"; });
+  await expect.poll(() => renderedLines(page)).toBeLessThanOrEqual(4);
+  await expect(card(page).getByRole("listitem")).toHaveCount(1);
+  await expect(card(page).getByRole("button", { name: "View all", exact: true })).toBeVisible();
+});
