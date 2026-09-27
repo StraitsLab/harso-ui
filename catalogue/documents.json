@@ -2248,7 +2248,7 @@
       "vertical": "documents",
       "kind": "card",
       "request": "Can I end my lease early? Show me what it says.",
-      "says": "Yes, after the first year, with 2 months' notice.",
+      "says": "Only if you're posted out of Singapore or lose your job: after the first year, with 2 months' notice and proof.",
       "surface": "page",
       "fresh": false,
       "components": [
@@ -2268,7 +2268,7 @@
             "items": [
               {
                 "label": "Clause 2(k) · Diplomatic clause",
-                "secondary": "After 12 months, 2 months' notice, if posted away or laid off",
+                "secondary": "If posted overseas or laid off, with proof; after 12 months, 2 months' notice",
                 "trailing": "Page 4"
               },
               {
@@ -2327,13 +2327,13 @@
           "major": 1,
           "header": {
             "title": "Tenancy agreement · The Clift",
-            "subtitle": "Ending early · 14 clauses read"
+            "subtitle": "Ending early · 14 clauses read · runs to 30 Sep 2028"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No clause lets you end it early; the term runs to 30 Sep 2028"
+              "detail": "No clause lets you end it early. Say yes and I'll draft a note to your landlord."
             }
           ],
           "details": {
@@ -2346,7 +2346,7 @@
               "A summary, not legal advice."
             ]
           },
-          "fallback_text": "Tenancy agreement for The Clift: none of the 14 clauses lets you end it early, so the term runs to 30 Sep 2028. Ask me to draft a note to your landlord if you want to ask anyway."
+          "fallback_text": "Tenancy agreement for The Clift: none of the 14 clauses lets you end it early, so the term runs to 30 Sep 2028. Say yes and I'll draft a note asking your landlord anyway."
         },
         "failed": {
           "kind": "output_blocks",

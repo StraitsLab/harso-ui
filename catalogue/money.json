@@ -5049,7 +5049,7 @@
           "major": 1,
           "header": {
             "title": "September receipts",
-            "subtitle": "1–26 Sep · 30 of 38 receipts read · XLSX"
+            "subtitle": "1–26 Sep · 30 of 38 read · 8 photos too blurred: send clearer ones"
           },
           "blocks": [
             {
@@ -5094,10 +5094,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "None found, so no sheet was made"
+              "detail": "None found, so no sheet was made. Forward receipts or send photos."
             }
           ],
-          "fallback_text": "No receipts for September (1–26 Sep) in your Gmail or the photos you sent. None found, so no sheet was made."
+          "fallback_text": "No receipts for September (1–26 Sep) in your Gmail or the photos you sent. None found, so no sheet was made. Forward receipts to me or send photos, or ask for another month, and I'll make it."
         },
         "failed": {
           "kind": "output_blocks",

@@ -1998,7 +1998,7 @@
       "vertical": "real_estate",
       "kind": "card",
       "request": "Watch for 1-bed rentals near Outram under S$3,500 from October and tell me when a new one appears.",
-      "says": "A new one came up: Spottiswoode Suites at S$3,380.",
+      "says": "A new one came up: Spottiswoode Suites at S$3,380 a month.",
       "surface": "inline",
       "fresh": true,
       "components": [

@@ -5232,7 +5232,7 @@
           "major": 1,
           "header": {
             "title": "September receipts",
-            "subtitle": "1–26 Sep · 30 of 38 receipts read · XLSX"
+            "subtitle": "1–26 Sep · 30 of 38 read · 8 photos too blurred: send clearer ones"
           },
           "blocks": [
             {
@@ -5277,10 +5277,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "None found, so no sheet was made"
+              "detail": "None found, so no sheet was made. Forward receipts or send photos."
             }
           ],
-          "fallback_text": "No receipts for September (1–26 Sep) in your Gmail or the photos you sent. None found, so no sheet was made."
+          "fallback_text": "No receipts for September (1–26 Sep) in your Gmail or the photos you sent. None found, so no sheet was made. Forward receipts to me or send photos, or ask for another month, and I'll make it."
         },
         "failed": {
           "kind": "output_blocks",
@@ -12655,7 +12655,7 @@
       "vertical": "real_estate",
       "kind": "card",
       "request": "Watch for 1-bed rentals near Outram under S$3,500 from October and tell me when a new one appears.",
-      "says": "A new one came up: Spottiswoode Suites at S$3,380.",
+      "says": "A new one came up: Spottiswoode Suites at S$3,380 a month.",
       "surface": "inline",
       "fresh": true,
       "components": [
@@ -31368,7 +31368,7 @@
                 },
                 {
                   "label": "This week",
-                  "secondary": "3 of 4 days logged · Friday not in yet",
+                  "secondary": "3 of 4 days logged · open the app on your phone to sync Friday",
                   "trailing": "Not known"
                 }
               ]
@@ -31383,7 +31383,7 @@
               }
             }
           ],
-          "fallback_text": "JLPT N5, week 3 check-in, Sat 26 Sep. You said on Sat 19 Sep that evenings after 10 pm don't work this month, so I changed your reviews to 7:30 am, 20 minutes, Monday to Friday, from Mon 28 Sep. This week: 3 sessions in 4 logged days; Friday hasn't synced from your phone, so I can't say yet if you're on track. Next check-in every Saturday at 09:00."
+          "fallback_text": "JLPT N5, week 3 check-in, Sat 26 Sep. You said on Sat 19 Sep that evenings after 10 pm don't work this month, so I changed your reviews to 7:30 am, 20 minutes, Monday to Friday, from Mon 28 Sep. This week: 3 sessions in 4 logged days; Friday hasn't synced from your phone, so I can't say yet if you're on track; open the app on your phone to sync it. Next check-in every Saturday at 09:00."
         },
         "empty": {
           "kind": "output_blocks",
@@ -38535,7 +38535,7 @@
       "vertical": "documents",
       "kind": "card",
       "request": "Can I end my lease early? Show me what it says.",
-      "says": "Yes, after the first year, with 2 months' notice.",
+      "says": "Only if you're posted out of Singapore or lose your job: after the first year, with 2 months' notice and proof.",
       "surface": "page",
       "fresh": false,
       "components": [
@@ -38555,7 +38555,7 @@
             "items": [
               {
                 "label": "Clause 2(k) · Diplomatic clause",
-                "secondary": "After 12 months, 2 months' notice, if posted away or laid off",
+                "secondary": "If posted overseas or laid off, with proof; after 12 months, 2 months' notice",
                 "trailing": "Page 4"
               },
               {
@@ -38614,13 +38614,13 @@
           "major": 1,
           "header": {
             "title": "Tenancy agreement · The Clift",
-            "subtitle": "Ending early · 14 clauses read"
+            "subtitle": "Ending early · 14 clauses read · runs to 30 Sep 2028"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "No clause lets you end it early; the term runs to 30 Sep 2028"
+              "detail": "No clause lets you end it early. Say yes and I'll draft a note to your landlord."
             }
           ],
           "details": {
@@ -38633,7 +38633,7 @@
               "A summary, not legal advice."
             ]
           },
-          "fallback_text": "Tenancy agreement for The Clift: none of the 14 clauses lets you end it early, so the term runs to 30 Sep 2028. Ask me to draft a note to your landlord if you want to ask anyway."
+          "fallback_text": "Tenancy agreement for The Clift: none of the 14 clauses lets you end it early, so the term runs to 30 Sep 2028. Say yes and I'll draft a note asking your landlord anyway."
         },
         "failed": {
           "kind": "output_blocks",
@@ -46757,8 +46757,13 @@
                   "trailing": "11:40, 9 min"
                 },
                 {
+                  "label": "Agreed",
+                  "secondary": "Full reversal, within your plan",
+                  "trailing": "S$38.52 credit"
+                },
+                {
                   "label": "Credit date",
-                  "secondary": "Not said on the call",
+                  "secondary": "Not said on the call; I'll check your October bill",
                   "trailing": "Not known"
                 }
               ]
@@ -46772,7 +46777,7 @@
               }
             }
           ],
-          "fallback_text": "Reversal agreed by phone at Singtel for the roaming charge of S$38.52 on account 1-88231455. Answered by Farah, billing support, at 11:40, 9 min. When the credit shows was not said on the call, so it's not known. The transcript is in your Library."
+          "fallback_text": "Reversal agreed by phone at Singtel for the roaming charge of S$38.52 on account 1-88231455. Answered by Farah, billing support, at 11:40, 9 min; agreed: full reversal, within your plan, a S$38.52 credit. When the credit shows was not said on the call, so it's not known; I'll check your October bill. The transcript is in your Library."
         },
         "empty": {
           "kind": "output_blocks",
@@ -46785,7 +46790,7 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "They say roaming was used on 14 Sep. Nothing agreed. I can dispute in writing."
+              "detail": "They say roaming was used 14 Sep. Say yes and I'll dispute it in writing."
             }
           ],
           "fallback_text": "Singtel refused to reverse the S$38.52 roaming charge on account 1-88231455: they say roaming was used on 14 Sep. Nothing was agreed, and that is outside your plan's floor of half as a credit. Say yes and I'll dispute it in writing."
@@ -46907,8 +46912,13 @@
                   "trailing": "10:05 ET, 22 min"
                 },
                 {
+                  "label": "Agreed",
+                  "secondary": "US$65 a month for 12 months, was US$89",
+                  "trailing": "Within your US$70 plan"
+                },
+                {
                   "label": "Start date",
-                  "secondary": "Not said on the call",
+                  "secondary": "Not said on the call; I'll check your next bill",
                   "trailing": "Not known"
                 }
               ]
@@ -46922,23 +46932,23 @@
               }
             }
           ],
-          "fallback_text": "Lowered by phone at Xfinity, internet, case 58-771204, Thu 24 Sep. Answered by Jordan, retention team, at 10:05 ET, 22 min. Which bill the new price starts on was not said on the call, so it's not known. The transcript is in your Library."
+          "fallback_text": "Lowered by phone at Xfinity, internet, case 58-771204, Thu 24 Sep. Answered by Jordan, retention team, at 10:05 ET, 22 min; agreed: US$65 a month for 12 months, was US$89, within your plan (US$70 or less). Which bill the new price starts on was not said on the call, so it's not known; I'll check your next bill. The transcript is in your Library."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
-            "title": "Xfinity refused to lower the price",
+            "title": "Xfinity’s best offer was above your limit",
             "subtitle": "Internet · case 58-771204"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Best offer was US$79, above your US$70 plan. Nothing was agreed."
+              "detail": "US$79 (was US$89), over your US$70 plan. Say yes and I'll compare providers."
             }
           ],
-          "fallback_text": "Xfinity refused to lower the internet price within your plan, case 58-771204: the best offer was US$79 a month, above your US$70 limit, so nothing was agreed. Say yes and I'll compare other providers."
+          "fallback_text": "Xfinity’s best offer for your internet, case 58-771204, was US$79 a month, down from US$89 but above your US$70 limit, so nothing was agreed. Say yes and I'll compare other providers."
         },
         "failed": {
           "kind": "output_blocks",
@@ -46951,7 +46961,7 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Call dropped at 10:31 ET before an offer. Nothing agreed. I can call again."
+              "detail": "Dropped at 10:31 ET, nothing agreed. Say yes and I'll call tomorrow at 10:00 ET."
             }
           ],
           "fallback_text": "No answer at Xfinity: the call about case 58-771204 dropped at 10:31 ET before an offer was made. Nothing was agreed. Say yes and I'll call again tomorrow at 10:00 ET."
@@ -46963,7 +46973,7 @@
       "vertical": "home_admin",
       "kind": "card",
       "request": "Keep my supplies list up to date from my grocery receipts.",
-      "says": "Today's FairPrice receipt is on your list.",
+      "says": "The 3 household items from today's FairPrice receipt are on your list.",
       "surface": "inline",
       "fresh": false,
       "components": [

@@ -1279,7 +1279,7 @@
                 },
                 {
                   "label": "This week",
-                  "secondary": "3 of 4 days logged · Friday not in yet",
+                  "secondary": "3 of 4 days logged · open the app on your phone to sync Friday",
                   "trailing": "Not known"
                 }
               ]
@@ -1294,7 +1294,7 @@
               }
             }
           ],
-          "fallback_text": "JLPT N5, week 3 check-in, Sat 26 Sep. You said on Sat 19 Sep that evenings after 10 pm don't work this month, so I changed your reviews to 7:30 am, 20 minutes, Monday to Friday, from Mon 28 Sep. This week: 3 sessions in 4 logged days; Friday hasn't synced from your phone, so I can't say yet if you're on track. Next check-in every Saturday at 09:00."
+          "fallback_text": "JLPT N5, week 3 check-in, Sat 26 Sep. You said on Sat 19 Sep that evenings after 10 pm don't work this month, so I changed your reviews to 7:30 am, 20 minutes, Monday to Friday, from Mon 28 Sep. This week: 3 sessions in 4 logged days; Friday hasn't synced from your phone, so I can't say yet if you're on track; open the app on your phone to sync it. Next check-in every Saturday at 09:00."
         },
         "empty": {
           "kind": "output_blocks",
