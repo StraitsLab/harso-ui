@@ -57,6 +57,15 @@
 
 .harso-kit .hkc-output-card-fallback { font-size: var(--hk-text-body); line-height: 1.5; white-space: pre-line; }
 
+/* A text block with structure (checklists, day plans, drafts): headings as small headings, paragraphs as paragraphs,
+   bullets as a real list with the markers hanging in a gutter. Inline, the renderer keeps whole items within ~4 lines. */
+.harso-kit .hkc-output-card-sections { display: flex; flex-direction: column; gap: var(--hk-space-3); min-width: 0; font-size: var(--hk-text-body); line-height: 1.5; }
+.harso-kit .hkc-output-card-section { display: flex; flex-direction: column; gap: var(--hk-space-1); min-width: 0; }
+.harso-kit .hkc-output-card-section-heading { margin: 0; font-size: var(--hk-text-chrome); font-weight: 600; line-height: 1.4; color: var(--hk-secondary); }
+.harso-kit .hkc-output-card-sections :where(p, ul) { margin: 0; }
+.harso-kit .hkc-output-card-bullets { padding-inline-start: var(--hk-space-6); list-style: disc; display: flex; flex-direction: column; gap: var(--hk-space-1); }
+.harso-kit .hkc-output-card-bullets > li { display: list-item; }
+
 .harso-kit .hkc-output-card .hk-button { min-height: 44px; height: auto; border: 0; white-space: normal; }
 /* Real 44px layout boxes, not the kit's overlapping pseudo hit extension. */
 .harso-kit .hkc-output-card .hk-button::after { content: none; }

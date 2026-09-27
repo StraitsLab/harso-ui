@@ -285,3 +285,49 @@ test("reduced motion: numbers and text render identically (no animation on eithe
   expect(animated).toEqual([]);
   await expect(card(page).getByRole("listitem")).toHaveCount(2);
 });
+
+// K1 (journey walk): a text block keeps its headings, paragraphs and bullets inline and in View all. Measured in a real
+// browser at the inline widths, light and dark, with hostile content (CJK with no spaces, a 300-character word, RTL).
+const itinerary = { header: { title: "Kyoto in 4 days", subtitle: "14–17 Oct" }, fallback_text: "Kyoto in 4 days.", blocks: [{ kind: "text", sections: [
+  { heading: "Day 1 · Higashiyama", bullets: ["09:00 Kiyomizu-dera before the crowds", "12:30 Lunch on Ninenzaka", "16:00 Yasaka Shrine at dusk"] },
+  { heading: "Day 2 · Arashiyama", bullets: ["08:30 Bamboo grove", "11:00 Tenryu-ji garden", "14:00 Hozu river boat"] },
+  { heading: "Day 3 · Fushimi Inari", bullets: ["07:30 Walk the torii gates to Yotsutsuji", "13:00 Tofuku-ji"] }] }] };
+const hostileText = { header: { title: "Hostile text" }, fallback_text: "x", blocks: [{ kind: "text", sections: [
+  { heading: "京都三日游行程安排", bullets: ["公共充电设施持续增加家庭充电费用较低".repeat(4), "x".repeat(300)] },
+  { heading: "مرحبا", paragraphs: ["مرحبا بالعالم، هذه فقرة قصيرة."] }] }] };
+async function textSections(page: Page) {
+  return card(page).locator(".hkc-output-card-sections").evaluate(root => {
+    const lineHeight = parseFloat(getComputedStyle(root).lineHeight);
+    const cardBox = root.closest(".hkc-output-card")!.getBoundingClientRect();
+    const nodes = [...root.querySelectorAll("h3, p, li")];
+    return { lines: root.getBoundingClientRect().height / lineHeight, last: nodes.at(-1)?.tagName, headings: root.querySelectorAll("h3").length,
+      items: root.querySelectorAll("li").length, outside: nodes.filter(n => { const r = n.getBoundingClientRect(); return r.left < cardBox.left - .5 || r.right > cardBox.right + .5; }).length,
+      marker: getComputedStyle(root.querySelector("li") ?? root).listStyleType };
+  });
+}
+for (const mode of ["light", "dark"] as const) for (const width of [390, 420]) {
+  test(`text ${mode} ${width}: headings and bullets keep their structure inline (~4 lines, never a trailing heading) and whole in View all`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    for (const full of [false, true]) {
+      for (const sent of [itinerary, hostileText]) {
+        await page.goto(`${fixture}?mode=${mode}&width=${width}${full ? "&full=1" : ""}`);
+        await page.evaluate(doc => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput(doc), sent);
+        await expect(card(page).locator(".hkc-output-card-sections")).toBeVisible();
+        const facts = await textSections(page);
+        expect(facts.last).not.toBe("H3");
+        expect(facts.outside).toBe(0);
+        expect(facts.marker).toBe("disc");
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        if (full) {
+          expect(facts.headings).toBe(sent.blocks[0].sections.length);
+          await expect(card(page).getByRole("button", { name: /View all/ })).toHaveCount(0);
+        } else {
+          // Inline: about four lines of whole items (a wrapped item and the gaps between sections add a little).
+          expect(facts.lines).toBeLessThanOrEqual(6);
+          await expect(card(page).getByRole("button", { name: "View all", exact: true })).toBeVisible();
+        }
+        expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+      }
+    }
+  });
+}

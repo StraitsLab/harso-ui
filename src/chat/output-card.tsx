@@ -162,6 +162,7 @@ type CardPart =
   | { kind: "rows"; items: HarsoOutputRow[] }
   | { kind: "numbers"; items: HarsoOutputNumber[] }
   | { kind: "text"; text: string }
+  | { kind: "sections"; sections: HarsoOutputTextSection[] }
   | { kind: "chart"; chart: HarsoOutputChart; state?: HarsoOutputBlockState }
   | { kind: "share"; items: HarsoOutputRow[]; shares: number[]; shown: number; state?: HarsoOutputBlockState }
   | { kind: "table"; table: HarsoOutputTable; shown: number; state?: HarsoOutputBlockState }
@@ -182,15 +183,59 @@ function clip(text: string, max: number) {
   return `${(space > cut.length * 0.6 ? cut.slice(0, space) : cut).trimEnd()}…`;
 }
 
+/** No inline budget (View all): every row and number, every text block whole (the line cap is a CSS clamp, so finite). */
+export const HARSO_OUTPUT_CARD_UNCAPPED: Readonly<HarsoOutputCardCaps> = Object.freeze({ maxRows: Infinity, maxNumbers: Infinity, maxTextChars: Infinity, maxTextLines: 10_000 });
+
 /**
- * The inline text of a text block: its `summary`, else its paragraphs and bullets as one run of prose.
- * `complete` only when that inline text is the whole block (no summary, headings or bullets left behind).
+ * The whole answer for View all, drawn by the same card with `HARSO_OUTPUT_CARD_UNCAPPED`. The card draws one text
+ * block, so every text block's summary and sections (headings, paragraphs and bullets kept as they are) join the first
+ * text block, in order. Rows the agent did not send (`total_count`) are reached through the answer's link or file, so
+ * the expanded card never offers a View all with nothing left to open.
  */
-function readText(block: HarsoOutputTextBlock) {
-  const body = block.sections.flatMap(section => [...section.paragraphs ?? [], ...section.bullets ?? []]).join(" ");
-  const complete = block.summary == null && block.sections.every(section => !section.heading && !section.bullets?.length);
-  return { text: block.summary ?? body, complete };
+export function harsoOutputWholeAnswer(document: HarsoOutputDocument): HarsoOutputDocument {
+  const texts = document.blocks.filter(isText);
+  const sections = texts.flatMap(block => [...block.summary ? [{ paragraphs: [block.summary] }] : [], ...block.sections]);
+  const first = document.blocks.findIndex(isText);
+  return { ...document, blocks: document.blocks.flatMap((block, index): HarsoOutputBlock[] => !isText(block)
+    ? ["total_count" in block ? { ...block, total_count: undefined } as HarsoOutputBlock : block]
+    : index === first ? [{ kind: "text", sections }] : []) };
 }
+
+/** Rough rendered width of a line: a wide (CJK) character takes about two Latin ones. */
+const widthOf = (text: string) => Array.from(text).reduce((sum, point) => sum + (point.codePointAt(0)! >= 0x2e80 ? 2 : 1), 0);
+
+/**
+ * The inline part of a structured text block: whole headings, paragraphs and bullets, in order, while they fit the
+ * card's ~`caps.maxTextLines` lines and `caps.maxTextChars` characters. Every item starts a line, and a line holds about
+ * maxTextChars / maxTextLines characters (a wide character counts twice). `complete`: nothing was left behind.
+ */
+function fitText(sections: HarsoOutputTextSection[], caps: HarsoOutputCardCaps) {
+  const perLine = Math.max(1, caps.maxTextChars / Math.max(1, caps.maxTextLines));
+  let lines = caps.maxTextLines, chars = caps.maxTextChars, body = 0, complete = true;
+  const fit = (text: string, heading = false) => {
+    if (!complete) return undefined;
+    const width = widthOf(text), size = Array.from(text).length, cost = Math.max(1, Math.ceil(width / perLine));
+    if (cost <= lines && size <= chars) { lines -= cost; chars -= size; body += heading ? 0 : 1; return text; }
+    complete = false;
+    // The item that does not fit is cut on a word boundary when it is the first line of body or at least two lines
+    // remain; otherwise it is left for View all. A heading is never cut, and one with no body after it is dropped.
+    if (heading || (body && lines < 2)) return undefined;
+    return clip(text, Math.floor(Math.min(chars, lines * perLine) * size / width)) || undefined;
+  };
+  const fitted: HarsoOutputTextSection[] = [];
+  for (const section of sections) {
+    const heading = section.heading ? fit(section.heading, true) : undefined;
+    const paragraphs = (section.paragraphs ?? []).flatMap(text => fit(text) ?? []);
+    const bullets = (section.bullets ?? []).flatMap(text => fit(text) ?? []);
+    if (!paragraphs.length && !bullets.length) continue;
+    fitted.push({ ...heading && { heading }, ...paragraphs.length && { paragraphs }, ...bullets.length && { bullets } });
+  }
+  return { sections: fitted, complete };
+}
+
+/** A block that is one paragraph and nothing else draws as the plain clamped run it always was. */
+const loneParagraph = ([section, ...rest]: HarsoOutputTextSection[]) =>
+  !rest.length && section && !section.heading && !section.bullets?.length && section.paragraphs?.length === 1 ? section.paragraphs[0] : undefined;
 
 /**
  * Supported = rows/numbers/text/action blocks, bar and line charts, and tables, with no row field this card would
@@ -280,13 +325,20 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
       shown += items.length;
       if (items.length) parts.push({ kind: "numbers", items });
     } else if (isText(block)) {
-      // One text run inline (~4 lines); a second text block always continues off the card.
+      // One text block inline (~4 lines); a second text block always continues off the card. A summary, or a block
+      // that is one paragraph, is one clamped run as before; anything else keeps its headings, paragraphs and bullets.
       if (textShown) { clamped = true; continue; }
       textShown = true;
-      const { text, complete } = readText(block);
-      const inline = clip(text, caps.maxTextChars);
-      clamped ||= !complete || inline !== text;
-      if (inline) parts.push({ kind: "text", text: inline });
+      const text = block.summary ?? loneParagraph(block.sections);
+      if (text != null) {
+        const inline = clip(text, caps.maxTextChars);
+        clamped ||= block.summary != null || inline !== text;
+        if (inline) parts.push({ kind: "text", text: inline });
+      } else {
+        const { sections, complete } = fitText(block.sections, caps);
+        clamped ||= !complete;
+        if (sections.length) parts.push({ kind: "sections", sections });
+      }
     } else if (isAction(block)) {
       action ??= block;
     } else {
@@ -312,6 +364,22 @@ function CardText({ text, lines, onClip }: { text: string; lines: number; onClip
     return () => { observer?.disconnect(); onClip(false); };
   }, [text, lines, onClip]);
   return <p ref={node} className="hkc-output-card-text" style={{ "--hkc-output-card-text-lines": Math.max(1, lines) } as CSSProperties}>{text}</p>;
+}
+
+/**
+ * A text block with its structure: each section's heading as a small heading, paragraphs as paragraphs, bullets as a
+ * real list. Inline it arrives already fitted to the line budget (`fitText`); uncapped it is the whole block.
+ */
+function CardSections({ sections }: { sections: HarsoOutputTextSection[] }) {
+  return <div className="hkc-output-card-sections">
+    {sections.map((section, index) => <div key={index} className="hkc-output-card-section">
+      {section.heading && <h3 className="hkc-output-card-section-heading">{section.heading}</h3>}
+      {section.paragraphs?.map((text, line) => <p key={line}>{text}</p>)}
+      {!!section.bullets?.length && <ul className="hkc-output-card-bullets">
+        {section.bullets.map((text, line) => <li key={line}>{text}</li>)}
+      </ul>}
+    </div>)}
+  </div>;
 }
 
 /**
@@ -439,6 +507,8 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
                 <span className="hkc-output-card-number-label">{number.label}</span>
               </li>)}
             </ul>
+            : part.kind === "sections"
+            ? <CardSections key={partIndex} sections={part.sections} />
             : <CardText key={partIndex} text={part.text} lines={limits.maxTextLines} onClip={setTextClipped} />)}
         {hasMore && <Button variant="ghost" className="hkc-output-card-view-all" onClick={onViewAll}
           trailingIcon={<CaretRight size={14} weight="bold" />}>{viewAllLabel}</Button>}
