@@ -2,11 +2,14 @@
 // Checks catalogue/journeys.json: every one of the founder's 60 journeys names the catalogue examples that show the
 // moment its success check describes (JOURNEY-SPECS.md, 2026-09-25, research folder; its IDs and titles are copied
 // below so CI never reads that folder).
-//   1. the journey list is exactly JOURNEYS below: same IDs, same order, same titles;
+//   1. each row is { id, title, examples, note } with string values, and the rows are exactly JOURNEYS below: same
+//      IDs, same order, same titles, compared one by one;
 //   2. every example a journey names exists in the catalogue (the verticals in catalogue/index.json);
-//   3. a journey with no example is declared in catalogue/gaps/journeys.md ("## <ID>"), and a declared gap has none.
+//   3. a journey with no example is missing coverage. It must be declared in catalogue/gaps/journeys.md ("## <ID>"),
+//      and a declared gap must have no example. Declared or not, missing coverage fails the check.
 // No dependency: node:fs, node:path, node:url and ./build-catalogue.mjs only.
-// Usage: node scripts/check-journeys.mjs   (exit 0 = clean, 1 = findings)
+// Usage: node scripts/check-journeys.mjs [journeys.json] [gaps.md]
+//   exit 0 = every journey has an example and the file is well formed; 1 = findings or missing coverage.
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -44,28 +47,41 @@ export const JOURNEYS = [
 /** The IDs with a "## <ID>" section in the gaps file. */
 export const gapIds = markdown => new Set([...markdown.matchAll(/^## ([A-Z][0-9])\b/gm)].map(match => match[1]));
 
-/** `exampleIds` are the catalogue's example ids; `gaps` the declared gap IDs. Returns findings; empty means clean. */
+const isText = value => typeof value === "string" && value.trim() !== "";
+
+/**
+ * `exampleIds` are the catalogue's example ids; `gaps` the declared gap IDs. `findings` are defects in the file;
+ * `missing` are the journeys with no example (declared gaps included). Clean means both are empty.
+ */
 export function checkJourneysData(data, exampleIds, gaps) {
   const findings = [];
-  const journeys = Array.isArray(data?.journeys) ? data.journeys : [];
-  const got = journeys.map(journey => journey?.id).join(",");
-  const want = JOURNEYS.map(([id]) => id).join(",");
-  if (got !== want) findings.push(`journeys: the IDs are ${got || "none"}, but JOURNEY-SPECS has ${want}`);
-  const titles = new Map(JOURNEYS);
-  for (const journey of journeys) {
-    const where = `journey ${journey?.id ?? "?"}`;
-    if (titles.has(journey?.id) && journey.title !== titles.get(journey.id)) findings.push(`${where}: title is "${journey.title}", JOURNEY-SPECS says "${titles.get(journey.id)}"`);
-    if (typeof journey?.note !== "string" || !journey.note.trim()) findings.push(`${where}: note must say which moment the examples show`);
-    const examples = Array.isArray(journey?.examples) ? journey.examples : null;
-    if (!examples) { findings.push(`${where}: examples must be a list of example ids`); continue; }
+  const rows = Array.isArray(data?.journeys) ? data.journeys : null;
+  if (!rows) return { findings: ["journeys: must be a list"], missing: [], covered: 0, gaps: [] };
+  if (rows.length !== JOURNEYS.length) findings.push(`journeys: ${rows.length} rows, JOURNEY-SPECS has ${JOURNEYS.length}`);
+  const missing = [];
+  let covered = 0;
+  rows.forEach((row, index) => {
+    const where = `journey ${index + 1}${isText(row?.id) ? ` (${row.id})` : ""}`;
+    const [wantId, wantTitle] = JOURNEYS[index] ?? [];
+    if (!isText(row?.id)) { findings.push(`${where}: id must be a string, got ${JSON.stringify(row?.id)}`); return; }
+    if (row.id !== wantId) findings.push(`${where}: id is "${row.id}", JOURNEY-SPECS has ${wantId ? `"${wantId}"` : "no journey"} here`);
+    else if (row.title !== wantTitle) findings.push(`${where}: title is ${JSON.stringify(row.title)}, JOURNEY-SPECS says "${wantTitle}"`);
+    if (!isText(row.note)) findings.push(`${where}: note must say which moment the examples show`);
+    const examples = row.examples;
+    if (!Array.isArray(examples) || !examples.every(isText)) { findings.push(`${where}: examples must be a list of example ids`); return; }
     for (const id of examples) if (!exampleIds.has(id)) findings.push(`${where}: names example ${id}, which is not in the catalogue`);
     if (new Set(examples).size !== examples.length) findings.push(`${where}: names an example twice`);
-    if (examples.length === 0 && !gaps.has(journey.id)) findings.push(`${where}: no example, and not declared in catalogue/gaps/journeys.md`);
-    if (examples.length > 0 && gaps.has(journey.id)) findings.push(`${where}: has examples, but catalogue/gaps/journeys.md still declares it a gap`);
-  }
-  for (const id of gaps) if (!titles.has(id)) findings.push(`gaps: catalogue/gaps/journeys.md declares ${id}, which is not a journey`);
-  const covered = journeys.filter(journey => journey?.examples?.length > 0).length;
-  return { findings, covered, gaps: [...gaps].filter(id => titles.has(id)) };
+    if (examples.length === 0) {
+      missing.push(row.id);
+      if (!gaps.has(row.id)) findings.push(`${where}: no example, and not declared in catalogue/gaps/journeys.md`);
+    } else {
+      covered += 1;
+      if (gaps.has(row.id)) findings.push(`${where}: has examples, but catalogue/gaps/journeys.md still declares it a gap`);
+    }
+  });
+  const known = new Set(JOURNEYS.map(([id]) => id));
+  for (const id of gaps) if (!known.has(id)) findings.push(`gaps: catalogue/gaps/journeys.md declares ${id}, which is not a journey`);
+  return { findings, missing, covered, gaps: JOURNEYS.map(([id]) => id).filter(id => gaps.has(id)) };
 }
 
 export function checkJourneys(file = JOURNEYS_PATH, gapsFile = GAPS_PATH) {
@@ -74,8 +90,9 @@ export function checkJourneys(file = JOURNEYS_PATH, gapsFile = GAPS_PATH) {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const result = checkJourneys();
+  const result = checkJourneys(process.argv[2] ?? JOURNEYS_PATH, process.argv[3] ?? GAPS_PATH);
   for (const finding of result.findings) console.error(finding);
-  console.log(`${result.covered} of ${JOURNEYS.length} journeys have an example; declared gaps: ${result.gaps.join(", ") || "none"}; ${result.findings.length} finding(s)`);
-  process.exit(result.findings.length ? 1 : 0);
+  if (result.missing.length) console.error(`no example yet: ${result.missing.join(", ")} (see catalogue/gaps/journeys.md)`);
+  console.log(`${result.covered} of ${JOURNEYS.length} journeys have an example; ${result.missing.length} missing; ${result.findings.length} finding(s)`);
+  process.exit(result.findings.length || result.missing.length ? 1 : 0);
 }
