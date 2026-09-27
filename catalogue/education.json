@@ -1156,6 +1156,179 @@
           "fallback_text": "Couldn't make the JLPT N5 flashcard deck: the file didn't finish. Nothing was saved to your Library."
         }
       }
+    },
+    {
+      "id": "edu-goal-checkin",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Check in with me every Saturday on my JLPT N5 plan and adjust it to my answers.",
+      "says": "Here's this week's check-in; reviews move to mornings, as you asked.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Progress / streak",
+        "Checklist / to-do"
+      ],
+      "rationale": "One check-in per run: the person's last answer, what changed because of it and this week's progress as rows; still bound to the routine with one Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "JLPT N5 · week 3 check-in",
+          "subtitle": "Sat 26 Sep · exam Sun 6 Dec"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every Saturday at 09:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90010"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "You said",
+                "secondary": "Evenings after 10 pm don't work this month",
+                "trailing": "Sat 19 Sep"
+              },
+              {
+                "label": "So I changed",
+                "secondary": "Reviews at 7:30 am, 20 min, Mon to Fri",
+                "trailing": "From Mon 28 Sep"
+              },
+              {
+                "label": "This week",
+                "secondary": "4 of 5 sessions · 64% through N5",
+                "trailing": "On track"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90010",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your study log in Harso and your answer of 19 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Your calendar wasn't changed; say yes and I'll add the 7:30 am reviews"
+          ]
+        },
+        "fallback_text": "JLPT N5, week 3 check-in, Sat 26 Sep, exam Sun 6 Dec. You said on Sat 19 Sep that evenings after 10 pm don't work this month, so I changed your reviews to 7:30 am, 20 minutes, Monday to Friday, from Mon 28 Sep. This week: 4 of 5 sessions done, 64% through N5, on track. Your calendar wasn't changed. Next check-in every Saturday at 09:00; you can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "JLPT N5 · week 3 check-in",
+            "subtitle": "Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing this week's JLPT N5 check-in",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90011"
+              }
+            }
+          ],
+          "fallback_text": "Writing this week's JLPT N5 check-in, Sat 26 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "JLPT N5 · week 3 check-in",
+            "subtitle": "Sat 26 Sep · Friday not synced yet"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every Saturday at 09:00",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90010"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "You said",
+                  "secondary": "Evenings after 10 pm don't work this month",
+                  "trailing": "Sat 19 Sep"
+                },
+                {
+                  "label": "So I changed",
+                  "secondary": "Reviews at 7:30 am, 20 min, Mon to Fri",
+                  "trailing": "From Mon 28 Sep"
+                },
+                {
+                  "label": "This week",
+                  "secondary": "3 of 4 days logged · open the app on your phone to sync Friday",
+                  "trailing": "Not known"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90010",
+                "control": "pause"
+              }
+            }
+          ],
+          "fallback_text": "JLPT N5, week 3 check-in, Sat 26 Sep. You said on Sat 19 Sep that evenings after 10 pm don't work this month, so I changed your reviews to 7:30 am, 20 minutes, Monday to Friday, from Mon 28 Sep. This week: 3 sessions in 4 logged days; Friday hasn't synced from your phone, so I can't say yet if you're on track; open the app on your phone to sync it. Next check-in every Saturday at 09:00."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No answer last week · JLPT N5",
+            "subtitle": "Sat 26 Sep · exam Sun 6 Dec"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No reply on Sat 19 Sep, so the plan is unchanged. Reply here to adjust it"
+            }
+          ],
+          "fallback_text": "JLPT N5 check-in, Sat 26 Sep: you didn't reply to last week's check-in on Sat 19 Sep, so the plan is unchanged for the exam on Sun 6 Dec. Reply here to adjust it; the next check-in is Sat 3 Oct at 09:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t write this week’s check-in",
+            "subtitle": "JLPT N5 · Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Your study log didn't load. Nothing was changed; I'll try again at 12:00"
+            }
+          ],
+          "fallback_text": "Couldn’t write this week’s JLPT N5 check-in, Sat 26 Sep: your study log didn't load. Nothing was changed in your plan; I'll try again at 12:00."
+        }
+      }
     }
   ]
 }

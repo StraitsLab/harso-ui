@@ -99,6 +99,7 @@
     "money-subscriptions",
     "money-invoices-owed",
     "money-bills-month",
+    "money-charge-alert",
     "shop-vacuum-options",
     "shop-running-shoes",
     "partial-sources",
@@ -124,6 +125,7 @@
     "home-rent-listings",
     "empty-search",
     "home-open-houses",
+    "home-rent-watch-alert",
     "jobs-results",
     "jobs-posting",
     "jobs-remote-results",
@@ -5019,6 +5021,513 @@
             }
           ],
           "fallback_text": "无法读取8月支出：星展银行没有回应。我没有做任何更改。"
+        }
+      }
+    },
+    {
+      "id": "money-bill-reminder",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Remind me 2 days before each M1 bill is due.",
+      "says": "Okay. I'll remind you on your phone before each M1 bill.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Reply watch",
+        "F10 Bill / subscription due"
+      ],
+      "rationale": "A bill reminder is a routine: status bound to it, the bill it read and the rule as rows, one quiet Pause. Nothing is paid.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Pay the M1 bill",
+          "subtitle": "2 days before each due date · 9:00 am"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "scheduled",
+            "detail": "next on Tue 13 Oct, 9:00 am",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90007"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "This bill",
+                "secondary": "M1 mobile, from your 25 Sep bill mail",
+                "trailing": "S$42.80 due 15 Oct"
+              },
+              {
+                "label": "Then",
+                "secondary": "2 days before each new M1 due date",
+                "trailing": "Monthly"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90007",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "M1 bill mail in Gmail, 25 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Sent to your phone by SMS until the Harso app can notify you",
+            "Each new due date is read from that month's M1 bill mail"
+          ]
+        },
+        "fallback_text": "Reminder set: pay the M1 bill, 2 days before each due date at 9:00 am. Next: Tue 13 Oct, for M1 mobile, S$42.80 due Thu 15 Oct, from your 25 Sep bill mail; then 2 days before each new M1 due date, monthly. It reaches your phone by SMS. Nothing is paid. You can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Pay the M1 bill",
+            "subtitle": "2 days before each due date · 9:00 am"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading your M1 bill mail for the due date",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90007"
+              }
+            }
+          ],
+          "fallback_text": "Setting a reminder to pay the M1 bill 2 days before each due date at 9:00 am; reading your M1 bill mail for the due date."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the reminder",
+            "subtitle": "Pay the M1 bill · 2 days before it’s due"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "No answer from the reminder service. Check Reminders before asking again."
+            }
+          ],
+          "fallback_text": "Couldn’t confirm the reminder to pay the M1 bill 2 days before each due date: the reminder service didn’t answer, so it may or may not be set. Check Reminders before asking again."
+        }
+      }
+    },
+    {
+      "id": "file-receipts-sheet",
+      "vertical": "money",
+      "kind": "file",
+      "request": "Put this month's receipts in a spreadsheet with totals by category.",
+      "says": "All 38 receipts are in a sheet, with a total per category.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Sheet",
+        "F8 Budget by category"
+      ],
+      "rationale": "38 receipts is a sheet; the card gives the total, the category totals as rows, and opens the file.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "September receipts",
+          "subtitle": "1–26 Sep · 38 receipts · XLSX"
+        },
+        "blocks": [
+          {
+            "kind": "numbers",
+            "items": [
+              {
+                "value": "S$827.35",
+                "label": "Total"
+              },
+              {
+                "value": "38",
+                "label": "Receipts"
+              }
+            ]
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Groceries",
+                "secondary": "FairPrice, Cold Storage · 14 receipts",
+                "trailing": "S$412.60"
+              },
+              {
+                "label": "Dining",
+                "secondary": "Toast Box, Din Tai Fung · 17 receipts",
+                "trailing": "S$286.40"
+              },
+              {
+                "label": "Household",
+                "secondary": "Daiso, Mr DIY · 7 receipts",
+                "trailing": "S$128.35"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_artifact",
+              "label": "Open sheet",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90008"
+            },
+            "secondary": {
+              "kind": "download_artifact",
+              "label": "Download",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90008"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Receipts in Gmail and photos you sent, to 26 Sep 2026 18:00"
+            }
+          ],
+          "assumptions": [
+            "Card charges with no receipt are left out"
+          ]
+        },
+        "fallback_text": "September receipts (1–26 Sep): 38 receipts totalling S$827.35, in a spreadsheet in your Library. By category: groceries S$412.60 (FairPrice, Cold Storage, 14 receipts); dining S$286.40 (Toast Box, Din Tai Fung, 17 receipts); household S$128.35 (Daiso, Mr DIY, 7 receipts)."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "September receipts",
+            "subtitle": "XLSX"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 38 receipts from Gmail and your photos",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90009"
+              }
+            }
+          ],
+          "fallback_text": "Reading September's receipts from Gmail and your photos."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "September receipts",
+            "subtitle": "1–26 Sep · 30 of 38 read · 8 photos too blurred: send clearer ones"
+          },
+          "blocks": [
+            {
+              "kind": "numbers",
+              "items": [
+                {
+                  "value": "S$651.20",
+                  "label": "Total so far"
+                },
+                {
+                  "value": "30",
+                  "label": "Receipts"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_artifact",
+                "label": "Open sheet",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca9000a"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Receipts in Gmail and photos you sent, to 26 Sep 2026 18:00"
+              }
+            ]
+          },
+          "fallback_text": "A sheet of September receipts (1–26 Sep) is in your Library with 30 of 38 read: S$651.20 so far. 8 receipt photos are too blurred to read, so they and their categories are not in it; send clearer photos and I'll add them."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No receipts in September",
+            "subtitle": "1–26 Sep · Gmail and photos"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "None found, so no sheet was made. Forward receipts or send photos."
+            }
+          ],
+          "fallback_text": "No receipts for September (1–26 Sep) in your Gmail or the photos you sent. None found, so no sheet was made. Forward receipts to me or send photos, or ask for another month, and I'll make it."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t make the sheet",
+            "subtitle": "September receipts"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Google connection expired. No file was made. Reconnect, then ask again."
+            }
+          ],
+          "fallback_text": "Couldn’t make the sheet of September receipts: the Google connection has expired. No file was made. Reconnect it, then ask me again."
+        }
+      }
+    },
+    {
+      "id": "money-charge-alert",
+      "vertical": "money",
+      "kind": "card",
+      "request": "Tell me whenever a charge on my DBS card is over S$200.",
+      "says": "A S$1,249 charge just went through at Harvey Norman.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "F9 Transactions list",
+        "Alert fired"
+      ],
+      "rationale": "The watch firing: the charge and the rule it broke as rows; still bound to the routine with one Pause. Disputing is a question, then an approval.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Charge over S$200 · DBS card",
+          "subtitle": "Altitude ··4410 · as of 14:32"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every charge since 20 Sep",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Harvey Norman",
+                "secondary": "Sat 26 Sep 14:31 · Shopping",
+                "trailing": "S$1,249.00"
+              },
+              {
+                "label": "Your rule",
+                "secondary": "Any single charge over S$200 on ··4410",
+                "trailing": "Over S$200"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS Altitude card ··4410, 26 Sep 2026 14:32"
+            }
+          ],
+          "assumptions": [
+            "Nothing is disputed or blocked unless you ask.",
+            "Not yours? DBS blocks the card on 1800 111 1111."
+          ]
+        },
+        "fallback_text": "Charge over S$200 on your DBS Altitude card ··4410, as of 14:32: Harvey Norman, S$1,249.00, Sat 26 Sep 14:31, shopping; your rule is any single charge over S$200 on ··4410. Watching every charge since 20 Sep. Nothing is disputed or blocked unless you ask; if it isn't yours, DBS blocks the card on 1800 111 1111."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "DBS card charges",
+            "subtitle": "Altitude ··4410"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading new charges on your DBS Altitude card",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000c"
+              }
+            }
+          ],
+          "fallback_text": "Reading new charges on your DBS Altitude card ··4410."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Charge over S$200 · DBS card",
+            "subtitle": "Altitude ··4410 · merchant not in yet · as of 14:32"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every charge since 20 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Card purchase",
+                  "secondary": "Sat 26 Sep 14:31 · merchant name not in yet",
+                  "trailing": "S$1,249.00"
+                },
+                {
+                  "label": "Your rule",
+                  "secondary": "Any single charge over S$200 on ··4410",
+                  "trailing": "Over S$200"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS Altitude card ··4410, 26 Sep 2026 14:32; merchant still loading"
+              }
+            ],
+            "assumptions": [
+              "Nothing is disputed or blocked unless you ask.",
+              "Not yours? DBS blocks the card on 1800 111 1111."
+            ]
+          },
+          "fallback_text": "Charge over S$200 on your DBS Altitude card ··4410, as of 14:32: S$1,249.00, Sat 26 Sep 14:31; DBS hasn't sent the merchant name yet. Your rule is any single charge over S$200. Watching every charge since 20 Sep. If it isn't yours, DBS blocks the card on 1800 111 1111."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Charge over S$200 · DBS card",
+            "subtitle": "Altitude ··4410 · as of 14:32 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every charge since 20 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Harvey Norman",
+                  "secondary": "Sat 26 Sep 14:31 · Shopping",
+                  "trailing": "S$1,249.00"
+                },
+                {
+                  "label": "Your rule",
+                  "secondary": "Any single charge over S$200 on ··4410",
+                  "trailing": "Over S$200"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000b",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS Altitude card ··4410, 26 Sep 2026 14:32"
+              }
+            ],
+            "assumptions": [
+              "Nothing is disputed or blocked unless you ask.",
+              "Not yours? DBS blocks the card on 1800 111 1111."
+            ]
+          },
+          "fallback_text": "As of 14:32 (couldn’t refresh with DBS since): charge over S$200 on your DBS Altitude card ··4410: Harvey Norman, S$1,249.00, Sat 26 Sep 14:31, shopping. Watching every charge since 20 Sep. Nothing is disputed or blocked unless you ask; if it isn't yours, DBS blocks the card on 1800 111 1111."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The S$1,249 charge was reversed",
+            "subtitle": "Altitude ··4410 · as of 15:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Harvey Norman reversed it at 15:05. Nothing was changed; I’m still watching"
+            }
+          ],
+          "fallback_text": "The S$1,249.00 Harvey Norman charge on your DBS Altitude card ··4410 was reversed at 15:05, as of 15:10. Nothing was changed on your side; I’m still watching for charges over S$200."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read your DBS card",
+            "subtitle": "Altitude ··4410"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "DBS didn’t respond. Nothing was changed; next check at 15:00"
+            }
+          ],
+          "fallback_text": "Couldn’t read new charges on your DBS Altitude card ··4410: DBS didn’t respond. Nothing was changed; the next check is at 15:00."
         }
       }
     },
@@ -12140,6 +12649,253 @@
             }
           ],
           "fallback_text": "Couldn't check condo open houses near Clementi for Sat 26–Sun 27 Sep: PropertyGuru didn't answer."
+        }
+      }
+    },
+    {
+      "id": "home-rent-watch-alert",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Watch for 1-bed rentals near Outram under S$3,500 from October and tell me when a new one appears.",
+      "says": "A new one came up: Spottiswoode Suites at S$3,380 a month.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R2 Listing results",
+        "Alert fired"
+      ],
+      "rationale": "The watch firing: the new listing as a row with the ones already sent; still bound to the routine with one Pause, and the listing one tap away.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "New 1-bed rental near Outram",
+          "subtitle": "Under S$3,500 · from October · as of 14:10"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every 2 hours since 24 Sep",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Spottiswoode Suites",
+                "secondary": "47 sqm · from 10 Oct · listed 13:52",
+                "trailing": "S$3,380"
+              },
+              {
+                "label": "Sent before",
+                "secondary": "The Clift, Spottiswoode 18, Pinnacle@Duxton",
+                "trailing": "3 listings"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "View listing",
+              "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+            },
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru listing 24588103, 26 Sep 2026 14:10",
+              "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+            }
+          ],
+          "assumptions": [
+            "Only listings new since the last alert are sent.",
+            "Nothing is booked or messaged until you say yes."
+          ]
+        },
+        "fallback_text": "New 1-bed rental near Outram under S$3,500 from October, as of 14:10: Spottiswoode Suites, 47 sqm, from 10 Oct, S$3,380 a month, listed at 13:52 on PropertyGuru. Sent before: The Clift, Spottiswoode 18, Pinnacle@Duxton (3 listings). Watching every 2 hours since 24 Sep. Nothing is booked or messaged until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1-bed rentals near Outram",
+            "subtitle": "Under S$3,500 · from October"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 99.co and PropertyGuru for new 1-bed listings",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000f"
+              }
+            }
+          ],
+          "fallback_text": "Checking 99.co and PropertyGuru for new 1-bed rentals near Outram under S$3,500 from October."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "New 1-bed rental near Outram",
+            "subtitle": "Size not in yet · as of 14:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every 2 hours since 24 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Spottiswoode Suites",
+                  "secondary": "Size not in yet · from 10 Oct · listed 13:52",
+                  "trailing": "S$3,380"
+                },
+                {
+                  "label": "Sent before",
+                  "secondary": "The Clift, Spottiswoode 18, Pinnacle@Duxton",
+                  "trailing": "3 listings"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "View listing",
+                "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+              },
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24588103, 26 Sep 2026 14:10",
+                "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+              }
+            ],
+            "assumptions": [
+              "Only listings new since the last alert are sent.",
+              "Nothing is booked or messaged until you say yes."
+            ]
+          },
+          "fallback_text": "New 1-bed rental near Outram under S$3,500 from October, as of 14:10: Spottiswoode Suites, from 10 Oct, S$3,380 a month, listed at 13:52 on PropertyGuru; the listing doesn't give its size yet. Sent before: The Clift, Spottiswoode 18, Pinnacle@Duxton (3 listings). Watching every 2 hours since 24 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "New 1-bed rental near Outram",
+            "subtitle": "Under S$3,500 · as of 14:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every 2 hours since 24 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Spottiswoode Suites",
+                  "secondary": "47 sqm · from 10 Oct · listed 13:52",
+                  "trailing": "S$3,380"
+                },
+                {
+                  "label": "Sent before",
+                  "secondary": "The Clift, Spottiswoode 18, Pinnacle@Duxton",
+                  "trailing": "3 listings"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "View listing",
+                "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+              },
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24588103, 26 Sep 2026 14:10",
+                "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+              }
+            ],
+            "assumptions": [
+              "Only listings new since the last alert are sent.",
+              "Nothing is booked or messaged until you say yes."
+            ]
+          },
+          "fallback_text": "As of 14:10 (couldn’t refresh PropertyGuru since; the listing may have gone): new 1-bed rental near Outram under S$3,500 from October: Spottiswoode Suites, 47 sqm, from 10 Oct, S$3,380 a month, listed at 13:52. Sent before: The Clift, Spottiswoode 18, Pinnacle@Duxton (3 listings). Watching every 2 hours since 24 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Spottiswoode Suites listing is gone",
+            "subtitle": "1-bed near Outram · as of 16:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The agent took it down at 15:30. Nothing was sent to them; I’m still watching"
+            }
+          ],
+          "fallback_text": "The Spottiswoode Suites listing (1-bed near Outram, S$3,380) is gone as of 16:10: the agent took it down at 15:30. Nothing was sent to them; I’m still watching for new 1-bed rentals under S$3,500."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check Outram rentals",
+            "subtitle": "1-bed · under S$3,500"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "99.co and PropertyGuru didn’t answer. Next check is at 16:10"
+            }
+          ],
+          "fallback_text": "Couldn’t check for new 1-bed rentals near Outram under S$3,500: 99.co and PropertyGuru didn’t answer. Nothing was sent to anyone; the next check is at 16:10."
         }
       }
     },
@@ -31354,6 +32110,179 @@
       }
     },
     {
+      "id": "edu-goal-checkin",
+      "vertical": "education",
+      "kind": "card",
+      "request": "Check in with me every Saturday on my JLPT N5 plan and adjust it to my answers.",
+      "says": "Here's this week's check-in; reviews move to mornings, as you asked.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Progress / streak",
+        "Checklist / to-do"
+      ],
+      "rationale": "One check-in per run: the person's last answer, what changed because of it and this week's progress as rows; still bound to the routine with one Pause.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "JLPT N5 · week 3 check-in",
+          "subtitle": "Sat 26 Sep · exam Sun 6 Dec"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every Saturday at 09:00",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90010"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "You said",
+                "secondary": "Evenings after 10 pm don't work this month",
+                "trailing": "Sat 19 Sep"
+              },
+              {
+                "label": "So I changed",
+                "secondary": "Reviews at 7:30 am, 20 min, Mon to Fri",
+                "trailing": "From Mon 28 Sep"
+              },
+              {
+                "label": "This week",
+                "secondary": "4 of 5 sessions · 64% through N5",
+                "trailing": "On track"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90010",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Your study log in Harso and your answer of 19 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Your calendar wasn't changed; say yes and I'll add the 7:30 am reviews"
+          ]
+        },
+        "fallback_text": "JLPT N5, week 3 check-in, Sat 26 Sep, exam Sun 6 Dec. You said on Sat 19 Sep that evenings after 10 pm don't work this month, so I changed your reviews to 7:30 am, 20 minutes, Monday to Friday, from Mon 28 Sep. This week: 4 of 5 sessions done, 64% through N5, on track. Your calendar wasn't changed. Next check-in every Saturday at 09:00; you can pause it."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "JLPT N5 · week 3 check-in",
+            "subtitle": "Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Writing this week's JLPT N5 check-in",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90011"
+              }
+            }
+          ],
+          "fallback_text": "Writing this week's JLPT N5 check-in, Sat 26 Sep."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "JLPT N5 · week 3 check-in",
+            "subtitle": "Sat 26 Sep · Friday not synced yet"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every Saturday at 09:00",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90010"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "You said",
+                  "secondary": "Evenings after 10 pm don't work this month",
+                  "trailing": "Sat 19 Sep"
+                },
+                {
+                  "label": "So I changed",
+                  "secondary": "Reviews at 7:30 am, 20 min, Mon to Fri",
+                  "trailing": "From Mon 28 Sep"
+                },
+                {
+                  "label": "This week",
+                  "secondary": "3 of 4 days logged · open the app on your phone to sync Friday",
+                  "trailing": "Not known"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90010",
+                "control": "pause"
+              }
+            }
+          ],
+          "fallback_text": "JLPT N5, week 3 check-in, Sat 26 Sep. You said on Sat 19 Sep that evenings after 10 pm don't work this month, so I changed your reviews to 7:30 am, 20 minutes, Monday to Friday, from Mon 28 Sep. This week: 3 sessions in 4 logged days; Friday hasn't synced from your phone, so I can't say yet if you're on track; open the app on your phone to sync it. Next check-in every Saturday at 09:00."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No answer last week · JLPT N5",
+            "subtitle": "Sat 26 Sep · exam Sun 6 Dec"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No reply on Sat 19 Sep, so the plan is unchanged. Reply here to adjust it"
+            }
+          ],
+          "fallback_text": "JLPT N5 check-in, Sat 26 Sep: you didn't reply to last week's check-in on Sat 19 Sep, so the plan is unchanged for the exam on Sun 6 Dec. Reply here to adjust it; the next check-in is Sat 3 Oct at 09:00."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t write this week’s check-in",
+            "subtitle": "JLPT N5 · Sat 26 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Your study log didn't load. Nothing was changed; I'll try again at 12:00"
+            }
+          ],
+          "fallback_text": "Couldn’t write this week’s JLPT N5 check-in, Sat 26 Sep: your study log didn't load. Nothing was changed in your plan; I'll try again at 12:00."
+        }
+      }
+    },
+    {
       "id": "health-resting-hr",
       "vertical": "health",
       "kind": "card",
@@ -39265,6 +40194,129 @@
       ],
       "rationale": "A definition is words; a card would only frame one sentence.",
       "document": null
+    },
+    {
+      "id": "docs-lease-answer",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Can I end my lease early? Show me what it says.",
+      "says": "Only if you're posted out of Singapore or lose your job: after the first year, with 2 months' notice and proof.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Contract summary with clauses"
+      ],
+      "rationale": "The clauses that answer it as rows with their page, then the key clause quoted word for word with its page; the PDF is in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tenancy agreement · The Clift",
+          "subtitle": "Ending early · clauses 2(k) and 2(l), page 4"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Clause 2(k) · Diplomatic clause",
+                "secondary": "If posted overseas or laid off, with proof; after 12 months, 2 months' notice",
+                "trailing": "Page 4"
+              },
+              {
+                "label": "Clause 2(l) · Commission refund",
+                "secondary": "You repay the agent's commission for the months left",
+                "trailing": "Page 4"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Clause 2(k), page 4, word for word",
+                "paragraphs": [
+                  "“The Tenant may, after the first twelve (12) months of the term, terminate this Agreement by giving the Landlord not less than two (2) months’ written notice, if the Tenant is transferred out of Singapore or loses employment, with documentary proof.”"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Tenancy agreement PDF you shared, page 4"
+            }
+          ],
+          "disclaimers": [
+            "A summary, not legal advice."
+          ]
+        },
+        "fallback_text": "Tenancy agreement, The Clift: clause 2(k), page 4, the diplomatic clause, says word for word: “The Tenant may, after the first twelve (12) months of the term, terminate this Agreement by giving the Landlord not less than two (2) months’ written notice, if the Tenant is transferred out of Singapore or loses employment, with documentary proof.” Clause 2(l), page 4: you repay the agent's commission for the months left."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tenancy agreement · The Clift",
+            "subtitle": "12 pages"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 12 pages for how the lease can end early",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000d"
+              }
+            }
+          ],
+          "fallback_text": "Reading the 12-page tenancy agreement for The Clift for how it can end early."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tenancy agreement · The Clift",
+            "subtitle": "Ending early · 14 clauses read · runs to 30 Sep 2028"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No clause lets you end it early. Say yes and I'll draft a note to your landlord."
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Tenancy agreement PDF you shared"
+              }
+            ],
+            "disclaimers": [
+              "A summary, not legal advice."
+            ]
+          },
+          "fallback_text": "Tenancy agreement for The Clift: none of the 14 clauses lets you end it early, so the term runs to 30 Sep 2028. Say yes and I'll draft a note asking your landlord anyway."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the tenancy agreement",
+            "subtitle": "The Clift"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF is a scan with no text layer. Send a text PDF and I'll quote it."
+            }
+          ],
+          "fallback_text": "The tenancy agreement for The Clift is a scan with no text layer, so I couldn’t read or quote it. Send a text PDF and I'll quote the clause and page. Nothing was changed."
+        }
+      }
     },
     {
       "id": "data-kpis",
@@ -47268,6 +48320,779 @@
             }
           ],
           "fallback_text": "Couldn’t check PS5 Slim stock near Indiranagar: the store pages didn’t load and no call was made. Ask me again in a few minutes."
+        }
+      }
+    },
+    {
+      "id": "home-bill-dispute-called",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Yes, call Singtel about the roaming charge.",
+      "says": "Singtel agreed to reverse it; the credit shows on your next bill.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Call outcome"
+      ],
+      "rationale": "After the dispute call: who answered, what was agreed within your plan and what happens next as rows; the transcript is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Reversal agreed by phone · Singtel",
+          "subtitle": "Roaming S$38.52 · account 1-88231455"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Answered by",
+                "secondary": "Farah, billing support",
+                "trailing": "11:40, 9 min"
+              },
+              {
+                "label": "Agreed",
+                "secondary": "Full reversal, within your plan",
+                "trailing": "S$38.52 credit"
+              },
+              {
+                "label": "Next step",
+                "secondary": "Credit on the October bill",
+                "trailing": "Mon 26 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open transcript",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90001"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Harso call to Singtel billing, 26 Sep 2026 11:40"
+            }
+          ],
+          "assumptions": [
+            "Harso said it was calling for you at the start of the call",
+            "Your plan: ask for a full reversal; accept no less than half as a credit"
+          ]
+        },
+        "fallback_text": "Reversal agreed by phone at Singtel for the roaming charge of S$38.52 on account 1-88231455. Answered by Farah, billing support, at 11:40, 9 min; agreed: full reversal, within your plan, a S$38.52 credit; next step, the credit shows on your next bill on Mon 26 Oct. The transcript is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Calling Singtel billing",
+            "subtitle": "Roaming S$38.52 · account 1-88231455"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Calling Singtel to dispute the S$38.52 roaming charge",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90002"
+              }
+            }
+          ],
+          "fallback_text": "Calling Singtel billing to dispute the S$38.52 roaming charge on account 1-88231455."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Reversal agreed by phone · Singtel",
+            "subtitle": "Roaming S$38.52 · account 1-88231455"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Answered by",
+                  "secondary": "Farah, billing support",
+                  "trailing": "11:40, 9 min"
+                },
+                {
+                  "label": "Agreed",
+                  "secondary": "Full reversal, within your plan",
+                  "trailing": "S$38.52 credit"
+                },
+                {
+                  "label": "Credit date",
+                  "secondary": "Not said on the call; I'll check your October bill",
+                  "trailing": "Not known"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open transcript",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90001"
+              }
+            }
+          ],
+          "fallback_text": "Reversal agreed by phone at Singtel for the roaming charge of S$38.52 on account 1-88231455. Answered by Farah, billing support, at 11:40, 9 min; agreed: full reversal, within your plan, a S$38.52 credit. When the credit shows was not said on the call, so it's not known; I'll check your October bill. The transcript is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Singtel refused the reversal",
+            "subtitle": "Roaming S$38.52 · account 1-88231455"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "They say roaming was used 14 Sep. Say yes and I'll dispute it in writing."
+            }
+          ],
+          "fallback_text": "Singtel refused to reverse the S$38.52 roaming charge on account 1-88231455: they say roaming was used on 14 Sep. Nothing was agreed, and that is outside your plan's floor of half as a credit. Say yes and I'll dispute it in writing."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No answer at Singtel billing",
+            "subtitle": "Roaming S$38.52 · account 1-88231455"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Cut off after 20 min on hold. Nothing agreed. Say yes and I'll call at 14:00."
+            }
+          ],
+          "fallback_text": "No answer at Singtel billing when I called at 11:40 to dispute the S$38.52 roaming charge on account 1-88231455: on hold for 20 minutes, then cut off at 12:02. Nothing was agreed. Say yes and I'll call again at 14:00."
+        }
+      }
+    },
+    {
+      "id": "home-bill-lower-called",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Call Xfinity and get my internet bill down, within the plan I approved.",
+      "says": "Xfinity agreed to US$65 a month; the new price starts on the 12 Oct bill.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Call outcome"
+      ],
+      "rationale": "After the retention call: who answered, the agreed price against the old one and when it shows as rows; the transcript is the one action.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Lowered by phone · Xfinity",
+          "subtitle": "Internet · case 58-771204 · Thu 24 Sep"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Answered by",
+                "secondary": "Jordan, retention team",
+                "trailing": "10:05 ET, 22 min"
+              },
+              {
+                "label": "Agreed",
+                "secondary": "US$65 a month for 12 months, was US$89",
+                "trailing": "Within your plan"
+              },
+              {
+                "label": "Next step",
+                "secondary": "New price on the next bill",
+                "trailing": "Mon 12 Oct"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_artifact",
+              "label": "Open transcript",
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90003"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Harso call to Xfinity, 24 Sep 2026 10:05 ET"
+            }
+          ],
+          "assumptions": [
+            "Harso said it was calling for you at the start of the call",
+            "Your plan: US$70 a month or less, no new contract"
+          ]
+        },
+        "fallback_text": "Lowered by phone at Xfinity, internet, case 58-771204, Thu 24 Sep. Answered by Jordan, retention team, at 10:05 ET, 22 min; agreed: US$65 a month for 12 months, was US$89, within your plan (US$70 or less); next step, the new price is on the next bill, Mon 12 Oct. The transcript is in your Library."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Calling Xfinity",
+            "subtitle": "Internet · case 58-771204"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Calling Xfinity to lower your internet bill from US$89",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90004"
+              }
+            }
+          ],
+          "fallback_text": "Calling Xfinity to lower your internet bill from US$89 a month, case 58-771204."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Lowered by phone · Xfinity",
+            "subtitle": "Internet · case 58-771204 · Thu 24 Sep"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Answered by",
+                  "secondary": "Jordan, retention team",
+                  "trailing": "10:05 ET, 22 min"
+                },
+                {
+                  "label": "Agreed",
+                  "secondary": "US$65 a month for 12 months, was US$89",
+                  "trailing": "Within your US$70 plan"
+                },
+                {
+                  "label": "Start date",
+                  "secondary": "Not said on the call; I'll check your next bill",
+                  "trailing": "Not known"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_artifact",
+                "label": "Open transcript",
+                "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000ca90003"
+              }
+            }
+          ],
+          "fallback_text": "Lowered by phone at Xfinity, internet, case 58-771204, Thu 24 Sep. Answered by Jordan, retention team, at 10:05 ET, 22 min; agreed: US$65 a month for 12 months, was US$89, within your plan (US$70 or less). Which bill the new price starts on was not said on the call, so it's not known; I'll check your next bill. The transcript is in your Library."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Xfinity’s best offer was above your limit",
+            "subtitle": "Internet · case 58-771204"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "US$79 (was US$89), over your US$70 plan. Say yes and I'll compare providers."
+            }
+          ],
+          "fallback_text": "Xfinity’s best offer for your internet, case 58-771204, was US$79 a month, down from US$89 but above your US$70 limit, so nothing was agreed. Say yes and I'll compare other providers."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No answer at Xfinity",
+            "subtitle": "Internet · case 58-771204"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Dropped at 10:31 ET, nothing agreed. Say yes and I'll call tomorrow at 10:00 ET."
+            }
+          ],
+          "fallback_text": "No answer at Xfinity: the call about case 58-771204 dropped at 10:31 ET before an offer was made. Nothing was agreed. Say yes and I'll call again tomorrow at 10:00 ET."
+        }
+      }
+    },
+    {
+      "id": "home-supplies-updated",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Keep my supplies list up to date from my grocery receipts.",
+      "says": "The 3 household items from today's FairPrice receipt are on your list.",
+      "surface": "inline",
+      "fresh": false,
+      "components": [
+        "Booking summary / confirmation"
+      ],
+      "rationale": "After a receipt arrives, the result reads like a receipt: which list, which rows changed and from what, and a quiet link to the list.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Updated · Household supplies",
+          "subtitle": "Google Sheets · 26 Sep 18:05"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "List",
+                "secondary": "Google Sheets · Home",
+                "trailing": "Household supplies"
+              },
+              {
+                "label": "Restocked",
+                "secondary": "Dish liquid, toilet rolls, rice 5 kg",
+                "trailing": "3 rows"
+              },
+              {
+                "label": "From receipt",
+                "secondary": "FairPrice Xtra, 26 Sep 17:48",
+                "trailing": "S$64.35"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "secondary": {
+              "kind": "open_url",
+              "label": "Open list in Sheets",
+              "url": "https://docs.google.com/spreadsheets/d/1HouseholdSupplies8kQ2/edit"
+            }
+          }
+        ],
+        "fallback_text": "Updated 26 Sep 18:05: Household supplies in Google Sheets, Home, now shows 3 rows restocked (dish liquid, toilet rolls, rice 5 kg) from your FairPrice Xtra receipt of 26 Sep 17:48, S$64.35. The 4 other items on it aren't on your list, so they were left off."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Household supplies",
+            "subtitle": "Google Sheets · FairPrice receipt"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Adding the FairPrice receipt to Household supplies",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90005"
+              }
+            }
+          ],
+          "fallback_text": "Adding the household items from your FairPrice Xtra receipt to Household supplies in Google Sheets."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "2 of 3 on Household supplies",
+            "subtitle": "Google Sheets · 26 Sep 18:05"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "List",
+                  "secondary": "Google Sheets · Home",
+                  "trailing": "Household supplies"
+                },
+                {
+                  "label": "Restocked",
+                  "secondary": "Dish liquid, toilet rolls",
+                  "trailing": "2 rows"
+                },
+                {
+                  "label": "Not added",
+                  "secondary": "SONGHE 5KG on the receipt, not on your list",
+                  "trailing": "Ask me to add it"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open list in Sheets",
+                "url": "https://docs.google.com/spreadsheets/d/1HouseholdSupplies8kQ2/edit"
+              }
+            }
+          ],
+          "fallback_text": "2 of 3 household items from your FairPrice Xtra receipt of 26 Sep 17:48 are on Household supplies in Google Sheets, Home, as of 18:05: dish liquid and toilet rolls restocked. Not added: the receipt line SONGHE 5KG matches nothing on your list; ask me to add it as rice 5 kg."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Updated · Household supplies",
+            "subtitle": "Google Sheets · as of 26 Sep 18:05 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "List",
+                  "secondary": "Google Sheets · Home",
+                  "trailing": "Household supplies"
+                },
+                {
+                  "label": "Restocked",
+                  "secondary": "Dish liquid, toilet rolls, rice 5 kg",
+                  "trailing": "3 rows"
+                },
+                {
+                  "label": "From receipt",
+                  "secondary": "FairPrice Xtra, 26 Sep 17:48",
+                  "trailing": "S$64.35"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "secondary": {
+                "kind": "open_url",
+                "label": "Open list in Sheets",
+                "url": "https://docs.google.com/spreadsheets/d/1HouseholdSupplies8kQ2/edit"
+              }
+            }
+          ],
+          "fallback_text": "As of 26 Sep 18:05 (couldn’t refresh Google Sheets since): Household supplies in Home shows 3 rows restocked (dish liquid, toilet rolls, rice 5 kg) from your FairPrice Xtra receipt of 26 Sep 17:48, S$64.35. Edits made in Sheets since then aren’t shown."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t confirm the list update",
+            "subtitle": "Household supplies · sent at 18:04"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "Sheets didn’t answer after the edit. I’ll check the list before trying again."
+            }
+          ],
+          "fallback_text": "I couldn’t confirm the update to Household supplies from your FairPrice Xtra receipt: Google Sheets didn’t answer after the edit, sent at 18:04, so some rows may already be changed. I’ll check the list before trying again."
+        }
+      }
+    },
+    {
+      "id": "home-tax-docs-linked",
+      "vertical": "home_admin",
+      "kind": "card",
+      "request": "Collect my tax documents for this year and link each one.",
+      "says": "One is still missing: the rental statements since March.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "S14 Return / refund status"
+      ],
+      "rationale": "The tax checklist with a link to every found mail or file in Details, in row order; missing first, what IRAS gets directly said once.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tax documents for YA 2027",
+          "subtitle": "Income year 2026 · 3 found, 1 missing"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Rental income, Jan–Aug",
+                "secondary": "Propnex monthly statements · none since March",
+                "trailing": "Missing"
+              },
+              {
+                "label": "SRS contributions",
+                "secondary": "DBS SRS statement, 1 Aug · Gmail",
+                "trailing": "Found"
+              },
+              {
+                "label": "CPF cash top-up, S$8,000",
+                "secondary": "CPF Board receipt, 12 Mar · Gmail",
+                "trailing": "Found"
+              },
+              {
+                "label": "Donations, 2 receipts",
+                "secondary": "IPC Club Rainbow in Gmail, SPCA in Drive",
+                "trailing": "Found"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "IRAS gets these directly",
+                "bullets": [
+                  "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
+                  "CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "DBS SRS statement, 1 Aug 2026 · Gmail",
+              "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXJWDsKmnbDtRqHwLvZpNcQbvB"
+            },
+            {
+              "label": "CPF Board cash top-up receipt, 12 Mar 2026 · Gmail",
+              "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXKcNrTvLpWbHqZmDsXjYgFkRt"
+            },
+            {
+              "label": "IPC Club Rainbow donation receipt · Gmail",
+              "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXLpBdWsNkVhGtRcMzQjXfHyKs"
+            },
+            {
+              "label": "SPCA donation receipt · Google Drive",
+              "url": "https://drive.google.com/file/d/1SPCAreceipt2026Xy/view"
+            },
+            {
+              "label": "IRAS: CPF Relief for employees",
+              "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-reliefs-rebates-and-deductions/tax-reliefs/central-provident-fund(cpf)-relief-for-employees"
+            },
+            {
+              "label": "Gmail and Google Drive, searched 26 Sep 2026"
+            }
+          ],
+          "assumptions": [
+            "Your employer is in IRAS's Auto-Inclusion Scheme; if not, you declare the IR8A income and CPF relief yourself"
+          ],
+          "disclaimers": [
+            "Not tax advice; check what you claim against IRAS."
+          ]
+        },
+        "fallback_text": "Tax documents for YA 2027 (income year 2026), 3 found, 1 missing, each found one linked. Missing: rental income Jan–Aug, Propnex statements, none since March. Found: DBS SRS statement 1 Aug (Gmail); CPF Board receipt for the S$8,000 top-up, 12 Mar (Gmail); donation receipts from IPC Club Rainbow (Gmail) and SPCA (Drive). IRAS gets your IR8A from your employer by 1 Mar 2027, and CPF relief if your employer is in the Auto-Inclusion Scheme. Not tax advice."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tax documents for YA 2027",
+            "subtitle": "Gmail and Google Drive"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Searching Gmail and Drive for 2026 tax documents",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca90006"
+              }
+            }
+          ],
+          "fallback_text": "Searching your Gmail and Google Drive for 2026 tax documents for YA 2027."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tax documents for YA 2027",
+            "subtitle": "Income year 2026 · Gmail read, Drive not yet · 2 found, 1 missing"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Rental income, Jan–Aug",
+                  "secondary": "Propnex monthly statements · none since March",
+                  "trailing": "Missing"
+                },
+                {
+                  "label": "SRS contributions",
+                  "secondary": "DBS SRS statement, 1 Aug · Gmail",
+                  "trailing": "Found"
+                },
+                {
+                  "label": "CPF cash top-up, S$8,000",
+                  "secondary": "CPF Board receipt, 12 Mar · Gmail",
+                  "trailing": "Found"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "IRAS gets these directly",
+                  "bullets": [
+                    "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
+                    "CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS SRS statement, 1 Aug 2026 · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXJWDsKmnbDtRqHwLvZpNcQbvB"
+              },
+              {
+                "label": "CPF Board cash top-up receipt, 12 Mar 2026 · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXKcNrTvLpWbHqZmDsXjYgFkRt"
+              },
+              {
+                "label": "IRAS: CPF Relief for employees",
+                "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-reliefs-rebates-and-deductions/tax-reliefs/central-provident-fund(cpf)-relief-for-employees"
+              },
+              {
+                "label": "Gmail, searched 26 Sep 2026; Drive still reading"
+              }
+            ],
+            "assumptions": [
+              "Your employer is in IRAS's Auto-Inclusion Scheme; if not, you declare the IR8A income and CPF relief yourself"
+            ],
+            "disclaimers": [
+              "Not tax advice; check what you claim against IRAS."
+            ]
+          },
+          "fallback_text": "Tax documents for YA 2027 (income year 2026), Gmail read, Drive not yet: 2 found, 1 missing. Missing: rental income Jan–Aug, Propnex monthly statements, none since March. Found: SRS contributions, DBS SRS statement 1 Aug (Gmail); CPF cash top-up S$8,000, CPF Board receipt 12 Mar (Gmail). IRAS gets these directly: your IR8A, which your employer sends by 1 Mar 2027, and CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme. Drive may hold more."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tax documents for YA 2027",
+            "subtitle": "Income year 2026 · as of Thu 24 Sep 20:00 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Rental income, Jan–Aug",
+                  "secondary": "Propnex monthly statements · none since March",
+                  "trailing": "Missing"
+                },
+                {
+                  "label": "SRS contributions",
+                  "secondary": "DBS SRS statement, 1 Aug · Gmail",
+                  "trailing": "Found"
+                },
+                {
+                  "label": "CPF cash top-up, S$8,000",
+                  "secondary": "CPF Board receipt, 12 Mar · Gmail",
+                  "trailing": "Found"
+                },
+                {
+                  "label": "Donations, 2 receipts",
+                  "secondary": "IPC Club Rainbow in Gmail, SPCA in Drive",
+                  "trailing": "Found"
+                }
+              ]
+            },
+            {
+              "kind": "text",
+              "sections": [
+                {
+                  "heading": "IRAS gets these directly",
+                  "bullets": [
+                    "Your IR8A salary form: your employer sends it by 1 Mar 2027.",
+                    "CPF relief on your compulsory employee contributions, if your employer is in the Auto-Inclusion Scheme."
+                  ]
+                }
+              ]
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "DBS SRS statement, 1 Aug 2026 · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXJWDsKmnbDtRqHwLvZpNcQbvB"
+              },
+              {
+                "label": "CPF Board cash top-up receipt, 12 Mar 2026 · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXKcNrTvLpWbHqZmDsXjYgFkRt"
+              },
+              {
+                "label": "IPC Club Rainbow donation receipt · Gmail",
+                "url": "https://mail.google.com/mail/u/0/#all/FMfcgzQXLpBdWsNkVhGtRcMzQjXfHyKs"
+              },
+              {
+                "label": "SPCA donation receipt · Google Drive",
+                "url": "https://drive.google.com/file/d/1SPCAreceipt2026Xy/view"
+              },
+              {
+                "label": "IRAS: CPF Relief for employees",
+                "url": "https://www.iras.gov.sg/taxes/individual-income-tax/basics-of-individual-income-tax/tax-reliefs-rebates-and-deductions/tax-reliefs/central-provident-fund(cpf)-relief-for-employees"
+              },
+              {
+                "label": "Gmail and Google Drive, searched 24 Sep 2026 20:00"
+              }
+            ],
+            "assumptions": [
+              "Your employer is in IRAS's Auto-Inclusion Scheme; if not, you declare the IR8A income and CPF relief yourself"
+            ],
+            "disclaimers": [
+              "Not tax advice; check what you claim against IRAS."
+            ]
+          },
+          "fallback_text": "Tax documents for YA 2027, income year 2026, as of Thu 24 Sep 20:00 (couldn’t refresh; the links may have moved): missing rental income Jan–Aug, Propnex statements, none since March. Found and linked: DBS SRS statement 1 Aug (Gmail); CPF Board receipt for the S$8,000 top-up, 12 Mar (Gmail); donation receipts from IPC Club Rainbow (Gmail) and SPCA (Drive). IRAS gets your IR8A from your employer by 1 Mar 2027, and CPF relief if your employer is in the Auto-Inclusion Scheme."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "No tax documents for 2026 yet",
+            "subtitle": "Gmail and Google Drive"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "Your IR8A comes from your employer by 1 Mar 2027"
+            }
+          ],
+          "fallback_text": "No tax documents for income year 2026 in your Gmail or Drive yet. Your IR8A comes from your employer by 1 Mar 2027."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t search for tax documents",
+            "subtitle": "YA 2027"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The Google connection has expired. Reconnect it, then ask again."
+            }
+          ],
+          "fallback_text": "Couldn’t search for tax documents for YA 2027 in your Gmail and Drive: the Google connection has expired. Reconnect it, then ask me again. Nothing was changed."
         }
       }
     }

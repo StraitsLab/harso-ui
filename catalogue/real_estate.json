@@ -5,7 +5,8 @@
     "home-listing-card",
     "home-rent-listings",
     "empty-search",
-    "home-open-houses"
+    "home-open-houses",
+    "home-rent-watch-alert"
   ],
   "examples": [
     {
@@ -1989,6 +1990,253 @@
             }
           ],
           "fallback_text": "Couldn't check condo open houses near Clementi for Sat 26–Sun 27 Sep: PropertyGuru didn't answer."
+        }
+      }
+    },
+    {
+      "id": "home-rent-watch-alert",
+      "vertical": "real_estate",
+      "kind": "card",
+      "request": "Watch for 1-bed rentals near Outram under S$3,500 from October and tell me when a new one appears.",
+      "says": "A new one came up: Spottiswoode Suites at S$3,380 a month.",
+      "surface": "inline",
+      "fresh": true,
+      "components": [
+        "R2 Listing results",
+        "Alert fired"
+      ],
+      "rationale": "The watch firing: the new listing as a row with the ones already sent; still bound to the routine with one Pause, and the listing one tap away.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "New 1-bed rental near Outram",
+          "subtitle": "Under S$3,500 · from October · as of 14:10"
+        },
+        "blocks": [
+          {
+            "kind": "status",
+            "state": "watching",
+            "detail": "every 2 hours since 24 Sep",
+            "subject": {
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e"
+            }
+          },
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Spottiswoode Suites",
+                "secondary": "47 sqm · from 10 Oct · listed 13:52",
+                "trailing": "S$3,380"
+              },
+              {
+                "label": "Sent before",
+                "secondary": "The Clift, Spottiswoode 18, Pinnacle@Duxton",
+                "trailing": "3 listings"
+              }
+            ]
+          },
+          {
+            "kind": "action",
+            "primary": {
+              "kind": "open_url",
+              "label": "View listing",
+              "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+            },
+            "secondary": {
+              "kind": "routine_control",
+              "label": "Pause",
+              "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e",
+              "control": "pause"
+            }
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "PropertyGuru listing 24588103, 26 Sep 2026 14:10",
+              "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+            }
+          ],
+          "assumptions": [
+            "Only listings new since the last alert are sent.",
+            "Nothing is booked or messaged until you say yes."
+          ]
+        },
+        "fallback_text": "New 1-bed rental near Outram under S$3,500 from October, as of 14:10: Spottiswoode Suites, 47 sqm, from 10 Oct, S$3,380 a month, listed at 13:52 on PropertyGuru. Sent before: The Clift, Spottiswoode 18, Pinnacle@Duxton (3 listings). Watching every 2 hours since 24 Sep. Nothing is booked or messaged until you say yes."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "1-bed rentals near Outram",
+            "subtitle": "Under S$3,500 · from October"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Checking 99.co and PropertyGuru for new 1-bed listings",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000f"
+              }
+            }
+          ],
+          "fallback_text": "Checking 99.co and PropertyGuru for new 1-bed rentals near Outram under S$3,500 from October."
+        },
+        "partial": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "New 1-bed rental near Outram",
+            "subtitle": "Size not in yet · as of 14:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every 2 hours since 24 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Spottiswoode Suites",
+                  "secondary": "Size not in yet · from 10 Oct · listed 13:52",
+                  "trailing": "S$3,380"
+                },
+                {
+                  "label": "Sent before",
+                  "secondary": "The Clift, Spottiswoode 18, Pinnacle@Duxton",
+                  "trailing": "3 listings"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "View listing",
+                "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+              },
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24588103, 26 Sep 2026 14:10",
+                "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+              }
+            ],
+            "assumptions": [
+              "Only listings new since the last alert are sent.",
+              "Nothing is booked or messaged until you say yes."
+            ]
+          },
+          "fallback_text": "New 1-bed rental near Outram under S$3,500 from October, as of 14:10: Spottiswoode Suites, from 10 Oct, S$3,380 a month, listed at 13:52 on PropertyGuru; the listing doesn't give its size yet. Sent before: The Clift, Spottiswoode 18, Pinnacle@Duxton (3 listings). Watching every 2 hours since 24 Sep."
+        },
+        "stale": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "New 1-bed rental near Outram",
+            "subtitle": "Under S$3,500 · as of 14:10 · couldn’t refresh"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "watching",
+              "detail": "every 2 hours since 24 Sep",
+              "subject": {
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e"
+              }
+            },
+            {
+              "kind": "rows",
+              "items": [
+                {
+                  "label": "Spottiswoode Suites",
+                  "secondary": "47 sqm · from 10 Oct · listed 13:52",
+                  "trailing": "S$3,380"
+                },
+                {
+                  "label": "Sent before",
+                  "secondary": "The Clift, Spottiswoode 18, Pinnacle@Duxton",
+                  "trailing": "3 listings"
+                }
+              ]
+            },
+            {
+              "kind": "action",
+              "primary": {
+                "kind": "open_url",
+                "label": "View listing",
+                "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+              },
+              "secondary": {
+                "kind": "routine_control",
+                "label": "Pause",
+                "routine_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000e",
+                "control": "pause"
+              }
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "PropertyGuru listing 24588103, 26 Sep 2026 14:10",
+                "url": "https://www.propertyguru.com.sg/listing/for-rent-spottiswoode-suites-24588103"
+              }
+            ],
+            "assumptions": [
+              "Only listings new since the last alert are sent.",
+              "Nothing is booked or messaged until you say yes."
+            ]
+          },
+          "fallback_text": "As of 14:10 (couldn’t refresh PropertyGuru since; the listing may have gone): new 1-bed rental near Outram under S$3,500 from October: Spottiswoode Suites, 47 sqm, from 10 Oct, S$3,380 a month, listed at 13:52. Sent before: The Clift, Spottiswoode 18, Pinnacle@Duxton (3 listings). Watching every 2 hours since 24 Sep."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "The Spottiswoode Suites listing is gone",
+            "subtitle": "1-bed near Outram · as of 16:10"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "The agent took it down at 15:30. Nothing was sent to them; I’m still watching"
+            }
+          ],
+          "fallback_text": "The Spottiswoode Suites listing (1-bed near Outram, S$3,380) is gone as of 16:10: the agent took it down at 15:30. Nothing was sent to them; I’m still watching for new 1-bed rentals under S$3,500."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t check Outram rentals",
+            "subtitle": "1-bed · under S$3,500"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "99.co and PropertyGuru didn’t answer. Next check is at 16:10"
+            }
+          ],
+          "fallback_text": "Couldn’t check for new 1-bed rentals near Outram under S$3,500: 99.co and PropertyGuru didn’t answer. Nothing was sent to anyone; the next check is at 16:10."
         }
       }
     }
