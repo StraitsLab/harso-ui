@@ -394,30 +394,63 @@ test("text: the budget is measured again after a resize and a font-size change",
   await expect(card(page).getByRole("button", { name: "View all", exact: true })).toBeVisible();
 });
 
-test("text: any font change re-measures, and text cut away at a large size comes back when the size is restored", async ({ page }) => {
-  const render = async (items: string[]) => {
-    const doc = { header: { title: "Font" }, fallback_text: "x", blocks: [{ kind: "text", sections: [{ bullets: items }] }] };
-    await page.evaluate(d => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput(d), doc);
-  };
-  const body = (value: string, prop: "fontFamily" | "fontSize") => card(page).evaluate((node, [v, k]) => {
-    ((node.querySelector(".hkc-output-card-sections") as HTMLElement).style as unknown as Record<string, string>)[k] = v;
-  }, [value, prop] as const);
+const renderBullets = async (page: Page, items: string[]) => {
+  await page.waitForFunction(() => "renderOutput" in window);
+  await page.evaluate(d => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput(d),
+    { header: { title: "Font" }, fallback_text: "x", blocks: [{ kind: "text", sections: [{ bullets: items }] }] });
+  // Fonts settled first: the card's own fonts-ready re-measure must not land later and mask what a test proves.
+  await page.evaluate(() => document.fonts.ready);
+};
+const bodyStyle = (page: Page, prop: "fontFamily" | "fontSize", value: string) => card(page).evaluate((node, [k, v]) => {
+  ((node.querySelector(".hkc-output-card-sections") as HTMLElement).style as unknown as Record<string, string>)[k] = v;
+}, [prop, value] as const);
+const items = (page: Page) => card(page).getByRole("listitem").allTextContents();
+
+test("text: a font-family change at the same size re-measures the budget", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto(`${fixture}?width=390`);
   // Narrow glyphs fit four bullets; a wider family (same size and line height) must still stay within the budget.
-  await render(Array(4).fill("iiiiiiiiii iiiiiiiiii iiiiiiiiii iiiiiiiiii"));
+  await renderBullets(page, Array(4).fill("iiiiiiiiii iiiiiiiiii iiiiiiiiii iiiiiiiiii"));
   await expect(card(page).getByRole("listitem")).toHaveCount(4);
-  await body("monospace", "fontFamily");
+  await bodyStyle(page, "fontFamily", "monospace");
   await expect.poll(() => renderedLines(page)).toBeLessThanOrEqual(4);
   await expect(card(page).getByRole("button", { name: "View all", exact: true })).toBeVisible();
-  // One unbreakable word: at 28px even the first bullet waits for View all (an empty body), and at 14px again the
-  // bullets that fit come back. The trimmed body is zero height there, so this needs more than its own resize.
-  await render(["W".repeat(65), "Next item."]);
-  await body("14px", "fontSize");
-  const fitting = await card(page).getByRole("listitem").allTextContents();
-  expect(fitting.length).toBeGreaterThan(0);
-  await body("28px", "fontSize");
-  await expect(card(page).getByRole("button", { name: "View all", exact: true })).toBeVisible();
-  await body("14px", "fontSize");
-  await expect.poll(() => card(page).getByRole("listitem").allTextContents()).toEqual(fitting);
+});
+
+test("text: bullets cut away to an empty body at a large size come back when the size is restored", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto(`${fixture}?width=390`);
+  // One unbreakable word. (a) At 14px some of it fits: wait until what shows is non-empty and stable.
+  await renderBullets(page, ["W".repeat(65), "Next item."]);
+  await bodyStyle(page, "fontSize", "14px");
+  let fitting: string[] = [];
+  await expect.poll(async () => { const before = await items(page); await page.waitForTimeout(100); fitting = await items(page);
+    return fitting.length > 0 && JSON.stringify(before) === JSON.stringify(fitting); }).toBe(true);
+  // (b) At 28px even the first bullet waits for View all: no list items and a zero-height body, not just View all.
+  await bodyStyle(page, "fontSize", "28px");
+  await expect(card(page).getByRole("listitem")).toHaveCount(0);
+  await expect.poll(() => card(page).evaluate(root => {
+    const body = root.querySelector(".hkc-output-card-sections")!;
+    return body.querySelectorAll(":is(h3, p, li)").length + body.getBoundingClientRect().height;
+  })).toBe(0);
+  // Settled, not just seen: let the body's own pending resize notice (to zero) land before the size is restored.
+  await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))));
+  // (c) Back at 14px the empty body has nothing of its own to resize; the bullets that fit must still come back.
+  await bodyStyle(page, "fontSize", "14px");
+  await expect.poll(() => items(page)).toEqual(fitting);
+});
+
+for (const full of [false, true]) test(`text ${full ? "full" : "inline"} 390: the hidden font sample adds no horizontal scroll at 40px and keeps its natural width`, async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto(`${fixture}?width=390${full ? "&full=1" : ""}`);
+  await renderBullets(page, ["W".repeat(65), "Next item."]);
+  await bodyStyle(page, "fontSize", "40px");
+  const facts = () => page.evaluate(() => {
+    const sections = document.querySelector(".hkc-output-card-sections")!, sample = document.querySelector(".hkc-output-card-sections-probe")!;
+    return { scroll: document.documentElement.scrollWidth, sample: sample.getBoundingClientRect().width, body: sections.clientWidth };
+  });
+  await expect.poll(async () => (await facts()).sample).toBeGreaterThan(300);
+  const settled = await facts();
+  expect(settled.scroll, "page scroll width").toBeLessThanOrEqual(390);
+  expect(settled.sample, "sample keeps its natural max-content width").toBeGreaterThan(settled.body);
 });

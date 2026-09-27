@@ -471,7 +471,7 @@ function CardSections({ sections, lines, onClip }: { sections: HarsoOutputTextSe
   }, []);
   useLayoutEffect(() => () => onClip(false), [onClip]);
   return <div ref={node} className="hkc-output-card-sections">
-    <span ref={probe} className="hkc-output-card-sections-probe" aria-hidden="true">Hamburgefonstiv 0123</span>
+    <span className="hkc-output-card-sections-probe-box" aria-hidden="true"><span ref={probe} className="hkc-output-card-sections-probe">Hamburgefonstiv 0123</span></span>
     {shown.map((section, index) => <div key={index} className="hkc-output-card-section">
       {section.heading && <h3 className="hkc-output-card-section-heading">{section.heading}</h3>}
       {section.paragraphs?.map((text, line) => <p key={line}>{text}</p>)}
