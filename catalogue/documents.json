@@ -2242,6 +2242,129 @@
       ],
       "rationale": "A definition is words; a card would only frame one sentence.",
       "document": null
+    },
+    {
+      "id": "docs-lease-answer",
+      "vertical": "documents",
+      "kind": "card",
+      "request": "Can I end my lease early? Show me what it says.",
+      "says": "Only if you're posted out of Singapore or lose your job: after the first year, with 2 months' notice and proof.",
+      "surface": "page",
+      "fresh": false,
+      "components": [
+        "Contract summary with clauses"
+      ],
+      "rationale": "The clauses that answer it as rows with their page, then the key clause quoted word for word with its page; the PDF is in Details.",
+      "document": {
+        "kind": "output_blocks",
+        "major": 1,
+        "header": {
+          "title": "Tenancy agreement · The Clift",
+          "subtitle": "Ending early · clauses 2(k) and 2(l), page 4"
+        },
+        "blocks": [
+          {
+            "kind": "rows",
+            "items": [
+              {
+                "label": "Clause 2(k) · Diplomatic clause",
+                "secondary": "If posted overseas or laid off, with proof; after 12 months, 2 months' notice",
+                "trailing": "Page 4"
+              },
+              {
+                "label": "Clause 2(l) · Commission refund",
+                "secondary": "You repay the agent's commission for the months left",
+                "trailing": "Page 4"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "sections": [
+              {
+                "heading": "Clause 2(k), page 4, word for word",
+                "paragraphs": [
+                  "“The Tenant may, after the first twelve (12) months of the term, terminate this Agreement by giving the Landlord not less than two (2) months’ written notice, if the Tenant is transferred out of Singapore or loses employment, with documentary proof.”"
+                ]
+              }
+            ]
+          }
+        ],
+        "details": {
+          "sources": [
+            {
+              "label": "Tenancy agreement PDF you shared, page 4"
+            }
+          ],
+          "disclaimers": [
+            "A summary, not legal advice."
+          ]
+        },
+        "fallback_text": "Tenancy agreement, The Clift: clause 2(k), page 4, the diplomatic clause, says word for word: “The Tenant may, after the first twelve (12) months of the term, terminate this Agreement by giving the Landlord not less than two (2) months’ written notice, if the Tenant is transferred out of Singapore or loses employment, with documentary proof.” Clause 2(l), page 4: you repay the agent's commission for the months left."
+      },
+      "states": {
+        "loading": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tenancy agreement · The Clift",
+            "subtitle": "12 pages"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "working",
+              "detail": "Reading 12 pages for how the lease can end early",
+              "subject": {
+                "work_unit_id": "0192a3b4-5c6d-7e8f-9a0b-00000ca9000d"
+              }
+            }
+          ],
+          "fallback_text": "Reading the 12-page tenancy agreement for The Clift for how it can end early."
+        },
+        "empty": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Tenancy agreement · The Clift",
+            "subtitle": "Ending early · 14 clauses read · runs to 30 Sep 2028"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "empty",
+              "detail": "No clause lets you end it early. Say yes and I'll draft a note to your landlord."
+            }
+          ],
+          "details": {
+            "sources": [
+              {
+                "label": "Tenancy agreement PDF you shared"
+              }
+            ],
+            "disclaimers": [
+              "A summary, not legal advice."
+            ]
+          },
+          "fallback_text": "Tenancy agreement for The Clift: none of the 14 clauses lets you end it early, so the term runs to 30 Sep 2028. Say yes and I'll draft a note asking your landlord anyway."
+        },
+        "failed": {
+          "kind": "output_blocks",
+          "major": 1,
+          "header": {
+            "title": "Couldn’t read the tenancy agreement",
+            "subtitle": "The Clift"
+          },
+          "blocks": [
+            {
+              "kind": "status",
+              "state": "failed",
+              "detail": "The PDF is a scan with no text layer. Send a text PDF and I'll quote it."
+            }
+          ],
+          "fallback_text": "The tenancy agreement for The Clift is a scan with no text layer, so I couldn’t read or quote it. Send a text PDF and I'll quote the clause and page. Nothing was changed."
+        }
+      }
     }
   ]
 }
