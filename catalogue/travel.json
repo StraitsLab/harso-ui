@@ -2930,13 +2930,13 @@
               "places": [
                 {
                   "id": "d1",
-                  "label": "Asakusa and Ueno",
+                  "label": "Asakusa",
                   "lat": "35.7148",
                   "lon": "139.7967"
                 },
                 {
                   "id": "d2",
-                  "label": "Shibuya and Harajuku",
+                  "label": "Shibuya",
                   "lat": "35.6595",
                   "lon": "139.7005"
                 },
@@ -2954,9 +2954,9 @@
                 },
                 {
                   "id": "d5",
-                  "label": "Ginza and Tsukiji",
-                  "lat": "35.6717",
-                  "lon": "139.7650"
+                  "label": "Tsukiji",
+                  "lat": "35.6655",
+                  "lon": "139.7707"
                 }
               ]
             }
@@ -2965,12 +2965,12 @@
             "kind": "rows",
             "items": [
               {
-                "label": "SQ 638 out, SQ 637 back",
-                "secondary": "Mon 12 Oct 08:35 · Fri 16 Oct 22:50 · economy",
+                "label": "SQ 632 out, SQ 633 back",
+                "secondary": "Mon 12 Oct 07:40 · Fri 16 Oct 17:05 · economy",
                 "trailing": "S$1,086"
               },
               {
-                "label": "Hotel Gracery Ueno",
+                "label": "Hotel Gracery Asakusa",
                 "secondary": "4 nights · free cancel until 9 Oct",
                 "trailing": "S$1,080"
               }
@@ -2980,14 +2980,14 @@
             "kind": "text",
             "sections": [
               {
-                "heading": "Day 1 · Mon 12 Oct · Asakusa and Ueno",
+                "heading": "Day 1 · Mon 12 Oct · Asakusa",
                 "bullets": [
-                  "16:40 Land at Haneda, check in at Ueno",
+                  "15:45 Land at Haneda, check in",
                   "19:00 Senso-ji lit up at night"
                 ]
               },
               {
-                "heading": "Day 2 · Tue 13 Oct · Shibuya and Harajuku",
+                "heading": "Day 2 · Tue 13 Oct · Shibuya",
                 "bullets": [
                   "09:00 Meiji Jingu",
                   "15:00 Shibuya Sky at dusk"
@@ -3008,10 +3008,10 @@
                 ]
               },
               {
-                "heading": "Day 5 · Fri 16 Oct · Ginza and Tsukiji",
+                "heading": "Day 5 · Fri 16 Oct · Tsukiji",
                 "bullets": [
                   "08:00 Tsukiji outer market",
-                  "20:00 Leave for Haneda"
+                  "14:00 Leave for Haneda"
                 ]
               }
             ]
@@ -3028,12 +3028,12 @@
         "details": {
           "sources": [
             {
-              "label": "Singapore Airlines fare SQ 638 and SQ 637, 26 Sep 2026 09:12",
-              "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/book-flight/?from=SIN&to=HND&depart=2026-10-12&return=2026-10-16"
+              "label": "SQ 632 and SQ 633 fare on Google Flights, 26 Sep 2026 09:12",
+              "url": "https://www.google.com/travel/flights?q=Flights%20to%20HND%20from%20SIN%20on%202026-10-12%20through%202026-10-16"
             },
             {
-              "label": "Hotel Gracery Ueno on Booking.com, 26 Sep 2026 09:12",
-              "url": "https://www.booking.com/hotel/jp/gracery-ueno.en-gb.html?checkin=2026-10-12&checkout=2026-10-16"
+              "label": "Hotel Gracery Asakusa rate on its own site, 26 Sep 2026 09:12",
+              "url": "https://asakusa.gracery.com/"
             }
           ],
           "assumptions": [
@@ -3041,7 +3041,7 @@
             "Trains between areas; Kamakura is 1 h from Shinjuku."
           ]
         },
-        "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, prices as of 09:12, nothing booked: SQ 638 out Mon 12 Oct 08:35 and SQ 637 back Fri 16 Oct 22:50, economy, S$1,086; Hotel Gracery Ueno, 4 nights, free cancel until 9 Oct, S$1,080. Day 1 Mon Asakusa and Ueno; Day 2 Tue Shibuya and Harajuku; Day 3 Wed Kamakura; Day 4 Thu Shinjuku; Day 5 Fri Ginza and Tsukiji. The plan is in your Library."
+        "fallback_text": "Tokyo, Mon 12–Fri 16 Oct, prices as of 09:12, nothing booked: SQ 632 out Mon 12 Oct 07:40, SQ 633 back Fri 16 Oct 17:05, economy, S$1,086; Hotel Gracery Asakusa, 4 nights, free cancel until 9 Oct, S$1,080. Mon 12 Oct Asakusa: 15:45 land at Haneda, check in; 19:00 Senso-ji. Tue 13 Oct Shibuya: 09:00 Meiji Jingu; 15:00 Shibuya Sky. Wed 14 Oct Kamakura: 09:30 Great Buddha; 13:00 Hase-dera. Thu 15 Oct Shinjuku: 10:00 Shinjuku Gyoen; 18:00 Omoide Yokocho. Fri 16 Oct Tsukiji: 08:00 outer market; 14:00 leave for Haneda. Plan in Library."
       },
       "states": {
         "loading": {
@@ -3061,7 +3061,7 @@
               }
             }
           ],
-          "fallback_text": "Planning your 5 days in Tokyo, Mon 12–Fri 16 Oct: pricing the flight and hotel first."
+          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct: pricing the flight and hotel first, then planning day 1 of 5."
         },
         "partial": {
           "kind": "output_blocks",
@@ -3078,13 +3078,13 @@
                 "places": [
                   {
                     "id": "d1",
-                    "label": "Asakusa and Ueno",
+                    "label": "Asakusa",
                     "lat": "35.7148",
                     "lon": "139.7967"
                   },
                   {
                     "id": "d2",
-                    "label": "Shibuya and Harajuku",
+                    "label": "Shibuya",
                     "lat": "35.6595",
                     "lon": "139.7005"
                   }
@@ -3095,12 +3095,12 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "SQ 638 out, SQ 637 back",
-                  "secondary": "Mon 12 Oct 08:35 · Fri 16 Oct 22:50 · economy",
+                  "label": "SQ 632 out, SQ 633 back",
+                  "secondary": "Mon 12 Oct 07:40 · Fri 16 Oct 17:05 · economy",
                   "trailing": "S$1,086"
                 },
                 {
-                  "label": "Hotel Gracery Ueno",
+                  "label": "Hotel Gracery Asakusa",
                   "secondary": "4 nights · free cancel until 9 Oct",
                   "trailing": "S$1,080"
                 }
@@ -3110,14 +3110,14 @@
               "kind": "text",
               "sections": [
                 {
-                  "heading": "Day 1 · Mon 12 Oct · Asakusa and Ueno",
+                  "heading": "Day 1 · Mon 12 Oct · Asakusa",
                   "bullets": [
-                    "16:40 Land at Haneda, check in at Ueno",
+                    "15:45 Land at Haneda, check in",
                     "19:00 Senso-ji lit up at night"
                   ]
                 },
                 {
-                  "heading": "Day 2 · Tue 13 Oct · Shibuya and Harajuku",
+                  "heading": "Day 2 · Tue 13 Oct · Shibuya",
                   "bullets": [
                     "09:00 Meiji Jingu",
                     "15:00 Shibuya Sky at dusk"
@@ -3129,19 +3129,19 @@
           "details": {
             "sources": [
               {
-                "label": "Singapore Airlines fare SQ 638 and SQ 637, 26 Sep 2026 09:12",
-                "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/book-flight/?from=SIN&to=HND&depart=2026-10-12&return=2026-10-16"
+                "label": "SQ 632 and SQ 633 fare on Google Flights, 26 Sep 2026 09:12",
+                "url": "https://www.google.com/travel/flights?q=Flights%20to%20HND%20from%20SIN%20on%202026-10-12%20through%202026-10-16"
               },
               {
-                "label": "Hotel Gracery Ueno on Booking.com, 26 Sep 2026 09:12",
-                "url": "https://www.booking.com/hotel/jp/gracery-ueno.en-gb.html?checkin=2026-10-12&checkout=2026-10-16"
+                "label": "Hotel Gracery Asakusa rate on its own site, 26 Sep 2026 09:12",
+                "url": "https://asakusa.gracery.com/"
               }
             ],
             "assumptions": [
               "Nothing is booked; the fare and the rate hold only until you book."
             ]
           },
-          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, 2 of 5 days planned, prices as of 09:12, nothing booked: SQ 638 out Mon 12 Oct 08:35 and SQ 637 back Fri 16 Oct 22:50, economy, S$1,086; Hotel Gracery Ueno, 4 nights, free cancel until 9 Oct, S$1,080. Day 1 Mon Asakusa and Ueno; Day 2 Tue Shibuya and Harajuku. Days 3 to 5 are still being planned."
+          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, 2 of 5 days planned, prices as of 09:12, nothing booked: SQ 632 out Mon 12 Oct 07:40, SQ 633 back Fri 16 Oct 17:05, economy, S$1,086; Hotel Gracery Asakusa, 4 nights, free cancel until 9 Oct, S$1,080. Mon 12 Oct Asakusa: 15:45 land at Haneda, check in; 19:00 Senso-ji. Tue 13 Oct Shibuya: 09:00 Meiji Jingu; 15:00 Shibuya Sky. Days 3 to 5 are still being planned."
         },
         "stale": {
           "kind": "output_blocks",
@@ -3158,13 +3158,13 @@
                 "places": [
                   {
                     "id": "d1",
-                    "label": "Asakusa and Ueno",
+                    "label": "Asakusa",
                     "lat": "35.7148",
                     "lon": "139.7967"
                   },
                   {
                     "id": "d2",
-                    "label": "Shibuya and Harajuku",
+                    "label": "Shibuya",
                     "lat": "35.6595",
                     "lon": "139.7005"
                   },
@@ -3182,9 +3182,9 @@
                   },
                   {
                     "id": "d5",
-                    "label": "Ginza and Tsukiji",
-                    "lat": "35.6717",
-                    "lon": "139.7650"
+                    "label": "Tsukiji",
+                    "lat": "35.6655",
+                    "lon": "139.7707"
                   }
                 ]
               }
@@ -3193,12 +3193,12 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "SQ 638 out, SQ 637 back",
-                  "secondary": "Mon 12 Oct 08:35 · Fri 16 Oct 22:50 · economy",
+                  "label": "SQ 632 out, SQ 633 back",
+                  "secondary": "Mon 12 Oct 07:40 · Fri 16 Oct 17:05 · economy",
                   "trailing": "S$1,086"
                 },
                 {
-                  "label": "Hotel Gracery Ueno",
+                  "label": "Hotel Gracery Asakusa",
                   "secondary": "4 nights · free cancel until 9 Oct",
                   "trailing": "S$1,080"
                 }
@@ -3208,14 +3208,14 @@
               "kind": "text",
               "sections": [
                 {
-                  "heading": "Day 1 · Mon 12 Oct · Asakusa and Ueno",
+                  "heading": "Day 1 · Mon 12 Oct · Asakusa",
                   "bullets": [
-                    "16:40 Land at Haneda, check in at Ueno",
+                    "15:45 Land at Haneda, check in",
                     "19:00 Senso-ji lit up at night"
                   ]
                 },
                 {
-                  "heading": "Day 2 · Tue 13 Oct · Shibuya and Harajuku",
+                  "heading": "Day 2 · Tue 13 Oct · Shibuya",
                   "bullets": [
                     "09:00 Meiji Jingu",
                     "15:00 Shibuya Sky at dusk"
@@ -3236,10 +3236,10 @@
                   ]
                 },
                 {
-                  "heading": "Day 5 · Fri 16 Oct · Ginza and Tsukiji",
+                  "heading": "Day 5 · Fri 16 Oct · Tsukiji",
                   "bullets": [
                     "08:00 Tsukiji outer market",
-                    "20:00 Leave for Haneda"
+                    "14:00 Leave for Haneda"
                   ]
                 }
               ]
@@ -3248,12 +3248,12 @@
           "details": {
             "sources": [
               {
-                "label": "Singapore Airlines fare SQ 638 and SQ 637, 26 Sep 2026 08:10",
-                "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/book-flight/?from=SIN&to=HND&depart=2026-10-12&return=2026-10-16"
+                "label": "SQ 632 and SQ 633 fare on Google Flights, 26 Sep 2026 08:10",
+                "url": "https://www.google.com/travel/flights?q=Flights%20to%20HND%20from%20SIN%20on%202026-10-12%20through%202026-10-16"
               },
               {
-                "label": "Hotel Gracery Ueno on Booking.com, 26 Sep 2026 08:10",
-                "url": "https://www.booking.com/hotel/jp/gracery-ueno.en-gb.html?checkin=2026-10-12&checkout=2026-10-16"
+                "label": "Hotel Gracery Asakusa rate on its own site, 26 Sep 2026 08:10",
+                "url": "https://asakusa.gracery.com/"
               }
             ],
             "assumptions": [
@@ -3264,7 +3264,7 @@
               "The fare and the rate may have changed since 08:10; the linked pages have today's."
             ]
           },
-          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, prices as of 08:10 (couldn't refresh), nothing booked: SQ 638 out Mon 12 Oct 08:35 and SQ 637 back Fri 16 Oct 22:50, economy, S$1,086; Hotel Gracery Ueno, 4 nights, free cancel until 9 Oct, S$1,080. Day 1 Mon Asakusa and Ueno; Day 2 Tue Shibuya and Harajuku; Day 3 Wed Kamakura; Day 4 Thu Shinjuku; Day 5 Fri Ginza and Tsukiji. Check both prices before you book."
+          "fallback_text": "Tokyo, as of 08:10 (couldn't refresh), nothing booked: SQ 632 out Mon 12 Oct 07:40, SQ 633 back Fri 16 Oct 17:05, economy, S$1,086; Hotel Gracery Asakusa, 4 nights, free cancel until 9 Oct, S$1,080. Mon 12 Oct Asakusa: 15:45 land at Haneda, check in; 19:00 Senso-ji. Tue 13 Oct Shibuya: 09:00 Meiji Jingu; 15:00 Shibuya Sky. Wed 14 Oct Kamakura: 09:30 Great Buddha; 13:00 Hase-dera. Thu 15 Oct Shinjuku: 10:00 Shinjuku Gyoen; 18:00 Omoide Yokocho. Fri 16 Oct Tsukiji: 08:00 outer market; 14:00 leave for Haneda. Recheck prices."
         },
         "empty": {
           "kind": "output_blocks",
@@ -3293,10 +3293,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Booking.com didn't answer, so the hotel has no price. Nothing was booked."
+              "detail": "The hotel's site didn't answer, so no room price. Ask me again soon."
             }
           ],
-          "fallback_text": "Couldn't finish the Tokyo plan for Mon 12–Fri 16 Oct: Booking.com didn't answer, so the hotel has no price. Nothing was booked. Ask me again in a few minutes."
+          "fallback_text": "Couldn't finish the Tokyo plan for Mon 12–Fri 16 Oct: Hotel Gracery Asakusa's site didn't answer, so the hotel has no price. Nothing was booked. Ask me again in a few minutes."
         }
       }
     },
@@ -3408,7 +3408,7 @@
               }
             }
           ],
-          "fallback_text": "Making your Tokyo trip plan from your booking emails: reading email 2 of 2."
+          "fallback_text": "Tokyo trip from your bookings, Mon 12–Sun 18 Oct: reading booking email 2 of 2."
         },
         "partial": {
           "kind": "output_blocks",
@@ -3745,10 +3745,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "SQ 638 and the hotel are already in your calendar. Nothing added twice."
+              "detail": "SQ 638 and the hotel are already there. Open Calendar to see them."
             }
           ],
-          "fallback_text": "Nothing to add for the Tokyo trip, Mon 12–Sun 18 Oct, as of 10:47: SQ 638 and Hotel Gracery Ueno are already in your Google Calendar. Nothing was added twice."
+          "fallback_text": "Nothing to add for the Tokyo trip, Mon 12–Sun 18 Oct, as of 10:47: SQ 638 and Hotel Gracery Ueno are already in your Google Calendar. Nothing was added twice; open Calendar to see them."
         },
         "failed": {
           "kind": "output_blocks",
@@ -3764,7 +3764,7 @@
               "detail": "Calendar didn't answer. I'll check it before trying again."
             }
           ],
-          "fallback_text": "Couldn't confirm the Tokyo trip events were added: Google Calendar didn't answer after they were sent, so SQ 638 and Hotel Gracery Ueno may already be there. So nothing is added twice: I'll check the calendar before trying again."
+          "fallback_text": "Couldn't confirm the Tokyo trip events, Mon 12–Sun 18 Oct, were added: Google Calendar didn't answer after they were sent, so SQ 638 and Hotel Gracery Ueno may already be there. So nothing is added twice: I'll check the calendar before trying again."
         }
       }
     },
@@ -4006,7 +4006,7 @@
               "detail": "Booking.com didn't answer. ABX-4471 is not cancelled. I'll check first."
             }
           ],
-          "fallback_text": "Couldn't confirm the new Hotel Gracery Ueno booking at S$1,380: Booking.com didn't answer, so it may or may not exist. Your booking ABX-4471 at S$1,620 is not cancelled. I'll check your Booking.com trips before trying again, so you aren't booked twice."
+          "fallback_text": "Couldn't confirm the new Hotel Gracery Ueno booking at S$1,380 for 12–18 Oct: Booking.com didn't answer, so it may or may not exist. Your booking ABX-4471 at S$1,620 is not cancelled. I'll check your Booking.com trips before trying again, so you aren't booked twice."
         }
       }
     },
@@ -4054,8 +4054,8 @@
             "kind": "action",
             "secondary": {
               "kind": "open_url",
-              "label": "Manage in Grab",
-              "url": "https://www.grab.com/sg/transport/advance-booking/"
+              "label": "Grab cancel and delay terms",
+              "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
             }
           }
         ],
@@ -4063,10 +4063,14 @@
           "sources": [
             {
               "label": "Grab Advance Booking confirmation, 26 Sep 2026 17:08"
+            },
+            {
+              "label": "Grab Help: About Advance Bookings",
+              "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
             }
           ]
         },
-        "fallback_text": "As of 17:08: GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. I'm watching SQ 638 and will propose a new pickup if it's delayed."
+        "fallback_text": "As of 17:08: GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. Manage it in the Grab app; Grab's cancel and delay terms are linked. I'm watching SQ 638 and will propose a new pickup if it's delayed."
       },
       "states": {
         "loading": {
@@ -4086,7 +4090,7 @@
               }
             }
           ],
-          "fallback_text": "Waiting for Grab to confirm your 05:40 GrabCar to Changi T3 on Fri 2 Oct."
+          "fallback_text": "Waiting for Grab to confirm your 05:40 GrabCar from Home to Changi T3 on Fri 2 Oct."
         },
         "partial": {
           "kind": "output_blocks",
@@ -4114,8 +4118,8 @@
               "kind": "action",
               "secondary": {
                 "kind": "open_url",
-                "label": "Manage in Grab",
-                "url": "https://www.grab.com/sg/transport/advance-booking/"
+                "label": "Grab cancel and delay terms",
+                "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
               }
             }
           ],
@@ -4123,10 +4127,14 @@
             "sources": [
               {
                 "label": "Grab Advance Booking confirmation, 26 Sep 2026 17:08"
+              },
+              {
+                "label": "Grab Help: About Advance Bookings",
+                "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
               }
             ]
           },
-          "fallback_text": "Booked a GrabCar to Changi T3 for Fri 2 Oct, pickup 05:40 from Home, ref A-7K2QX9, as of 17:08. The fixed fare and the cancel terms aren't in from Grab yet."
+          "fallback_text": "Booked a GrabCar to Changi T3 for Fri 2 Oct, pickup 05:40 from Home, ref A-7K2QX9, as of 17:08. The fixed fare and the cancel terms aren't in from Grab yet; Grab's general cancel and delay terms are linked."
         },
         "stale": {
           "kind": "output_blocks",
@@ -4159,8 +4167,8 @@
               "kind": "action",
               "secondary": {
                 "kind": "open_url",
-                "label": "Manage in Grab",
-                "url": "https://www.grab.com/sg/transport/advance-booking/"
+                "label": "Grab cancel and delay terms",
+                "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
               }
             }
           ],
@@ -4168,10 +4176,14 @@
             "sources": [
               {
                 "label": "Grab Advance Booking confirmation, 26 Sep 2026 17:08"
+              },
+              {
+                "label": "Grab Help: About Advance Bookings",
+                "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
               }
             ]
           },
-          "fallback_text": "As of 17:08 (couldn't refresh with Grab): GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. I'm watching SQ 638 and will propose a new pickup if it's delayed."
+          "fallback_text": "As of 17:08 (couldn't refresh with Grab): GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. Manage it in the Grab app; Grab's cancel and delay terms are linked. I'm watching SQ 638 and will propose a new pickup if it's delayed."
         },
         "empty": {
           "kind": "output_blocks",
@@ -4203,7 +4215,7 @@
               "detail": "Grab didn't answer. Check Grab before booking again"
             }
           ],
-          "fallback_text": "I couldn't confirm whether the GrabCar to Changi T3 is booked for 05:40 on Fri 2 Oct: Grab didn't answer after the request was sent. Check your Grab bookings before trying again, so you aren't booked twice."
+          "fallback_text": "I couldn't confirm whether the GrabCar from Home to Changi T3 is booked for 05:40 on Fri 2 Oct: Grab didn't answer after the request was sent. Check your Grab bookings before trying again, so you aren't booked twice."
         }
       }
     },
@@ -4251,7 +4263,7 @@
               },
               {
                 "label": "Moves to",
-                "secondary": "Fri 2 Oct · same booking, from Home",
+                "secondary": "Fri 2 Oct · new GrabCar from Home",
                 "trailing": "06:25"
               },
               {
@@ -4278,10 +4290,11 @@
           ],
           "assumptions": [
             "Drive 25–35 min at that hour plus 20 min spare, as for the 05:40 pickup.",
+            "Grab can't move a booking: on your yes I book 06:25, then cancel A-7K2QX9, free until 04:40.",
             "Nothing moves until you say yes; if you don't, the 05:40 pickup stays."
           ]
         },
-        "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to 06:25, same booking, from Home, new pickup 06:25. SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
+        "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to a new GrabCar from Home, new pickup 06:25 (Grab can't move a booking, so A-7K2QX9 is cancelled free before 04:40). SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
       },
       "states": {
         "loading": {
@@ -4334,7 +4347,7 @@
                 },
                 {
                   "label": "Moves to",
-                  "secondary": "Fri 2 Oct · same booking, from Home",
+                  "secondary": "Fri 2 Oct · new GrabCar from Home",
                   "trailing": "06:25"
                 },
                 {
@@ -4357,7 +4370,7 @@
               }
             ]
           },
-          "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: GrabCar A-7K2QX9 at 05:40; moves to 06:25, new pickup 06:25. Grab hasn't said if 06:25 is free, so that is not known. Be at Changi T3 by 07:20. Nothing changes until you say yes."
+          "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to a new GrabCar from Home, new pickup 06:25. Grab hasn't said if a 06:25 slot is free, so that is not known. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
         },
         "stale": {
           "kind": "output_blocks",
@@ -4390,7 +4403,7 @@
                 },
                 {
                   "label": "Moves to",
-                  "secondary": "Fri 2 Oct · same booking, from Home",
+                  "secondary": "Fri 2 Oct · new GrabCar from Home",
                   "trailing": "06:25"
                 },
                 {
@@ -4417,10 +4430,11 @@
             ],
             "assumptions": [
               "Drive 25–35 min at that hour plus 20 min spare, as for the 05:40 pickup.",
+              "Grab can't move a booking: on your yes I book 06:25, then cancel A-7K2QX9, free until 04:40.",
               "Nothing moves until you say yes; if you don't, the 05:40 pickup stays."
             ]
           },
-          "fallback_text": "As of 03:40 (couldn't refresh, so a newer delay won't show): Move your Changi ride: SQ 638 is delayed 45 min, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to 06:25, same booking, from Home, new pickup 06:25. SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
+          "fallback_text": "As of 03:40 (couldn't refresh, so a newer delay won't show): Move your Changi ride: SQ 638 is delayed 45 min, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to a new GrabCar from Home, new pickup 06:25 (Grab can't move a booking, so A-7K2QX9 is cancelled free before 04:40). SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
         },
         "empty": {
           "kind": "output_blocks",
@@ -4452,7 +4466,7 @@
               "detail": "The airline didn't answer. The 05:40 pickup stays; I'll check in 10 min."
             }
           ],
-          "fallback_text": "Couldn't check SQ 638: Singapore Airlines didn't answer. Your 05:40 GrabCar pickup on Fri 2 Oct stays; nothing was moved. I'll check the flight again in 10 minutes."
+          "fallback_text": "Couldn't check SQ 638 for your Changi ride: Singapore Airlines didn't answer. Your 05:40 GrabCar pickup on Fri 2 Oct stays; nothing was moved. I'll check the flight again in 10 minutes."
         }
       }
     }

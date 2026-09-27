@@ -5167,12 +5167,11 @@
       "vertical": "shopping",
       "kind": "card",
       "request": "Find me noise-cancelling headphones under S$300, with links.",
-      "says": "Three fit; the Sony XM4 blocks the most noise for the money.",
+      "says": "Three fit, all in stock; my pick has the longest battery.",
       "surface": "inline",
       "fresh": true,
       "components": [
         "S1 Product options",
-        "S10 Rating",
         "S2 Product grid / carousel (as rows)",
         "X4 Item thumbnail (degraded: no row image)"
       ],
@@ -5182,27 +5181,27 @@
         "major": 1,
         "header": {
           "title": "Noise-cancelling headphones under S$300",
-          "subtitle": "Sorted by noise cancelling · as of 10:20"
+          "subtitle": "Pick first, then by price · as of 10:20"
         },
         "blocks": [
           {
             "kind": "rows",
             "items": [
               {
-                "label": "Sony WH-1000XM4",
-                "secondary": "Courts · 30 h · rated 4.7/5",
-                "trailing": "S$299",
+                "label": "Sennheiser Accentum Plus",
+                "secondary": "Challenger · 50 h battery · in stock",
+                "trailing": "S$239",
                 "mark": "pick"
               },
               {
-                "label": "Sennheiser Accentum Plus",
-                "secondary": "Shopee Mall · 50 h · rated 4.4/5",
-                "trailing": "S$259"
+                "label": "Soundcore Space One",
+                "secondary": "Lazada · 40 h battery · in stock",
+                "trailing": "S$119"
               },
               {
-                "label": "Soundcore Space One",
-                "secondary": "LazMall · 40 h · rated 4.5/5",
-                "trailing": "S$139"
+                "label": "Sony WH-CH720N",
+                "secondary": "Courts · 35 h battery · in stock",
+                "trailing": "S$149"
               }
             ]
           }
@@ -5210,26 +5209,20 @@
         "details": {
           "sources": [
             {
-              "label": "Sony WH-1000XM4 on Courts, 26 Sep 2026 10:20",
-              "url": "https://www.courts.com.sg/sony-wh-1000xm4-wireless-noise-cancelling-headphones-black"
+              "label": "Sennheiser Accentum Plus on Challenger, 26 Sep 2026 10:20",
+              "url": "https://online.challenger.sg/products/sennheiser-accentum-plus-wireless-black"
             },
             {
-              "label": "Sennheiser Accentum Plus on Shopee Mall, 26 Sep 2026 10:20",
-              "url": "https://shopee.sg/Sennheiser-Accentum-Plus-Wireless-i.318204559.23874019255"
+              "label": "Soundcore Space One on Lazada, 26 Sep 2026 10:20",
+              "url": "https://www.lazada.sg/products/soundcore-space-one-noise-cancelling-headphones-1-year-local-warranty-i3342475400.html"
             },
             {
-              "label": "Soundcore Space One on LazMall, 26 Sep 2026 10:20",
-              "url": "https://www.lazada.sg/products/soundcore-space-one-i2981734563.html"
-            },
-            {
-              "label": "RTINGS noise cancelling measurements"
-            },
-            {
-              "label": "Ratings from 21,410, 1,302 and 6,885 reviews"
+              "label": "Sony WH-CH720N on Courts, 26 Sep 2026 10:20",
+              "url": "https://www.courts.com.sg/sony-wh-ch720n-bce-wireless-noise-cancellation-headphones-black-ip182171"
             }
           ]
         },
-        "fallback_text": "Noise-cancelling headphones under S$300 (10:20): Sony WH-1000XM4 S$299 at Courts, 30 h, rated 4.7/5 (pick); Sennheiser Accentum Plus S$259 at Shopee Mall, 50 h, rated 4.4/5; Soundcore Space One S$139 at LazMall, 40 h, rated 4.5/5. Each product page is linked in Details."
+        "fallback_text": "Noise-cancelling headphones under S$300 (10:20): Sennheiser Accentum Plus S$239 at Challenger, 50 h battery, in stock (pick); Soundcore Space One S$119 at Lazada, 40 h battery, in stock; Sony WH-CH720N S$149 at Courts, 35 h battery, in stock. Each product page is linked in Details."
       },
       "states": {
         "loading": {
@@ -5237,7 +5230,7 @@
           "major": 1,
           "header": {
             "title": "Noise-cancelling headphones under S$300",
-            "subtitle": "Courts, Shopee, Lazada"
+            "subtitle": "Challenger, Lazada, Courts"
           },
           "blocks": [
             {
@@ -5249,7 +5242,7 @@
               }
             }
           ],
-          "fallback_text": "Checking 3 stores for noise-cancelling headphones under S$300."
+          "fallback_text": "Checking Challenger, Lazada and Courts for noise-cancelling headphones under S$300."
         },
         "partial": {
           "kind": "output_blocks",
@@ -5263,15 +5256,15 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "Sony WH-1000XM4",
-                  "secondary": "Courts · 30 h · rated 4.7/5",
-                  "trailing": "S$299",
+                  "label": "Sennheiser Accentum Plus",
+                  "secondary": "Challenger · 50 h battery · in stock",
+                  "trailing": "S$239",
                   "mark": "pick"
                 },
                 {
-                  "label": "Sennheiser Accentum Plus",
-                  "secondary": "Shopee Mall · 50 h · rated 4.4/5",
-                  "trailing": "S$259"
+                  "label": "Soundcore Space One",
+                  "secondary": "Lazada · 40 h battery · in stock",
+                  "trailing": "S$119"
                 }
               ]
             }
@@ -5279,16 +5272,16 @@
           "details": {
             "sources": [
               {
-                "label": "Sony WH-1000XM4 on Courts, 26 Sep 2026 10:20",
-                "url": "https://www.courts.com.sg/sony-wh-1000xm4-wireless-noise-cancelling-headphones-black"
+                "label": "Sennheiser Accentum Plus on Challenger, 26 Sep 2026 10:20",
+                "url": "https://online.challenger.sg/products/sennheiser-accentum-plus-wireless-black"
               },
               {
-                "label": "Sennheiser Accentum Plus on Shopee Mall, 26 Sep 2026 10:20",
-                "url": "https://shopee.sg/Sennheiser-Accentum-Plus-Wireless-i.318204559.23874019255"
+                "label": "Soundcore Space One on Lazada, 26 Sep 2026 10:20",
+                "url": "https://www.lazada.sg/products/soundcore-space-one-noise-cancelling-headphones-1-year-local-warranty-i3342475400.html"
               }
             ]
           },
-          "fallback_text": "Noise-cancelling headphones under S$300, 2 of 3 stores checked (10:20): Sony WH-1000XM4 S$299 at Courts, 30 h, rated 4.7/5 (pick); Sennheiser Accentum Plus S$259 at Shopee Mall, 50 h, rated 4.4/5. Lazada hasn't answered yet."
+          "fallback_text": "Noise-cancelling headphones under S$300, 2 of 3 stores checked (10:20): Sennheiser Accentum Plus S$239 at Challenger, 50 h battery, in stock (pick); Soundcore Space One S$119 at Lazada, 40 h battery, in stock. Courts hasn't answered yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -5302,20 +5295,20 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "Sony WH-1000XM4",
-                  "secondary": "Courts · 30 h · rated 4.7/5",
-                  "trailing": "S$299",
+                  "label": "Sennheiser Accentum Plus",
+                  "secondary": "Challenger · 50 h battery · in stock",
+                  "trailing": "S$239",
                   "mark": "pick"
                 },
                 {
-                  "label": "Sennheiser Accentum Plus",
-                  "secondary": "Shopee Mall · 50 h · rated 4.4/5",
-                  "trailing": "S$259"
+                  "label": "Soundcore Space One",
+                  "secondary": "Lazada · 40 h battery · in stock",
+                  "trailing": "S$119"
                 },
                 {
-                  "label": "Soundcore Space One",
-                  "secondary": "LazMall · 40 h · rated 4.5/5",
-                  "trailing": "S$139"
+                  "label": "Sony WH-CH720N",
+                  "secondary": "Courts · 35 h battery · in stock",
+                  "trailing": "S$149"
                 }
               ]
             }
@@ -5323,43 +5316,43 @@
           "details": {
             "sources": [
               {
-                "label": "Sony WH-1000XM4 on Courts, 26 Sep 2026 08:40",
-                "url": "https://www.courts.com.sg/sony-wh-1000xm4-wireless-noise-cancelling-headphones-black"
+                "label": "Sennheiser Accentum Plus on Challenger, 26 Sep 2026 08:40",
+                "url": "https://online.challenger.sg/products/sennheiser-accentum-plus-wireless-black"
               },
               {
-                "label": "Sennheiser Accentum Plus on Shopee Mall, 26 Sep 2026 08:40",
-                "url": "https://shopee.sg/Sennheiser-Accentum-Plus-Wireless-i.318204559.23874019255"
+                "label": "Soundcore Space One on Lazada, 26 Sep 2026 08:40",
+                "url": "https://www.lazada.sg/products/soundcore-space-one-noise-cancelling-headphones-1-year-local-warranty-i3342475400.html"
               },
               {
-                "label": "Soundcore Space One on LazMall, 26 Sep 2026 08:40",
-                "url": "https://www.lazada.sg/products/soundcore-space-one-i2981734563.html"
+                "label": "Sony WH-CH720N on Courts, 26 Sep 2026 08:40",
+                "url": "https://www.courts.com.sg/sony-wh-ch720n-bce-wireless-noise-cancellation-headphones-black-ip182171"
               }
             ]
           },
-          "fallback_text": "Noise-cancelling headphones under S$300 as of 08:40 (couldn't refresh): Sony WH-1000XM4 S$299 at Courts, 30 h, rated 4.7/5 (pick); Sennheiser Accentum Plus S$259 at Shopee Mall, 50 h, rated 4.4/5; Soundcore Space One S$139 at LazMall, 40 h, rated 4.5/5."
+          "fallback_text": "Noise-cancelling headphones under S$300 as of 08:40 (couldn't refresh): Sennheiser Accentum Plus S$239 at Challenger, 50 h battery, in stock (pick); Soundcore Space One S$119 at Lazada, 40 h battery, in stock; Sony WH-CH720N S$149 at Courts, 35 h battery, in stock."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No noise-cancelling headphones in stock under S$300",
-            "subtitle": "Courts, Shopee, Lazada · as of 10:20"
+            "subtitle": "Challenger, Lazada, Courts · as of 10:20"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Courts restocks the Sony WH-1000XM4 on Thu 1 Oct"
+              "detail": "Challenger restocks the Sennheiser Accentum Plus on Thu 1 Oct. Ask me then."
             }
           ],
-          "fallback_text": "None of the noise-cancelling headphones under S$300 is in stock at Courts, Shopee or Lazada (10:20). Courts restocks the Sony WH-1000XM4 on Thu 1 Oct."
+          "fallback_text": "None of the noise-cancelling headphones under S$300 is in stock at Challenger, Lazada or Courts (10:20). Challenger restocks the Sennheiser Accentum Plus on Thu 1 Oct. Ask me then."
         },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Couldn't check headphone prices",
-            "subtitle": "Courts, Shopee, Lazada"
+            "subtitle": "Challenger, Lazada, Courts"
           },
           "blocks": [
             {
@@ -5368,7 +5361,7 @@
               "detail": "None of the 3 stores answered. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't check headphone prices: none of the 3 stores (Courts, Shopee, Lazada) answered. Ask me again in a few minutes."
+          "fallback_text": "Couldn't check headphone prices: none of the 3 stores (Challenger, Lazada, Courts) answered. Ask me again in a few minutes."
         }
       }
     },
@@ -5437,7 +5430,7 @@
             },
             {
               "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 11:05",
-              "url": "https://www.jtexpress.sg/tracking?billcode=JTSG0041772930"
+              "url": "https://www.jtexpress.sg/trackmyparcel"
             },
             {
               "label": "SingPost tracking, Temu order, 26 Sep 2026 11:05",
@@ -5476,7 +5469,7 @@
               }
             }
           ],
-          "fallback_text": "Orders on their way: checking 5 shops' orders with their carriers."
+          "fallback_text": "Orders on their way: checking your Uniqlo, Amazon.sg, Temu, AliExpress and Shopee orders with their carriers."
         },
         "partial": {
           "kind": "output_blocks",
@@ -5526,7 +5519,7 @@
               },
               {
                 "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 11:05",
-                "url": "https://www.jtexpress.sg/tracking?billcode=JTSG0041772930"
+                "url": "https://www.jtexpress.sg/trackmyparcel"
               },
               {
                 "label": "SingPost tracking, Temu order, 26 Sep 2026 11:05",
@@ -5559,7 +5552,7 @@
               "items": [
                 {
                   "label": "Running shoes · Uniqlo",
-                  "secondary": "Ninja Van: out for delivery · left Tuas hub 08:12",
+                  "secondary": "Ninja Van: at the Tuas hub · sorted 07:30",
                   "trailing": "today by 6 pm"
                 },
                 {
@@ -5599,7 +5592,7 @@
               },
               {
                 "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 08:00",
-                "url": "https://www.jtexpress.sg/tracking?billcode=JTSG0041772930"
+                "url": "https://www.jtexpress.sg/trackmyparcel"
               },
               {
                 "label": "SingPost tracking, Temu order, 26 Sep 2026 08:00",
@@ -5618,7 +5611,7 @@
               "Each status is the carrier's own words; the arrival is the carrier's estimate, or the shop's when the carrier gives none."
             ]
           },
-          "fallback_text": "As of 08:00 (couldn't refresh, so a scan since then won't show), 4 orders are on their way: running shoes from Uniqlo today by 6 pm (Ninja Van: out for delivery, left Tuas hub 08:12); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15); charger from AliExpress Fri 2–Mon 5 Oct (Cainiao: left Shenzhen Thu 24 Sep). Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
+          "fallback_text": "As of 08:00 (couldn't refresh, so a scan since then won't show), 4 orders are on their way: running shoes from Uniqlo today by 6 pm (Ninja Van: at the Tuas hub, sorted 07:30); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15); charger from AliExpress Fri 2–Mon 5 Oct (Cainiao: left Shenzhen Thu 24 Sep). Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
         },
         "empty": {
           "kind": "output_blocks",
@@ -5700,7 +5693,7 @@
             "secondary": {
               "kind": "open_url",
               "label": "Open in Marketplace inbox",
-              "url": "https://www.facebook.com/marketplace/inbox/?thread=8812470953"
+              "url": "https://www.facebook.com/marketplace/inbox/"
             }
           }
         ],
@@ -5807,7 +5800,7 @@
               "secondary": {
                 "kind": "open_url",
                 "label": "Open in Marketplace inbox",
-                "url": "https://www.facebook.com/marketplace/inbox/?thread=8812470953"
+                "url": "https://www.facebook.com/marketplace/inbox/"
               }
             }
           ],
@@ -5831,7 +5824,7 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Jordan marked the sectional sold before it went. Nothing was sent."
+              "detail": "Jordan marked it sold before it went; nothing sent. Ask me to find another."
             }
           ],
           "fallback_text": "Not sent: Jordan marked the gray sectional sold on Facebook Marketplace before your US$180 offer went. Nothing was sent. Ask me to look for another one."

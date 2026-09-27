@@ -10167,12 +10167,11 @@
       "vertical": "shopping",
       "kind": "card",
       "request": "Find me noise-cancelling headphones under S$300, with links.",
-      "says": "Three fit; the Sony XM4 blocks the most noise for the money.",
+      "says": "Three fit, all in stock; my pick has the longest battery.",
       "surface": "inline",
       "fresh": true,
       "components": [
         "S1 Product options",
-        "S10 Rating",
         "S2 Product grid / carousel (as rows)",
         "X4 Item thumbnail (degraded: no row image)"
       ],
@@ -10182,27 +10181,27 @@
         "major": 1,
         "header": {
           "title": "Noise-cancelling headphones under S$300",
-          "subtitle": "Sorted by noise cancelling · as of 10:20"
+          "subtitle": "Pick first, then by price · as of 10:20"
         },
         "blocks": [
           {
             "kind": "rows",
             "items": [
               {
-                "label": "Sony WH-1000XM4",
-                "secondary": "Courts · 30 h · rated 4.7/5",
-                "trailing": "S$299",
+                "label": "Sennheiser Accentum Plus",
+                "secondary": "Challenger · 50 h battery · in stock",
+                "trailing": "S$239",
                 "mark": "pick"
               },
               {
-                "label": "Sennheiser Accentum Plus",
-                "secondary": "Shopee Mall · 50 h · rated 4.4/5",
-                "trailing": "S$259"
+                "label": "Soundcore Space One",
+                "secondary": "Lazada · 40 h battery · in stock",
+                "trailing": "S$119"
               },
               {
-                "label": "Soundcore Space One",
-                "secondary": "LazMall · 40 h · rated 4.5/5",
-                "trailing": "S$139"
+                "label": "Sony WH-CH720N",
+                "secondary": "Courts · 35 h battery · in stock",
+                "trailing": "S$149"
               }
             ]
           }
@@ -10210,26 +10209,20 @@
         "details": {
           "sources": [
             {
-              "label": "Sony WH-1000XM4 on Courts, 26 Sep 2026 10:20",
-              "url": "https://www.courts.com.sg/sony-wh-1000xm4-wireless-noise-cancelling-headphones-black"
+              "label": "Sennheiser Accentum Plus on Challenger, 26 Sep 2026 10:20",
+              "url": "https://online.challenger.sg/products/sennheiser-accentum-plus-wireless-black"
             },
             {
-              "label": "Sennheiser Accentum Plus on Shopee Mall, 26 Sep 2026 10:20",
-              "url": "https://shopee.sg/Sennheiser-Accentum-Plus-Wireless-i.318204559.23874019255"
+              "label": "Soundcore Space One on Lazada, 26 Sep 2026 10:20",
+              "url": "https://www.lazada.sg/products/soundcore-space-one-noise-cancelling-headphones-1-year-local-warranty-i3342475400.html"
             },
             {
-              "label": "Soundcore Space One on LazMall, 26 Sep 2026 10:20",
-              "url": "https://www.lazada.sg/products/soundcore-space-one-i2981734563.html"
-            },
-            {
-              "label": "RTINGS noise cancelling measurements"
-            },
-            {
-              "label": "Ratings from 21,410, 1,302 and 6,885 reviews"
+              "label": "Sony WH-CH720N on Courts, 26 Sep 2026 10:20",
+              "url": "https://www.courts.com.sg/sony-wh-ch720n-bce-wireless-noise-cancellation-headphones-black-ip182171"
             }
           ]
         },
-        "fallback_text": "Noise-cancelling headphones under S$300 (10:20): Sony WH-1000XM4 S$299 at Courts, 30 h, rated 4.7/5 (pick); Sennheiser Accentum Plus S$259 at Shopee Mall, 50 h, rated 4.4/5; Soundcore Space One S$139 at LazMall, 40 h, rated 4.5/5. Each product page is linked in Details."
+        "fallback_text": "Noise-cancelling headphones under S$300 (10:20): Sennheiser Accentum Plus S$239 at Challenger, 50 h battery, in stock (pick); Soundcore Space One S$119 at Lazada, 40 h battery, in stock; Sony WH-CH720N S$149 at Courts, 35 h battery, in stock. Each product page is linked in Details."
       },
       "states": {
         "loading": {
@@ -10237,7 +10230,7 @@
           "major": 1,
           "header": {
             "title": "Noise-cancelling headphones under S$300",
-            "subtitle": "Courts, Shopee, Lazada"
+            "subtitle": "Challenger, Lazada, Courts"
           },
           "blocks": [
             {
@@ -10249,7 +10242,7 @@
               }
             }
           ],
-          "fallback_text": "Checking 3 stores for noise-cancelling headphones under S$300."
+          "fallback_text": "Checking Challenger, Lazada and Courts for noise-cancelling headphones under S$300."
         },
         "partial": {
           "kind": "output_blocks",
@@ -10263,15 +10256,15 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "Sony WH-1000XM4",
-                  "secondary": "Courts · 30 h · rated 4.7/5",
-                  "trailing": "S$299",
+                  "label": "Sennheiser Accentum Plus",
+                  "secondary": "Challenger · 50 h battery · in stock",
+                  "trailing": "S$239",
                   "mark": "pick"
                 },
                 {
-                  "label": "Sennheiser Accentum Plus",
-                  "secondary": "Shopee Mall · 50 h · rated 4.4/5",
-                  "trailing": "S$259"
+                  "label": "Soundcore Space One",
+                  "secondary": "Lazada · 40 h battery · in stock",
+                  "trailing": "S$119"
                 }
               ]
             }
@@ -10279,16 +10272,16 @@
           "details": {
             "sources": [
               {
-                "label": "Sony WH-1000XM4 on Courts, 26 Sep 2026 10:20",
-                "url": "https://www.courts.com.sg/sony-wh-1000xm4-wireless-noise-cancelling-headphones-black"
+                "label": "Sennheiser Accentum Plus on Challenger, 26 Sep 2026 10:20",
+                "url": "https://online.challenger.sg/products/sennheiser-accentum-plus-wireless-black"
               },
               {
-                "label": "Sennheiser Accentum Plus on Shopee Mall, 26 Sep 2026 10:20",
-                "url": "https://shopee.sg/Sennheiser-Accentum-Plus-Wireless-i.318204559.23874019255"
+                "label": "Soundcore Space One on Lazada, 26 Sep 2026 10:20",
+                "url": "https://www.lazada.sg/products/soundcore-space-one-noise-cancelling-headphones-1-year-local-warranty-i3342475400.html"
               }
             ]
           },
-          "fallback_text": "Noise-cancelling headphones under S$300, 2 of 3 stores checked (10:20): Sony WH-1000XM4 S$299 at Courts, 30 h, rated 4.7/5 (pick); Sennheiser Accentum Plus S$259 at Shopee Mall, 50 h, rated 4.4/5. Lazada hasn't answered yet."
+          "fallback_text": "Noise-cancelling headphones under S$300, 2 of 3 stores checked (10:20): Sennheiser Accentum Plus S$239 at Challenger, 50 h battery, in stock (pick); Soundcore Space One S$119 at Lazada, 40 h battery, in stock. Courts hasn't answered yet."
         },
         "stale": {
           "kind": "output_blocks",
@@ -10302,20 +10295,20 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "Sony WH-1000XM4",
-                  "secondary": "Courts · 30 h · rated 4.7/5",
-                  "trailing": "S$299",
+                  "label": "Sennheiser Accentum Plus",
+                  "secondary": "Challenger · 50 h battery · in stock",
+                  "trailing": "S$239",
                   "mark": "pick"
                 },
                 {
-                  "label": "Sennheiser Accentum Plus",
-                  "secondary": "Shopee Mall · 50 h · rated 4.4/5",
-                  "trailing": "S$259"
+                  "label": "Soundcore Space One",
+                  "secondary": "Lazada · 40 h battery · in stock",
+                  "trailing": "S$119"
                 },
                 {
-                  "label": "Soundcore Space One",
-                  "secondary": "LazMall · 40 h · rated 4.5/5",
-                  "trailing": "S$139"
+                  "label": "Sony WH-CH720N",
+                  "secondary": "Courts · 35 h battery · in stock",
+                  "trailing": "S$149"
                 }
               ]
             }
@@ -10323,43 +10316,43 @@
           "details": {
             "sources": [
               {
-                "label": "Sony WH-1000XM4 on Courts, 26 Sep 2026 08:40",
-                "url": "https://www.courts.com.sg/sony-wh-1000xm4-wireless-noise-cancelling-headphones-black"
+                "label": "Sennheiser Accentum Plus on Challenger, 26 Sep 2026 08:40",
+                "url": "https://online.challenger.sg/products/sennheiser-accentum-plus-wireless-black"
               },
               {
-                "label": "Sennheiser Accentum Plus on Shopee Mall, 26 Sep 2026 08:40",
-                "url": "https://shopee.sg/Sennheiser-Accentum-Plus-Wireless-i.318204559.23874019255"
+                "label": "Soundcore Space One on Lazada, 26 Sep 2026 08:40",
+                "url": "https://www.lazada.sg/products/soundcore-space-one-noise-cancelling-headphones-1-year-local-warranty-i3342475400.html"
               },
               {
-                "label": "Soundcore Space One on LazMall, 26 Sep 2026 08:40",
-                "url": "https://www.lazada.sg/products/soundcore-space-one-i2981734563.html"
+                "label": "Sony WH-CH720N on Courts, 26 Sep 2026 08:40",
+                "url": "https://www.courts.com.sg/sony-wh-ch720n-bce-wireless-noise-cancellation-headphones-black-ip182171"
               }
             ]
           },
-          "fallback_text": "Noise-cancelling headphones under S$300 as of 08:40 (couldn't refresh): Sony WH-1000XM4 S$299 at Courts, 30 h, rated 4.7/5 (pick); Sennheiser Accentum Plus S$259 at Shopee Mall, 50 h, rated 4.4/5; Soundcore Space One S$139 at LazMall, 40 h, rated 4.5/5."
+          "fallback_text": "Noise-cancelling headphones under S$300 as of 08:40 (couldn't refresh): Sennheiser Accentum Plus S$239 at Challenger, 50 h battery, in stock (pick); Soundcore Space One S$119 at Lazada, 40 h battery, in stock; Sony WH-CH720N S$149 at Courts, 35 h battery, in stock."
         },
         "empty": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "No noise-cancelling headphones in stock under S$300",
-            "subtitle": "Courts, Shopee, Lazada · as of 10:20"
+            "subtitle": "Challenger, Lazada, Courts · as of 10:20"
           },
           "blocks": [
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Courts restocks the Sony WH-1000XM4 on Thu 1 Oct"
+              "detail": "Challenger restocks the Sennheiser Accentum Plus on Thu 1 Oct. Ask me then."
             }
           ],
-          "fallback_text": "None of the noise-cancelling headphones under S$300 is in stock at Courts, Shopee or Lazada (10:20). Courts restocks the Sony WH-1000XM4 on Thu 1 Oct."
+          "fallback_text": "None of the noise-cancelling headphones under S$300 is in stock at Challenger, Lazada or Courts (10:20). Challenger restocks the Sennheiser Accentum Plus on Thu 1 Oct. Ask me then."
         },
         "failed": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Couldn't check headphone prices",
-            "subtitle": "Courts, Shopee, Lazada"
+            "subtitle": "Challenger, Lazada, Courts"
           },
           "blocks": [
             {
@@ -10368,7 +10361,7 @@
               "detail": "None of the 3 stores answered. Ask me again in a few minutes."
             }
           ],
-          "fallback_text": "Couldn't check headphone prices: none of the 3 stores (Courts, Shopee, Lazada) answered. Ask me again in a few minutes."
+          "fallback_text": "Couldn't check headphone prices: none of the 3 stores (Challenger, Lazada, Courts) answered. Ask me again in a few minutes."
         }
       }
     },
@@ -10437,7 +10430,7 @@
             },
             {
               "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 11:05",
-              "url": "https://www.jtexpress.sg/tracking?billcode=JTSG0041772930"
+              "url": "https://www.jtexpress.sg/trackmyparcel"
             },
             {
               "label": "SingPost tracking, Temu order, 26 Sep 2026 11:05",
@@ -10476,7 +10469,7 @@
               }
             }
           ],
-          "fallback_text": "Orders on their way: checking 5 shops' orders with their carriers."
+          "fallback_text": "Orders on their way: checking your Uniqlo, Amazon.sg, Temu, AliExpress and Shopee orders with their carriers."
         },
         "partial": {
           "kind": "output_blocks",
@@ -10526,7 +10519,7 @@
               },
               {
                 "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 11:05",
-                "url": "https://www.jtexpress.sg/tracking?billcode=JTSG0041772930"
+                "url": "https://www.jtexpress.sg/trackmyparcel"
               },
               {
                 "label": "SingPost tracking, Temu order, 26 Sep 2026 11:05",
@@ -10559,7 +10552,7 @@
               "items": [
                 {
                   "label": "Running shoes · Uniqlo",
-                  "secondary": "Ninja Van: out for delivery · left Tuas hub 08:12",
+                  "secondary": "Ninja Van: at the Tuas hub · sorted 07:30",
                   "trailing": "today by 6 pm"
                 },
                 {
@@ -10599,7 +10592,7 @@
               },
               {
                 "label": "J&T Express tracking, Amazon.sg order, 26 Sep 2026 08:00",
-                "url": "https://www.jtexpress.sg/tracking?billcode=JTSG0041772930"
+                "url": "https://www.jtexpress.sg/trackmyparcel"
               },
               {
                 "label": "SingPost tracking, Temu order, 26 Sep 2026 08:00",
@@ -10618,7 +10611,7 @@
               "Each status is the carrier's own words; the arrival is the carrier's estimate, or the shop's when the carrier gives none."
             ]
           },
-          "fallback_text": "As of 08:00 (couldn't refresh, so a scan since then won't show), 4 orders are on their way: running shoes from Uniqlo today by 6 pm (Ninja Van: out for delivery, left Tuas hub 08:12); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15); charger from AliExpress Fri 2–Mon 5 Oct (Cainiao: left Shenzhen Thu 24 Sep). Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
+          "fallback_text": "As of 08:00 (couldn't refresh, so a scan since then won't show), 4 orders are on their way: running shoes from Uniqlo today by 6 pm (Ninja Van: at the Tuas hub, sorted 07:30); desk lamp from Amazon.sg Mon 28 Sep (J&T Express: at the Changi hub, sorted 06:40); phone case from Temu Tue 29–Wed 30 Sep (SingPost: cleared customs in Singapore 04:15); charger from AliExpress Fri 2–Mon 5 Oct (Cainiao: left Shenzhen Thu 24 Sep). Not shipped yet: the Shopee Mall kettle, which Shopee says ships by Tue 29 Sep."
         },
         "empty": {
           "kind": "output_blocks",
@@ -10700,7 +10693,7 @@
             "secondary": {
               "kind": "open_url",
               "label": "Open in Marketplace inbox",
-              "url": "https://www.facebook.com/marketplace/inbox/?thread=8812470953"
+              "url": "https://www.facebook.com/marketplace/inbox/"
             }
           }
         ],
@@ -10807,7 +10800,7 @@
               "secondary": {
                 "kind": "open_url",
                 "label": "Open in Marketplace inbox",
-                "url": "https://www.facebook.com/marketplace/inbox/?thread=8812470953"
+                "url": "https://www.facebook.com/marketplace/inbox/"
               }
             }
           ],
@@ -10831,7 +10824,7 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "Jordan marked the sectional sold before it went. Nothing was sent."
+              "detail": "Jordan marked it sold before it went; nothing sent. Ask me to find another."
             }
           ],
           "fallback_text": "Not sent: Jordan marked the gray sectional sold on Facebook Marketplace before your US$180 offer went. Nothing was sent. Ask me to look for another one."
@@ -17321,13 +17314,13 @@
               "places": [
                 {
                   "id": "d1",
-                  "label": "Asakusa and Ueno",
+                  "label": "Asakusa",
                   "lat": "35.7148",
                   "lon": "139.7967"
                 },
                 {
                   "id": "d2",
-                  "label": "Shibuya and Harajuku",
+                  "label": "Shibuya",
                   "lat": "35.6595",
                   "lon": "139.7005"
                 },
@@ -17345,9 +17338,9 @@
                 },
                 {
                   "id": "d5",
-                  "label": "Ginza and Tsukiji",
-                  "lat": "35.6717",
-                  "lon": "139.7650"
+                  "label": "Tsukiji",
+                  "lat": "35.6655",
+                  "lon": "139.7707"
                 }
               ]
             }
@@ -17356,12 +17349,12 @@
             "kind": "rows",
             "items": [
               {
-                "label": "SQ 638 out, SQ 637 back",
-                "secondary": "Mon 12 Oct 08:35 · Fri 16 Oct 22:50 · economy",
+                "label": "SQ 632 out, SQ 633 back",
+                "secondary": "Mon 12 Oct 07:40 · Fri 16 Oct 17:05 · economy",
                 "trailing": "S$1,086"
               },
               {
-                "label": "Hotel Gracery Ueno",
+                "label": "Hotel Gracery Asakusa",
                 "secondary": "4 nights · free cancel until 9 Oct",
                 "trailing": "S$1,080"
               }
@@ -17371,14 +17364,14 @@
             "kind": "text",
             "sections": [
               {
-                "heading": "Day 1 · Mon 12 Oct · Asakusa and Ueno",
+                "heading": "Day 1 · Mon 12 Oct · Asakusa",
                 "bullets": [
-                  "16:40 Land at Haneda, check in at Ueno",
+                  "15:45 Land at Haneda, check in",
                   "19:00 Senso-ji lit up at night"
                 ]
               },
               {
-                "heading": "Day 2 · Tue 13 Oct · Shibuya and Harajuku",
+                "heading": "Day 2 · Tue 13 Oct · Shibuya",
                 "bullets": [
                   "09:00 Meiji Jingu",
                   "15:00 Shibuya Sky at dusk"
@@ -17399,10 +17392,10 @@
                 ]
               },
               {
-                "heading": "Day 5 · Fri 16 Oct · Ginza and Tsukiji",
+                "heading": "Day 5 · Fri 16 Oct · Tsukiji",
                 "bullets": [
                   "08:00 Tsukiji outer market",
-                  "20:00 Leave for Haneda"
+                  "14:00 Leave for Haneda"
                 ]
               }
             ]
@@ -17419,12 +17412,12 @@
         "details": {
           "sources": [
             {
-              "label": "Singapore Airlines fare SQ 638 and SQ 637, 26 Sep 2026 09:12",
-              "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/book-flight/?from=SIN&to=HND&depart=2026-10-12&return=2026-10-16"
+              "label": "SQ 632 and SQ 633 fare on Google Flights, 26 Sep 2026 09:12",
+              "url": "https://www.google.com/travel/flights?q=Flights%20to%20HND%20from%20SIN%20on%202026-10-12%20through%202026-10-16"
             },
             {
-              "label": "Hotel Gracery Ueno on Booking.com, 26 Sep 2026 09:12",
-              "url": "https://www.booking.com/hotel/jp/gracery-ueno.en-gb.html?checkin=2026-10-12&checkout=2026-10-16"
+              "label": "Hotel Gracery Asakusa rate on its own site, 26 Sep 2026 09:12",
+              "url": "https://asakusa.gracery.com/"
             }
           ],
           "assumptions": [
@@ -17432,7 +17425,7 @@
             "Trains between areas; Kamakura is 1 h from Shinjuku."
           ]
         },
-        "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, prices as of 09:12, nothing booked: SQ 638 out Mon 12 Oct 08:35 and SQ 637 back Fri 16 Oct 22:50, economy, S$1,086; Hotel Gracery Ueno, 4 nights, free cancel until 9 Oct, S$1,080. Day 1 Mon Asakusa and Ueno; Day 2 Tue Shibuya and Harajuku; Day 3 Wed Kamakura; Day 4 Thu Shinjuku; Day 5 Fri Ginza and Tsukiji. The plan is in your Library."
+        "fallback_text": "Tokyo, Mon 12–Fri 16 Oct, prices as of 09:12, nothing booked: SQ 632 out Mon 12 Oct 07:40, SQ 633 back Fri 16 Oct 17:05, economy, S$1,086; Hotel Gracery Asakusa, 4 nights, free cancel until 9 Oct, S$1,080. Mon 12 Oct Asakusa: 15:45 land at Haneda, check in; 19:00 Senso-ji. Tue 13 Oct Shibuya: 09:00 Meiji Jingu; 15:00 Shibuya Sky. Wed 14 Oct Kamakura: 09:30 Great Buddha; 13:00 Hase-dera. Thu 15 Oct Shinjuku: 10:00 Shinjuku Gyoen; 18:00 Omoide Yokocho. Fri 16 Oct Tsukiji: 08:00 outer market; 14:00 leave for Haneda. Plan in Library."
       },
       "states": {
         "loading": {
@@ -17452,7 +17445,7 @@
               }
             }
           ],
-          "fallback_text": "Planning your 5 days in Tokyo, Mon 12–Fri 16 Oct: pricing the flight and hotel first."
+          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct: pricing the flight and hotel first, then planning day 1 of 5."
         },
         "partial": {
           "kind": "output_blocks",
@@ -17469,13 +17462,13 @@
                 "places": [
                   {
                     "id": "d1",
-                    "label": "Asakusa and Ueno",
+                    "label": "Asakusa",
                     "lat": "35.7148",
                     "lon": "139.7967"
                   },
                   {
                     "id": "d2",
-                    "label": "Shibuya and Harajuku",
+                    "label": "Shibuya",
                     "lat": "35.6595",
                     "lon": "139.7005"
                   }
@@ -17486,12 +17479,12 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "SQ 638 out, SQ 637 back",
-                  "secondary": "Mon 12 Oct 08:35 · Fri 16 Oct 22:50 · economy",
+                  "label": "SQ 632 out, SQ 633 back",
+                  "secondary": "Mon 12 Oct 07:40 · Fri 16 Oct 17:05 · economy",
                   "trailing": "S$1,086"
                 },
                 {
-                  "label": "Hotel Gracery Ueno",
+                  "label": "Hotel Gracery Asakusa",
                   "secondary": "4 nights · free cancel until 9 Oct",
                   "trailing": "S$1,080"
                 }
@@ -17501,14 +17494,14 @@
               "kind": "text",
               "sections": [
                 {
-                  "heading": "Day 1 · Mon 12 Oct · Asakusa and Ueno",
+                  "heading": "Day 1 · Mon 12 Oct · Asakusa",
                   "bullets": [
-                    "16:40 Land at Haneda, check in at Ueno",
+                    "15:45 Land at Haneda, check in",
                     "19:00 Senso-ji lit up at night"
                   ]
                 },
                 {
-                  "heading": "Day 2 · Tue 13 Oct · Shibuya and Harajuku",
+                  "heading": "Day 2 · Tue 13 Oct · Shibuya",
                   "bullets": [
                     "09:00 Meiji Jingu",
                     "15:00 Shibuya Sky at dusk"
@@ -17520,19 +17513,19 @@
           "details": {
             "sources": [
               {
-                "label": "Singapore Airlines fare SQ 638 and SQ 637, 26 Sep 2026 09:12",
-                "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/book-flight/?from=SIN&to=HND&depart=2026-10-12&return=2026-10-16"
+                "label": "SQ 632 and SQ 633 fare on Google Flights, 26 Sep 2026 09:12",
+                "url": "https://www.google.com/travel/flights?q=Flights%20to%20HND%20from%20SIN%20on%202026-10-12%20through%202026-10-16"
               },
               {
-                "label": "Hotel Gracery Ueno on Booking.com, 26 Sep 2026 09:12",
-                "url": "https://www.booking.com/hotel/jp/gracery-ueno.en-gb.html?checkin=2026-10-12&checkout=2026-10-16"
+                "label": "Hotel Gracery Asakusa rate on its own site, 26 Sep 2026 09:12",
+                "url": "https://asakusa.gracery.com/"
               }
             ],
             "assumptions": [
               "Nothing is booked; the fare and the rate hold only until you book."
             ]
           },
-          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, 2 of 5 days planned, prices as of 09:12, nothing booked: SQ 638 out Mon 12 Oct 08:35 and SQ 637 back Fri 16 Oct 22:50, economy, S$1,086; Hotel Gracery Ueno, 4 nights, free cancel until 9 Oct, S$1,080. Day 1 Mon Asakusa and Ueno; Day 2 Tue Shibuya and Harajuku. Days 3 to 5 are still being planned."
+          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, 2 of 5 days planned, prices as of 09:12, nothing booked: SQ 632 out Mon 12 Oct 07:40, SQ 633 back Fri 16 Oct 17:05, economy, S$1,086; Hotel Gracery Asakusa, 4 nights, free cancel until 9 Oct, S$1,080. Mon 12 Oct Asakusa: 15:45 land at Haneda, check in; 19:00 Senso-ji. Tue 13 Oct Shibuya: 09:00 Meiji Jingu; 15:00 Shibuya Sky. Days 3 to 5 are still being planned."
         },
         "stale": {
           "kind": "output_blocks",
@@ -17549,13 +17542,13 @@
                 "places": [
                   {
                     "id": "d1",
-                    "label": "Asakusa and Ueno",
+                    "label": "Asakusa",
                     "lat": "35.7148",
                     "lon": "139.7967"
                   },
                   {
                     "id": "d2",
-                    "label": "Shibuya and Harajuku",
+                    "label": "Shibuya",
                     "lat": "35.6595",
                     "lon": "139.7005"
                   },
@@ -17573,9 +17566,9 @@
                   },
                   {
                     "id": "d5",
-                    "label": "Ginza and Tsukiji",
-                    "lat": "35.6717",
-                    "lon": "139.7650"
+                    "label": "Tsukiji",
+                    "lat": "35.6655",
+                    "lon": "139.7707"
                   }
                 ]
               }
@@ -17584,12 +17577,12 @@
               "kind": "rows",
               "items": [
                 {
-                  "label": "SQ 638 out, SQ 637 back",
-                  "secondary": "Mon 12 Oct 08:35 · Fri 16 Oct 22:50 · economy",
+                  "label": "SQ 632 out, SQ 633 back",
+                  "secondary": "Mon 12 Oct 07:40 · Fri 16 Oct 17:05 · economy",
                   "trailing": "S$1,086"
                 },
                 {
-                  "label": "Hotel Gracery Ueno",
+                  "label": "Hotel Gracery Asakusa",
                   "secondary": "4 nights · free cancel until 9 Oct",
                   "trailing": "S$1,080"
                 }
@@ -17599,14 +17592,14 @@
               "kind": "text",
               "sections": [
                 {
-                  "heading": "Day 1 · Mon 12 Oct · Asakusa and Ueno",
+                  "heading": "Day 1 · Mon 12 Oct · Asakusa",
                   "bullets": [
-                    "16:40 Land at Haneda, check in at Ueno",
+                    "15:45 Land at Haneda, check in",
                     "19:00 Senso-ji lit up at night"
                   ]
                 },
                 {
-                  "heading": "Day 2 · Tue 13 Oct · Shibuya and Harajuku",
+                  "heading": "Day 2 · Tue 13 Oct · Shibuya",
                   "bullets": [
                     "09:00 Meiji Jingu",
                     "15:00 Shibuya Sky at dusk"
@@ -17627,10 +17620,10 @@
                   ]
                 },
                 {
-                  "heading": "Day 5 · Fri 16 Oct · Ginza and Tsukiji",
+                  "heading": "Day 5 · Fri 16 Oct · Tsukiji",
                   "bullets": [
                     "08:00 Tsukiji outer market",
-                    "20:00 Leave for Haneda"
+                    "14:00 Leave for Haneda"
                   ]
                 }
               ]
@@ -17639,12 +17632,12 @@
           "details": {
             "sources": [
               {
-                "label": "Singapore Airlines fare SQ 638 and SQ 637, 26 Sep 2026 08:10",
-                "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/book-flight/?from=SIN&to=HND&depart=2026-10-12&return=2026-10-16"
+                "label": "SQ 632 and SQ 633 fare on Google Flights, 26 Sep 2026 08:10",
+                "url": "https://www.google.com/travel/flights?q=Flights%20to%20HND%20from%20SIN%20on%202026-10-12%20through%202026-10-16"
               },
               {
-                "label": "Hotel Gracery Ueno on Booking.com, 26 Sep 2026 08:10",
-                "url": "https://www.booking.com/hotel/jp/gracery-ueno.en-gb.html?checkin=2026-10-12&checkout=2026-10-16"
+                "label": "Hotel Gracery Asakusa rate on its own site, 26 Sep 2026 08:10",
+                "url": "https://asakusa.gracery.com/"
               }
             ],
             "assumptions": [
@@ -17655,7 +17648,7 @@
               "The fare and the rate may have changed since 08:10; the linked pages have today's."
             ]
           },
-          "fallback_text": "Tokyo in 5 days, Mon 12–Fri 16 Oct, prices as of 08:10 (couldn't refresh), nothing booked: SQ 638 out Mon 12 Oct 08:35 and SQ 637 back Fri 16 Oct 22:50, economy, S$1,086; Hotel Gracery Ueno, 4 nights, free cancel until 9 Oct, S$1,080. Day 1 Mon Asakusa and Ueno; Day 2 Tue Shibuya and Harajuku; Day 3 Wed Kamakura; Day 4 Thu Shinjuku; Day 5 Fri Ginza and Tsukiji. Check both prices before you book."
+          "fallback_text": "Tokyo, as of 08:10 (couldn't refresh), nothing booked: SQ 632 out Mon 12 Oct 07:40, SQ 633 back Fri 16 Oct 17:05, economy, S$1,086; Hotel Gracery Asakusa, 4 nights, free cancel until 9 Oct, S$1,080. Mon 12 Oct Asakusa: 15:45 land at Haneda, check in; 19:00 Senso-ji. Tue 13 Oct Shibuya: 09:00 Meiji Jingu; 15:00 Shibuya Sky. Wed 14 Oct Kamakura: 09:30 Great Buddha; 13:00 Hase-dera. Thu 15 Oct Shinjuku: 10:00 Shinjuku Gyoen; 18:00 Omoide Yokocho. Fri 16 Oct Tsukiji: 08:00 outer market; 14:00 leave for Haneda. Recheck prices."
         },
         "empty": {
           "kind": "output_blocks",
@@ -17684,10 +17677,10 @@
             {
               "kind": "status",
               "state": "failed",
-              "detail": "Booking.com didn't answer, so the hotel has no price. Nothing was booked."
+              "detail": "The hotel's site didn't answer, so no room price. Ask me again soon."
             }
           ],
-          "fallback_text": "Couldn't finish the Tokyo plan for Mon 12–Fri 16 Oct: Booking.com didn't answer, so the hotel has no price. Nothing was booked. Ask me again in a few minutes."
+          "fallback_text": "Couldn't finish the Tokyo plan for Mon 12–Fri 16 Oct: Hotel Gracery Asakusa's site didn't answer, so the hotel has no price. Nothing was booked. Ask me again in a few minutes."
         }
       }
     },
@@ -17799,7 +17792,7 @@
               }
             }
           ],
-          "fallback_text": "Making your Tokyo trip plan from your booking emails: reading email 2 of 2."
+          "fallback_text": "Tokyo trip from your bookings, Mon 12–Sun 18 Oct: reading booking email 2 of 2."
         },
         "partial": {
           "kind": "output_blocks",
@@ -18136,10 +18129,10 @@
             {
               "kind": "status",
               "state": "empty",
-              "detail": "SQ 638 and the hotel are already in your calendar. Nothing added twice."
+              "detail": "SQ 638 and the hotel are already there. Open Calendar to see them."
             }
           ],
-          "fallback_text": "Nothing to add for the Tokyo trip, Mon 12–Sun 18 Oct, as of 10:47: SQ 638 and Hotel Gracery Ueno are already in your Google Calendar. Nothing was added twice."
+          "fallback_text": "Nothing to add for the Tokyo trip, Mon 12–Sun 18 Oct, as of 10:47: SQ 638 and Hotel Gracery Ueno are already in your Google Calendar. Nothing was added twice; open Calendar to see them."
         },
         "failed": {
           "kind": "output_blocks",
@@ -18155,7 +18148,7 @@
               "detail": "Calendar didn't answer. I'll check it before trying again."
             }
           ],
-          "fallback_text": "Couldn't confirm the Tokyo trip events were added: Google Calendar didn't answer after they were sent, so SQ 638 and Hotel Gracery Ueno may already be there. So nothing is added twice: I'll check the calendar before trying again."
+          "fallback_text": "Couldn't confirm the Tokyo trip events, Mon 12–Sun 18 Oct, were added: Google Calendar didn't answer after they were sent, so SQ 638 and Hotel Gracery Ueno may already be there. So nothing is added twice: I'll check the calendar before trying again."
         }
       }
     },
@@ -18397,7 +18390,7 @@
               "detail": "Booking.com didn't answer. ABX-4471 is not cancelled. I'll check first."
             }
           ],
-          "fallback_text": "Couldn't confirm the new Hotel Gracery Ueno booking at S$1,380: Booking.com didn't answer, so it may or may not exist. Your booking ABX-4471 at S$1,620 is not cancelled. I'll check your Booking.com trips before trying again, so you aren't booked twice."
+          "fallback_text": "Couldn't confirm the new Hotel Gracery Ueno booking at S$1,380 for 12–18 Oct: Booking.com didn't answer, so it may or may not exist. Your booking ABX-4471 at S$1,620 is not cancelled. I'll check your Booking.com trips before trying again, so you aren't booked twice."
         }
       }
     },
@@ -18445,8 +18438,8 @@
             "kind": "action",
             "secondary": {
               "kind": "open_url",
-              "label": "Manage in Grab",
-              "url": "https://www.grab.com/sg/transport/advance-booking/"
+              "label": "Grab cancel and delay terms",
+              "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
             }
           }
         ],
@@ -18454,10 +18447,14 @@
           "sources": [
             {
               "label": "Grab Advance Booking confirmation, 26 Sep 2026 17:08"
+            },
+            {
+              "label": "Grab Help: About Advance Bookings",
+              "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
             }
           ]
         },
-        "fallback_text": "As of 17:08: GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. I'm watching SQ 638 and will propose a new pickup if it's delayed."
+        "fallback_text": "As of 17:08: GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. Manage it in the Grab app; Grab's cancel and delay terms are linked. I'm watching SQ 638 and will propose a new pickup if it's delayed."
       },
       "states": {
         "loading": {
@@ -18477,7 +18474,7 @@
               }
             }
           ],
-          "fallback_text": "Waiting for Grab to confirm your 05:40 GrabCar to Changi T3 on Fri 2 Oct."
+          "fallback_text": "Waiting for Grab to confirm your 05:40 GrabCar from Home to Changi T3 on Fri 2 Oct."
         },
         "partial": {
           "kind": "output_blocks",
@@ -18505,8 +18502,8 @@
               "kind": "action",
               "secondary": {
                 "kind": "open_url",
-                "label": "Manage in Grab",
-                "url": "https://www.grab.com/sg/transport/advance-booking/"
+                "label": "Grab cancel and delay terms",
+                "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
               }
             }
           ],
@@ -18514,10 +18511,14 @@
             "sources": [
               {
                 "label": "Grab Advance Booking confirmation, 26 Sep 2026 17:08"
+              },
+              {
+                "label": "Grab Help: About Advance Bookings",
+                "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
               }
             ]
           },
-          "fallback_text": "Booked a GrabCar to Changi T3 for Fri 2 Oct, pickup 05:40 from Home, ref A-7K2QX9, as of 17:08. The fixed fare and the cancel terms aren't in from Grab yet."
+          "fallback_text": "Booked a GrabCar to Changi T3 for Fri 2 Oct, pickup 05:40 from Home, ref A-7K2QX9, as of 17:08. The fixed fare and the cancel terms aren't in from Grab yet; Grab's general cancel and delay terms are linked."
         },
         "stale": {
           "kind": "output_blocks",
@@ -18550,8 +18551,8 @@
               "kind": "action",
               "secondary": {
                 "kind": "open_url",
-                "label": "Manage in Grab",
-                "url": "https://www.grab.com/sg/transport/advance-booking/"
+                "label": "Grab cancel and delay terms",
+                "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
               }
             }
           ],
@@ -18559,10 +18560,14 @@
             "sources": [
               {
                 "label": "Grab Advance Booking confirmation, 26 Sep 2026 17:08"
+              },
+              {
+                "label": "Grab Help: About Advance Bookings",
+                "url": "https://help.grab.com/passenger/en-sg/360001392588-What-are-Advance-Bookings"
               }
             ]
           },
-          "fallback_text": "As of 17:08 (couldn't refresh with Grab): GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. I'm watching SQ 638 and will propose a new pickup if it's delayed."
+          "fallback_text": "As of 17:08 (couldn't refresh with Grab): GrabCar to Changi T3 booked for Fri 2 Oct, pickup 05:40 from Home, for SQ 638 at 08:35, ref A-7K2QX9. Fare S$35, fixed when booked, Visa ending 4412; cancelling is free on Grab until 04:40, no fee. Manage it in the Grab app; Grab's cancel and delay terms are linked. I'm watching SQ 638 and will propose a new pickup if it's delayed."
         },
         "empty": {
           "kind": "output_blocks",
@@ -18594,7 +18599,7 @@
               "detail": "Grab didn't answer. Check Grab before booking again"
             }
           ],
-          "fallback_text": "I couldn't confirm whether the GrabCar to Changi T3 is booked for 05:40 on Fri 2 Oct: Grab didn't answer after the request was sent. Check your Grab bookings before trying again, so you aren't booked twice."
+          "fallback_text": "I couldn't confirm whether the GrabCar from Home to Changi T3 is booked for 05:40 on Fri 2 Oct: Grab didn't answer after the request was sent. Check your Grab bookings before trying again, so you aren't booked twice."
         }
       }
     },
@@ -18642,7 +18647,7 @@
               },
               {
                 "label": "Moves to",
-                "secondary": "Fri 2 Oct · same booking, from Home",
+                "secondary": "Fri 2 Oct · new GrabCar from Home",
                 "trailing": "06:25"
               },
               {
@@ -18669,10 +18674,11 @@
           ],
           "assumptions": [
             "Drive 25–35 min at that hour plus 20 min spare, as for the 05:40 pickup.",
+            "Grab can't move a booking: on your yes I book 06:25, then cancel A-7K2QX9, free until 04:40.",
             "Nothing moves until you say yes; if you don't, the 05:40 pickup stays."
           ]
         },
-        "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to 06:25, same booking, from Home, new pickup 06:25. SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
+        "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to a new GrabCar from Home, new pickup 06:25 (Grab can't move a booking, so A-7K2QX9 is cancelled free before 04:40). SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
       },
       "states": {
         "loading": {
@@ -18725,7 +18731,7 @@
                 },
                 {
                   "label": "Moves to",
-                  "secondary": "Fri 2 Oct · same booking, from Home",
+                  "secondary": "Fri 2 Oct · new GrabCar from Home",
                   "trailing": "06:25"
                 },
                 {
@@ -18748,7 +18754,7 @@
               }
             ]
           },
-          "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: GrabCar A-7K2QX9 at 05:40; moves to 06:25, new pickup 06:25. Grab hasn't said if 06:25 is free, so that is not known. Be at Changi T3 by 07:20. Nothing changes until you say yes."
+          "fallback_text": "Move your Changi ride: SQ 638 is delayed 45 min, as of 04:10, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to a new GrabCar from Home, new pickup 06:25. Grab hasn't said if a 06:25 slot is free, so that is not known. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
         },
         "stale": {
           "kind": "output_blocks",
@@ -18781,7 +18787,7 @@
                 },
                 {
                   "label": "Moves to",
-                  "secondary": "Fri 2 Oct · same booking, from Home",
+                  "secondary": "Fri 2 Oct · new GrabCar from Home",
                   "trailing": "06:25"
                 },
                 {
@@ -18808,10 +18814,11 @@
             ],
             "assumptions": [
               "Drive 25–35 min at that hour plus 20 min spare, as for the 05:40 pickup.",
+              "Grab can't move a booking: on your yes I book 06:25, then cancel A-7K2QX9, free until 04:40.",
               "Nothing moves until you say yes; if you don't, the 05:40 pickup stays."
             ]
           },
-          "fallback_text": "As of 03:40 (couldn't refresh, so a newer delay won't show): Move your Changi ride: SQ 638 is delayed 45 min, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to 06:25, same booking, from Home, new pickup 06:25. SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
+          "fallback_text": "As of 03:40 (couldn't refresh, so a newer delay won't show): Move your Changi ride: SQ 638 is delayed 45 min, not moved yet. Now: Fri 2 Oct GrabCar A-7K2QX9 at 05:40; moves to a new GrabCar from Home, new pickup 06:25 (Grab can't move a booking, so A-7K2QX9 is cancelled free before 04:40). SQ 638 now departs 09:20 from Gate B6, was 08:35. Be at Changi T3 by 07:20, 2 h before, Singapore Airlines' advice. Nothing changes until you say yes."
         },
         "empty": {
           "kind": "output_blocks",
@@ -18843,7 +18850,7 @@
               "detail": "The airline didn't answer. The 05:40 pickup stays; I'll check in 10 min."
             }
           ],
-          "fallback_text": "Couldn't check SQ 638: Singapore Airlines didn't answer. Your 05:40 GrabCar pickup on Fri 2 Oct stays; nothing was moved. I'll check the flight again in 10 minutes."
+          "fallback_text": "Couldn't check SQ 638 for your Changi ride: Singapore Airlines didn't answer. Your 05:40 GrabCar pickup on Fri 2 Oct stays; nothing was moved. I'll check the flight again in 10 minutes."
         }
       }
     },
