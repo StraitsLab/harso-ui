@@ -19,7 +19,7 @@ const committed = JSON.parse(readFileSync(JOURNEYS_PATH, "utf8")) as { journeys:
 const gapsText = readFileSync(GAPS_PATH, "utf8");
 const exampleIds = new Set<string>(JSON.parse(buildPlaybook()).examples.map((example: { id: string }) => example.id));
 const gaps = gapIds(gapsText) as Set<string>;
-const GAPS = ["S1", "S4", "S7", "T1", "T5", "T6", "T7", "R4", "E3", "E6", "C1", "C3", "C5", "M2"];
+const GAPS = ["S1", "S4", "S7", "T1", "T5", "T6", "T7"];
 
 const edited = (edit: (journeys: Journey[]) => void, from = committed) => {
   const copy = structuredClone(from);
@@ -50,11 +50,11 @@ function cli(data: unknown, gapsMarkdown = gapsText): { status: number; out: str
 }
 
 describe("every journey names its catalogue example", () => {
-  test("the committed map: 46 covered, and the 14 missing are exactly the declared gaps", () => {
+  test("the committed map: 53 covered, and the 7 missing are exactly the declared gaps", () => {
     const result = checkJourneys() as Result;
     expect(JOURNEYS).toHaveLength(60);
     expect(result.findings).toEqual([]);
-    expect(result.covered).toBe(46);
+    expect(result.covered).toBe(53);
     expect(result.missing).toEqual(GAPS);
     expect(result.gaps).toEqual(GAPS);
   });
@@ -122,7 +122,7 @@ describe("every journey names its catalogue example", () => {
   });
 
   test("a declared gap that gains an example fails until its section is removed; unknown gap IDs fail", () => {
-    expect(check(edited(journeys => { at(journeys, "C1").examples = ["prod-agenda"]; })).findings)
+    expect(check(edited(journeys => { at(journeys, "C1").examples = ["prod-agenda"]; }), new Set([...gaps, "C1"])).findings)
       .toEqual(["journey 27 (C1): has examples, but catalogue/gaps/journeys.md still declares it a gap"]);
     expect(check(committed, new Set([...gaps, "Z9"])).findings).toEqual(["gaps: catalogue/gaps/journeys.md declares Z9, which is not a journey"]);
   });
