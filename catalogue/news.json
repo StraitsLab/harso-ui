@@ -615,15 +615,27 @@
             "items": [
               {
                 "label": "MAS keeps the Singapore dollar policy unchanged",
-                "secondary": "Business Times"
+                "secondary": "Business Times",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa56803dfe7",
+                  "alt": "Photo for the story: MAS keeps the Singapore dollar policy unchanged"
+                }
               },
               {
                 "label": "East–West line fault delays morning commute",
-                "secondary": "CNA"
+                "secondary": "CNA",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0064544c70",
+                  "alt": "Photo for the story: East–West line fault delays morning commute"
+                }
               },
               {
                 "label": "Fed signals one more rate cut this year",
-                "secondary": "Reuters"
+                "secondary": "Reuters",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fae44d5f9af",
+                  "alt": "Photo for the story: Fed signals one more rate cut this year"
+                }
               }
             ]
           }
@@ -676,11 +688,19 @@
               "items": [
                 {
                   "label": "MAS keeps the Singapore dollar policy unchanged",
-                  "secondary": "Business Times"
+                  "secondary": "Business Times",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa56803dfe7",
+                    "alt": "Photo for the story: MAS keeps the Singapore dollar policy unchanged"
+                  }
                 },
                 {
                   "label": "East–West line fault delays morning commute",
-                  "secondary": "CNA"
+                  "secondary": "CNA",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0064544c70",
+                    "alt": "Photo for the story: East–West line fault delays morning commute"
+                  }
                 }
               ]
             }
@@ -710,15 +730,27 @@
               "items": [
                 {
                   "label": "MAS keeps the Singapore dollar policy unchanged",
-                  "secondary": "Business Times"
+                  "secondary": "Business Times",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa56803dfe7",
+                    "alt": "Photo for the story: MAS keeps the Singapore dollar policy unchanged"
+                  }
                 },
                 {
                   "label": "East–West line fault delays morning commute",
-                  "secondary": "CNA"
+                  "secondary": "CNA",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0064544c70",
+                    "alt": "Photo for the story: East–West line fault delays morning commute"
+                  }
                 },
                 {
                   "label": "Fed signals one more rate cut this year",
-                  "secondary": "Reuters"
+                  "secondary": "Reuters",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fae44d5f9af",
+                    "alt": "Photo for the story: Fed signals one more rate cut this year"
+                  }
                 }
               ]
             }

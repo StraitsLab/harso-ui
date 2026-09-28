@@ -7,7 +7,7 @@
     "source": "StraitsLab/weave-cloud packages/contracts/src/schemas/output-blocks.v1.json",
     "source_commit": "db2db1abef7714f3117ce6cdfdf8fcdc468a0d09",
     "read_at": "origin/main 7c8995307983084c96b08afe82ee1bd4fd7e02bf",
-    "sha256": "470aa1aec345587faaa4004ee00a499f3044540dfbde1126ff130072fdd68f87"
+    "sha256": "969af48f10b567b1f4d7bda0585a3c81d40537f4e0767c2fecacd72b1919077f"
   },
   "time_sensitive_components": [
     "F1 Balance / net worth",
@@ -5548,7 +5548,7 @@
         "S1 Product options",
         "S10 Rating",
         "S2 Product grid / carousel (as rows)",
-        "X4 Item thumbnail (degraded: no row image)"
+        "X4 Item thumbnail"
       ],
       "rationale": "Three options, one pick, price trailing, the trade-off on the secondary line; choosing goes through the question card.",
       "document": {
@@ -5566,17 +5566,29 @@
                 "label": "Dyson V8 Origin",
                 "secondary": "72 dB · 40 min · rated 4.6/5",
                 "trailing": "S$379",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fc4ea7fb351",
+                  "alt": "Dyson V8 Origin, product photo"
+                }
               },
               {
                 "label": "Xiaomi G11",
                 "secondary": "74 dB · 60 min · rated 4.4/5",
-                "trailing": "S$299"
+                "trailing": "S$299",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb591f0062e",
+                  "alt": "Xiaomi G11, product photo"
+                }
               },
               {
                 "label": "Samsung Jet 60",
                 "secondary": "76 dB · 40 min · rated 4.5/5",
-                "trailing": "S$349"
+                "trailing": "S$349",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe11e98e0f5",
+                  "alt": "Samsung Jet 60, product photo"
+                }
               }
             ]
           }
@@ -5631,12 +5643,20 @@
                   "label": "Dyson V8 Origin",
                   "secondary": "72 dB · 40 min · rated 4.6/5",
                   "trailing": "S$379",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fc4ea7fb351",
+                    "alt": "Dyson V8 Origin, product photo"
+                  }
                 },
                 {
                   "label": "Xiaomi G11",
                   "secondary": "74 dB · 60 min · rated 4.4/5",
-                  "trailing": "S$299"
+                  "trailing": "S$299",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb591f0062e",
+                    "alt": "Xiaomi G11, product photo"
+                  }
                 }
               ]
             }
@@ -5665,17 +5685,29 @@
                   "label": "Dyson V8 Origin",
                   "secondary": "72 dB · 40 min · rated 4.6/5",
                   "trailing": "S$379",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fc4ea7fb351",
+                    "alt": "Dyson V8 Origin, product photo"
+                  }
                 },
                 {
                   "label": "Xiaomi G11",
                   "secondary": "74 dB · 60 min · rated 4.4/5",
-                  "trailing": "S$299"
+                  "trailing": "S$299",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb591f0062e",
+                    "alt": "Xiaomi G11, product photo"
+                  }
                 },
                 {
                   "label": "Samsung Jet 60",
                   "secondary": "76 dB · 40 min · rated 4.5/5",
-                  "trailing": "S$349"
+                  "trailing": "S$349",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe11e98e0f5",
+                    "alt": "Samsung Jet 60, product photo"
+                  }
                 }
               ]
             }
@@ -5752,37 +5784,65 @@
                 "label": "ASICS Novablast 5",
                 "secondary": "Cushioned daily trainer · rated 4.7/5",
                 "trailing": "S$189",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fbb438b0774",
+                  "alt": "ASICS Novablast 5, side view of the shoe"
+                }
               },
               {
                 "label": "Nike Pegasus 42",
                 "secondary": "Daily trainer · rated 4.6/5",
-                "trailing": "S$179"
+                "trailing": "S$179",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7e02e3a31d",
+                  "alt": "Nike Pegasus 42, side view of the shoe"
+                }
               },
               {
                 "label": "Brooks Ghost 17",
                 "secondary": "Soft, stable · rated 4.6/5",
-                "trailing": "S$199"
+                "trailing": "S$199",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f4157ad3bf7",
+                  "alt": "Brooks Ghost 17, side view of the shoe"
+                }
               },
               {
                 "label": "Hoka Clifton 10",
                 "secondary": "Max cushion · rated 4.5/5",
-                "trailing": "S$199"
+                "trailing": "S$199",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef0f4df717",
+                  "alt": "Hoka Clifton 10, side view of the shoe"
+                }
               },
               {
                 "label": "New Balance 880 v15",
                 "secondary": "Wide fit · rated 4.5/5",
-                "trailing": "S$185"
+                "trailing": "S$185",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd53673371a",
+                  "alt": "New Balance 880 v15, side view of the shoe"
+                }
               },
               {
                 "label": "Adidas Adizero SL 2",
                 "secondary": "Light, fast · rated 4.4/5",
-                "trailing": "S$159"
+                "trailing": "S$159",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff1fa1965c8",
+                  "alt": "Adidas Adizero SL 2, side view of the shoe"
+                }
               },
               {
                 "label": "Puma Velocity Nitro 4",
                 "secondary": "Budget daily · rated 4.4/5",
-                "trailing": "S$149"
+                "trailing": "S$149",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5191c70de",
+                  "alt": "Puma Velocity Nitro 4, side view of the shoe"
+                }
               }
             ]
           },
@@ -5842,22 +5902,38 @@
                   "label": "ASICS Novablast 5",
                   "secondary": "Cushioned daily trainer · rated 4.7/5",
                   "trailing": "S$189",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fbb438b0774",
+                    "alt": "ASICS Novablast 5, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Nike Pegasus 42",
                   "secondary": "Daily trainer · rated 4.6/5",
-                  "trailing": "S$179"
+                  "trailing": "S$179",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7e02e3a31d",
+                    "alt": "Nike Pegasus 42, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Brooks Ghost 17",
                   "secondary": "Soft, stable · rated 4.6/5",
-                  "trailing": "S$199"
+                  "trailing": "S$199",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f4157ad3bf7",
+                    "alt": "Brooks Ghost 17, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Hoka Clifton 10",
                   "secondary": "Max cushion · rated 4.5/5",
-                  "trailing": "S$199"
+                  "trailing": "S$199",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef0f4df717",
+                    "alt": "Hoka Clifton 10, side view of the shoe"
+                  }
                 }
               ]
             },
@@ -5894,37 +5970,65 @@
                   "label": "ASICS Novablast 5",
                   "secondary": "Cushioned daily trainer · rated 4.7/5",
                   "trailing": "S$189",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fbb438b0774",
+                    "alt": "ASICS Novablast 5, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Nike Pegasus 42",
                   "secondary": "Daily trainer · rated 4.6/5",
-                  "trailing": "S$179"
+                  "trailing": "S$179",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7e02e3a31d",
+                    "alt": "Nike Pegasus 42, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Brooks Ghost 17",
                   "secondary": "Soft, stable · rated 4.6/5",
-                  "trailing": "S$199"
+                  "trailing": "S$199",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f4157ad3bf7",
+                    "alt": "Brooks Ghost 17, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Hoka Clifton 10",
                   "secondary": "Max cushion · rated 4.5/5",
-                  "trailing": "S$199"
+                  "trailing": "S$199",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef0f4df717",
+                    "alt": "Hoka Clifton 10, side view of the shoe"
+                  }
                 },
                 {
                   "label": "New Balance 880 v15",
                   "secondary": "Wide fit · rated 4.5/5",
-                  "trailing": "S$185"
+                  "trailing": "S$185",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd53673371a",
+                    "alt": "New Balance 880 v15, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Adidas Adizero SL 2",
                   "secondary": "Light, fast · rated 4.4/5",
-                  "trailing": "S$159"
+                  "trailing": "S$159",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff1fa1965c8",
+                    "alt": "Adidas Adizero SL 2, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Puma Velocity Nitro 4",
                   "secondary": "Budget daily · rated 4.4/5",
-                  "trailing": "S$149"
+                  "trailing": "S$149",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5191c70de",
+                    "alt": "Puma Velocity Nitro 4, side view of the shoe"
+                  }
                 }
               ]
             },
@@ -6155,7 +6259,33 @@
               "kind": "image",
               "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
               "alt": "Dyson V8 Origin stick vacuum, purple wand, front view",
-              "aspect": "4:3"
+              "aspect": "4:3",
+              "images": [
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
+                  "alt": "Dyson V8 Origin stick vacuum, purple wand, front view"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fcf92e8d8db",
+                  "alt": "Dyson V8 Origin, wand and head, side view"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb83847e856",
+                  "alt": "Dyson V8 Origin docked on its wall mount"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd29b206827",
+                  "alt": "Dyson V8 Origin attachments laid out: crevice tool, combination tool, mini motorised head"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff84429ec97",
+                  "alt": "Dyson V8 Origin bin opened for emptying"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f6c962c4d21",
+                  "alt": "Dyson V8 Origin used as a handheld on a sofa"
+                }
+              ]
             }
           },
           {
@@ -6254,7 +6384,33 @@
                 "kind": "image",
                 "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
                 "alt": "Dyson V8 Origin stick vacuum, purple wand, front view",
-                "aspect": "4:3"
+                "aspect": "4:3",
+                "images": [
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
+                    "alt": "Dyson V8 Origin stick vacuum, purple wand, front view"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fcf92e8d8db",
+                    "alt": "Dyson V8 Origin, wand and head, side view"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb83847e856",
+                    "alt": "Dyson V8 Origin docked on its wall mount"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd29b206827",
+                    "alt": "Dyson V8 Origin attachments laid out: crevice tool, combination tool, mini motorised head"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff84429ec97",
+                    "alt": "Dyson V8 Origin bin opened for emptying"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f6c962c4d21",
+                    "alt": "Dyson V8 Origin used as a handheld on a sofa"
+                  }
+                ]
               }
             },
             {
@@ -6297,7 +6453,33 @@
                 "kind": "image",
                 "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
                 "alt": "Dyson V8 Origin stick vacuum, purple wand, front view",
-                "aspect": "4:3"
+                "aspect": "4:3",
+                "images": [
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
+                    "alt": "Dyson V8 Origin stick vacuum, purple wand, front view"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fcf92e8d8db",
+                    "alt": "Dyson V8 Origin, wand and head, side view"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb83847e856",
+                    "alt": "Dyson V8 Origin docked on its wall mount"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd29b206827",
+                    "alt": "Dyson V8 Origin attachments laid out: crevice tool, combination tool, mini motorised head"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff84429ec97",
+                    "alt": "Dyson V8 Origin bin opened for emptying"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f6c962c4d21",
+                    "alt": "Dyson V8 Origin used as a handheld on a sofa"
+                  }
+                ]
               }
             },
             {
@@ -6833,12 +7015,20 @@
                 "label": "Sony WF-1000XM6",
                 "secondary": "Best noise cancelling · 8 h battery",
                 "trailing": "S$399",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f732e328f89",
+                  "alt": "Sony WF-1000XM6, earbuds in their case"
+                }
               },
               {
                 "label": "AirPods Pro 3",
                 "secondary": "Best with iPhone · 8 h battery",
-                "trailing": "S$349"
+                "trailing": "S$349",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f19e2b2b6d2",
+                  "alt": "AirPods Pro 3, earbuds in their case"
+                }
               }
             ]
           }
@@ -6890,11 +7080,19 @@
                   "label": "Sony WF-1000XM6",
                   "secondary": "Best noise cancelling · 8 h battery",
                   "trailing": "S$399",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f732e328f89",
+                    "alt": "Sony WF-1000XM6, earbuds in their case"
+                  }
                 },
                 {
                   "label": "AirPods Pro 3",
-                  "secondary": "Best with iPhone · 8 h battery · price not checked"
+                  "secondary": "Best with iPhone · 8 h battery · price not checked",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f19e2b2b6d2",
+                    "alt": "AirPods Pro 3, earbuds in their case"
+                  }
                 }
               ]
             }
@@ -6926,12 +7124,20 @@
                   "label": "Sony WF-1000XM6",
                   "secondary": "Best noise cancelling · 8 h battery",
                   "trailing": "S$399",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f732e328f89",
+                    "alt": "Sony WF-1000XM6, earbuds in their case"
+                  }
                 },
                 {
                   "label": "AirPods Pro 3",
                   "secondary": "Best with iPhone · 8 h battery",
-                  "trailing": "S$349"
+                  "trailing": "S$349",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f19e2b2b6d2",
+                    "alt": "AirPods Pro 3, earbuds in their case"
+                  }
                 }
               ]
             }
@@ -10684,7 +10890,7 @@
       "components": [
         "S1 Product options",
         "S2 Product grid / carousel (as rows)",
-        "X4 Item thumbnail (degraded: no row image)"
+        "X4 Item thumbnail"
       ],
       "rationale": "Three options from three shops, one pick, price trailing; each product's own page is a source in Details, since rows carry no link.",
       "document": {
@@ -10702,17 +10908,29 @@
                 "label": "Sennheiser Accentum Plus",
                 "secondary": "Challenger · 50 h battery · in stock",
                 "trailing": "S$239",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe4da99c46c",
+                  "alt": "Sennheiser Accentum Plus, product photo"
+                }
               },
               {
                 "label": "Soundcore Space One",
                 "secondary": "Lazada · 40 h battery · in stock",
-                "trailing": "S$119"
+                "trailing": "S$119",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f108d4e66d3",
+                  "alt": "Soundcore Space One, product photo"
+                }
               },
               {
                 "label": "Sony WH-CH720N",
                 "secondary": "Courts · 35 h battery · in stock",
-                "trailing": "S$149"
+                "trailing": "S$149",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f5b3c8695a2",
+                  "alt": "Sony WH-CH720N, product photo"
+                }
               }
             ]
           }
@@ -10770,12 +10988,20 @@
                   "label": "Sennheiser Accentum Plus",
                   "secondary": "Challenger · 50 h battery · in stock",
                   "trailing": "S$239",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe4da99c46c",
+                    "alt": "Sennheiser Accentum Plus, product photo"
+                  }
                 },
                 {
                   "label": "Soundcore Space One",
                   "secondary": "Lazada · 40 h battery · in stock",
-                  "trailing": "S$119"
+                  "trailing": "S$119",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f108d4e66d3",
+                    "alt": "Soundcore Space One, product photo"
+                  }
                 }
               ]
             }
@@ -10809,17 +11035,29 @@
                   "label": "Sennheiser Accentum Plus",
                   "secondary": "Challenger · 50 h battery · in stock",
                   "trailing": "S$239",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe4da99c46c",
+                    "alt": "Sennheiser Accentum Plus, product photo"
+                  }
                 },
                 {
                   "label": "Soundcore Space One",
                   "secondary": "Lazada · 40 h battery · in stock",
-                  "trailing": "S$119"
+                  "trailing": "S$119",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f108d4e66d3",
+                    "alt": "Soundcore Space One, product photo"
+                  }
                 },
                 {
                   "label": "Sony WH-CH720N",
                   "secondary": "Courts · 35 h battery · in stock",
-                  "trailing": "S$149"
+                  "trailing": "S$149",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f5b3c8695a2",
+                    "alt": "Sony WH-CH720N, product photo"
+                  }
                 }
               ]
             }
@@ -11437,37 +11675,65 @@
                 "label": "Blk 824 Tampines St 81",
                 "secondary": "67 sqm · 6 min to Tampines MRT",
                 "trailing": "S$548k",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f78c79a02a2",
+                  "alt": "Blk 824 Tampines St 81, front of the home"
+                }
               },
               {
                 "label": "Blk 201 Tampines St 21",
                 "secondary": "68 sqm · 8 min to Tampines MRT",
-                "trailing": "S$575k"
+                "trailing": "S$575k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd43b9f7477",
+                  "alt": "Blk 201 Tampines St 21, front of the home"
+                }
               },
               {
                 "label": "Blk 457 Tampines St 42",
                 "secondary": "65 sqm · 9 min to Tampines East",
-                "trailing": "S$560k"
+                "trailing": "S$560k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f279d5722c3",
+                  "alt": "Blk 457 Tampines St 42, front of the home"
+                }
               },
               {
                 "label": "Blk 866 Tampines St 83",
                 "secondary": "67 sqm · 7 min to Tampines MRT",
-                "trailing": "S$585k"
+                "trailing": "S$585k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa42f7d6eb0",
+                  "alt": "Blk 866 Tampines St 83, front of the home"
+                }
               },
               {
                 "label": "Blk 115 Tampines St 11",
                 "secondary": "64 sqm · 10 min to Tampines MRT",
-                "trailing": "S$538k"
+                "trailing": "S$538k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7bc25f432b",
+                  "alt": "Blk 115 Tampines St 11, front of the home"
+                }
               },
               {
                 "label": "Blk 395 Tampines Ave 7",
                 "secondary": "66 sqm · 9 min to Tampines West",
-                "trailing": "S$559k"
+                "trailing": "S$559k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f22b79b06e7",
+                  "alt": "Blk 395 Tampines Ave 7, front of the home"
+                }
               },
               {
                 "label": "Blk 881 Tampines St 84",
                 "secondary": "65 sqm · 8 min to Tampines West",
-                "trailing": "S$592k"
+                "trailing": "S$592k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ffdbd95ea2a",
+                  "alt": "Blk 881 Tampines St 84, front of the home"
+                }
               }
             ]
           }
@@ -11552,22 +11818,38 @@
                   "label": "Blk 824 Tampines St 81",
                   "secondary": "67 sqm · 6 min to Tampines MRT",
                   "trailing": "S$548k",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f78c79a02a2",
+                    "alt": "Blk 824 Tampines St 81, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 457 Tampines St 42",
                   "secondary": "65 sqm · 9 min to Tampines East",
-                  "trailing": "S$560k"
+                  "trailing": "S$560k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f279d5722c3",
+                    "alt": "Blk 457 Tampines St 42, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 115 Tampines St 11",
                   "secondary": "64 sqm · 10 min to Tampines MRT",
-                  "trailing": "S$538k"
+                  "trailing": "S$538k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7bc25f432b",
+                    "alt": "Blk 115 Tampines St 11, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 395 Tampines Ave 7",
                   "secondary": "66 sqm · 9 min to Tampines West",
-                  "trailing": "S$559k"
+                  "trailing": "S$559k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f22b79b06e7",
+                    "alt": "Blk 395 Tampines Ave 7, front of the home"
+                  }
                 }
               ]
             }
@@ -11647,37 +11929,65 @@
                   "label": "Blk 824 Tampines St 81",
                   "secondary": "67 sqm · 6 min to Tampines MRT",
                   "trailing": "S$548k",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f78c79a02a2",
+                    "alt": "Blk 824 Tampines St 81, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 201 Tampines St 21",
                   "secondary": "68 sqm · 8 min to Tampines MRT",
-                  "trailing": "S$575k"
+                  "trailing": "S$575k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd43b9f7477",
+                    "alt": "Blk 201 Tampines St 21, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 457 Tampines St 42",
                   "secondary": "65 sqm · 9 min to Tampines East",
-                  "trailing": "S$560k"
+                  "trailing": "S$560k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f279d5722c3",
+                    "alt": "Blk 457 Tampines St 42, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 866 Tampines St 83",
                   "secondary": "67 sqm · 7 min to Tampines MRT",
-                  "trailing": "S$585k"
+                  "trailing": "S$585k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa42f7d6eb0",
+                    "alt": "Blk 866 Tampines St 83, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 115 Tampines St 11",
                   "secondary": "64 sqm · 10 min to Tampines MRT",
-                  "trailing": "S$538k"
+                  "trailing": "S$538k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7bc25f432b",
+                    "alt": "Blk 115 Tampines St 11, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 395 Tampines Ave 7",
                   "secondary": "66 sqm · 9 min to Tampines West",
-                  "trailing": "S$559k"
+                  "trailing": "S$559k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f22b79b06e7",
+                    "alt": "Blk 395 Tampines Ave 7, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 881 Tampines St 84",
                   "secondary": "65 sqm · 8 min to Tampines West",
-                  "trailing": "S$592k"
+                  "trailing": "S$592k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ffdbd95ea2a",
+                    "alt": "Blk 881 Tampines St 84, front of the home"
+                  }
                 }
               ]
             }
@@ -11761,7 +12071,41 @@
               "kind": "image",
               "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
               "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor",
-              "aspect": "4:3"
+              "aspect": "4:3",
+              "images": [
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
+                  "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa106af72f3",
+                  "alt": "Kitchen of Blk 824 Tampines St 81, white cabinets, window over the sink"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f3481b071cb",
+                  "alt": "Main bedroom, built-in wardrobe, window facing the park"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f3e43f86a6f",
+                  "alt": "Second bedroom set up as a study"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd4b99f8529",
+                  "alt": "Common bathroom, walk-in shower"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f254fa11003",
+                  "alt": "View from the living room window over Tampines Central"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f59c7a86a95",
+                  "alt": "Service yard with washer"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0b79bf616b",
+                  "alt": "Floor plan, 4-room, 93 sqm"
+                }
+              ]
             }
           },
           {
@@ -11868,7 +12212,41 @@
                 "kind": "image",
                 "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
                 "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor",
-                "aspect": "4:3"
+                "aspect": "4:3",
+                "images": [
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
+                    "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa106af72f3",
+                    "alt": "Kitchen of Blk 824 Tampines St 81, white cabinets, window over the sink"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f3481b071cb",
+                    "alt": "Main bedroom, built-in wardrobe, window facing the park"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f3e43f86a6f",
+                    "alt": "Second bedroom set up as a study"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd4b99f8529",
+                    "alt": "Common bathroom, walk-in shower"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f254fa11003",
+                    "alt": "View from the living room window over Tampines Central"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f59c7a86a95",
+                    "alt": "Service yard with washer"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0b79bf616b",
+                    "alt": "Floor plan, 4-room, 93 sqm"
+                  }
+                ]
               }
             },
             {
@@ -12163,17 +12541,29 @@
                 "label": "The Clift",
                 "secondary": "49 sqm · from 1 Oct",
                 "trailing": "S$3,300",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f82de6f7194",
+                  "alt": "The Clift, living room"
+                }
               },
               {
                 "label": "Spottiswoode 18",
                 "secondary": "45 sqm · from 15 Oct",
-                "trailing": "S$3,450"
+                "trailing": "S$3,450",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fde3f743572",
+                  "alt": "Spottiswoode 18, living room"
+                }
               },
               {
                 "label": "Pinnacle@Duxton",
                 "secondary": "50 sqm · from 1 Oct",
-                "trailing": "S$3,400"
+                "trailing": "S$3,400",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f1ea029e5c9",
+                  "alt": "Pinnacle@Duxton, living room"
+                }
               }
             ]
           }
@@ -12222,12 +12612,20 @@
                   "label": "The Clift",
                   "secondary": "49 sqm · from 1 Oct",
                   "trailing": "S$3,300",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f82de6f7194",
+                    "alt": "The Clift, living room"
+                  }
                 },
                 {
                   "label": "Pinnacle@Duxton",
                   "secondary": "50 sqm · from 1 Oct",
-                  "trailing": "S$3,400"
+                  "trailing": "S$3,400",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f1ea029e5c9",
+                    "alt": "Pinnacle@Duxton, living room"
+                  }
                 }
               ]
             }
@@ -12256,17 +12654,29 @@
                   "label": "The Clift",
                   "secondary": "49 sqm · from 1 Oct",
                   "trailing": "S$3,300",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f82de6f7194",
+                    "alt": "The Clift, living room"
+                  }
                 },
                 {
                   "label": "Spottiswoode 18",
                   "secondary": "45 sqm · from 15 Oct",
-                  "trailing": "S$3,450"
+                  "trailing": "S$3,450",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fde3f743572",
+                    "alt": "Spottiswoode 18, living room"
+                  }
                 },
                 {
                   "label": "Pinnacle@Duxton",
                   "secondary": "50 sqm · from 1 Oct",
-                  "trailing": "S$3,400"
+                  "trailing": "S$3,400",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f1ea029e5c9",
+                    "alt": "Pinnacle@Duxton, living room"
+                  }
                 }
               ]
             }
@@ -13616,17 +14026,29 @@
                 "label": "Lead Product Designer",
                 "secondary": "Grab · Hybrid · 2 days ago",
                 "trailing": "S$11–14k/mo",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe531c8a3f2",
+                  "alt": "Grab logo"
+                }
               },
               {
                 "label": "Design Lead, Payments",
                 "secondary": "Wise · Hybrid · 4 days ago",
-                "trailing": "S$10–13k/mo"
+                "trailing": "S$10–13k/mo",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff8dadfd1ae",
+                  "alt": "Wise logo"
+                }
               },
               {
                 "label": "Principal Designer",
                 "secondary": "Shopee · On-site · 5 days ago",
-                "trailing": "S$9–12k/mo"
+                "trailing": "S$9–12k/mo",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb477c974c8",
+                  "alt": "Shopee logo"
+                }
               }
             ]
           }
@@ -13675,12 +14097,20 @@
                   "label": "Lead Product Designer",
                   "secondary": "Grab · Hybrid · 2 days ago",
                   "trailing": "S$11–14k/mo",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe531c8a3f2",
+                    "alt": "Grab logo"
+                  }
                 },
                 {
                   "label": "Design Lead, Payments",
                   "secondary": "Wise · Hybrid · 4 days ago",
-                  "trailing": "S$10–13k/mo"
+                  "trailing": "S$10–13k/mo",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff8dadfd1ae",
+                    "alt": "Wise logo"
+                  }
                 }
               ]
             }
@@ -13709,17 +14139,29 @@
                   "label": "Lead Product Designer",
                   "secondary": "Grab · Hybrid · 2 days ago",
                   "trailing": "S$11–14k/mo",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe531c8a3f2",
+                    "alt": "Grab logo"
+                  }
                 },
                 {
                   "label": "Design Lead, Payments",
                   "secondary": "Wise · Hybrid · 4 days ago",
-                  "trailing": "S$10–13k/mo"
+                  "trailing": "S$10–13k/mo",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff8dadfd1ae",
+                    "alt": "Wise logo"
+                  }
                 },
                 {
                   "label": "Principal Designer",
                   "secondary": "Shopee · On-site · 5 days ago",
-                  "trailing": "S$9–12k/mo"
+                  "trailing": "S$9–12k/mo",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb477c974c8",
+                    "alt": "Shopee logo"
+                  }
                 }
               ]
             }
@@ -15870,17 +16312,29 @@
                 "label": "Hotel Gracery Ueno",
                 "secondary": "3 min to Keisei Ueno · 8.6 rating",
                 "trailing": "S$270 a night",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fabf5f43ad9",
+                  "alt": "Hotel Gracery Ueno, room photo"
+                }
               },
               {
                 "label": "Mitsui Garden Ueno",
                 "secondary": "Bigger rooms · 8.4 rating",
-                "trailing": "S$255 a night"
+                "trailing": "S$255 a night",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f60f61d4e06",
+                  "alt": "Mitsui Garden Ueno, room photo"
+                }
               },
               {
                 "label": "Nohga Hotel Ueno",
                 "secondary": "Quiet street · 8.9 rating",
-                "trailing": "S$295 a night"
+                "trailing": "S$295 a night",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faf1c66470f",
+                  "alt": "Nohga Hotel Ueno, room photo"
+                }
               }
             ]
           }
@@ -15953,12 +16407,20 @@
                   "label": "Hotel Gracery Ueno",
                   "secondary": "3 min to Keisei Ueno · 8.6 rating",
                   "trailing": "S$270 a night",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fabf5f43ad9",
+                    "alt": "Hotel Gracery Ueno, room photo"
+                  }
                 },
                 {
                   "label": "Mitsui Garden Ueno",
                   "secondary": "Bigger rooms · 8.4 rating",
-                  "trailing": "S$255 a night"
+                  "trailing": "S$255 a night",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f60f61d4e06",
+                    "alt": "Mitsui Garden Ueno, room photo"
+                  }
                 }
               ]
             }
@@ -16014,17 +16476,29 @@
                   "label": "Hotel Gracery Ueno",
                   "secondary": "3 min to Keisei Ueno · 8.6 rating",
                   "trailing": "S$270 a night",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fabf5f43ad9",
+                    "alt": "Hotel Gracery Ueno, room photo"
+                  }
                 },
                 {
                   "label": "Mitsui Garden Ueno",
                   "secondary": "Bigger rooms · 8.4 rating",
-                  "trailing": "S$255 a night"
+                  "trailing": "S$255 a night",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f60f61d4e06",
+                    "alt": "Mitsui Garden Ueno, room photo"
+                  }
                 },
                 {
                   "label": "Nohga Hotel Ueno",
                   "secondary": "Quiet street · 8.9 rating",
-                  "trailing": "S$295 a night"
+                  "trailing": "S$295 a night",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faf1c66470f",
+                    "alt": "Nohga Hotel Ueno, room photo"
+                  }
                 }
               ]
             }
@@ -16101,7 +16575,33 @@
               "kind": "image",
               "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000835",
               "alt": "Hotel Gracery Ueno double room with a city view",
-              "aspect": "4:3"
+              "aspect": "4:3",
+              "images": [
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000835",
+                  "alt": "Hotel Gracery Ueno double room with a city view"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f442e90bb8d",
+                  "alt": "Hotel Gracery Ueno lobby"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f192071d599",
+                  "alt": "Bathroom of the double room, rain shower"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fbfe12cc741",
+                  "alt": "Breakfast room on the ground floor"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0db4a4a940",
+                  "alt": "Hotel entrance on the street, 3 minutes from Keisei Ueno"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fc337a368b1",
+                  "alt": "View of Ueno Park from a high floor"
+                }
+              ]
             }
           },
           {
@@ -20367,17 +20867,29 @@
                 "label": "Merci Marcel",
                 "secondary": "French · 4.5★ · table at 7:30",
                 "trailing": "S$$",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f58149e1eac",
+                  "alt": "Merci Marcel, dining room"
+                }
               },
               {
                 "label": "Bincho",
                 "secondary": "Yakitori · 4.6★ · table at 7:45",
-                "trailing": "S$$$"
+                "trailing": "S$$$",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f691da989a5",
+                  "alt": "Bincho, dining room"
+                }
               },
               {
                 "label": "Tiong Bahru Bakery Diner",
                 "secondary": "Brunch-style · 4.3★ · table at 7:30",
-                "trailing": "S$$"
+                "trailing": "S$$",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef2b813391",
+                  "alt": "Tiong Bahru Bakery Diner, dining room"
+                }
               }
             ]
           }
@@ -20426,12 +20938,20 @@
                   "label": "Merci Marcel",
                   "secondary": "French · 4.5★ · table at 7:30",
                   "trailing": "S$$",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f58149e1eac",
+                    "alt": "Merci Marcel, dining room"
+                  }
                 },
                 {
                   "label": "Bincho",
                   "secondary": "Yakitori · 4.6★ · table at 7:45",
-                  "trailing": "S$$$"
+                  "trailing": "S$$$",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f691da989a5",
+                    "alt": "Bincho, dining room"
+                  }
                 }
               ]
             }
@@ -20460,17 +20980,29 @@
                   "label": "Merci Marcel",
                   "secondary": "French · 4.5★ · table at 7:30",
                   "trailing": "S$$",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f58149e1eac",
+                    "alt": "Merci Marcel, dining room"
+                  }
                 },
                 {
                   "label": "Bincho",
                   "secondary": "Yakitori · 4.6★ · table at 7:45",
-                  "trailing": "S$$$"
+                  "trailing": "S$$$",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f691da989a5",
+                    "alt": "Bincho, dining room"
+                  }
                 },
                 {
                   "label": "Tiong Bahru Bakery Diner",
                   "secondary": "Brunch-style · 4.3★ · table at 7:30",
-                  "trailing": "S$$"
+                  "trailing": "S$$",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef2b813391",
+                    "alt": "Tiong Bahru Bakery Diner, dining room"
+                  }
                 }
               ]
             }
@@ -26143,17 +26675,29 @@
               {
                 "label": "Burnt Ends sanger",
                 "secondary": "Pulled pork, brioche, slaw",
-                "trailing": "S$28"
+                "trailing": "S$28",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faa4a6162bb",
+                  "alt": "Burnt Ends sanger, photo of the dish"
+                }
               },
               {
                 "label": "Leeks, hazelnut, brown butter",
                 "secondary": "Smoked over almond wood",
-                "trailing": "S$24"
+                "trailing": "S$24",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5fd455003",
+                  "alt": "Leeks, hazelnut, brown butter, photo of the dish"
+                }
               },
               {
                 "label": "Onion rings",
                 "secondary": "With smoked mayo",
-                "trailing": "S$18"
+                "trailing": "S$18",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe52cd5c8e2",
+                  "alt": "Onion rings, photo of the dish"
+                }
               }
             ]
           },
@@ -26213,17 +26757,29 @@
                 {
                   "label": "Burnt Ends sanger",
                   "secondary": "Pulled pork, brioche, slaw",
-                  "trailing": "S$28"
+                  "trailing": "S$28",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faa4a6162bb",
+                    "alt": "Burnt Ends sanger, photo of the dish"
+                  }
                 },
                 {
                   "label": "Leeks, hazelnut, brown butter",
                   "secondary": "Smoked over almond wood",
-                  "trailing": "S$24"
+                  "trailing": "S$24",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5fd455003",
+                    "alt": "Leeks, hazelnut, brown butter, photo of the dish"
+                  }
                 },
                 {
                   "label": "Onion rings",
                   "secondary": "With smoked mayo",
-                  "trailing": "S$18"
+                  "trailing": "S$18",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe52cd5c8e2",
+                    "alt": "Onion rings, photo of the dish"
+                  }
                 }
               ]
             },
@@ -26263,17 +26819,29 @@
                 {
                   "label": "Burnt Ends sanger",
                   "secondary": "Pulled pork, brioche, slaw",
-                  "trailing": "S$28"
+                  "trailing": "S$28",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faa4a6162bb",
+                    "alt": "Burnt Ends sanger, photo of the dish"
+                  }
                 },
                 {
                   "label": "Leeks, hazelnut, brown butter",
                   "secondary": "Smoked over almond wood",
-                  "trailing": "S$24"
+                  "trailing": "S$24",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5fd455003",
+                    "alt": "Leeks, hazelnut, brown butter, photo of the dish"
+                  }
                 },
                 {
                   "label": "Onion rings",
                   "secondary": "With smoked mayo",
-                  "trailing": "S$18"
+                  "trailing": "S$18",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe52cd5c8e2",
+                    "alt": "Onion rings, photo of the dish"
+                  }
                 }
               ]
             },
@@ -32661,15 +33229,27 @@
             "items": [
               {
                 "label": "MAS keeps the Singapore dollar policy unchanged",
-                "secondary": "Business Times"
+                "secondary": "Business Times",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa56803dfe7",
+                  "alt": "Photo for the story: MAS keeps the Singapore dollar policy unchanged"
+                }
               },
               {
                 "label": "East–West line fault delays morning commute",
-                "secondary": "CNA"
+                "secondary": "CNA",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0064544c70",
+                  "alt": "Photo for the story: East–West line fault delays morning commute"
+                }
               },
               {
                 "label": "Fed signals one more rate cut this year",
-                "secondary": "Reuters"
+                "secondary": "Reuters",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fae44d5f9af",
+                  "alt": "Photo for the story: Fed signals one more rate cut this year"
+                }
               }
             ]
           }
@@ -32722,11 +33302,19 @@
               "items": [
                 {
                   "label": "MAS keeps the Singapore dollar policy unchanged",
-                  "secondary": "Business Times"
+                  "secondary": "Business Times",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa56803dfe7",
+                    "alt": "Photo for the story: MAS keeps the Singapore dollar policy unchanged"
+                  }
                 },
                 {
                   "label": "East–West line fault delays morning commute",
-                  "secondary": "CNA"
+                  "secondary": "CNA",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0064544c70",
+                    "alt": "Photo for the story: East–West line fault delays morning commute"
+                  }
                 }
               ]
             }
@@ -32756,15 +33344,27 @@
               "items": [
                 {
                   "label": "MAS keeps the Singapore dollar policy unchanged",
-                  "secondary": "Business Times"
+                  "secondary": "Business Times",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa56803dfe7",
+                    "alt": "Photo for the story: MAS keeps the Singapore dollar policy unchanged"
+                  }
                 },
                 {
                   "label": "East–West line fault delays morning commute",
-                  "secondary": "CNA"
+                  "secondary": "CNA",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0064544c70",
+                    "alt": "Photo for the story: East–West line fault delays morning commute"
+                  }
                 },
                 {
                   "label": "Fed signals one more rate cut this year",
-                  "secondary": "Reuters"
+                  "secondary": "Reuters",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fae44d5f9af",
+                    "alt": "Photo for the story: Fed signals one more rate cut this year"
+                  }
                 }
               ]
             }

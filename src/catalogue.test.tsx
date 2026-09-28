@@ -10,7 +10,7 @@ import playbookText from "../docs/agent/output-playbook.examples.json?raw";
 
 const catalogueFiles = import.meta.glob<string>("../catalogue/*.json", { query: "?raw", import: "default", eager: true });
 
-const SCHEMA_SHA256 = "470aa1aec345587faaa4004ee00a499f3044540dfbde1126ff130072fdd68f87";
+const SCHEMA_SHA256 = "969af48f10b567b1f4d7bda0585a3c81d40537f4e0767c2fecacd72b1919077f";
 const readCatalogue = (name: string) => catalogueFiles[`../catalogue/${name}`];
 /** Builds the playbook from the catalogue with one file's parsed JSON edited in memory. */
 function buildWith(name: string, edit: (file: any) => void) {
@@ -172,7 +172,8 @@ describe("catalogue gallery overflow and routes", () => {
         fireEvent.click(within(full).getByRole("button", { name: "Show less" }));
       });
     }
-  }, 60_000);
+    // Shopping takes ~17 s alone (13 s before row photos added ~60 photo tiles); 120 s leaves room on a loaded runner.
+  }, 120_000);
 
   // Review round 1 (F3): `mode in MODES` accepted inherited keys, and the page then crashed on them.
   // The route and the page are what is under test, not a vertical's size: the smallest vertical keeps each case well

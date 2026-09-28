@@ -728,17 +728,29 @@
                 "label": "Hotel Gracery Ueno",
                 "secondary": "3 min to Keisei Ueno · 8.6 rating",
                 "trailing": "S$270 a night",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fabf5f43ad9",
+                  "alt": "Hotel Gracery Ueno, room photo"
+                }
               },
               {
                 "label": "Mitsui Garden Ueno",
                 "secondary": "Bigger rooms · 8.4 rating",
-                "trailing": "S$255 a night"
+                "trailing": "S$255 a night",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f60f61d4e06",
+                  "alt": "Mitsui Garden Ueno, room photo"
+                }
               },
               {
                 "label": "Nohga Hotel Ueno",
                 "secondary": "Quiet street · 8.9 rating",
-                "trailing": "S$295 a night"
+                "trailing": "S$295 a night",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faf1c66470f",
+                  "alt": "Nohga Hotel Ueno, room photo"
+                }
               }
             ]
           }
@@ -811,12 +823,20 @@
                   "label": "Hotel Gracery Ueno",
                   "secondary": "3 min to Keisei Ueno · 8.6 rating",
                   "trailing": "S$270 a night",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fabf5f43ad9",
+                    "alt": "Hotel Gracery Ueno, room photo"
+                  }
                 },
                 {
                   "label": "Mitsui Garden Ueno",
                   "secondary": "Bigger rooms · 8.4 rating",
-                  "trailing": "S$255 a night"
+                  "trailing": "S$255 a night",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f60f61d4e06",
+                    "alt": "Mitsui Garden Ueno, room photo"
+                  }
                 }
               ]
             }
@@ -872,17 +892,29 @@
                   "label": "Hotel Gracery Ueno",
                   "secondary": "3 min to Keisei Ueno · 8.6 rating",
                   "trailing": "S$270 a night",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fabf5f43ad9",
+                    "alt": "Hotel Gracery Ueno, room photo"
+                  }
                 },
                 {
                   "label": "Mitsui Garden Ueno",
                   "secondary": "Bigger rooms · 8.4 rating",
-                  "trailing": "S$255 a night"
+                  "trailing": "S$255 a night",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f60f61d4e06",
+                    "alt": "Mitsui Garden Ueno, room photo"
+                  }
                 },
                 {
                   "label": "Nohga Hotel Ueno",
                   "secondary": "Quiet street · 8.9 rating",
-                  "trailing": "S$295 a night"
+                  "trailing": "S$295 a night",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faf1c66470f",
+                    "alt": "Nohga Hotel Ueno, room photo"
+                  }
                 }
               ]
             }
@@ -959,7 +991,33 @@
               "kind": "image",
               "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000835",
               "alt": "Hotel Gracery Ueno double room with a city view",
-              "aspect": "4:3"
+              "aspect": "4:3",
+              "images": [
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000835",
+                  "alt": "Hotel Gracery Ueno double room with a city view"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f442e90bb8d",
+                  "alt": "Hotel Gracery Ueno lobby"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f192071d599",
+                  "alt": "Bathroom of the double room, rain shower"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fbfe12cc741",
+                  "alt": "Breakfast room on the ground floor"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0db4a4a940",
+                  "alt": "Hotel entrance on the street, 3 minutes from Keisei Ueno"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fc337a368b1",
+                  "alt": "View of Ueno Park from a high floor"
+                }
+              ]
             }
           },
           {

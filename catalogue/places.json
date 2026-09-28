@@ -765,17 +765,29 @@
                 "label": "Merci Marcel",
                 "secondary": "French · 4.5★ · table at 7:30",
                 "trailing": "S$$",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f58149e1eac",
+                  "alt": "Merci Marcel, dining room"
+                }
               },
               {
                 "label": "Bincho",
                 "secondary": "Yakitori · 4.6★ · table at 7:45",
-                "trailing": "S$$$"
+                "trailing": "S$$$",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f691da989a5",
+                  "alt": "Bincho, dining room"
+                }
               },
               {
                 "label": "Tiong Bahru Bakery Diner",
                 "secondary": "Brunch-style · 4.3★ · table at 7:30",
-                "trailing": "S$$"
+                "trailing": "S$$",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef2b813391",
+                  "alt": "Tiong Bahru Bakery Diner, dining room"
+                }
               }
             ]
           }
@@ -824,12 +836,20 @@
                   "label": "Merci Marcel",
                   "secondary": "French · 4.5★ · table at 7:30",
                   "trailing": "S$$",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f58149e1eac",
+                    "alt": "Merci Marcel, dining room"
+                  }
                 },
                 {
                   "label": "Bincho",
                   "secondary": "Yakitori · 4.6★ · table at 7:45",
-                  "trailing": "S$$$"
+                  "trailing": "S$$$",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f691da989a5",
+                    "alt": "Bincho, dining room"
+                  }
                 }
               ]
             }
@@ -858,17 +878,29 @@
                   "label": "Merci Marcel",
                   "secondary": "French · 4.5★ · table at 7:30",
                   "trailing": "S$$",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f58149e1eac",
+                    "alt": "Merci Marcel, dining room"
+                  }
                 },
                 {
                   "label": "Bincho",
                   "secondary": "Yakitori · 4.6★ · table at 7:45",
-                  "trailing": "S$$$"
+                  "trailing": "S$$$",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f691da989a5",
+                    "alt": "Bincho, dining room"
+                  }
                 },
                 {
                   "label": "Tiong Bahru Bakery Diner",
                   "secondary": "Brunch-style · 4.3★ · table at 7:30",
-                  "trailing": "S$$"
+                  "trailing": "S$$",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef2b813391",
+                    "alt": "Tiong Bahru Bakery Diner, dining room"
+                  }
                 }
               ]
             }

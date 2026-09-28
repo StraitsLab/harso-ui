@@ -55,6 +55,46 @@
 @keyframes hkc-media-shimmer { from { background-position: 100% 0; } to { background-position: -120% 0; } }
 .harso-kit .hkc-output-media[data-state="ready"] .hkc-output-media-img { animation: hkc-media-arrive 180ms var(--hk-ease, ease-out); }
 @keyframes hkc-media-arrive { from { opacity: 0; } }
+
+/* Photos (row thumbnail, gallery photo): the tinted box holds the space, the photo fades in, a failure stays the
+   quiet tile. The box is the same field tint as every media frame, so a missing photo never reads as an error. */
+.harso-kit .hkc-output-thumb, .harso-kit .hkc-output-gallery-photo { position: relative; display: block; overflow: hidden; background: var(--hk-field-tint); }
+.harso-kit .hkc-output-photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.harso-kit .hkc-output-photo-empty { position: absolute; inset: 0; }
+.harso-kit :is(.hkc-output-thumb, .hkc-output-gallery-photo)[data-state="loading"] .hkc-output-photo-img { opacity: 0; }
+.harso-kit :is(.hkc-output-thumb, .hkc-output-gallery-photo)[data-state="ready"] .hkc-output-photo-img { animation: hkc-media-arrive 180ms var(--hk-ease, ease-out); }
+/* A row photo: square, as tall as the row's two lines, radius 8. */
+.harso-kit .hkc-output-thumb { flex: none; width: 44px; height: 44px; border-radius: var(--hk-radius-row); align-self: center; }
+
+/* Gallery: the single image's frame, one photo per snap point; pan-x keeps the page's vertical scroll. */
+.harso-kit .hkc-output-gallery-track {
+  position: absolute; inset: 0; display: flex; overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; touch-action: pan-x pan-y;
+  border-radius: inherit;
+}
+.harso-kit .hkc-output-gallery-track::-webkit-scrollbar { display: none; }
+.harso-kit .hkc-output-gallery-track:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: -2px; }
+.harso-kit .hkc-output-gallery-slide { flex: 0 0 100%; height: 100%; scroll-snap-align: start; scroll-snap-stop: always; }
+.harso-kit .hkc-output-gallery-photo { width: 100%; height: 100%; }
+/* Prev/next: quiet surface disks on the photo, shown on hover or keyboard focus (and always on touch-only screens,
+   where there is no hover; swipe is the primary gesture there, the buttons stay for switch access). */
+.harso-kit .hkc-output-gallery-nav {
+  position: absolute; top: 50%; translate: 0 -50%; z-index: 1;
+  background: color-mix(in srgb, var(--hk-surface) 88%, transparent); color: var(--hk-ink); box-shadow: var(--hk-shadow-float);
+  opacity: 0; transition: opacity 140ms var(--hk-ease, ease-out);
+}
+.harso-kit .hkc-output-gallery-nav[data-side="start"] { inset-inline-start: var(--hk-space-2); }
+.harso-kit .hkc-output-gallery-nav[data-side="end"] { inset-inline-end: var(--hk-space-2); }
+.harso-kit .hkc-output-gallery:hover .hkc-output-gallery-nav, .harso-kit .hkc-output-gallery:focus-within .hkc-output-gallery-nav { opacity: 1; }
+@media (hover: none) { .harso-kit .hkc-output-gallery-nav { opacity: 1; } }
+.harso-kit .hkc-output-gallery-nav:dir(rtl) svg { transform: scaleX(-1); }
+/* "1 of 8": a small surface pill at the bottom end, legible on any photo. */
+.harso-kit .hkc-output-gallery-count {
+  position: absolute; inset-block-end: var(--hk-space-2); inset-inline-end: var(--hk-space-2); z-index: 1;
+  padding: 2px var(--hk-space-2); border-radius: var(--hk-radius-pill);
+  background: color-mix(in srgb, var(--hk-surface) 88%, transparent); color: var(--hk-ink);
+  font-size: var(--hk-text-meta); font-weight: 500; line-height: 1.4; font-variant-numeric: tabular-nums; pointer-events: none;
+}
 .harso-kit .hkc-output-video { cursor: pointer; }
 .harso-kit .hkc-output-video-play {
   position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px;
@@ -119,6 +159,8 @@
 @media (prefers-reduced-motion: reduce) {
   .harso-kit .hkc-output-media[data-state="loading"]::after, .harso-kit .hkc-output-map[data-state="loading"] .hkc-output-map-plane::after { animation: none; background: none; }
   .harso-kit .hkc-output-media[data-state="ready"] .hkc-output-media-img { animation: none; }
+  .harso-kit .hkc-output-thumb[data-state="ready"] .hkc-output-photo-img, .harso-kit .hkc-output-gallery-photo[data-state="ready"] .hkc-output-photo-img { animation: none; }
+  .harso-kit .hkc-output-gallery-nav { transition: none; }
 }
 @media (forced-colors: active) {
   .harso-kit .hkc-output-status-dot, .harso-kit .hkc-output-progress-fill, .harso-kit .hkc-output-map-pin { background: CanvasText; forced-color-adjust: none; }

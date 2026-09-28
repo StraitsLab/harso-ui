@@ -5,8 +5,8 @@ import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type Reac
 import { Button } from "../primitives";
 import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
   type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
-import { HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputVideoView,
-  ARTIFACT, readMedia, readProgress, readStatus, readSteps, type HarsoOutputMedia, type HarsoOutputMediaHost, type HarsoOutputMediaKind,
+import { HarsoOutputGalleryView, HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputThumb, HarsoOutputVideoView,
+  ARTIFACT, isPhoto, readMedia, readProgress, readStatus, readSteps, type HarsoOutputMedia, type HarsoOutputMediaHost, type HarsoOutputMediaKind, type HarsoOutputPhoto,
   type HarsoOutputProgress, type HarsoOutputStatusBlock, type HarsoOutputStatusSubject, type HarsoOutputSubjectState } from "./output-card-media";
 import "./output-card.css";
 
@@ -28,6 +28,8 @@ export interface HarsoOutputRow {
   mark?: "pick";
   /** Agent-asserted row word, drawn after the label: "overdue" (attention) or "paid" (positive). Any other value falls back. */
   status?: string;
+  /** A square photo leading the row. Drawn only when every row of the block has one (all or none, never ragged). */
+  thumbnail?: HarsoOutputPhoto;
 }
 
 export interface HarsoOutputRowsBlock { kind: "rows"; items: HarsoOutputRow[]; total_count?: number }
@@ -164,7 +166,7 @@ function readAction(spec: unknown, host: ActionHost): { label: string; run: () =
 }
 
 type CardPart =
-  | { kind: "rows"; items: HarsoOutputRow[] }
+  | { kind: "rows"; items: HarsoOutputRow[]; photos: boolean }
   | { kind: "numbers"; items: HarsoOutputNumber[] }
   | { kind: "text"; text: string }
   | { kind: "sections"; sections: HarsoOutputTextSection[] }
@@ -333,7 +335,9 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
       rowBudget -= items.length;
       total += Math.max(block.items.length, Number.isInteger(block.total_count) ? block.total_count! : 0);
       shown += items.length;
-      if (items.length) parts.push({ kind: "rows", items });
+      // Photos lead the rows only when the host can resolve artifacts and every row sent carries one.
+      const photos = !!host.resolveArtifact && block.items.every(row => isPhoto(row.thumbnail));
+      if (items.length) parts.push({ kind: "rows", items, photos });
     } else if (readChart(block)) {
       parts.push({ kind: "chart", chart: readChart(block)!, state });
     } else if (readTable(block)) {
@@ -584,6 +588,7 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
               : part.kind === "progress" ? <HarsoOutputProgressView progress={part.progress} />
               : part.media.kind === "map" ? <HarsoOutputMapView map={part.media} host={media!} />
               : part.media.kind === "video" ? <HarsoOutputVideoView video={part.media} host={media!} onOpen={host.onOpenArtifact!} />
+              : part.media.images ? <HarsoOutputGalleryView image={{ ...part.media, images: part.media.images }} host={media!} />
               : <HarsoOutputImageView image={part.media} host={media!} />}
           </MediaFrame>
           : part.kind === "chart"
@@ -593,8 +598,9 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
           : part.kind === "table"
           ? <HarsoOutputBlockFrame key={partIndex} kind="table" state={part.state}><HarsoOutputTableView table={part.table} shown={part.shown} label={document.header.title} /></HarsoOutputBlockFrame>
           : part.kind === "rows"
-          ? <ul key={partIndex} className="hkc-output-card-rows">
+          ? <ul key={partIndex} className="hkc-output-card-rows" data-photos={part.photos || undefined}>
             {part.items.map((row, index) => <li key={row.id ?? index} className="hkc-output-card-row">
+              {part.photos && <HarsoOutputThumb photo={row.thumbnail!} host={media!} />}
               <div className="hkc-output-card-row-main">
                 <p className="hkc-output-card-row-line">
                   <span className="hkc-output-card-row-label">{row.label}</span>

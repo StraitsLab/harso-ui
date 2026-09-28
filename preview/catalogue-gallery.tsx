@@ -3,6 +3,7 @@ import { KitProvider } from "../src";
 import { Button } from "../src/primitives";
 import { HARSO_OUTPUT_CARD_UNCAPPED, HarsoOutputCard, harsoOutputWholeAnswer, type HarsoOutputCardProps, type HarsoOutputDocument } from "../src/chat/output-card";
 import index from "../catalogue/index.json";
+import { sampleArtifact, sampleTile } from "./sample-image";
 import "./catalogue-gallery.css";
 
 /** One catalogue example as the vertical files hold it (catalogue/<vertical>.json). */
@@ -34,7 +35,7 @@ export function catalogueRouteFromHash(): { vertical?: string; mode: string } | 
   return { vertical: match[1], mode: MODES.has(mode) ? mode : "both" };
 }
 
-type Host = Pick<HarsoOutputCardProps, "onOpenUrl" | "onOpenArtifact" | "onDownloadArtifact" | "onWorkControl" | "onRoutineControl">;
+type Host = Pick<HarsoOutputCardProps, "onOpenUrl" | "onOpenArtifact" | "onDownloadArtifact" | "onWorkControl" | "onRoutineControl" | "media">;
 /**
  * The gallery stands in for the app: every action a reviewer presses is logged and flashed as what the app would do.
  * Nothing opens, downloads or controls anything here.
@@ -46,7 +47,9 @@ function galleryHost(say: (text: string) => void): Host {
     onOpenArtifact: artifact => tell(`Would open ${artifact}`),
     onDownloadArtifact: artifact => tell(`Would download ${artifact}`),
     onWorkControl: (control, id) => tell(`Would ${control} work ${id}`),
-    onRoutineControl: (control, id) => tell(`Would ${control} routine ${id}`)
+    onRoutineControl: (control, id) => tell(`Would ${control} routine ${id}`),
+    // Photos and map tiles are local drawings (deterministic, offline): the app resolves real files and tiles.
+    media: { resolveArtifact: sampleArtifact, mapTile: sampleTile }
   };
 }
 

@@ -119,7 +119,7 @@ workaround and nothing else: the app draws the richer form once the backend adds
 |---|---|---|
 | header | `header.title` + `subtitle` (period, scope, "as of") | every card |
 | rows | `rows` with label, secondary, trailing; state word as text [G1]; one flat list [G2] | `money-bills-due` |
-| rowkinds | `mark: "pick"` on one row; no thumbnail [G7] or row link [G8] yet | `travel-flights` |
+| rowkinds | `mark: "pick"` on one row; `thumbnail` {artifact, alt} on every row or none (a photo per option: products, homes, hotels, dishes, logos); no row link [G8] yet | `travel-flights`, `shop-vacuum-options` |
 | numbers | `numbers`, 2 items; a change is its own item [G3] | `money-net-worth` |
 | numbers4 | `numbers`, 3 items at most, page only [G21] | `data-sales-collections` |
 | bar | `chart: "bar"`, unit, `highlight_index` on the one you name; the caption is your sentence [G19] | `money-spending-month` |
@@ -128,7 +128,7 @@ workaround and nothing else: the app draws the richer form once the backend adds
 | progress | the budget goes in a number label ("Left of S$5,000") [G9] | `money-spending-month` |
 | table | `table`, ≤4 columns; a total is the last row, labelled Total [G4] | `data-table-small` |
 | text | `text` summary + sections; steps are numbered paragraphs [G5] | `docs-research-brief` |
-| image | `visual.image` with alt and aspect | `file-logo` |
+| image | `visual.image` with alt and aspect; `images` (2..10, photo 1 = the image itself) makes it a gallery, only for one thing with many photos (a home, a product, a hotel) | `file-logo`, `home-listing-card` |
 | map | `visual.map`, ≤12 places, `selected_place_id` for the pick | `travel-stay-areas` |
 | status | `status` state + detail + subject; timed steps go in rows [G16] | `prod-watch-reply` |
 | action | `action`, one primary, one quiet; never a reply | `file-logo` |
@@ -243,8 +243,8 @@ are real (they are illustrative), and how the app draws the card. Those need a r
 
 `schema/output-blocks.v1.json` is a byte-for-byte copy of weave-cloud `packages/contracts/src/schemas/output-blocks.v1.json`,
 last changed in commit `db2db1ab`, read at origin/main `7c899530`, sha256
-`470aa1aec345587faaa4004ee00a499f3044540dfbde1126ff130072fdd68f87`. The checker refuses a copy whose hash differs from
+`969af48f10b567b1f4d7bda0585a3c81d40537f4e0767c2fecacd72b1919077f`. The checker refuses a copy whose hash differs from
 the one recorded in the examples file, so a schema change has to be re-copied on purpose. Where the contract cannot
-express an example cleanly (row state meanings, grouped rows, delta, totals, ordered steps, as-of, row image or link,
+express an example cleanly (row state meanings, grouped rows, delta, totals, ordered steps, as-of, row link,
 share bar, a share total, chart caption, timed status steps, a failed block's retry), the workaround used above is the rule until the
 backend adds the field. The gaps are numbered G1–G24 in the evidence file `catalogue-design/playbook/coverage.md`.

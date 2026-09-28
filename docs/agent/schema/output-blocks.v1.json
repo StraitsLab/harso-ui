@@ -196,6 +196,22 @@
         }
       }
     },
+    "photo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact",
+        "alt"
+      ],
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/artifact_uri"
+        },
+        "alt": {
+          "$ref": "#/$defs/line200"
+        }
+      }
+    },
     "image": {
       "type": "object",
       "additionalProperties": false,
@@ -221,6 +237,14 @@
             "16:9",
             "3:4"
           ]
+        },
+        "images": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/photo"
+          }
         }
       }
     },
@@ -373,6 +397,9 @@
         },
         "status": {
           "$ref": "#/$defs/row_status"
+        },
+        "thumbnail": {
+          "$ref": "#/$defs/photo"
         }
       }
     },

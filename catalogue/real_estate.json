@@ -88,37 +88,65 @@
                 "label": "Blk 824 Tampines St 81",
                 "secondary": "67 sqm · 6 min to Tampines MRT",
                 "trailing": "S$548k",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f78c79a02a2",
+                  "alt": "Blk 824 Tampines St 81, front of the home"
+                }
               },
               {
                 "label": "Blk 201 Tampines St 21",
                 "secondary": "68 sqm · 8 min to Tampines MRT",
-                "trailing": "S$575k"
+                "trailing": "S$575k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd43b9f7477",
+                  "alt": "Blk 201 Tampines St 21, front of the home"
+                }
               },
               {
                 "label": "Blk 457 Tampines St 42",
                 "secondary": "65 sqm · 9 min to Tampines East",
-                "trailing": "S$560k"
+                "trailing": "S$560k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f279d5722c3",
+                  "alt": "Blk 457 Tampines St 42, front of the home"
+                }
               },
               {
                 "label": "Blk 866 Tampines St 83",
                 "secondary": "67 sqm · 7 min to Tampines MRT",
-                "trailing": "S$585k"
+                "trailing": "S$585k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa42f7d6eb0",
+                  "alt": "Blk 866 Tampines St 83, front of the home"
+                }
               },
               {
                 "label": "Blk 115 Tampines St 11",
                 "secondary": "64 sqm · 10 min to Tampines MRT",
-                "trailing": "S$538k"
+                "trailing": "S$538k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7bc25f432b",
+                  "alt": "Blk 115 Tampines St 11, front of the home"
+                }
               },
               {
                 "label": "Blk 395 Tampines Ave 7",
                 "secondary": "66 sqm · 9 min to Tampines West",
-                "trailing": "S$559k"
+                "trailing": "S$559k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f22b79b06e7",
+                  "alt": "Blk 395 Tampines Ave 7, front of the home"
+                }
               },
               {
                 "label": "Blk 881 Tampines St 84",
                 "secondary": "65 sqm · 8 min to Tampines West",
-                "trailing": "S$592k"
+                "trailing": "S$592k",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ffdbd95ea2a",
+                  "alt": "Blk 881 Tampines St 84, front of the home"
+                }
               }
             ]
           }
@@ -203,22 +231,38 @@
                   "label": "Blk 824 Tampines St 81",
                   "secondary": "67 sqm · 6 min to Tampines MRT",
                   "trailing": "S$548k",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f78c79a02a2",
+                    "alt": "Blk 824 Tampines St 81, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 457 Tampines St 42",
                   "secondary": "65 sqm · 9 min to Tampines East",
-                  "trailing": "S$560k"
+                  "trailing": "S$560k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f279d5722c3",
+                    "alt": "Blk 457 Tampines St 42, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 115 Tampines St 11",
                   "secondary": "64 sqm · 10 min to Tampines MRT",
-                  "trailing": "S$538k"
+                  "trailing": "S$538k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7bc25f432b",
+                    "alt": "Blk 115 Tampines St 11, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 395 Tampines Ave 7",
                   "secondary": "66 sqm · 9 min to Tampines West",
-                  "trailing": "S$559k"
+                  "trailing": "S$559k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f22b79b06e7",
+                    "alt": "Blk 395 Tampines Ave 7, front of the home"
+                  }
                 }
               ]
             }
@@ -298,37 +342,65 @@
                   "label": "Blk 824 Tampines St 81",
                   "secondary": "67 sqm · 6 min to Tampines MRT",
                   "trailing": "S$548k",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f78c79a02a2",
+                    "alt": "Blk 824 Tampines St 81, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 201 Tampines St 21",
                   "secondary": "68 sqm · 8 min to Tampines MRT",
-                  "trailing": "S$575k"
+                  "trailing": "S$575k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd43b9f7477",
+                    "alt": "Blk 201 Tampines St 21, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 457 Tampines St 42",
                   "secondary": "65 sqm · 9 min to Tampines East",
-                  "trailing": "S$560k"
+                  "trailing": "S$560k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f279d5722c3",
+                    "alt": "Blk 457 Tampines St 42, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 866 Tampines St 83",
                   "secondary": "67 sqm · 7 min to Tampines MRT",
-                  "trailing": "S$585k"
+                  "trailing": "S$585k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa42f7d6eb0",
+                    "alt": "Blk 866 Tampines St 83, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 115 Tampines St 11",
                   "secondary": "64 sqm · 10 min to Tampines MRT",
-                  "trailing": "S$538k"
+                  "trailing": "S$538k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7bc25f432b",
+                    "alt": "Blk 115 Tampines St 11, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 395 Tampines Ave 7",
                   "secondary": "66 sqm · 9 min to Tampines West",
-                  "trailing": "S$559k"
+                  "trailing": "S$559k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f22b79b06e7",
+                    "alt": "Blk 395 Tampines Ave 7, front of the home"
+                  }
                 },
                 {
                   "label": "Blk 881 Tampines St 84",
                   "secondary": "65 sqm · 8 min to Tampines West",
-                  "trailing": "S$592k"
+                  "trailing": "S$592k",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ffdbd95ea2a",
+                    "alt": "Blk 881 Tampines St 84, front of the home"
+                  }
                 }
               ]
             }
@@ -412,7 +484,41 @@
               "kind": "image",
               "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
               "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor",
-              "aspect": "4:3"
+              "aspect": "4:3",
+              "images": [
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
+                  "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa106af72f3",
+                  "alt": "Kitchen of Blk 824 Tampines St 81, white cabinets, window over the sink"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f3481b071cb",
+                  "alt": "Main bedroom, built-in wardrobe, window facing the park"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f3e43f86a6f",
+                  "alt": "Second bedroom set up as a study"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd4b99f8529",
+                  "alt": "Common bathroom, walk-in shower"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f254fa11003",
+                  "alt": "View from the living room window over Tampines Central"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f59c7a86a95",
+                  "alt": "Service yard with washer"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0b79bf616b",
+                  "alt": "Floor plan, 4-room, 93 sqm"
+                }
+              ]
             }
           },
           {
@@ -519,7 +625,41 @@
                 "kind": "image",
                 "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
                 "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor",
-                "aspect": "4:3"
+                "aspect": "4:3",
+                "images": [
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-00000000076d",
+                    "alt": "Living room of Blk 824 Tampines St 81, bright, parquet floor"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fa106af72f3",
+                    "alt": "Kitchen of Blk 824 Tampines St 81, white cabinets, window over the sink"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f3481b071cb",
+                    "alt": "Main bedroom, built-in wardrobe, window facing the park"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f3e43f86a6f",
+                    "alt": "Second bedroom set up as a study"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd4b99f8529",
+                    "alt": "Common bathroom, walk-in shower"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f254fa11003",
+                    "alt": "View from the living room window over Tampines Central"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f59c7a86a95",
+                    "alt": "Service yard with washer"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f0b79bf616b",
+                    "alt": "Floor plan, 4-room, 93 sqm"
+                  }
+                ]
               }
             },
             {
@@ -814,17 +954,29 @@
                 "label": "The Clift",
                 "secondary": "49 sqm · from 1 Oct",
                 "trailing": "S$3,300",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f82de6f7194",
+                  "alt": "The Clift, living room"
+                }
               },
               {
                 "label": "Spottiswoode 18",
                 "secondary": "45 sqm · from 15 Oct",
-                "trailing": "S$3,450"
+                "trailing": "S$3,450",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fde3f743572",
+                  "alt": "Spottiswoode 18, living room"
+                }
               },
               {
                 "label": "Pinnacle@Duxton",
                 "secondary": "50 sqm · from 1 Oct",
-                "trailing": "S$3,400"
+                "trailing": "S$3,400",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f1ea029e5c9",
+                  "alt": "Pinnacle@Duxton, living room"
+                }
               }
             ]
           }
@@ -873,12 +1025,20 @@
                   "label": "The Clift",
                   "secondary": "49 sqm · from 1 Oct",
                   "trailing": "S$3,300",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f82de6f7194",
+                    "alt": "The Clift, living room"
+                  }
                 },
                 {
                   "label": "Pinnacle@Duxton",
                   "secondary": "50 sqm · from 1 Oct",
-                  "trailing": "S$3,400"
+                  "trailing": "S$3,400",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f1ea029e5c9",
+                    "alt": "Pinnacle@Duxton, living room"
+                  }
                 }
               ]
             }
@@ -907,17 +1067,29 @@
                   "label": "The Clift",
                   "secondary": "49 sqm · from 1 Oct",
                   "trailing": "S$3,300",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f82de6f7194",
+                    "alt": "The Clift, living room"
+                  }
                 },
                 {
                   "label": "Spottiswoode 18",
                   "secondary": "45 sqm · from 15 Oct",
-                  "trailing": "S$3,450"
+                  "trailing": "S$3,450",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fde3f743572",
+                    "alt": "Spottiswoode 18, living room"
+                  }
                 },
                 {
                   "label": "Pinnacle@Duxton",
                   "secondary": "50 sqm · from 1 Oct",
-                  "trailing": "S$3,400"
+                  "trailing": "S$3,400",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f1ea029e5c9",
+                    "alt": "Pinnacle@Duxton, living room"
+                  }
                 }
               ]
             }

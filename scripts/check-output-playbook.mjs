@@ -158,8 +158,15 @@ export function semanticErrors(document) {
       const ids = block.items.filter(row => "id" in row).map(row => row.id);
       if (new Set(ids).size !== ids.length) errors.push(`${here}.items: row ids must be unique`);
       if ((block.total_count ?? block.items.length) < block.items.length) errors.push(`${here}.total_count: must be >= number of items`);
+      // Photos per row are all or none, so a list never looks ragged.
+      const photos = block.items.filter(row => "thumbnail" in row).length;
+      if (photos && photos !== block.items.length) errors.push(`${here}.items: give every row a thumbnail or none`);
     } else if (block.kind === "visual") {
       const visual = block.visual;
+      // A gallery's photo 1 is the image itself (old readers show artifact/alt): both must equal images[0].
+      if (visual.kind === "image" && Array.isArray(visual.images) && (visual.images[0]?.artifact !== visual.artifact || visual.images[0]?.alt !== visual.alt)) {
+        errors.push(`${here}.visual.images[0]: photo 1 must be the image's own artifact and alt`);
+      }
       if (visual.kind === "map") {
         visual.places.forEach((place, placeIndex) => {
           for (const [field, limit] of [["lat", 90], ["lon", 180]]) {
