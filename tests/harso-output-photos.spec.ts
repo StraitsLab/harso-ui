@@ -129,6 +129,38 @@ for (const [key, counter, at] of [["ArrowRight", "3 of 8", 2], ["End", "8 of 8",
   });
 }
 
+// F1 class, earliest frame: a reversal or Home/End pressed on the very next frame after a key, before the older smooth
+// scroll has moved (or has taken only its first pixels). The newest command must win, with the track exactly there.
+// No fixed delays before the second key; ten rounds per case; LTR and RTL; both ends.
+for (const c of [
+  { name: "Home right after ArrowRight", dir: "ltr", start: "Home", first: "ArrowRight", second: "Home", at: 0 },
+  { name: "ArrowLeft right after ArrowRight", dir: "ltr", start: "Home", first: "ArrowRight", second: "ArrowLeft", at: 0 },
+  { name: "End right after ArrowLeft, at the end", dir: "ltr", start: "End", first: "ArrowLeft", second: "End", at: 7 },
+  { name: "ArrowRight right after ArrowLeft, at the end", dir: "ltr", start: "End", first: "ArrowLeft", second: "ArrowRight", at: 7 },
+  { name: "RTL: Home right after ArrowLeft", dir: "rtl", start: "Home", first: "ArrowLeft", second: "Home", at: 0 },
+] as const) {
+  test(`earliest frame: ${c.name} (x10)`, async ({ page }) => {
+    await page.goto("/#/catalogue/real_estate?mode=light");
+    const gallery = example(page, "home-listing-card").getByRole("region", { name: "8 photos" });
+    await gallery.scrollIntoViewIfNeeded();
+    const track = gallery.locator(".hkc-output-gallery-track");
+    if (c.dir === "rtl") await track.evaluate(el => { el.style.direction = "rtl"; });
+    const counter = `${c.at + 1} of 8`;
+    for (let round = 0; round < 10; round++) {
+      await track.focus();
+      await page.keyboard.press(c.start);
+      await expect.poll(() => track.evaluate(el => Math.abs(el.scrollLeft) / el.clientWidth)).toBeCloseTo(c.at, 3);
+      await page.keyboard.press(c.first);
+      await page.keyboard.press(c.second);
+      // Every older scroll (and its scrollend) has had time to land; the track stays exactly on the newest target.
+      await track.evaluate(el => new Promise(done => setTimeout(done, 900)));
+      const { left, width } = await track.evaluate(el => ({ left: Math.abs(el.scrollLeft), width: el.clientWidth }));
+      expect(Math.abs(left - c.at * width)).toBeLessThanOrEqual(1);
+      await expect(gallery.getByText(counter)).toBeVisible();
+    }
+  });
+}
+
 test("reduced motion: buttons jump straight to the photo", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/#/catalogue/real_estate?mode=light");

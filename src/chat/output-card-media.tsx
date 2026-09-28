@@ -331,17 +331,31 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
     setSeen(all => all.has(at - 1) && all.has(at) && all.has(at + 1) ? all : new Set([...all, at - 1, at, at + 1]));
   };
   const position = (element: HTMLElement) => Math.abs(element.scrollLeft) / element.clientWidth;
-  const scrollTrack = (element: HTMLElement, at: number) => {
+  const scrollTrack = (element: HTMLElement, at: number, instant = false) => {
     const rtl = element.ownerDocument.defaultView?.getComputedStyle(element).direction === "rtl";
-    element.scrollTo({ left: (rtl ? -1 : 1) * at * element.clientWidth, behavior: reducedMotion(element) ? "auto" : "smooth" });
+    element.scrollTo({ left: (rtl ? -1 : 1) * at * element.clientWidth, behavior: instant ? "instant" : reducedMotion(element) ? "auto" : "smooth" });
   };
   const show = (to: number) => {
     const at = Math.max(0, Math.min(count - 1, to));
     select(at);
     const element = track.current;
     if (!element || !element.clientWidth) return;
-    // Already there (an end pressed again): nothing will scroll, so there is no command to wait for.
-    if (Math.abs(position(element) - at) < .02) { target.current = undefined; return; }
+    // Already there (an end pressed again, or a reversal before an older smooth scroll has got far): an older scroll may
+    // still be on its way, so this is still a command. Pin the track instantly, then again on the next two frames: a
+    // cut-short smooth scroll can take its first pixels and stop without a scrollend. A hand on the track wins.
+    if (Math.abs(position(element) - at) < .02) {
+      target.current = at;
+      retries.current = 0;
+      scrollTrack(element, at, true);
+      const view = element.ownerDocument.defaultView;
+      const pin = (frames: number) => view?.requestAnimationFrame(() => {
+        if (target.current !== at) return;
+        if (Math.abs(position(element) - at) * element.clientWidth > 1) scrollTrack(element, at, true);
+        if (frames > 1) pin(frames - 1); else target.current = undefined;
+      });
+      pin(2);
+      return;
+    }
     target.current = at;
     retries.current = 0;
     scrollTrack(element, at);
@@ -353,7 +367,8 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
     if (target.current !== undefined) {
       if (!end) return;
       // An older scroll the newest command cut short ended short of it: send the track on, never the counter back.
-      if (at !== target.current && retries.current < 3) { retries.current++; scrollTrack(element, target.current); return; }
+      // Checked exactly, not rounded: a few pixels an older scroll took before it was cut short count as short too.
+      if (Math.abs(position(element) - target.current) * element.clientWidth > 1 && retries.current < 3) { retries.current++; scrollTrack(element, target.current); return; }
       target.current = undefined;
     }
     if (at !== index) select(at);
