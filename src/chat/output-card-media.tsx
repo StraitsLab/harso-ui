@@ -167,24 +167,32 @@ export const ARTIFACT = /^artifact:[0-9a-f-]{36}$/;
 /** A photo the card may draw (a row thumbnail, a gallery photo): a well-formed artifact and an alt. */
 export const isPhoto = (photo: unknown): photo is HarsoOutputPhoto => !!photo && typeof photo === "object"
   && ARTIFACT.test((photo as HarsoOutputPhoto).artifact ?? "") && typeof (photo as HarsoOutputPhoto).alt === "string";
+/** 2..10 well-formed photos, photo 1 being the image's own artifact and alt (what a one-photo reader shows). */
+const isGallery = (image: HarsoOutputImage): image is HarsoOutputImage & { images: HarsoOutputPhoto[] } => {
+  const { images } = image;
+  return Array.isArray(images) && images.length >= 2 && images.length <= 10 && images.every(isPhoto)
+    && images[0].artifact === image.artifact && images[0].alt === image.alt;
+};
 /**
  * The image, video or map this card can draw, or undefined (the card then falls back to text). A video needs
- * `canOpen` (the card's `onOpenArtifact`): its poster is only a way to open the file. An image's `images` stay only
- * when they are a well-formed gallery (2..10 photos); otherwise it draws as the one photo old readers show.
+ * `canOpen` (the card's `onOpenArtifact`): its poster is only a way to open the file. A well-formed gallery (2..10
+ * photos, photo 1 = the image) needs only a resolving host; each photo's availability is its own tile's. Any other
+ * `images` draw as the one photo old readers show.
  */
 export function readMedia(block: AnyBlock, host: HarsoOutputMediaHost, canOpen = false): HarsoOutputMedia | undefined {
   if (block.kind !== "visual") return undefined;
   const visual = (block as { visual?: { kind?: string } }).visual as HarsoOutputMedia | undefined;
   if (!visual) return undefined;
   if (visual.kind === "image" || visual.kind === "video") {
+    if (!ARTIFACT.test(visual.artifact ?? "") || typeof visual.alt !== "string") return undefined;
+    // A well-formed gallery needs only a host that resolves artifacts: each photo it cannot resolve is its own quiet
+    // tile, photo 1 included, and the others still browse.
+    if (visual.kind === "image" && isGallery(visual)) return host.resolveArtifact ? visual : undefined;
     // No way to show the file (or, for a video, to open it) without the host: fall back rather than draw a dead frame.
-    const ok = ARTIFACT.test(visual.artifact ?? "") && typeof visual.alt === "string" && !!host.resolveArtifact?.(visual.artifact)
-      && (visual.kind === "image" || canOpen);
-    if (!ok) return undefined;
-    if (visual.kind !== "image" || visual.images === undefined) return visual;
-    const { images, ...one } = visual;
-    return Array.isArray(images) && images.length >= 2 && images.length <= 10 && images.every(isPhoto)
-      && images[0].artifact === visual.artifact && images[0].alt === visual.alt ? visual : one;
+    if (!host.resolveArtifact?.(visual.artifact) || (visual.kind === "video" && !canOpen)) return undefined;
+    if (visual.kind === "video" || visual.images === undefined) return visual;
+    const { images: _dropped, ...one } = visual;
+    return one;
   }
   if (visual.kind === "map") {
     if (!host.mapTile) return undefined;
@@ -311,27 +319,46 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
   const prev = useRef<HTMLButtonElement>(null), next = useRef<HTMLButtonElement>(null);
   // A button the edge removes hands focus to the other one, so the keyboard never drops to the page.
   const handoff = useRef<"prev" | "next" | undefined>(undefined);
-  // While a button or key scrolls the track, the scroll position is on its way: the counter keeps the target.
-  const target = useRef<number | undefined>(undefined);
-  const show = (to: number) => {
-    const at = Math.max(0, Math.min(count - 1, to));
+  /*
+   * The photo the newest button or key press is scrolling to, until the track gets there. Only the newest command
+   * counts: scroll events on the way, and the end of an older scroll that command cut short, never move the counter
+   * (the track is sent on to the target, a few times at most). A hand on the track (wheel, touch, pointer) cancels the
+   * command, and from then on the counter follows the track and settles where it stops.
+   */
+  const target = useRef<number | undefined>(undefined), retries = useRef(0);
+  const select = (at: number) => {
     setIndex(at);
     setSeen(all => all.has(at - 1) && all.has(at) && all.has(at + 1) ? all : new Set([...all, at - 1, at, at + 1]));
-    const element = track.current;
-    if (!element || !element.clientWidth) return;
-    target.current = at;
+  };
+  const position = (element: HTMLElement) => Math.abs(element.scrollLeft) / element.clientWidth;
+  const scrollTrack = (element: HTMLElement, at: number) => {
     const rtl = element.ownerDocument.defaultView?.getComputedStyle(element).direction === "rtl";
     element.scrollTo({ left: (rtl ? -1 : 1) * at * element.clientWidth, behavior: reducedMotion(element) ? "auto" : "smooth" });
+  };
+  const show = (to: number) => {
+    const at = Math.max(0, Math.min(count - 1, to));
+    select(at);
+    const element = track.current;
+    if (!element || !element.clientWidth) return;
+    // Already there (an end pressed again): nothing will scroll, so there is no command to wait for.
+    if (Math.abs(position(element) - at) < .02) { target.current = undefined; return; }
+    target.current = at;
+    retries.current = 0;
+    scrollTrack(element, at);
   };
   const settle = (end: boolean) => {
     const element = track.current;
     if (!element?.clientWidth) return;
-    const at = Math.round(Math.abs(element.scrollLeft) / element.clientWidth);
-    // A swipe during a button's scroll ends somewhere else: the end of any scroll hands the counter back to the track.
-    if (target.current !== undefined && !end && at !== target.current) return;
-    target.current = undefined;
-    if (at !== index) show(at);
+    const at = Math.round(position(element));
+    if (target.current !== undefined) {
+      if (!end) return;
+      // An older scroll the newest command cut short ended short of it: send the track on, never the counter back.
+      if (at !== target.current && retries.current < 3) { retries.current++; scrollTrack(element, target.current); return; }
+      target.current = undefined;
+    }
+    if (at !== index) select(at);
   };
+  const takeOver = () => { target.current = undefined; };
   const step = (by: number, from: "prev" | "next") => {
     const at = index + by;
     if (at <= 0 && from === "prev") handoff.current = "next";
@@ -348,6 +375,7 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
     style={{ "--hkc-media-aspect": aspect } as CSSProperties}>
     <div ref={track} className="hkc-output-gallery-track" tabIndex={0} aria-label="Photos. Left and right arrows move between them."
       onScroll={() => settle(false)} onScrollEnd={() => settle(true)}
+      onWheel={takeOver} onTouchStart={takeOver} onPointerDown={takeOver}
       onKeyDown={event => {
         if (event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Home" && event.key !== "End") return;
         event.preventDefault();

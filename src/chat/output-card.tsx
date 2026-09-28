@@ -321,7 +321,8 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
     }
     if (isRows(block)) {
       if (!block.items.every(row => rowStatusOk(row.status))) return undefined;
-      const shares = readShare(block.items);
+      // Shares are inferred from the rows' words; a row that carries an explicit photo is a list of things, never a share.
+      const shares = block.items.some(row => row.thumbnail != null) ? undefined : readShare(block.items);
       if (shares) {
         if (withoutData(state)) { parts.push({ kind: "share", items: [], shares, shown: 0, state }); continue; }
         const count = Math.min(block.items.length, rowBudget);

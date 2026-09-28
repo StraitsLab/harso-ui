@@ -80,15 +80,54 @@ test("a photo that does not arrive leaves the quiet tile, never a broken image; 
   await expect(gallery.getByText("2 of 6")).toBeVisible();
 });
 
-test("View all shows the same gallery", async ({ page }) => {
+test("View all opens the whole answer, and the gallery browses there", async ({ page }) => {
   await page.goto("/#/catalogue/shopping?mode=light");
   const frame = example(page, "shop-product-detail");
   await frame.scrollIntoViewIfNeeded();
-  const viewAll = frame.locator(".hkc-output-card-view-all");
-  if (await viewAll.count()) await viewAll.click();
-  await expect(frame.getByRole("region", { name: "6 photos" })).toBeVisible();
-  await expect(frame.getByText("1 of 6")).toBeVisible();
+  // The trigger must exist: this example overflows inline by design.
+  await frame.locator(".hkc-output-card-view-all").click();
+  const full = frame.getByRole("region", { name: /, full answer$/ });
+  await expect(full).toBeVisible();
+  await expect(full.getByRole("button", { name: "Show less" })).toBeVisible();
+  const gallery = full.getByRole("region", { name: "6 photos" });
+  await expect(gallery.getByText("1 of 6")).toBeVisible();
+  await gallery.hover();
+  await gallery.getByRole("button", { name: "Next photo" }).click();
+  await expect(gallery.getByText("2 of 6")).toBeVisible();
+  const track = gallery.locator(".hkc-output-gallery-track");
+  await expect.poll(() => track.evaluate(el => Math.round(el.scrollLeft / el.clientWidth))).toBe(1);
+  await full.getByRole("button", { name: "Show less" }).click();
+  await expect(full).toHaveCount(0);
 });
+
+// F1 class: a key pressed while a button's smooth scroll is still on its way. The older scroll's end must never undo
+// the newer command. Waits on the track's own position (no fixed delays), ten times over.
+for (const [key, counter, at] of [["ArrowRight", "3 of 8", 2], ["End", "8 of 8", 7]] as const) {
+  test(`a ${key} during Next's scroll wins over the end of that scroll (x10)`, async ({ page }) => {
+    await page.goto("/#/catalogue/real_estate?mode=light");
+    const gallery = example(page, "home-listing-card").getByRole("region", { name: "8 photos" });
+    await gallery.scrollIntoViewIfNeeded();
+    const track = gallery.locator(".hkc-output-gallery-track");
+    for (let round = 0; round < 10; round++) {
+      await track.focus();
+      await page.keyboard.press("Home");
+      await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBe(0);
+      await expect(gallery.getByText("1 of 8")).toBeVisible();
+      await gallery.hover();
+      await gallery.getByRole("button", { name: "Next photo" }).click();
+      // Mid-scroll: past halfway to photo 2, not there yet.
+      await page.waitForFunction(el => el!.scrollLeft > el!.clientWidth * .5 && el!.scrollLeft < el!.clientWidth - 1,
+        await track.elementHandle(), { polling: "raf" });
+      await track.focus();
+      await page.keyboard.press(key);
+      await expect.poll(() => track.evaluate(el => el.scrollLeft / el.clientWidth), { timeout: 4000 }).toBeCloseTo(at, 2);
+      // Let every pending scrollend land, then the counter and position must still be the newest command's.
+      await track.evaluate(el => new Promise(done => setTimeout(done, 400)));
+      expect(await track.evaluate(el => Math.round(el.scrollLeft / el.clientWidth))).toBe(at);
+      await expect(gallery.getByText(counter)).toBeVisible();
+    }
+  });
+}
 
 test("reduced motion: buttons jump straight to the photo", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });

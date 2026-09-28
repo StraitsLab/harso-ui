@@ -1,8 +1,17 @@
 import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
+// @ts-expect-error - plain ESM script without type declarations
+import { schemaErrors, semanticErrors } from "../../scripts/check-output-playbook.mjs";
+import schema from "../../docs/agent/schema/output-blocks.v1.json";
 import * as chat from "./index";
 
 afterEach(cleanup);
+/** The document is one the agent may send: the renderer's fallback is not what is under test. */
+const valid = (document: chat.HarsoOutputDocument) => {
+  expect(schemaErrors(schema, document)).toEqual([]);
+  expect(semanticErrors(document)).toEqual([]);
+  return document;
+};
 
 const id = (n: number) => `artifact:0192a3b4-5c6d-7e8f-9a0b-${String(n).padStart(12, "0")}`;
 const url = (artifact: string) => `https://files.test/${artifact.slice(9)}`;
@@ -90,6 +99,26 @@ test("a running status list with photo rows is not read as steps", () => {
     { kind: "rows", items: [{ ...row(1), secondary: undefined }, { ...row(2), secondary: undefined }] }]);
   const card = renderDoc(document);
   expect(card.querySelectorAll(".hkc-output-thumb")).toHaveLength(2);
+});
+
+// ---- explicit photos beat inferred row visuals (F3 class) ----
+
+const fund = (share: number, n: number, photo = true): chat.HarsoOutputRow =>
+  ({ label: `Fund ${n}`, secondary: `${share}%`, trailing: `S$${share}`, ...(photo ? { thumbnail: { artifact: id(n), alt: `Fund ${n} logo` } } : {}) });
+
+test.each([
+  ["two rows, 60/40", [60, 40]],
+  ["three rows, 50/30/20", [50, 30, 20]]
+])("rows shaped like shares (%s) that carry photos draw their photos, not a share bar", (_name, shares) => {
+  const card = renderDoc(valid(doc([{ kind: "rows", items: shares.map((share, n) => fund(share, n + 1)) }])));
+  expect(card.querySelectorAll(".hkc-output-thumb")).toHaveLength(shares.length);
+  expect(card.querySelector(".hkc-output-share-bar")).toBeNull();
+});
+
+test("the same rows without photos are still read as shares (the inference is untouched)", () => {
+  const card = renderDoc(valid(doc([{ kind: "rows", items: [fund(60, 1, false), fund(40, 2, false)] }])));
+  expect(card.querySelector(".hkc-output-share-bar")).not.toBeNull();
+  expect(card.querySelector(".hkc-output-thumb")).toBeNull();
 });
 
 // ---- gallery ----
@@ -200,18 +229,70 @@ test("a swipe (the track scrolled by hand) updates the counter when it settles",
   expect(loaded(card)).toContain("Photo 4");
 });
 
-test("a swipe that interrupts a button's scroll still settles the counter on where the track stopped", () => {
+test.each([
+  ["wheel (trackpad)", "wheel"], ["touch", "touchStart"], ["pointer", "pointerDown"]
+] as const)("a hand on the track (%s) during a button's scroll wins: the counter settles where the track stopped", (_name, gesture) => {
   const card = renderDoc(gallery(4));
   const track = card.querySelector<HTMLElement>(".hkc-output-gallery-track")!;
   Object.defineProperty(track, "clientWidth", { value: 400, configurable: true });
-  track.scrollTo = vi.fn() as typeof track.scrollTo;
+  const scrollTo = vi.fn();
+  track.scrollTo = scrollTo as typeof track.scrollTo;
   fireEvent.click(within(card).getByRole("button", { name: "Next photo" }));
-  // Mid-way the user swipes back: scroll events at 0 are ignored while the button's scroll is on its way ...
+  expect(scrollTo).toHaveBeenCalledTimes(1);
+  // Mid-way the user swipes back: scroll events on the way never move the counter off the command ...
   track.scrollLeft = 0;
   fireEvent.scroll(track);
   expect(within(card).getByText("2 of 4")).toBeTruthy();
-  // ... but when the scroll ends there, the counter follows the track.
+  // ... but the hand cancels the command, and where the track then stops is where the counter goes.
+  fireEvent[gesture](track);
+  fireEvent.scroll(track);
   fireEvent(track, new Event("scrollend"));
+  expect(within(card).getByText("1 of 4")).toBeTruthy();
+  expect(scrollTo).toHaveBeenCalledTimes(1);
+});
+
+test.each([
+  // [what the newest command is, the key, where the older scroll's end lands, expected counter]
+  ["Next then ArrowRight", "ArrowRight", 1.2, "3 of 8", 2],
+  ["Next then End", "End", 1.2, "8 of 8", 7],
+  ["Next then Home (going back)", "Home", 0.9, "1 of 8", 0]
+] as const)("the end of an older scroll never undoes a newer command (%s): the track is sent on to it", (_name, key, stoppedAt, counter, target) => {
+  const card = renderDoc(gallery(8));
+  const track = card.querySelector<HTMLElement>(".hkc-output-gallery-track")!;
+  Object.defineProperty(track, "clientWidth", { value: 400, configurable: true });
+  const scrollTo = vi.fn();
+  track.scrollTo = scrollTo as typeof track.scrollTo;
+  fireEvent.click(within(card).getByRole("button", { name: "Next photo" }));
+  // The button's smooth scroll has reached photo 2 (rounded) when the key lands ...
+  track.scrollLeft = 400 * 0.8;
+  fireEvent.scroll(track);
+  fireEvent.keyDown(track, { key });
+  expect(within(card).getByText(counter)).toBeTruthy();
+  // ... then the first scroll's end arrives, short of the new photo (Chrome: offset 512 on the way to 840).
+  track.scrollLeft = 400 * stoppedAt;
+  fireEvent.scroll(track);
+  fireEvent(track, new Event("scrollend"));
+  expect(within(card).getByText(counter)).toBeTruthy();
+  expect(scrollTo).toHaveBeenLastCalledWith({ left: 400 * target, behavior: "smooth" });
+  // When the track arrives, the command is done and a later swipe is followed again.
+  track.scrollLeft = 400 * target;
+  fireEvent(track, new Event("scrollend"));
+  expect(within(card).getByText(counter)).toBeTruthy();
+  fireEvent.wheel(track);
+  track.scrollLeft = 400 * (target === 0 ? 1 : target - 1);
+  fireEvent(track, new Event("scrollend"));
+  expect(within(card).getByText(`${target === 0 ? 2 : target} of 8`)).toBeTruthy();
+});
+
+test("a command the track can never reach gives up after a few tries and follows the track (no endless loop)", () => {
+  const card = renderDoc(gallery(4));
+  const track = card.querySelector<HTMLElement>(".hkc-output-gallery-track")!;
+  Object.defineProperty(track, "clientWidth", { value: 400, configurable: true });
+  const scrollTo = vi.fn();
+  track.scrollTo = scrollTo as typeof track.scrollTo;
+  fireEvent.click(within(card).getByRole("button", { name: "Next photo" }));
+  for (let end = 0; end < 5; end++) fireEvent(track, new Event("scrollend"));
+  expect(scrollTo).toHaveBeenCalledTimes(4);
   expect(within(card).getByText("1 of 4")).toBeTruthy();
 });
 
@@ -243,6 +324,40 @@ test("a gallery with a malformed photo draws as the single image", () => {
   const card = renderDoc(document);
   expect(card.querySelector(".hkc-output-gallery")).toBeNull();
   expect(card.querySelector(".hkc-output-media-img")).not.toBeNull();
+});
+
+test.each([
+  ["first", 1], ["middle", 3], ["last", 5]
+])("a valid gallery whose %s photo the host cannot resolve keeps that photo's quiet tile; every other photo browses", (_name, missing) => {
+  const document = valid(gallery(5));
+  const card = renderDoc(document, { media: { resolveArtifact: artifact => artifact === id(missing) ? undefined : url(artifact) } });
+  const region = within(card).getByRole("region", { name: "5 photos" });
+  const tiles = [...region.querySelectorAll(".hkc-output-gallery-photo")];
+  const next = () => fireEvent.click(within(card).getByRole("button", { name: "Next photo" }));
+  for (let at = 2; at <= 5; at++) { next(); expect(within(card).getByText(`${at} of 5`)).toBeTruthy(); }
+  expect(tiles[missing - 1].getAttribute("data-state")).toBe("failed");
+  expect(within(tiles[missing - 1] as HTMLElement).getByRole("img", { name: `Photo ${missing}`, hidden: true }).tagName).toBe("SPAN");
+  expect(loaded(card)).toEqual([1, 2, 3, 4, 5].filter(n => n !== missing).map(n => `Photo ${n}`));
+  expect(card.textContent).not.toContain("FALLBACK");
+});
+
+test("photo 1 that resolves but fails to load is its own tile too; the gallery still browses", () => {
+  const card = renderDoc(valid(gallery(3)));
+  const first = card.querySelector(".hkc-output-gallery-photo")!;
+  act(() => { fireEvent.error(first.querySelector("img")!); });
+  fireEvent.click(within(card).getByRole("button", { name: "Next photo" }));
+  expect(within(card).getByText("2 of 3")).toBeTruthy();
+});
+
+test("without a host that resolves artifacts a gallery is text, as a single image is (unchanged)", () => {
+  const galleryCard = renderDoc(valid(gallery(3)), { media: {} });
+  expect(galleryCard.querySelector(".hkc-output-media")).toBeNull();
+  expect(galleryCard.textContent).toContain("FALLBACK");
+  cleanup();
+  const single = doc([{ kind: "visual", visual: { kind: "image", artifact: id(1), alt: "Photo 1", aspect: "4:3" } } as chat.HarsoOutputBlock]);
+  const singleCard = renderDoc(valid(single), { media: { resolveArtifact: () => undefined } });
+  expect(singleCard.querySelector(".hkc-output-media")).toBeNull();
+  expect(singleCard.textContent).toContain("FALLBACK");
 });
 
 test("View all (uncapped) shows the same gallery", () => {
