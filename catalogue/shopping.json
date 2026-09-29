@@ -37,7 +37,7 @@
         "S1 Product options",
         "S10 Rating",
         "S2 Product grid / carousel (as rows)",
-        "X4 Item thumbnail (degraded: no row image)"
+        "X4 Item thumbnail"
       ],
       "rationale": "Three options, one pick, price trailing, the trade-off on the secondary line; choosing goes through the question card.",
       "document": {
@@ -55,17 +55,29 @@
                 "label": "Dyson V8 Origin",
                 "secondary": "72 dB · 40 min · rated 4.6/5",
                 "trailing": "S$379",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fc4ea7fb351",
+                  "alt": "Dyson V8 Origin, product photo"
+                }
               },
               {
                 "label": "Xiaomi G11",
                 "secondary": "74 dB · 60 min · rated 4.4/5",
-                "trailing": "S$299"
+                "trailing": "S$299",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb591f0062e",
+                  "alt": "Xiaomi G11, product photo"
+                }
               },
               {
                 "label": "Samsung Jet 60",
                 "secondary": "76 dB · 40 min · rated 4.5/5",
-                "trailing": "S$349"
+                "trailing": "S$349",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe11e98e0f5",
+                  "alt": "Samsung Jet 60, product photo"
+                }
               }
             ]
           }
@@ -120,12 +132,20 @@
                   "label": "Dyson V8 Origin",
                   "secondary": "72 dB · 40 min · rated 4.6/5",
                   "trailing": "S$379",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fc4ea7fb351",
+                    "alt": "Dyson V8 Origin, product photo"
+                  }
                 },
                 {
                   "label": "Xiaomi G11",
                   "secondary": "74 dB · 60 min · rated 4.4/5",
-                  "trailing": "S$299"
+                  "trailing": "S$299",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb591f0062e",
+                    "alt": "Xiaomi G11, product photo"
+                  }
                 }
               ]
             }
@@ -154,17 +174,29 @@
                   "label": "Dyson V8 Origin",
                   "secondary": "72 dB · 40 min · rated 4.6/5",
                   "trailing": "S$379",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fc4ea7fb351",
+                    "alt": "Dyson V8 Origin, product photo"
+                  }
                 },
                 {
                   "label": "Xiaomi G11",
                   "secondary": "74 dB · 60 min · rated 4.4/5",
-                  "trailing": "S$299"
+                  "trailing": "S$299",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb591f0062e",
+                    "alt": "Xiaomi G11, product photo"
+                  }
                 },
                 {
                   "label": "Samsung Jet 60",
                   "secondary": "76 dB · 40 min · rated 4.5/5",
-                  "trailing": "S$349"
+                  "trailing": "S$349",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe11e98e0f5",
+                    "alt": "Samsung Jet 60, product photo"
+                  }
                 }
               ]
             }
@@ -241,37 +273,65 @@
                 "label": "ASICS Novablast 5",
                 "secondary": "Cushioned daily trainer · rated 4.7/5",
                 "trailing": "S$189",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fbb438b0774",
+                  "alt": "ASICS Novablast 5, side view of the shoe"
+                }
               },
               {
                 "label": "Nike Pegasus 42",
                 "secondary": "Daily trainer · rated 4.6/5",
-                "trailing": "S$179"
+                "trailing": "S$179",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7e02e3a31d",
+                  "alt": "Nike Pegasus 42, side view of the shoe"
+                }
               },
               {
                 "label": "Brooks Ghost 17",
                 "secondary": "Soft, stable · rated 4.6/5",
-                "trailing": "S$199"
+                "trailing": "S$199",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f4157ad3bf7",
+                  "alt": "Brooks Ghost 17, side view of the shoe"
+                }
               },
               {
                 "label": "Hoka Clifton 10",
                 "secondary": "Max cushion · rated 4.5/5",
-                "trailing": "S$199"
+                "trailing": "S$199",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef0f4df717",
+                  "alt": "Hoka Clifton 10, side view of the shoe"
+                }
               },
               {
                 "label": "New Balance 880 v15",
                 "secondary": "Wide fit · rated 4.5/5",
-                "trailing": "S$185"
+                "trailing": "S$185",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd53673371a",
+                  "alt": "New Balance 880 v15, side view of the shoe"
+                }
               },
               {
                 "label": "Adidas Adizero SL 2",
                 "secondary": "Light, fast · rated 4.4/5",
-                "trailing": "S$159"
+                "trailing": "S$159",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff1fa1965c8",
+                  "alt": "Adidas Adizero SL 2, side view of the shoe"
+                }
               },
               {
                 "label": "Puma Velocity Nitro 4",
                 "secondary": "Budget daily · rated 4.4/5",
-                "trailing": "S$149"
+                "trailing": "S$149",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5191c70de",
+                  "alt": "Puma Velocity Nitro 4, side view of the shoe"
+                }
               }
             ]
           },
@@ -331,22 +391,38 @@
                   "label": "ASICS Novablast 5",
                   "secondary": "Cushioned daily trainer · rated 4.7/5",
                   "trailing": "S$189",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fbb438b0774",
+                    "alt": "ASICS Novablast 5, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Nike Pegasus 42",
                   "secondary": "Daily trainer · rated 4.6/5",
-                  "trailing": "S$179"
+                  "trailing": "S$179",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7e02e3a31d",
+                    "alt": "Nike Pegasus 42, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Brooks Ghost 17",
                   "secondary": "Soft, stable · rated 4.6/5",
-                  "trailing": "S$199"
+                  "trailing": "S$199",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f4157ad3bf7",
+                    "alt": "Brooks Ghost 17, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Hoka Clifton 10",
                   "secondary": "Max cushion · rated 4.5/5",
-                  "trailing": "S$199"
+                  "trailing": "S$199",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef0f4df717",
+                    "alt": "Hoka Clifton 10, side view of the shoe"
+                  }
                 }
               ]
             },
@@ -383,37 +459,65 @@
                   "label": "ASICS Novablast 5",
                   "secondary": "Cushioned daily trainer · rated 4.7/5",
                   "trailing": "S$189",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fbb438b0774",
+                    "alt": "ASICS Novablast 5, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Nike Pegasus 42",
                   "secondary": "Daily trainer · rated 4.6/5",
-                  "trailing": "S$179"
+                  "trailing": "S$179",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f7e02e3a31d",
+                    "alt": "Nike Pegasus 42, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Brooks Ghost 17",
                   "secondary": "Soft, stable · rated 4.6/5",
-                  "trailing": "S$199"
+                  "trailing": "S$199",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f4157ad3bf7",
+                    "alt": "Brooks Ghost 17, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Hoka Clifton 10",
                   "secondary": "Max cushion · rated 4.5/5",
-                  "trailing": "S$199"
+                  "trailing": "S$199",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fef0f4df717",
+                    "alt": "Hoka Clifton 10, side view of the shoe"
+                  }
                 },
                 {
                   "label": "New Balance 880 v15",
                   "secondary": "Wide fit · rated 4.5/5",
-                  "trailing": "S$185"
+                  "trailing": "S$185",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd53673371a",
+                    "alt": "New Balance 880 v15, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Adidas Adizero SL 2",
                   "secondary": "Light, fast · rated 4.4/5",
-                  "trailing": "S$159"
+                  "trailing": "S$159",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff1fa1965c8",
+                    "alt": "Adidas Adizero SL 2, side view of the shoe"
+                  }
                 },
                 {
                   "label": "Puma Velocity Nitro 4",
                   "secondary": "Budget daily · rated 4.4/5",
-                  "trailing": "S$149"
+                  "trailing": "S$149",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5191c70de",
+                    "alt": "Puma Velocity Nitro 4, side view of the shoe"
+                  }
                 }
               ]
             },
@@ -644,7 +748,33 @@
               "kind": "image",
               "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
               "alt": "Dyson V8 Origin stick vacuum, purple wand, front view",
-              "aspect": "4:3"
+              "aspect": "4:3",
+              "images": [
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
+                  "alt": "Dyson V8 Origin stick vacuum, purple wand, front view"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fcf92e8d8db",
+                  "alt": "Dyson V8 Origin, wand and head, side view"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb83847e856",
+                  "alt": "Dyson V8 Origin docked on its wall mount"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd29b206827",
+                  "alt": "Dyson V8 Origin attachments laid out: crevice tool, combination tool, mini motorised head"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff84429ec97",
+                  "alt": "Dyson V8 Origin bin opened for emptying"
+                },
+                {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f6c962c4d21",
+                  "alt": "Dyson V8 Origin used as a handheld on a sofa"
+                }
+              ]
             }
           },
           {
@@ -743,7 +873,33 @@
                 "kind": "image",
                 "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
                 "alt": "Dyson V8 Origin stick vacuum, purple wand, front view",
-                "aspect": "4:3"
+                "aspect": "4:3",
+                "images": [
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
+                    "alt": "Dyson V8 Origin stick vacuum, purple wand, front view"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fcf92e8d8db",
+                    "alt": "Dyson V8 Origin, wand and head, side view"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb83847e856",
+                    "alt": "Dyson V8 Origin docked on its wall mount"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd29b206827",
+                    "alt": "Dyson V8 Origin attachments laid out: crevice tool, combination tool, mini motorised head"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff84429ec97",
+                    "alt": "Dyson V8 Origin bin opened for emptying"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f6c962c4d21",
+                    "alt": "Dyson V8 Origin used as a handheld on a sofa"
+                  }
+                ]
               }
             },
             {
@@ -786,7 +942,33 @@
                 "kind": "image",
                 "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
                 "alt": "Dyson V8 Origin stick vacuum, purple wand, front view",
-                "aspect": "4:3"
+                "aspect": "4:3",
+                "images": [
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000006a5",
+                    "alt": "Dyson V8 Origin stick vacuum, purple wand, front view"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fcf92e8d8db",
+                    "alt": "Dyson V8 Origin, wand and head, side view"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb83847e856",
+                    "alt": "Dyson V8 Origin docked on its wall mount"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fd29b206827",
+                    "alt": "Dyson V8 Origin attachments laid out: crevice tool, combination tool, mini motorised head"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff84429ec97",
+                    "alt": "Dyson V8 Origin bin opened for emptying"
+                  },
+                  {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f6c962c4d21",
+                    "alt": "Dyson V8 Origin used as a handheld on a sofa"
+                  }
+                ]
               }
             },
             {
@@ -1322,12 +1504,20 @@
                 "label": "Sony WF-1000XM6",
                 "secondary": "Best noise cancelling · 8 h battery",
                 "trailing": "S$399",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f732e328f89",
+                  "alt": "Sony WF-1000XM6, earbuds in their case"
+                }
               },
               {
                 "label": "AirPods Pro 3",
                 "secondary": "Best with iPhone · 8 h battery",
-                "trailing": "S$349"
+                "trailing": "S$349",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f19e2b2b6d2",
+                  "alt": "AirPods Pro 3, earbuds in their case"
+                }
               }
             ]
           }
@@ -1379,11 +1569,19 @@
                   "label": "Sony WF-1000XM6",
                   "secondary": "Best noise cancelling · 8 h battery",
                   "trailing": "S$399",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f732e328f89",
+                    "alt": "Sony WF-1000XM6, earbuds in their case"
+                  }
                 },
                 {
                   "label": "AirPods Pro 3",
-                  "secondary": "Best with iPhone · 8 h battery · price not checked"
+                  "secondary": "Best with iPhone · 8 h battery · price not checked",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f19e2b2b6d2",
+                    "alt": "AirPods Pro 3, earbuds in their case"
+                  }
                 }
               ]
             }
@@ -1415,12 +1613,20 @@
                   "label": "Sony WF-1000XM6",
                   "secondary": "Best noise cancelling · 8 h battery",
                   "trailing": "S$399",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f732e328f89",
+                    "alt": "Sony WF-1000XM6, earbuds in their case"
+                  }
                 },
                 {
                   "label": "AirPods Pro 3",
                   "secondary": "Best with iPhone · 8 h battery",
-                  "trailing": "S$349"
+                  "trailing": "S$349",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f19e2b2b6d2",
+                    "alt": "AirPods Pro 3, earbuds in their case"
+                  }
                 }
               ]
             }
@@ -5173,7 +5379,7 @@
       "components": [
         "S1 Product options",
         "S2 Product grid / carousel (as rows)",
-        "X4 Item thumbnail (degraded: no row image)"
+        "X4 Item thumbnail"
       ],
       "rationale": "Three options from three shops, one pick, price trailing; each product's own page is a source in Details, since rows carry no link.",
       "document": {
@@ -5191,17 +5397,29 @@
                 "label": "Sennheiser Accentum Plus",
                 "secondary": "Challenger · 50 h battery · in stock",
                 "trailing": "S$239",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe4da99c46c",
+                  "alt": "Sennheiser Accentum Plus, product photo"
+                }
               },
               {
                 "label": "Soundcore Space One",
                 "secondary": "Lazada · 40 h battery · in stock",
-                "trailing": "S$119"
+                "trailing": "S$119",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f108d4e66d3",
+                  "alt": "Soundcore Space One, product photo"
+                }
               },
               {
                 "label": "Sony WH-CH720N",
                 "secondary": "Courts · 35 h battery · in stock",
-                "trailing": "S$149"
+                "trailing": "S$149",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f5b3c8695a2",
+                  "alt": "Sony WH-CH720N, product photo"
+                }
               }
             ]
           }
@@ -5259,12 +5477,20 @@
                   "label": "Sennheiser Accentum Plus",
                   "secondary": "Challenger · 50 h battery · in stock",
                   "trailing": "S$239",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe4da99c46c",
+                    "alt": "Sennheiser Accentum Plus, product photo"
+                  }
                 },
                 {
                   "label": "Soundcore Space One",
                   "secondary": "Lazada · 40 h battery · in stock",
-                  "trailing": "S$119"
+                  "trailing": "S$119",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f108d4e66d3",
+                    "alt": "Soundcore Space One, product photo"
+                  }
                 }
               ]
             }
@@ -5298,17 +5524,29 @@
                   "label": "Sennheiser Accentum Plus",
                   "secondary": "Challenger · 50 h battery · in stock",
                   "trailing": "S$239",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe4da99c46c",
+                    "alt": "Sennheiser Accentum Plus, product photo"
+                  }
                 },
                 {
                   "label": "Soundcore Space One",
                   "secondary": "Lazada · 40 h battery · in stock",
-                  "trailing": "S$119"
+                  "trailing": "S$119",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f108d4e66d3",
+                    "alt": "Soundcore Space One, product photo"
+                  }
                 },
                 {
                   "label": "Sony WH-CH720N",
                   "secondary": "Courts · 35 h battery · in stock",
-                  "trailing": "S$149"
+                  "trailing": "S$149",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0f5b3c8695a2",
+                    "alt": "Sony WH-CH720N, product photo"
+                  }
                 }
               ]
             }

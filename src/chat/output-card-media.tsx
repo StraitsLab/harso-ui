@@ -1,8 +1,8 @@
 "use client";
 
-import { Info, Play, WarningCircle } from "@phosphor-icons/react";
+import { CaretLeft, CaretRight, Info, Play, WarningCircle } from "@phosphor-icons/react";
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
-import { Button } from "../primitives";
+import { Button, IconButton } from "../primitives";
 import "./output-card-media.css";
 
 /*
@@ -24,7 +24,10 @@ export interface HarsoOutputStatusBlock {
 export interface HarsoOutputSubjectState { word: string; meaning?: HarsoOutputMeaning }
 export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string }
 export interface HarsoOutputMap { kind: "map"; places: HarsoOutputPlace[]; selected_place_id?: string }
-export interface HarsoOutputImage { kind: "image"; artifact: string; alt: string; aspect?: "square" | "4:3" | "16:9" | "3:4" }
+/** One photo: a row's thumbnail, or one photo of a gallery. */
+export interface HarsoOutputPhoto { artifact: string; alt: string }
+/** `images` (2..10) makes the image a gallery; `artifact`/`alt` stay photo 1 for readers that show one. */
+export interface HarsoOutputImage { kind: "image"; artifact: string; alt: string; aspect?: "square" | "4:3" | "16:9" | "3:4"; images?: HarsoOutputPhoto[] }
 export interface HarsoOutputVideo { kind: "video"; artifact: string; alt: string; poster?: string }
 export type HarsoOutputMedia = HarsoOutputMap | HarsoOutputImage | HarsoOutputVideo;
 
@@ -40,7 +43,7 @@ export interface HarsoOutputMediaHost {
 }
 
 type AnyBlock = { kind: string };
-type Row = { label: string; secondary?: string; trailing?: string; mark?: string; status?: string };
+type Row = { label: string; secondary?: string; trailing?: string; mark?: string; status?: string; thumbnail?: unknown };
 type Number_ = { value: string; label: string };
 
 // ---- status ----
@@ -73,7 +76,7 @@ export function readStatus(block: AnyBlock): HarsoOutputStatusBlock | undefined 
  */
 export function readSteps<T extends Row>(status: HarsoOutputStatusBlock | undefined, items: T[]): T[] | undefined {
   if (!status || !RUNNING.has(status.state) || !items.length) return undefined;
-  return items.every(row => row.label?.trim() && row.trailing?.trim() && !row.secondary && row.mark == null && row.status == null) ? items : undefined;
+  return items.every(row => row.label?.trim() && row.trailing?.trim() && !row.secondary && row.mark == null && row.status == null && row.thumbnail == null) ? items : undefined;
 }
 
 export function HarsoOutputStatusView({ status, steps, live }: { status: HarsoOutputStatusBlock; steps?: Row[]; live?: HarsoOutputSubjectState }) {
@@ -161,19 +164,35 @@ export function HarsoOutputProgressView({ progress }: { progress: HarsoOutputPro
 // ---- media ----
 
 export const ARTIFACT = /^artifact:[0-9a-f-]{36}$/;
+/** A photo the card may draw (a row thumbnail, a gallery photo): a well-formed artifact and an alt. */
+export const isPhoto = (photo: unknown): photo is HarsoOutputPhoto => !!photo && typeof photo === "object"
+  && ARTIFACT.test((photo as HarsoOutputPhoto).artifact ?? "") && typeof (photo as HarsoOutputPhoto).alt === "string";
+/** 2..10 well-formed photos, photo 1 being the image's own artifact and alt (what a one-photo reader shows). */
+const isGallery = (image: HarsoOutputImage): image is HarsoOutputImage & { images: HarsoOutputPhoto[] } => {
+  const { images } = image;
+  return Array.isArray(images) && images.length >= 2 && images.length <= 10 && images.every(isPhoto)
+    && images[0].artifact === image.artifact && images[0].alt === image.alt;
+};
 /**
  * The image, video or map this card can draw, or undefined (the card then falls back to text). A video needs
- * `canOpen` (the card's `onOpenArtifact`): its poster is only a way to open the file.
+ * `canOpen` (the card's `onOpenArtifact`): its poster is only a way to open the file. A well-formed gallery (2..10
+ * photos, photo 1 = the image) needs only a resolving host; each photo's availability is its own tile's. Any other
+ * `images` draw as the one photo old readers show.
  */
 export function readMedia(block: AnyBlock, host: HarsoOutputMediaHost, canOpen = false): HarsoOutputMedia | undefined {
   if (block.kind !== "visual") return undefined;
   const visual = (block as { visual?: { kind?: string } }).visual as HarsoOutputMedia | undefined;
   if (!visual) return undefined;
   if (visual.kind === "image" || visual.kind === "video") {
+    if (!ARTIFACT.test(visual.artifact ?? "") || typeof visual.alt !== "string") return undefined;
+    // A well-formed gallery needs only a host that resolves artifacts: each photo it cannot resolve is its own quiet
+    // tile, photo 1 included, and the others still browse.
+    if (visual.kind === "image" && isGallery(visual)) return host.resolveArtifact ? visual : undefined;
     // No way to show the file (or, for a video, to open it) without the host: fall back rather than draw a dead frame.
-    const ok = ARTIFACT.test(visual.artifact ?? "") && typeof visual.alt === "string" && !!host.resolveArtifact?.(visual.artifact)
-      && (visual.kind === "image" || canOpen);
-    return ok ? visual : undefined;
+    if (!host.resolveArtifact?.(visual.artifact) || (visual.kind === "video" && !canOpen)) return undefined;
+    if (visual.kind === "video" || visual.images === undefined) return visual;
+    const { images: _dropped, ...one } = visual;
+    return one;
   }
   if (visual.kind === "map") {
     if (!host.mapTile) return undefined;
@@ -258,6 +277,150 @@ export function HarsoOutputImageView({ image, host }: { image: HarsoOutputImage;
     style={{ "--hkc-media-aspect": aspect } as CSSProperties}>
     <img key={loads.key(src)} data-load={src} className="hkc-output-media-img" src={src} alt={image.alt} decoding="async" draggable={false}
       onLoad={() => loads.settle(src, "ready")} onError={() => loads.settle(src, "failed")} />
+  </div>;
+}
+
+const reducedMotion = (node: Element | null) => !!node?.ownerDocument.defaultView?.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+/**
+ * One photo in a fixed box: the tinted box holds the space while it loads, the photo fades in, and a photo that does
+ * not arrive (or that the host cannot resolve) leaves the quiet tile, named by its alt. Never a broken-image glyph.
+ * `load` false keeps the tile without fetching (a gallery photo not yet near the one shown).
+ */
+function PhotoTile({ photo, host, className, load = true }: { photo: HarsoOutputPhoto; host: HarsoOutputMediaHost; className: string; load?: boolean }) {
+  const src = load ? host.resolveArtifact?.(photo.artifact) : undefined;
+  const loads = useLoads();
+  const tile = useRef<HTMLSpanElement>(null);
+  useSettleComplete(tile, loads);
+  const phase = src ? loads.phase(src) : "failed";
+  return <span ref={tile} className={className} data-state={load ? phase : "idle"}>
+    {src && phase !== "failed"
+      ? <img key={loads.key(src)} data-load={src} className="hkc-output-photo-img" src={src} alt={photo.alt} decoding="async" draggable={false}
+        onLoad={() => loads.settle(src, "ready")} onError={() => loads.settle(src, "failed")} />
+      : <span className="hkc-output-photo-empty" role="img" aria-label={photo.alt} />}
+  </span>;
+}
+
+/** A row's square photo, leading the row (sized in CSS to the row's two lines). */
+export function HarsoOutputThumb({ photo, host }: { photo: HarsoOutputPhoto; host: HarsoOutputMediaHost }) {
+  return <PhotoTile photo={photo} host={host} className="hkc-output-thumb" />;
+}
+
+/**
+ * A gallery in the single image's frame: swipe or trackpad-scroll with snap, prev/next on hover or focus, arrow keys
+ * on the focused gallery, and a quiet "1 of 8". Only the photo shown and its neighbours load (and stay once loaded).
+ * A photo that fails is the quiet tile; the others still browse.
+ */
+export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImage & { images: HarsoOutputPhoto[] }; host: HarsoOutputMediaHost }) {
+  const photos = image.images, count = photos.length;
+  const [index, setIndex] = useState(0);
+  const [seen, setSeen] = useState<ReadonlySet<number>>(() => new Set([0, 1]));
+  const track = useRef<HTMLDivElement>(null);
+  const prev = useRef<HTMLButtonElement>(null), next = useRef<HTMLButtonElement>(null);
+  // A button the edge removes hands focus to the other one, so the keyboard never drops to the page.
+  const handoff = useRef<"prev" | "next" | undefined>(undefined);
+  /*
+   * The photo the newest button or key press is scrolling to, until the track gets there. Only the newest command
+   * counts: scroll events on the way, and the end of an older scroll that command cut short, never move the counter
+   * (the track is sent on to the target, a few times at most). A hand on the track (wheel, touch, pointer) cancels the
+   * command, and from then on the counter follows the track and settles where it stops.
+   */
+  const target = useRef<number | undefined>(undefined), retries = useRef(0);
+  const lastPosition = useRef(0);
+  const select = (at: number) => {
+    setIndex(at);
+    setSeen(all => all.has(at - 1) && all.has(at) && all.has(at + 1) ? all : new Set([...all, at - 1, at, at + 1]));
+  };
+  const position = (element: HTMLElement) => Math.abs(element.scrollLeft) / element.clientWidth;
+  const scrollTrack = (element: HTMLElement, at: number, instant = false) => {
+    const rtl = element.ownerDocument.defaultView?.getComputedStyle(element).direction === "rtl";
+    element.scrollTo({ left: (rtl ? -1 : 1) * at * element.clientWidth, behavior: instant ? "instant" : reducedMotion(element) ? "auto" : "smooth" });
+  };
+  const show = (to: number) => {
+    const at = Math.max(0, Math.min(count - 1, to));
+    select(at);
+    const element = track.current;
+    if (!element || !element.clientWidth) return;
+    lastPosition.current = position(element);
+    // Already there (an end pressed again, or a reversal before an older smooth scroll has got far): an older scroll may
+    // still be on its way, so this is still a command. Pin the track instantly, then again on the next two frames: a
+    // cut-short smooth scroll can take its first pixels and stop without a scrollend. A hand on the track wins.
+    if (Math.abs(position(element) - at) < .02) {
+      target.current = at;
+      retries.current = 0;
+      scrollTrack(element, at, true);
+      const view = element.ownerDocument.defaultView;
+      const pin = (frames: number) => view?.requestAnimationFrame(() => {
+        if (target.current !== at) return;
+        if (Math.abs(position(element) - at) * element.clientWidth > 1) scrollTrack(element, at, true);
+        lastPosition.current = position(element);
+        if (frames > 1) pin(frames - 1); else target.current = undefined;
+      });
+      pin(2);
+      return;
+    }
+    target.current = at;
+    retries.current = 0;
+    scrollTrack(element, at);
+  };
+  const settle = (end: boolean) => {
+    const element = track.current;
+    if (!element?.clientWidth) return;
+    const current = position(element), at = Math.round(current);
+    // A host scrollTo has no pointer/wheel event. Movement away after reaching the
+    // target's slide means takeover. Before then, an older scroll may still be
+    // moving away from a newer reversing command; keep that command alive.
+    if (target.current !== undefined && Math.abs(lastPosition.current - target.current) < .5
+      && Math.abs(current - target.current) > Math.abs(lastPosition.current - target.current) + 1 / element.clientWidth) {
+      target.current = undefined;
+    }
+    lastPosition.current = current;
+    if (target.current !== undefined) {
+      if (!end) return;
+      // An older scroll the newest command cut short ended short of it: send the track on, never the counter back.
+      // Checked exactly, not rounded: a few pixels an older scroll took before it was cut short count as short too.
+      if (Math.abs(position(element) - target.current) * element.clientWidth > 1 && retries.current < 3) { retries.current++; scrollTrack(element, target.current); return; }
+      target.current = undefined;
+    }
+    if (at !== index) select(at);
+  };
+  const takeOver = () => { target.current = undefined; };
+  const step = (by: number, from: "prev" | "next") => {
+    const at = index + by;
+    if (at <= 0 && from === "prev") handoff.current = "next";
+    if (at >= count - 1 && from === "next") handoff.current = "prev";
+    show(at);
+  };
+  useEffect(() => {
+    const to = handoff.current;
+    handoff.current = undefined;
+    (to === "next" ? next : to === "prev" ? prev : undefined)?.current?.focus();
+  }, [index]);
+  const aspect = ASPECT[image.aspect ?? "4:3"] ?? ASPECT["4:3"];
+  return <div className="hkc-output-media hkc-output-gallery" role="region" aria-roledescription="gallery" aria-label={`${count} photos`}
+    style={{ "--hkc-media-aspect": aspect } as CSSProperties}>
+    <div ref={track} className="hkc-output-gallery-track" tabIndex={0} aria-label="Photos. Left and right arrows move between them."
+      onScroll={() => settle(false)} onScrollEnd={() => settle(true)}
+      onWheel={takeOver} onTouchStart={takeOver} onPointerDown={takeOver}
+      onKeyDown={event => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Home" && event.key !== "End") return;
+        event.preventDefault();
+        const rtl = event.currentTarget.ownerDocument.defaultView?.getComputedStyle(event.currentTarget).direction === "rtl";
+        const forward = (event.key === "ArrowRight") !== rtl;
+        show(event.key === "Home" ? 0 : event.key === "End" ? count - 1 : index + (forward ? 1 : -1));
+      }}>
+      {photos.map((photo, at) => <div key={at} className="hkc-output-gallery-slide" role="group" aria-roledescription="photo"
+        aria-label={`${at + 1} of ${count}`} aria-hidden={at !== index || undefined}>
+        <PhotoTile photo={photo} host={host} className="hkc-output-gallery-photo" load={seen.has(at)} />
+      </div>)}
+    </div>
+    {index > 0 && <IconButton ref={prev} label="Previous photo" className="hkc-output-gallery-nav" data-side="start" onClick={() => step(-1, "prev")}>
+      <CaretLeft weight="bold" />
+    </IconButton>}
+    {index < count - 1 && <IconButton ref={next} label="Next photo" className="hkc-output-gallery-nav" data-side="end" onClick={() => step(1, "next")}>
+      <CaretRight weight="bold" />
+    </IconButton>}
+    <span className="hkc-output-gallery-count" aria-live="polite">{index + 1} of {count}</span>
   </div>;
 }
 

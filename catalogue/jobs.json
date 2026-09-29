@@ -33,17 +33,29 @@
                 "label": "Lead Product Designer",
                 "secondary": "Grab · Hybrid · 2 days ago",
                 "trailing": "S$11–14k/mo",
-                "mark": "pick"
+                "mark": "pick",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe531c8a3f2",
+                  "alt": "Grab logo"
+                }
               },
               {
                 "label": "Design Lead, Payments",
                 "secondary": "Wise · Hybrid · 4 days ago",
-                "trailing": "S$10–13k/mo"
+                "trailing": "S$10–13k/mo",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff8dadfd1ae",
+                  "alt": "Wise logo"
+                }
               },
               {
                 "label": "Principal Designer",
                 "secondary": "Shopee · On-site · 5 days ago",
-                "trailing": "S$9–12k/mo"
+                "trailing": "S$9–12k/mo",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb477c974c8",
+                  "alt": "Shopee logo"
+                }
               }
             ]
           }
@@ -92,12 +104,20 @@
                   "label": "Lead Product Designer",
                   "secondary": "Grab · Hybrid · 2 days ago",
                   "trailing": "S$11–14k/mo",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe531c8a3f2",
+                    "alt": "Grab logo"
+                  }
                 },
                 {
                   "label": "Design Lead, Payments",
                   "secondary": "Wise · Hybrid · 4 days ago",
-                  "trailing": "S$10–13k/mo"
+                  "trailing": "S$10–13k/mo",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff8dadfd1ae",
+                    "alt": "Wise logo"
+                  }
                 }
               ]
             }
@@ -126,17 +146,29 @@
                   "label": "Lead Product Designer",
                   "secondary": "Grab · Hybrid · 2 days ago",
                   "trailing": "S$11–14k/mo",
-                  "mark": "pick"
+                  "mark": "pick",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe531c8a3f2",
+                    "alt": "Grab logo"
+                  }
                 },
                 {
                   "label": "Design Lead, Payments",
                   "secondary": "Wise · Hybrid · 4 days ago",
-                  "trailing": "S$10–13k/mo"
+                  "trailing": "S$10–13k/mo",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0ff8dadfd1ae",
+                    "alt": "Wise logo"
+                  }
                 },
                 {
                   "label": "Principal Designer",
                   "secondary": "Shopee · On-site · 5 days ago",
-                  "trailing": "S$9–12k/mo"
+                  "trailing": "S$9–12k/mo",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb477c974c8",
+                    "alt": "Shopee logo"
+                  }
                 }
               ]
             }

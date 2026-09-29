@@ -647,17 +647,29 @@
               {
                 "label": "Burnt Ends sanger",
                 "secondary": "Pulled pork, brioche, slaw",
-                "trailing": "S$28"
+                "trailing": "S$28",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faa4a6162bb",
+                  "alt": "Burnt Ends sanger, photo of the dish"
+                }
               },
               {
                 "label": "Leeks, hazelnut, brown butter",
                 "secondary": "Smoked over almond wood",
-                "trailing": "S$24"
+                "trailing": "S$24",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5fd455003",
+                  "alt": "Leeks, hazelnut, brown butter, photo of the dish"
+                }
               },
               {
                 "label": "Onion rings",
                 "secondary": "With smoked mayo",
-                "trailing": "S$18"
+                "trailing": "S$18",
+                "thumbnail": {
+                  "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe52cd5c8e2",
+                  "alt": "Onion rings, photo of the dish"
+                }
               }
             ]
           },
@@ -717,17 +729,29 @@
                 {
                   "label": "Burnt Ends sanger",
                   "secondary": "Pulled pork, brioche, slaw",
-                  "trailing": "S$28"
+                  "trailing": "S$28",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faa4a6162bb",
+                    "alt": "Burnt Ends sanger, photo of the dish"
+                  }
                 },
                 {
                   "label": "Leeks, hazelnut, brown butter",
                   "secondary": "Smoked over almond wood",
-                  "trailing": "S$24"
+                  "trailing": "S$24",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5fd455003",
+                    "alt": "Leeks, hazelnut, brown butter, photo of the dish"
+                  }
                 },
                 {
                   "label": "Onion rings",
                   "secondary": "With smoked mayo",
-                  "trailing": "S$18"
+                  "trailing": "S$18",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe52cd5c8e2",
+                    "alt": "Onion rings, photo of the dish"
+                  }
                 }
               ]
             },
@@ -767,17 +791,29 @@
                 {
                   "label": "Burnt Ends sanger",
                   "secondary": "Pulled pork, brioche, slaw",
-                  "trailing": "S$28"
+                  "trailing": "S$28",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0faa4a6162bb",
+                    "alt": "Burnt Ends sanger, photo of the dish"
+                  }
                 },
                 {
                   "label": "Leeks, hazelnut, brown butter",
                   "secondary": "Smoked over almond wood",
-                  "trailing": "S$24"
+                  "trailing": "S$24",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fb5fd455003",
+                    "alt": "Leeks, hazelnut, brown butter, photo of the dish"
+                  }
                 },
                 {
                   "label": "Onion rings",
                   "secondary": "With smoked mayo",
-                  "trailing": "S$18"
+                  "trailing": "S$18",
+                  "thumbnail": {
+                    "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0fe52cd5c8e2",
+                    "alt": "Onion rings, photo of the dish"
+                  }
                 }
               ]
             },

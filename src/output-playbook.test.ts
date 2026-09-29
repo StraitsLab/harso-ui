@@ -16,7 +16,7 @@ const allFindings = (example: Example): string[] => [
   ...lawErrors(example),
 ];
 
-const SCHEMA_SHA256 = "470aa1aec345587faaa4004ee00a499f3044540dfbde1126ff130072fdd68f87";
+const SCHEMA_SHA256 = "969af48f10b567b1f4d7bda0585a3c81d40537f4e0767c2fecacd72b1919077f";
 /** Runs the whole-file checks on a copy of the examples with one example replaced (says, periods, weekdays). */
 function fileFindings(example: Example): string[] {
   const copy = structuredClone(examplesFile as any);
@@ -94,6 +94,18 @@ describe("agent output playbook examples", () => {
     ["shares: a Total row sent as a share row (G24)", "money-spending-month", (e: Example) => { e.document.blocks[2].items.push({ label: "Total", secondary: "100%", trailing: "S$4,280" }); }, /shares go largest first/],
     ["shares: a donut on the card", "data-channel-share", (e: Example) => { e.document.header.subtitle = "Donut by channel"; }, /no donut or pie/],
     ["partial: a missing day sent as zero", "partial-days", (e: Example) => { e.document.blocks[0].visual.series[0].values[13] = "0"; }, /not in yet is null, never 0/],
+    // Row photos and galleries (KIT-ROW-PHOTOS): all or none per rows block; a gallery is 2..10 well-formed photos.
+    ["photos: one row without a thumbnail", "shop-vacuum-options", (e: Example) => { delete e.document.blocks[0].items[1].thumbnail; }, /every row a thumbnail or none/],
+    ["photos: thumbnail with a bad artifact", "jobs-results", (e: Example) => { e.document.blocks[0].items[0].thumbnail.artifact = "https://cdn.example.com/grab.png"; }, /thumbnail/],
+    ["photos: thumbnail alt with a trailing newline", "jobs-results", (e: Example) => { e.document.blocks[0].items[0].thumbnail.alt = "Grab logo\n"; }, /thumbnail/],
+    ["photos: thumbnail with an extra field", "jobs-results", (e: Example) => { e.document.blocks[0].items[0].thumbnail.url = "https://grab.com/logo.png"; }, /unexpected field/],
+    ["gallery: one photo", "home-listing-card", (e: Example) => { e.document.blocks[0].visual.images.splice(1); }, /at least 2/],
+    ["gallery: eleven photos", "home-listing-card", (e: Example) => { const images = e.document.blocks[0].visual.images; images.push(...images.slice(0, 11 - images.length)); }, /at most 10/],
+    ["gallery: bad artifact", "travel-hotel-detail", (e: Example) => { e.document.blocks[0].visual.images[2].artifact = "artifact:nope"; }, /images/],
+    // Photo 1 is the image itself (contract review F1): artifact and alt both equal images[0], in order.
+    ["gallery: photo 1 artifact differs from the image", "home-listing-card", (e: Example) => { e.document.blocks[0].visual.artifact = e.document.blocks[0].visual.images[1].artifact; }, /photo 1 must be the image's own/],
+    ["gallery: photo 1 alt differs from the image", "home-listing-card", (e: Example) => { e.document.blocks[0].visual.alt = "Kitchen"; }, /photo 1 must be the image's own/],
+    ["gallery: photos reordered", "shop-product-detail", (e: Example) => { e.document.blocks[0].visual.images.reverse(); }, /photo 1 must be the image's own/],
   ])("catches %s", (_name, id, mutate, expected) => {
     const example = byId(id);
     expect(allFindings(example)).toEqual([]);
