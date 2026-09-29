@@ -14,7 +14,7 @@
     "faint": { "light": "#a9aeb5", "dark": "#666c76", "cozy": "#b3aca3", "darkCozy": "#6f675c" },
     "line": { "light": "#e6e8ec", "dark": "#262a30", "cozy": "#e8e3db", "darkCozy": "#2e2a24" },
     "line-strong": { "light": "#d6d9df", "dark": "#343941", "cozy": "#d9d3c9", "darkCozy": "#3b362e" },
-    "control-line": { "light": "{ink} / 32%", "dark": "{ink} / 40%", "cozy": "{ink} / 32%", "darkCozy": "{ink} / 40%" },
+    "control-line": { "light": "{ink} / 50%", "dark": "{ink} / 40%", "cozy": "{ink} / 52%", "darkCozy": "{ink} / 40%" },
     "accent": { "light": "#1d63c8", "dark": "#6ea8ff", "cozy": "#2f6e53", "darkCozy": "#8fcbaf" },
     "accent-mark": { "light": "#3d8bf5", "dark": "#6ea8ff", "cozy": "#3f8a6a", "darkCozy": "#8fcbaf" },
     "accent-soft": { "light": "#dce8fb", "dark": "#1f2f47", "cozy": "#dcefe5", "darkCozy": "#223a30" },

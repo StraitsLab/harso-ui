@@ -18,7 +18,7 @@
   --hk-faint: #a9aeb5;
   --hk-line: #e6e8ec;
   --hk-line-strong: #d6d9df;
-  --hk-control-line: color-mix(in srgb, var(--hk-ink) 32%, transparent);
+  --hk-control-line: color-mix(in srgb, var(--hk-ink) 50%, transparent);
   --hk-accent: #1d63c8;
   --hk-accent-mark: #3d8bf5;
   --hk-accent-soft: #dce8fb;
@@ -106,6 +106,7 @@
   --hk-faint: #b3aca3;
   --hk-line: #e8e3db;
   --hk-line-strong: #d9d3c9;
+  --hk-control-line: color-mix(in srgb, var(--hk-ink) 52%, transparent);
   --hk-accent: #2f6e53;
   --hk-accent-mark: #3f8a6a;
   --hk-accent-soft: #dcefe5;
@@ -170,7 +171,8 @@
 
 .harso-kit :where(*, *::before, *::after) { box-sizing: border-box; }
 .harso-kit :where(button, input, textarea, select) { font: inherit; }
-.harso-kit :where(button, a, input, textarea, select, summary, [tabindex]):focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 4px; }
+/* One keyboard-focus contract, including custom focusable elements. Component rules must not erase it. */
+.harso-kit :focus-visible { outline: 2px solid var(--hk-accent) !important; outline-offset: 3px !important; }
 .harso-kit :where(button, input, textarea, select):disabled { cursor: not-allowed; }
 .harso-kit :where(h1, h2, h3, p) { margin: 0; }
 .harso-kit :where(h1, h2, h3) { font-weight: 500; letter-spacing: -.015em; line-height: 1.3; }
@@ -183,5 +185,6 @@
 }
 
 @media (forced-colors: active) {
+  .harso-kit :focus-visible { outline-color: Highlight !important; }
   .harso-kit { --hk-canvas: Canvas; --hk-canvas-deep: Canvas; --hk-panel: Canvas; --hk-surface: Canvas; --hk-ink: CanvasText; --hk-secondary: CanvasText; --hk-tertiary: CanvasText; --hk-faint: GrayText; --hk-line: ButtonBorder; --hk-line-strong: ButtonBorder; --hk-control-line: ButtonBorder; --hk-dark: ButtonText; --hk-accent: Highlight; --hk-accent-mark: Highlight; --hk-positive-mark: CanvasText; --hk-attention-mark: CanvasText; --hk-negative-mark: CanvasText; --hk-accent-soft: Canvas; --hk-inverse: HighlightText; --hk-glass: Canvas; }
 }
