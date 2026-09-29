@@ -2,7 +2,9 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { createRef, useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
-import { Announcement, Breadcrumb, BreadcrumbItem, ButtonGroup, Chip, CloseButton, Pagination, SegmentedControl, StatusDot, TabList, TabPanel, Tabs, ThemeToggle } from "./navigation";
+import { Announcement, Breadcrumb, BreadcrumbItem, ButtonGroup, Chip, CloseButton, Pagination, SegmentedControl, StatusDot, TabList, TabPanel, Tabs, ThemeToggle, Tooltip } from "./navigation";
+
+import { KitProvider } from "./theme";
 
 const choices = [{ value: "team", label: "Our team" }, { value: "public", label: "Everyone" }, { value: "partners", label: "Partners", disabled: true }];
 
@@ -231,4 +233,60 @@ describe("compact navigation and selection", () => {
     fireEvent.click(screen.getByRole("button", { name: "Unavailable close" }));
     expect(close).toHaveBeenCalledTimes(1);
   });
+});
+
+
+describe("tooltip timing", () => {
+  test("second tooltip opens without delay within skip window", async () => {
+    vi.useFakeTimers();
+    const hover = (name: string) => fireEvent.pointerMove(screen.getByRole("button", { name }), { pointerType: "mouse" });
+    const unhover = (name: string) => fireEvent.pointerLeave(screen.getByRole("button", { name }));
+    const view = render(<KitProvider><Tooltip disableHoverableContent content="First hint"><button>First</button></Tooltip><Tooltip disableHoverableContent content="Second hint"><button>Second</button></Tooltip></KitProvider>);
+    try {
+      hover("First");
+      await act(async () => vi.advanceTimersByTime(400));
+      expect(screen.getByRole("tooltip")).toHaveTextContent("First hint");
+      unhover("First");
+      await act(async () => vi.advanceTimersByTime(100));
+      hover("Second");
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Second hint");
+      expect(screen.getByRole("button", { name: "Second" })).toHaveAttribute("data-state", "instant-open");
+    } finally { view.unmount(); vi.useRealTimers(); }
+  });
+  test.each([{ delay: 400, skip: 300 }, { delay: 80, skip: 40 }])("first hint waits and delay returns after skip window ($delay/$skip ms)", async ({ delay, skip }) => {
+    vi.useFakeTimers();
+    const view = render(<KitProvider delayDuration={delay} skipDelayDuration={skip}><Tooltip disableHoverableContent content="Hint"><button>Trigger</button></Tooltip></KitProvider>);
+    try {
+      const trigger = screen.getByRole("button", { name: "Trigger" });
+      fireEvent.pointerMove(trigger, { pointerType: "mouse" });
+      await act(async () => vi.advanceTimersByTime(delay - 1));
+      expect(screen.queryByRole("tooltip")).toBeNull();
+      await act(async () => vi.advanceTimersByTime(1));
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Hint");
+      fireEvent.pointerLeave(trigger);
+      await act(async () => vi.advanceTimersByTime(skip + 1));
+      fireEvent.pointerMove(trigger, { pointerType: "mouse" });
+      expect(screen.queryByRole("tooltip")).toBeNull();
+      await act(async () => vi.advanceTimersByTime(delay));
+      expect(trigger).toHaveAttribute("data-state", "delayed-open");
+    } finally { view.unmount(); vi.useRealTimers(); }
+  });
+
+  test("standalone tooltip retains hover, keyboard focus and Escape behavior", async () => {
+    vi.useFakeTimers();
+    const view = render(<Tooltip content="Standalone hint"><button>Standalone</button></Tooltip>);
+    try {
+      const trigger = screen.getByRole("button", { name: "Standalone" });
+      fireEvent.pointerMove(trigger, { pointerType: "mouse" });
+      await act(async () => vi.advanceTimersByTime(400));
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Standalone hint");
+      fireEvent.keyDown(trigger, { key: "Escape" });
+      expect(screen.queryByRole("tooltip")).toBeNull();
+      fireEvent.focus(trigger);
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Standalone hint");
+      fireEvent.blur(trigger);
+      expect(screen.queryByRole("tooltip")).toBeNull();
+    } finally { view.unmount(); vi.useRealTimers(); }
+  });
+
 });

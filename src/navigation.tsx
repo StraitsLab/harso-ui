@@ -1,9 +1,9 @@
-import { useCallback, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type ReactElement, type ReactNode } from "react";
+import { useContext, useCallback, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type ReactElement, type ReactNode } from "react";
 import { XIcon } from "@phosphor-icons/react";
 import { flushSync } from "react-dom";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { Button, IconButton, type ButtonProps } from "./primitives";
-import type { Appearance } from "./theme";
+import { KitTooltipContext, type Appearance } from "./theme";
 
 export function Breadcrumb({ children, label = "Breadcrumb" }: { children: ReactNode; label?: string }) {
   return <nav aria-label={label} className="hk-breadcrumb"><ol>{children}</ol></nav>;
@@ -154,10 +154,12 @@ export function CloseButton({ label = "Close", size = "medium", ...props }: Omit
 export const TooltipTrigger = TooltipPrimitive.Trigger;
 
 export function Tooltip({ children, content, side = "top", size = "medium", ...props }: ComponentPropsWithRef<typeof TooltipPrimitive.Root> & { children: ReactElement; content: ReactNode; side?: "top" | "bottom" | "left" | "right"; size?: "small" | "medium" }) {
+  const sharedProvider = useContext(KitTooltipContext);
   const [container, setContainer] = useState<HTMLElement | null>(null);
   const anchor = useCallback((node: HTMLButtonElement | null) => setContainer(node?.closest<HTMLElement>(".harso-kit") ?? null), []);
   const hint = <TooltipPrimitive.Content side={side} sideOffset={8} collisionPadding={12} className={`hk-tooltip hk-tooltip--${size}`}>{content}</TooltipPrimitive.Content>;
-  return <TooltipPrimitive.Provider delayDuration={250}><TooltipPrimitive.Root {...props}><TooltipTrigger asChild ref={anchor}>{children}</TooltipTrigger>{container ? <TooltipPrimitive.Portal container={container}>{hint}</TooltipPrimitive.Portal> : hint}</TooltipPrimitive.Root></TooltipPrimitive.Provider>;
+  const tooltip = <TooltipPrimitive.Root {...props}><TooltipTrigger asChild ref={anchor}>{children}</TooltipTrigger>{container ? <TooltipPrimitive.Portal container={container}>{hint}</TooltipPrimitive.Portal> : hint}</TooltipPrimitive.Root>;
+  return sharedProvider ? tooltip : <TooltipPrimitive.Provider delayDuration={400} skipDelayDuration={300}>{tooltip}</TooltipPrimitive.Provider>;
 }
 
 export function ThemeToggle({ value, onValueChange, compact = false, disabled = false }: { value: Appearance; onValueChange: (value: Appearance) => void; compact?: boolean; disabled?: boolean }) {
