@@ -371,9 +371,9 @@ test("uncapped photo rows default to grid, preserve metadata in List, and reset 
   const document = rows({ ...row(1), mark: "pick", status: "paid" }, row(2));
   const view = render(<chat.HarsoOutputCard document={document} caps={chat.HARSO_OUTPUT_CARD_UNCAPPED} media={host} onViewAll={() => {}} />);
   expect(view.container.querySelector('[data-layout="grid"]')).toBeTruthy();
-  fireEvent.click(screen.getByRole("button", { name: "List", exact: true }));
+  fireEvent.click(screen.getByRole("button", { name: /^List$/ }));
   expect(view.container.querySelector('[data-layout="list"]')).toBeTruthy();
-  for (const word of ["Pick", "paid", "Option 1", "S$1"]) expect(screen.getByText(word)).toBeTruthy();
+  for (const word of ["Pick", "Paid", "Option 1", "S$1"]) expect(screen.getByText(word)).toBeTruthy();
   view.rerender(<chat.HarsoOutputCard document={rows(row(3))} caps={chat.HARSO_OUTPUT_CARD_UNCAPPED} media={host} onViewAll={() => {}} />);
   expect(view.container.querySelector('[data-layout="grid"]')).toBeTruthy();
 });

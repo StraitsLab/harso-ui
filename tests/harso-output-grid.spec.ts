@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 for (const mode of ["light", "dark"]) for (const width of [420, 512]) {
   for (const missing of [false, true]) test(`View all ${mode} ${width} missing=${missing}`, async ({ page }) => {
-    await page.goto(`/#/catalogue/shopping?mode=${mode}`);
+    await page.goto(`/#/catalogue/shopping?mode=${mode}&missingPhoto=1`);
     const selector = `[data-example="shop-running-shoes"] .hkl-cat-state${missing ? '[data-state="missing-photo"]' : ':not([data-state])'} .hkl-cat-frame[data-width="420"]`;
     const frame = page.locator(selector);
     await frame.evaluate((el, width) => { (el as HTMLElement).style.width = `${width}px`; }, width);
