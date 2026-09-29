@@ -555,6 +555,12 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
   const [textClipped, setTextClipped] = useState(false);
   const limits = { ...HARSO_OUTPUT_CARD_CAPS, ...caps };
   const content = readBlocks(document.blocks, limits, blockStates, media, host.onOpenArtifact, subjectState);
+  // The existing uncapped contract is the host's full-answer view. A photo collection is
+  // its one visual: never add a grid beside a chart, gallery, map or other visual block.
+  const gridEligible = limits.maxRows === Infinity && !!content?.parts.some(part => part.kind === "rows")
+    && content.parts.every(part => part.kind === "rows" ? part.photos : ["text", "sections", "numbers"].includes(part.kind));
+  const [rowView, setRowView] = useState<{ document: HarsoOutputDocument; layout: "grid" | "list" }>();
+  const rowLayout = gridEligible ? (rowView?.document === document ? rowView.layout : "grid") : undefined;
   const details = hasDetails(document.details) ? document.details : undefined;
   const inlineDetails = details && !onOpenDetails;
   const hasMore = !!content && (content.hidden > 0 || content.clamped || textClipped);
@@ -583,6 +589,12 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
     </div>}
     {content
       ? <>
+        {gridEligible && <div className="hkc-output-card-view-switch" role="group" aria-label="View layout">
+          {(["grid", "list"] as const).map(layout => <Button key={layout} variant="ghost" size="small"
+            aria-pressed={rowLayout === layout} onClick={() => setRowView({ document, layout })}>
+            {layout === "grid" ? "Grid" : "List"}
+          </Button>)}
+        </div>}
         {content.parts.map((part, partIndex) => part.kind === "status" || part.kind === "progress" || part.kind === "media"
           ? <MediaFrame key={partIndex} state={part.state} kind={part.kind === "media" ? part.media.kind : part.kind}>
             {part.kind === "status" ? <HarsoOutputStatusView status={part.status} steps={part.steps} live={part.live} />
@@ -599,7 +611,7 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
           : part.kind === "table"
           ? <HarsoOutputBlockFrame key={partIndex} kind="table" state={part.state}><HarsoOutputTableView table={part.table} shown={part.shown} label={document.header.title} /></HarsoOutputBlockFrame>
           : part.kind === "rows"
-          ? <ul key={partIndex} className="hkc-output-card-rows" data-photos={part.photos || undefined}>
+          ? <ul key={partIndex} className="hkc-output-card-rows" data-photos={part.photos || undefined} data-layout={rowLayout}>
             {part.items.map((row, index) => <li key={row.id ?? index} className="hkc-output-card-row">
               {part.photos && <HarsoOutputThumb photo={row.thumbnail!} host={media!} />}
               <div className="hkc-output-card-row-main">

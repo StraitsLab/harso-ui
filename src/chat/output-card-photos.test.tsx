@@ -365,3 +365,28 @@ test("View all (uncapped) shows the same gallery", () => {
   expect(within(card).getByRole("region", { name: "6 photos" })).toBeTruthy();
   expect(within(card).getByText("1 of 6")).toBeTruthy();
 });
+
+// ---- full-answer grid ----
+test("uncapped photo rows default to grid, preserve metadata in List, and reset for a different answer", () => {
+  const document = rows({ ...row(1), mark: "pick", status: "paid" }, row(2));
+  const view = render(<chat.HarsoOutputCard document={document} caps={chat.HARSO_OUTPUT_CARD_UNCAPPED} media={host} onViewAll={() => {}} />);
+  expect(view.container.querySelector('[data-layout="grid"]')).toBeTruthy();
+  fireEvent.click(screen.getByRole("button", { name: /^List$/ }));
+  expect(view.container.querySelector('[data-layout="list"]')).toBeTruthy();
+  for (const word of ["Pick", "Paid", "Option 1", "S$1"]) expect(screen.getByText(word)).toBeTruthy();
+  view.rerender(<chat.HarsoOutputCard document={rows(row(3))} caps={chat.HARSO_OUTPUT_CARD_UNCAPPED} media={host} onViewAll={() => {}} />);
+  expect(view.container.querySelector('[data-layout="grid"]')).toBeTruthy();
+});
+
+for (const variant of ["missing", "malformed", "no-host", "empty", "visual", "second-block", "inline"]) {
+  test(`no grid switch for ${variant}`, () => {
+    const document = variant === "empty" ? rows() : rows(row(1), variant === "missing" ? row(2, false)
+      : variant === "malformed" ? { ...row(2), thumbnail: { artifact: "bad", alt: "Bad" } } : row(2));
+    if (variant === "visual") document.blocks.push({ kind: "image", artifact: id(9), alt: "Hero" });
+    if (variant === "second-block") document.blocks.push({ kind: "rows", items: [row(3, false)] });
+    const card = renderDoc(document, { caps: variant === "inline" ? undefined : chat.HARSO_OUTPUT_CARD_UNCAPPED,
+      media: variant === "no-host" ? {} : host });
+    expect(within(card).queryByRole("group", { name: "View layout" })).toBeNull();
+    expect(card.querySelector('[data-layout="grid"]')).toBeNull();
+  });
+}

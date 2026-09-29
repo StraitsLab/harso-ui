@@ -87,6 +87,14 @@ function Answer({ example, document }: { example: CatalogueExample; document: Ha
 /** One example: its request above; the answer at each width in each appearance; each state below. */
 function ExampleRow({ example, modes }: { example: CatalogueExample; modes: Array<"light" | "dark"> }) {
   const rows: Array<[string, HarsoOutputDocument | null]> = [["", example.document], ...Object.entries(example.states ?? {})];
+  // Opt-in malformed-input fixture: mixed thumbnails are deliberately not valid catalogue data.
+  if (example.id === "shop-running-shoes" && window.location.hash.includes("missingPhoto=1") && example.document) {
+    const missing = structuredClone(example.document);
+    for (const block of missing.blocks) if (block.kind === "rows" && Array.isArray(block.items)) {
+      delete block.items.at(-1)?.thumbnail;
+    }
+    rows.push(["missing-photo", missing]);
+  }
   return <article className="hkl-cat-example" data-example={example.id}>
     <header className="hkl-cat-request">
       <p className="hkl-cat-asked">{example.request}</p>

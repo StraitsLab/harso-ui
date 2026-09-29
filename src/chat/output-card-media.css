@@ -167,3 +167,11 @@
   .harso-kit .hkc-output-progress-track { outline: 1px solid CanvasText; }
   .harso-kit .hkc-output-map-label, .harso-kit .hkc-output-map-attribution, .harso-kit .hkc-output-video-length { outline: 1px solid CanvasText; }
 }
+
+/* The full answer reuses row content and the same safe photo loader, in two columns. */
+.harso-kit .hkc-output-card-view-switch { display: flex; gap: var(--hk-space-2); }
+.harso-kit .hkc-output-card-view-switch [aria-pressed="true"] { background: var(--hk-field-tint); color: var(--hk-ink); }
+.harso-kit .hkc-output-card-rows[data-layout="grid"] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--hk-space-4); }
+.harso-kit .hkc-output-card-rows[data-layout="grid"] .hkc-output-card-row { display: flex; flex-direction: column; align-items: stretch; min-width: 0; gap: var(--hk-space-2); }
+.harso-kit .hkc-output-card-rows[data-layout="grid"] .hkc-output-thumb { width: 100%; height: auto; aspect-ratio: 1; flex: none; }
+.harso-kit .hkc-output-card-rows[data-layout="grid"] .hkc-output-card-row-value { text-align: start; white-space: normal; overflow-wrap: anywhere; }
