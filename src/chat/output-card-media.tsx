@@ -326,6 +326,7 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
    * command, and from then on the counter follows the track and settles where it stops.
    */
   const target = useRef<number | undefined>(undefined), retries = useRef(0);
+  const lastPosition = useRef(0);
   const select = (at: number) => {
     setIndex(at);
     setSeen(all => all.has(at - 1) && all.has(at) && all.has(at + 1) ? all : new Set([...all, at - 1, at, at + 1]));
@@ -340,6 +341,7 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
     select(at);
     const element = track.current;
     if (!element || !element.clientWidth) return;
+    lastPosition.current = position(element);
     // Already there (an end pressed again, or a reversal before an older smooth scroll has got far): an older scroll may
     // still be on its way, so this is still a command. Pin the track instantly, then again on the next two frames: a
     // cut-short smooth scroll can take its first pixels and stop without a scrollend. A hand on the track wins.
@@ -351,6 +353,7 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
       const pin = (frames: number) => view?.requestAnimationFrame(() => {
         if (target.current !== at) return;
         if (Math.abs(position(element) - at) * element.clientWidth > 1) scrollTrack(element, at, true);
+        lastPosition.current = position(element);
         if (frames > 1) pin(frames - 1); else target.current = undefined;
       });
       pin(2);
@@ -363,7 +366,13 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
   const settle = (end: boolean) => {
     const element = track.current;
     if (!element?.clientWidth) return;
-    const at = Math.round(position(element));
+    const current = position(element), at = Math.round(current);
+    // A host scrollTo has no pointer/wheel event. Movement away from the command
+    // means the track has been taken over, not an old scroll ending short.
+    if (target.current !== undefined && Math.abs(current - target.current) > Math.abs(lastPosition.current - target.current) + 1 / element.clientWidth) {
+      target.current = undefined;
+    }
+    lastPosition.current = current;
     if (target.current !== undefined) {
       if (!end) return;
       // An older scroll the newest command cut short ended short of it: send the track on, never the counter back.
