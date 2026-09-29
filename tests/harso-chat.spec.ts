@@ -10,7 +10,7 @@ test("streaming grows, announces status, and Stop cancels", async ({ page }) => 
   const initialLength = (await text.innerText()).length;
   await expect.poll(async () => (await text.innerText()).length).toBeGreaterThan(initialLength);
   await example.getByRole("button", { name: "Stop", exact: true }).click();
-  await expect(response.getByRole("status")).toHaveText("Stopped by you.");
+  await expect(response.getByRole("status")).toHaveText("Stopped by you");
   await settleRun(example);
   const stoppedText = await text.innerText();
   await page.waitForTimeout(350);

@@ -93,13 +93,13 @@
 .hk-link:hover { text-decoration-color: var(--hk-ink); text-decoration-thickness: 2px; }
 .hk-button--link { padding-inline: 0; border-color: transparent; background: transparent; color: var(--hk-ink); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hk-faint); }
 .hk-input {
-  /* v3 field: panel-tinted, no stroke; focus is a soft accent ring (rule 1). */
+  /* v3 field: panel-tinted, no stroke; focus adds an accent outline and soft halo (rule 1). */
   display: block; width: 100%; min-width: 0; min-height: 36px; border: 0;
   border-radius: var(--hk-radius-control); background: var(--hk-field-tint); color: var(--hk-ink); padding: 6px 12px; font-size: var(--hk-text-base); line-height: 1.5;
   transition: background var(--hk-fast) var(--hk-ease), box-shadow var(--hk-fast) var(--hk-ease);
 }
 .hk-input:hover:not(:disabled) { background: var(--hk-field-tint-hover); }
-.hk-input:focus-visible { outline: none; background: var(--hk-surface); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
+.hk-input:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 3px; background: var(--hk-surface); box-shadow: 0 0 0 3px var(--hk-accent-soft); }
 .hk-input::placeholder { color: var(--hk-tertiary); opacity: 1; }
 .hk-input[aria-invalid="true"]:not(:focus-visible) { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hk-negative) 40%, transparent); }
 .hk-input:disabled { color: var(--hk-tertiary); background: var(--hk-hover); }

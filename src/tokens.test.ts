@@ -4,6 +4,9 @@ import source from "../tokens/harso.tokens.json";
 import swiftFile from "../tokens/generated/HarsoTokens.swift?raw";
 import kotlinFile from "../tokens/generated/HarsoTokens.kt?raw";
 import theme from "./theme.css?raw";
+import primitives from "./primitives.css?raw";
+import controls from "./controls.css?raw";
+import chain from "./chain-of-thought.css?raw";
 
 // What a person sees on desktop is the cascade of theme.css's .harso-kit rules for one appearance. This resolves that
 // cascade independently of the generator (rules matched by their data attributes, later rule wins at equal weight,
@@ -246,5 +249,39 @@ describe("design tokens", () => {
       expect(swift.constants(name)).toEqual(Object.fromEntries(names.map(token => [camel(token), number(token)])));
       expect(kotlin.constants(name)).toEqual(Object.fromEntries(names.map(token => [pascal(token), `${number(token)}${unit(token)}`])));
     });
+  });
+});
+
+describe("focus and control visibility", () => {
+  test.each(Object.keys(appearances) as Appearance[])("control-line contrasts with surface and panel in %s", appearance => {
+    const resolved = cascade(theme, appearance);
+    const channels = (hex: string) => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255);
+    const luminance = (rgb: number[]) => rgb.map(c => c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)
+      .reduce((sum, c, i) => sum + c * [0.2126, 0.7152, 0.0722][i], 0);
+    const [, ink, percent] = /^color-mix\(in srgb, (#[0-9a-f]{6}) (\d+)%, transparent\)$/.exec(resolved["--hk-control-line"])!;
+    const alpha = Number(percent) / 100;
+    for (const role of ["surface", "panel"]) {
+      const background = channels(resolved[`--hk-${role}`]);
+      const composited = channels(ink).map((c, i) => c * alpha + background[i] * (1 - alpha));
+      const a = luminance(composited), b = luminance(background);
+      expect((Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05), `${appearance}/${role}`).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  test("the shared keyboard-focus contract survives component overrides and forced colors", () => {
+    expect(theme).toMatch(/\.harso-kit :focus-visible\s*\{[^}]*outline: 2px solid var\(--hk-accent\) !important;[^}]*outline-offset: 3px !important;/);
+    expect(theme).toMatch(/@media \(forced-colors: active\)\s*\{\s*\.harso-kit :focus-visible\s*\{ outline-color: Highlight !important;/);
+    expect(primitives).not.toMatch(/\.hk-input:focus-visible\s*\{[^}]*outline: none/);
+    expect(controls).not.toMatch(/\.hk-input-shell > \.hk-input:focus-visible\s*\{[^}]*outline: none/);
+  });
+
+  test("focus styles reference only defined custom properties or explicit fallbacks", () => {
+    const css = Object.values(import.meta.glob<string>("./*.css", { query: "?raw", import: "default", eager: true })).join("\n");
+    const defined = new Set([...css.matchAll(/(--hk-[\w-]+)\s*:/g)].map(([, name]) => name));
+    for (const [file, text] of Object.entries({ theme, primitives, controls, chain })) {
+      const missing = [...text.replace(/\/\*[\s\S]*?\*\//g, "").matchAll(/var\((--hk-[\w-]+)\s*\)/g)]
+        .map(([, name]) => name).filter(name => !defined.has(name));
+      expect([...new Set(missing)], file).toEqual([]);
+    }
   });
 });

@@ -435,3 +435,20 @@ describe("misc surfaces", () => {
     expect(screen.getByText("Only slide")).toBeVisible();
   });
 });
+
+describe("settings portal locale", () => {
+  it("inherits each nearest ancestor attribute and follows changes without a kit provider", async () => {
+    const view = render(<section dir="rtl" lang="ar"><div lang="he"><SettingsModal open /></div></section>);
+    const portal = screen.getByRole("dialog").closest(".hk-settings-portal");
+    expect(portal).toHaveAttribute("dir", "rtl");
+    expect(portal).toHaveAttribute("lang", "he");
+    view.rerender(<section dir="ltr" lang="ar"><div lang="en"><SettingsModal open /></div></section>);
+    await waitFor(() => expect(portal).toHaveAttribute("dir", "ltr"));
+    expect(portal).toHaveAttribute("lang", "en");
+  });
+  it("keeps explicit dialog locale overrides", () => {
+    render(<section dir="rtl" lang="ar"><SettingsModal open dir="ltr" lang="en" /></section>);
+    expect(screen.getByRole("dialog")).toHaveAttribute("dir", "ltr");
+    expect(screen.getByRole("dialog")).toHaveAttribute("lang", "en");
+  });
+});

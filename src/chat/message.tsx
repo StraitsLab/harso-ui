@@ -1,7 +1,8 @@
 import type { ComponentType, HTMLAttributes } from "react";
-import { ActionBarPrimitive, AttachmentPrimitive, ComposerPrimitive, MessagePartPrimitive, MessagePrimitive, useAuiState, type ReasoningMessagePartComponent, type TextMessagePartComponent, type ToolCallMessagePartComponent } from "@assistant-ui/react";
+import { AttachmentPrimitive, ComposerPrimitive, MessagePartPrimitive, MessagePrimitive, useAuiState, type ReasoningMessagePartComponent, type TextMessagePartComponent, type ToolCallMessagePartComponent } from "@assistant-ui/react";
 import { FileText, Sparkle } from "@phosphor-icons/react";
 import { HarsoMessageActions, type HarsoMessageActionCapabilities } from "./message-actions";
+import { HarsoMessageError, HarsoStoppedRun } from "./error";
 import { HarsoReasoning } from "./reasoning";
 import "./message.css";
 
@@ -15,7 +16,7 @@ export interface HarsoMessageSlots {
   reasoning?: ReasoningMessagePartComponent;
   error?: ComponentType;
   attachment?: ComponentType;
-  /** Which message actions the host runtime actually supports; defaults to all. */
+  /** Which message actions the host runtime actually supports; defaults to Copy only. */
   actions?: HarsoMessageActionCapabilities;
   /** Host clipboard for Copy; renderers without navigator.clipboard (Electron with a strict permission policy) supply one. */
   copyToClipboard?: (text: string) => void | Promise<void>;
@@ -51,23 +52,18 @@ function MessageTime({ user = false }: { user?: boolean }) {
   return <time className="hkc-message-time" dateTime={date.toISOString()}>{user ? `${today ? "Today" : date.toLocaleDateString("en-GB", { day: "numeric", month: "short" })} at ${time}` : time}</time>;
 }
 
-function DefaultError() {
-  const status = useAuiState(state => state.message.status);
-  return <div className="hkc-message-error" role="alert"><span>{status?.type === "incomplete" && status.reason === "error" && typeof status.error === "string" ? status.error : "The response was interrupted."}</span><ActionBarPrimitive.Reload>Retry</ActionBarPrimitive.Reload></div>;
-}
-
 export function HarsoUserMessage({ attachment: Attachment = DefaultAttachment, actions, copyToClipboard }: Pick<HarsoMessageSlots, "attachment" | "actions" | "copyToClipboard"> = {}) {
   return <MessageRoot className="hkc-message hkc-message--user" role="article" aria-label="You"><div className="hkc-message-bubble"><MessagePrimitive.Parts components={{ Text: StreamingText }} /><div className="hkc-message-attachments"><MessagePrimitive.Attachments components={{ Attachment }} /></div></div><MessageTime user /><HarsoMessageActions user capabilities={actions} copyToClipboard={copyToClipboard} /></MessageRoot>;
 }
 
-export function HarsoAssistantMessage({ assistantName = "Harso", headline, toolUI, reasoning = HarsoReasoning, error: Error = DefaultError, text: Text = StreamingText, actions, copyToClipboard }: HarsoMessageSlots = {}) {
+export function HarsoAssistantMessage({ assistantName = "Harso", headline, toolUI, reasoning = HarsoReasoning, error: Error = HarsoMessageError, text: Text = StreamingText, actions, copyToClipboard }: HarsoMessageSlots = {}) {
   const status = useAuiState(state => state.message.status);
   return <MessageRoot className="hkc-message hkc-message--assistant" role="article" aria-label={assistantName}>
     <div className="hkc-message-speaker"><Sparkle size={14} weight="regular" aria-hidden="true" />{assistantName}<MessageTime /></div>
     {headline && <h2 className="hkc-message-headline">{headline}</h2>}
     <MessagePrimitive.Parts components={{ Text, Reasoning: reasoning, tools: toolUI }} />
     {status?.type === "incomplete" && status.reason === "error" && <Error />}
-    {status?.type === "incomplete" && status.reason === "cancelled" && <p className="hkc-message-stopped" role="status">Stopped by you.</p>}
+    <HarsoStoppedRun />
     <HarsoMessageActions capabilities={actions} copyToClipboard={copyToClipboard} />
   </MessageRoot>;
 }

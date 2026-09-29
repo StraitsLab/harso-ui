@@ -10,10 +10,10 @@ import messageCSS from "./message.css?inline";
 const messages: ThreadMessageLike[] = [{ id: "question", role: "user", content: "Original question", attachments: samples }, { id: "answer", role: "assistant", content: "Original answer", status: { type: "complete", reason: "stop" } }];
 const submitFeedback = vi.fn();
 
-function Example({ seed = messages, options, ...slots }: HarsoMessageSlots & { seed?: ThreadMessageLike[]; options?: ScriptedAdapterOptions }) {
+function Example({ seed = messages, options, feedbackAdapter = true, ...slots }: HarsoMessageSlots & { seed?: ThreadMessageLike[]; options?: ScriptedAdapterOptions; feedbackAdapter?: boolean }) {
   const [adapter] = useState(() => createScriptedAdapter({ response: "Edited answer.", tokenDelayMs: 5, tools: false, ...options }));
   const [Tool] = useState<ToolCallMessagePartComponent>(() => ({ toolName, toolCallId, approval, result }: ToolCallMessagePartProps) => <section aria-label={toolName}>{approval && approval.approved === undefined && <><button onClick={() => adapter.decide(toolCallId, true)}>Approve</button><button onClick={() => adapter.decide(toolCallId, false)}>Deny</button></>}<pre>{String(result ?? "Running")}</pre></section>);
-  const runtime = useLocalRuntime(adapter, { initialMessages: seed, adapters: { attachments, feedback: { submit: submitFeedback } } });
+  const runtime = useLocalRuntime(adapter, { initialMessages: seed, adapters: { attachments, feedback: feedbackAdapter ? { submit: submitFeedback } : undefined } });
   return <div className="harso-kit"><style>{messageCSS}</style><AssistantRuntimeProvider runtime={runtime}><HarsoThread toolUI={{ Fallback: Tool }} {...slots} composer={<ComposerPrimitive.Root><ComposerPrimitive.Input aria-label="New message" /><ComposerPrimitive.Send>Send</ComposerPrimitive.Send><ComposerPrimitive.Cancel>Stop</ComposerPrimitive.Cancel></ComposerPrimitive.Root>} /></AssistantRuntimeProvider></div>;
 }
 
@@ -25,8 +25,26 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe("Harso messages and MessageActions", () => {
+  test("default shows only Copy", () => {
+    render(<Example />);
+    for (const name of ["You", "Harso"]) {
+      const actions = within(within(screen.getByRole("article", { name })).getByRole("group", { name: "Message actions" }));
+      expect(actions.getAllByRole("button").map(button => button.getAttribute("aria-label"))).toEqual(["Copy message"]);
+    }
+  });
+  test("feedback requires an adapter even when enabled", () => {
+    render(<Example feedbackAdapter={false} actions={{ feedback: true }} />);
+    expect(screen.queryByRole("button", { name: "Helpful" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Not helpful" })).toBeNull();
+  });
+  test("assistant default error respects non-retryable metadata", () => {
+    render(<Example seed={[messages[0], { role: "assistant", content: "", status: { type: "incomplete", reason: "error", error: "Do not resend" }, metadata: { custom: { harso: { retryable: false } } } }]} />);
+    expect(screen.getAllByRole("alert")).toHaveLength(1);
+    expect(screen.getByRole("alert")).toHaveTextContent("Do not resend");
+    expect(screen.queryByRole("button", { name: "Retry" })).toBeNull();
+  });
   test("aligns users right and assistants left, with attachments inside the bubble", () => {
-    const { container } = render(<Example />);
+    const { container } = render(<Example actions={{ feedback: true, regenerate: true, speech: true }} />);
     expect(getComputedStyle(screen.getByRole("article", { name: "You" })).alignItems).toBe("flex-end");
     expect(getComputedStyle(screen.getByRole("article", { name: "Harso" })).alignItems).toBe("flex-start");
     expect(container.querySelector(".hkc-message-bubble")).toContainElement(screen.getByText("requirements.md"));
@@ -76,7 +94,7 @@ describe("Harso messages and MessageActions", () => {
   });
 
   test("cancel preserves the original; save creates a navigable branch", async () => {
-    render(<Example />);
+    render(<Example actions={{ edit: true, branches: true }} />);
     fireEvent.click(screen.getByRole("button", { name: "Edit message" }));
     expect(screen.getByRole("textbox", { name: "Edit your message" })).toHaveValue("Original question");
     fireEvent.change(screen.getByRole("textbox", { name: "Edit your message" }), { target: { value: "Discard me" } });
@@ -94,7 +112,7 @@ describe("Harso messages and MessageActions", () => {
   });
 
   test("action and branch bars are named groups, so their labels are permitted (axe aria-prohibited-attr)", async () => {
-    render(<Example />);
+    render(<Example actions={{ edit: true, regenerate: true, branches: true }} />);
     const user = within(screen.getByRole("article", { name: "You" }));
     expect(user.getByRole("group", { name: "Message actions" })).toContainElement(user.getByRole("button", { name: "Edit message" }));
     expect(within(screen.getByRole("article", { name: "Harso" })).getByRole("group", { name: "Message actions" })).toContainElement(screen.getByRole("button", { name: "Regenerate response" }));
@@ -116,7 +134,7 @@ describe("Harso messages and MessageActions", () => {
   });
 
   test("feedback uses runtime state rather than local reaction state", async () => {
-    render(<Example />);
+    render(<Example actions={{ feedback: true }} />);
     fireEvent.click(screen.getByRole("button", { name: "Helpful" }));
     await waitFor(() => expect(submitFeedback).toHaveBeenCalled());
     expect(screen.getByRole("button", { name: "Helpful" })).toHaveAttribute("aria-pressed", "true");
@@ -130,7 +148,7 @@ describe("Harso messages and MessageActions", () => {
     fireEvent.click(screen.getByRole("button", { name: "Retry" }));
     await waitFor(() => expect(screen.queryByRole("alert")).not.toBeInTheDocument());
     fireEvent.click(screen.getByRole("button", { name: "Stop" }));
-    expect(await screen.findByText("Stopped by you.")).toBeInTheDocument();
+    expect(await screen.findByText("Stopped by you")).toBeInTheDocument();
   });
 
   test("passes reasoning, named tool, fallback and attachment slots", () => {
@@ -160,7 +178,7 @@ describe("Harso messages and MessageActions", () => {
     fireEvent.click(screen.getByRole("button", { name: "Send" }));
     await screen.findByRole("button", { name: "Approve" });
     fireEvent.click(screen.getByRole("button", { name: "Stop" }));
-    expect(await screen.findByText("Stopped by you.")).toBeInTheDocument();
+    expect(await screen.findByText("Stopped by you")).toBeInTheDocument();
   });
 
   test("attachment adapter reads a file and completes it on send", async () => {
@@ -174,7 +192,7 @@ describe("Harso messages and MessageActions", () => {
     let resolveCopy!: () => void;
     const writeText = vi.fn(() => new Promise<void>(resolve => { resolveCopy = resolve; }));
     Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
-    render(<Example />);
+    render(<Example actions={{ edit: true, branches: true }} />);
     fireEvent.click(within(screen.getByRole("article", { name: "Harso" })).getByRole("button", { name: "Copy message" }));
     expect(writeText).toHaveBeenCalledExactlyOnceWith("Original answer");
     fireEvent.click(screen.getByRole("button", { name: "Edit message" }));
@@ -190,11 +208,11 @@ describe("Harso messages and MessageActions", () => {
   test("pending feedback follows message identity through unmount, not a replacement response", async () => {
     let resolveFeedback!: () => void;
     submitFeedback.mockImplementationOnce(() => new Promise<void>(resolve => { resolveFeedback = resolve; }));
-    const view = render(<Example />);
+    const view = render(<Example actions={{ feedback: true }} />);
     fireEvent.click(screen.getByRole("button", { name: "Helpful" }));
     await waitFor(() => expect(submitFeedback).toHaveBeenCalledOnce());
     view.unmount();
-    render(<Example seed={[{ id: "replacement", role: "assistant", content: "Replacement answer", status: { type: "complete", reason: "stop" } }]} />);
+    render(<Example actions={{ feedback: true }} seed={[{ id: "replacement", role: "assistant", content: "Replacement answer", status: { type: "complete", reason: "stop" } }]} />);
     await act(async () => resolveFeedback());
     expect(screen.getByRole("article", { name: "Harso" })).toHaveTextContent("Replacement answer");
     expect(screen.getByRole("button", { name: "Helpful" })).toHaveAttribute("aria-pressed", "false");

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
-import { Calendar, DatePicker, MeetingScheduler, MonthPanel } from "./dates";
+import { Calendar, DatePicker, DateRangePicker, MeetingScheduler, MonthPanel } from "./dates";
 
 describe("boundaryless date selection", () => {
   test("host replacement and reset supersede an uncommitted picker draft", () => {
@@ -112,5 +112,28 @@ describe("boundaryless date selection", () => {
     screen.getByRole("button", { name: "Other work" }).focus();
     view.rerender(renderMonth("2029-02"));
     expect(screen.getByRole("button", { name: "Other work" })).toHaveFocus();
+  });
+});
+
+describe("picker names and opening focus", () => {
+  test("triggers include visible labels and summaries", () => {
+    render(<><DatePicker label="Review date" defaultValue="2026-09-07" /><DateRangePicker label="Research window" defaultValue={{ start: "2026-09-07", end: "2026-09-11" }} /><DatePicker label="Deadline" /></>);
+    expect(screen.getByRole("button", { name: "Review date, Sep 7, 2026" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Research window, Sep 7, 2026 – Sep 11, 2026" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Deadline, Choose dates" })).toBeInTheDocument();
+  });
+  test.each([false, true])("opening range=%s focuses selected start or today after clearing", range => {
+    const picker = (selected: boolean) => range
+      ? <DateRangePicker label="Window" today="2026-09-20" value={selected ? { start: "2026-09-07", end: "2026-09-11" } : null} />
+      : <DatePicker label="Window" today="2026-09-20" value={selected ? "2026-09-07" : null} />;
+    const view = render(picker(true));
+    const panel = view.container.querySelector("[popover]")!;
+    const toggle = (type: string, newState: string) => fireEvent(panel, Object.assign(new Event(type), { newState }));
+    toggle("beforetoggle", "open"); toggle("toggle", "open");
+    expect(panel.querySelector('[data-date="2026-09-07"]')).toHaveFocus();
+    toggle("toggle", "closed");
+    view.rerender(picker(false));
+    toggle("beforetoggle", "open"); toggle("toggle", "open");
+    expect(panel.querySelector('[data-date="2026-09-20"]')).toHaveFocus();
   });
 });

@@ -133,3 +133,22 @@ and options including `threadId`, `initialMessages`, and an attachment adapter;
 it returns the assistant-ui runtime. `mapHistory` projects turn data, not live
 pagination. Boolean permission decisions require an explicit tool-renderer
 callback to `transport.decide`; question answers and Live remain host concerns.
+
+## Message actions and failure recovery
+
+`HarsoThread`, `HarsoUserMessage`, `HarsoAssistantMessage` and
+`HarsoMessageActions` default to Copy only. Omitted flags (including in a partial
+object) are off. Enable only actions your host actually supports, for example
+`<HarsoThread actions={{ edit: true, regenerate: true, branches: true }} />`
+for a runtime with edit/reload and persisted branch history. For standalone
+`HarsoMessageActions`, pass the same flags as `capabilities`.
+
+Feedback requires both `feedback: true` and a runtime feedback adapter; without
+an adapter, neither vote button renders. Speech needs `speech: true` and a
+speech adapter. Existing all-on integrations must now opt in explicitly.
+
+The assistant's default error slot is `HarsoMessageError`. It preserves the
+failure text and hides Retry when `metadata.custom.harso.retryable === false`;
+omitted or true keeps the runtime Reload action. The Harso stream adapter already
+projects the `error` event's `retryable` flag there. Cancellation uses the shared
+`HarsoStoppedRun` note, “Stopped by you”, without error or Retry UI.

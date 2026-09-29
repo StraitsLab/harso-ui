@@ -28,6 +28,43 @@ describe("Harso tool parts", () => {
     expect(screen.getByLabelText("Result")).toBeVisible();
     expect(container.querySelectorAll("summary > svg")).toHaveLength(2);
   });
+  test("approval arriving after mount opens the row", async () => {
+    const view = render(<HarsoToolCall {...part} />);
+    const details = view.container.querySelector("details")!;
+    expect(details).not.toHaveAttribute("open");
+    view.rerender(<HarsoToolCall {...part} approval={{ id: "gate" }} />);
+    expect(details).toHaveAttribute("open");
+    expect(screen.getByRole("button", { name: "Approve" })).toBeVisible();
+    fireEvent.click(view.container.querySelector("summary")!);
+    await waitFor(() => expect(details).not.toHaveAttribute("open"));
+    view.rerender(<HarsoToolCall {...part} approval={{ id: "gate", prompt: "Still waiting" }} />);
+    expect(details).not.toHaveAttribute("open");
+  });
+  test("failure opens on mount and after a transition, but stays collapsible", async () => {
+    const view = render(<HarsoToolCall {...part} isError />);
+    const details = view.container.querySelector("details")!;
+    expect(details).toHaveAttribute("open");
+    fireEvent.click(view.container.querySelector("summary")!);
+    await waitFor(() => expect(details).not.toHaveAttribute("open"));
+    view.rerender(<HarsoToolCall {...part} isError result="Failed checks" />);
+    expect(details).not.toHaveAttribute("open");
+    view.rerender(<HarsoToolCall {...part} />);
+    expect(details).not.toHaveAttribute("open");
+    view.rerender(<HarsoToolCall {...part} isError result="Failed checks" />);
+    expect(details).toHaveAttribute("open");
+  });
+  test("state changes never close an open row or open a quiet completed row", () => {
+    const view = render(<HarsoToolCall {...part} />);
+    const details = view.container.querySelector("details")!;
+    view.rerender(<HarsoToolCall {...part} result="done" />);
+    expect(details).not.toHaveAttribute("open");
+    view.rerender(<HarsoToolCall {...part} approval={{ id: "gate" }} />);
+    expect(details).toHaveAttribute("open");
+    view.rerender(<HarsoToolCall {...part} />);
+    expect(details).toHaveAttribute("open");
+    view.rerender(<HarsoToolCall {...part} result="done" />);
+    expect(details).toHaveAttribute("open");
+  });
   test("default approval invokes the runtime responder", async () => {
     render(<HarsoToolCall {...part} approval={{ id: "gate" }} />);
     fireEvent.click(screen.getByRole("button", { name: "Approve" }));

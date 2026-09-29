@@ -80,14 +80,20 @@ export function SettingsModal({ open = false, isOpen, title = "Settings", childr
     document.addEventListener("focusin", rememberFocus, true);
     return () => { document.removeEventListener("focusin", rememberFocus, true); focused.current = null; };
   }, [active]);
-  const [theme, setTheme] = useState<{ appearance: Appearance; palette: Palette }>({ appearance: "system", palette: "clean" });
+  const [theme, setTheme] = useState<{ appearance: Appearance; palette: Palette; dir?: string; lang?: string }>({ appearance: "system", palette: "clean" });
   useLayoutEffect(() => {
     const provider = anchor.current?.closest<HTMLElement>(".harso-kit");
-    if (!provider) return;
-    const update = () => setTheme({ appearance: provider.dataset.mode === "dark" ? "dark" : "light", palette: provider.dataset.palette === "cozy" ? "cozy" : "clean" });
+    const update = () => setTheme({
+      appearance: provider ? provider.dataset.mode === "dark" ? "dark" : "light" : "system",
+      palette: provider?.dataset.palette === "cozy" ? "cozy" : "clean",
+      dir: anchor.current?.closest("[dir]")?.getAttribute("dir") ?? undefined,
+      lang: anchor.current?.closest("[lang]")?.getAttribute("lang") ?? undefined,
+    });
     update();
     const observer = new MutationObserver(update);
-    observer.observe(provider, { attributes: true, attributeFilter: ["data-mode", "data-palette"] });
+    for (let ancestor = anchor.current?.parentElement; ancestor; ancestor = ancestor.parentElement) {
+      observer.observe(ancestor, { attributes: true, attributeFilter: ["data-mode", "data-palette", "dir", "lang"] });
+    }
     return () => observer.disconnect();
   }, []);
   return <><span ref={anchor} hidden /><Dialog.Root open={active} onOpenChange={next => { if (!next) onClose?.(); }}>
