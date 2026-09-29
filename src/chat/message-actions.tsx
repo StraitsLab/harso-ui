@@ -16,18 +16,17 @@ export interface HarsoMessageActionCapabilities {
   branches?: boolean;
 }
 
-const ALL: Required<HarsoMessageActionCapabilities> = { edit: true, feedback: true, regenerate: true, speech: true, branches: true };
-
 export function HarsoMessageActions({ user = false, capabilities, copyToClipboard }: { user?: boolean; capabilities?: HarsoMessageActionCapabilities; copyToClipboard?: (text: string) => void | Promise<void> }) {
-  const can = { ...ALL, ...capabilities };
+  const can = capabilities ?? {};
+  const supportsFeedback = useAuiState(state => state.thread.capabilities.feedback);
   const feedback = useAuiState(state => state.message.metadata.submittedFeedback?.type);
   const speaking = useAuiState(state => state.message.speech !== undefined);
   return (
     <ActionBarPrimitive.Root className="hkc-message-actions" hideWhenRunning={false} autohide="never" role="group" aria-label="Message actions">
       <HarsoCopyAction copyToClipboard={copyToClipboard} />
       {user ? (can.edit && <ActionBarPrimitive.Edit aria-label="Edit message" title="Edit"><PencilSimple size={16} /></ActionBarPrimitive.Edit>) : <>
-        {can.feedback && <ActionBarPrimitive.FeedbackPositive aria-label="Helpful" title="Helpful" aria-pressed={feedback === "positive"}><ThumbsUp size={16} /></ActionBarPrimitive.FeedbackPositive>}
-        {can.feedback && <ActionBarPrimitive.FeedbackNegative aria-label="Not helpful" title="Not helpful" aria-pressed={feedback === "negative"}><ThumbsDown size={16} /></ActionBarPrimitive.FeedbackNegative>}
+        {can.feedback && supportsFeedback && <ActionBarPrimitive.FeedbackPositive aria-label="Helpful" title="Helpful" aria-pressed={feedback === "positive"}><ThumbsUp size={16} /></ActionBarPrimitive.FeedbackPositive>}
+        {can.feedback && supportsFeedback && <ActionBarPrimitive.FeedbackNegative aria-label="Not helpful" title="Not helpful" aria-pressed={feedback === "negative"}><ThumbsDown size={16} /></ActionBarPrimitive.FeedbackNegative>}
         {can.regenerate && <ActionBarPrimitive.Reload aria-label="Regenerate response" title="Regenerate"><ArrowsClockwise size={16} /></ActionBarPrimitive.Reload>}
         {can.speech && (speaking ? <ActionBarPrimitive.StopSpeaking aria-label="Stop reading" title="Stop reading"><Stop size={16} /></ActionBarPrimitive.StopSpeaking> : <ActionBarPrimitive.Speak aria-label="Read aloud" title="Read aloud"><SpeakerHigh size={16} /></ActionBarPrimitive.Speak>)}
       </>}

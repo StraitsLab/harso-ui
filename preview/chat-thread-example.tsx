@@ -48,7 +48,7 @@ function ThreadRuntime({ state, disabled }: { state: ThreadState; disabled: bool
       { parentId: "branch-user", message: { id: "branch-two", role: "assistant", content: "Second branch: begin with an invitation." } },
     ], { headId: "branch-two" }));
   }, [runtime, state]);
-  return <AssistantRuntimeProvider runtime={runtime}><HarsoThread text={FixtureText} reasoning={TimedReasoning} actions={{ speech: false }} attachment={HarsoMessageAttachment} toolUI={{ Fallback: Tool }} composer={<HarsoComposer disabled={disabled} leading="Scripted · local only" />} /></AssistantRuntimeProvider>;
+  return <AssistantRuntimeProvider runtime={runtime}><HarsoThread text={FixtureText} reasoning={TimedReasoning} actions={{ edit: true, regenerate: true, branches: true }} attachment={HarsoMessageAttachment} toolUI={{ Fallback: Tool }} composer={<HarsoComposer disabled={disabled} leading="Scripted · local only" />} /></AssistantRuntimeProvider>;
 }
 
 export function ChatThreadExample() {
