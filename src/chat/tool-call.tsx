@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { CaretRight, Terminal } from "@phosphor-icons/react";
 import type { ToolCallMessagePartProps } from "@assistant-ui/react";
 import { HarsoApproval, type HarsoApprovalProps } from "./approval";
@@ -24,7 +24,10 @@ function format(value: unknown): string {
 
 function ToolCard({ children, ...part }: HarsoToolCallProps & { children: ReactNode }) {
   const state = stateOf(part);
-  const [open, setOpen] = useState(state === "awaiting approval");
+  const [open, setOpen] = useState(state === "awaiting approval" || state === "failed");
+  useEffect(() => {
+    if (state === "awaiting approval" || state === "failed") setOpen(true);
+  }, [state]);
   const command = typeof part.args?.command === "string" ? part.args.command : part.toolName;
   return <section className="hkc-tool" data-tool={part.toolName} data-state={state}>
     <details open={open} onToggle={event => setOpen(event.currentTarget.open)}>
