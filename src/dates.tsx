@@ -97,7 +97,7 @@ export function MonthPanel({ month, defaultMonth, onMonthChange, value, defaultV
   </section>;
 }
 
-function DatePopover({ label, trigger, disabled = false, onOpen, children }: { label: string; trigger: ReactNode; disabled?: boolean; onOpen?: () => void; children: (close: () => void) => ReactNode }) {
+function DatePopover({ label, trigger, triggerLabel, initialFocusDate, disabled = false, onOpen, children }: { label: string; trigger: ReactNode; triggerLabel?: string; initialFocusDate?: string; disabled?: boolean; onOpen?: () => void; children: (close: () => void) => ReactNode }) {
   const identity = useId();
   const anchor = `--hk-date-${identity.replace(/[^a-z0-9_-]/gi, "")}`;
   const panel = useRef<HTMLDivElement>(null);
@@ -111,11 +111,14 @@ function DatePopover({ label, trigger, disabled = false, onOpen, children }: { l
     if (restore) button.current?.focus({ preventScroll: true });
   };
   useLayoutEffect(() => { setAvailable(typeof panel.current?.showPopover === "function"); if (disabled) close(); }, [disabled]);
-  return <><Button ref={button} popoverTarget={identity} disabled={disabled || !available} aria-haspopup="dialog" aria-expanded={expanded} aria-controls={identity} title={!available ? "Requires native popover support" : undefined} style={{ anchorName: anchor } as CSSProperties}>{trigger}</Button>
+  return <><Button ref={button} aria-label={triggerLabel} popoverTarget={identity} disabled={disabled || !available} aria-haspopup="dialog" aria-expanded={expanded} aria-controls={identity} title={!available ? "Requires native popover support" : undefined} style={{ anchorName: anchor } as CSSProperties}>{trigger}</Button>
     <div ref={panel} id={identity} popover="auto" role="dialog" aria-label={label} className="hk-date-popover" style={{ positionAnchor: anchor } as CSSProperties} onBeforeToggle={event => { if (event.newState === "open") onOpen?.(); }} onToggle={event => {
       const opened = event.newState === "open";
       setExpanded(opened);
-      if (opened) panel.current?.querySelector<HTMLButtonElement>("button")?.focus({ preventScroll: true });
+      if (opened) {
+        const day = initialFocusDate && panel.current?.querySelector<HTMLButtonElement>(`[data-date="${initialFocusDate}"]`);
+        (day || panel.current?.querySelector<HTMLButtonElement>('[data-date][tabindex="0"]') || panel.current?.querySelector<HTMLButtonElement>("button"))?.focus({ preventScroll: true });
+      }
     }}><div className="hk-date-popover-heading"><h3>{label}</h3><IconButton label={`Close ${label}`} onClick={close}>×</IconButton></div>{children(close)}</div></>;
 }
 
@@ -144,7 +147,7 @@ function DateSelection({ label, locale = "en-US", today = localToday(), weekStar
   const summary = committed?.start && parseDate(committed.start) ? formatDate(committed.start, locale, { dateStyle: "medium" }) + (range && committed.end && parseDate(committed.end) ? ` – ${formatDate(committed.end, locale, { dateStyle: "medium" })}` : "") : "Choose dates";
   const secondMonth = shifted(`${month}-01`, 0, 1).slice(0, 7);
   const choose = (date: string) => setDraft(previous => !range ? { start: date, end: date } : !previous.start || previous.end || date < previous.start ? { start: date, end: "" } : { ...previous, end: date });
-  return <div className="hk-date-selection"><span className="hk-date-label">{label}</span><DatePopover label={label} trigger={<><CalendarBlankIcon size={16} aria-hidden="true" /><span>{summary}</span><CaretDownIcon size={16} aria-hidden="true" /></>} disabled={limits.disabled} onOpen={() => { setDraft(committed ?? { start: "", end: "" }); setMonth((committed?.start && parseDate(committed.start) ? committed.start : today).slice(0, 7)); }}>{close => <>
+  return <div className="hk-date-selection"><span className="hk-date-label">{label}</span><DatePopover label={label} triggerLabel={`${label}, ${summary}`} initialFocusDate={committed?.start && parseDate(committed.start) ? committed.start : today} trigger={<><CalendarBlankIcon size={16} aria-hidden="true" /><span>{summary}</span><CaretDownIcon size={16} aria-hidden="true" /></>} disabled={limits.disabled} onOpen={() => { setDraft(committed ?? { start: "", end: "" }); setMonth((committed?.start && parseDate(committed.start) ? committed.start : today).slice(0, 7)); }}>{close => <>
     {!!presets.length && <div className="hk-date-presets" aria-label="Date presets">{presets.map(preset => <Button key={preset.label} size="small" disabled={!!selectionError(preset.value, range, limits)} onClick={() => { setDraft(preset.value); setMonth(preset.value.start.slice(0, 7)); }}>{preset.label}</Button>)}</div>}
     <div className="hk-date-inputs"><Field label={range ? "Start date" : "Date"}>{props => <Input {...props} type="date" value={draft.start} min={limits.minDate ?? earliest} max={limits.maxDate ?? latest} disabled={limits.disabled} onChange={event => { const start = event.target.value; setDraft(previous => ({ start, end: range ? previous.end : start })); if (parseDate(start)) setMonth(start.slice(0, 7)); }} />}</Field>{range && <Field label="End date">{props => <Input {...props} type="date" value={draft.end} min={draft.start || limits.minDate || earliest} max={limits.maxDate ?? latest} disabled={limits.disabled} onChange={event => setDraft(previous => ({ ...previous, end: event.target.value }))} />}</Field>}</div>
     <div className="hk-date-months"><MonthPanel {...limits} month={month} onMonthChange={setMonth} value={range ? draft.end || draft.start : draft.start} range={range ? draft : undefined} today={today} locale={locale} weekStartsOn={weekStartsOn} onValueChange={choose} />{range && secondMonth !== month && <MonthPanel {...limits} month={secondMonth} onMonthChange={next => setMonth(shifted(`${next}-01`, 0, -1).slice(0, 7))} value={draft.end || draft.start} range={draft} today={today} locale={locale} weekStartsOn={weekStartsOn} onValueChange={choose} />}</div>

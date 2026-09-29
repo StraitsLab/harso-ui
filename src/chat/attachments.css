@@ -18,3 +18,7 @@
   .harso-kit .hkc-message-bubble .hkc-message-attachments { display: grid; }
   .harso-kit .hkc-message-bubble .hkc-message-attachments > * { width: 100%; box-sizing: border-box; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .harso-kit .hkc-attachment-progress-fill { transition: none; }
+}
