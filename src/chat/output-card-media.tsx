@@ -367,9 +367,11 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
     const element = track.current;
     if (!element?.clientWidth) return;
     const current = position(element), at = Math.round(current);
-    // A host scrollTo has no pointer/wheel event. Movement away from the command
-    // means the track has been taken over, not an old scroll ending short.
-    if (target.current !== undefined && Math.abs(current - target.current) > Math.abs(lastPosition.current - target.current) + 1 / element.clientWidth) {
+    // A host scrollTo has no pointer/wheel event. Movement away after reaching the
+    // target's slide means takeover. Before then, an older scroll may still be
+    // moving away from a newer reversing command; keep that command alive.
+    if (target.current !== undefined && Math.abs(lastPosition.current - target.current) < .5
+      && Math.abs(current - target.current) > Math.abs(lastPosition.current - target.current) + 1 / element.clientWidth) {
       target.current = undefined;
     }
     lastPosition.current = current;
