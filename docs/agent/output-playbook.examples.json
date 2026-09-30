@@ -5,8 +5,8 @@
   "schema": {
     "path": "docs/agent/schema/output-blocks.v1.json",
     "source": "StraitsLab/weave-cloud packages/contracts/src/schemas/output-blocks.v1.json",
-    "source_commit": "db2db1abef7714f3117ce6cdfdf8fcdc468a0d09",
-    "read_at": "origin/main 7c8995307983084c96b08afe82ee1bd4fd7e02bf",
+    "source_commit": "9f2ea3fe667ecaa856bd8f788ae4cac50f8c3461",
+    "read_at": "factory/output-tier3 9f2ea3fe667ecaa856bd8f788ae4cac50f8c3461",
     "sha256": "aa7ba71a21b70afb082ed998a47e0f09b1cff37fc53ebecda161aede52463baf"
   },
   "time_sensitive_components": [
