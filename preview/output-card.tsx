@@ -316,13 +316,13 @@ const compare: HarsoOutputDocument = {
 const rentals: HarsoOutputDocument = {
   header: { title: "2-bed rentals near Tiong Bahru", subtitle: "Under S$4,500/month · checked 29 Sep 2026" },
   blocks: [{ kind: "rows", items: [
-    { label: "20 Jalan Klinik (HDB)", mark: "pick", group: "Live listing", status: "done", status_label: "Live listing",
+    { label: "20 Jalan Klinik (HDB)", mark: "pick", status: "done", status_label: "Live listing",
       secondary: "635 sq ft · 2 bed, 1 bath · fully furnished · ~6 min to MRT · available now", trailing: "S$3,200/mo" },
-    { label: "30 Jalan Klinik (HDB)", group: "Unverified", status: "needs_you", status_label: "Unverified",
+    { label: "30 Jalan Klinik (HDB)", status: "needs_you", status_label: "Unverified",
       secondary: "624 sq ft · 2 bed, 1 bath · fully furnished · ~3 min to MRT · 2-yr lease", trailing: "S$3,300/mo" },
-    { label: "46 Jalan Bukit Ho Swee (HDB)", group: "Unverified", status: "needs_you", status_label: "Unverified",
+    { label: "46 Jalan Bukit Ho Swee (HDB)", status: "needs_you", status_label: "Unverified",
       secondary: "~667–700 sq ft · 2 bed, 2 bath · furnished · ~4 min to MRT · from 1 Oct", trailing: "S$3,300/mo" },
-    { label: "Kai Fook Mansion", group: "Unverified", status: "needs_you", status_label: "Unverified",
+    { label: "Kai Fook Mansion", status: "needs_you", status_label: "Unverified",
       secondary: "910 sq ft · 2 bed · partly furnished · no lift · ~4–5 min to MRT", trailing: "S$4,200/mo" }
   ] }],
   fallback_text: "2-bed rentals near Tiong Bahru: 20 Jalan Klinik (HDB), live listing, S$3,200/mo; 30 Jalan Klinik (HDB), unverified, S$3,300/mo; 46 Jalan Bukit Ho Swee (HDB), unverified, S$3,300/mo; Kai Fook Mansion, unverified, S$4,200/mo."
