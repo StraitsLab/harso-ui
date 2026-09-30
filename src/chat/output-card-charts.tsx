@@ -475,19 +475,55 @@ export function HarsoOutputShareView({ items, shares, shown }: { items: Row[]; s
 }
 
 export function HarsoOutputTableView({ table, shown, label }: { table: HarsoOutputTableBlock; shown: number; label: string }) {
+  const container = useRef<HTMLDivElement>(null);
+  const natural = useRef<HTMLTableElement>(null);
+  const [stacked, setStacked] = useState(false);
   const total = isTotalRow(table, table.rows.length - 1) ? table.rows[table.rows.length - 1] : undefined;
   const body = (total ? table.rows.slice(0, -1) : table.rows).slice(0, shown);
+  const rows = [...body, ...total ? [total] : []];
   const align = (index: number) => table.columns[index].align === "end" ? "end" : "start";
-  // Scrolls sideways inside the block when the columns outgrow the card; focusable so a keyboard can scroll it.
-  return <div className="hkc-output-table-scroll" role="region" aria-label={`${label} · table`} tabIndex={0}>
-    <table className="hkc-output-table">
-      <thead><tr>{table.columns.map((column, index) => <th key={index} scope="col" data-align={align(index)}>{column.label}</th>)}</tr></thead>
-      <tbody>
-        {[...body, ...total ? [total] : []].map((row, rowIndex) => <tr key={rowIndex} className={row === total ? "hkc-output-table-total" : undefined}>{row.cells.map((cell, index) => index === 0
-          ? <th key={index} scope="row" data-align={align(index)}>{cell}{row.status && <> <HarsoOutputRowStatus status={row.status} /></>}</th>
-          : <td key={index} data-align={align(index)}>{cell}</td>)}</tr>)}
-      </tbody>
-    </table>
+  useLayoutEffect(() => {
+    const element = container.current, probe = natural.current;
+    if (!element || !probe) return;
+    const measure = () => {
+      if (element.clientWidth <= 0) return;
+      // Measure max-content, not the table's stretched width. Keep the same table measurable while stacked.
+      const width = probe.style.width;
+      probe.style.width = "max-content";
+      const required = probe.offsetWidth;
+      probe.style.width = width;
+      setStacked(required > element.clientWidth);
+    };
+    measure();
+    const observer = typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(measure);
+    observer?.observe(element);
+    observer?.observe(probe);
+    let live = true;
+    const loaded = () => { if (live) measure(); };
+    const faces = globalThis.document?.fonts;
+    faces?.ready.then(loaded);
+    faces?.addEventListener?.("loadingdone", loaded);
+    return () => { live = false; observer?.disconnect(); faces?.removeEventListener?.("loadingdone", loaded); };
+  }, [table, shown]);
+  return <div ref={container} className="hkc-output-table-scroll" role="region" aria-label={`${label} · table`} tabIndex={stacked ? undefined : 0}>
+    <div className={stacked ? "hkc-output-table-probe" : undefined} aria-hidden={stacked || undefined}>
+      <table ref={natural} className="hkc-output-table">
+        <thead><tr>{table.columns.map((column, index) => <th key={index} scope="col" data-align={align(index)}>{column.label}</th>)}</tr></thead>
+        <tbody>
+          {rows.map((row, rowIndex) => <tr key={rowIndex} className={row === total ? "hkc-output-table-total" : undefined}>{row.cells.map((cell, index) => index === 0
+            ? <th key={index} scope="row" data-align={align(index)}>{cell}{row.status && <> <HarsoOutputRowStatus status={row.status} /></>}</th>
+            : <td key={index} data-align={align(index)}>{cell}</td>)}</tr>)}
+        </tbody>
+      </table>
+    </div>
+    {stacked && <ul className="hkc-output-table-items" role="list">
+      {rows.map((row, rowIndex) => <li key={rowIndex} className={row === total ? "hkc-output-table-item hkc-output-table-total" : "hkc-output-table-item"}>
+        <div className="hkc-output-table-name">{row.cells[0]}{row.status && <> <HarsoOutputRowStatus status={row.status} /></>}</div>
+        <dl className="hkc-output-table-values">{row.cells.slice(1).map((cell, index) => <div key={index}>
+          <dt>{table.columns[index + 1].label}</dt><dd data-align={align(index + 1)}>{cell}</dd>
+        </div>)}</dl>
+      </li>)}
+    </ul>}
   </div>;
 }
 

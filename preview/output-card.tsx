@@ -299,12 +299,18 @@ const month: HarsoOutputDocument = {
   details: { sources: [{ label: "Linked accounts, synced 1 Sep 2026" }], assumptions: ["Transfers between your own accounts are excluded."] },
   fallback_text: "August: S$4,280 spent of S$5,000, S$720 left. Highest week 15–21 Aug (S$1,460)."
 };
-// Verbatim playbook example sports-standings table block (total_count 20 → View all), and a wide synthetic table that scrolls.
+// Verbatim playbook example sports-standings table block (total_count 20 → View all), and a wide synthetic comparison.
 const standings: HarsoOutputDocument = {
   header: { title: "Premier League table", subtitle: "After matchweek 6 · as of 22:10" },
   blocks: [{ kind: "table", total_count: 20, columns: [{ label: "Pos" }, { label: "Team" }, { label: "Played", align: "end" }, { label: "Pts", align: "end" }],
     rows: [{ cells: ["1", "Liverpool", "6", "16"] }, { cells: ["2", "Arsenal", "6", "14"] }, { cells: ["3", "Man City", "6", "13"] }] }],
   fallback_text: "Premier League after matchweek 6: Liverpool 16, Arsenal 14, Man City 13."
+};
+// Verbatim real headphones comparison from the 29 Sep 2026 dev card.
+const compare: HarsoOutputDocument = {
+  header: {"title":"Noise-cancelling headphones under S$400","subtitle":"Singapore prices checked 29 Sep 2026"},
+  blocks: [{"kind":"table","columns":[{"label":"Model"},{"align":"end","label":"Price"},{"label":"ANC"},{"align":"end","label":"Battery"},{"align":"end","label":"Weight"}],"rows":[{"cells":["Sony WH-1000XM5 (best overall)","S$309 · Harvey Norman","Excellent","30h","250g"]},{"cells":["Bose QuietComfort (comfort/travel)","S$359 · Harvey Norman","Excellent, esp. engine rumble","24h","240g"]},{"cells":["Sennheiser Momentum 4 (music/battery)","S$349 · Sennheiser SG","Good, behind Sony/Bose","60h","293g"]}]}],
+  fallback_text: "Noise-cancelling headphones under S$400: Sony WH-1000XM5 S$309 (30h, 250g), Bose QuietComfort S$359 (24h, 240g), Sennheiser Momentum 4 S$349 (60h, 293g)."
 };
 const wide: HarsoOutputDocument = {
   header: { title: "Plans compared" },
@@ -437,7 +443,7 @@ const rtlActions: HarsoOutputDocument = { header: { title: "مرحبا بالع�
   fallback_text: "RTL labels." };
 // Synthetic: a block kind the card does not draw, so the whole card falls back to its text.
 const unknown: HarsoOutputDocument = { ...failed, blocks: [{ kind: "hologram", payload: { raw: true } }] };
-const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide,
+const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide, compare,
   ...worldMaps, invoice, directions, work: workRunning, longactions: longActions, rtlactions: rtlActions, status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
 
 /* Fixture media host: artifacts are local drawings, map tiles a drawn street grid per tile (deterministic, offline:
@@ -518,8 +524,8 @@ function Fixture() {
   return <KitProvider appearance={appearance} palette={palette} className="output-card-fixture" style={query.has("width") ? { maxWidth: `${Number(query.get("width"))}px` } : undefined}>
     <main>
       <div className="output-card-transcript" data-testid="transcript">
-        <p className="output-card-user">Flights to Tokyo on 12 Oct?</p>
-        <p>Three direct options. SQ 638 has the best times for your morning start.</p>
+        <p className="output-card-user">{doc === "compare" ? "Compare noise-cancelling headphones under S$400." : "Flights to Tokyo on 12 Oct?"}</p>
+        <p>{doc === "compare" ? "Three options at Singapore prices. Here is every specification side by side." : "Three direct options. SQ 638 has the best times for your morning start."}</p>
         <HarsoOutputCard document={query.has("full") ? harsoOutputWholeAnswer(document) : document} caps={query.has("full") ? HARSO_OUTPUT_CARD_UNCAPPED : undefined}
           onViewAll={() => setViewAllOpened(value => value + 1)}
           onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} subjectState={subjectState} {...host} />
