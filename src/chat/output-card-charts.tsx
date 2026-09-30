@@ -17,7 +17,7 @@ export interface HarsoOutputSeries { label: string; values: (string | null)[] }
 export interface HarsoOutputChart { kind: "chart"; chart: "bar" | "line"; unit?: string; x_labels: string[]; series: HarsoOutputSeries[]; highlight_index?: number }
 export interface HarsoOutputVisualBlock { kind: "visual"; visual: HarsoOutputChart | { kind: string; [key: string]: unknown } }
 export interface HarsoOutputTableColumn { label: string; align?: "start" | "end" }
-export interface HarsoOutputTableRow { cells: string[]; status?: string }
+export interface HarsoOutputTableRow { cells: string[]; status?: string; status_label?: string }
 export interface HarsoOutputTableBlock { kind: "table"; columns: HarsoOutputTableColumn[]; rows: HarsoOutputTableRow[]; total_count?: number }
 
 /**
@@ -35,7 +35,7 @@ export interface HarsoOutputBlockState {
 
 /** Any output block, read by shape (the host validates the document before it reaches the kit). */
 type AnyBlock = { kind: string };
-type Row = { label: string; secondary?: string; trailing?: string; mark?: string; status?: string };
+type Row = { label: string; secondary?: string; trailing?: string; mark?: string; status?: string; status_label?: string };
 
 const DECIMAL = /^-?\d{1,15}(\.\d{1,6})?$/;
 const PERCENT = /^(\d{1,3}(?:\.\d{1,2})?)\s?%$/;
@@ -61,7 +61,7 @@ export function readShare(items: Row[]): number[] | undefined {
   if (items.length < 2) return undefined;
   const shares: number[] = [];
   for (const row of items) {
-    const match = row.trailing && row.mark == null && row.status == null ? PERCENT.exec(row.secondary?.trim() ?? "") : null;
+    const match = row.trailing && row.mark == null && row.status == null && row.status_label == null ? PERCENT.exec(row.secondary?.trim() ?? "") : null;
     if (!match) return undefined;
     shares.push(Number(match[1]));
   }
@@ -71,15 +71,20 @@ export function readShare(items: Row[]): number[] | undefined {
 }
 
 /** Row status words the card can say (output-blocks.v1 `row_status`), each in the kit's tone for its meaning. */
-const ROW_STATUS = { overdue: { word: "Overdue", tone: "attention" }, paid: { word: "Paid", tone: "positive" } } as const;
+const ROW_STATUS = {
+  overdue: { word: "Overdue", tone: "attention" }, paid: { word: "Paid", tone: "positive" },
+  done: { word: "Done", tone: "neutral" }, in_progress: { word: "In progress", tone: "active" },
+  needs_you: { word: "Needs you", tone: "attention" }, problem: { word: "Problem", tone: "negative" }
+} as const;
 /** True when the row has no status, or one this card can say; any other status makes the document fall back. */
 export const rowStatusOk = (status?: string) => status == null || Object.hasOwn(ROW_STATUS, status);
 const rowStatus = (status?: string) => status != null && Object.hasOwn(ROW_STATUS, status) ? ROW_STATUS[status as keyof typeof ROW_STATUS] : undefined;
 
 /** A row's status as the word itself beside its tone dot (the kit Badge), so the meaning never rests on colour. */
-export function HarsoOutputRowStatus({ status }: { status?: string }) {
+export function HarsoOutputRowStatus({ status, status_label }: { status?: string; status_label?: string }) {
   const known = rowStatus(status);
-  return known ? <Badge tone={known.tone} className="hkc-output-row-status" data-status={status}>{known.word}</Badge> : null;
+  const word = status_label ?? known?.word;
+  return word ? <Badge tone={known?.tone ?? "neutral"} className="hkc-output-row-status" data-status={status}>{word}</Badge> : null;
 }
 
 /** The table this card can draw: 2+ columns, 1+ rows, every row as wide as the header, row status words it can say. */
@@ -511,16 +516,16 @@ export function HarsoOutputTableView({ table, shown, label }: { table: HarsoOutp
         <thead><tr>{table.columns.map((column, index) => <th key={index} scope="col" data-align={align(index)}>{column.label}</th>)}</tr></thead>
         <tbody>
           {rows.map((row, rowIndex) => <tr key={rowIndex} className={row === total ? "hkc-output-table-total" : undefined}>{row.cells.map((cell, index) => index === 0
-            ? <th key={index} scope="row" data-align={align(index)}>{cell}{row.status && <> <HarsoOutputRowStatus status={row.status} /></>}</th>
+            ? <th key={index} scope="row" data-align={align(index)}>{cell}{(row.status || row.status_label) && <> <HarsoOutputRowStatus status={row.status} status_label={row.status_label} /></>}</th>
             : <td key={index} data-align={align(index)}>{cell}</td>)}</tr>)}
         </tbody>
       </table>
     </div>
     {stacked && <ul className="hkc-output-table-items" role="list">
       {rows.map((row, rowIndex) => <li key={rowIndex} className={row === total ? "hkc-output-table-item hkc-output-table-total" : "hkc-output-table-item"}>
-        <div className="hkc-output-table-name">{row.cells[0]}{row.status && <> <HarsoOutputRowStatus status={row.status} /></>}</div>
+        <div className="hkc-output-table-name">{row.cells[0]}{(row.status || row.status_label) && <> <HarsoOutputRowStatus status={row.status} status_label={row.status_label} /></>}</div>
         <dl className="hkc-output-table-values">{row.cells.slice(1).map((cell, index) => <div key={index}>
-          <dt>{table.columns[index + 1].label}</dt><dd data-align={align(index + 1)}>{cell}</dd>
+          <dt>{table.columns[index + 1].label}</dt><dd data-align="end">{cell}</dd>
         </div>)}</dl>
       </li>)}
     </ul>}
@@ -563,7 +568,7 @@ export function HarsoOutputBlockFrame({ state, kind, children }: { state?: Harso
   </div>;
 }
 
-const statusWord = (status?: string) => { const known = rowStatus(status); return known ? [known.word] : []; };
+const statusWord = (status?: string, label?: string) => { const word = label ?? rowStatus(status)?.word; return word ? [word] : []; };
 
 /** Plain text of one block for Copy: every value with its unit, rows as lines, tables tab-separated. */
 export function harsoOutputBlockPlainText(block: AnyBlock): string | undefined {
@@ -571,9 +576,9 @@ export function harsoOutputBlockPlainText(block: AnyBlock): string | undefined {
   if (chart) return chart.series.map(series => `${series.label}: ${chart.x_labels.map((label, index) =>
     `${label} ${series.values[index] === null ? "not reported" : formatValue(series.values[index]!, chart.unit)}`).join(", ")}`).join("\n");
   const table = readTable(block);
-  if (table) return [table.columns.map(column => column.label), ...table.rows.map(row => [[row.cells[0], ...statusWord(row.status)].join(" · "), ...row.cells.slice(1)])].map(cells => cells.join("\t")).join("\n");
+  if (table) return [table.columns.map(column => column.label), ...table.rows.map(row => [[row.cells[0], ...statusWord(row.status, row.status_label)].join(" · "), ...row.cells.slice(1)])].map(cells => cells.join("\t")).join("\n");
   const items = (block as { items?: unknown }).items;
   if (block.kind === "rows" && Array.isArray(items)) return (items as Row[])
-    .map(row => [row.label, ...statusWord(row.status), row.secondary, row.trailing].filter(Boolean).join(" · ")).join("\n");
+    .map(row => [row.label, ...statusWord(row.status, row.status_label), row.secondary, row.trailing].filter(Boolean).join(" · ")).join("\n");
   return undefined;
 }

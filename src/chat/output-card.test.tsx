@@ -362,7 +362,7 @@ test("text is plain: markup-looking strings render literally, never as HTML", ()
 });
 
 // Row status words used to fall back (they had no drawing); now the word draws on its row in the kit Badge.
-test.each([["overdue", "Overdue", "attention"], ["paid", "Paid", "positive"]] as const)("row status %s draws the word %s on its row, in the %s tone", (status, word, tone) => {
+test.each([["overdue", "Overdue", "attention"], ["paid", "Paid", "positive"], ["done", "Done", "neutral"], ["in_progress", "In progress", "active"], ["needs_you", "Needs you", "attention"], ["problem", "Problem", "negative"]] as const)("row status %s draws the word %s on its row, in the %s tone", (status, word, tone) => {
   const document = { ...flights, blocks: [{ kind: "rows", items: [{ label: "SP Group", secondary: "Was due 21 Sep", trailing: "S$212.40", status }] }] };
   const { container } = render(<chat.HarsoOutputCard document={document as chat.HarsoOutputDocument} onViewAll={() => {}} />);
   expect(container.querySelector("[data-fallback]")).toBeNull();

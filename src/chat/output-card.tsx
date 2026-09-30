@@ -26,8 +26,11 @@ export interface HarsoOutputRow {
   secondary?: string;
   trailing?: string;
   mark?: "pick";
-  /** Agent-asserted row word, drawn after the label: "overdue" (attention) or "paid" (positive). Any other value falls back. */
+  /** Agent-asserted meaning, drawn as a dot and word after the label. Unknown meanings fall back. */
   status?: string;
+  /** Exact word to show instead of the meaning's default; neutral when no meaning is supplied. */
+  status_label?: string;
+  group?: string;
   /** A square photo leading the row. Drawn only when every row of the block has one (all or none, never ragged). */
   thumbnail?: HarsoOutputPhoto;
 }
@@ -289,7 +292,7 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
       // Timed steps the playbook sends as the rows right after a running status (G16) draw on its rail; under a live
       // word they are no longer what comes next, so they stay ordinary rows.
       const next = blocks[index + 1];
-      const steps = !live && next && isRows(next) ? readSteps(status, next.items) : undefined;
+      const steps = !live && next && isRows(next) && next.items.every(row => row.status_label == null) ? readSteps(status, next.items) : undefined;
       let drawn: HarsoOutputRow[] | undefined;
       if (steps) {
         stepsAt = index + 1;
@@ -618,7 +621,7 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
                 <p className="hkc-output-card-row-line">
                   <span className="hkc-output-card-row-label">{row.label}</span>
                   {row.mark === "pick" && <span className="hkc-output-card-pick">Pick</span>}
-                  <HarsoOutputRowStatus status={row.status} />
+                  <HarsoOutputRowStatus status={row.status} status_label={row.status_label} />
                 </p>
                 {row.secondary && <p className="hkc-output-card-row-secondary">{row.secondary}</p>}
               </div>

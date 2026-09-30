@@ -312,6 +312,21 @@ const compare: HarsoOutputDocument = {
   blocks: [{"kind":"table","columns":[{"label":"Model"},{"align":"end","label":"Price"},{"label":"ANC"},{"align":"end","label":"Battery"},{"align":"end","label":"Weight"}],"rows":[{"cells":["Sony WH-1000XM5 (best overall)","S$309 · Harvey Norman","Excellent","30h","250g"]},{"cells":["Bose QuietComfort (comfort/travel)","S$359 · Harvey Norman","Excellent, esp. engine rumble","24h","240g"]},{"cells":["Sennheiser Momentum 4 (music/battery)","S$349 · Sennheiser SG","Good, behind Sony/Bose","60h","293g"]}]}],
   fallback_text: "Noise-cancelling headphones under S$400: Sony WH-1000XM5 S$309 (30h, 250g), Bose QuietComfort S$359 (24h, 240g), Sennheiser Momentum 4 S$349 (60h, 293g)."
 };
+// Real rental rows from the dev card, with state separate from each address.
+const rentals: HarsoOutputDocument = {
+  header: { title: "2-bed rentals near Tiong Bahru", subtitle: "Under S$4,500/month · checked 29 Sep 2026" },
+  blocks: [{ kind: "rows", items: [
+    { label: "20 Jalan Klinik (HDB)", mark: "pick", status: "done", status_label: "Live listing",
+      secondary: "635 sq ft · 2 bed, 1 bath · fully furnished · ~6 min to MRT · available now", trailing: "S$3,200/mo" },
+    { label: "30 Jalan Klinik (HDB)", status: "needs_you", status_label: "Unverified",
+      secondary: "624 sq ft · 2 bed, 1 bath · fully furnished · ~3 min to MRT · 2-yr lease", trailing: "S$3,300/mo" },
+    { label: "46 Jalan Bukit Ho Swee (HDB)", status: "needs_you", status_label: "Unverified",
+      secondary: "~667–700 sq ft · 2 bed, 2 bath · furnished · ~4 min to MRT · from 1 Oct", trailing: "S$3,300/mo" },
+    { label: "Kai Fook Mansion", status: "needs_you", status_label: "Unverified",
+      secondary: "910 sq ft · 2 bed · partly furnished · no lift · ~4–5 min to MRT", trailing: "S$4,200/mo" }
+  ] }],
+  fallback_text: "2-bed rentals near Tiong Bahru: 20 Jalan Klinik (HDB), live listing, S$3,200/mo; 30 Jalan Klinik (HDB), unverified, S$3,300/mo; 46 Jalan Bukit Ho Swee (HDB), unverified, S$3,300/mo; Kai Fook Mansion, unverified, S$4,200/mo."
+};
 const wide: HarsoOutputDocument = {
   header: { title: "Plans compared" },
   blocks: [{ kind: "table", columns: [{ label: "Plan" }, { label: "Monthly premium", align: "end" }, { label: "Hospital ward", align: "end" }, { label: "Annual deductible", align: "end" }, { label: "Co-insurance", align: "end" }, { label: "Panel", align: "end" }],
@@ -443,7 +458,7 @@ const rtlActions: HarsoOutputDocument = { header: { title: "مرحبا بالع�
   fallback_text: "RTL labels." };
 // Synthetic: a block kind the card does not draw, so the whole card falls back to its text.
 const unknown: HarsoOutputDocument = { ...failed, blocks: [{ kind: "hologram", payload: { raw: true } }] };
-const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide, compare,
+const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide, compare, rentals,
   ...worldMaps, invoice, directions, work: workRunning, longactions: longActions, rtlactions: rtlActions, status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
 
 /* Fixture media host: artifacts are local drawings, map tiles a drawn street grid per tile (deterministic, offline:
@@ -524,8 +539,8 @@ function Fixture() {
   return <KitProvider appearance={appearance} palette={palette} className="output-card-fixture" style={query.has("width") ? { maxWidth: `${Number(query.get("width"))}px` } : undefined}>
     <main>
       <div className="output-card-transcript" data-testid="transcript">
-        <p className="output-card-user">{doc === "compare" ? "Compare noise-cancelling headphones under S$400." : "Flights to Tokyo on 12 Oct?"}</p>
-        <p>{doc === "compare" ? "Three options at Singapore prices. Here is every specification side by side." : "Three direct options. SQ 638 has the best times for your morning start."}</p>
+        <p className="output-card-user">{doc === "rentals" ? "Find 2-bed rentals near Tiong Bahru under S$4,500/month." : doc === "compare" ? "Compare noise-cancelling headphones under S$400." : "Flights to Tokyo on 12 Oct?"}</p>
+        <p>{doc === "rentals" ? "One live listing and three options still to verify." : doc === "compare" ? "Three options at Singapore prices. Here is every specification side by side." : "Three direct options. SQ 638 has the best times for your morning start."}</p>
         <HarsoOutputCard document={query.has("full") ? harsoOutputWholeAnswer(document) : document} caps={query.has("full") ? HARSO_OUTPUT_CARD_UNCAPPED : undefined}
           onViewAll={() => setViewAllOpened(value => value + 1)}
           onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} subjectState={subjectState} {...host} />
