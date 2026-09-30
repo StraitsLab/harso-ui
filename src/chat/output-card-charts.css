@@ -46,8 +46,8 @@
 .harso-kit .hkc-output-share-amount { min-width: 72px; text-align: right; font-size: var(--hk-text-body); line-height: 20px; font-variant-numeric: tabular-nums; }
 
 /* Table: header 12 secondary weight 500; rows 13 on 32px with hairlines; Total last, 500, strong rule above.
-   Numeric (end) columns right-aligned, tabular. Scrolls sideways inside the block, never the card. */
-.harso-kit .hkc-output-table-scroll { width: 100%; min-width: 0; overflow-x: auto; overscroll-behavior-x: contain; border-radius: var(--hk-radius-row); }
+   Numeric (end) columns right-aligned, tabular. Wider tables become label/value items. */
+.harso-kit .hkc-output-table-scroll { position: relative; width: 100%; min-width: 0; overflow-x: auto; overscroll-behavior-x: contain; border-radius: var(--hk-radius-row); }
 .harso-kit .hkc-output-table { width: 100%; border-spacing: 0; font-variant-numeric: tabular-nums; }
 .harso-kit .hkc-output-table :where(th, td) {
   padding: 6px 0; padding-inline-end: var(--hk-space-4); height: 32px; text-align: start; vertical-align: middle;
@@ -60,6 +60,23 @@
 .harso-kit .hkc-output-table tbody tr:is(:last-child, :has(+ .hkc-output-table-total)) :where(th, td) { box-shadow: none; }
 .harso-kit .hkc-output-table tbody tr.hkc-output-table-total :where(th, td) { font-weight: 500; box-shadow: inset 0 1px 0 color-mix(in srgb, var(--hk-ink) 40%, var(--hk-surface)); }
 .harso-kit .hkc-output-table-scroll:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+
+/* A clipped, inert probe keeps natural width measurable without adding sideways scroll or duplicate announcements. */
+.harso-kit .hkc-output-table-probe { position: absolute; inset-inline: 0; top: 0; height: 0; overflow: hidden; visibility: hidden; pointer-events: none; }
+.harso-kit .hkc-output-table-probe .hkc-output-table { width: max-content; }
+/* Stacked comparisons: quiet label/value lines, separated only by existing row spacing. */
+.harso-kit .hkc-output-table-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-3); }
+.harso-kit .hkc-output-table-item { min-width: 0; padding-block: 6px; overflow-wrap: anywhere; }
+.harso-kit .hkc-output-table-name { font-size: var(--hk-text-body); font-weight: 500; line-height: 20px; }
+.harso-kit .hkc-output-table-values { margin: var(--hk-space-1) 0 0; font-size: var(--hk-text-chrome); line-height: 20px; }
+.harso-kit .hkc-output-table-values > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: var(--hk-space-3); }
+.harso-kit .hkc-output-table-values dt { color: var(--hk-secondary); }
+.harso-kit .hkc-output-table-values dd { margin: 0; min-width: 0; color: var(--hk-ink); }
+.harso-kit .hkc-output-table-values dd[data-align="end"] { font-variant-numeric: tabular-nums; text-align: end; }
+.harso-kit .hkc-output-table-item.hkc-output-table-total { font-weight: 500; }
+
+/* Rule 3: problem adds negative text, not another coloured state dot. Legacy paid/overdue stay unchanged. */
+.harso-kit .hkc-output-row-status[data-status="problem"] { --hk-badge-mark: var(--hk-tertiary); }
 
 /* States (B0): loading skeleton · empty ring + note · partial/stale note under the content · failed amber, never red. */
 .harso-kit .hkc-output-block { display: flex; flex-direction: column; gap: 10px; min-width: 0; }

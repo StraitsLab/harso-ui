@@ -118,7 +118,7 @@ workaround and nothing else: the app draws the richer form once the backend adds
 | Master | What you send | Example |
 |---|---|---|
 | header | `header.title` + `subtitle` (period, scope, "as of") | every card |
-| rows | `rows` with label, secondary, trailing; state word as text [G1]; one flat list [G2] | `money-bills-due` |
+| rows | `rows` with label, secondary, trailing; `status` + optional `status_label` for the state word; `group` for natural sections (below) | `money-bills-due` |
 | rowkinds | `mark: "pick"` on one row; `thumbnail` {artifact, alt} on every row or none (a photo per option: products, homes, hotels, dishes, logos); no row link [G8] yet | `travel-flights`, `shop-vacuum-options` |
 | numbers | `numbers`, 2 items; a change is its own item [G3] | `money-net-worth` |
 | numbers4 | `numbers`, 3 items at most, page only [G21] | `data-sales-collections` |
@@ -134,6 +134,8 @@ workaround and nothing else: the app draws the richer form once the backend adds
 | action | `action`, one primary, one quiet; never a reply | `file-logo` |
 | viewall | nothing extra: the app adds it past the inline caps; `more_label` names it | `money-spending-month` |
 | details | `details` sources, assumptions, disclaimers | `travel-flights` |
+
+Use `group` when rows have natural sections the person acts on differently ("Needs you" / "FYI", "Live" / "Unverified"); use 2–4 groups, never one per row, and keep rows of a group adjacent.
 
 The app also draws each master's loading, partial, stale, failed and empty states. You never send a loading card, and
 you choose none of their colours; the wording is yours (below).
@@ -180,7 +182,7 @@ progress, needs you, problem. You never choose red.
 | Stale | subtitle "As of Fri 25 Sep close · markets closed", or "As of 09:10 · couldn't refresh" when a refresh failed | the last good value, still first |
 | Empty | "No 3-room HDB in Bishan under S$500k" + the nearest useful fact | status(empty, detail) |
 | Working / watching / scheduled | "112 of about 400 checked", "since 9:40 AM", "rings at 19:42" | status + subject + one quiet control |
-| Row states | the word that fits: "Overdue", "Refunded", "Signed", "Not opened" | `status: overdue/paid` where they fit; otherwise the word goes in `trailing` or `secondary` until the contract adds meanings |
+| Row states | the word that fits: "Unverified", "Signed", "Not opened", "Live" | set `status` to the meaning: `done`, `in_progress`, `needs_you`, `problem`, `overdue` or `paid`; set `status_label` to the exact word when the default does not fit. Never put the state in the label |
 
 Anything live or time-sensitive (prices, availability, opening, quotes, balances, scores, fixtures, weather, flights,
 news) carries "as of HH:MM" in the subtitle, or "as of <day> close" for a market that is closed. That includes a
@@ -242,9 +244,9 @@ are real (they are illustrative), and how the app draws the card. Those need a r
 ## Contract source
 
 `schema/output-blocks.v1.json` is a byte-for-byte copy of weave-cloud `packages/contracts/src/schemas/output-blocks.v1.json`,
-last changed in commit `db2db1ab`, read at origin/main `7c899530`, sha256
-`969af48f10b567b1f4d7bda0585a3c81d40537f4e0767c2fecacd72b1919077f`. The checker refuses a copy whose hash differs from
+read at `factory/output-tier3` commit `9f2ea3fe667ecaa856bd8f788ae4cac50f8c3461`, sha256
+`aa7ba71a21b70afb082ed998a47e0f09b1cff37fc53ebecda161aede52463baf`. The checker refuses a copy whose hash differs from
 the one recorded in the examples file, so a schema change has to be re-copied on purpose. Where the contract cannot
-express an example cleanly (row state meanings, grouped rows, delta, totals, ordered steps, as-of, row link,
+express an example cleanly (delta, totals, ordered steps, as-of, row link,
 share bar, a share total, chart caption, timed status steps, a failed block's retry), the workaround used above is the rule until the
 backend adds the field. The gaps are numbered G1–G24 in the evidence file `catalogue-design/playbook/coverage.md`.

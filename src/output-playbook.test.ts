@@ -16,7 +16,7 @@ const allFindings = (example: Example): string[] => [
   ...lawErrors(example),
 ];
 
-const SCHEMA_SHA256 = "969af48f10b567b1f4d7bda0585a3c81d40537f4e0767c2fecacd72b1919077f";
+const SCHEMA_SHA256 = "aa7ba71a21b70afb082ed998a47e0f09b1cff37fc53ebecda161aede52463baf";
 /** Runs the whole-file checks on a copy of the examples with one example replaced (says, periods, weekdays). */
 function fileFindings(example: Example): string[] {
   const copy = structuredClone(examplesFile as any);

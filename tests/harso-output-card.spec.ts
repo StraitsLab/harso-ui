@@ -168,6 +168,35 @@ test("narrow 320px: long rows wrap without horizontal overflow or overlap", asyn
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
+// Tier 3: each group heading belongs to the rows below, not to the preceding run.
+for (const mode of ["light", "dark"] as const) for (const width of [380, 640]) {
+  test(`inbox ${mode} ${width}: group headings sit closer to their own rows; first starts flush`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(`${fixture}?doc=inbox&mode=${mode}`);
+    await expect(card(page).getByRole("list", { name: "Needs you" }).getByRole("listitem")).toHaveCount(2);
+    await expect(card(page).getByRole("list", { name: "FYI" }).getByRole("listitem")).toHaveCount(1);
+    const spacing = await card(page).evaluate(root => {
+      const groups = root.querySelector(".hkc-output-card-row-groups")!;
+      const [first, later] = [...groups.children];
+      const firstHeading = first.querySelector("h3")!.getBoundingClientRect();
+      const heading = later.querySelector("h3")!.getBoundingClientRect();
+      const previous = [...first.querySelectorAll("li")].at(-1)!.getBoundingClientRect();
+      const next = later.querySelector("li")!.getBoundingClientRect();
+      const style = getComputedStyle(root);
+      return { first: firstHeading.top - groups.getBoundingClientRect().top,
+        above: heading.top - previous.bottom, below: next.top - heading.bottom,
+        space4: parseFloat(style.getPropertyValue("--hk-space-4")), space1: parseFloat(style.getPropertyValue("--hk-space-1")) };
+    });
+    expect(spacing.first).toBe(0);
+    expect(spacing.above).toBeCloseTo(spacing.space4, 1);
+    expect(spacing.below).toBeCloseTo(spacing.space1, 1);
+    expect(spacing.above).toBeGreaterThan(spacing.below);
+    await expect(card(page).getByRole("button", { name: "View all 5" })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+  });
+}
+
 // Packet 5a: key numbers and a short text block render as themselves (light + dark evidence in .lane/evidence).
 const evidence = resolve(process.cwd(), ".lane/evidence");
 for (const mode of ["light", "dark"] as const) {
@@ -454,3 +483,16 @@ for (const full of [false, true]) test(`text ${full ? "full" : "inline"} 390: th
   expect(settled.scroll, "page scroll width").toBeLessThanOrEqual(390);
   expect(settled.sample, "sample keeps its natural max-content width").toBeGreaterThan(settled.body);
 });
+
+for (const mode of ["light", "dark"] as const) for (const width of [380, 640]) {
+  test(`rentals ${mode} ${width}: every row says its state without repeating group headings`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(`${fixture}?doc=rentals&mode=${mode}`);
+    await expect(card(page).getByRole("heading", { level: 3 })).toHaveCount(0);
+    await expect(card(page).locator(".hkc-output-row-status")).toHaveText(["Live listing", "Unverified", "Unverified"]);
+    await expect(card(page).getByRole("listitem")).toHaveCount(3);
+    await expect(card(page).getByRole("button", { name: "View all 4" })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+  });
+}

@@ -299,12 +299,45 @@ const month: HarsoOutputDocument = {
   details: { sources: [{ label: "Linked accounts, synced 1 Sep 2026" }], assumptions: ["Transfers between your own accounts are excluded."] },
   fallback_text: "August: S$4,280 spent of S$5,000, S$720 left. Highest week 15–21 Aug (S$1,460)."
 };
-// Verbatim playbook example sports-standings table block (total_count 20 → View all), and a wide synthetic table that scrolls.
+// Verbatim playbook example sports-standings table block (total_count 20 → View all), and a wide synthetic comparison.
 const standings: HarsoOutputDocument = {
   header: { title: "Premier League table", subtitle: "After matchweek 6 · as of 22:10" },
   blocks: [{ kind: "table", total_count: 20, columns: [{ label: "Pos" }, { label: "Team" }, { label: "Played", align: "end" }, { label: "Pts", align: "end" }],
     rows: [{ cells: ["1", "Liverpool", "6", "16"] }, { cells: ["2", "Arsenal", "6", "14"] }, { cells: ["3", "Man City", "6", "13"] }] }],
   fallback_text: "Premier League after matchweek 6: Liverpool 16, Arsenal 14, Man City 13."
+};
+// Verbatim real headphones comparison from the 29 Sep 2026 dev card.
+const compare: HarsoOutputDocument = {
+  header: {"title":"Noise-cancelling headphones under S$400","subtitle":"Singapore prices checked 29 Sep 2026"},
+  blocks: [{"kind":"table","columns":[{"label":"Model"},{"align":"end","label":"Price"},{"label":"ANC"},{"align":"end","label":"Battery"},{"align":"end","label":"Weight"}],"rows":[{"cells":["Sony WH-1000XM5 (best overall)","S$309 · Harvey Norman","Excellent","30h","250g"]},{"cells":["Bose QuietComfort (comfort/travel)","S$359 · Harvey Norman","Excellent, esp. engine rumble","24h","240g"]},{"cells":["Sennheiser Momentum 4 (music/battery)","S$349 · Sennheiser SG","Good, behind Sony/Bose","60h","293g"]}]}],
+  fallback_text: "Noise-cancelling headphones under S$400: Sony WH-1000XM5 S$309 (30h, 250g), Bose QuietComfort S$359 (24h, 240g), Sennheiser Momentum 4 S$349 (60h, 293g)."
+};
+// Real rental rows from the dev card, with state separate from each address.
+const rentals: HarsoOutputDocument = {
+  header: { title: "2-bed rentals near Tiong Bahru", subtitle: "Under S$4,500/month · checked 29 Sep 2026" },
+  blocks: [{ kind: "rows", items: [
+    { label: "20 Jalan Klinik (HDB)", mark: "pick", status: "done", status_label: "Live listing",
+      secondary: "635 sq ft · 2 bed, 1 bath · fully furnished · ~6 min to MRT · available now", trailing: "S$3,200/mo" },
+    { label: "30 Jalan Klinik (HDB)", status: "needs_you", status_label: "Unverified",
+      secondary: "624 sq ft · 2 bed, 1 bath · fully furnished · ~3 min to MRT · 2-yr lease", trailing: "S$3,300/mo" },
+    { label: "46 Jalan Bukit Ho Swee (HDB)", status: "needs_you", status_label: "Unverified",
+      secondary: "~667–700 sq ft · 2 bed, 2 bath · furnished · ~4 min to MRT · from 1 Oct", trailing: "S$3,300/mo" },
+    { label: "Kai Fook Mansion", status: "needs_you", status_label: "Unverified",
+      secondary: "910 sq ft · 2 bed · partly furnished · no lift · ~4–5 min to MRT", trailing: "S$4,200/mo" }
+  ] }],
+  fallback_text: "2-bed rentals near Tiong Bahru: 20 Jalan Klinik (HDB), live listing, S$3,200/mo; 30 Jalan Klinik (HDB), unverified, S$3,300/mo; 46 Jalan Bukit Ho Swee (HDB), unverified, S$3,300/mo; Kai Fook Mansion, unverified, S$4,200/mo."
+};
+// Synthetic inbox: natural action sections, no per-row statuses.
+const inbox: HarsoOutputDocument = {
+  header: { title: "Your inbox", subtitle: "5 updates · as of 10:30" },
+  blocks: [{ kind: "rows", items: [
+    { label: "Reply to Nichol", group: "Needs you", secondary: "Confirm Thursday dinner", trailing: "09:40" },
+    { label: "Review the lease renewal", group: "Needs you", secondary: "Landlord · reply by Friday", trailing: "09:15" },
+    { label: "Your parcel is on its way", group: "FYI", secondary: "Delivery expected tomorrow", trailing: "08:55" },
+    { label: "September receipt", group: "FYI", secondary: "SP Group · saved to Library", trailing: "08:30" },
+    { label: "Team update", group: "FYI", secondary: "Weekly notes from the team", trailing: "08:10" },
+  ] }],
+  fallback_text: "Needs you: reply to Nichol about Thursday dinner; review the lease renewal by Friday. FYI: parcel arrives tomorrow; September receipt saved; weekly team notes."
 };
 const wide: HarsoOutputDocument = {
   header: { title: "Plans compared" },
@@ -437,7 +470,7 @@ const rtlActions: HarsoOutputDocument = { header: { title: "مرحبا بالع�
   fallback_text: "RTL labels." };
 // Synthetic: a block kind the card does not draw, so the whole card falls back to its text.
 const unknown: HarsoOutputDocument = { ...failed, blocks: [{ kind: "hologram", payload: { raw: true } }] };
-const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide,
+const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide, compare, rentals, inbox,
   ...worldMaps, invoice, directions, work: workRunning, longactions: longActions, rtlactions: rtlActions, status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
 
 /* Fixture media host: artifacts are local drawings, map tiles a drawn street grid per tile (deterministic, offline:
@@ -518,8 +551,8 @@ function Fixture() {
   return <KitProvider appearance={appearance} palette={palette} className="output-card-fixture" style={query.has("width") ? { maxWidth: `${Number(query.get("width"))}px` } : undefined}>
     <main>
       <div className="output-card-transcript" data-testid="transcript">
-        <p className="output-card-user">Flights to Tokyo on 12 Oct?</p>
-        <p>Three direct options. SQ 638 has the best times for your morning start.</p>
+        <p className="output-card-user">{doc === "inbox" ? "What needs my attention in my inbox?" : doc === "rentals" ? "Find 2-bed rentals near Tiong Bahru under S$4,500/month." : doc === "compare" ? "Compare noise-cancelling headphones under S$400." : "Flights to Tokyo on 12 Oct?"}</p>
+        <p>{doc === "inbox" ? "Two messages need you; the rest are updates." : doc === "rentals" ? "One live listing and three options still to verify." : doc === "compare" ? "Three options at Singapore prices. Here is every specification side by side." : "Three direct options. SQ 638 has the best times for your morning start."}</p>
         <HarsoOutputCard document={query.has("full") ? harsoOutputWholeAnswer(document) : document} caps={query.has("full") ? HARSO_OUTPUT_CARD_UNCAPPED : undefined}
           onViewAll={() => setViewAllOpened(value => value + 1)}
           onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} subjectState={subjectState} {...host} />

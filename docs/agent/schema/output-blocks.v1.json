@@ -130,7 +130,11 @@
     "row_status": {
       "enum": [
         "overdue",
-        "paid"
+        "paid",
+        "done",
+        "in_progress",
+        "needs_you",
+        "problem"
       ]
     },
     "header": {
@@ -398,6 +402,12 @@
         "status": {
           "$ref": "#/$defs/row_status"
         },
+        "status_label": {
+          "$ref": "#/$defs/line16"
+        },
+        "group": {
+          "$ref": "#/$defs/line24"
+        },
         "thumbnail": {
           "$ref": "#/$defs/photo"
         }
@@ -550,6 +560,9 @@
         },
         "status": {
           "$ref": "#/$defs/row_status"
+        },
+        "status_label": {
+          "$ref": "#/$defs/line16"
         }
       }
     },

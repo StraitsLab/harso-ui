@@ -1,10 +1,10 @@
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
 import { formatValue, readShare, scale, wrapFigure } from "./output-card-charts";
 import chartStyles from "./output-card-charts.css?raw";
 
-afterEach(cleanup);
+afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 /** Test-side exact decimal helpers (strings, no floats), so the checks do not reuse the code under test. */
 const formatMicroText = (micro: bigint, places: number) => {
@@ -255,6 +255,96 @@ test("share is read only from rows that are a whole: otherwise they stay ordinar
 
 // ---- table ----
 
+// Verbatim real comparison block from the 29 Sep 2026 dev card.
+const comparisonTable: chat.HarsoOutputTableBlock = {"kind":"table","columns":[{"label":"Model"},{"align":"end","label":"Price"},{"label":"ANC"},{"align":"end","label":"Battery"},{"align":"end","label":"Weight"}],"rows":[{"cells":["Sony WH-1000XM5 (best overall)","S$309 · Harvey Norman","Excellent","30h","250g"]},{"cells":["Bose QuietComfort (comfort/travel)","S$359 · Harvey Norman","Excellent, esp. engine rumble","24h","240g"]},{"cells":["Sennheiser Momentum 4 (music/battery)","S$349 · Sennheiser SG","Good, behind Sony/Bose","60h","293g"]}]};
+
+function mockTableWidths(containerWidth: number, naturalWidth = 711) {
+  let width = containerWidth;
+  const observers: { callback: ResizeObserverCallback; observe: ReturnType<typeof vi.fn>; disconnect: ReturnType<typeof vi.fn> }[] = [];
+  vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockImplementation(function (this: HTMLElement) {
+    return this.classList.contains("hkc-output-table-scroll") ? width : 0;
+  });
+  vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockImplementation(function (this: HTMLElement) {
+    return this.tagName === "TABLE" ? naturalWidth : 0;
+  });
+  vi.stubGlobal("ResizeObserver", class {
+    observe = vi.fn();
+    disconnect = vi.fn();
+    constructor(callback: ResizeObserverCallback) { observers.push({ callback, observe: this.observe, disconnect: this.disconnect }); }
+  });
+  return { observers, resize(next: number) {
+    width = next;
+    act(() => { for (const observer of observers) observer.callback([], {} as ResizeObserver); });
+  } };
+}
+
+test("a table wider than its container draws stacked items with every value", () => {
+  mockTableWidths(576);
+  const { card } = renderDoc(doc([comparisonTable], { header: { title: "Noise-cancelling headphones under S$400", subtitle: "Singapore prices checked 29 Sep 2026" } }));
+  const region = within(card).getByRole("region", { name: "Noise-cancelling headphones under S$400 · table" });
+  expect(within(region).queryByRole("table")).toBeNull();
+  const items = within(within(region).getByRole("list")).getAllByRole("listitem");
+  expect(items).toHaveLength(3);
+  for (const [index, item] of items.entries()) {
+    const row = comparisonTable.rows[index];
+    expect(within(item).getByText(row.cells[0])).toBeVisible();
+    expect(within(item).getAllByRole("term").map(term => term.textContent)).toEqual(["Price", "ANC", "Battery", "Weight"]);
+    expect(within(item).getAllByRole("definition").map(value => value.textContent)).toEqual(row.cells.slice(1));
+    expect(within(item).getAllByRole("definition").map(value => value.getAttribute("data-align"))).toEqual(["end", "end", "end", "end"]);
+  }
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test("a table that fits stays a table", () => {
+  mockTableWidths(711);
+  const { card } = renderDoc(doc([comparisonTable]));
+  const region = within(card).getByRole("region", { name: "August spending · table" });
+  const table = within(region).getByRole("table");
+  expect(region).toHaveAttribute("tabindex", "0");
+  expect(within(region).queryByRole("list")).toBeNull();
+  expect(within(table).getAllByRole("columnheader").map(cell => cell.textContent)).toEqual(comparisonTable.columns.map(column => column.label));
+  expect(within(table).getAllByRole("rowheader").map(cell => cell.textContent)).toEqual(comparisonTable.rows.map(row => row.cells[0]));
+});
+
+test("table measurement re-decides on resize in both directions and disconnects on unmount", () => {
+  const widths = mockTableWidths(800);
+  const { card } = renderDoc(doc([comparisonTable]));
+  const region = within(card).getByRole("region", { name: "August spending · table" });
+  expect(within(region).getByRole("table")).toBeVisible();
+  expect(widths.observers[0].observe).toHaveBeenCalledWith(region);
+  widths.resize(316);
+  expect(within(region).queryByRole("table")).toBeNull();
+  expect(within(region).getAllByRole("listitem")).toHaveLength(3);
+  expect(region).not.toHaveAttribute("tabindex");
+  widths.resize(711);
+  expect(within(region).getByRole("table")).toBeVisible();
+  expect(within(region).queryByRole("list")).toBeNull();
+  cleanup();
+  expect(widths.observers[0].disconnect).toHaveBeenCalledTimes(1);
+});
+
+test("stacked tables keep the shared row budget, status words and emphasized Total last", () => {
+  mockTableWidths(316);
+  const table: chat.HarsoOutputTableBlock = { ...regionTable, rows: regionTable.rows.map((row, index) => ({ ...row, status: index === 0 ? "overdue" : index === 3 ? "paid" : undefined })) };
+  const { card, onViewAll } = renderDoc(doc([{ kind: "rows", items: [{ label: "A" }, { label: "B" }] }, table]));
+  const region = within(card).getByRole("region", { name: "August spending · table" });
+  const items = within(region).getAllByRole("listitem");
+  expect(items.map(item => item.textContent)).toEqual(["Central OverdueRevenueS$182,400vs Q1+4%", "Total PaidRevenueS$350,600vs Q1+6%"]);
+  expect(items[1]).toHaveClass("hkc-output-table-total");
+  expect(within(items[0]).getByText("Overdue")).toHaveClass("hk-badge--attention");
+  expect(within(items[1]).getByText("Paid")).toHaveClass("hk-badge--positive");
+  fireEvent.click(within(card).getByRole("button", { name: "View all 5" }));
+  expect(onViewAll).toHaveBeenCalledTimes(1);
+});
+
+test("stacked tables keep total_count and the host's View all label", () => {
+  mockTableWidths(316);
+  const { card, onViewAll } = renderDoc(doc([{ ...comparisonTable, total_count: 20 }], { more_label: "Compare all headphones" }));
+  expect(within(card).getAllByRole("listitem")).toHaveLength(3);
+  fireEvent.click(within(card).getByRole("button", { name: "Compare all headphones" }));
+  expect(onViewAll).toHaveBeenCalledTimes(1);
+});
+
 test("table: header row, numeric columns right-aligned, Total last and set apart, row headers for screen readers", () => {
   const { card } = renderDoc(doc([regionTable], { header: { title: "Sales by region · Q2" } }));
   expect(card).not.toHaveAttribute("data-fallback");
@@ -435,4 +525,61 @@ test("styles: tokens only, no borders or !important; 44px retry on touch", () =>
   // Header weight, tabular figures, in-block scroll, the 28px bordered retry, the amber glyph and the View-all hairline
   // are measured on computed styles in tests/harso-output-charts.spec.ts. The touch size is not emulated there.
   expect(source).toMatch(/pointer: coarse\) \{[^}]*hkc-output-block-retry \{ min-height: 44px/);
+});
+
+// A custom word changes the wording, never the meaning's tone, in either table layout or ordinary rows.
+test.each(["rows", "table", "stacked"] as const)("%s keeps custom status words and their tones", layout => {
+  if (layout === "stacked") mockTableWidths(100);
+  const states = [
+    { status: "done", status_label: "Live listing", tone: "neutral" },
+    { status: "in_progress", status_label: "Opening", tone: "active" },
+    { status: "needs_you", status_label: "Unverified", tone: "attention" },
+    { status: "problem", status_label: "Unavailable", tone: "negative" },
+    { status: "paid", status_label: "Settled", tone: "positive" },
+    { status: "overdue", status_label: "Late", tone: "attention" },
+    { status_label: "Signed", tone: "neutral" },
+  ];
+  const block = layout === "rows"
+    ? { kind: "rows", items: states.map((state, i) => ({ label: `Item ${i}`, ...state })) }
+    : { kind: "table", columns: [{ label: "Item" }, { label: "Value" }], rows: states.map((state, i) => ({ cells: [`Item ${i}`, "S$10"], ...state })) };
+  const { card } = renderDoc(doc([block]), { caps: { maxRows: 10 } });
+  expect(card).not.toHaveAttribute("data-fallback");
+  const content = layout === "stacked" ? within(card).getByRole("list") : card;
+  for (const { status_label, tone } of states) {
+    expect(within(content).getByText(status_label)).toHaveClass("hk-badge", `hk-badge--${tone}`);
+  }
+  for (const word of ["Done", "In progress", "Needs you", "Problem", "Paid", "Overdue"]) expect(within(content).queryByText(word)).toBeNull();
+  const text = chat.harsoOutputBlockPlainText(block)!;
+  for (const { status_label } of states) expect(text).toContain(` · ${status_label}`);
+});
+
+test.each(["rows", "table"])("%s rejects an unknown meaning even with a custom word", kind => {
+  const state = { status: "refunded", status_label: "Signed" };
+  const block = kind === "rows" ? { kind, items: [{ label: "A", ...state }] }
+    : { kind, columns: [{ label: "Name" }, { label: "Value" }], rows: [{ cells: ["A", "1"], ...state }] };
+  const { card } = renderDoc(doc([block]));
+  expect(card).toHaveAttribute("data-fallback", "true");
+  expect(within(card).getByText("FALLBACK")).toBeVisible();
+});
+
+test("a custom status word prevents share inference from discarding the word", () => {
+  const block = { kind: "rows", items: [
+    { label: "A", secondary: "60%", trailing: "S$60", status_label: "Signed" },
+    { label: "B", secondary: "40%", trailing: "S$40" }
+  ] };
+  const { card } = renderDoc(doc([block]));
+  expect(card.querySelector(".hkc-output-share")).toBeNull();
+  expect(within(card).getByText("Signed")).toHaveClass("hk-badge--neutral");
+});
+
+test("a label-only row after a running status keeps its custom word", () => {
+  const { card } = renderDoc(doc([
+    { kind: "status", state: "working", detail: "Checking listings" },
+    { kind: "rows", items: [{ label: "20 Jalan Klinik", trailing: "S$3,200/mo", status_label: "Signed" }] }
+  ]));
+  expect(within(card).getByText("Signed")).toHaveClass("hk-badge--neutral");
+});
+
+test("problem uses negative text without adding a red state dot", () => {
+  expect(chartStyles).toMatch(/\.hkc-output-row-status\[data-status="problem"\]\s*\{[^}]*--hk-badge-mark:\s*var\(--hk-tertiary\)/);
 });

@@ -111,7 +111,7 @@ for (const mode of ["light", "dark"] as const) {
     await expect(card(page)).toHaveScreenshot(`output-share-${mode}.png`, { animations: "disabled" });
   });
 
-  test(`table ${mode}: header 500, numbers right-aligned and tabular, Total last with a rule, wide tables scroll inside; axe clean`, async ({ page }) => {
+  test(`table ${mode}: header 500, numbers right-aligned and tabular, Total last with a rule, wide tables stack without sideways scroll; axe clean`, async ({ page }) => {
     await open(page, `doc=table&mode=${mode}&width=544`);
     const table = card(page).locator(".hkc-output-table");
     const head = await table.locator("thead th").evaluateAll(nodes => nodes.map(node => { const s = getComputedStyle(node); return [s.fontWeight, s.textAlign]; }));
@@ -131,12 +131,14 @@ for (const mode of ["light", "dark"] as const) {
     await open(page, `doc=wide&mode=${mode}&width=360`, 400);
     const scroller = card(page).locator(".hkc-output-table-scroll");
     const sizes = await scroller.evaluate(node => ({ scroll: node.scrollWidth, client: node.clientWidth, card: node.closest(".hkc-output-card")!.scrollWidth <= node.closest(".hkc-output-card")!.clientWidth }));
-    expect(sizes.scroll).toBeGreaterThan(sizes.client);
+    expect(sizes.scroll).toBeLessThanOrEqual(sizes.client);
     expect(sizes.card).toBe(true);
+    await expect(scroller.getByRole("table")).toHaveCount(0);
+    await expect(scroller.getByRole("listitem")).toHaveCount(2);
+    await expect(scroller.locator(".hkc-output-table-name")).toHaveText(["Prudential PRUShield Premier", "Great Eastern Supreme"]);
+    await expect(scroller.getByRole("term")).toHaveText(Array(2).fill(["Monthly premium", "Hospital ward", "Annual deductible", "Co-insurance", "Panel"]).flat());
+    await expect(scroller.getByRole("definition")).toHaveText(["S$1,240.00", "Private", "S$3,500.00", "10%", "Yes", "S$1,180.00", "Private", "S$3,500.00", "10%", "Yes"]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    await scroller.focus();
-    await page.keyboard.press("ArrowRight");
-    await expect.poll(() => scroller.evaluate(node => node.scrollLeft)).toBeGreaterThan(0);
     expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
 
     await open(page, `doc=standings&mode=${mode}&width=544`);
@@ -265,7 +267,7 @@ test("measurement follows the font token: a wider --hk-font keeps axis figures c
 // Hostile content (CJK without spaces, a 300-character word, emoji, RTL, negatives, 9-digit values) at four widths:
 // chart text never overlaps, never leaves the card's content box, and the page never scrolls sideways.
 for (const width of [320, 400, 560, 900]) {
-  test(`hostile content at ${width}px: chart labels stay apart and inside, the table scrolls inside, no page overflow`, async ({ page }) => {
+  test(`hostile content at ${width}px: chart labels stay apart and inside, the table stacks without sideways scroll, no page overflow`, async ({ page }) => {
     for (const doc of ["hostile", "month", "bar", "line"]) {
       await open(page, `doc=${doc}`, width);
       const result = await card(page).evaluate(root => {
@@ -279,7 +281,12 @@ for (const width of [320, 400, 560, 900]) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), doc).toBe(true);
     }
     await open(page, "doc=hostile", width);
-    expect(await card(page).locator(".hkc-output-table-scroll").evaluate(node => node.scrollWidth > node.clientWidth)).toBe(true);
+    const tableBlock = card(page).locator(".hkc-output-table-scroll");
+    await expect(tableBlock.getByRole("table")).toHaveCount(0);
+    await expect(tableBlock.getByRole("listitem")).toHaveCount(2);
+    await expect(tableBlock.getByRole("term")).toHaveText(["Δ", "Δ"]);
+    await expect(tableBlock.getByRole("definition")).toHaveText(["−S$1,200", "0"]);
+    expect(await tableBlock.evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
     await expect(card(page).locator(".hkc-chart-value")).toHaveText("−1,200");
     expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
   });
@@ -370,6 +377,29 @@ for (const mode of ["light", "dark"] as const) for (const [name, unit] of [["cjk
       await page.evaluate(() => document.fonts.ready);
       expect(await geometry(page), kind).toEqual({ overlaps: [], outside: [], bordered: [] });
       await expect(card(page)).toHaveScreenshot(`output-extremes-${name}-${kind}-${mode}.png`, { animations: "disabled" });
+    }
+  });
+}
+
+for (const mode of ["light", "dark"] as const) {
+  test(`comparison ${mode}: every value fits at 380 and 640; resizing back restores the table`, async ({ page }) => {
+    for (const width of [380, 640]) {
+      await open(page, `doc=compare&mode=${mode}`, width);
+      const block = card(page).getByRole("region", { name: "Noise-cancelling headphones under S$400 · table" });
+      await expect(block.getByRole("table")).toHaveCount(0);
+      await expect(block.getByRole("listitem")).toHaveCount(3);
+      await expect(block.locator(".hkc-output-table-name")).toHaveText(["Sony WH-1000XM5 (best overall)", "Bose QuietComfort (comfort/travel)", "Sennheiser Momentum 4 (music/battery)"]);
+      await expect(block.getByRole("term")).toHaveText(Array(3).fill(["Price", "ANC", "Battery", "Weight"]).flat());
+      await expect(block.getByRole("definition")).toHaveText(["S$309 · Harvey Norman", "Excellent", "30h", "250g", "S$359 · Harvey Norman", "Excellent, esp. engine rumble", "24h", "240g", "S$349 · Sennheiser SG", "Good, behind Sony/Bose", "60h", "293g"]);
+      expect(await block.evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
+      expect(await block.getByRole("definition").evaluateAll(nodes => nodes.every(node => getComputedStyle(node).textAlign === "end" && getComputedStyle(node).fontVariantNumeric === "tabular-nums"))).toBe(true);
+      expect((await new AxeBuilder({ page }).include(".hkc-output-card").analyze()).violations).toEqual([]);
+      await page.setViewportSize({ width: 1200, height: 1000 });
+      await expect(block.getByRole("table")).toBeVisible();
+      await expect(block.getByRole("list")).toHaveCount(0);
+      await page.setViewportSize({ width, height: 1000 });
+      await expect(block.getByRole("listitem")).toHaveCount(3);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     }
   });
 }
