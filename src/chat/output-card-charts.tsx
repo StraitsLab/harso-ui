@@ -35,7 +35,7 @@ export interface HarsoOutputBlockState {
 
 /** Any output block, read by shape (the host validates the document before it reaches the kit). */
 type AnyBlock = { kind: string };
-type Row = { label: string; secondary?: string; trailing?: string; mark?: string; status?: string; status_label?: string };
+type Row = { group?: string; label: string; secondary?: string; trailing?: string; mark?: string; status?: string; status_label?: string };
 
 const DECIMAL = /^-?\d{1,15}(\.\d{1,6})?$/;
 const PERCENT = /^(\d{1,3}(?:\.\d{1,2})?)\s?%$/;
@@ -579,6 +579,9 @@ export function harsoOutputBlockPlainText(block: AnyBlock): string | undefined {
   if (table) return [table.columns.map(column => column.label), ...table.rows.map(row => [[row.cells[0], ...statusWord(row.status, row.status_label)].join(" · "), ...row.cells.slice(1)])].map(cells => cells.join("\t")).join("\n");
   const items = (block as { items?: unknown }).items;
   if (block.kind === "rows" && Array.isArray(items)) return (items as Row[])
-    .map(row => [row.label, ...statusWord(row.status, row.status_label), row.secondary, row.trailing].filter(Boolean).join(" · ")).join("\n");
+    .flatMap((row, index) => [
+      ...row.group && row.group !== (items[index - 1] as Row | undefined)?.group ? [row.group] : [],
+      [row.label, ...statusWord(row.status, row.status_label), row.secondary, row.trailing].filter(Boolean).join(" · "),
+    ]).join("\n");
   return undefined;
 }

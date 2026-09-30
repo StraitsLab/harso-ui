@@ -292,7 +292,7 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
       // Timed steps the playbook sends as the rows right after a running status (G16) draw on its rail; under a live
       // word they are no longer what comes next, so they stay ordinary rows.
       const next = blocks[index + 1];
-      const steps = !live && next && isRows(next) && next.items.every(row => row.status_label == null) ? readSteps(status, next.items) : undefined;
+      const steps = !live && next && isRows(next) && next.items.every(row => row.status_label == null && !row.group) ? readSteps(status, next.items) : undefined;
       let drawn: HarsoOutputRow[] | undefined;
       if (steps) {
         stepsAt = index + 1;
@@ -324,8 +324,8 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
     }
     if (isRows(block)) {
       if (!block.items.every(row => rowStatusOk(row.status))) return undefined;
-      // Shares are inferred from the rows' words; a row that carries an explicit photo is a list of things, never a share.
-      const shares = block.items.some(row => row.thumbnail != null) ? undefined : readShare(block.items);
+      // Explicit photos or groups keep their rows structure instead of becoming an inferred share.
+      const shares = block.items.some(row => row.thumbnail != null || row.group) ? undefined : readShare(block.items);
       if (shares) {
         if (withoutData(state)) { parts.push({ kind: "share", items: [], shares, shown: 0, state }); continue; }
         const count = Math.min(block.items.length, rowBudget);
@@ -551,6 +551,41 @@ function DetailsContent({ details, onOpenUrl }: { details: HarsoOutputDocumentDe
   </>;
 }
 
+/** Adjacent row runs keep agent order; only named runs add a heading, never an extra row. */
+function CardRows({ items, photos, layout, media }: { items: HarsoOutputRow[]; photos: boolean; layout?: "grid" | "list"; media?: HarsoOutputMediaHost }) {
+  const grouped = items.some(row => row.group);
+  const list = (rows: HarsoOutputRow[], group?: string) => <ul className="hkc-output-card-rows" aria-label={group} role={grouped ? "list" : undefined}
+    data-photos={photos || undefined} data-layout={layout}>
+    {rows.map((row, index) => <li key={row.id ?? index} className="hkc-output-card-row">
+      {photos && <HarsoOutputThumb photo={row.thumbnail!} host={media!} />}
+      <div className="hkc-output-card-row-main">
+        <p className="hkc-output-card-row-line">
+          <span className="hkc-output-card-row-label">{row.label}</span>
+          {row.mark === "pick" && <span className="hkc-output-card-pick">Pick</span>}
+          <HarsoOutputRowStatus status={row.status} status_label={row.status_label} />
+        </p>
+        {row.secondary && <p className="hkc-output-card-row-secondary">{row.secondary}</p>}
+      </div>
+      {row.trailing && <span className="hkc-output-card-row-value">{row.trailing}</span>}
+    </li>)}
+  </ul>;
+  // Keep the flat list and all its row markup unchanged when the block has no groups.
+  if (!grouped) return list(items);
+  const runs: { group?: string; items: HarsoOutputRow[] }[] = [];
+  for (const row of items) {
+    const group = row.group || undefined;
+    const previous = runs.at(-1);
+    if (previous && previous.group === group) previous.items.push(row);
+    else runs.push({ group, items: [row] });
+  }
+  return <div className="hkc-output-card-row-groups">
+    {runs.map((run, index) => <div key={index} className="hkc-output-card-row-group">
+      {run.group && <h3 className="hkc-output-card-row-group-heading">{run.group}</h3>}
+      {list(run.items, run.group)}
+    </div>)}
+  </div>;
+}
+
 export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
   const id = useId();
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -614,20 +649,7 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
           : part.kind === "table"
           ? <HarsoOutputBlockFrame key={partIndex} kind="table" state={part.state}><HarsoOutputTableView table={part.table} shown={part.shown} label={document.header.title} /></HarsoOutputBlockFrame>
           : part.kind === "rows"
-          ? <ul key={partIndex} className="hkc-output-card-rows" data-photos={part.photos || undefined} data-layout={rowLayout}>
-            {part.items.map((row, index) => <li key={row.id ?? index} className="hkc-output-card-row">
-              {part.photos && <HarsoOutputThumb photo={row.thumbnail!} host={media!} />}
-              <div className="hkc-output-card-row-main">
-                <p className="hkc-output-card-row-line">
-                  <span className="hkc-output-card-row-label">{row.label}</span>
-                  {row.mark === "pick" && <span className="hkc-output-card-pick">Pick</span>}
-                  <HarsoOutputRowStatus status={row.status} status_label={row.status_label} />
-                </p>
-                {row.secondary && <p className="hkc-output-card-row-secondary">{row.secondary}</p>}
-              </div>
-              {row.trailing && <span className="hkc-output-card-row-value">{row.trailing}</span>}
-            </li>)}
-          </ul>
+          ? <CardRows key={partIndex} items={part.items} photos={part.photos} layout={rowLayout} media={media} />
           : part.kind === "numbers"
             // Value above its label, in that DOM order, so a screen reader hears "S$4,280, Spent" as one item.
             ? <ul key={partIndex} className="hkc-output-card-numbers">

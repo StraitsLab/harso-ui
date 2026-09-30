@@ -194,6 +194,28 @@ test("Flights renders title, subtitle, three rows with values and exactly one Pi
   expect(within(card).queryByText(flights.fallback_text)).toBeNull();
 });
 
+test("row groups draw a named list for each adjacent run without reordering or merging repeats", () => {
+  const items: chat.HarsoOutputRow[] = [
+    { label: "First", group: "Live listings", mark: "pick", status: "done", secondary: "Available", trailing: "S$1" },
+    { label: "Second", group: "Live listings" },
+    { label: "Third", group: "Unverified" },
+    { label: "Fourth" },
+    { label: "Fifth", group: "Live listings" },
+  ];
+  const { card } = renderCard({ document: withRows(items), caps: chat.HARSO_OUTPUT_CARD_UNCAPPED });
+  expect(within(card).getAllByRole("heading", { level: 3 }).map(node => node.textContent))
+    .toEqual(["Live listings", "Unverified", "Live listings"]);
+  const runs = within(card).getAllByRole("list");
+  expect(runs.map(list => list.getAttribute("aria-label"))).toEqual(["Live listings", "Unverified", null, "Live listings"]);
+  expect(runs.map(list => within(list).getAllByRole("listitem").length)).toEqual([2, 1, 1, 1]);
+  expect([...card.querySelectorAll(".hkc-output-card-row-label")].map(node => node.textContent))
+    .toEqual(items.map(row => row.label));
+  const first = within(runs[0]).getAllByRole("listitem")[0];
+  expect(first.tagName).toBe("LI");
+  expect(first).toHaveClass("hkc-output-card-row");
+  expect(first.textContent).toBe("FirstPickDoneAvailableS$1");
+});
+
 test("with no host callbacks no action draws (a reply never does): no button, no text, never throws", () => {
   const { card } = renderCard();
   expect(within(card).getAllByRole("button").map(button => button.textContent)).toEqual(["Details"]);
@@ -694,4 +716,136 @@ test("line cap follows width changes and the caps override; short complete text 
 
 test("the text clamp is CSS line-clamp driven by the caps variable", () => {
   expect(cardStyles).toMatch(/\.hkc-output-card-text \{[^}]*-webkit-line-clamp: var\(--hkc-output-card-text-lines, 4\)[^}]*overflow: hidden/);
+});
+
+test("row groups stay rows instead of being inferred as a share", () => {
+  const { card } = renderCard({ document: withRows([
+    { label: "First", group: "Needs you", secondary: "60%", trailing: "S$60" },
+    { label: "Second", group: "FYI", secondary: "40%", trailing: "S$40" },
+  ]) });
+  expect(within(card).getByRole("heading", { name: "Needs you", level: 3 })).toBeVisible();
+  expect(within(card).getByRole("heading", { name: "FYI", level: 3 })).toBeVisible();
+  expect(within(card).getAllByRole("listitem")).toHaveLength(2);
+  expect(card.querySelector(".hkc-output-share")).toBeNull();
+});
+
+test("row groups stay rows instead of being inferred as timed steps", () => {
+  const { card } = renderCard({ document: { ...flights, blocks: [
+    { kind: "status", state: "working", detail: "Checking" },
+    { kind: "rows", items: [
+      { label: "First", group: "Needs you", trailing: "08:20" },
+      { label: "Second", group: "FYI", trailing: "08:35" },
+    ] },
+  ] } });
+  expect(within(card).getByRole("heading", { name: "Needs you", level: 3 })).toBeVisible();
+  expect(within(card).getByRole("heading", { name: "FYI", level: 3 })).toBeVisible();
+  expect(within(card).getAllByRole("listitem")).toHaveLength(2);
+});
+
+test("row groups appear as their own plain text line before each adjacent run", () => {
+  const block: chat.HarsoOutputRowsBlock = { kind: "rows", items: [
+    { label: "First", group: "Live", status: "done", status_label: "Listed", secondary: "Available", trailing: "S$1" },
+    { label: "Second", group: "Live" },
+    { label: "Third", group: "Unverified" },
+    { label: "Fourth" },
+    { label: "Fifth", group: "Live" },
+  ] };
+  expect(chat.harsoOutputBlockPlainText(block)).toBe("Live\nFirst · Listed · Available · S$1\nSecond\nUnverified\nThird\nFourth\nLive\nFifth");
+});
+
+test("row groups use the existing quiet caps label and normal row spacing without a divider", () => {
+  expect(cardStyles).toMatch(/\.hkc-output-card-row-groups \{[^}]*gap: var\(--hk-space-4\)/);
+  const heading = cardStyles.match(/\.hkc-output-card-row-group-heading \{([^}]+)\}/)?.[1] ?? "";
+  expect(heading).toContain("margin: 0");
+  expect(heading).toContain("font-size: var(--hk-text-caps)");
+  expect(heading).toContain("font-weight: 500");
+  expect(heading).toContain("letter-spacing: var(--hk-caps-tracking)");
+  expect(heading).toContain("text-transform: uppercase");
+  expect(heading).toContain("color: var(--hk-secondary)");
+  expect(heading).not.toMatch(/border|background|box-shadow/);
+});
+
+test("rows without groups keep the existing flat markup and have no group headings", () => {
+  const { card } = renderCard();
+  expect(within(card).queryByRole("heading", { level: 3 })).toBeNull();
+  expect(card.querySelector(".hkc-output-card-row-groups")).toBeNull();
+  const list = within(card).getByRole("list");
+  expect(list.parentElement).toBe(card);
+  expect([...list.children].map(row => row.className)).toEqual(Array(3).fill("hkc-output-card-row"));
+  expect(list).not.toHaveAttribute("aria-label");
+});
+
+test("row group headings do not count toward the three-row cap or View all total", () => {
+  const items: chat.HarsoOutputRow[] = [
+    { label: "Reply to Nichol", group: "Needs you" },
+    { label: "Approve the renewal", group: "Needs you" },
+    { label: "Delivery update", group: "FYI" },
+    { label: "Receipt", group: "FYI" },
+    { label: "Team update", group: "FYI" },
+  ];
+  const document = withRows(items);
+  const { card, rerender, onViewAll } = renderCard({ document });
+  expect(within(card).getAllByRole("listitem").map(row => row.textContent))
+    .toEqual(items.slice(0, 3).map(row => row.label));
+  expect(within(card).getAllByRole("heading", { level: 3 }).map(node => node.textContent)).toEqual(["Needs you", "FYI"]);
+  expect(within(card).getByRole("list", { name: "Needs you" }).children).toHaveLength(2);
+  expect(within(card).getByRole("list", { name: "FYI" }).children).toHaveLength(1);
+  fireEvent.click(within(card).getByRole("button", { name: "View all 5" }));
+  expect(onViewAll).toHaveBeenCalledTimes(1);
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={withRows(items, { total_count: 12 })} onViewAll={onViewAll} /></div>);
+  expect(within(card).getByRole("button", { name: "View all 12" })).toBeVisible();
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={withRows(items, { total_count: 12 }, { more_label: "Read every message" })} onViewAll={onViewAll} /></div>);
+  expect(within(card).getByRole("button", { name: "Read every message" })).toBeVisible();
+});
+
+test.each([0, 1, 2, 3])("row groups never draw an orphan heading with a %i-row cap", maxRows => {
+  const { card } = renderCard({ document: withRows([
+    { label: "First", group: "Needs you" },
+    { label: "Second", group: "Needs you" },
+    { label: "Third", group: "Needs you" },
+    { label: "Hidden", group: "FYI" },
+  ]), caps: { maxRows } });
+  expect(within(card).queryAllByRole("listitem")).toHaveLength(maxRows);
+  expect(within(card).queryByRole("heading", { name: "FYI" })).toBeNull();
+  expect(within(card).queryAllByRole("heading", { level: 3 }).map(node => node.textContent))
+    .toEqual(maxRows ? ["Needs you"] : []);
+  expect(within(card).getByRole("button", { name: "View all 4" })).toBeVisible();
+});
+
+test("row groups only draw for rows shown within the shared block budget", () => {
+  const { card } = renderCard({ document: { ...flights, blocks: [
+    { kind: "rows", items: [{ label: "First" }, { label: "Second" }, { label: "Third" }] },
+    { kind: "rows", items: [{ label: "Hidden", group: "FYI" }] },
+  ] } });
+  expect(within(card).getAllByRole("listitem")).toHaveLength(3);
+  expect(within(card).queryByRole("heading", { level: 3 })).toBeNull();
+  expect(within(card).getByRole("button", { name: "View all 4" })).toBeVisible();
+});
+
+test("row groups remain literal text in the heading and accessible list name", () => {
+  const group = "<b>Needs you</b>";
+  const { card } = renderCard({ document: withRows([{ label: "First", group }]) });
+  expect(within(card).getByRole("heading", { level: 3, name: group })).toBeVisible();
+  expect(within(card).getByRole("list", { name: group })).toHaveTextContent("First");
+  expect(card.querySelector("b")).toBeNull();
+});
+
+test("row groups keep photo rows in the full-answer grid and List view", () => {
+  const items: chat.HarsoOutputRow[] = [
+    { label: "First", group: "Live" },
+    { label: "Second", group: "Unverified" },
+    { label: "Third", group: "Unverified" },
+  ].map((row, index) => ({ ...row, thumbnail: {
+    artifact: `artifact:018f22e2-7c00-7a13-8a13-${String(index + 1).padStart(12, "0")}`, alt: row.label,
+  } }));
+  const { card } = renderCard({ document: withRows(items), caps: chat.HARSO_OUTPUT_CARD_UNCAPPED,
+    media: { resolveArtifact: () => "https://example.com/photo.png" } });
+  const lists = within(card).getAllByRole("list");
+  expect(lists.map(list => list.getAttribute("data-layout"))).toEqual(["grid", "grid"]);
+  expect(lists.map(list => list.getAttribute("aria-label"))).toEqual(["Live", "Unverified"]);
+  expect(within(card).getAllByRole("listitem")).toHaveLength(3);
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+  fireEvent.click(within(card).getByRole("button", { name: /^List$/ }));
+  expect(lists.map(list => list.getAttribute("data-layout"))).toEqual(["list", "list"]);
+  expect(within(card).getAllByRole("heading", { level: 3 }).map(node => node.textContent)).toEqual(["Live", "Unverified"]);
 });

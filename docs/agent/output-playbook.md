@@ -118,7 +118,7 @@ workaround and nothing else: the app draws the richer form once the backend adds
 | Master | What you send | Example |
 |---|---|---|
 | header | `header.title` + `subtitle` (period, scope, "as of") | every card |
-| rows | `rows` with label, secondary, trailing; state word as text [G1]; one flat list [G2] | `money-bills-due` |
+| rows | `rows` with label, secondary, trailing; `status` + optional `status_label` for the state word; `group` for natural sections (below) | `money-bills-due` |
 | rowkinds | `mark: "pick"` on one row; `thumbnail` {artifact, alt} on every row or none (a photo per option: products, homes, hotels, dishes, logos); no row link [G8] yet | `travel-flights`, `shop-vacuum-options` |
 | numbers | `numbers`, 2 items; a change is its own item [G3] | `money-net-worth` |
 | numbers4 | `numbers`, 3 items at most, page only [G21] | `data-sales-collections` |
@@ -134,6 +134,8 @@ workaround and nothing else: the app draws the richer form once the backend adds
 | action | `action`, one primary, one quiet; never a reply | `file-logo` |
 | viewall | nothing extra: the app adds it past the inline caps; `more_label` names it | `money-spending-month` |
 | details | `details` sources, assumptions, disclaimers | `travel-flights` |
+
+Use `group` when rows have natural sections the person acts on differently ("Needs you" / "FYI", "Live" / "Unverified"); use 2–4 groups, never one per row, and keep rows of a group adjacent.
 
 The app also draws each master's loading, partial, stale, failed and empty states. You never send a loading card, and
 you choose none of their colours; the wording is yours (below).
