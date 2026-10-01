@@ -509,10 +509,17 @@ test("number delta is kept verbatim in plain text even beyond the inline cap", (
   expect(chat.harsoOutputBlockPlainText(block)).toBe("S$4,280 · +12% vs Aug · Spent\nS$720 · Left\nS$5,000 · same as Aug · Budget");
 });
 
-test("the inferred budget view places a delta beside spending, not beside the budget limit", () => {
-  const { card } = renderCard({ document: numbersDoc([{ value: "S$4,280", label: "Spent", delta: "+12% vs Aug" }, { value: "S$720", label: "Left of S$5,000" }]) });
-  const value = card.querySelector(".hkc-output-progress-value")!;
-  expect(value.textContent!.indexOf("+12% vs Aug")).toBeLessThan(value.textContent!.indexOf("of S$5,000"));
+test.each([
+  ["within budget", "S$4,280", "S$720", "86% used · S$720 left"],
+  ["over budget", "S$5,350", "−S$350", "107% used · over by S$350"],
+] as const)("budget progress keeps the used change at the end of the note (%s)", (_case, used, rest, noteText) => {
+  const { card } = renderCard({ document: numbersDoc([{ value: used, label: "Spent", delta: "+12% vs Aug" }, { value: rest, label: "Left of S$5,000" }]) });
+  expect(card.querySelector(".hkc-output-progress-value")!.textContent).toBe(`${used} of S$5,000`);
+  const note = card.querySelector(".hkc-output-progress-note")!;
+  const readText = (node: Node, spoken: boolean): string => node instanceof Element && (spoken ? node.getAttribute("aria-hidden") === "true" : node.classList.contains("hk-sr-only")) ? ""
+    : node.nodeType === Node.TEXT_NODE ? node.textContent ?? "" : [...node.childNodes].map(child => readText(child, spoken)).join("");
+  expect(readText(note, false).replace(/\s+/g, " ").trim()).toBe(`${noteText} · ▲ +12% vs Aug`);
+  expect(readText(note, true).replace(/\s+/g, " ").trim()).toBe(`${noteText} · up 12% vs Aug`);
 });
 
 test("number delta survives the existing budget-progress inference", () => {
@@ -520,7 +527,13 @@ test("number delta survives the existing budget-progress inference", () => {
   const { card } = renderCard({ document: numbersDoc(items) });
   expect(within(card).getByRole("meter", { name: "Spent" })).toHaveAttribute("aria-valuetext", "S$4,280 of S$5,000, 86%");
   expect([...card.querySelectorAll(".hkc-output-number-delta > [aria-hidden=true]:not([data-direction])")].map(node => node.textContent))
-    .toEqual(["+12% vs Aug", "−8% vs Aug"]);
+    .toEqual(["−8% vs Aug", "+12% vs Aug"]);
+  expect(card.querySelector(".hkc-output-progress-value")!.textContent).toBe("S$4,280 of S$5,000");
+  const note = card.querySelector(".hkc-output-progress-note")!;
+  const readText = (node: Node, spoken: boolean): string => node instanceof Element && (spoken ? node.getAttribute("aria-hidden") === "true" : node.classList.contains("hk-sr-only")) ? ""
+    : node.nodeType === Node.TEXT_NODE ? node.textContent ?? "" : [...node.childNodes].map(child => readText(child, spoken)).join("");
+  expect(readText(note, false).replace(/\s+/g, " ").trim()).toBe("86% used · S$720 left ▼ −8% vs Aug · ▲ +12% vs Aug");
+  expect(readText(note, true).replace(/\s+/g, " ").trim()).toBe("86% used · S$720 left down 8% vs Aug · up 12% vs Aug");
   expect(card.querySelector(".hkc-output-card-numbers")).toBeNull();
 });
 

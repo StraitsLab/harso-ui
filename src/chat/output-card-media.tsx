@@ -152,13 +152,13 @@ export function HarsoOutputProgressView({ progress }: { progress: HarsoOutputPro
   return <div className="hkc-output-progress">
     <p className="hkc-output-progress-head">
       <span className="hkc-output-progress-label">{usedWord}</span>
-      <span className="hkc-output-progress-value">{progress.used.value}{progress.used.delta && <> <HarsoOutputNumberDelta delta={progress.used.delta} /></>} of {progress.target}</span>
+      <span className="hkc-output-progress-value">{progress.used.value} of {progress.target}</span>
     </p>
     <div className="hkc-output-progress-track" role="meter" aria-label={usedWord} aria-valuemin={0} aria-valuemax={100}
       aria-valuenow={Math.min(100, percent)} aria-valuetext={`${progress.used.value} of ${progress.target}, ${percent}%`}>
       <span className="hkc-output-progress-fill" data-over={progress.over ? "true" : undefined} style={{ width: `${Math.min(100, progress.ratio * 100)}%` }} />
     </div>
-    <p className="hkc-output-progress-note">{note}{progress.rest.delta && <> <HarsoOutputNumberDelta delta={progress.rest.delta} /></>}</p>
+    <p className="hkc-output-progress-note">{note}{progress.rest.delta && <> <HarsoOutputNumberDelta delta={progress.rest.delta} /></>}{progress.used.delta && <> · <HarsoOutputNumberDelta delta={progress.used.delta} /></>}</p>
   </div>;
 }
 
