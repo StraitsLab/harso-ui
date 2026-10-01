@@ -5,9 +5,9 @@
   "schema": {
     "path": "docs/agent/schema/output-blocks.v1.json",
     "source": "StraitsLab/weave-cloud packages/contracts/src/schemas/output-blocks.v1.json",
-    "source_commit": "9f2ea3fe667ecaa856bd8f788ae4cac50f8c3461",
-    "read_at": "factory/output-tier3 9f2ea3fe667ecaa856bd8f788ae4cac50f8c3461",
-    "sha256": "aa7ba71a21b70afb082ed998a47e0f09b1cff37fc53ebecda161aede52463baf"
+    "source_commit": "e15f8638ff7af28d8838c50543ddf5fd8cb078b2",
+    "read_at": "factory/output-tier3b e15f8638ff7af28d8838c50543ddf5fd8cb078b2",
+    "sha256": "95fd10567a218f309717cf343fdffc18a4ae8c2aab1ddf0de167ff38d61859f4"
   },
   "time_sensitive_components": [
     "F1 Balance / net worth",
@@ -473,7 +473,7 @@
         "major": 1,
         "header": {
           "title": "Net worth",
-          "subtitle": "All linked accounts · as of 09:00"
+          "subtitle": "All linked accounts"
         },
         "blocks": [
           {
@@ -481,11 +481,12 @@
             "items": [
               {
                 "value": "S$412,300",
-                "label": "Now"
+                "label": "Now",
+                "delta": "+S$9,800"
               },
               {
-                "value": "+S$9,800",
-                "label": "Since June"
+                "value": "S$402,500",
+                "label": "June"
               }
             ]
           },
@@ -526,7 +527,8 @@
             "Property is excluded until you add a valuation."
           ]
         },
-        "fallback_text": "Net worth S$412,300 as of 09:00 on 26 Sep, up S$9,800 since June. Month by month: Jun S$402,500, Jul S$405,100, Aug S$408,900, Sep S$412,300. Property is excluded."
+        "fallback_text": "Net worth S$412,300 as of 09:00 on 26 Sep, up S$9,800 since June. Month by month: Jun S$402,500, Jul S$405,100, Aug S$408,900, Sep S$412,300. Property is excluded.",
+        "as_of": "2026-09-26T09:00Z"
       },
       "states": {
         "loading": {
@@ -553,7 +555,7 @@
           "major": 1,
           "header": {
             "title": "Net worth",
-            "subtitle": "2 of 3 accounts read · as of 09:00"
+            "subtitle": "All linked accounts"
           },
           "blocks": [
             {
@@ -579,14 +581,20 @@
               }
             ]
           },
-          "fallback_text": "2 of 3 accounts read (as of 09:00): CPF (Ordinary, Special and MediSave) S$287,300; DBS Multiplier savings ··5521 S$41,200. IBKR is still loading, so no total yet."
+          "fallback_text": "2 of 3 accounts read (as of 09:00): CPF (Ordinary, Special and MediSave) S$287,300; DBS Multiplier savings ··5521 S$41,200. IBKR is still loading, so no total yet.",
+          "progress": {
+            "done": 2,
+            "total": 3,
+            "noun": "accounts read"
+          },
+          "as_of": "2026-09-26T09:00Z"
         },
         "stale": {
           "kind": "output_blocks",
           "major": 1,
           "header": {
             "title": "Net worth",
-            "subtitle": "As of Thu 24 Sep 18:00 · couldn’t refresh"
+            "subtitle": "Couldn’t refresh"
           },
           "blocks": [
             {
@@ -594,11 +602,12 @@
               "items": [
                 {
                   "value": "S$410,900",
-                  "label": "Net worth"
+                  "label": "Net worth",
+                  "delta": "+S$8,400"
                 },
                 {
-                  "value": "+S$8,400",
-                  "label": "Since June"
+                  "value": "S$402,500",
+                  "label": "June"
                 }
               ]
             }
@@ -610,7 +619,8 @@
               }
             ]
           },
-          "fallback_text": "Net worth S$410,900 as of Thu 24 Sep 18:00, up S$8,400 since June. Couldn’t refresh."
+          "fallback_text": "Net worth S$410,900 as of Thu 24 Sep 18:00, up S$8,400 since June’s S$402,500. Couldn’t refresh.",
+          "as_of": "2026-09-24T18:00Z"
         },
         "empty": {
           "kind": "output_blocks",
@@ -43204,11 +43214,12 @@
             "items": [
               {
                 "value": "S$48,200",
-                "label": "Revenue"
+                "label": "Revenue",
+                "delta": "+12% vs July"
               },
               {
-                "value": "+12%",
-                "label": "vs July"
+                "value": "S$1,670",
+                "label": "22–31 Aug / day"
               }
             ]
           },
@@ -43273,7 +43284,7 @@
           "major": 1,
           "header": {
             "title": "Shop · August",
-            "subtitle": "Average sales a day · 3 of 4 weeks reported"
+            "subtitle": "Average sales a day · all channels"
           },
           "blocks": [
             {
@@ -43326,7 +43337,12 @@
               "22–31 Aug is not in yet, so it is left blank, not counted as zero."
             ]
           },
-          "fallback_text": "August so far, 3 of 4 weeks reported: S$31,500 revenue, S$1,500 a day on average. Average a day: 1–7 Aug S$1,400, 8–14 Aug S$1,500, 15–21 Aug S$1,600. 22–31 Aug is not reported yet."
+          "fallback_text": "August so far, 3 of 4 weeks reported: S$31,500 revenue, S$1,500 a day on average. Average a day: 1–7 Aug S$1,400, 8–14 Aug S$1,500, 15–21 Aug S$1,600. 22–31 Aug is not reported yet.",
+          "progress": {
+            "done": 3,
+            "total": 4,
+            "noun": "weeks reported"
+          }
         },
         "stale": {
           "kind": "output_blocks",
@@ -43341,11 +43357,12 @@
               "items": [
                 {
                   "value": "S$47,900",
-                  "label": "Revenue"
+                  "label": "Revenue",
+                  "delta": "+11% vs July"
                 },
                 {
-                  "value": "+11%",
-                  "label": "vs July"
+                  "value": "S$1,640",
+                  "label": "22–31 Aug / day"
                 }
               ]
             },
@@ -46024,13 +46041,13 @@
         "Partial state",
         "Line chart"
       ],
-      "rationale": "Days not reported yet are null, never 0; the real zero stays 0 and is highlighted. The subtitle says how many days are in.",
+      "rationale": "Days not reported yet are null, never 0; the real zero stays 0 and is highlighted. Progress says how many days are in; as_of says when they were read.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
         "header": {
           "title": "Daily sales · 13–26 Sep",
-          "subtitle": "12 of 14 days reported · as of 10:40"
+          "subtitle": "Shopify payouts"
         },
         "blocks": [
           {
@@ -46090,7 +46107,13 @@
             "25 and 26 Sep are not reported yet, so they are left blank, not counted as zero."
           ]
         },
-        "fallback_text": "Daily sales, 12 of 14 days reported as of 10:40. 13–24 Sep: S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900. 25 and 26 Sep are not reported yet, so they are left blank, not counted as zero."
+        "fallback_text": "Daily sales, 12 of 14 days reported as of 10:40. 13–24 Sep: S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900. 25 and 26 Sep are not reported yet, so they are left blank, not counted as zero.",
+        "progress": {
+          "done": 12,
+          "total": 14,
+          "noun": "days reported"
+        },
+        "as_of": "2026-09-26T10:40Z"
       },
       "states": {
         "loading": {
@@ -46270,15 +46293,15 @@
                   "S$71,900",
                   "−2%"
                 ]
-              },
-              {
-                "cells": [
-                  "Total",
-                  "S$350,600",
-                  "+6%"
-                ]
               }
-            ]
+            ],
+            "totals": {
+              "cells": [
+                "Total",
+                "S$350,600",
+                "+6%"
+              ]
+            }
           }
         ],
         "details": {
@@ -46407,15 +46430,15 @@
                     "S$71,100",
                     "−3%"
                   ]
-                },
-                {
-                  "cells": [
-                    "Total",
-                    "S$349,800",
-                    "+6%"
-                  ]
                 }
-              ]
+              ],
+              "totals": {
+                "cells": [
+                  "Total",
+                  "S$349,800",
+                  "+6%"
+                ]
+              }
             }
           ],
           "details": {

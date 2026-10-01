@@ -16,7 +16,7 @@ const allFindings = (example: Example): string[] => [
   ...lawErrors(example),
 ];
 
-const SCHEMA_SHA256 = "aa7ba71a21b70afb082ed998a47e0f09b1cff37fc53ebecda161aede52463baf";
+const SCHEMA_SHA256 = "95fd10567a218f309717cf343fdffc18a4ae8c2aab1ddf0de167ff38d61859f4";
 /** Runs the whole-file checks on a copy of the examples with one example replaced (says, periods, weekdays). */
 function fileFindings(example: Example): string[] {
   const copy = structuredClone(examplesFile as any);
@@ -115,6 +115,49 @@ describe("agent output playbook examples", () => {
     expect(findings.join("\n")).toMatch(expected);
   });
 
+  test("coverage words are visible plain text", () => {
+    const example = byId("travel-flights");
+    example.document.progress = { done: 2, total: 3, noun: "**airlines**" };
+    expect(allFindings(example).join()).toMatch(/progress.noun.*markup/);
+  });
+
+  test("explicit table totals are included in supplied total_count", () => {
+    const example = byId("data-table-small");
+    const table = example.document.blocks[0];
+    table.totals = { cells: ["Total", "S$350,600", "+6%"] };
+    table.rows = table.rows.slice(0, 3);
+    table.total_count = 4;
+    expect(allFindings(example)).toEqual([]);
+    table.total_count = 5;
+    expect(allFindings(example).join()).toMatch(/table rows beyond those sent/);
+  });
+
+  test("reported progress keeps missing chart points null without subtitle counts", () => {
+    const example = byId("partial-days");
+    example.document.progress = { done: 12, total: 14, noun: "days reported" };
+    example.document.header.subtitle = "All channels · as of 10:40";
+    expect(allFindings(example)).toEqual([]);
+    example.document.blocks[0].visual.series[0].values[13] = "0";
+    expect(allFindings(example).join()).toMatch(/not in yet is null, never 0/);
+  });
+
+  test("contract coverage cannot exceed the total", () => {
+    const example = byId("travel-flights");
+    example.document.progress = { done: 3, total: 4, noun: "stores checked" };
+    expect(allFindings(example)).toEqual([]);
+    example.document.progress.done = 5;
+    expect(allFindings(example).join()).toMatch(/progress.done.*<=.*total/);
+  });
+
+  test("contract table totals carry one cell per column", () => {
+    const example = byId("data-table-small");
+    const table = example.document.blocks[0];
+    table.totals = { cells: ["Total", "S$350,600", "+6%"] };
+    expect(allFindings(example)).toEqual([]);
+    table.totals.cells.pop();
+    expect(allFindings(example).join()).toMatch(/totals.cells.*exactly 3 cells/);
+  });
+
   test("catches a weekday that does not match its date", () => {
     const year = Number((examplesFile as any).reference_date.slice(0, 4));
     const example = byId("home-viewing");
@@ -155,6 +198,16 @@ describe("agent output playbook examples", () => {
     expect(periodErrors(example, REFERENCE)).toEqual([]);
     example.request = "How did I do on spending in September?";
     expect(periodErrors(example, REFERENCE).join()).toMatch(/September 2026 has not ended/);
+  });
+
+  test.each([undefined, "partial", "stale", "empty"])("a fresh %s answer can stamp as_of instead of its subtitle", state => {
+    const example = byId("travel-flights");
+    const document = state === undefined ? example.document : (example.states as any)[state];
+    document.as_of = "2026-09-26T09:12Z";
+    document.header.subtitle = "12 Oct · economy";
+    expect(lawErrors(example, undefined, state)).toEqual([]);
+    delete document.as_of;
+    expect(lawErrors(example, undefined, state).join()).toMatch(/stale/);
   });
 
   test("every card and file declares freshness, and every time-sensitive component is covered", () => {

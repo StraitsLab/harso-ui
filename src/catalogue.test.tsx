@@ -10,7 +10,7 @@ import playbookText from "../docs/agent/output-playbook.examples.json?raw";
 
 const catalogueFiles = import.meta.glob<string>("../catalogue/*.json", { query: "?raw", import: "default", eager: true });
 
-const SCHEMA_SHA256 = "aa7ba71a21b70afb082ed998a47e0f09b1cff37fc53ebecda161aede52463baf";
+const SCHEMA_SHA256 = "95fd10567a218f309717cf343fdffc18a4ae8c2aab1ddf0de167ff38d61859f4";
 const readCatalogue = (name: string) => catalogueFiles[`../catalogue/${name}`];
 /** Builds the playbook from the catalogue with one file's parsed JSON edited in memory. */
 function buildWith(name: string, edit: (file: any) => void) {
@@ -92,8 +92,8 @@ describe("the catalogue is the one source of the examples", () => {
   test.each([
     ["fallback leaves out a figure", "stale", (s: any) => { s.fallback_text = "The portfolio has changed."; }, /states\.stale truth: fallback_text leaves out US\$84,210/],
     ["exclamation", "stale", (s: any) => { s.header.title = "Portfolio!"; }, /states\.stale voice: \$\.document\.header\.title uses an exclamation mark/],
-    ["no as-of time on data read at a moment", "stale", (s: any) => { s.header.subtitle = "IBKR"; }, /states\.stale stale: time-sensitive data says "as of HH:MM"/],
-    ["no as-of time on an empty read", "empty", (s: any) => { s.header.subtitle = "IBKR"; }, /states\.empty stale: time-sensitive data says "as of HH:MM"/],
+    ["no as-of time on data read at a moment", "stale", (s: any) => { s.header.subtitle = "IBKR"; }, /states\.stale stale: time-sensitive data sets as_of or says "as of HH:MM"/],
+    ["no as-of time on an empty read", "empty", (s: any) => { s.header.subtitle = "IBKR"; }, /states\.empty stale: time-sensitive data sets as_of or says "as of HH:MM"/],
     ["reply button", "stale", (s: any) => { s.blocks.push({ kind: "action", primary: { kind: "reply", label: "Refresh", text: "Refresh" } }); }, /states\.stale law 3: action\.primary is a reply button/],
     ["failed without detail", "failed", (s: any) => { delete s.blocks[0].detail; }, /states\.failed failure: \$\.blocks\[0\]: a failed card says what happened/],
     ["date outside \"this week\"", "stale", (s: any) => { s.header.title = "Portfolio 1 Jan"; }, /states\.stale truth: 2026-01-01 is outside "this week"/],
