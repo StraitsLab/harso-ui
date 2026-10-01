@@ -16,6 +16,10 @@
 .harso-kit .hkc-output-card-title { font-size: var(--hk-text-title); font-weight: 600; line-height: 1.35; }
 .harso-kit .hkc-output-card-subtitle { font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); }
 
+/* Snapshot and coverage share one quiet, wrapping text line; the existing progress track keeps its tokens. */
+.harso-kit .hkc-output-card-meta { font-size: var(--hk-text-meta); font-weight: 400; line-height: 1.4; color: var(--hk-secondary); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.harso-kit .hkc-output-card-progress-track { --hkc-output-progress-height: 2px; margin-top: var(--hk-space-1); }
+
 .harso-kit .hkc-output-card-rows { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-4); }
 /* A quiet label above each adjacent run. The first starts flush; later runs leave more space above than below. */
 .harso-kit .hkc-output-card-row-groups { display: flex; flex-direction: column; gap: var(--hk-space-4); min-width: 0; }

@@ -3,7 +3,23 @@ import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
 import cardStyles from "./output-card.css?raw";
 
-afterEach(cleanup);
+afterEach(() => { cleanup(); vi.useRealTimers(); });
+
+// Header metadata uses the viewer local day and Intl locale/hour-cycle defaults.
+const freezeReadClock = () => { vi.useFakeTimers({ toFake: ["Date"] }); vi.setSystemTime(new Date("2026-09-26T12:00:00Z")); };
+const readStamp = (value: string, today = true) => {
+  const date = new Date(value);
+  const time = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" }).format(date);
+  return `As of ${today ? "" : `${new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short" }).format(date)}, `}${time}`;
+};
+
+test.each(["2026-09-26T09:10Z", "2026-09-26T09:10:45Z", "2026-09-25T09:10Z"])("as_of %s shows the local time, adding a date only on another day", as_of => {
+  freezeReadClock();
+  const document = { ...flights, as_of };
+  const { card } = renderCard({ document });
+  expect(within(card).getByText(readStamp(as_of, as_of.startsWith("2026-09-26")))).toBeVisible();
+  expect(within(card).getAllByRole("listitem")).toHaveLength(3);
+});
 
 // Verbatim copies of the S0 examples 02-flights, 08-failed and 03-spending (output-blocks.v1 draft).
 const flights: chat.HarsoOutputDocument = {
@@ -891,4 +907,119 @@ test("row groups keep photo rows in the full-answer grid and List view", () => {
   fireEvent.click(within(card).getByRole("button", { name: /^List$/ }));
   expect(lists.map(list => list.getAttribute("data-layout"))).toEqual(["list", "list"]);
   expect(within(card).getAllByRole("heading", { level: 3 }).map(node => node.textContent)).toEqual(["Live", "Unverified"]);
+});
+
+
+test("document progress says how far the answer got with an accessible meter", () => {
+  freezeReadClock();
+  const document = { ...flights, progress: { done: 3, total: 4, noun: "stores checked" } };
+  const { card } = renderCard({ document });
+  expect(within(card).getByText("3 of 4 stores checked")).toBeVisible();
+  const meter = within(card).getByRole("meter", { name: "stores checked" });
+  expect(meter).toHaveAttribute("aria-valuetext", "3 of 4 stores checked");
+  expect(meter).toHaveAttribute("aria-valuemin", "0");
+  expect(meter).toHaveAttribute("aria-valuemax", "4");
+  expect(meter).toHaveAttribute("aria-valuenow", "3");
+  expect(meter.firstElementChild).toHaveStyle({ width: "75%" });
+});
+
+
+test.each([
+  { done: 5, total: 4, noun: "stores checked" }, { done: 0, total: 0, noun: "stores checked" },
+  { done: -1, total: 4, noun: "stores checked" }, { done: 1.5, total: 4, noun: "stores checked" },
+  { done: 1, total: Infinity, noun: "stores checked" }, { done: NaN, total: 4, noun: "stores checked" },
+  { done: 1, total: 4, noun: "" }, { done: 1, total: 4, noun: 42 },
+])("invalid document progress %j draws nothing without losing the answer", progress => {
+  freezeReadClock();
+  const document = { ...flights, progress } as chat.HarsoOutputDocument;
+  const { card } = renderCard({ document });
+  expect(within(card).queryByRole("meter")).toBeNull();
+  expect(card.querySelector(".hkc-output-card-meta")).toBeNull();
+  expect(within(card).getAllByRole("listitem")).toHaveLength(3);
+});
+
+
+test("completed document progress keeps the words but drops the track", () => {
+  freezeReadClock();
+  const document = { ...flights, progress: { done: 4, total: 4, noun: "stores checked" } };
+  const { card } = renderCard({ document });
+  expect(within(card).getByText("4 of 4 stores checked")).toBeVisible();
+  expect(within(card).queryByRole("meter")).toBeNull();
+  expect(card.querySelector(".hkc-output-progress-track")).toBeNull();
+});
+
+
+test("document plain text carries the read stamp and coverage before the fallback answer", () => {
+  freezeReadClock();
+  const document = { ...flights, as_of: "2026-09-26T09:10Z", progress: { done: 3, total: 4, noun: "stores checked" } };
+  expect(chat).toHaveProperty("harsoOutputDocumentPlainText", expect.any(Function));
+  expect(chat.harsoOutputDocumentPlainText(document)).toBe(`${readStamp(document.as_of)} · 3 of 4 stores checked\n${flights.fallback_text}`);
+});
+
+
+test("header metadata is quieter than the subtitle and reuses a two-pixel progress track", () => {
+  freezeReadClock();
+  const document = { ...flights, as_of: "2026-09-26T09:10Z", progress: { done: 3, total: 4, noun: "stores checked" } };
+  const { card } = renderCard({ document });
+  const words = within(card).getByText(`${readStamp(document.as_of)} · 3 of 4 stores checked`);
+  expect(words).toHaveClass("hkc-output-card-meta");
+  expect(words.previousElementSibling).toHaveTextContent(flights.header.subtitle!);
+  expect(cardStyles).toMatch(/\.hkc-output-card-meta\s*\{[^}]*font-size: var\(--hk-text-meta\)/);
+  expect(within(card).getByRole("meter")).toHaveClass("hkc-output-progress-track");
+});
+
+
+test.each(["not a date", "", "2026-02-30T09:10Z", "2026-09-26T25:10Z", "2026-09-26T09:10", "<b>09:10</b>"])("bad as_of %s is ignored without losing the answer or coverage", as_of => {
+  freezeReadClock();
+  const document = { ...flights, as_of, progress: { done: 3, total: 4, noun: "stores checked" } };
+  const { card } = renderCard({ document });
+  expect(within(card).queryByText(/^As of/)).toBeNull();
+  expect(card.textContent).not.toContain("Invalid Date");
+  expect(within(card).getByText("3 of 4 stores checked")).toBeVisible();
+  expect(within(card).getAllByRole("listitem")).toHaveLength(3);
+  expect(chat.harsoOutputDocumentPlainText(document)).toBe(`3 of 4 stores checked\n${flights.fallback_text}`);
+});
+
+test("the local calendar day, not the UTC day, decides whether as_of needs a date", () => {
+  freezeReadClock();
+  vi.setSystemTime(new Date("2026-09-26T00:30Z"));
+  const as_of = "2026-09-25T23:30Z";
+  const localDay = (date: Date) => new Intl.DateTimeFormat(undefined, { dateStyle: "short" }).format(date);
+  const today = localDay(new Date(as_of)) === localDay(new Date());
+  const { card } = renderCard({ document: { ...flights, as_of } });
+  expect(within(card).getByText(readStamp(as_of, today))).toBeVisible();
+});
+
+test("as_of never parses or rewrites an old subtitle stamp", () => {
+  freezeReadClock();
+  const subtitle = "Prices · as of 08:00";
+  const { card, rerender, onViewAll } = renderCard({ document: { ...flights, header: { ...flights.header, subtitle }, as_of: "2026-09-26T09:10Z" } });
+  expect(within(card).getByText(subtitle)).toBeVisible();
+  expect(within(card).getByText(readStamp("2026-09-26T09:10Z"))).toBeVisible();
+  rerender(<div className="harso-kit"><chat.HarsoOutputCard document={{ ...flights, header: { ...flights.header, subtitle } }} onViewAll={onViewAll} /></div>);
+  expect(card.querySelector(".hkc-output-card-meta")).toBeNull();
+});
+
+test("zero coverage still has an empty meter without inventing completed work", () => {
+  freezeReadClock();
+  const { card } = renderCard({ document: { ...flights, progress: { done: 0, total: 4, noun: "stores checked" } } });
+  expect(within(card).getByText("0 of 4 stores checked")).toBeVisible();
+  const meter = within(card).getByRole("meter");
+  expect(meter).toHaveAttribute("aria-valuenow", "0");
+  expect(meter.firstElementChild).toHaveStyle({ width: "0%" });
+});
+
+test("optional metadata survives body fallback and whole-answer expansion", () => {
+  freezeReadClock();
+  const document = { ...flights, as_of: "2026-09-25T09:10Z", progress: { done: 3, total: 4, noun: "stores checked" }, blocks: [{ kind: "hologram" }] };
+  const { card } = renderCard({ document });
+  expect(within(card).getByText(`${readStamp(document.as_of, false)} · 3 of 4 stores checked`)).toBeVisible();
+  expect(within(card).getByText(flights.fallback_text)).toBeVisible();
+  expect(chat.harsoOutputWholeAnswer(document)).toMatchObject({ as_of: document.as_of, progress: document.progress });
+});
+
+test("document plain text without valid metadata preserves the legacy fallback verbatim", () => {
+  freezeReadClock();
+  expect(chat.harsoOutputDocumentPlainText(flights)).toBe(flights.fallback_text);
+  expect(chat.harsoOutputDocumentPlainText({ ...flights, as_of: "bad", progress: { done: 5, total: 4, noun: "stores checked" } })).toBe(flights.fallback_text);
 });

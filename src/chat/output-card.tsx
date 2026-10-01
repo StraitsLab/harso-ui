@@ -75,7 +75,45 @@ export interface HarsoOutputDocument {
   blocks: HarsoOutputBlock[];
   details?: HarsoOutputDocumentDetails;
   more_label?: string;
+  /** UTC snapshot time; formatted in the viewer local time zone. */
+  as_of?: string;
+  /** Coverage of this answer, independent of any budget/progress number block. */
+  progress?: { done: number; total: number; noun: string };
   fallback_text: string;
+}
+
+/** Only a real UTC minute/second stamp; Date must not silently roll an impossible day forward. */
+function asOfText(value: unknown): string | undefined {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?Z$/.test(value)) return undefined;
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime()) || date.toISOString() !== `${value.slice(0, 16)}:${value.length === 20 ? value.slice(17, 19) : "00"}.000Z`) return undefined;
+  const now = new Date();
+  const today = date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() && date.getDate() === now.getDate();
+  const time = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" }).format(date);
+  const day = today ? "" : `${new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short" }).format(date)}, `;
+  return `As of ${day}${time}`;
+}
+
+/** Bad coverage is optional metadata, never a reason to lose the card body. */
+function readDocumentProgress(value: unknown): HarsoOutputDocument["progress"] {
+  if (!value || typeof value !== "object") return undefined;
+  const progress = value as NonNullable<HarsoOutputDocument["progress"]>;
+  return Number.isInteger(progress.done) && Number.isInteger(progress.total) && progress.total >= 1
+    && progress.done >= 0 && progress.done <= progress.total && typeof progress.noun === "string" && progress.noun.trim()
+    ? progress : undefined;
+}
+
+function documentMetadata(document: HarsoOutputDocument) {
+  const asOf = asOfText(document.as_of);
+  const progress = readDocumentProgress(document.progress);
+  const progressWords = progress ? `${progress.done} of ${progress.total} ${progress.noun}` : undefined;
+  return { progress, progressWords, words: [asOf, progressWords].filter(Boolean).join(" · ") };
+}
+
+/** Document-level Copy/fallback path: keep optional header metadata even when the body falls back. */
+export function harsoOutputDocumentPlainText(document: HarsoOutputDocument): string {
+  const { words } = documentMetadata(document);
+  return [words, document.fallback_text].filter(Boolean).join("\n");
 }
 
 export interface HarsoOutputCardCaps { maxRows: number; maxNumbers: number; maxTextChars: number; maxTextLines: number }
@@ -588,6 +626,7 @@ function CardRows({ items, photos, layout, media }: { items: HarsoOutputRow[]; p
 
 export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
   const id = useId();
+  const { progress, progressWords, words: metadata } = documentMetadata(document);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const [textClipped, setTextClipped] = useState(false);
@@ -617,6 +656,11 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
       <div className="hkc-output-card-heading">
         <h2 id={titleId} className="hkc-output-card-title">{document.header.title}</h2>
         {document.header.subtitle && <p className="hkc-output-card-subtitle">{document.header.subtitle}</p>}
+        {metadata && <p className="hkc-output-card-meta">{metadata}</p>}
+        {progress && progress.done < progress.total && <div className="hkc-output-progress-track hkc-output-card-progress-track" role="meter"
+          aria-label={progress.noun} aria-valuemin={0} aria-valuemax={progress.total} aria-valuenow={progress.done} aria-valuetext={progressWords}>
+          <span className="hkc-output-progress-fill" style={{ width: `${progress.done / progress.total * 100}%` }} />
+        </div>}
       </div>
       {details && <Button ref={trigger} variant="ghost" size="small" className="hkc-output-card-details-toggle"
         aria-expanded={inlineDetails ? detailsOpen : undefined} aria-controls={inlineDetails ? detailsId : undefined}
