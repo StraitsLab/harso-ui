@@ -177,6 +177,12 @@ const more: HarsoOutputDocument = {
 // Synthetic: the Spending example without its chart and rows (charts render in a later packet), so the key numbers show.
 // Three numbers against the 2-up cap: Spent and Left inline, Budget behind View all transactions.
 const numbers: HarsoOutputDocument = { ...spending, blocks: [spending.blocks[0]] };
+// Synthetic KPI: the existing budget pair still draws progress, with its change beside the used figure.
+const kpi: HarsoOutputDocument = {
+  header: { title: "September spending", subtitle: "1–30 Sep · all accounts" },
+  blocks: [{ kind: "numbers", items: [{ value: "S$4,280", label: "Spent", delta: "+12% vs Aug" }, { value: "S$720", label: "Left of S$5,000" }] }],
+  fallback_text: "September spending: S$4,280 spent (+12% vs Aug), S$720 left of S$5,000."
+};
 // Verbatim copy of the S0 example 05-research-brief.
 const brief: HarsoOutputDocument = {
   "header": {
@@ -284,7 +290,7 @@ const b0Table: HarsoOutputDocument = {
   header: { title: "Supplier invoices", subtitle: "Due this month" },
   blocks: [{ kind: "table", columns: [{ label: "Supplier" }, { label: "Due" }, { label: "Amount", align: "end" }], rows: [
     { cells: ["Pacific Freight", "22 Sep", "S$12,480.00"] }, { cells: ["Keppel Packaging", "27 Sep", "S$3,960.00"] },
-    { cells: ["Lim Brothers", "29 Sep", "S$2,145.50"] }, { cells: ["Tan & Co", "30 Sep", "S$880.00"] }, { cells: ["Total · 4", "", "S$19,465.50"] }] }],
+    { cells: ["Lim Brothers", "29 Sep", "S$2,145.50"] }, { cells: ["Tan & Co", "30 Sep", "S$880.00"] }], totals: { cells: ["Total · 4", "", "S$19,465.50"] } }],
   fallback_text: "Supplier invoices due: Pacific Freight S$12,480.00 (22 Sep), Keppel Packaging S$3,960.00 (27 Sep), Lim Brothers S$2,145.50 (29 Sep), Tan & Co S$880.00 (30 Sep); total S$19,465.50."
 };
 // Verbatim playbook example money-spending-month (numbers → bar → share rows, page with View all categories).
@@ -470,7 +476,7 @@ const rtlActions: HarsoOutputDocument = { header: { title: "مرحبا بالع�
   fallback_text: "RTL labels." };
 // Synthetic: a block kind the card does not draw, so the whole card falls back to its text.
 const unknown: HarsoOutputDocument = { ...failed, blocks: [{ kind: "hologram", payload: { raw: true } }] };
-const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide, compare, rentals, inbox,
+const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, kpi, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide, compare, rentals, inbox,
   ...worldMaps, invoice, directions, work: workRunning, longactions: longActions, rtlactions: rtlActions, status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
 
 /* Fixture media host: artifacts are local drawings, map tiles a drawn street grid per tile (deterministic, offline:

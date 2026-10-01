@@ -18,7 +18,7 @@ export interface HarsoOutputChart { kind: "chart"; chart: "bar" | "line"; unit?:
 export interface HarsoOutputVisualBlock { kind: "visual"; visual: HarsoOutputChart | { kind: string; [key: string]: unknown } }
 export interface HarsoOutputTableColumn { label: string; align?: "start" | "end" }
 export interface HarsoOutputTableRow { cells: string[]; status?: string; status_label?: string }
-export interface HarsoOutputTableBlock { kind: "table"; columns: HarsoOutputTableColumn[]; rows: HarsoOutputTableRow[]; total_count?: number }
+export interface HarsoOutputTableBlock { kind: "table"; columns: HarsoOutputTableColumn[]; rows: HarsoOutputTableRow[]; totals?: { cells: string[] }; total_count?: number }
 
 /**
  * Host-owned state of one block (the contract has no per-block state yet, G20). `ready` is the default.
@@ -92,16 +92,28 @@ export function readTable(block: AnyBlock): HarsoOutputTableBlock | undefined {
   if (block.kind !== "table") return undefined;
   const table = block as Partial<HarsoOutputTableBlock> as HarsoOutputTableBlock;
   if (!Array.isArray(table.columns) || table.columns.length < 2 || !Array.isArray(table.rows) || !table.rows.length) return undefined;
+  if (table.totals !== undefined && (!Array.isArray(table.totals?.cells) || table.totals.cells.length !== table.columns.length)) return undefined;
   const ok = table.rows.every(row => Array.isArray(row?.cells) && row.cells.length === table.columns.length && rowStatusOk(row.status));
   return ok ? table : undefined;
 }
 
 /**
- * The playbook's total row (G4: no totals field yet): the last row labelled exactly "Total", or "Total · N" as the B0
+ * The legacy total row (only when no explicit totals are supplied): the last row labelled exactly "Total", or "Total · N" as the B0
  * table master draws it. Anything else ("Total Energies", "Total floor area") is an ordinary row.
  */
 export const isTotalRow = (table: HarsoOutputTableBlock, index: number) =>
-  index === table.rows.length - 1 && table.rows.length > 1 && /^Total(?: · \d+)?$/.test(table.rows[index].cells[0]?.trim() ?? "");
+  !table.totals && index === table.rows.length - 1 && table.rows.length > 1 && /^Total(?: · \d+)?$/.test(table.rows[index].cells[0]?.trim() ?? "");
+
+/** A change stays neutral; the sign says direction in text as well as the decorative glyph. */
+export function HarsoOutputNumberDelta({ delta }: { delta?: string }) {
+  if (!delta) return null;
+  const sign = delta[0], direction = sign === "+" ? "up" : sign === "−" || sign === "-" ? "down" : undefined;
+  return <span className="hkc-output-number-delta">
+    {direction && <><span data-direction={direction} aria-hidden="true">{direction === "up" ? "▲" : "▼"}</span>{" "}</>}
+    <span aria-hidden={direction ? "true" : undefined}>{delta}</span>
+    {direction && <span className="hk-sr-only">{direction} {delta.slice(1)}</span>}
+  </span>;
+}
 
 // ---- numbers and units ----
 // Values are exact: a contract decimal (15 digits, 6 places) is held as BigInt millionths and printed from its digits.
@@ -483,8 +495,8 @@ export function HarsoOutputTableView({ table, shown, label }: { table: HarsoOutp
   const container = useRef<HTMLDivElement>(null);
   const natural = useRef<HTMLTableElement>(null);
   const [stacked, setStacked] = useState(false);
-  const total = isTotalRow(table, table.rows.length - 1) ? table.rows[table.rows.length - 1] : undefined;
-  const body = (total ? table.rows.slice(0, -1) : table.rows).slice(0, shown);
+  const total: HarsoOutputTableRow | undefined = table.totals ?? (isTotalRow(table, table.rows.length - 1) ? table.rows[table.rows.length - 1] : undefined);
+  const body = (total && !table.totals ? table.rows.slice(0, -1) : table.rows).slice(0, shown);
   const rows = [...body, ...total ? [total] : []];
   const align = (index: number) => table.columns[index].align === "end" ? "end" : "start";
   useLayoutEffect(() => {
@@ -576,8 +588,10 @@ export function harsoOutputBlockPlainText(block: AnyBlock): string | undefined {
   if (chart) return chart.series.map(series => `${series.label}: ${chart.x_labels.map((label, index) =>
     `${label} ${series.values[index] === null ? "not reported" : formatValue(series.values[index]!, chart.unit)}`).join(", ")}`).join("\n");
   const table = readTable(block);
-  if (table) return [table.columns.map(column => column.label), ...table.rows.map(row => [[row.cells[0], ...statusWord(row.status, row.status_label)].join(" · "), ...row.cells.slice(1)])].map(cells => cells.join("\t")).join("\n");
+  if (table) return [table.columns.map(column => column.label), ...table.rows.map(row => [[row.cells[0], ...statusWord(row.status, row.status_label)].join(" · "), ...row.cells.slice(1)]), ...table.totals ? [table.totals.cells] : []].map(cells => cells.join("\t")).join("\n");
   const items = (block as { items?: unknown }).items;
+  if (block.kind === "numbers" && Array.isArray(items)) return (items as { value: string; delta?: string; label: string }[])
+    .map(number => [number.value, number.delta, number.label].filter(Boolean).join(" · ")).join("\n");
   if (block.kind === "rows" && Array.isArray(items)) return (items as Row[])
     .flatMap((row, index) => [
       ...row.group && row.group !== (items[index - 1] as Row | undefined)?.group ? [row.group] : [],

@@ -3,7 +3,7 @@
 import { CaretRight } from "@phosphor-icons/react";
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Button } from "../primitives";
-import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
+import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputNumberDelta, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
   type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
 import { HarsoOutputGalleryView, HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputThumb, HarsoOutputVideoView,
   ARTIFACT, isPhoto, readMedia, readProgress, readStatus, readSteps, type HarsoOutputMedia, type HarsoOutputMediaHost, type HarsoOutputMediaKind, type HarsoOutputPhoto,
@@ -38,7 +38,7 @@ export interface HarsoOutputRow {
 export interface HarsoOutputRowsBlock { kind: "rows"; items: HarsoOutputRow[]; total_count?: number }
 
 /** One key figure: `value` is already formatted by the agent (e.g. "S$4,280"). */
-export interface HarsoOutputNumber { value: string; label: string }
+export interface HarsoOutputNumber { value: string; delta?: string; label: string }
 
 export interface HarsoOutputNumbersBlock { kind: "numbers"; items: HarsoOutputNumber[] }
 
@@ -349,8 +349,8 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
       if (withoutData(state)) { parts.push({ kind: "table", table, shown: 0, state }); continue; }
       // One unit: body rows. `total_count` counts the table's rows as the playbook checker does (the Total row
       // included), so a Total row is taken off it too.
-      const totalRow = isTotalRow(table, table.rows.length - 1) ? 1 : 0;
-      const body = table.rows.length - totalRow;
+      const totalRow = table.totals || isTotalRow(table, table.rows.length - 1) ? 1 : 0;
+      const body = table.rows.length - (table.totals ? 0 : totalRow);
       const count = Math.min(body, rowBudget);
       rowBudget -= count;
       total += Math.max(body, Number.isInteger(table.total_count) ? table.total_count! - totalRow : 0);
@@ -651,10 +651,13 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
           : part.kind === "rows"
           ? <CardRows key={partIndex} items={part.items} photos={part.photos} layout={rowLayout} media={media} />
           : part.kind === "numbers"
-            // Value above its label, in that DOM order, so a screen reader hears "S$4,280, Spent" as one item.
+            // Value, optional change, then label in reading order; the change is never another number tile.
             ? <ul key={partIndex} className="hkc-output-card-numbers">
               {part.items.map((number, index) => <li key={index} className="hkc-output-card-number">
-                <span className="hkc-output-card-number-value">{number.value}</span>
+                {number.delta ? <span className="hkc-output-card-number-line">
+                  <span className="hkc-output-card-number-value">{number.value}</span>{" "}
+                  <HarsoOutputNumberDelta delta={number.delta} />{" "}
+                </span> : <span className="hkc-output-card-number-value">{number.value}</span>}
                 <span className="hkc-output-card-number-label">{number.label}</span>
               </li>)}
             </ul>

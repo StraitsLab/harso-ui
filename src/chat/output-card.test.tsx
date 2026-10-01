@@ -465,6 +465,49 @@ test("two key numbers render as figures (value then label, one list item each), 
   expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
 });
 
+test.each([
+  ["+12% vs Aug", "▲", "up 12% vs Aug"],
+  ["−8% vs Aug", "▼", "down 8% vs Aug"],
+  ["-8% vs Aug", "▼", "down 8% vs Aug"],
+  ["same as Aug", null, "same as Aug"],
+] as const)("number delta %j stays with its value and draws sign glyph %s", (delta, glyph, spoken) => {
+  const { card } = renderCard({ document: numbersDoc([{ value: "S$4,280", delta, label: "Spent" }]) });
+  const item = within(card).getByRole("listitem");
+  const change = item.querySelector(".hkc-output-number-delta")!;
+  expect(change).not.toBeNull();
+  expect(change).toHaveTextContent(delta);
+  expect(change.querySelector("[data-direction]")?.textContent ?? null).toBe(glyph);
+  if (glyph) expect(change.querySelector("[data-direction]")).toHaveAttribute("aria-hidden", "true");
+  const readText = (node: Node): string => node instanceof Element && node.getAttribute("aria-hidden") === "true" ? ""
+    : node.nodeType === Node.TEXT_NODE ? node.textContent ?? "" : [...node.childNodes].map(readText).join("");
+  expect(readText(item).replace(/\s+/g, " ").trim()).toBe(`S$4,280 ${spoken} Spent`);
+  expect(within(card).queryByRole("button", { name: /View all/ })).toBeNull();
+});
+
+test("number delta is kept verbatim in plain text even beyond the inline cap", () => {
+  const block: chat.HarsoOutputNumbersBlock = { kind: "numbers", items: [
+    { value: "S$4,280", label: "Spent", delta: "+12% vs Aug" },
+    { value: "S$720", label: "Left" },
+    { value: "S$5,000", label: "Budget", delta: "same as Aug" },
+  ] };
+  expect(chat.harsoOutputBlockPlainText(block)).toBe("S$4,280 · +12% vs Aug · Spent\nS$720 · Left\nS$5,000 · same as Aug · Budget");
+});
+
+test("the inferred budget view places a delta beside spending, not beside the budget limit", () => {
+  const { card } = renderCard({ document: numbersDoc([{ value: "S$4,280", label: "Spent", delta: "+12% vs Aug" }, { value: "S$720", label: "Left of S$5,000" }]) });
+  const value = card.querySelector(".hkc-output-progress-value")!;
+  expect(value.textContent!.indexOf("+12% vs Aug")).toBeLessThan(value.textContent!.indexOf("of S$5,000"));
+});
+
+test("number delta survives the existing budget-progress inference", () => {
+  const items: chat.HarsoOutputNumber[] = [{ value: "S$4,280", label: "Spent", delta: "+12% vs Aug" }, { value: "S$720", label: "Left of S$5,000", delta: "−8% vs Aug" }];
+  const { card } = renderCard({ document: numbersDoc(items) });
+  expect(within(card).getByRole("meter", { name: "Spent" })).toHaveAttribute("aria-valuetext", "S$4,280 of S$5,000, 86%");
+  expect([...card.querySelectorAll(".hkc-output-number-delta > [aria-hidden=true]:not([data-direction])")].map(node => node.textContent))
+    .toEqual(["+12% vs Aug", "−8% vs Aug"]);
+  expect(card.querySelector(".hkc-output-card-numbers")).toBeNull();
+});
+
 test("a third key number stays off the card and counts toward View all N, with rows sharing the count", () => {
   const { card, onViewAll, rerender } = renderCard({ document: numbersDoc(spendingNumbers.items) });
   expect(within(card).getAllByRole("listitem").map(item => item.textContent)).toEqual(["S$4,280Spent", "S$720Left"]);
