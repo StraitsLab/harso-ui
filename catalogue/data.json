@@ -35,11 +35,12 @@
             "items": [
               {
                 "value": "S$48,200",
-                "label": "Revenue"
+                "label": "Revenue",
+                "delta": "+12% vs July"
               },
               {
-                "value": "+12%",
-                "label": "vs July"
+                "value": "S$1,670",
+                "label": "22–31 Aug / day"
               }
             ]
           },
@@ -104,7 +105,7 @@
           "major": 1,
           "header": {
             "title": "Shop · August",
-            "subtitle": "Average sales a day · 3 of 4 weeks reported"
+            "subtitle": "Average sales a day · all channels"
           },
           "blocks": [
             {
@@ -157,7 +158,12 @@
               "22–31 Aug is not in yet, so it is left blank, not counted as zero."
             ]
           },
-          "fallback_text": "August so far, 3 of 4 weeks reported: S$31,500 revenue, S$1,500 a day on average. Average a day: 1–7 Aug S$1,400, 8–14 Aug S$1,500, 15–21 Aug S$1,600. 22–31 Aug is not reported yet."
+          "fallback_text": "August so far, 3 of 4 weeks reported: S$31,500 revenue, S$1,500 a day on average. Average a day: 1–7 Aug S$1,400, 8–14 Aug S$1,500, 15–21 Aug S$1,600. 22–31 Aug is not reported yet.",
+          "progress": {
+            "done": 3,
+            "total": 4,
+            "noun": "weeks reported"
+          }
         },
         "stale": {
           "kind": "output_blocks",
@@ -172,11 +178,12 @@
               "items": [
                 {
                   "value": "S$47,900",
-                  "label": "Revenue"
+                  "label": "Revenue",
+                  "delta": "+11% vs July"
                 },
                 {
-                  "value": "+11%",
-                  "label": "vs July"
+                  "value": "S$1,640",
+                  "label": "22–31 Aug / day"
                 }
               ]
             },
@@ -2855,13 +2862,13 @@
         "Partial state",
         "Line chart"
       ],
-      "rationale": "Days not reported yet are null, never 0; the real zero stays 0 and is highlighted. The subtitle says how many days are in.",
+      "rationale": "Days not reported yet are null, never 0; the real zero stays 0 and is highlighted. Progress says how many days are in; as_of says when they were read.",
       "document": {
         "kind": "output_blocks",
         "major": 1,
         "header": {
           "title": "Daily sales · 13–26 Sep",
-          "subtitle": "12 of 14 days reported · as of 10:40"
+          "subtitle": "Shopify payouts"
         },
         "blocks": [
           {
@@ -2921,7 +2928,13 @@
             "25 and 26 Sep are not reported yet, so they are left blank, not counted as zero."
           ]
         },
-        "fallback_text": "Daily sales, 12 of 14 days reported as of 10:40. 13–24 Sep: S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900. 25 and 26 Sep are not reported yet, so they are left blank, not counted as zero."
+        "fallback_text": "Daily sales, 12 of 14 days reported as of 10:40. 13–24 Sep: S$1,500, S$1,700, S$1,300, S$2,000, S$2,100, S$1,600, S$0 on Sat 19 Sep (closed), S$1,400, S$1,800, S$2,000, S$1,500, S$1,900. 25 and 26 Sep are not reported yet, so they are left blank, not counted as zero.",
+        "progress": {
+          "done": 12,
+          "total": 14,
+          "noun": "days reported"
+        },
+        "as_of": "2026-09-26T10:40Z"
       },
       "states": {
         "loading": {
@@ -3101,15 +3114,15 @@
                   "S$71,900",
                   "−2%"
                 ]
-              },
-              {
-                "cells": [
-                  "Total",
-                  "S$350,600",
-                  "+6%"
-                ]
               }
-            ]
+            ],
+            "totals": {
+              "cells": [
+                "Total",
+                "S$350,600",
+                "+6%"
+              ]
+            }
           }
         ],
         "details": {
@@ -3238,15 +3251,15 @@
                     "S$71,100",
                     "−3%"
                   ]
-                },
-                {
-                  "cells": [
-                    "Total",
-                    "S$349,800",
-                    "+6%"
-                  ]
                 }
-              ]
+              ],
+              "totals": {
+                "cells": [
+                  "Total",
+                  "S$349,800",
+                  "+6%"
+                ]
+              }
             }
           ],
           "details": {

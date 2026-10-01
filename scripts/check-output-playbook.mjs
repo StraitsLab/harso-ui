@@ -147,6 +147,7 @@ export function semanticErrors(document) {
   }
   const size = Buffer.byteLength(canonical(document), "utf8");
   if (size > INLINE_LIMIT_BYTES) errors.push(`$: document is ${size} bytes; the limit is ${INLINE_LIMIT_BYTES}`);
+  if (document.progress && document.progress.done > document.progress.total) errors.push("$.progress.done: must be <= progress.total");
   const blocks = document.blocks;
   const kinds = blocks.map(block => block.kind);
   for (const kind of KINDS) if (kinds.filter(item => item === kind).length > 1) errors.push(`$.blocks: at most one '${kind}' block`);
@@ -186,6 +187,7 @@ export function semanticErrors(document) {
         if ((visual.highlight_index ?? 0) >= count) errors.push(`${here}.visual.highlight_index: must be < ${count}`);
       }
     } else if (block.kind === "table") {
+      if (block.totals && block.totals.cells.length !== block.columns.length) errors.push(`${here}.totals.cells: needs exactly ${block.columns.length} cells (one per column)`);
       block.rows.forEach((row, rowIndex) => {
         if (row.cells.length !== block.columns.length) errors.push(`${here}.rows[${rowIndex}].cells: needs exactly ${block.columns.length} cells`);
       });
@@ -230,8 +232,8 @@ const SOURCE_IN_TEXT = /(https?:\/\/|www\.|\bsource:|\baccording to\b)/i;
 const ARTIFACT_VERBS = new Set(["open_artifact", "download_artifact"]);
 /**
  * Catalogue components whose data goes stale (prices, quotes, availability, opening, scores, weather, flights,
- * balances, news), listed in catalogue/index.json. An example that uses one must declare `fresh: true` and stamp the
- * subtitle; `fresh` is required on every card and file, so leaving it out, or setting it false, cannot exempt one of
+ * balances, news), listed in catalogue/index.json. An example that uses one must declare `fresh: true` and stamp `as_of` (or the legacy
+ * subtitle); `fresh` is required on every card and file, so leaving it out, or setting it false, cannot exempt one of
  * these. This list is a floor, not the classification: a generic component (Comparison, Empty state) can carry current
  * prices too, so each vertical file pins the fresh verdict of its examples by id, and LIVE_WORDS below catches an
  * "open now" answer whatever its components.
@@ -304,6 +306,7 @@ const norm = text => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 /** Visible strings = everything the card draws; details and fallback_text are excluded. */
 function visibleStrings(document) {
   const out = [...walkStrings(document.header, "$.header")];
+  if (document.progress) out.push(...walkStrings(document.progress, "$.progress"));
   document.blocks.forEach((block, index) => {
     for (const [path, text] of walkStrings(block, `$.blocks[${index}]`)) {
       if (/\.(kind|state|chart|mark|status|control|artifact|url|id|work_unit_id|routine_id|poster|aspect|align|selected_place_id|lat|lon)$/.test(path)) continue;
@@ -401,10 +404,13 @@ export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensi
     }
     if (block.kind === "table" && block.columns.length > CAPS.tableColumns) push("law 4", `${here}: at most ${CAPS.tableColumns} columns; a phone cannot show more`);
     if (block.kind === "table" && block.rows.length > CAPS.sentRows) push("law 4", `${here}: at most ${CAPS.sentRows} table rows; a longer table is a sheet`);
-    if (block.kind === "table" && (block.total_count ?? 0) > block.rows.length && !reachesRest(action)) push("truth", `${here}: table rows beyond those sent must be reachable (a file, or a link to the source's own result page)`);
+    if (block.kind === "table" && (block.total_count ?? 0) > block.rows.length + (block.totals ? 1 : 0) && !reachesRest(action)) push("truth", `${here}: table rows beyond those sent must be reachable (a file, or a link to the source's own result page)`);
     if (block.kind === "visual" && block.visual.kind === "chart" && !block.visual.unit) push("data", `${here}: a chart states its unit`);
     // Partial: "12 of 14 days reported" means exactly two points are not in yet, and those are null, never 0.
-    const reported = /\b(\d+) of (\d+) (?:days|weeks|months) reported\b/.exec(document.header.subtitle ?? "");
+    const coverage = document.progress;
+    const reported = coverage && /^(?:days|weeks|months) reported$/.test(coverage.noun)
+      ? [null, coverage.done, coverage.total]
+      : /\b(\d+) of (\d+) (?:days|weeks|months) reported\b/.exec(document.header.subtitle ?? "");
     if (reported && block.kind === "visual" && block.visual.kind === "chart") {
       const missing = Number(reported[2]) - Number(reported[1]);
       for (const series of block.visual.series) {
@@ -426,7 +432,7 @@ export function lawErrors(example, verdicts = { fresh: FRESH_EXAMPLES, timeSensi
   if (main && example.fresh !== true && staleComponents.length) push("stale", `${staleComponents.join(", ")} is time-sensitive, so fresh must be true`);
   const liveText = [main ? example.says ?? "" : "", document.fallback_text, ...visibleStrings(document).map(([, text]) => text)].find(text => LIVE_WORDS.test(text));
   if (example.fresh !== true && liveText) push("stale", `"${liveText.match(LIVE_WORDS)[0]}" is true only right now, so fresh must be true`);
-  if (applies.asOf && example.fresh === true && !AS_OF.test(document.header.subtitle ?? "")) push("stale", "time-sensitive data says \"as of HH:MM\" (or a market close) in the subtitle");
+  if (applies.asOf && example.fresh === true && !document.as_of && !AS_OF.test(document.header.subtitle ?? "")) push("stale", "time-sensitive data sets as_of or says \"as of HH:MM\" (or a market close) in the subtitle");
   for (const verb of [action?.primary, action?.secondary]) {
     if (verb?.kind === "open_url" && !specificLink(verb.url)) push("truth", `action "${verb.label}" opens a site's home page; link to the specific page`);
   }

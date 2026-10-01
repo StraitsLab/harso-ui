@@ -3,7 +3,7 @@
 import { CaretRight } from "@phosphor-icons/react";
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Button } from "../primitives";
-import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
+import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputNumberDelta, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
   type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
 import { HarsoOutputGalleryView, HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputThumb, HarsoOutputVideoView,
   ARTIFACT, isPhoto, readMedia, readProgress, readStatus, readSteps, type HarsoOutputMedia, type HarsoOutputMediaHost, type HarsoOutputMediaKind, type HarsoOutputPhoto,
@@ -38,7 +38,7 @@ export interface HarsoOutputRow {
 export interface HarsoOutputRowsBlock { kind: "rows"; items: HarsoOutputRow[]; total_count?: number }
 
 /** One key figure: `value` is already formatted by the agent (e.g. "S$4,280"). */
-export interface HarsoOutputNumber { value: string; label: string }
+export interface HarsoOutputNumber { value: string; delta?: string; label: string }
 
 export interface HarsoOutputNumbersBlock { kind: "numbers"; items: HarsoOutputNumber[] }
 
@@ -75,7 +75,45 @@ export interface HarsoOutputDocument {
   blocks: HarsoOutputBlock[];
   details?: HarsoOutputDocumentDetails;
   more_label?: string;
+  /** UTC snapshot time; formatted in the viewer local time zone. */
+  as_of?: string;
+  /** Coverage of this answer, independent of any budget/progress number block. */
+  progress?: { done: number; total: number; noun: string };
   fallback_text: string;
+}
+
+/** Only a real UTC minute/second stamp; Date must not silently roll an impossible day forward. */
+function asOfText(value: unknown): string | undefined {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?Z$/.test(value)) return undefined;
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime()) || date.toISOString() !== `${value.slice(0, 16)}:${value.length === 20 ? value.slice(17, 19) : "00"}.000Z`) return undefined;
+  const now = new Date();
+  const today = date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() && date.getDate() === now.getDate();
+  const time = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" }).format(date);
+  const day = today ? "" : `${new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short" }).format(date)}, `;
+  return `As of ${day}${time}`;
+}
+
+/** Bad coverage is optional metadata, never a reason to lose the card body. */
+function readDocumentProgress(value: unknown): HarsoOutputDocument["progress"] {
+  if (!value || typeof value !== "object") return undefined;
+  const progress = value as NonNullable<HarsoOutputDocument["progress"]>;
+  return Number.isInteger(progress.done) && Number.isInteger(progress.total) && progress.total >= 1
+    && progress.done >= 0 && progress.done <= progress.total && typeof progress.noun === "string" && progress.noun.trim()
+    ? progress : undefined;
+}
+
+function documentMetadata(document: HarsoOutputDocument) {
+  const asOf = asOfText(document.as_of);
+  const progress = readDocumentProgress(document.progress);
+  const progressWords = progress ? `${progress.done} of ${progress.total} ${progress.noun}` : undefined;
+  return { progress, progressWords, words: [asOf, progressWords].filter(Boolean).join(" · ") };
+}
+
+/** Document-level Copy/fallback path: keep optional header metadata even when the body falls back. */
+export function harsoOutputDocumentPlainText(document: HarsoOutputDocument): string {
+  const { words } = documentMetadata(document);
+  return [words, document.fallback_text].filter(Boolean).join("\n");
 }
 
 export interface HarsoOutputCardCaps { maxRows: number; maxNumbers: number; maxTextChars: number; maxTextLines: number }
@@ -349,8 +387,8 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
       if (withoutData(state)) { parts.push({ kind: "table", table, shown: 0, state }); continue; }
       // One unit: body rows. `total_count` counts the table's rows as the playbook checker does (the Total row
       // included), so a Total row is taken off it too.
-      const totalRow = isTotalRow(table, table.rows.length - 1) ? 1 : 0;
-      const body = table.rows.length - totalRow;
+      const totalRow = table.totals || isTotalRow(table, table.rows.length - 1) ? 1 : 0;
+      const body = table.rows.length - (table.totals ? 0 : totalRow);
       const count = Math.min(body, rowBudget);
       rowBudget -= count;
       total += Math.max(body, Number.isInteger(table.total_count) ? table.total_count! - totalRow : 0);
@@ -588,6 +626,7 @@ function CardRows({ items, photos, layout, media }: { items: HarsoOutputRow[]; p
 
 export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
   const id = useId();
+  const { progress, progressWords, words: metadata } = documentMetadata(document);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const [textClipped, setTextClipped] = useState(false);
@@ -617,6 +656,11 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
       <div className="hkc-output-card-heading">
         <h2 id={titleId} className="hkc-output-card-title">{document.header.title}</h2>
         {document.header.subtitle && <p className="hkc-output-card-subtitle">{document.header.subtitle}</p>}
+        {metadata && <p className="hkc-output-card-meta">{metadata}</p>}
+        {progress && progress.done < progress.total && <div className="hkc-output-progress-track hkc-output-card-progress-track" role="meter"
+          aria-label={progress.noun} aria-valuemin={0} aria-valuemax={progress.total} aria-valuenow={progress.done} aria-valuetext={progressWords}>
+          <span className="hkc-output-progress-fill" style={{ width: `${progress.done / progress.total * 100}%` }} />
+        </div>}
       </div>
       {details && <Button ref={trigger} variant="ghost" size="small" className="hkc-output-card-details-toggle"
         aria-expanded={inlineDetails ? detailsOpen : undefined} aria-controls={inlineDetails ? detailsId : undefined}
@@ -651,10 +695,13 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
           : part.kind === "rows"
           ? <CardRows key={partIndex} items={part.items} photos={part.photos} layout={rowLayout} media={media} />
           : part.kind === "numbers"
-            // Value above its label, in that DOM order, so a screen reader hears "S$4,280, Spent" as one item.
+            // Value, optional change, then label in reading order; the change is never another number tile.
             ? <ul key={partIndex} className="hkc-output-card-numbers">
               {part.items.map((number, index) => <li key={index} className="hkc-output-card-number">
-                <span className="hkc-output-card-number-value">{number.value}</span>
+                {number.delta ? <span className="hkc-output-card-number-line">
+                  <span className="hkc-output-card-number-value">{number.value}</span>{" "}
+                  <HarsoOutputNumberDelta delta={number.delta} />{" "}
+                </span> : <span className="hkc-output-card-number-value">{number.value}</span>}
                 <span className="hkc-output-card-number-label">{number.label}</span>
               </li>)}
             </ul>

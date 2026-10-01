@@ -399,6 +399,64 @@ test.each([
   expect(within(card).queryByRole("button", { name: /View all/ })?.textContent ?? null).toBe(label);
 });
 
+test.each(["table", "stacked"] as const)("explicit totals stay last in %s with every row budget", layout => {
+  if (layout === "stacked") mockTableWidths(316);
+  const table: chat.HarsoOutputTableBlock = { ...regionTable, rows: regionTable.rows.slice(0, -1), totals: { cells: ["All regions", "S$350,600", "+6%"] } };
+  for (const maxRows of [3, 1, 0]) {
+    const { card } = renderDoc(doc([table]), { caps: { maxRows } });
+    const region = within(card).getByRole("region", { name: "August spending · table" });
+    const rows = layout === "stacked" ? within(region).getAllByRole("listitem") : within(within(region).getByRole("table")).getAllByRole("row").slice(1);
+    expect(rows).toHaveLength(maxRows + 1);
+    expect(rows.at(-1)).toHaveClass("hkc-output-table-total");
+    expect(rows.at(-1)).toHaveTextContent("S$350,600");
+    expect(rows.at(-1)).toHaveTextContent("All regions");
+    expect(rows.filter(row => row.classList.contains("hkc-output-table-total"))).toHaveLength(1);
+    expect(within(card).queryByRole("button", { name: /View all/ })?.textContent ?? null).toBe(maxRows < 3 ? "View all 3" : null);
+    cleanup();
+  }
+});
+
+test.each(["table", "stacked"] as const)("explicit totals turn an old Total row into an ordinary body row in %s", layout => {
+  if (layout === "stacked") mockTableWidths(316);
+  const table: chat.HarsoOutputTableBlock = { ...regionTable, totals: { cells: ["Grand total", "S$350,600", "+6%"] } };
+  for (const maxRows of [4, 3]) {
+    const { card } = renderDoc(doc([table]), { caps: { maxRows } });
+    const region = within(card).getByRole("region", { name: "August spending · table" });
+    const rows = layout === "stacked" ? within(region).getAllByRole("listitem") : within(within(region).getByRole("table")).getAllByRole("row").slice(1);
+    expect(rows).toHaveLength(maxRows + 1);
+    expect(rows.at(-1)).toHaveTextContent("Grand total");
+    expect(rows.filter(row => row.classList.contains("hkc-output-table-total"))).toHaveLength(1);
+    if (maxRows === 4) expect(rows[3]).not.toHaveClass("hkc-output-table-total");
+    else expect(within(region).queryByText("Total", { exact: true })).toBeNull();
+    expect(within(card).queryByRole("button", { name: /View all/ })?.textContent ?? null).toBe(maxRows === 3 ? "View all 4" : null);
+    cleanup();
+  }
+});
+
+test.each([["short", { cells: ["Total"] }], ["long", { cells: ["Total", "1", "2", "3"] }], ["missing", {}], ["null", null]] as const)(
+  "invalid %s totals make the entire document fall back", (_, totals) => {
+    const { card } = renderDoc(doc([{ kind: "rows", items: [{ label: "Must not draw" }] }, { ...regionTable, totals } as unknown as chat.HarsoOutputTableBlock]));
+    expect(card).toHaveAttribute("data-fallback", "true");
+    expect(within(card).getByText("FALLBACK")).toBeVisible();
+    expect(within(card).queryByRole("table")).toBeNull();
+    expect(within(card).queryByText("Must not draw")).toBeNull();
+  });
+
+test.each([[3, 4, null], [3, undefined, null], [3, 10, "View all 9"], [5, 6, "View all 5"]] as const)(
+  "explicit totals count %i body rows and total_count %s as %s", (count, totalCount, label) => {
+    const table: chat.HarsoOutputTableBlock = { kind: "table", columns: [{ label: "Name" }, { label: "Amount" }],
+      rows: Array.from({ length: count }, (_, index) => ({ cells: [`Row ${index}`, "S$1"] })), totals: { cells: ["All", "S$0"] }, total_count: totalCount };
+    const { card } = renderDoc(doc([table]));
+    expect(within(card).queryByRole("button", { name: /View all/ })?.textContent ?? null).toBe(label);
+  });
+
+test("explicit totals do not consume the shared body-row budget", () => {
+  const table: chat.HarsoOutputTableBlock = { ...regionTable, rows: regionTable.rows.slice(0, -1), totals: { cells: ["All regions", "S$350,600", "+6%"] } };
+  const { card } = renderDoc(doc([{ kind: "rows", items: [{ label: "Lead" }, { label: "Second" }] }, table]));
+  expect(within(card).getAllByRole("row").map(row => row.textContent)).toEqual(["RegionRevenuevs Q1", "CentralS$182,400+4%", "All regionsS$350,600+6%"]);
+  expect(within(card).getByRole("button", { name: "View all 5" })).toBeVisible();
+});
+
 test("tables the card cannot draw fall back", () => {
   for (const bad of [{ kind: "table", columns: [{ label: "A" }], rows: [{ cells: ["x"] }] }, { kind: "table", columns: [{ label: "A" }, { label: "B" }], rows: [{ cells: ["x"] }] },
     { kind: "table", columns: [{ label: "A" }, { label: "B" }], rows: [{ cells: ["x", "y"], status: "refunded" }] }]) {
@@ -505,6 +563,11 @@ test("hostile text renders literally in axis, labels, cells and share rows", () 
   const { container } = render(<chat.HarsoOutputCard document={doc([chart, table, rows])} onViewAll={() => {}} />);
   expect(container.querySelector("img, b")).toBeNull();
   expect(screen.getAllByText(markup).length).toBeGreaterThanOrEqual(3);
+});
+
+test("plain text includes the explicit totals line after every body row", () => {
+  const table: chat.HarsoOutputTableBlock = { ...regionTable, rows: regionTable.rows.slice(0, -1), totals: { cells: ["All regions", "S$350,600", "+6%"] } };
+  expect(chat.harsoOutputBlockPlainText(table)).toBe("Region\tRevenue\tvs Q1\nCentral\tS$182,400\t+4%\nEast\tS$96,300\t+18%\nWest\tS$71,900\t−2%\nAll regions\tS$350,600\t+6%");
 });
 
 test("plain text for Copy carries every value with its unit", () => {

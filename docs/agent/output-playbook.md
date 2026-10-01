@@ -55,7 +55,7 @@ generated file is stale.
 | Request shape | Block sequence | Inline or page | Do not |
 |---|---|---|---|
 | **Money:** how did I spend | numbers(Left, Spent) → chart(bar, weeks, highlight the week you name) → rows(categories as shares, below) | page | lead with Spent; bars without a unit |
-| Balance / net worth / quote | numbers(value, change) → chart(line) | inline | a 15-field stats grid; "as of" missing |
+| Balance / net worth / quote | numbers(value with `delta`, companion) → chart(line) | inline | a 15-field stats grid; `as_of` missing |
 | Bills, invoices due | rows(payee, due date, amount, `overdue`/`paid`) | inline ≤3 | a table; a Pay button (use `open_url` to the payee) |
 | Loan / tax / affordability result | header(what it is) → numbers(result, companion) → details(assumptions) | inline | a donut; sliders (a file calculator if they ask to play) |
 | Transfer quote | numbers(they get, fee) → action(open_url provider) | inline | a Send button |
@@ -69,11 +69,11 @@ generated file is stale.
 | Value estimate | numbers(estimate, psf) → details("not a valuation") | inline | a range bar |
 | **Jobs:** roles | rows(title, "company · workplace · posted", salary, pick) | inline | logos; % match scores |
 | One posting | numbers(pay, apply by) → text(what you'd do, where you fit) → action(apply at employer) | page | salary buried in text |
-| Applications, offers | rows(company · role, state in secondary) / table(offer × item, total row last) | inline / page | a board with columns |
+| Applications, offers | rows(company · role, state in secondary) / table(offer × item, `totals`) | inline / page | a board with columns |
 | **Travel:** flights | rows(airline, "flight · time · duration", price, pick) | inline | a Choose button (use the question card) |
 | Where to stay | map(areas, selected) → rows(area, trade-off, price range, pick) | inline | more than 3 areas inline |
 | Itinerary | map(stops) → text(one section per day, timed bullets) → action(open the file) | page | a timeline widget; more than 12 days (use a file) |
-| Flight status | header(new time) + subtitle(delay · gate · as of) → rows(was, now) → action(airline) | inline | a live widget; red |
+| Flight status | header(new time) + subtitle(delay · gate) + `as_of` → rows(was, now) → action(airline) | inline | a live widget; red |
 | Visa, packing | header(verdict) → text(bullets) → details(official source) | inline | tick-boxes |
 | **Places:** one place | map or image → rows(address, good for) → action(Open in Maps) | inline | both a photo and a map |
 | Directions | header(time and mode) → rows(legs) → action(primary: Maps) | inline | drawing a route |
@@ -84,7 +84,7 @@ generated file is stale.
 | **Weather:** now | numbers(now, rain chance) → chart(line, next hours) | inline | icon sets; range bars |
 | Week | rows(day, conditions, low–high) | page | a 10-day inline card |
 | Warning | header(warning + until) → text(what to do) → details(authority) | inline | red; hiding the warning in Details |
-| **Sports:** score | header(result) → numbers(team, goals × 2) | inline | a live ticker; "as of" missing |
+| **Sports:** score | header(result) → numbers(team, goals × 2) | inline | a live ticker; `as_of` missing |
 | Standings, fixtures | table(pos, team, played, pts) / rows(opponent, date · venue, home/away) | page / inline | more than 4 columns |
 | **News:** what's happening | text(summary, what happened, still unclear) → details(outlets, linked) | page | a bias meter; quotes without sources |
 | Timeline, headlines | rows(event or headline, outlet, date) | inline | summaries of summaries |
@@ -103,10 +103,10 @@ generated file is stale.
 | Signatures | rows(signer, date, state word) → action(open the signing site) | inline | a Nudge button |
 | Compare plans | rows(plan, the one difference, price, pick) | inline | a 6-column grid on a phone |
 | Brief | text(summary, ≤3 sections) → action(open the document) | page | more than a page (make a document) |
-| **Data:** KPIs | numbers(metric, change) → chart(bar or line, highlight the named period) | inline | sparklines; filter chips |
+| **Data:** KPIs | numbers(metric with `delta`, companion) → chart(bar or line, highlight the named period) | inline | sparklines; filter chips |
 | Shares of a whole | rows(largest first: label, share % in secondary, amount trailing; they add up to the total) + the total in a number or the subtitle [G24] | inline ≤3 / page | a pie or donut; a bar chart of shares; a Total row inside the share rows |
 | Ranking (not a whole) | chart(bar, sorted, highlight the leader) | inline | a pie or donut |
-| Breakdown | table(≤4 columns, total row last, numbers `align: end`) | page | more than 10 rows (use a sheet) |
+| Breakdown | table(≤4 columns, `totals` {cells}, numbers `align: end`) | page | more than 10 rows (use a sheet) |
 | Scatter, heatmap, big pivot | image in a file → action(open) | inline | pretending a line or bar chart shows it |
 
 ## The blocks the app draws
@@ -117,16 +117,16 @@ workaround and nothing else: the app draws the richer form once the backend adds
 
 | Master | What you send | Example |
 |---|---|---|
-| header | `header.title` + `subtitle` (period, scope, "as of") | every card |
+| header | `header.title` + `subtitle` (period, scope); `as_of` for when the data was read (UTC) | every card |
 | rows | `rows` with label, secondary, trailing; `status` + optional `status_label` for the state word; `group` for natural sections (below) | `money-bills-due` |
 | rowkinds | `mark: "pick"` on one row; `thumbnail` {artifact, alt} on every row or none (a photo per option: products, homes, hotels, dishes, logos); no row link [G8] yet | `travel-flights`, `shop-vacuum-options` |
-| numbers | `numbers`, 2 items; a change is its own item [G3] | `money-net-worth` |
+| numbers | `numbers`, 2 items; put each change in that `number.delta`, not a second number | `money-net-worth` |
 | numbers4 | `numbers`, 3 items at most, page only [G21] | `data-sales-collections` |
 | bar | `chart: "bar"`, unit, `highlight_index` on the one you name; the caption is your sentence [G19] | `money-spending-month` |
 | line | `chart: "line"`; a real zero is `0`, a day not in yet is `null` | `data-sales-collections`, `partial-days` |
 | share | `rows`, largest first, share % in secondary, amount trailing, adding up to the total. The app draws the proportion bar above them [G18] and a Total row under them [G24]; until that field exists the total goes in a `numbers` item or `header.subtitle`, never as a share row. Never a donut or pie | `data-channel-share`, `money-spending-month` |
 | progress | the budget goes in a number label ("Left of S$5,000") [G9] | `money-spending-month` |
-| table | `table`, ≤4 columns; a total is the last row, labelled Total [G4] | `data-table-small` |
+| table | `table`, ≤4 columns; put the total in `totals` {cells}, one cell per column, not a body row | `data-table-small` |
 | text | `text` summary + sections; steps are numbered paragraphs [G5] | `docs-research-brief` |
 | image | `visual.image` with alt and aspect; `images` (2..10, photo 1 = the image itself) makes it a gallery, only for one thing with many photos (a home, a product, a hotel) | `file-logo`, `home-listing-card` |
 | map | `visual.map`, ≤12 places, `selected_place_id` for the pick | `travel-stay-areas` |
@@ -178,15 +178,16 @@ progress, needs you, problem. You never choose red.
 | State | Say it like this | Blocks |
 |---|---|---|
 | Failed, recoverable | "Couldn't check flight prices" + what happened + what didn't change ("Nothing was booked.") | status(failed, detail); Retry only as `work_control` on a real Work Unit |
-| Partial | subtitle "3 of 4 stores checked", "12 of 14 days reported"; name the gap in your sentence | the rows you have; a chart value not in yet is `null`, never `0` |
-| Stale | subtitle "As of Fri 25 Sep close · markets closed", or "As of 09:10 · couldn't refresh" when a refresh failed | the last good value, still first |
+| Partial | set `progress` {done,total,noun}, e.g. {done:3,total:4,noun:"stores checked"}; name the gap in your sentence | the rows you have; a chart value not in yet is `null`, never `0` |
+| Stale | set `as_of` to when the last good data was read (UTC); subtitle "Markets closed" or "Couldn't refresh" | the last good value, still first |
 | Empty | "No 3-room HDB in Bishan under S$500k" + the nearest useful fact | status(empty, detail) |
 | Working / watching / scheduled | "112 of about 400 checked", "since 9:40 AM", "rings at 19:42" | status + subject + one quiet control |
 | Row states | the word that fits: "Unverified", "Signed", "Not opened", "Live" | set `status` to the meaning: `done`, `in_progress`, `needs_you`, `problem`, `overdue` or `paid`; set `status_label` to the exact word when the default does not fit. Never put the state in the label |
 
 Anything live or time-sensitive (prices, availability, opening, quotes, balances, scores, fixtures, weather, flights,
-news) carries "as of HH:MM" in the subtitle, or "as of <day> close" for a market that is closed. That includes a
-menu's prices, a plan's premiums and an "open now" answer. A date alone does not say how old a price is.
+news) sets `as_of` to when the data was read, in UTC (`YYYY-MM-DDTHH:MMZ`, seconds optional). That includes a
+menu's prices, a plan's premiums and an "open now" answer. Never invent a time. The app draws the stamp; the subtitle
+no longer needs "as of".
 
 ## Dates
 
@@ -233,9 +234,9 @@ Harso's voice: calm system first, trusted colleague second.
 - **Staleness:** every card and file declares `fresh`, and each vertical file holds a per-example verdict (its
   `fresh` list; time-sensitive components are listed in `catalogue/index.json`) that the flag must match, so a
   time-sensitive answer cannot opt out whatever components it uses. Time-sensitive components and "right now" wording
-  ("open now", "in stock", "currently") also force `fresh: true`. A fresh subtitle carries "as of" with a clock time or
-  a market close. The "as of" stamp is when the data was read; the date check
-  ignores it and checks only the dates the answer covers.
+  ("open now", "in stock", "currently") also force `fresh: true`. A fresh document sets `as_of` to when the data was
+  read (UTC); old subtitle words ("as of" with a clock time or market close) still pass. The date check ignores the
+  stamp and checks only the dates the answer covers.
 
 What it cannot check: whether a link resolves or shows the promised results (nothing is fetched), whether the figures
 are real (they are illustrative), and how the app draws the card. Those need a reviewer, or a live run.
@@ -244,9 +245,9 @@ are real (they are illustrative), and how the app draws the card. Those need a r
 ## Contract source
 
 `schema/output-blocks.v1.json` is a byte-for-byte copy of weave-cloud `packages/contracts/src/schemas/output-blocks.v1.json`,
-read at `factory/output-tier3` commit `9f2ea3fe667ecaa856bd8f788ae4cac50f8c3461`, sha256
-`aa7ba71a21b70afb082ed998a47e0f09b1cff37fc53ebecda161aede52463baf`. The checker refuses a copy whose hash differs from
+read at `factory/output-tier3b` commit `e15f8638ff7af28d8838c50543ddf5fd8cb078b2`, sha256
+`95fd10567a218f309717cf343fdffc18a4ae8c2aab1ddf0de167ff38d61859f4`. The checker refuses a copy whose hash differs from
 the one recorded in the examples file, so a schema change has to be re-copied on purpose. Where the contract cannot
-express an example cleanly (delta, totals, ordered steps, as-of, row link,
+express an example cleanly (ordered steps, row link,
 share bar, a share total, chart caption, timed status steps, a failed block's retry), the workaround used above is the rule until the
 backend adds the field. The gaps are numbered G1–G24 in the evidence file `catalogue-design/playbook/coverage.md`.

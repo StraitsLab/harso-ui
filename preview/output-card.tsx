@@ -177,6 +177,12 @@ const more: HarsoOutputDocument = {
 // Synthetic: the Spending example without its chart and rows (charts render in a later packet), so the key numbers show.
 // Three numbers against the 2-up cap: Spent and Left inline, Budget behind View all transactions.
 const numbers: HarsoOutputDocument = { ...spending, blocks: [spending.blocks[0]] };
+// Synthetic KPI: the existing budget pair still draws progress, with its change beside the used figure.
+const kpi: HarsoOutputDocument = {
+  header: { title: "September spending", subtitle: "1–30 Sep · all accounts" },
+  blocks: [{ kind: "numbers", items: [{ value: "S$4,280", label: "Spent", delta: "+12% vs Aug" }, { value: "S$720", label: "Left of S$5,000" }] }],
+  fallback_text: "September spending: S$4,280 spent (+12% vs Aug), S$720 left of S$5,000."
+};
 // Verbatim copy of the S0 example 05-research-brief.
 const brief: HarsoOutputDocument = {
   "header": {
@@ -284,7 +290,7 @@ const b0Table: HarsoOutputDocument = {
   header: { title: "Supplier invoices", subtitle: "Due this month" },
   blocks: [{ kind: "table", columns: [{ label: "Supplier" }, { label: "Due" }, { label: "Amount", align: "end" }], rows: [
     { cells: ["Pacific Freight", "22 Sep", "S$12,480.00"] }, { cells: ["Keppel Packaging", "27 Sep", "S$3,960.00"] },
-    { cells: ["Lim Brothers", "29 Sep", "S$2,145.50"] }, { cells: ["Tan & Co", "30 Sep", "S$880.00"] }, { cells: ["Total · 4", "", "S$19,465.50"] }] }],
+    { cells: ["Lim Brothers", "29 Sep", "S$2,145.50"] }, { cells: ["Tan & Co", "30 Sep", "S$880.00"] }], totals: { cells: ["Total · 4", "", "S$19,465.50"] } }],
   fallback_text: "Supplier invoices due: Pacific Freight S$12,480.00 (22 Sep), Keppel Packaging S$3,960.00 (27 Sep), Lim Brothers S$2,145.50 (29 Sep), Tan & Co S$880.00 (30 Sep); total S$19,465.50."
 };
 // Verbatim playbook example money-spending-month (numbers → bar → share rows, page with View all categories).
@@ -327,9 +333,23 @@ const rentals: HarsoOutputDocument = {
   ] }],
   fallback_text: "2-bed rentals near Tiong Bahru: 20 Jalan Klinik (HDB), live listing, S$3,200/mo; 30 Jalan Klinik (HDB), unverified, S$3,300/mo; 46 Jalan Bukit Ho Swee (HDB), unverified, S$3,300/mo; Kai Fook Mansion, unverified, S$4,200/mo."
 };
+// Synthetic stock check: snapshot and partial coverage belong to the document, not the subtitle.
+const todayUtc = new Date().toISOString().slice(0, 10);
+const stock: HarsoOutputDocument = {
+  header: { title: "Oat milk near Tiong Bahru", subtitle: "1 litre · walking distance" },
+  as_of: `${todayUtc}T09:10Z`,
+  progress: { done: 3, total: 4, noun: "stores checked" },
+  blocks: [{ kind: "rows", items: [
+    { label: "FairPrice Finest", secondary: "Tiong Bahru Plaza · Oatly Barista 1L", trailing: "S$6.25", status: "done", status_label: "In stock" },
+    { label: "Giant", secondary: "Kim Tian Road · Oatly Original 1L", trailing: "S$5.95", status: "done", status_label: "In stock" },
+    { label: "Little Farms", secondary: "Tiong Bahru · Minor Figures 1L", trailing: "S$7.50", status: "done", status_label: "In stock" },
+  ] }],
+  fallback_text: "Oat milk near Tiong Bahru: FairPrice Finest Oatly Barista 1L S$6.25; Giant Oatly Original 1L S$5.95; Little Farms Minor Figures 1L S$7.50. Illustrative stock and prices."
+};
 // Synthetic inbox: natural action sections, no per-row statuses.
 const inbox: HarsoOutputDocument = {
   header: { title: "Your inbox", subtitle: "5 updates · as of 10:30" },
+  as_of: `${todayUtc}T10:30Z`,
   blocks: [{ kind: "rows", items: [
     { label: "Reply to Nichol", group: "Needs you", secondary: "Confirm Thursday dinner", trailing: "09:40" },
     { label: "Review the lease renewal", group: "Needs you", secondary: "Landlord · reply by Friday", trailing: "09:15" },
@@ -470,7 +490,7 @@ const rtlActions: HarsoOutputDocument = { header: { title: "مرحبا بالع�
   fallback_text: "RTL labels." };
 // Synthetic: a block kind the card does not draw, so the whole card falls back to its text.
 const unknown: HarsoOutputDocument = { ...failed, blocks: [{ kind: "hologram", payload: { raw: true } }] };
-const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide, compare, rentals, inbox,
+const documents: Record<string, HarsoOutputDocument> = { hostilemedia: hostileMedia, unknown, hostile, flights, failed, spending, more, numbers, kpi, brief, text, cjk, short, bar: b0Bar, line: b0Line, share: b0Share, table: b0Table, month, standings, wide, compare, rentals, inbox, stock,
   ...worldMaps, invoice, directions, work: workRunning, longactions: longActions, rtlactions: rtlActions, status: b0Status, watch: watchReply, meanings, empty: emptySearch, progress: b0Progress, over: overBudget, image: b0Image, deck, video, map: b0Map, tampines };
 
 /* Fixture media host: artifacts are local drawings, map tiles a drawn street grid per tile (deterministic, offline:
@@ -551,8 +571,8 @@ function Fixture() {
   return <KitProvider appearance={appearance} palette={palette} className="output-card-fixture" style={query.has("width") ? { maxWidth: `${Number(query.get("width"))}px` } : undefined}>
     <main>
       <div className="output-card-transcript" data-testid="transcript">
-        <p className="output-card-user">{doc === "inbox" ? "What needs my attention in my inbox?" : doc === "rentals" ? "Find 2-bed rentals near Tiong Bahru under S$4,500/month." : doc === "compare" ? "Compare noise-cancelling headphones under S$400." : "Flights to Tokyo on 12 Oct?"}</p>
-        <p>{doc === "inbox" ? "Two messages need you; the rest are updates." : doc === "rentals" ? "One live listing and three options still to verify." : doc === "compare" ? "Three options at Singapore prices. Here is every specification side by side." : "Three direct options. SQ 638 has the best times for your morning start."}</p>
+        <p className="output-card-user">{doc === "stock" ? "Check oat milk across four stores near Tiong Bahru." : doc === "inbox" ? "What needs my attention in my inbox?" : doc === "rentals" ? "Find 2-bed rentals near Tiong Bahru under S$4,500/month." : doc === "compare" ? "Compare noise-cancelling headphones under S$400." : "Flights to Tokyo on 12 Oct?"}</p>
+        <p>{doc === "stock" ? "Three stores checked so far; one is still to come." : doc === "inbox" ? "Two messages need you; the rest are updates." : doc === "rentals" ? "One live listing and three options still to verify." : doc === "compare" ? "Three options at Singapore prices. Here is every specification side by side." : "Three direct options. SQ 638 has the best times for your morning start."}</p>
         <HarsoOutputCard document={query.has("full") ? harsoOutputWholeAnswer(document) : document} caps={query.has("full") ? HARSO_OUTPUT_CARD_UNCAPPED : undefined}
           onViewAll={() => setViewAllOpened(value => value + 1)}
           onOpenDetails={query.has("hostDetails") ? () => setDetailsOpened(value => value + 1) : undefined} blockStates={blockStates} media={media} subjectState={subjectState} {...host} />
