@@ -1,0 +1,45 @@
+/* WEV-3324 research-brief: the title opens the answer. Tokens only; the card allows no borders. */
+
+.harso-kit .hkc-research { min-width: 0; }
+.harso-kit .hkc-research-card { gap: var(--hk-space-3); }
+
+/* The summary: a short read under the title, never the sections. */
+.harso-kit .hkc-research-summary {
+  margin: 0; font-size: var(--hk-text-body); line-height: 1.5; color: var(--hk-secondary);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
+}
+.harso-kit .hkc-research-summary[data-full] { display: block; font-size: var(--hk-text-title); -webkit-line-clamp: unset; overflow: visible; }
+.harso-kit .hkc-research[data-widget] .hkc-research-summary { -webkit-line-clamp: 2; }
+
+/* Source marks: round and overlapping, the card surface ringing each one. */
+.harso-kit .hkc-research-sources { display: flex; align-items: center; gap: var(--hk-space-2); font-size: var(--hk-text-meta); line-height: 24px; color: var(--hk-secondary); }
+.harso-kit .hkc-research-stack { display: inline-flex; align-items: center; padding-inline-start: var(--hk-space-1); }
+.harso-kit .hkc-research-stack .hkc-v6-brand { width: 24px; height: 24px; border-radius: 50%; font-size: var(--hk-text-meta); box-shadow: 0 0 0 2px var(--hk-surface); }
+.harso-kit .hkc-research-stack .hkc-v6-brand + .hkc-v6-brand { margin-inline-start: calc(-1 * var(--hk-space-1)); }
+
+/* Full view: sections in order, then the sources as a list. */
+.harso-kit .hkc-research-section { display: flex; flex-direction: column; gap: var(--hk-space-2); min-width: 0; }
+.harso-kit .hkc-research-section :where(h3, p, ul) { margin: 0; }
+.harso-kit .hkc-research-section h3 { font-size: var(--hk-text-body); font-weight: 600; line-height: 1.4; }
+.harso-kit .hkc-research-section p, .harso-kit .hkc-research-section li { font-size: var(--hk-text-body); line-height: 1.6; }
+.harso-kit .hkc-research-section ul:not(.hkc-research-list) { padding-inline-start: var(--hk-space-6); list-style: disc; }
+.harso-kit .hkc-research-count { margin-inline-start: var(--hk-space-1); font-size: var(--hk-text-meta); font-weight: 400; color: var(--hk-secondary); }
+.harso-kit .hkc-research-list { padding: 0; list-style: none; display: flex; flex-direction: column; }
+
+.harso-kit .hkc-research-source {
+  appearance: none; display: flex; align-items: center; gap: var(--hk-space-3); width: 100%; min-height: 48px; margin: 0; padding: var(--hk-space-2) 0;
+  border: 0; border-radius: var(--hk-radius-control); background: transparent; color: var(--hk-ink); font: inherit; text-align: start;
+}
+.harso-kit button.hkc-research-source { cursor: pointer; }
+.harso-kit button.hkc-research-source:hover .hkc-research-source-label { text-decoration: underline; }
+.harso-kit .hkc-research-source:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.harso-kit .hkc-research-source-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.harso-kit .hkc-research-source-label { font-size: var(--hk-text-chrome); font-weight: 500; line-height: 1.4; overflow-wrap: anywhere; }
+.harso-kit .hkc-research-source-site { font-size: var(--hk-text-meta); line-height: 1.4; color: var(--hk-secondary); }
+
+@media (pointer: coarse) { .harso-kit .hkc-research-source { min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .harso-kit .hkc-research * { transition: none; } }
+@media (forced-colors: active) {
+  .harso-kit .hkc-research-source:focus-visible { outline-color: Highlight; }
+  .harso-kit .hkc-research-stack .hkc-v6-brand { outline: 1px solid CanvasText; }
+}
