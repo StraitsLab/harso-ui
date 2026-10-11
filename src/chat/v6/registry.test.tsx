@@ -22,10 +22,8 @@ const draw = (document: HarsoOutputDocument, families?: V6Registry, props: Parti
 /** useId values differ between two renders; everything else must be identical. */
 const shape = (html: string) => html.replace(/\s(?:id|aria-labelledby|aria-controls)="[^"]*"/g, "");
 
-test("the shipped registry holds the 17 built templates and is frozen", () => {
-  // P01 money (stock-quote, bills-due, subscriptions) is added when its builder lands.
-  const money = ["stock-quote", "bills-due", "subscriptions"];
-  expect(Object.keys(V6_FAMILIES).sort()).toEqual(V6_TEMPLATES.filter(t => !money.includes(t)).sort());
+test("the shipped registry holds all 20 templates and is frozen", () => {
+  expect(Object.keys(V6_FAMILIES).sort()).toEqual([...V6_TEMPLATES].sort());
   expect(Object.isFrozen(V6_FAMILIES)).toBe(true);
 });
 
@@ -48,9 +46,9 @@ test.each([
 });
 
 test("a hinted document with no family registered draws exactly the generic card the unhinted one draws", () => {
-  const plain = draw(doc()).container.innerHTML;
+  const plain = draw(doc(), {}).container.innerHTML;
   cleanup();
-  const hinted = draw(doc("stock-quote")).container.innerHTML;
+  const hinted = draw(doc("stock-quote"), {}).container.innerHTML;
   expect(shape(hinted)).toBe(shape(plain));
   expect(screen.getByRole("region", { name: "Quote" }).textContent).toContain("Acme");
 });
@@ -58,7 +56,7 @@ test("a hinted document with no family registered draws exactly the generic card
 test("a template hint never changes the generic card, even with unrelated families registered", () => {
   const other = vi.fn(() => <p>other</p>);
   const families: V6Registry = { "weather-now": familyOf(other) };
-  const plain = draw(doc("stock-quote")).container.innerHTML;
+  const plain = draw(doc("stock-quote"), {}).container.innerHTML;
   cleanup();
   const hinted = draw(doc("stock-quote"), families).container.innerHTML;
   expect(shape(hinted)).toBe(shape(plain));
@@ -188,7 +186,8 @@ test("widget sizes come from the registered family for the document's template, 
   expect(sizes).toHaveBeenCalledWith("stock-quote");
   expect(harsoV6WidgetSizes(doc("weather-now"), families)).toEqual([]);
   expect(harsoV6WidgetSizes(doc(), families)).toEqual([]);
-  expect(harsoV6WidgetSizes(doc("stock-quote"))).toEqual([]);
+  expect(harsoV6WidgetSizes(doc("stock-quote"), {})).toEqual([]);
+  expect(harsoV6WidgetSizes(doc("stock-quote"))).toEqual(["small", "medium", "large"]); // the shipped money family
 });
 
 test("the generic card keeps its own region name and Details behaviour with a hint present", () => {
