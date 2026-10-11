@@ -129,9 +129,11 @@ function controlOf(routine: Routine, props: V6FamilyProps): ReactNode {
 
 const brandLabel = (domain: string) => { const name = domain.split(".")[0] ?? domain; return name.charAt(0).toUpperCase() + name.slice(1); };
 
-function Events({ events, upNext, asOf, props }: { events: Calendar[]; upNext: number; asOf?: Date; props: V6FamilyProps }) {
-  return <ol className="hkc-sched-list">
-    {events.map(({ row, start, color, where, prep, clock }, index) => {
+function Events({ events, upNext, asOf, props, tile }: { events: Calendar[]; upNext: number; asOf?: Date; props: V6FamilyProps; tile?: boolean }) {
+  return <ol className="hkc-sched-list" data-tile={tile || undefined}>
+    {events.map(({ row, start, color, where: full, prep: note, clock }, index) => {
+      // A small tile has room for the title and the first thing said about where; the rest is the card's.
+      const where = tile ? full?.split(" · ")[0] : full, prep = tile ? undefined : note;
       const next = index === upNext;
       const gap = next && asOf && start ? countdown(asOf, start) : undefined;
       const shown = start && startText(start);
@@ -216,7 +218,7 @@ function renderFamily(props: V6FamilyProps): ReactNode | undefined {
       {first && days.size === 1 && <span className="hkc-sched-date">{`${first.weekday} ${first.day} ${first.month}`}</span>}
       <span className="hkc-sched-zone">Times in {zone}</span>
     </p>}
-    <Events events={slice} upNext={upNextAt - from} asOf={asOf} props={props} />
+    <Events events={slice} upNext={upNextAt - from} asOf={asOf} props={props} tile={widgetSize === "small"} />
     {widget && hidden > 0 && <p className="hkc-sched-more">+{hidden} more</p>}
     {!widget && hidden > 0 && <Button variant="ghost" className="hkc-output-card-view-all" onClick={host.onViewAll}
       trailingIcon={<CaretRight size={14} weight="bold" />}>{document.more_label ?? `View all ${total}`}</Button>}
