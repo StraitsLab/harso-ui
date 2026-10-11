@@ -245,8 +245,8 @@ are real (they are illustrative), and how the app draws the card. Those need a r
 ## Contract source
 
 `schema/output-blocks.v1.json` is a byte-for-byte copy of weave-cloud `packages/contracts/src/schemas/output-blocks.v1.json`,
-read at `factory/output-tier3b` commit `e15f8638ff7af28d8838c50543ddf5fd8cb078b2`, sha256
-`95fd10567a218f309717cf343fdffc18a4ae8c2aab1ddf0de167ff38d61859f4`. The checker refuses a copy whose hash differs from
+read at `factory/wev-3300-v6-base` commit `88699f3a6191225b8d7c230708ebef2ec60c3230`, sha256
+`95f4d41d71537c0a7734dee3ff403f0530bb0527f06413506446a716171eaf54`. The checker refuses a copy whose hash differs from
 the one recorded in the examples file, so a schema change has to be re-copied on purpose. Where the contract cannot
 express an example cleanly (ordered steps, row link,
 share bar, a share total, chart caption, timed status steps, a failed block's retry), the workaround used above is the rule until the

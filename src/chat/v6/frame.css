@@ -1,0 +1,44 @@
+/* WEV-3303: the shared v6 frame. It sits on the generic card's surface (hkc-output-card) and adds only what a family
+   frame needs: a brand mark, one open target that reaches over the header or the card, and a trailing area that stays
+   clickable on top of it. Tokens only. */
+
+.harso-kit .hkc-v6-frame { position: relative; }
+.harso-kit .hkc-v6-header { align-items: center; }
+.harso-kit .hkc-v6-frame[data-open-area="header"] > .hkc-v6-header { position: relative; }
+
+/* The open target is the title's button, set as plain title text; its box is stretched by ::after to the nearest
+   positioned ancestor (the header, or the card), so the whole area opens while the markup stays one button. */
+.harso-kit .hkc-v6-open {
+  appearance: none; display: inline; max-width: 100%; margin: 0; padding: 0; border: 0; background: transparent;
+  font: inherit; color: inherit; text-align: start; cursor: pointer; border-radius: var(--hk-radius-control);
+}
+.harso-kit .hkc-v6-open::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.harso-kit .hkc-v6-open:focus-visible { outline: none; }
+.harso-kit .hkc-v6-open:focus-visible::after { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.harso-kit .hkc-v6-open-glyph { display: inline-block; margin-inline-start: var(--hk-space-1); vertical-align: -1px; color: var(--hk-faint); }
+
+/* Everything else a person can press stays above the stretched target. */
+.harso-kit .hkc-v6-trailing { position: relative; z-index: 1; flex: 0 0 auto; display: flex; align-items: center; gap: var(--hk-space-2); }
+.harso-kit .hkc-v6-frame[data-open-area="card"] :where(button, a[href], input, select, textarea, [role="button"]):not(.hkc-v6-open) { position: relative; z-index: 1; }
+/* An action row in the trailing area is a compact pair, not the card's full-width footer. The generic footer is an
+   inline-size container, which collapses to zero width inside a shrink-to-fit flex item, so it is switched off here. */
+.harso-kit .hkc-v6-trailing .hkc-output-card-actions { container: none; padding-top: 0; }
+.harso-kit .hkc-v6-trailing .hkc-output-card-actions::before { content: none; }
+.harso-kit .hkc-v6-trailing .hkc-output-card-actions-row { flex-direction: row; flex-wrap: nowrap; }
+.harso-kit .hkc-v6-trailing .hk-button.hkc-output-card-action { width: auto; min-height: 32px; max-width: 14rem; font-size: var(--hk-text-chrome); }
+@media (pointer: coarse) { .harso-kit .hkc-v6-trailing .hk-button.hkc-output-card-action { min-height: 44px; } }
+/* The generic card hangs its Details toggle into the header corner with a negative margin; here it sits in the flow. */
+.harso-kit .hkc-v6-trailing .hkc-output-card-details-toggle { margin: 0; }
+
+/* Brand mark: a rounded tile. The host's bundled mark fills it; a letter tile is the fallback and never claims a logo. */
+.harso-kit .hkc-v6-brand {
+  flex: 0 0 auto; display: inline-grid; place-items: center; width: 32px; height: 32px; overflow: hidden;
+  border-radius: var(--hk-radius-control); background: var(--hk-active-tint); color: var(--hk-ink);
+  font-size: var(--hk-text-chrome); font-weight: 600; line-height: 1;
+}
+.harso-kit .hkc-v6-brand > :where(svg, img) { width: 72%; height: 72%; object-fit: contain; }
+
+@media (forced-colors: active) {
+  .harso-kit .hkc-v6-brand { outline: 1px solid CanvasText; }
+  .harso-kit .hkc-v6-open:focus-visible::after { outline-color: Highlight; }
+}

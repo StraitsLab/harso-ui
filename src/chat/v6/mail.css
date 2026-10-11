@@ -1,0 +1,60 @@
+/* WEV-3322 (P06): mail cards. Tokens only, so light and dark follow the theme. No borders; the card allows none.
+   Unread is a dot plus bold sender; important is a status word plus an attention edge; urgency is a tone plus words. */
+
+.harso-kit .hkc-mail-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-4); }
+.harso-kit .hkc-mail-row { display: flex; align-items: flex-start; gap: var(--hk-space-3); min-width: 0; }
+.harso-kit .hkc-mail-row[data-compact] { gap: var(--hk-space-2); }
+.harso-kit .hkc-mail-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+
+/* Sender mark with the unread dot hanging in its own column, so a read row lines up with an unread one. */
+.harso-kit .hkc-mail-lead { flex: 0 0 auto; display: inline-flex; align-items: center; gap: var(--hk-space-1); }
+.harso-kit .hkc-mail-mark { display: inline-flex; }
+.harso-kit .hkc-mail-unread { flex: 0 0 auto; width: 8px; height: 8px; border-radius: var(--hk-radius-pill); background: var(--hk-accent); }
+.harso-kit .hkc-mail-row:not([data-unread]) .hkc-mail-lead:has(.hkc-mail-mark) { padding-inline-start: calc(8px + var(--hk-space-1)); }
+.harso-kit .hkc-mail-row[data-compact] .hkc-v6-brand { width: 24px; height: 24px; font-size: var(--hk-text-meta); }
+
+.harso-kit .hkc-mail-sender { display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--hk-space-2); row-gap: 2px; margin: 0; min-width: 0; }
+.harso-kit .hkc-mail-name, .harso-kit .hkc-mail-title { min-width: 0; margin: 0; font-size: var(--hk-text-body); font-weight: 500; line-height: 1.4; overflow-wrap: anywhere; }
+.harso-kit .hkc-mail-row[data-unread] .hkc-mail-name { font-weight: 700; }
+.harso-kit .hkc-mail-title { font-weight: 600; }
+.harso-kit .hkc-mail-secondary { margin: 0; font-size: var(--hk-text-chrome); line-height: 1.4; color: var(--hk-secondary); overflow-wrap: anywhere; }
+.harso-kit .hkc-mail-row[data-compact] .hkc-mail-secondary { font-size: var(--hk-text-meta); }
+
+/* Read and important: no dot, but the word and an edge in the attention tone. Unread and not important: dot and bold only. */
+.harso-kit .hkc-mail-row[data-important] { box-shadow: inset 2px 0 0 var(--hk-attention-mark); padding-inline-start: var(--hk-space-2); }
+
+.harso-kit .hkc-mail-dueline { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--hk-space-2); margin: 0; }
+.harso-kit .hkc-mail-due { font-size: var(--hk-text-chrome); font-weight: 600; line-height: 1.4; color: var(--hk-secondary); }
+.harso-kit .hkc-mail-due[data-urgency="urgent"] { color: var(--hk-negative); }
+.harso-kit .hkc-mail-due[data-urgency="soon"] { color: var(--hk-attention); }
+.harso-kit .hkc-mail-due-note { font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+
+.harso-kit .hkc-mail-missing, .harso-kit .hkc-mail-note { margin: var(--hk-space-3) 0 0; font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-mail-links { margin-top: var(--hk-space-3); }
+.harso-kit .hkc-mail-open { flex: 0 0 auto; align-self: center; max-width: 12rem; }
+
+/* Already passed: a closed disclosure, not a control that changes anything. */
+.harso-kit .hkc-mail-passed { margin-top: var(--hk-space-3); padding: var(--hk-space-2) var(--hk-space-3); border-radius: var(--hk-radius-control); background: var(--hk-active-tint); font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-mail-passed summary { cursor: pointer; color: var(--hk-secondary); border-radius: var(--hk-radius-control); }
+.harso-kit .hkc-mail-passed-body { margin-top: var(--hk-space-2); color: var(--hk-secondary); }
+.harso-kit .hkc-mail-passed-body p, .harso-kit .hkc-mail-passed-body ul { margin: 0; }
+
+/* The draft is whole: no clamp, no scroll box, long words wrap. */
+.harso-kit .hkc-mail-paper { padding: var(--hk-space-4); border-radius: var(--hk-radius-control); background: var(--hk-active-tint); font-size: var(--hk-text-body); line-height: 1.55; overflow-wrap: anywhere; }
+.harso-kit .hkc-mail-paper-block + .hkc-mail-paper-block { margin-top: var(--hk-space-3); }
+.harso-kit .hkc-mail-paper-line, .harso-kit .hkc-mail-paper-summary, .harso-kit .hkc-mail-paper-list { margin: 0; }
+.harso-kit .hkc-mail-paper-line + .hkc-mail-paper-line, .harso-kit .hkc-mail-paper-summary + *, .harso-kit .hkc-mail-paper-heading + *, .harso-kit .hkc-mail-paper-line + .hkc-mail-paper-list { margin-top: var(--hk-space-3); }
+.harso-kit .hkc-mail-paper-heading { margin: var(--hk-space-3) 0 0; font-size: var(--hk-text-body); font-weight: 600; }
+.harso-kit .hkc-mail-paper-block > :first-child { margin-top: 0; }
+.harso-kit .hkc-mail-paper-list { padding-inline-start: var(--hk-space-4); }
+
+.harso-kit .hkc-mail a:focus-visible, .harso-kit .hkc-mail button:focus-visible, .harso-kit .hkc-mail summary:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+
+@media (pointer: coarse) {
+  .harso-kit .hkc-mail-open, .harso-kit .hkc-mail-passed summary { min-height: 44px; display: inline-flex; align-items: center; }
+}
+
+@media (forced-colors: active) {
+  .harso-kit .hkc-mail-unread { background: Highlight; }
+  .harso-kit .hkc-mail-row[data-important] { box-shadow: inset 2px 0 0 CanvasText; }
+}

@@ -3,6 +3,8 @@
 import { Clock, Info, WarningCircle } from "@phosphor-icons/react";
 import { useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Badge, Button } from "../primitives";
+import type { HarsoOutputPhoto } from "./output-card-media";
+import type { V6ChartRange } from "./v6/types";
 import "./output-card-charts.css";
 
 /*
@@ -14,10 +16,18 @@ import "./output-card-charts.css";
  */
 
 export interface HarsoOutputSeries { label: string; values: (string | null)[] }
-export interface HarsoOutputChart { kind: "chart"; chart: "bar" | "line"; unit?: string; x_labels: string[]; series: HarsoOutputSeries[]; highlight_index?: number }
+export interface HarsoOutputChart {
+  kind: "chart"; chart: "bar" | "line"; unit?: string; x_labels: string[]; series: HarsoOutputSeries[]; highlight_index?: number;
+  /** C4: what the carried points cover. Only the range supplied; no series exists for any other. */
+  range?: V6ChartRange;
+  /** C4: an exact source decimal (a previous close), never rebuilt from a rounded percentage. */
+  baseline?: string;
+}
 export interface HarsoOutputVisualBlock { kind: "visual"; visual: HarsoOutputChart | { kind: string; [key: string]: unknown } }
-export interface HarsoOutputTableColumn { label: string; align?: "start" | "end" }
-export interface HarsoOutputTableRow { cells: string[]; status?: string; status_label?: string }
+/** C5: a column may carry its own photo (a product), independent of the other columns. */
+export interface HarsoOutputTableColumn { label: string; align?: "start" | "end"; thumbnail?: HarsoOutputPhoto }
+/** C5: `winner` is the index of the column the source found best for this row; never inferred from words like "Better". */
+export interface HarsoOutputTableRow { cells: string[]; status?: string; status_label?: string; winner?: number }
 export interface HarsoOutputTableBlock { kind: "table"; columns: HarsoOutputTableColumn[]; rows: HarsoOutputTableRow[]; totals?: { cells: string[] }; total_count?: number }
 
 /**
