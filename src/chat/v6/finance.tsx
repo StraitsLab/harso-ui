@@ -148,17 +148,20 @@ function renderFamily({ document, mode, widgetSize, host, renderBrand, onOpenDet
   if (!shape) return undefined;
 
   const size = widgetSize ?? "card";
+  // A medium widget has the room for one figure: the first number (a total) sits at the title's right, as in the approved tile.
+  const total = widgetSize === "medium" && template !== "stock-quote" ? shape.numbers?.[0] : undefined;
   const action = !widgetSize && shape.action && (readAction(shape.action.primary, host) || readAction(shape.action.secondary, host)) ? shape.action : undefined;
   // A widget is a glance: the whole answer, with its Details, opens from the title.
   const frameDocument = widgetSize ? { ...document, details: undefined } : document;
   let body: ReactNode;
 
   if (template === "stock-quote") {
-    const [price, ...rest] = shape.numbers!;
+    const [price, ...more] = shape.numbers!;
+    const rest = widgetSize === "large" || !widgetSize ? more : []; // a small or medium widget is a glance: price, change, chart
     const change = readChange(price.delta);
     const { chart } = shape;
     const baseline = chart?.baseline !== undefined && DECIMAL.test(chart.baseline) ? chart.baseline : undefined;
-    const quiet = size === "small";
+    const quiet = size === "small" || size === "medium"; // the large tile and the card carry the axis and the range note
     body = <div className="hkc-fin" data-size={size}>
       <p className="hkc-fin-quote">
         <strong className="hkc-fin-price">{price.value}</strong>
@@ -181,7 +184,7 @@ function renderFamily({ document, mode, widgetSize, host, renderBrand, onOpenDet
     const hidden = Math.max(0, rows.length - shown);
     const label = document.more_label?.trim() || `View all ${shape.total}`;
     body = <div className="hkc-fin" data-size={size}>
-      {shape.numbers && <Stats items={shape.numbers} />}
+      {shape.numbers && !widgetSize && <Stats items={shape.numbers} />}
       <Rows rows={rows.slice(0, shown)} verb={template === "bills-due" ? "Due" : "Renews"} renderBrand={renderBrand} />
       {widgetSize
         ? hidden > 0 && <p className="hkc-fin-note">{`+${hidden} more`}</p>
@@ -194,7 +197,7 @@ function renderFamily({ document, mode, widgetSize, host, renderBrand, onOpenDet
 
   return <V6Frame document={frameDocument} mode={mode} host={host} onOpenDetails={onOpenDetails} renderBrand={renderBrand}
     className={`hkc-fin-card hkc-fin-card--${size}`}
-    trailing={action && <HarsoOutputActionRow block={action} host={host} />}>
+    trailing={total ? <span className="hkc-fin-total"><strong>{total.value}</strong> {total.label}</span> : action && <HarsoOutputActionRow block={action} host={host} />}>
     {body}
   </V6Frame>;
 }

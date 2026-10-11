@@ -335,6 +335,9 @@ test("bill and subscription widgets show their rows in source order: small the f
   const medium = draw(subs(four), { widgetSize: "medium" });
   expect(rowIds(medium.root)).toEqual(["s-chat", "s-net", "s-dis"]);
   expect(medium.root.querySelector(".hkc-fin-note")!.textContent).toBe("+1 more");
+  // The total rides at the title's right in a medium widget; a small one has no room for it.
+  expect(within(medium.root.querySelector<HTMLElement>("[data-slot=trailing]")!).getByText("S$98.47")).toBeTruthy();
+  expect(small.root.querySelector(".hkc-fin-total")).toBeNull();
   expect(within(medium.root).queryByRole("button", { name: /View all/ })).toBeNull();
 });
 
