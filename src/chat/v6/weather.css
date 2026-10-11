@@ -1,0 +1,119 @@
+/* WEV-3320 (P04): the weather-now card. The sky is a gradient from the approved Apple Weather look (design/harso-v6/cards/travel.css);
+   a dark veil dims it in dark mode. Raw colours live only in the --hkc-sky / --hkc-wx custom properties, each checked against
+   the text on it in weather.test.tsx. Everything else is a kit token. No borders: hairlines are inset shadows. */
+
+.harso-kit .hkc-v6-weather {
+  --hkc-sky-veil: 0;
+  --hkc-sky-ink: #ffffff;
+  --hkc-sky-ink-soft: #e9f1f8;
+  --hkc-wx-rain: #e0f4ff;
+  --hkc-wx-sun: #b87700;
+  --hkc-wx-moon: #8a6d00;
+  --hkc-wx-bolt: #b87700;
+  --hkc-wx-drop: #2f6e9a;
+  --hkc-wx-bar-from: #c7d375;
+  --hkc-wx-bar-to: #fa9856;
+  position: relative; min-width: 0; border-radius: var(--hk-radius-card); overflow: hidden;
+  container-type: inline-size;
+}
+.harso-kit[data-mode="dark"] .hkc-v6-weather { --hkc-sky-veil: .22; }
+
+/* The sky. Four of the five are a two-stop gradient; the storm sky has the extra middle stop of the approved mock-up. */
+.harso-kit .hkc-v6-weather[data-sky="clear-day"] { --hkc-sky-clear-day-from: #1768b0; --hkc-sky-clear-day-to: #2063a6; --hkc-sky-a: var(--hkc-sky-clear-day-from); --hkc-sky-b: var(--hkc-sky-clear-day-from); --hkc-sky-c: var(--hkc-sky-clear-day-to); }
+.harso-kit .hkc-v6-weather[data-sky="clear-night"] { --hkc-sky-clear-night-from: #10203f; --hkc-sky-clear-night-to: #263760; --hkc-sky-a: var(--hkc-sky-clear-night-from); --hkc-sky-b: var(--hkc-sky-clear-night-from); --hkc-sky-c: var(--hkc-sky-clear-night-to); }
+.harso-kit .hkc-v6-weather[data-sky="cloudy"] { --hkc-sky-cloudy-from: #566e7e; --hkc-sky-cloudy-to: #4a5e6b; --hkc-sky-a: var(--hkc-sky-cloudy-from); --hkc-sky-b: var(--hkc-sky-cloudy-from); --hkc-sky-c: var(--hkc-sky-cloudy-to); }
+.harso-kit .hkc-v6-weather[data-sky="rain"] { --hkc-sky-rain-from: #4a667e; --hkc-sky-rain-to: #34495d; --hkc-sky-a: var(--hkc-sky-rain-from); --hkc-sky-b: var(--hkc-sky-rain-from); --hkc-sky-c: var(--hkc-sky-rain-to); }
+.harso-kit .hkc-v6-weather[data-sky="storm"] { --hkc-sky-storm-from: #2a6a96; --hkc-sky-storm-mid: #4a6980; --hkc-sky-storm-to: #3e4a58; --hkc-sky-a: var(--hkc-sky-storm-from); --hkc-sky-b: var(--hkc-sky-storm-mid); --hkc-sky-c: var(--hkc-sky-storm-to); }
+
+.harso-kit .hkc-v6-weather[data-sky] {
+  --hk-ink: var(--hkc-sky-ink); --hk-secondary: var(--hkc-sky-ink-soft); --hk-tertiary: var(--hkc-sky-ink-soft); --hk-faint: var(--hkc-sky-ink-soft);
+  --hkc-wx-sun: #ffd76a; --hkc-wx-moon: #fff1bd; --hkc-wx-bolt: #ffce53; --hkc-wx-drop: #92d3ff; --hkc-wx-cloud: #f4f8ff;
+  color: var(--hkc-sky-ink);
+  background-image:
+    linear-gradient(color-mix(in srgb, black calc(var(--hkc-sky-veil) * 100%), transparent), color-mix(in srgb, black calc(var(--hkc-sky-veil) * 100%), transparent)),
+    linear-gradient(155deg, var(--hkc-sky-a), var(--hkc-sky-b) 45%, var(--hkc-sky-c));
+}
+.harso-kit .hkc-v6-weather[data-sky] .hkc-v6-weather-frame { background: transparent; }
+.harso-kit .hkc-v6-weather:not([data-sky]) { --hkc-wx-cloud: var(--hk-secondary); }
+.harso-kit .hkc-v6-weather .hkc-v6-weather-frame { gap: var(--hk-space-3); }
+
+/* Hero: place and temperature on the left, condition on the right. */
+.harso-kit .hkc-v6-weather-hero { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--hk-space-3); }
+.harso-kit .hkc-v6-weather-hero p { margin: 0; }
+.harso-kit .hkc-v6-weather-temp { font-size: 3.5rem; line-height: 1; font-weight: 200; letter-spacing: -.04em; }
+.harso-kit .hkc-v6-weather-sky { display: flex; flex-direction: column; align-items: flex-end; gap: var(--hk-space-1); text-align: end; font-size: var(--hk-text-meta); }
+.harso-kit .hkc-v6-weather-sky [data-slot="condition"] { font-size: var(--hk-text-chrome); font-weight: 500; }
+.harso-kit .hkc-v6-weather-hero-glyph { width: 39px; height: 42px; }
+.harso-kit .hkc-v6-weather-note { margin: 0; font-size: var(--hk-text-chrome); color: var(--hk-secondary); }
+
+/* Glyphs */
+.harso-kit .hkc-v6-weather-glyph { width: 25px; height: 27px; flex: none; display: block; }
+.harso-kit .hkc-wx-cloud { fill: var(--hkc-wx-cloud); }
+.harso-kit .hkc-wx-sun { fill: var(--hkc-wx-sun); stroke: var(--hkc-wx-sun); }
+.harso-kit .hkc-wx-moon { fill: var(--hkc-wx-moon); }
+.harso-kit .hkc-wx-bolt { fill: var(--hkc-wx-bolt); }
+.harso-kit .hkc-wx-drop { fill: none; stroke: var(--hkc-wx-drop); }
+
+/* Hours: one column per chart point. A card scrolls sideways when it is narrow; a widget shows its first five. */
+.harso-kit .hkc-v6-weather-hours { overflow-x: auto; padding-block: var(--hk-space-3) var(--hk-space-1); box-shadow: inset 0 1px 0 color-mix(in srgb, currentColor 22%, transparent); border-radius: var(--hk-radius-control); }
+.harso-kit .hkc-v6-weather-hours:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.harso-kit .hkc-v6-weather-hours ol { display: flex; justify-content: space-between; gap: var(--hk-space-2); margin: 0; padding: 0; list-style: none; }
+.harso-kit .hkc-v6-weather-hours li { display: flex; flex-direction: column; align-items: center; gap: var(--hk-space-1); min-width: 2.25rem; flex: 1 0 auto; font-size: var(--hk-text-meta); }
+.harso-kit .hkc-v6-weather-hours [data-slot="temp"] { font-size: var(--hk-text-chrome); font-weight: 500; }
+.harso-kit .hkc-v6-weather-rain { font-size: var(--hk-text-meta); font-weight: 600; color: var(--hkc-wx-rain); }
+.harso-kit .hkc-v6-weather:not([data-sky]) .hkc-v6-weather-rain { color: var(--hk-accent); }
+
+/* Days: label, glyph, low, range bar, high. The bar sits in a lane 6px shorter than the track, so a bar of one value
+   (its minimum width) stays inside the track at either end. shortcut: the widest bar ends 6px short of the track end. */
+.harso-kit .hkc-v6-weather-days { display: flex; flex-direction: column; margin: 0; padding: var(--hk-space-1) 0 0; list-style: none; box-shadow: inset 0 1px 0 color-mix(in srgb, currentColor 22%, transparent); }
+.harso-kit .hkc-v6-weather-days li { display: grid; grid-template-columns: 2.75rem 1.75rem 2rem 1fr 2rem; align-items: center; gap: var(--hk-space-2); min-height: 34px; font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-v6-weather-days b { font-weight: 500; }
+.harso-kit .hkc-v6-weather-days [data-slot="low"] { opacity: .75; text-align: end; }
+.harso-kit .hkc-v6-weather-days [data-slot="high"] { text-align: end; }
+.harso-kit .hkc-v6-weather-days .hkc-v6-weather-glyph { width: 21px; height: 22px; }
+.harso-kit .hkc-v6-weather-track { display: block; position: relative; height: 5px; border-radius: var(--hk-radius-control); background: color-mix(in srgb, black 30%, transparent); }
+.harso-kit .hkc-v6-weather-lane { position: absolute; inset-block: 0; inset-inline: 0 6px; display: block; }
+.harso-kit .hkc-v6-weather-bar { position: absolute; top: 0; height: 5px; min-width: 6px; border-radius: var(--hk-radius-control); background: linear-gradient(90deg, var(--hkc-wx-bar-from), var(--hkc-wx-bar-to)); }
+.harso-kit .hkc-v6-weather:not([data-sky]) .hkc-v6-weather-track { background: var(--hk-hover); }
+
+/* Widgets sit in a fixed box (158pt small and medium, 354pt large), so nothing scrolls and the header is folded into one
+   line: the title and the snapshot time share a row, and the subtitle stays for screen readers. The small widget keeps the
+   subtitle, since it has no room for the condition words. */
+.harso-kit .hkc-v6-weather[data-widget] { height: 100%; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-frame { height: 100%; box-sizing: border-box; padding: var(--hk-space-3); gap: var(--hk-space-2); border-radius: inherit; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-output-card-title { font-size: var(--hk-text-chrome); line-height: 1.3; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-output-card-heading { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: var(--hk-space-2); row-gap: 0; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-output-card-meta { font-size: 10px; line-height: 1.3; }
+.harso-kit .hkc-v6-weather[data-widget]:not([data-widget="small"]) .hkc-output-card-subtitle { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-output-card-subtitle { flex-basis: 100%; font-size: var(--hk-text-meta); line-height: 1.3; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-temp { font-size: 2.25rem; letter-spacing: -.03em; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hero-glyph { width: 29px; height: 31px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-sky { font-size: 10px; gap: 0; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-sky [data-slot="condition"] { font-size: 10px; font-weight: 400; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours { overflow: hidden; padding-block: var(--hk-space-2) 0; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours ol { gap: var(--hk-space-1); }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours li { min-width: 0; gap: 1px; font-size: 10px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours li .hkc-v6-weather-glyph { width: 19px; height: 20px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours [data-slot="temp"] { font-size: 13px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-rain { font-size: 9px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-days li { min-height: 28px; font-size: var(--hk-text-meta); }
+/* Small: the glyph sits at the top right, over the empty corner, and the condition words give way to it. */
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-v6-weather-hero { flex-direction: column; gap: 0; position: static; }
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-v6-weather-sky { align-items: flex-start; text-align: start; position: static; }
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-output-card-heading { padding-inline-end: 34px; }
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-v6-weather-hero-glyph { position: absolute; top: var(--hk-space-3); right: var(--hk-space-3); }
+.harso-kit .hkc-v6-weather[data-widget="small"] [data-slot="condition"] { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (pointer: coarse) {
+  .harso-kit .hkc-v6-weather-hours li { min-width: 44px; }
+}
+
+@media (forced-colors: active) {
+  .harso-kit .hkc-v6-weather { forced-color-adjust: none; background: Canvas; color: CanvasText; outline: 1px solid CanvasText; }
+  .harso-kit .hkc-v6-weather[data-sky] { background-image: none; }
+  .harso-kit .hkc-v6-weather .hkc-v6-weather-rain { color: CanvasText; }
+  .harso-kit .hkc-v6-weather .hkc-wx-cloud, .harso-kit .hkc-v6-weather .hkc-wx-moon, .harso-kit .hkc-v6-weather .hkc-wx-bolt, .harso-kit .hkc-v6-weather .hkc-wx-sun { fill: CanvasText; stroke: CanvasText; }
+  .harso-kit .hkc-v6-weather .hkc-wx-drop { stroke: CanvasText; }
+  .harso-kit .hkc-v6-weather-bar { background: Highlight; }
+  .harso-kit .hkc-v6-weather-track { background: GrayText; }
+}
