@@ -1,0 +1,30 @@
+/* P9 local controls: header sort on a table and section tabs. Tokens only; the card allows no borders. */
+
+/* The header is a real button: Enter and Space sort, and the caret says which way. The table's own header look is kept. */
+.harso-kit .hkc-local-sort {
+  display: inline-flex; align-items: center; gap: var(--hk-space-1); margin: 0; padding: 0; border: 0;
+  border-radius: var(--hk-radius-control); background: none; color: inherit; font: inherit; cursor: pointer;
+}
+.harso-kit .hkc-local-sort svg { width: 12px; height: 12px; flex: none; color: var(--hk-tertiary); }
+.harso-kit .hkc-local-sort:hover, .harso-kit [aria-sort] .hkc-local-sort, .harso-kit .hkc-local-sort[data-sorted] { color: var(--hk-ink); }
+.harso-kit [aria-sort] .hkc-local-sort svg, .harso-kit .hkc-local-sort[data-sorted] svg { color: var(--hk-ink); }
+.harso-kit .hkc-local-sort:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+
+/* A table too narrow for its columns is drawn as items, which have no header row: the same sorts sit above them. */
+.harso-kit .hkc-local-sortbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--hk-space-1) var(--hk-space-4);
+  margin: 0 0 var(--hk-space-3); font-size: var(--hk-text-meta); line-height: 16px; color: var(--hk-secondary);
+}
+
+/* Section tabs: the kit pill tabs, with the panel set close under them (the kit panel default is a page-sized gap). */
+.harso-kit .hkc-section-tabs .hk-tab-list { max-width: 100%; }
+.harso-kit .hkc-section-tabs .hk-tab-panel { padding: var(--hk-space-3) 0 0; }
+
+@media (pointer: coarse) {
+  .harso-kit .hkc-local-sort, .harso-kit .hkc-section-tabs .hk-tab--pill { min-height: 44px; }
+}
+
+@media (forced-colors: active) {
+  .harso-kit .hkc-local-sort svg { color: ButtonText; }
+  .harso-kit .hkc-section-tabs .hk-tab--pill[aria-selected="true"] { background: Highlight; color: HighlightText; forced-color-adjust: none; }
+}
