@@ -52,7 +52,7 @@ test("canonical decimals compare exactly, not as floats", () => {
 test("only the contract's decimal shape counts as a number; everything else is text", () => {
   // 16 whole digits, 7 fraction digits, a bare dot, a plus sign, an exponent, a thousands comma, a unit: all text,
   // so each sorts after a real number however large that number is.
-  for (const text of ["1234567890123456", "1.1234567", "5.", ".5", "+5", "1e3", "1,000", "5%", " 5"]) {
+  for (const text of ["1234567890123456", "1.1234567", "5.", ".5", "+5", "1e3", "1,000", "5%", " 5", "5\n", "٣"]) {
     expect(compareCells(text, "999999999999999")).toBe(1);
     expect(compareCells("999999999999999", text)).toBe(-1);
   }
