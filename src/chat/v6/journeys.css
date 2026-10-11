@@ -1,0 +1,100 @@
+/* WEV-3319 (P03): delivery, flight status and flight options. Tokens only, so light and dark follow the theme; no borders
+   (the card allows none). Colour is never the only signal: the condition is always a word beside it. */
+
+.harso-kit .hkc-journey-body { display: flex; flex-direction: column; gap: var(--hk-space-3); min-width: 0; }
+.harso-kit .hkc-journey :where(p, ol, ul, dl, dd) { margin: 0; padding: 0; }
+.harso-kit .hkc-journey :where(ol, ul) { list-style: none; }
+.harso-kit .hkc-journey-note { color: var(--hk-secondary); font-size: var(--hk-text-meta); overflow-wrap: anywhere; }
+
+/* status line: flight number, the source's label, then the condition word */
+.harso-kit .hkc-journey-status { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--hk-space-1) var(--hk-space-3); font-size: var(--hk-text-body); min-width: 0; }
+.harso-kit .hkc-journey-status b { font-weight: 600; overflow-wrap: anywhere; }
+.harso-kit .hkc-journey-number { color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-journey-condition { margin-inline-start: auto; font-size: var(--hk-text-chrome); font-weight: 600; }
+.harso-kit .hkc-journey-condition[data-condition="on_time"] { color: var(--hk-positive); }
+.harso-kit .hkc-journey-condition[data-condition="delayed"] { color: var(--hk-attention); }
+
+/* the one bar */
+.harso-kit .hkc-journey-bar { position: relative; display: block; width: 100%; height: 6px; border-radius: var(--hk-radius-pill); overflow: hidden; background: var(--hk-line); }
+.harso-kit .hkc-journey-bar > span { display: block; height: 100%; border-radius: inherit; background: var(--hk-accent); }
+.harso-kit .hkc-journey-bar[data-condition="on_time"] > span { background: var(--hk-positive); }
+.harso-kit .hkc-journey-bar[data-condition="delayed"] > span { background: var(--hk-attention); }
+
+/* stages */
+.harso-kit .hkc-journey-stages { display: flex; justify-content: space-between; gap: var(--hk-space-2); color: var(--hk-secondary); font-size: var(--hk-text-meta); }
+.harso-kit .hkc-journey-stages li { display: flex; flex: 1 1 0; flex-direction: column; gap: var(--hk-space-1); min-width: 0; overflow-wrap: anywhere; }
+.harso-kit .hkc-journey-stages li:last-child { align-items: flex-end; text-align: end; }
+.harso-kit .hkc-journey-stages i { display: block; width: 6px; height: 6px; border-radius: var(--hk-radius-pill); background: var(--hk-line-strong); }
+.harso-kit .hkc-journey-stages li[data-state="done"] i, .harso-kit .hkc-journey-stages li[data-state="current"] i { background: var(--hk-ink); }
+.harso-kit .hkc-journey-stages li[data-state="current"] { color: var(--hk-ink); font-weight: 600; }
+
+/* route */
+.harso-kit .hkc-journey-route { display: flex; align-items: center; gap: var(--hk-space-4); }
+.harso-kit .hkc-journey-route > div:not(.hkc-journey-track) { display: flex; flex-direction: column; flex: 0 1 auto; min-width: 0; }
+.harso-kit .hkc-journey-route > div:last-child { align-items: flex-end; text-align: end; }
+.harso-kit .hkc-journey-route b { font-size: var(--hk-text-display); font-weight: 600; line-height: 1; }
+.harso-kit .hkc-journey-route small { margin-top: var(--hk-space-1); color: var(--hk-secondary); font-size: var(--hk-text-meta); overflow-wrap: anywhere; }
+.harso-kit .hkc-journey-track { flex: 1 1 auto; min-width: var(--hk-space-8); }
+.harso-kit .hkc-journey-line { display: block; height: 2px; border-radius: var(--hk-radius-pill); background: var(--hk-line-strong); }
+
+/* times and facts */
+.harso-kit .hkc-journey-times { display: flex; justify-content: space-between; gap: var(--hk-space-4); }
+.harso-kit .hkc-journey-times > div { display: flex; flex-direction: column; min-width: 0; }
+.harso-kit .hkc-journey-times > div:last-child { align-items: flex-end; text-align: end; }
+.harso-kit .hkc-journey-times strong { font-size: var(--hk-text-heading); font-weight: 600; font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-journey-times sup, .harso-kit .hkc-journey-arrives sup { margin-inline-start: 2px; font-size: var(--hk-text-xs); font-weight: 600; color: var(--hk-attention); }
+.harso-kit .hkc-journey-times s, .harso-kit .hkc-journey-facts s { color: var(--hk-tertiary); font-size: var(--hk-text-meta); }
+.harso-kit .hkc-journey-times span { color: var(--hk-secondary); font-size: var(--hk-text-meta); }
+.harso-kit .hkc-journey-remaining { font-size: var(--hk-text-chrome); font-weight: 600; color: var(--hk-secondary); }
+.harso-kit .hkc-journey-facts { display: flex; flex-wrap: wrap; gap: var(--hk-space-1) var(--hk-space-4); font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-journey-facts > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--hk-space-1); }
+.harso-kit .hkc-journey-facts dt { color: var(--hk-secondary); }
+.harso-kit .hkc-journey-facts dd { font-weight: 600; }
+
+/* the source's own timeline, in the full answer */
+.harso-kit .hkc-journey-timeline { display: flex; flex-direction: column; gap: var(--hk-space-3); }
+.harso-kit .hkc-journey-timeline li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 var(--hk-space-3); }
+.harso-kit .hkc-journey-timeline b { font-weight: 600; }
+.harso-kit .hkc-journey-timeline .hkc-journey-note { grid-column: 1; }
+.harso-kit .hkc-journey-when { grid-column: 2; grid-row: 1; color: var(--hk-secondary); font-size: var(--hk-text-chrome); font-variant-numeric: tabular-nums; }
+
+/* flight options: each row is one booking button (or a plain row when the host cannot open links) */
+.harso-kit .hkc-journey-options { display: flex; flex-direction: column; gap: var(--hk-space-1); }
+.harso-kit .hkc-journey-option {
+  appearance: none; display: flex; align-items: center; gap: var(--hk-space-3); width: 100%; min-width: 0; margin: 0; padding: var(--hk-space-2) 0;
+  border: 0; border-radius: var(--hk-radius-row); background: transparent; color: inherit; font: inherit; text-align: start;
+}
+.harso-kit button.hkc-journey-option { cursor: pointer; }
+.harso-kit button.hkc-journey-option:hover { background: var(--hk-hover); }
+.harso-kit .hkc-journey-option:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.harso-kit .hkc-journey-option-main { display: flex; flex: 1 1 auto; flex-direction: column; gap: 2px; min-width: 0; }
+.harso-kit .hkc-journey-option-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--hk-space-2); }
+.harso-kit .hkc-journey-airline { font-weight: 600; overflow-wrap: anywhere; }
+.harso-kit .hkc-journey-pick { padding: 1px var(--hk-space-2); border-radius: var(--hk-radius-pill); background: var(--hk-active-tint); font-size: var(--hk-text-xs); font-weight: 600; }
+.harso-kit .hkc-journey-arrives { color: var(--hk-secondary); font-size: var(--hk-text-meta); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-journey-price { flex: none; font-size: var(--hk-text-body); font-weight: 600; font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-journey-go { flex: none; color: var(--hk-faint); }
+.harso-kit .hkc-journey-more { color: var(--hk-secondary); font-size: var(--hk-text-meta); }
+@media (pointer: coarse) { .harso-kit .hkc-journey-option { min-height: 44px; } }
+
+/* Home widgets: one open target stretched over the tile, no other control */
+.harso-kit .hkc-journey-widget { position: relative; gap: var(--hk-space-2); padding: var(--hk-space-3); overflow: hidden; }
+.harso-kit .hkc-journey-widget-head { display: flex; align-items: center; gap: var(--hk-space-2); min-width: 0; }
+.harso-kit .hkc-journey-widget-title { margin: 0; min-width: 0; font-size: var(--hk-text-chrome); font-weight: 600; }
+.harso-kit .hkc-journey-widget-open {
+  appearance: none; display: block; max-width: 100%; margin: 0; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: start; cursor: pointer;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: var(--hk-radius-control);
+}
+.harso-kit .hkc-journey-widget-open::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.harso-kit .hkc-journey-widget-open:focus-visible { outline: none; }
+.harso-kit .hkc-journey-widget-open:focus-visible::after { outline: 2px solid var(--hk-accent); outline-offset: -2px; }
+.harso-kit .hkc-journey-widget .hkc-journey-glance { color: var(--hk-secondary); font-size: var(--hk-text-meta); margin: 0; }
+.harso-kit .hkc-journey-widget .hkc-journey-note { margin: 0; }
+.harso-kit .hkc-journey-widget .hkc-journey-status, .harso-kit .hkc-journey-widget .hkc-journey-stages { margin: 0; }
+.harso-kit .hkc-journey-widget[data-size="small"] .hkc-journey-route b { font-size: var(--hk-text-heading); }
+
+@media (forced-colors: active) {
+  .harso-kit .hkc-journey-bar { outline: 1px solid CanvasText; }
+  .harso-kit .hkc-journey-bar > span { background: Highlight; }
+  .harso-kit .hkc-journey-widget-open:focus-visible::after, .harso-kit .hkc-journey-option:focus-visible { outline-color: Highlight; }
+}
