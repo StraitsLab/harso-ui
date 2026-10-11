@@ -53,6 +53,9 @@ export function mailDueUrgency(dueAt: unknown, asOf: unknown): MailUrgency | und
   const ahead = due - base;
   return ahead < 0 ? undefined : ahead <= 24 * HOUR ? "urgent" : ahead <= 72 * HOUR ? "soon" : undefined;
 }
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/** "Due 26 Sep 10:00 UTC": fixed words in UTC, so the iPhone, Mac and web say the same and no locale or zone decides. */
+const dueWords = (utc: string) => `Due ${Number(utc.slice(8, 10))} ${MONTHS[Number(utc.slice(5, 7)) - 1]} ${utc.slice(11, 16)} UTC`;
 const URGENCY_NOTE: Record<MailUrgency, string> = { urgent: "Due within 24 hours of the snapshot", soon: "Due within 72 hours of the snapshot" };
 
 // ---- reading the document ----
@@ -104,7 +107,7 @@ function RowLink({ row, host }: { row: HarsoOutputRow; host: V6Host }) {
 
 function Due({ row, urgency }: { row: HarsoOutputRow; urgency?: MailUrgency }) {
   const exact = utcMs(row.due_at) === undefined ? undefined : row.due_at;
-  const words = row.trailing ?? (exact ? `Due ${new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(exact))}` : undefined);
+  const words = row.trailing ?? (exact ? dueWords(exact) : undefined);
   if (!words) return null;
   return <p className="hkc-mail-dueline">
     <time className="hkc-mail-due" dateTime={exact} data-urgency={urgency}>{words}</time>
