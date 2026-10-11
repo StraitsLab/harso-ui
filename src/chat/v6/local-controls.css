@@ -16,9 +16,11 @@
   margin: 0 0 var(--hk-space-3); font-size: var(--hk-text-meta); line-height: 16px; color: var(--hk-secondary);
 }
 
-/* Section tabs: the kit pill tabs, with the panel set close under them (the kit panel default is a page-sized gap). */
+/* Section tabs: the kit pill tabs, with the panel set close under them (the kit panel default is a page-sized gap).
+   The chosen tab wears the accent tint, as the approved V6 day tabs do, so it reads without relying on weight alone. */
 .harso-kit .hkc-section-tabs .hk-tab-list { max-width: 100%; }
 .harso-kit .hkc-section-tabs .hk-tab-panel { padding: var(--hk-space-3) 0 0; }
+.harso-kit .hkc-section-tabs .hk-tab--pill[aria-selected="true"] { background: var(--hk-accent-soft); color: var(--hk-accent); box-shadow: none; }
 
 @media (pointer: coarse) {
   .harso-kit .hkc-local-sort, .harso-kit .hkc-section-tabs .hk-tab--pill { min-height: 44px; }
