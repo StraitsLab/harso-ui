@@ -150,7 +150,7 @@ test("with no trailing text an exact due_at is shown as a time; a date-only or b
     row({ label: "Broken", trailing: undefined, due_at: "2026-02-30T07:30Z" })
   ]));
   const [exact, dateOnly, broken] = marks(card!);
-  expect(exact.querySelector("time")!.textContent).toMatch(/^Due /);
+  expect(exact.querySelector("time")!.textContent).toBe("Due 11 Oct 07:30 UTC");
   expect(exact.querySelector("time")!.getAttribute("datetime")).toBe("2026-10-11T07:30Z");
   expect(dateOnly.querySelector("time")).toBeNull();
   expect(broken.querySelector("time")).toBeNull();
