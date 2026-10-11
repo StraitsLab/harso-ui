@@ -4,6 +4,7 @@ import * as chat from "../index";
 import type { HarsoOutputDocument, HarsoOutputRow } from "../output-card";
 import type { HarsoOutputStatusBlock } from "../output-card-media";
 import type { V6Flight, V6Weather } from "./types";
+import { V6_FAMILIES as V6_FAMILIES_FOR_TEST } from "./registry";
 
 // WEV-3303: C0-C10 are typed (checked by `npm run typecheck`: every @ts-expect-error below must still be an error) and
 // are optional, so an old document is unchanged and a new one draws the same generic card until a family handles it.
@@ -140,8 +141,8 @@ test("the page-watch subject draws like the other subjects", () => {
 
 test("the v6 foundation is exported from the chat index under Harso names", () => {
   expect(chat.HARSO_V6_TEMPLATES).toHaveLength(20);
-  expect(Object.keys(chat.HARSO_V6_FAMILIES)).toEqual([]);
-  expect(chat.harsoV6WidgetSizes(rich)).toEqual([]);
+  expect(chat.HARSO_V6_FAMILIES).toBe(V6_FAMILIES_FOR_TEST);
+  expect(chat.harsoV6WidgetSizes(rich)).toEqual(V6_FAMILIES_FOR_TEST["flight-status"]!.supportedWidgetSizes("flight-status"));
   for (const name of ["HarsoV6Frame", "HarsoV6Brand", "HarsoOutputActionRow"] as const) expect(typeof chat[name]).toBe("function");
 });
 

@@ -22,8 +22,10 @@ const draw = (document: HarsoOutputDocument, families?: V6Registry, props: Parti
 /** useId values differ between two renders; everything else must be identical. */
 const shape = (html: string) => html.replace(/\s(?:id|aria-labelledby|aria-controls)="[^"]*"/g, "");
 
-test("the shipped registry is empty and frozen: a populated one is the Lead's later edit", () => {
-  expect(Object.keys(V6_FAMILIES)).toEqual([]);
+test("the shipped registry holds the 17 built templates and is frozen", () => {
+  // P01 money (stock-quote, bills-due, subscriptions) is added when its builder lands.
+  const money = ["stock-quote", "bills-due", "subscriptions"];
+  expect(Object.keys(V6_FAMILIES).sort()).toEqual(V6_TEMPLATES.filter(t => !money.includes(t)).sort());
   expect(Object.isFrozen(V6_FAMILIES)).toBe(true);
 });
 

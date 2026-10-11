@@ -1,13 +1,27 @@
 import { Component, type ReactNode } from "react";
 import { V6_TEMPLATES, type V6Family, type V6FamilyProps, type V6Registry, type V6Template, type WidgetSize } from "./types";
 import type { HarsoOutputDocument } from "../output-card";
+import { family as commerce } from "./commerce";
+import { family as journeys } from "./journeys";
+import { family as weather } from "./weather";
+import { family as places } from "./places";
+import { family as mail } from "./mail";
+import { family as schedule } from "./schedule";
+import { family as research } from "./research";
 
 /*
- * WEV-3303: the shipped family registry is empty, and this file imports no family. The Lead adds one line per
- * finished family here and nowhere else; a family never registers itself. Dispatch is by `document.template` only,
+ * WEV-3303: the Lead adds one line per finished family here and nowhere else; a family never registers itself. Dispatch is by `document.template` only,
  * never by a title or by which blocks happen to be present.
  */
-export const V6_FAMILIES: V6Registry = Object.freeze({});
+export const V6_FAMILIES: V6Registry = Object.freeze({
+  "price-watch": commerce, "compare-products": commerce, "product-shortlist": commerce,
+  "delivery-tracking": journeys, "flight-status": journeys, "flight-options": journeys,
+  "weather-now": weather,
+  "trip-itinerary": places, "places-nearby": places,
+  "inbox-brief": mail, "deadlines-from-mail": mail, "reply-draft": mail,
+  "day-agenda": schedule, "meeting-brief": schedule, "recurring-reminder": schedule, "reply-watch": schedule,
+  "research-brief": research,
+});
 
 /** The document's template hint if it is one of the 20 names; anything else (absent, unknown, a variant name) is none. */
 export function v6TemplateOf(document: Pick<HarsoOutputDocument, "template">): V6Template | undefined {
