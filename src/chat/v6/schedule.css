@@ -1,0 +1,67 @@
+/* WEV-3323 (P7): calendar and routine cards. Surface and header are the shared v6 frame; this file adds the event rows.
+   Calendar colours are fixed per calendar_color (a fact of the event), never per position. Light and dark values below;
+   everything else is a kit token. */
+
+.harso-kit .hkc-sched {
+  --hkc-sched-blue: #2b6bd6; --hkc-sched-green: #2a8f4e; --hkc-sched-orange: #c76a12;
+  --hkc-sched-red: #d23b3b; --hkc-sched-purple: #8348d1; --hkc-sched-gray: #737982;
+}
+.harso-kit[data-mode="dark"] .hkc-sched {
+  --hkc-sched-blue: #6ea8ff; --hkc-sched-green: #5fcf86; --hkc-sched-orange: #f2a14a;
+  --hkc-sched-red: #ff7a72; --hkc-sched-purple: #b58cff; --hkc-sched-gray: #9aa0a8;
+}
+.harso-kit .hkc-sched-event[data-color="blue"] { --hkc-sched-color: var(--hkc-sched-blue); }
+.harso-kit .hkc-sched-event[data-color="green"] { --hkc-sched-color: var(--hkc-sched-green); }
+.harso-kit .hkc-sched-event[data-color="orange"] { --hkc-sched-color: var(--hkc-sched-orange); }
+.harso-kit .hkc-sched-event[data-color="red"] { --hkc-sched-color: var(--hkc-sched-red); }
+.harso-kit .hkc-sched-event[data-color="purple"] { --hkc-sched-color: var(--hkc-sched-purple); }
+.harso-kit .hkc-sched-event[data-color="gray"] { --hkc-sched-color: var(--hkc-sched-gray); }
+
+.harso-kit .hkc-sched-body { display: flex; flex-direction: column; gap: var(--hk-space-3); min-width: 0; }
+.harso-kit .hkc-sched-note { display: flex; flex-wrap: wrap; gap: var(--hk-space-2); margin: 0; font-size: var(--hk-text-chrome); color: var(--hk-secondary); }
+.harso-kit .hkc-sched-date { font-weight: 600; color: var(--hk-attention); text-transform: uppercase; letter-spacing: .02em; }
+.harso-kit .hkc-sched-zone { font-variant-numeric: tabular-nums; }
+
+.harso-kit .hkc-sched-list, .harso-kit .hkc-sched-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-2); }
+
+.harso-kit .hkc-sched-event {
+  --hkc-sched-color: var(--hk-line-strong);
+  display: grid; grid-template-columns: 3.25rem minmax(0, 1fr) auto; align-items: start; column-gap: var(--hk-space-3);
+  padding: var(--hk-space-2) var(--hk-space-3); min-width: 0;
+  border-inline-start: 4px solid var(--hkc-sched-color); border-radius: var(--hk-radius-row);
+  background: var(--hk-panel);
+}
+.harso-kit .hkc-sched-event[data-color] { background: color-mix(in srgb, var(--hkc-sched-color) 11%, transparent); }
+.harso-kit .hkc-sched-when { font-size: var(--hk-text-chrome); line-height: 20px; color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-sched-start { font-weight: 500; color: var(--hk-ink); }
+.harso-kit .hkc-sched-main { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.harso-kit .hkc-sched-title { margin: 0; font-size: var(--hk-text-body); line-height: 20px; font-weight: 500; color: var(--hk-ink); overflow-wrap: anywhere; }
+.harso-kit .hkc-sched-where { margin: 0; display: flex; align-items: center; gap: var(--hk-space-2); font-size: var(--hk-text-chrome); color: var(--hk-secondary); min-width: 0; }
+.harso-kit .hkc-sched-where > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.harso-kit .hkc-sched-brand { width: 20px; height: 20px; font-size: var(--hk-text-xs); border-radius: var(--hk-radius-control); }
+.harso-kit .hkc-sched-prep {
+  margin: var(--hk-space-1) 0 0; padding: var(--hk-space-1) var(--hk-space-2); border-radius: var(--hk-radius-control);
+  font-size: var(--hk-text-chrome); color: var(--hk-ink); background: color-mix(in srgb, var(--hkc-sched-color) 14%, transparent);
+}
+.harso-kit .hkc-sched-prep-tag { font-weight: 600; color: var(--hkc-sched-color); }
+.harso-kit .hkc-sched-next { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-size: var(--hk-text-xs); line-height: 16px; text-align: end; }
+.harso-kit .hkc-sched-next-word { font-weight: 600; color: var(--hk-attention); }
+.harso-kit .hkc-sched-gap { color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-sched-more { margin: 0; font-size: var(--hk-text-chrome); color: var(--hk-secondary); }
+
+.harso-kit .hkc-sched-row { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--hk-space-3); font-size: var(--hk-text-chrome); min-width: 0; }
+.harso-kit .hkc-sched-row-label { color: var(--hk-ink); font-weight: 500; }
+.harso-kit .hkc-sched-row-secondary { color: var(--hk-secondary); min-width: 0; overflow-wrap: anywhere; }
+.harso-kit .hkc-sched-row-time { margin-inline-start: auto; color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
+
+/* A small tile: one event, stacked (time, title, where) so a narrow tile never wraps word by word. */
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-event { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: var(--hk-space-2); }
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-main, .harso-kit .hkc-sched-list[data-tile] .hkc-sched-title { overflow-wrap: break-word; }
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-next { flex-direction: row; align-items: baseline; gap: var(--hk-space-2); text-align: start; }
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-next-word { order: -1; }
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-gap { display: none; }
+
+@media (forced-colors: active) {
+  .harso-kit .hkc-sched-event { border-inline-start-color: CanvasText; background: transparent; outline: 1px solid CanvasText; }
+  .harso-kit .hkc-sched-prep { outline: 1px solid CanvasText; background: transparent; }
+}
