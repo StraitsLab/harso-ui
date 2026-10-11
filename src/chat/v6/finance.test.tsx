@@ -258,7 +258,26 @@ test("bills: a row with no due date has none drawn, and a row with an exact due_
   expect(water.textContent).not.toMatch(/due/i);
   const time = gas.querySelector<HTMLTimeElement>("time")!;
   expect(time.dateTime).toBe("2026-09-25T04:00Z");
-  expect(time.textContent).toMatch(/^Due (25 Sep|Sep 25)$/);
+  expect(time.textContent).toBe("Due 25 Sep");
+});
+
+test("a due_at is read as the UTC day it names, in fixed English words, whatever the device zone or locale (the iPhone does the same)", () => {
+  const env = (globalThis as unknown as { process: { env: Record<string, string | undefined> } }).process.env;
+  const zone = env.TZ;
+  try {
+    for (const tz of ["Asia/Singapore", "America/Los_Angeles", "UTC"]) {
+      env.TZ = tz;
+      const { root, view } = draw(bills([{ id: "z", label: "Late", trailing: "S$1", due_at: "2026-09-25T23:30Z" }, { id: "y", label: "Early", trailing: "S$1", due_at: "2026-10-01T00:05:30Z" }]));
+      expect([...root.querySelectorAll("time")].map(time => time.textContent), tz).toEqual(["Due 25 Sep", "Due 1 Oct"]);
+      view.unmount();
+    }
+  } finally { if (zone === undefined) delete env.TZ; else env.TZ = zone; }
+});
+
+test("a due_at that is not a real UTC instant is a missing date, not a rolled-forward one", () => {
+  const { root } = draw(bills(["2026-02-30T04:00Z", "2026-09-25", "2026-09-25T25:00Z", "soon"].map((due_at, i) => ({ id: `d${i}`, label: `Bill ${i}`, trailing: "S$1", due_at } as HarsoOutputRow))));
+  expect(root.querySelectorAll("time")).toHaveLength(0);
+  expect(root.querySelectorAll(".hkc-fin-when")).toHaveLength(0);
 });
 
 test("subscriptions: a row with no renewal date has none drawn and none invented", () => {
@@ -281,7 +300,7 @@ test("subscriptions: renewal words are kept as given, an exact due_at stands in 
   expect(within(root).getByText("Renews 4 Oct · DBS card")).toBeTruthy();
   const time = root.querySelector<HTMLTimeElement>(".hkc-fin-row time")!;
   expect(time.dateTime).toBe("2026-10-12T04:00Z");
-  expect(time.textContent).toMatch(/^Renews (12 Oct|Oct 12)$/);
+  expect(time.textContent).toBe("Renews 12 Oct");
   expect(within(root).getByText("S$98.47")).toBeTruthy();
   expect(within(root).getByText("Total")).toBeTruthy();
 });
