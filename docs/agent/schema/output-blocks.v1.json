@@ -114,6 +114,48 @@
       "maxLength": 600,
       "pattern": "^[^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*[^\\s\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069][^\\u0000-\\u001F\\u007F\\u2028\\u2029\\u202A-\\u202E\\u2066-\\u2069]*$"
     },
+    "domain": {"type": "string", "minLength": 3, "maxLength": 253, "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$"},
+    "template_name": {"enum": ["bills-due", "compare-products", "day-agenda", "deadlines-from-mail", "delivery-tracking", "flight-options", "flight-status", "inbox-brief", "meeting-brief", "places-nearby", "price-watch", "product-shortlist", "recurring-reminder", "reply-draft", "reply-watch", "research-brief", "stock-quote", "subscriptions", "trip-itinerary", "weather-now"]},
+    "utc_minute": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$"},
+    "date_only": {"type": "string", "minLength": 10, "maxLength": 10},
+    "airport_code": {"type": "string", "pattern": "^[A-Z]{3}$"},
+    "calendar_color": {"enum": ["blue", "green", "orange", "red", "purple", "gray"]},
+    "weather_condition": {"enum": ["clear", "night", "partly", "cloudy", "rain", "storm"]},
+    "flight_facts": {
+      "type": "object", "additionalProperties": false, "minProperties": 1,
+      "properties": {
+        "number": {"$ref": "#/$defs/line12"}, "origin_code": {"$ref": "#/$defs/airport_code"}, "destination_code": {"$ref": "#/$defs/airport_code"}, "origin_name": {"$ref": "#/$defs/line48"}, "destination_name": {"$ref": "#/$defs/line48"},
+        "scheduled_departure": {"$ref": "#/$defs/line16"}, "departure": {"$ref": "#/$defs/line16"}, "arrival": {"$ref": "#/$defs/line16"}, "departure_zone": {"$ref": "#/$defs/line12"}, "arrival_zone": {"$ref": "#/$defs/line12"},
+        "terminal": {"$ref": "#/$defs/line12"}, "gate": {"$ref": "#/$defs/line12"}, "previous_gate": {"$ref": "#/$defs/line12"}, "boarding": {"$ref": "#/$defs/line16"}, "seat": {"$ref": "#/$defs/line12"}, "remaining": {"$ref": "#/$defs/line24"}
+      }
+    },
+    "row_flight": {
+      "type": "object", "additionalProperties": false, "minProperties": 1,
+      "properties": {
+        "number": {"$ref": "#/$defs/line12"}, "origin_code": {"$ref": "#/$defs/airport_code"}, "destination_code": {"$ref": "#/$defs/airport_code"}, "origin_name": {"$ref": "#/$defs/line48"}, "destination_name": {"$ref": "#/$defs/line48"},
+        "scheduled_departure": {"$ref": "#/$defs/line16"}, "departure": {"$ref": "#/$defs/line16"}, "arrival": {"$ref": "#/$defs/line16"}, "departure_zone": {"$ref": "#/$defs/line12"}, "arrival_zone": {"$ref": "#/$defs/line12"},
+        "terminal": {"$ref": "#/$defs/line12"}, "gate": {"$ref": "#/$defs/line12"}, "previous_gate": {"$ref": "#/$defs/line12"}, "boarding": {"$ref": "#/$defs/line16"}, "seat": {"$ref": "#/$defs/line12"}, "remaining": {"$ref": "#/$defs/line24"},
+        "arrival_day_offset": {"type": "integer", "minimum": 0, "maximum": 3}
+      }
+    },
+    "weather_hour": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"condition": {"$ref": "#/$defs/weather_condition"}, "rain": {"type": "integer", "minimum": 0, "maximum": 100}}
+    },
+    "weather_day": {
+      "type": "object", "additionalProperties": false, "required": ["label", "condition", "low", "high"],
+      "properties": {"label": {"$ref": "#/$defs/line16"}, "condition": {"$ref": "#/$defs/weather_condition"}, "low": {"$ref": "#/$defs/decimal"}, "high": {"$ref": "#/$defs/decimal"}}
+    },
+    "weather": {
+      "type": "object", "additionalProperties": false, "minProperties": 1,
+      "properties": {
+        "sky": {"enum": ["clear-day", "clear-night", "cloudy", "rain", "storm"]},
+        "current_condition": {"$ref": "#/$defs/weather_condition"},
+        "high": {"$ref": "#/$defs/decimal"}, "low": {"$ref": "#/$defs/decimal"},
+        "hourly": {"type": "array", "minItems": 1, "maxItems": 31, "items": {"$ref": "#/$defs/weather_hour"}},
+        "days": {"type": "array", "minItems": 1, "maxItems": 7, "items": {"$ref": "#/$defs/weather_day"}}
+      }
+    },
     "state": {
       "enum": [
         "working",
@@ -124,7 +166,8 @@
         "failed",
         "watching",
         "scheduled",
-        "empty"
+        "empty",
+        "tracking"
       ]
     },
     "row_status": {
@@ -149,7 +192,8 @@
         },
         "subtitle": {
           "$ref": "#/$defs/line80"
-        }
+        },
+        "brand": {"$ref": "#/$defs/domain"}
       }
     },
     "place": {
@@ -345,7 +389,9 @@
           "type": "integer",
           "minimum": 0,
           "maximum": 30
-        }
+        },
+        "range": {"enum": ["1D", "1W", "1M", "1Y"]},
+        "baseline": {"$ref": "#/$defs/decimal"}
       }
     },
     "visual_block": {
@@ -410,7 +456,22 @@
         },
         "thumbnail": {
           "$ref": "#/$defs/photo"
-        }
+        },
+        "brand": {"$ref": "#/$defs/domain"},
+        "action": {"$ref": "#/$defs/action_open_url"},
+        "rating": {"$ref": "#/$defs/decimal"},
+        "review_count": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+        "noise_db": {"$ref": "#/$defs/decimal"},
+        "category": {"$ref": "#/$defs/line48"},
+        "opening_label": {"$ref": "#/$defs/line80"},
+        "open_state": {"enum": ["open", "closed", "unknown"]},
+        "distance": {"$ref": "#/$defs/line24"},
+        "travel_mode": {"enum": ["walk", "drive", "transit", "cycle"]},
+        "unread": {"type": "boolean"},
+        "due_at": {"$ref": "#/$defs/utc_minute"},
+        "starts_at": {"$ref": "#/$defs/utc_minute"},
+        "calendar_color": {"$ref": "#/$defs/calendar_color"},
+        "flight": {"$ref": "#/$defs/row_flight"}
       }
     },
     "rows_block": {
@@ -501,7 +562,9 @@
           "items": {
             "$ref": "#/$defs/line200"
           }
-        }
+        },
+        "date": {"$ref": "#/$defs/date_only"},
+        "thumbnail": {"$ref": "#/$defs/photo"}
       }
     },
     "text_block": {
@@ -543,7 +606,8 @@
             "start",
             "end"
           ]
-        }
+        },
+        "thumbnail": {"$ref": "#/$defs/photo"}
       }
     },
     "table_row": {
@@ -566,7 +630,8 @@
         },
         "status_label": {
           "$ref": "#/$defs/line16"
-        }
+        },
+        "winner": {"type": "integer", "minimum": 0, "maximum": 5}
       }
     },
     "table_block": {
@@ -645,6 +710,11 @@
         }
       }
     },
+    "subject_page_watch": {
+      "type": "object", "additionalProperties": false,
+      "required": ["page_watch_id"],
+      "properties": {"page_watch_id": {"$ref": "#/$defs/uuid7"}}
+    },
     "status_block": {
       "type": "object",
       "additionalProperties": false,
@@ -662,6 +732,11 @@
         "detail": {
           "$ref": "#/$defs/line80"
         },
+        "label": {"$ref": "#/$defs/line80"},
+        "progress": {"type": "integer", "minimum": 0, "maximum": 100},
+        "stages": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"$ref": "#/$defs/line24"}},
+        "stage_index": {"type": "integer", "minimum": 0, "maximum": 7},
+        "condition": {"enum": ["on_time", "delayed", "unknown"]},
         "subject": {
           "oneOf": [
             {
@@ -669,7 +744,8 @@
             },
             {
               "$ref": "#/$defs/subject_routine"
-            }
+            },
+            {"$ref": "#/$defs/subject_page_watch"}
           ]
         }
       }
@@ -769,6 +845,16 @@
         }
       }
     },
+    "action_page_watch_control": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "label", "page_watch_id", "control"],
+      "properties": {
+        "kind": {"const": "page_watch_control"},
+        "label": {"$ref": "#/$defs/line28"},
+        "page_watch_id": {"$ref": "#/$defs/uuid7"},
+        "control": {"const": "disable"}
+      }
+    },
     "action": {
       "oneOf": [
         {
@@ -788,8 +874,59 @@
         },
         {
           "$ref": "#/$defs/action_routine_control"
-        }
+        },
+        {"$ref": "#/$defs/action_page_watch_control"}
       ]
+    },
+    "dream_citation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidence_ref", "quote"],
+      "properties": {
+        "evidence_ref": {"type": "string", "minLength": 45, "maxLength": 45},
+        "quote": {"type": "string", "minLength": 1, "maxLength": 2000}
+      }
+    },
+    "dream_answer_body": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "major", "organization_id", "proposal_ref", "answer"],
+      "properties": {
+        "kind": {"const": "dream_answer_request"}, "major": {"const": 1},
+        "organization_id": {"$ref": "#/$defs/uuid7"},
+        "proposal_ref": {"type": "string", "minLength": 86, "maxLength": 86},
+        "answer": {"enum": ["confirm", "not_true", "changed", "unchanged"]}
+      }
+    },
+    "dream_answer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["label", "method", "path", "body"],
+      "properties": {
+        "label": {"enum": ["Confirm", "Not true", "Yes, it changed", "No, it has not"]},
+        "method": {"const": "POST"}, "path": {"const": "/v1/memory/dreams/answer"},
+        "body": {"$ref": "#/$defs/dream_answer_body"}
+      }
+    },
+    "dream_card_block": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "proposal_ref", "label", "conclusion", "citations", "answers"],
+      "properties": {
+        "kind": {"const": "dream_card"},
+        "proposal_ref": {"type": "string", "minLength": 86, "maxLength": 86},
+        "label": {"enum": ["Guess", "Question"]},
+        "conclusion": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "question": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "citations": {"type": "array", "minItems": 1, "maxItems": 64, "items": {"$ref": "#/$defs/dream_citation"}},
+        "answers": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/dream_answer"}}
+      }
+    },
+    "dream_week_block": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "week_start", "week_end", "conclusions"],
+      "properties": {
+        "kind": {"const": "dream_week"},
+        "week_start": {"type": "string", "minLength": 10, "maxLength": 10},
+        "week_end": {"type": "string", "minLength": 10, "maxLength": 10},
+        "conclusions": {"type": "array", "maxItems": 50, "items": {"$ref": "#/$defs/dream_card_block"}}
+      }
     },
     "action_block": {
       "type": "object",
@@ -830,6 +967,8 @@
         {
           "$ref": "#/$defs/status_block"
         },
+        {"$ref": "#/$defs/dream_card_block"},
+        {"$ref": "#/$defs/dream_week_block"},
         {
           "$ref": "#/$defs/action_block"
         }
@@ -898,6 +1037,7 @@
         "major": {
           "const": 1
         },
+        "template": {"$ref": "#/$defs/template_name"},
         "header": {
           "$ref": "#/$defs/header"
         },
@@ -922,6 +1062,8 @@
           "type": "string",
           "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z$"
         },
+        "weather": {"$ref": "#/$defs/weather"},
+        "flight": {"$ref": "#/$defs/flight_facts"},
         "progress": {
           "type": "object",
           "additionalProperties": false,
