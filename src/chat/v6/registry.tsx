@@ -8,6 +8,7 @@ import { family as places } from "./places";
 import { family as mail } from "./mail";
 import { family as schedule } from "./schedule";
 import { family as research } from "./research";
+import { family as finance } from "./finance";
 
 /*
  * WEV-3303: the Lead adds one line per finished family here and nowhere else; a family never registers itself. Dispatch is by `document.template` only,
@@ -21,6 +22,7 @@ export const V6_FAMILIES: V6Registry = Object.freeze({
   "inbox-brief": mail, "deadlines-from-mail": mail, "reply-draft": mail,
   "day-agenda": schedule, "meeting-brief": schedule, "recurring-reminder": schedule, "reply-watch": schedule,
   "research-brief": research,
+  "stock-quote": finance, "bills-due": finance, "subscriptions": finance,
 });
 
 /** The document's template hint if it is one of the 20 names; anything else (absent, unknown, a variant name) is none. */
