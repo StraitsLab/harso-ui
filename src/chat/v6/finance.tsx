@@ -118,7 +118,10 @@ function Stats({ items }: { items: HarsoOutputNumber[] }) {
   </span>)}</p>;
 }
 
-const day = (date: Date) => new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short" }).format(date);
+// The UTC day the instant names, in fixed English words: no device zone or locale, so a saved card reads the same on every
+// screen (the iPhone's `V6Instant` does the same). shortcut: a person far from UTC may see the neighbouring day, until the contract carries a zone.
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const day = (date: Date) => `${date.getUTCDate()} ${MONTHS[date.getUTCMonth()]}`;
 
 function Rows({ rows, verb, renderBrand }: { rows: HarsoOutputRow[]; verb: string; renderBrand: V6RenderBrand }) {
   return <ul className="hkc-fin-rows">{rows.map((row, index) => {
