@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>P01 money cards — kit preview</title><style>
+html, body, #root { margin: 0; min-height: 100%; }
+.finance-fixture { min-height: 100vh; background: var(--hk-canvas); color: var(--hk-ink); font-size: var(--hk-text-body); }
+.finance-fixture main { padding: 24px 16px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px; }
+.finance-fixture .tile { width: 316px; }
+.finance-fixture .tile.wide { width: 560px; }
+.finance-fixture .tile[data-size="small"] { width: 170px; height: 170px; overflow: hidden; }
+.finance-fixture .tile[data-size="medium"] { width: 356px; height: 170px; overflow: hidden; }
+.finance-fixture .tile[data-size="large"] { width: 356px; height: 356px; overflow: hidden; }
+.finance-fixture .tile > * { height: 100%; }
+.finance-fixture small { display: block; margin: 0 0 6px; color: var(--hk-secondary); font-size: var(--hk-text-meta); }
+</style></head><body><div id="root"></div><script type="module" src="./finance.tsx"></script></body></html>

@@ -1,0 +1,70 @@
+/* WEV-3317 (P01): money cards. Tokens only; the card allows no borders. Up, down and flat take the kit's positive,
+   negative and secondary tones, and every change also says its direction in words and a glyph. */
+
+.harso-kit .hkc-fin-card { gap: var(--hk-space-3); }
+.harso-kit .hkc-fin { display: flex; flex-direction: column; gap: var(--hk-space-3); min-width: 0; }
+
+.harso-kit .hkc-fin-quote { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--hk-space-1) var(--hk-space-3); }
+.harso-kit .hkc-fin-price { font-size: calc(var(--hk-text-display) * 1.5); font-weight: 600; line-height: 1.15; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-fin-change { font-size: var(--hk-text-body); font-weight: 600; font-variant-numeric: tabular-nums; color: var(--hk-secondary); }
+.harso-kit .hkc-fin-label { font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+
+.harso-kit .hkc-fin-change[data-direction="up"], .harso-kit .hkc-fin-spark[data-direction="up"] { color: var(--hk-positive); }
+.harso-kit .hkc-fin-change[data-direction="down"], .harso-kit .hkc-fin-spark[data-direction="down"] { color: var(--hk-negative); }
+.harso-kit .hkc-fin-change[data-direction="flat"], .harso-kit .hkc-fin-spark[data-direction="flat"] { color: var(--hk-secondary); }
+
+.harso-kit .hkc-fin-spark { display: block; width: 100%; height: 80px; color: var(--hk-secondary); overflow: visible; }
+.harso-kit .hkc-fin-line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.harso-kit .hkc-fin-baseline { stroke: var(--hk-tertiary); stroke-width: 1; }
+.harso-kit .hkc-fin[data-size="small"] .hkc-fin-spark { height: 32px; }
+.harso-kit .hkc-fin[data-size="medium"] .hkc-fin-spark { height: 48px; }
+.harso-kit .hkc-fin[data-size="large"] .hkc-fin-spark { height: 120px; }
+
+.harso-kit .hkc-fin-axis, .harso-kit .hkc-fin-chartnote { display: flex; justify-content: space-between; gap: var(--hk-space-3); font-size: var(--hk-text-meta); color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-fin-range { font-weight: 600; color: var(--hk-ink); }
+
+.harso-kit .hkc-fin-stats { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--hk-space-1) var(--hk-space-4); }
+.harso-kit .hkc-fin-stat { display: inline-flex; align-items: baseline; gap: var(--hk-space-2); font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-fin-stat > strong { font-size: var(--hk-text-title); font-weight: 600; color: var(--hk-ink); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-fin-stat:first-child > strong { font-size: var(--hk-text-display); }
+
+.harso-kit .hkc-fin-rows { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--hk-space-3); }
+.harso-kit .hkc-fin-row { display: flex; align-items: center; gap: var(--hk-space-3); min-width: 0; }
+.harso-kit .hkc-fin-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.harso-kit .hkc-fin-name { display: flex; flex-wrap: wrap; align-items: center; gap: var(--hk-space-1) var(--hk-space-2); font-size: var(--hk-text-body); font-weight: 500; }
+.harso-kit .hkc-fin-when { font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-fin-row[data-status="overdue"] .hkc-fin-when { color: var(--hk-negative); }
+.harso-kit .hkc-fin-amount { flex: none; font-size: var(--hk-text-body); font-weight: 600; text-align: end; font-variant-numeric: tabular-nums; }
+
+.harso-kit .hkc-fin-total { font-size: var(--hk-text-meta); color: var(--hk-secondary); white-space: nowrap; }
+.harso-kit .hkc-fin-total > strong { font-size: var(--hk-text-title); font-weight: 600; color: var(--hk-ink); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-fin-note { font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-fin-more { align-self: flex-start; }
+
+/* A widget is a glance (the approved tiles): the title, the figures, no subtitle and no snapshot line. The pinned tile's
+   own footer carries the snapshot age, and the title still opens the whole answer with its Details. */
+.harso-kit .hkc-fin-card--small, .harso-kit .hkc-fin-card--medium, .harso-kit .hkc-fin-card--large { gap: var(--hk-space-2); padding: var(--hk-space-3); }
+.harso-kit .hkc-fin-card--small .hkc-output-card-subtitle, .harso-kit .hkc-fin-card--medium .hkc-output-card-subtitle, .harso-kit .hkc-fin-card--large .hkc-output-card-subtitle,
+.harso-kit .hkc-fin-card--small .hkc-output-card-meta, .harso-kit .hkc-fin-card--medium .hkc-output-card-meta, .harso-kit .hkc-fin-card--large .hkc-output-card-meta { display: none; }
+.harso-kit .hkc-fin-card--small .hkc-output-card-title, .harso-kit .hkc-fin-card--medium .hkc-output-card-title, .harso-kit .hkc-fin-card--large .hkc-output-card-title { font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-fin-card--small .hkc-v6-open, .harso-kit .hkc-fin-card--medium .hkc-v6-open, .harso-kit .hkc-fin-card--large .hkc-v6-open { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.harso-kit .hkc-fin-card--small .hkc-v6-brand, .harso-kit .hkc-fin-card--medium .hkc-v6-brand, .harso-kit .hkc-fin-card--large .hkc-v6-brand { width: 24px; height: 24px; font-size: var(--hk-text-meta); }
+.harso-kit .hkc-fin-card--small .hkc-fin, .harso-kit .hkc-fin-card--medium .hkc-fin { gap: var(--hk-space-2); }
+.harso-kit .hkc-fin-card--small .hkc-fin-price, .harso-kit .hkc-fin-card--medium .hkc-fin-price, .harso-kit .hkc-fin-card--large .hkc-fin-price { font-size: var(--hk-text-display); }
+.harso-kit .hkc-fin-card--small .hkc-fin-rows, .harso-kit .hkc-fin-card--medium .hkc-fin-rows { gap: var(--hk-space-2); }
+/* A small bill or subscription: the one row stacks, the figure under the name, as the approved small tile does. */
+.harso-kit .hkc-fin-card--small .hkc-fin-row { flex-wrap: wrap; row-gap: var(--hk-space-1); }
+.harso-kit .hkc-fin-card--small .hkc-fin-main { flex-basis: calc(100% - 36px); }
+.harso-kit .hkc-fin-card--small .hkc-fin-amount { flex-basis: 100%; text-align: start; font-size: var(--hk-text-display); line-height: 1.1; }
+.harso-kit .hkc-fin-card--small .hkc-fin-when, .harso-kit .hkc-fin-card--medium .hkc-fin-when { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.harso-kit .hkc-fin-card--medium .hkc-fin-name { flex-wrap: nowrap; }
+.harso-kit .hkc-fin-card--medium .hkc-fin-name > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+@media (pointer: coarse) {
+  .harso-kit .hkc-fin-more { min-height: 44px; }
+}
+
+@media (forced-colors: active) {
+  .harso-kit .hkc-fin-line { stroke: CanvasText; }
+  .harso-kit .hkc-fin-baseline { stroke: GrayText; }
+}
