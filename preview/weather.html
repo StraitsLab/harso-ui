@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>P04 weather-now — kit preview</title><style>
+html, body, #root { margin: 0; min-height: 100%; }
+.weather-fixture { min-height: 100vh; background: var(--hk-canvas); color: var(--hk-ink); font-size: var(--hk-text-body); }
+.weather-fixture main { padding: 24px 16px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px; }
+.weather-fixture .slot { width: 360px; } .weather-fixture .slot.s { width: 158px; } .weather-fixture .slot.m, .weather-fixture .slot.l { width: 338px; }
+.weather-fixture .slot.s .hkc-v6-weather, .weather-fixture .slot.m .hkc-v6-weather { height: 158px; } .weather-fixture .slot.l .hkc-v6-weather { height: 354px; }
+.weather-fixture h2 { margin: 0 0 8px; font-size: var(--hk-text-chrome); font-weight: 500; }
+</style></head><body><div id="root"></div><script type="module" src="./weather.tsx"></script></body></html>

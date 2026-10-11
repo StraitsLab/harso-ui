@@ -76,13 +76,33 @@
 .harso-kit .hkc-v6-weather-bar { position: absolute; top: 0; height: 5px; min-width: 6px; border-radius: var(--hk-radius-control); background: linear-gradient(90deg, var(--hkc-wx-bar-from), var(--hkc-wx-bar-to)); }
 .harso-kit .hkc-v6-weather:not([data-sky]) .hkc-v6-weather-track { background: var(--hk-hover); }
 
-/* Widgets: tighter type, nothing scrolls. */
-.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-frame { padding: var(--hk-space-4); gap: var(--hk-space-2); }
-.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours { overflow: hidden; }
-.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-v6-weather-hero { flex-direction: column; }
-.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-v6-weather-sky { align-items: flex-start; text-align: start; }
-.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-temp { font-size: 2.5rem; }
+/* Widgets sit in a fixed box (158pt small and medium, 354pt large), so nothing scrolls and the header is folded into one
+   line: the title and the snapshot time share a row, and the subtitle stays for screen readers. The small widget keeps the
+   subtitle, since it has no room for the condition words. */
+.harso-kit .hkc-v6-weather[data-widget] { height: 100%; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-frame { height: 100%; box-sizing: border-box; padding: var(--hk-space-3); gap: var(--hk-space-2); border-radius: inherit; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-output-card-title { font-size: var(--hk-text-chrome); line-height: 1.3; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-output-card-heading { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: var(--hk-space-2); row-gap: 0; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-output-card-meta { font-size: 10px; line-height: 1.3; }
+.harso-kit .hkc-v6-weather[data-widget]:not([data-widget="small"]) .hkc-output-card-subtitle { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-output-card-subtitle { flex-basis: 100%; font-size: var(--hk-text-meta); line-height: 1.3; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-temp { font-size: 2.25rem; letter-spacing: -.03em; }
 .harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hero-glyph { width: 29px; height: 31px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-sky { font-size: 10px; gap: 0; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-sky [data-slot="condition"] { font-size: 10px; font-weight: 400; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours { overflow: hidden; padding-block: var(--hk-space-2) 0; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours ol { gap: var(--hk-space-1); }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours li { min-width: 0; gap: 1px; font-size: 10px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours li .hkc-v6-weather-glyph { width: 19px; height: 20px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-hours [data-slot="temp"] { font-size: 13px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-rain { font-size: 9px; }
+.harso-kit .hkc-v6-weather[data-widget] .hkc-v6-weather-days li { min-height: 28px; font-size: var(--hk-text-meta); }
+/* Small: the glyph sits at the top right, over the empty corner, and the condition words give way to it. */
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-v6-weather-hero { flex-direction: column; gap: 0; position: static; }
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-v6-weather-sky { align-items: flex-start; text-align: start; position: static; }
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-output-card-heading { padding-inline-end: 34px; }
+.harso-kit .hkc-v6-weather[data-widget="small"] .hkc-v6-weather-hero-glyph { position: absolute; top: var(--hk-space-3); right: var(--hk-space-3); }
+.harso-kit .hkc-v6-weather[data-widget="small"] [data-slot="condition"] { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 @media (pointer: coarse) {
   .harso-kit .hkc-v6-weather-hours li { min-width: 44px; }
