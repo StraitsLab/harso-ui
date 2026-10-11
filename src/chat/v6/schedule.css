@@ -54,9 +54,12 @@
 .harso-kit .hkc-sched-row-secondary { color: var(--hk-secondary); min-width: 0; overflow-wrap: anywhere; }
 .harso-kit .hkc-sched-row-time { margin-inline-start: auto; color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
 
-/* A widget tile: tighter rows, no pointer-fighting children; the whole card is the one open target. */
-.harso-kit .hkc-sched[data-open-area="card"] .hkc-sched-event { grid-template-columns: 2.75rem minmax(0, 1fr); }
-.harso-kit .hkc-sched[data-open-area="card"] .hkc-sched-next { grid-column: 2; align-items: flex-start; flex-direction: row; gap: var(--hk-space-2); text-align: start; }
+/* A small tile: one event, stacked (time, title, where) so a narrow tile never wraps word by word. */
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-event { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: var(--hk-space-2); }
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-main, .harso-kit .hkc-sched-list[data-tile] .hkc-sched-title { overflow-wrap: break-word; }
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-next { flex-direction: row; align-items: baseline; gap: var(--hk-space-2); text-align: start; }
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-next-word { order: -1; }
+.harso-kit .hkc-sched-list[data-tile] .hkc-sched-gap { display: none; }
 
 @media (forced-colors: active) {
   .harso-kit .hkc-sched-event { border-inline-start-color: CanvasText; background: transparent; outline: 1px solid CanvasText; }
