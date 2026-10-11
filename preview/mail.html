@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>P06 mail cards — kit preview</title><style>
+html, body, #root { margin: 0; min-height: 100%; }
+.mail-fixture { min-height: 100vh; background: var(--hk-canvas); color: var(--hk-ink); font-size: var(--hk-text-body); }
+.mail-fixture main { padding: 24px 16px; display: flex; flex-direction: column; gap: 24px; }
+.mail-fixture .slot { max-width: 420px; }
+.mail-fixture .slot.small { max-width: 170px; }
+.mail-fixture .slot.medium { max-width: 360px; }
+.mail-fixture .slot .hkc-output-card { margin: 0; }
+.mail-fixture h2 { margin: 0 0 8px; font-size: var(--hk-text-meta); font-weight: 500; color: var(--hk-secondary); }
+</style></head><body><div id="root"></div><script type="module" src="./mail.tsx"></script></body></html>
