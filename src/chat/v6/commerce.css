@@ -2,8 +2,13 @@
    surface. Tokens only, so light and dark both follow the theme. No borders: separation is spacing and tint. */
 
 .harso-kit .hkc-v6-commerce { container-type: inline-size; }
-.harso-kit .hkc-v6-foot { display: flex; flex-direction: column; gap: var(--hk-space-2); margin-top: var(--hk-space-3); }
-.harso-kit .hkc-v6-foot .hkc-output-card-actions { padding-top: 0; }
+.harso-kit .hkc-v6-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--hk-space-2) var(--hk-space-3); margin-top: var(--hk-space-3); }
+/* The generic action row is a full-width footer and an inline-size container, which collapses inside a flex item (as in the frame's trailing area). */
+.harso-kit .hkc-v6-foot .hkc-output-card-actions { container: none; padding-top: 0; margin: 0; }
+.harso-kit .hkc-v6-foot .hkc-output-card-actions::before { content: none; }
+.harso-kit .hkc-v6-foot .hkc-output-card-actions-row { flex-direction: row; flex-wrap: nowrap; }
+.harso-kit .hkc-v6-foot .hk-button.hkc-output-card-action { width: auto; min-height: 32px; font-size: var(--hk-text-chrome); }
+@media (pointer: coarse) { .harso-kit .hkc-v6-foot .hk-button.hkc-output-card-action { min-height: 44px; } }
 .harso-kit .hkc-v6-more { margin: var(--hk-space-2) 0 0; font-size: var(--hk-text-meta); line-height: 16px; color: var(--hk-secondary); }
 
 /* A product photo. A tile that failed to load is hidden outright: the text beside it already says everything. */
@@ -71,11 +76,18 @@
 }
 
 /* Widgets: the Home tile is a fixed window, so the photo and one or three shops fit it and nothing scrolls. */
-.harso-kit .hkc-v6-widget .hkc-v6-watch { margin-top: var(--hk-space-2); gap: var(--hk-space-3); }
-.harso-kit .hkc-v6-widget .hkc-v6-watch > .hkc-v6-photo { width: 56px; }
-.harso-kit .hkc-v6-widget--small .hkc-v6-watch { flex-direction: column; align-items: flex-start; }
-.harso-kit .hkc-v6-widget--small .hkc-v6-shop { padding: 0; background: none; min-height: 0; }
-.harso-kit .hkc-v6-widget--small .hkc-v6-price { font-size: var(--hk-text-title); }
+.harso-kit .hkc-v6-widget .hkc-v6-watch { margin-top: 0; gap: var(--hk-space-3); align-items: flex-start; }
+.harso-kit .hkc-v6-widget .hkc-v6-watch > .hkc-v6-photo { width: 48px; }
+.harso-kit .hkc-v6-widget .hkc-v6-shops { gap: var(--hk-space-1); }
+.harso-kit .hkc-v6-widget .hkc-v6-shop { min-height: 0; padding: 0; background: none; gap: var(--hk-space-2); }
+.harso-kit .hkc-v6-widget .hkc-v6-shop .hkc-v6-brand { width: 20px; height: 20px; font-size: var(--hk-text-meta); }
+.harso-kit .hkc-v6-widget .hkc-v6-shop-note { display: none; }
+/* Small: the photo beside the one shop, whose name sits over its price, so the tile needs no more than its title, the snapshot and one band. */
+.harso-kit .hkc-v6-widget--small .hkc-v6-watch > .hkc-v6-photo { width: 40px; }
+.harso-kit .hkc-v6-widget--small .hkc-v6-shop { flex-wrap: wrap; row-gap: 0; }
+.harso-kit .hkc-v6-widget--small .hkc-v6-shop-main { flex-basis: calc(100% - 28px); }
+.harso-kit .hkc-v6-widget--small .hkc-v6-price { flex-basis: 100%; margin-inline-start: 0; font-size: var(--hk-text-title); }
+.harso-kit .hkc-v6-widget--small .hkc-output-card-title { font-size: var(--hk-text-body); }
 .harso-kit .hkc-v6-watch-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: var(--hk-space-2); }
 
 @media (forced-colors: active) {

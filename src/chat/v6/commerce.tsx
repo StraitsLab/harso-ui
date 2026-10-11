@@ -102,11 +102,10 @@ function priceWatch(props: V6FamilyProps) {
     // Small has room for one shop: the one marked as the pick, else the first that gave a price. Nothing is worked out.
     const lead = rows.items.find(row => row.mark === "pick") ?? rows.items.find(row => text(row.trailing));
     const shown = widgetSize === "small" ? (lead ? [lead] : []) : rows.items;
-    return <V6Frame document={{ ...document, details: undefined }} mode={mode} host={host} renderBrand={props.renderBrand} className={`hkc-v6-widget hkc-v6-widget--${widgetSize}`}>
+    return <V6Frame document={{ ...document, header: { ...document.header, subtitle: undefined }, details: undefined }} mode={mode} host={host} renderBrand={props.renderBrand} className={`hkc-v6-widget hkc-v6-widget--${widgetSize}`}>
       <div className="hkc-v6-watch" data-widget={widgetSize}>
         <Photo photo={photo} media={media} />
         <div className="hkc-v6-watch-main">
-          {widgetSize === "medium" && status && <HarsoOutputStatusView status={status} live={live} />}
           {!!shown.length && <ul className="hkc-v6-shops" role="list">{shown.map((row, index) => shop(row, index, false))}</ul>}
         </div>
       </div>
