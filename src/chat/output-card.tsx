@@ -1,13 +1,15 @@
 "use client";
 
 import { CaretRight } from "@phosphor-icons/react";
-import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { Button } from "../primitives";
 import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputNumberDelta, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
   type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
 import { HarsoOutputGalleryView, HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputThumb, HarsoOutputVideoView,
   ARTIFACT, isPhoto, readMedia, readProgress, readStatus, readSteps, type HarsoOutputMedia, type HarsoOutputMediaHost, type HarsoOutputMediaKind, type HarsoOutputPhoto,
   type HarsoOutputProgress, type HarsoOutputStatusBlock, type HarsoOutputStatusSubject, type HarsoOutputSubjectState } from "./output-card-media";
+import { V6_FAMILIES, V6FamilyBoundary, v6FamilyOf } from "./v6/registry";
+import type { V6Flight, V6Mode, V6RenderBrand, V6Registry, V6RowFields, V6Template, V6Weather, WidgetSize } from "./v6/types";
 import "./output-card.css";
 
 /*
@@ -18,9 +20,10 @@ import "./output-card.css";
  * (weave-cloud S0); the host validates the document before it reaches the kit.
  */
 
-export interface HarsoOutputHeader { title: string; subtitle?: string }
+/** `brand` (C1) is a lowercase public host name the host maps to a bundled mark; the kit never fetches one. */
+export interface HarsoOutputHeader { title: string; subtitle?: string; brand?: string }
 
-export interface HarsoOutputRow {
+export interface HarsoOutputRow extends V6RowFields {
   id?: string;
   label: string;
   secondary?: string;
@@ -42,12 +45,15 @@ export interface HarsoOutputNumber { value: string; delta?: string; label: strin
 
 export interface HarsoOutputNumbersBlock { kind: "numbers"; items: HarsoOutputNumber[] }
 
-export interface HarsoOutputTextSection { heading?: string; paragraphs?: string[]; bullets?: string[] }
+/** `date` (C10) is a date-only YYYY-MM-DD; `thumbnail` is a photo. The generic card draws neither. */
+export interface HarsoOutputTextSection { heading?: string; paragraphs?: string[]; bullets?: string[]; date?: string; thumbnail?: HarsoOutputPhoto }
 
 export interface HarsoOutputTextBlock { kind: "text"; summary?: string; sections: HarsoOutputTextSection[] }
 
 export type HarsoOutputWorkControl = "cancel" | "retry" | "dismiss";
 export type HarsoOutputRoutineControl = "pause" | "resume";
+/** The only page-watch control the contract has. */
+export type HarsoOutputPageWatchControl = "disable";
 
 /** One action as the contract carries it. `reply` is still carried and never drawn (choices use the question card). */
 export type HarsoOutputActionSpec =
@@ -55,7 +61,8 @@ export type HarsoOutputActionSpec =
   | { kind: "open_url"; label: string; url: string }
   | { kind: "open_artifact" | "download_artifact"; label: string; artifact: string }
   | { kind: "work_control"; label: string; work_unit_id: string; control: HarsoOutputWorkControl }
-  | { kind: "routine_control"; label: string; routine_id: string; control: HarsoOutputRoutineControl };
+  | { kind: "routine_control"; label: string; routine_id: string; control: HarsoOutputRoutineControl }
+  | { kind: "page_watch_control"; label: string; page_watch_id: string; control: HarsoOutputPageWatchControl };
 
 export interface HarsoOutputActionBlock { kind: "action"; primary?: HarsoOutputActionSpec; secondary?: HarsoOutputActionSpec }
 
@@ -71,6 +78,11 @@ export interface HarsoOutputDocumentDetails { sources?: HarsoOutputSource[]; ass
 export interface HarsoOutputDocument {
   kind?: "output_blocks";
   major?: 1;
+  /** C0: which of the 20 answer templates this is. Absent or unhandled draws the generic card. Never inferred from a title. */
+  template?: V6Template;
+  /** C8 and C9: closed optional facts a family reads. The generic card ignores them. */
+  weather?: V6Weather;
+  flight?: V6Flight;
   header: HarsoOutputHeader;
   blocks: HarsoOutputBlock[];
   details?: HarsoOutputDocumentDetails;
@@ -110,6 +122,18 @@ function documentMetadata(document: HarsoOutputDocument) {
   return { progress, progressWords, words: [asOf, progressWords].filter(Boolean).join(" · ") };
 }
 
+/** The snapshot line and, while the answer is partial, its coverage meter. Saved facts only: no live or up-to-date claim. */
+export function HarsoOutputCardMeta({ document }: { document: HarsoOutputDocument }) {
+  const { progress, progressWords, words } = documentMetadata(document);
+  return <>
+    {words && <p className="hkc-output-card-meta">{words}</p>}
+    {progress && progress.done < progress.total && <div className="hkc-output-progress-track hkc-output-card-progress-track" role="meter"
+      aria-label={progress.noun} aria-valuemin={0} aria-valuemax={progress.total} aria-valuenow={progress.done} aria-valuetext={progressWords}>
+      <span className="hkc-output-progress-fill" style={{ width: `${progress.done / progress.total * 100}%` }} />
+    </div>}
+  </>;
+}
+
 /** Document-level Copy/fallback path: keep optional header metadata even when the body falls back. */
 export function harsoOutputDocumentPlainText(document: HarsoOutputDocument): string {
   const { words } = documentMetadata(document);
@@ -125,7 +149,23 @@ export interface HarsoOutputCardCaps { maxRows: number; maxNumbers: number; maxT
  */
 export const HARSO_OUTPUT_CARD_CAPS: Readonly<HarsoOutputCardCaps> = Object.freeze({ maxRows: 3, maxNumbers: 2, maxTextChars: 180, maxTextLines: 4 });
 
-export interface HarsoOutputCardProps {
+/** The host callbacks actions and sources go through. */
+export interface HarsoOutputActionHost {
+  /** Opens an https link (an `open_url` action, a row link, a source with a url). */
+  onOpenUrl?: (url: string) => void;
+  /** Opens a file in the host's viewer: an `open_artifact` action, and a video poster (without it a video falls back). */
+  onOpenArtifact?: (artifact: string) => void;
+  /** Saves a file: a `download_artifact` action. */
+  onDownloadArtifact?: (artifact: string) => void;
+  /** Cancels, retries or dismisses the Work Unit a `work_control` action names. */
+  onWorkControl?: (control: HarsoOutputWorkControl, workUnitId: string) => void;
+  /** Pauses or resumes the routine a `routine_control` action names. */
+  onRoutineControl?: (control: HarsoOutputRoutineControl, routineId: string) => void;
+  /** Turns off the page watch a `page_watch_control` action names, by its exact ID. */
+  onPageWatchControl?: (control: HarsoOutputPageWatchControl, pageWatchId: string) => void;
+}
+
+export interface HarsoOutputCardProps extends HarsoOutputActionHost {
   document: HarsoOutputDocument;
   caps?: Partial<HarsoOutputCardCaps>;
   /** Called when the person asks for every row; the host opens the full output view. */
@@ -143,29 +183,27 @@ export interface HarsoOutputCardProps {
    */
   media?: HarsoOutputMediaHost;
   /*
-   * Actions and linked sources go through the host; the kit never navigates or fetches. An action whose callback the
-   * host did not supply is not drawn (never a dead button), and a source link needs `onOpenUrl`.
+   * Actions and linked sources go through the host (HarsoOutputActionHost); the kit never navigates or fetches. An
+   * action whose callback the host did not supply is not drawn (never a dead button), and a source link needs `onOpenUrl`.
    */
-  /** Opens an https link (an `open_url` action, a source with a url). */
-  onOpenUrl?: (url: string) => void;
-  /** Opens a file in the host's viewer: an `open_artifact` action, and a video poster (without it a video falls back). */
-  onOpenArtifact?: (artifact: string) => void;
-  /** Saves a file: a `download_artifact` action. */
-  onDownloadArtifact?: (artifact: string) => void;
-  /** Cancels, retries or dismisses the Work Unit a `work_control` action names. */
-  onWorkControl?: (control: HarsoOutputWorkControl, workUnitId: string) => void;
-  /** Pauses or resumes the routine a `routine_control` action names. */
-  onRoutineControl?: (control: HarsoOutputRoutineControl, routineId: string) => void;
   /**
    * The live state of a status block's subject, which the host owns (a routine paused after the card was emitted).
    * A value replaces the emitted word, detail and timed steps; undefined keeps what the agent sent.
    */
   subjectState?: (subject: HarsoOutputStatusSubject) => HarsoOutputSubjectState | undefined;
+  /** `full` is the whole answer; the default is `full` when the card is uncapped, else `inline`. A family draws both. */
+  mode?: V6Mode;
+  /** Only for a card pinned to Home: the Apple widget family it is drawn at. Families that do not support it return undefined. */
+  widgetSize?: WidgetSize;
+  /** The host's bundled logo lookup for a brand domain. Undefined result: a letter tile. Never fetched by the kit. */
+  renderBrand?: V6RenderBrand;
+  /** Template to family. Defaults to the shipped registry (empty until the Lead adds families). A test passes its own. */
+  families?: V6Registry;
+  /** Applies to the generic card; a family's frame sets its own. */
   className?: string;
 }
 
-/** The host callbacks actions and sources go through. */
-type ActionHost = Pick<HarsoOutputCardProps, "onOpenUrl" | "onOpenArtifact" | "onDownloadArtifact" | "onWorkControl" | "onRoutineControl">;
+type ActionHost = HarsoOutputActionHost;
 
 const isRows = (block: HarsoOutputBlock): block is HarsoOutputRowsBlock =>
   block.kind === "rows" && Array.isArray((block as HarsoOutputRowsBlock).items);
@@ -177,7 +215,7 @@ const isAction = (block: HarsoOutputBlock): block is HarsoOutputActionBlock => b
 
 /** The contract's `https_url`: only such a link is ever handed to the host. */
 const HTTPS = /^https:\/\/[A-Za-z0-9.-]+(?::[0-9]+)?(?:\/\S*)?$/;
-const isHttps = (url: unknown): url is string => typeof url === "string" && HTTPS.test(url);
+export const isHttps = (url: unknown): url is string => typeof url === "string" && HTTPS.test(url);
 const isId = (id: unknown): id is string => typeof id === "string" && id.length > 0;
 const WORK_CONTROLS: readonly unknown[] = ["cancel", "retry", "dismiss"];
 const ROUTINE_CONTROLS: readonly unknown[] = ["pause", "resume"];
@@ -186,13 +224,13 @@ const ROUTINE_CONTROLS: readonly unknown[] = ["pause", "resume"];
  * What one action does, or undefined when the card must not draw it: a `reply` (choices use the question card), an
  * unknown kind, a missing label or target, or a kind whose callback the host did not supply.
  */
-function readAction(spec: unknown, host: ActionHost): { label: string; run: () => void } | undefined {
+export function readAction(spec: unknown, host: ActionHost): { label: string; run: () => void } | undefined {
   if (!spec || typeof spec !== "object") return undefined;
   const action = spec as Record<string, unknown>;
   const label = typeof action.label === "string" ? action.label.trim() : "";
   if (!label) return undefined;
-  const { onOpenUrl, onOpenArtifact, onDownloadArtifact, onWorkControl, onRoutineControl } = host;
-  const { url, artifact, control, work_unit_id: work, routine_id: routine } = action;
+  const { onOpenUrl, onOpenArtifact, onDownloadArtifact, onWorkControl, onRoutineControl, onPageWatchControl } = host;
+  const { url, artifact, control, work_unit_id: work, routine_id: routine, page_watch_id: pageWatch } = action;
   const artifactOk = typeof artifact === "string" && ARTIFACT.test(artifact);
   switch (action.kind) {
     case "open_url": return onOpenUrl && isHttps(url) ? { label, run: () => onOpenUrl(url) } : undefined;
@@ -202,6 +240,8 @@ function readAction(spec: unknown, host: ActionHost): { label: string; run: () =
       ? { label, run: () => onWorkControl(control as HarsoOutputWorkControl, work) } : undefined;
     case "routine_control": return onRoutineControl && isId(routine) && ROUTINE_CONTROLS.includes(control)
       ? { label, run: () => onRoutineControl(control as HarsoOutputRoutineControl, routine) } : undefined;
+    case "page_watch_control": return onPageWatchControl && isId(pageWatch) && control === "disable"
+      ? { label, run: () => onPageWatchControl("disable", pageWatch) } : undefined;
     default: return undefined;
   }
 }
@@ -540,7 +580,7 @@ function CardSections({ sections, lines, onClip }: { sections: HarsoOutputTextSe
  * phone card, a right-aligned pair (primary at the trailing edge) in a pane wide enough to hold it (output-card.css).
  * Draws nothing when the host can act on neither.
  */
-function ActionRow({ block, host }: { block: HarsoOutputActionBlock; host: ActionHost }) {
+export function HarsoOutputActionRow({ block, host }: { block: HarsoOutputActionBlock; host: ActionHost }) {
   const actions = ([["primary", "primary"], ["secondary", "quiet"]] as const).flatMap(([slot, variant]) => {
     const action = readAction(block[slot], host);
     return action ? [{ slot, variant, ...action }] : [];
@@ -564,11 +604,11 @@ function MediaFrame({ state, kind, children }: { state?: HarsoOutputBlockState; 
   return <HarsoOutputBlockFrame kind="chart" state={state}>{children}</HarsoOutputBlockFrame>;
 }
 
-function hasDetails(details: HarsoOutputDocumentDetails | undefined): details is HarsoOutputDocumentDetails {
+export function hasDetails(details: HarsoOutputDocumentDetails | undefined): details is HarsoOutputDocumentDetails {
   return !!details && [details.sources, details.assumptions, details.disclaimers].some(list => !!list?.length);
 }
 
-function DetailsContent({ details, onOpenUrl }: { details: HarsoOutputDocumentDetails; onOpenUrl?: (url: string) => void }) {
+export function DetailsContent({ details, onOpenUrl }: { details: HarsoOutputDocumentDetails; onOpenUrl?: (url: string) => void }) {
   return <>
     {!!details.sources?.length && <ul className="hkc-output-card-details-list" aria-label="Sources">
       {details.sources.map((source, index) => <li key={index}>
@@ -624,9 +664,9 @@ function CardRows({ items, photos, layout, media }: { items: HarsoOutputRow[]; p
   </div>;
 }
 
-export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
+/** The generic card: the whole answer from its blocks, in source order. Every family falls back to it. */
+function GenericOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
   const id = useId();
-  const { progress, progressWords, words: metadata } = documentMetadata(document);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const [textClipped, setTextClipped] = useState(false);
@@ -656,11 +696,7 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
       <div className="hkc-output-card-heading">
         <h2 id={titleId} className="hkc-output-card-title">{document.header.title}</h2>
         {document.header.subtitle && <p className="hkc-output-card-subtitle">{document.header.subtitle}</p>}
-        {metadata && <p className="hkc-output-card-meta">{metadata}</p>}
-        {progress && progress.done < progress.total && <div className="hkc-output-progress-track hkc-output-card-progress-track" role="meter"
-          aria-label={progress.noun} aria-valuemin={0} aria-valuemax={progress.total} aria-valuenow={progress.done} aria-valuetext={progressWords}>
-          <span className="hkc-output-progress-fill" style={{ width: `${progress.done / progress.total * 100}%` }} />
-        </div>}
+        <HarsoOutputCardMeta document={document} />
       </div>
       {details && <Button ref={trigger} variant="ghost" size="small" className="hkc-output-card-details-toggle"
         aria-expanded={inlineDetails ? detailsOpen : undefined} aria-controls={inlineDetails ? detailsId : undefined}
@@ -710,8 +746,26 @@ export function HarsoOutputCard({ document, caps, onViewAll, onOpenDetails, bloc
             : <CardText key={partIndex} text={part.text} lines={limits.maxTextLines} onClip={setTextClipped} />)}
         {hasMore && <Button variant="ghost" className="hkc-output-card-view-all" onClick={onViewAll}
           trailingIcon={<CaretRight size={14} weight="bold" />}>{viewAllLabel}</Button>}
-        {content.action && <ActionRow block={content.action} host={host} />}
+        {content.action && <HarsoOutputActionRow block={content.action} host={host} />}
       </>
       : <p className="hkc-output-card-fallback">{document.fallback_text}</p>}
   </section>;
+}
+
+/** `full` when the card is uncapped (the host's View all), else `inline`; the host may say so outright. */
+const modeOf = (mode: V6Mode | undefined, caps: HarsoOutputCardProps["caps"]): V6Mode => mode ?? (caps?.maxRows === Infinity ? "full" : "inline");
+
+/**
+ * The output card. A document whose `template` names a registered family is drawn by that family (inside a component
+ * boundary, so the family's hooks are legal); anything else, and any family that declines, is the generic card.
+ */
+export function HarsoOutputCard(props: HarsoOutputCardProps) {
+  const { document, families = V6_FAMILIES, mode, widgetSize, renderBrand, media, onViewAll, onOpenDetails, subjectState, blockStates, caps, className: _class, ...actions } = props;
+  const family = v6FamilyOf(document, families);
+  const generic = <GenericOutputCard {...props} />;
+  if (!family) return generic;
+  return <V6FamilyBoundary key={document.template} family={family} fallback={generic} familyProps={{
+    document, mode: modeOf(mode, caps), widgetSize, media: media ?? {}, renderBrand: renderBrand ?? (() => undefined), onOpenDetails,
+    host: { ...actions, onViewAll, subjectState, blockStates }
+  }} />;
 }

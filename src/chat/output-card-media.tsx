@@ -4,6 +4,7 @@ import { CaretLeft, CaretRight, Info, Play, WarningCircle } from "@phosphor-icon
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
 import { Button, IconButton } from "../primitives";
 import { HarsoOutputNumberDelta } from "./output-card-charts";
+import type { V6TrackingCondition } from "./v6/types";
 import "./output-card-media.css";
 
 /*
@@ -13,14 +14,35 @@ import "./output-card-media.css";
  * block is read by the shape the playbook tells the agent to send; nothing is invented.
  */
 
-export type HarsoOutputStatusState = "working" | "needs_you" | "ready" | "needs_attention" | "stopped_by_you" | "failed" | "watching" | "scheduled" | "empty";
-export type HarsoOutputStatusSubject = { work_unit_id: string } | { routine_id: string };
-export interface HarsoOutputStatusBlock {
+export type HarsoOutputStatusState = "working" | "needs_you" | "ready" | "needs_attention" | "stopped_by_you" | "failed" | "watching" | "scheduled" | "empty" | "tracking";
+/** What a status is about, as the contract names it. The host owns the live state of each (a page watch turned off). */
+export type HarsoOutputStatusSubject = { work_unit_id: string } | { routine_id: string } | { page_watch_id: string };
+/** Every state but `tracking`: it may name its subject, and carries none of the tracking fields. */
+export interface HarsoOutputSubjectStatusBlock {
   kind: "status";
-  state: HarsoOutputStatusState;
+  state: Exclude<HarsoOutputStatusState, "tracking">;
   detail?: string;
   subject?: HarsoOutputStatusSubject;
+  label?: never; progress?: never; stages?: never; stage_index?: never; condition?: never;
 }
+/**
+ * C3: a display-only status read from a source (a parcel, a flight), never a Work or routine. It has a label and no
+ * subject, so no control can attach to it. Progress is the source's own percent; stages are its steps in order.
+ */
+export interface HarsoOutputTrackingStatusBlock {
+  kind: "status";
+  state: "tracking";
+  label: string;
+  detail?: string;
+  subject?: never;
+  /** Integer 0-100, only when the source said so. */
+  progress?: number;
+  /** 1-8 short steps in order. */
+  stages?: string[];
+  stage_index?: number;
+  condition?: V6TrackingCondition;
+}
+export type HarsoOutputStatusBlock = HarsoOutputSubjectStatusBlock | HarsoOutputTrackingStatusBlock;
 /** The host's live word for a status block's subject (a paused routine), drawn instead of the emitted snapshot. */
 export interface HarsoOutputSubjectState { word: string; meaning?: HarsoOutputMeaning }
 export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string }
@@ -60,14 +82,37 @@ const STATUS: Record<HarsoOutputStatusState, { word: string; meaning?: HarsoOutp
   ready: { word: "Done", meaning: "done" },
   stopped_by_you: { word: "Stopped", meaning: "done" },
   failed: { word: "Couldn’t finish", meaning: "problem" },
-  empty: { word: "Nothing found" }
+  empty: { word: "Nothing found" },
+  tracking: { word: "Tracking", meaning: "in_progress" }
 };
 const RUNNING = new Set<HarsoOutputStatusState>(["working", "watching", "scheduled"]);
 
+const CONDITIONS: readonly unknown[] = ["on_time", "delayed", "unknown"];
+const CONDITION_WORD = { on_time: "On time", delayed: "Delayed", unknown: undefined } as const;
+const text = (value: unknown): value is string => typeof value === "string" && value.trim().length > 0;
+
+/** C3's own laws: a label, no subject, a whole 0-100 percent, 1-8 stages with an in-bounds index, a known condition. */
+function trackingOk(status: Record<string, unknown>) {
+  const { label, subject, progress, stages, stage_index: index, condition, detail } = status;
+  return text(label) && subject === undefined && (detail === undefined || typeof detail === "string")
+    && (progress === undefined || (Number.isInteger(progress) && (progress as number) >= 0 && (progress as number) <= 100))
+    && (stages === undefined || (Array.isArray(stages) && stages.length >= 1 && stages.length <= 8 && stages.every(text)))
+    && (index === undefined || (Array.isArray(stages) && Number.isInteger(index) && (index as number) >= 0 && (index as number) < stages.length))
+    && (condition === undefined || CONDITIONS.includes(condition));
+}
+
+/** A status this card can say, or undefined (the whole card then falls back): never half a tracking status. */
 export function readStatus(block: AnyBlock): HarsoOutputStatusBlock | undefined {
   if (block.kind !== "status") return undefined;
-  const status = block as Partial<HarsoOutputStatusBlock>;
-  return typeof status.state === "string" && Object.hasOwn(STATUS, status.state) ? status as HarsoOutputStatusBlock : undefined;
+  const status = block as Record<string, unknown>;
+  if (typeof status.state !== "string" || !Object.hasOwn(STATUS, status.state)) return undefined;
+  return status.state !== "tracking" || trackingOk(status) ? status as unknown as HarsoOutputStatusBlock : undefined;
+}
+
+/** What follows the state word: a tracking status says its label, then a delay or on-time word only if the source gave one. */
+function statusDetail(status: HarsoOutputStatusBlock) {
+  if (status.state !== "tracking") return status.detail;
+  return [status.label, status.condition && CONDITION_WORD[status.condition], status.detail].filter(Boolean).join(" · ");
 }
 
 /**
@@ -81,9 +126,10 @@ export function readSteps<T extends Row>(status: HarsoOutputStatusBlock | undefi
 }
 
 export function HarsoOutputStatusView({ status, steps, live }: { status: HarsoOutputStatusBlock; steps?: Row[]; live?: HarsoOutputSubjectState }) {
-  const { word, meaning } = live ?? STATUS[status.state];
+  const { word, meaning: emitted } = live ?? STATUS[status.state];
+  const meaning = !live && status.state === "tracking" && status.condition === "delayed" ? "attention" : emitted;
   // The emitted detail describes the emitted state ("since 26 Sep", "rings at 19:42"), so a live word drops it.
-  const detail = live ? undefined : status.detail;
+  const detail = live ? undefined : statusDetail(status);
   if (!live && status.state === "empty") return <p className="hkc-output-block-note hkc-output-block-note--empty" data-state="empty">
     <span className="hkc-output-block-ring" aria-hidden="true" />{detail || word}
   </p>;
@@ -643,7 +689,7 @@ export function HarsoOutputMediaSkeleton({ kind }: { kind: HarsoOutputMediaKind 
 /** Plain text of a status, image, video or map block for Copy; undefined for any other kind. */
 export function mediaPlainText(block: AnyBlock): string | undefined {
   const status = readStatus(block);
-  if (status) return [STATUS[status.state].word, status.detail].filter(Boolean).join(" · ");
+  if (status) return [STATUS[status.state].word, statusDetail(status)].filter(Boolean).join(" · ");
   const visual = (block as { visual?: HarsoOutputMedia }).visual;
   if (block.kind !== "visual" || !visual) return undefined;
   if (visual.kind === "image") return `Image: ${visual.alt}`;
