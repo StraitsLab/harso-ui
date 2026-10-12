@@ -278,7 +278,7 @@ function SchematicMap({ map, days }: { map: HarsoOutputMap | undefined; days: nu
   const west = Math.min(...lons), east = Math.max(...lons), south = Math.min(...lats), north = Math.max(...lats);
   // Pins keep inside the plane and clear of the footer line ("Schematic · not to scale" sits under the lowest pin's tip).
   const x = (lon: number) => east === west ? PLANE.width / 2 : 26 + (lon - west) / (east - west) * (PLANE.width - 52);
-  const y = (lat: number) => north === south ? 46 : 18 + (north - lat) / (north - south) * 56;
+  const y = (lat: number) => north === south ? 40 : 16 + (north - lat) / (north - south) * 46;
   const byDay = places.length === days;
   return <figure className="hkc-trip-map" aria-label="Map of the trip, not to scale">
     <figcaption className="hkc-trip-map-legend">{byDay ? "Where each day is · pin number = day" : "Where the places are"}</figcaption>
