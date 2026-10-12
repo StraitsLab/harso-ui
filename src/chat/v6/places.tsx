@@ -276,15 +276,16 @@ function SchematicMap({ map, days }: { map: HarsoOutputMap | undefined; days: nu
   if (!places) return null;
   const lats = places.map(place => place.lat), lons = places.map(place => place.lon);
   const west = Math.min(...lons), east = Math.max(...lons), south = Math.min(...lats), north = Math.max(...lats);
+  // Pins keep inside the plane and clear of the footer line ("Schematic · not to scale" sits under the lowest pin's tip).
   const x = (lon: number) => east === west ? PLANE.width / 2 : 26 + (lon - west) / (east - west) * (PLANE.width - 52);
-  const y = (lat: number) => north === south ? PLANE.height / 2 : 20 + (north - lat) / (north - south) * (PLANE.height - 40);
+  const y = (lat: number) => north === south ? 46 : 18 + (north - lat) / (north - south) * 56;
   const byDay = places.length === days;
   return <figure className="hkc-trip-map" aria-label="Map of the trip, not to scale">
     <figcaption className="hkc-trip-map-legend">{byDay ? "Where each day is · pin number = day" : "Where the places are"}</figcaption>
-    <svg className="hkc-trip-map-plane" viewBox={`0 0 ${PLANE.width} ${PLANE.height}`} preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <svg className="hkc-trip-map-plane" viewBox={`0 0 ${PLANE.width} ${PLANE.height}`} aria-hidden="true" focusable="false">
       <rect className="hkc-trip-map-land" width={PLANE.width} height={PLANE.height} />
       <g className="hkc-trip-map-grid">{[100, 200, 300, 400].map(at => <line key={`x${at}`} x1={at} x2={at} y1={0} y2={PLANE.height} />)}{[37, 74].map(at => <line key={`y${at}`} x1={0} x2={PLANE.width} y1={at} y2={at} />)}</g>
-      <text className="hkc-trip-map-scale" x={PLANE.width - 10} y={PLANE.height - 7} textAnchor="end">Schematic · not to scale</text>
+      <text className="hkc-trip-map-scale" x={PLANE.width - 10} y={PLANE.height - 8} textAnchor="end">Schematic · not to scale</text>
       {places.map((place, index) => <g key={index} className="hkc-trip-pin" transform={`translate(${x(place.lon).toFixed(1)} ${y(place.lat).toFixed(1)})`}>
         <path d="M0 10C-5 3-10 0-10-6a10 10 0 0 1 20 0C10 0 5 3 0 10z" />
         <text y={-2} textAnchor="middle">{index + 1}</text>

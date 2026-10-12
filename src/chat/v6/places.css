@@ -68,7 +68,8 @@
   border-radius: var(--hk-radius-control); background: var(--hk-field-tint); color: var(--hk-secondary); line-height: 16px;
 }
 .harso-kit .hkc-trip-tabs .hk-tab--pill b { font-size: var(--hk-text-meta); font-weight: 600; color: var(--hk-ink); }
-.harso-kit .hkc-trip-tabs .hk-tab--pill span { font-size: var(--hk-text-xs); font-weight: 400; }
+.harso-kit .hkc-trip-tabs .hk-tab--pill span { font-size: var(--hk-text-xs); font-weight: 400; color: var(--hk-secondary); }
+.harso-kit .hkc-trip-tabs .hk-tab--pill[aria-selected="true"] span { color: inherit; }
 .harso-kit .hkc-trip-tabs .hk-tab--pill[aria-selected="true"] { background: var(--hk-accent-soft); color: var(--hk-accent); box-shadow: none; }
 .harso-kit .hkc-trip-tabs .hk-tab--pill[aria-selected="true"] b { color: inherit; }
 .harso-kit .hkc-trip-tabs .hk-tab-panel { padding: var(--hk-space-3) 0 0; }
@@ -87,9 +88,9 @@
 /* V6 schematic map: drawn offline when the host lends no tiles. Numbered pins, a plain grid, "not to scale". */
 .harso-kit .hkc-trip-map { display: flex; flex-direction: column; gap: var(--hk-space-1); margin: var(--hk-space-1) 0 0; }
 .harso-kit .hkc-trip-map-legend { font-size: var(--hk-text-xs); color: var(--hk-secondary); }
-.harso-kit .hkc-trip-map-plane { display: block; width: 100%; height: 104px; border-radius: var(--hk-radius-card); overflow: hidden; }
+.harso-kit .hkc-trip-map-plane { display: block; width: 100%; height: auto; aspect-ratio: 500 / 110; border-radius: var(--hk-radius-card); overflow: hidden; }
 .harso-kit .hkc-trip-map-land { fill: var(--hk-field-tint); }
-.harso-kit .hkc-trip-map-grid line { stroke: var(--hk-line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.harso-kit .hkc-trip-map-grid line { stroke: var(--hk-line-strong); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .harso-kit .hkc-trip-map-scale { fill: var(--hk-secondary); font-size: 10px; }
 .harso-kit .hkc-trip-pin path { fill: var(--hk-negative); stroke: var(--hk-surface); stroke-width: 1.5; }
 .harso-kit .hkc-trip-pin text { fill: var(--hk-surface); font-size: 11px; font-weight: 700; }
