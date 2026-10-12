@@ -3,6 +3,7 @@
 import { MapPin, Star } from "@phosphor-icons/react";
 import { useId, type ReactNode } from "react";
 import { Button } from "../../primitives";
+import { Tabs } from "../../navigation";
 import { HarsoOutputCardMeta, readAction, type HarsoOutputActionBlock, type HarsoOutputDocument, type HarsoOutputRow, type HarsoOutputRowsBlock, type HarsoOutputTextBlock, type HarsoOutputTextSection } from "../output-card";
 import { HarsoOutputMapView, HarsoOutputThumb, isPhoto, readMedia, type HarsoOutputMap, type HarsoOutputMediaHost } from "../output-card-media";
 import { V6Brand, V6Frame } from "./frame";
@@ -226,27 +227,92 @@ function DayPhoto({ section, media }: { section: HarsoOutputTextSection; media: 
   return isPhoto(section.thumbnail) && media.resolveArtifact ? <HarsoOutputThumb photo={section.thumbnail} host={media} /> : null;
 }
 
+/** "Wed 14": the day tab's short date, in the same fixed words as the day label. */
+function shortDay(value: unknown): string | undefined {
+  return dayLabel(value)?.split(" ").slice(0, 2).join(" ");
+}
+
+/** Under the "Day 2" tab, "Day 2 · Arashiyama" reads "2. Arashiyama" (V6). A heading that names another day, or no day, is kept whole. */
+function dayTitle(heading: string | undefined, index: number): string | undefined {
+  const prefix = `Day ${index + 1} · `, area = heading?.startsWith(prefix) ? heading.slice(prefix.length).trim() : "";
+  return area ? `${index + 1}. ${area}` : heading;
+}
+
+/** One day: with a photo, its date and "1. Area" sit on the photo (V6); without one, the same words lead the day. */
+function TripDay({ section, index, next, media }: { section: HarsoOutputTextSection; index: number; next: boolean; media: HarsoOutputMediaHost }) {
+  const label = dayLabel(section.date), title = dayTitle(section.heading, index);
+  const head = (label || title || next) && <div className="hkc-day-head">
+    {label && <time dateTime={section.date}>{label}</time>}
+    {(title || next) && <div className="hkc-day-title">
+      {title && <h3>{title}</h3>}
+      {next && <span className="hkc-day-next">Next</span>}
+    </div>}
+  </div>;
+  const photo = isPhoto(section.thumbnail) && media.resolveArtifact;
+  return <div className="hkc-day" data-next={next || undefined}>
+    {photo ? <div className="hkc-trip-hero"><DayPhoto section={section} media={media} />{head}</div> : head}
+    {section.paragraphs?.map((line, n) => <p key={n} className="hkc-day-note">{line}</p>)}
+    {!!section.bullets?.length && <ol className="hkc-stops">{section.bullets.map((stop, n) => <Stop key={n} text={stop} />)}</ol>}
+  </div>;
+}
+
+/** The map's places when every one has a name and readable coordinates (at most 12), else undefined: the days still say where. */
+function schematicPlaces(map: HarsoOutputMap | undefined) {
+  const places = map?.places;
+  if (!Array.isArray(places) || !places.length || places.length > 12) return undefined;
+  const read = places.map(place => ({ label: place?.label, lat: Number(place?.lat), lon: Number(place?.lon) }));
+  return read.every(place => typeof place.label === "string" && place.label.trim() !== "" && Number.isFinite(place.lat) && Number.isFinite(place.lon)
+    && Math.abs(place.lat) <= 90 && Math.abs(place.lon) <= 180) ? read as { label: string; lat: number; lon: number }[] : undefined;
+}
+
+const PLANE = { width: 500, height: 110 };
+/**
+ * V6's offline map, for a host that lends no map tiles: each pin at its place's real position relative to the others
+ * (west to east, north to south; not to scale), numbered in document order. The ground is a plain grid, never drawn
+ * streets or rivers, so nothing on it claims a geography the document did not give. Screen readers get the places as a list.
+ */
+function SchematicMap({ map, days }: { map: HarsoOutputMap | undefined; days: number }) {
+  const places = schematicPlaces(map);
+  if (!places) return null;
+  const lats = places.map(place => place.lat), lons = places.map(place => place.lon);
+  const west = Math.min(...lons), east = Math.max(...lons), south = Math.min(...lats), north = Math.max(...lats);
+  // Pins keep inside the plane and clear of the footer line ("Schematic · not to scale" sits under the lowest pin's tip).
+  const x = (lon: number) => east === west ? PLANE.width / 2 : 26 + (lon - west) / (east - west) * (PLANE.width - 52);
+  const y = (lat: number) => north === south ? 40 : 16 + (north - lat) / (north - south) * 46;
+  const byDay = places.length === days;
+  return <figure className="hkc-trip-map" aria-label="Map of the trip, not to scale">
+    <figcaption className="hkc-trip-map-legend">{byDay ? "Where each day is · pin number = day" : "Where the places are"}</figcaption>
+    <svg className="hkc-trip-map-plane" viewBox={`0 0 ${PLANE.width} ${PLANE.height}`} aria-hidden="true" focusable="false">
+      <rect className="hkc-trip-map-land" width={PLANE.width} height={PLANE.height} />
+      <g className="hkc-trip-map-grid">{[100, 200, 300, 400].map(at => <line key={`x${at}`} x1={at} x2={at} y1={0} y2={PLANE.height} />)}{[37, 74].map(at => <line key={`y${at}`} x1={0} x2={PLANE.width} y1={at} y2={at} />)}</g>
+      <text className="hkc-trip-map-scale" x={PLANE.width - 10} y={PLANE.height - 8} textAnchor="end">Schematic · not to scale</text>
+      {places.map((place, index) => <g key={index} className="hkc-trip-pin" transform={`translate(${x(place.lon).toFixed(1)} ${y(place.lat).toFixed(1)})`}>
+        <path d="M0 10C-5 3-10 0-10-6a10 10 0 0 1 20 0C10 0 5 3 0 10z" />
+        <text y={-2} textAnchor="middle">{index + 1}</text>
+      </g>)}
+    </svg>
+    <ol className="hk-sr-only">{places.map((place, index) => <li key={index}>{place.label}</li>)}</ol>
+  </figure>;
+}
+
 function TripCard({ props, read }: { props: V6FamilyProps; read: TripRead }) {
   const { document, mode, host, media, renderBrand, onOpenDetails } = props;
   const next = nextDayIndex(read.sections, document.as_of);
   const map = drawableMap(read.map, media);
+  const day = (section: HarsoOutputTextSection, index: number) => <TripDay key={index} section={section} index={index} next={next === index} media={media} />;
   return <V6Frame document={document} mode={mode} host={host} onOpenDetails={onOpenDetails} renderBrand={renderBrand} trailing={trailingOf(read.action, host)}>
     <div className="hkc-trip">
       {read.summary && <p className="hkc-trip-summary">{read.summary}</p>}
-      {read.sections.map((section, index) => {
-        const label = dayLabel(section.date);
-        return <div key={index} className="hkc-day" data-next={next === index || undefined}>
-          <DayPhoto section={section} media={media} />
-          {(section.heading || label || next === index) && <div className="hkc-day-head">
-            {section.heading && <h3>{section.heading}</h3>}
-            {next === index && <span className="hkc-day-next">Next</span>}
-            {label && <time dateTime={section.date}>{label}</time>}
-          </div>}
-          {section.paragraphs?.map((line, n) => <p key={n} className="hkc-day-note">{line}</p>)}
-          {!!section.bullets?.length && <ol className="hkc-stops">{section.bullets.map((stop, n) => <Stop key={n} text={stop} />)}</ol>}
-        </div>;
-      })}
-      {map && <HarsoOutputMapView map={map} host={media} />}
+      {read.sections.length > 1
+        ? <div className="hkc-trip-tabs">
+          {/* V6 day tabs: one day at a time, opening on the next day. Every day stays mounted, so nothing is lost. */}
+          <Tabs variant="pill" label="Days" defaultValue={String(next ?? 0)} items={read.sections.map((section, index) => {
+            const short = shortDay(section.date);
+            return { value: String(index), label: <><b>{`Day ${index + 1}`}</b>{short && <> <span>{short}</span></>}</>, content: day(section, index) };
+          })} />
+        </div>
+        : day(read.sections[0], 0)}
+      {map ? <HarsoOutputMapView map={map} host={media} /> : <SchematicMap map={read.map} days={read.sections.length} />}
     </div>
   </V6Frame>;
 }
