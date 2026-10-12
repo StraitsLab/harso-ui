@@ -221,12 +221,14 @@ const trip = (sections = days, extra: Partial<HarsoOutputDocument> = {}): HarsoO
   ],
   fallback_text: "FALLBACK", ...extra
 });
+// Every day stays mounted under its tab (a hidden panel keeps its place), so the DOM holds all of them in order.
 const headings = () => [...document.querySelectorAll(".hkc-day h3")].map(h => h.textContent);
+const shown = () => [...document.querySelectorAll<HTMLElement>(".hkc-day")].filter(day => !day.closest("[hidden]"));
 const stops = (sections = days) => sections.flatMap(section => section.bullets ?? []);
 
-test("one section per day, in document order, with the date as a plain label", () => {
+test("one section per day, in document order, with the date as a plain label; \"Day 1 · Area\" reads \"1. Area\"", () => {
   draw(trip(), { media });
-  expect(headings()).toEqual(["Day 1 · Higashiyama", "Day 2 · Arashiyama", "Day 3 · Fushimi Inari"]);
+  expect(headings()).toEqual(["1. Higashiyama", "2. Arashiyama", "3. Fushimi Inari"]);
   const dates = [...document.querySelectorAll(".hkc-day time")];
   expect(dates.map(time => time.textContent)).toEqual(["Wed 14 Oct", "Thu 15 Oct", "Fri 16 Oct"]);
   expect(dates[0].getAttribute("datetime")).toBe("2026-10-14");
@@ -234,7 +236,9 @@ test("one section per day, in document order, with the date as a plain label", (
 
 test("document order is kept even when the dates are out of order", () => {
   draw(trip([days[2], days[0], days[1]]), { media });
+  // A heading that names another day than its place is kept whole, never renumbered.
   expect(headings()).toEqual(["Day 3 · Fushimi Inari", "Day 1 · Higashiyama", "Day 2 · Arashiyama"]);
+  expect(screen.getAllByRole("tab").map(tab => tab.textContent)).toEqual(["Day 1 Fri 16", "Day 2 Wed 14", "Day 3 Thu 15"]);
 });
 
 test("a day with no date or an impossible date shows no date; a day with no photo shows no photo", () => {
@@ -265,6 +269,9 @@ test("next day: the earliest dated day on or after the snapshot day, whatever th
   expect(next).toHaveLength(1);
   expect(next[0].querySelector("h3")!.textContent).toBe("Day 1 · Higashiyama");
   expect(within(next[0] as HTMLElement).getByText("Next")).toBeTruthy();
+  // The card opens on the next day's tab.
+  expect(screen.getByRole("tab", { selected: true }).textContent).toBe("Day 2 Wed 14");
+  expect(shown().map(day => day.querySelector("h3")!.textContent)).toEqual(["Day 1 · Higashiyama"]);
   cleanup();
   draw(trip(scrambled, { as_of: "2026-10-15T23:59Z" }), { media });
   expect(document.querySelector("[data-next] h3")!.textContent).toBe("Day 2 · Arashiyama");
@@ -290,7 +297,7 @@ test("the device clock never moves the next day", () => {
   for (const now of ["2020-01-01T00:00:00Z", "2026-10-16T12:00:00Z", "2031-05-05T00:00:00Z"]) {
     vi.setSystemTime(new Date(now));
     draw(trip(), { media });
-    expect(document.querySelector("[data-next] h3")!.textContent).toBe("Day 1 · Higashiyama");
+    expect(document.querySelector("[data-next] h3")!.textContent).toBe("1. Higashiyama");
     cleanup();
   }
 });
@@ -328,6 +335,78 @@ test("trip documents the family cannot draw whole go to the generic card", () =>
     expect(document.querySelector(".hkc-trip")).toBeNull();
     cleanup();
   }
+});
+
+test("V6 day tabs: one day shown at a time, Day n over its short date, arrow keys move between days", () => {
+  draw(trip(days, { as_of: "2026-10-01T09:00Z" }), { media });
+  const tabs = screen.getAllByRole("tab");
+  expect(tabs.map(tab => tab.textContent)).toEqual(["Day 1 Wed 14", "Day 2 Thu 15", "Day 3 Fri 16"]);
+  expect(screen.getByRole("tablist", { name: "Days" })).toBeTruthy();
+  expect(tabs[0].getAttribute("aria-selected")).toBe("true");
+  expect(shown().map(day => day.querySelector("h3")!.textContent)).toEqual(["1. Higashiyama"]);
+  fireEvent.click(tabs[1]);
+  expect(shown().map(day => day.querySelector("h3")!.textContent)).toEqual(["2. Arashiyama"]);
+  fireEvent.keyDown(tabs[1], { key: "ArrowRight" });
+  expect(screen.getByRole("tab", { selected: true }).textContent).toBe("Day 3 Fri 16");
+  expect(shown()[0].textContent).toContain("Bring water.");
+  cleanup();
+  // A one-day trip needs no tabs.
+  draw(trip([days[0]]), { media });
+  expect(screen.queryByRole("tablist")).toBeNull();
+  expect(headings()).toEqual(["1. Higashiyama"]);
+});
+
+test("V6 hero: the photo carries the day's date and title; without a photo the same words lead the day", () => {
+  draw(trip(), { media });
+  const first = document.querySelectorAll<HTMLElement>(".hkc-day")[0];
+  const hero = first.querySelector<HTMLElement>(".hkc-trip-hero")!;
+  expect(hero.querySelector("img")!.getAttribute("alt")).toBe("Higashiyama street");
+  expect(hero.querySelector("time")!.textContent).toBe("Wed 14 Oct");
+  expect(hero.querySelector("h3")!.textContent).toBe("1. Higashiyama");
+  const third = document.querySelectorAll<HTMLElement>(".hkc-day")[2];
+  expect(third.querySelector(".hkc-trip-hero")).toBeNull();
+  expect(third.querySelector(".hkc-day-head h3")!.textContent).toBe("3. Fushimi Inari");
+  cleanup();
+  // A host that serves no photos draws no hero at all, and no white words over nothing.
+  draw(trip());
+  expect(document.querySelector(".hkc-trip-hero")).toBeNull();
+  expect(headings()).toEqual(["1. Higashiyama", "2. Arashiyama", "3. Fushimi Inari"]);
+});
+
+test("V6 schematic map: with no map tiles, numbered pins placed west to east and north to south, named for screen readers", () => {
+  const four = [...days, { heading: "Day 4 · Nishiki and Gion", date: "2026-10-17", bullets: ["10:00 Nishiki Market"] }];
+  const pinsAt = [{ id: "d1", label: "Higashiyama", lat: "34.9967", lon: "135.7850" }, { id: "d2", label: "Arashiyama", lat: "35.0094", lon: "135.6668" },
+    { id: "d3", label: "Fushimi Inari", lat: "34.9671", lon: "135.7727" }, { id: "d4", label: "Nishiki and Gion", lat: "35.0050", lon: "135.7650" }];
+  const doc = trip(four, { blocks: [{ kind: "visual", visual: { kind: "map", places: pinsAt } }, { kind: "text", sections: four }] });
+  draw(doc, { media: { resolveArtifact: media.resolveArtifact } });
+  const map = screen.getByRole("figure", { name: "Map of the trip, not to scale" });
+  expect(map.textContent).toContain("Where each day is · pin number = day");
+  expect(map.textContent).toContain("Schematic · not to scale");
+  const pins = [...map.querySelectorAll(".hkc-trip-pin")];
+  expect(pins.map(pin => pin.textContent)).toEqual(["1", "2", "3", "4"]);
+  const xy = pins.map(pin => /translate\(([\d.]+) ([\d.]+)\)/.exec(pin.getAttribute("transform")!)!.slice(1).map(Number));
+  // Arashiyama (2) is furthest west, Higashiyama (1) furthest east; Fushimi Inari (3) is furthest south.
+  expect(xy[1][0]).toBeLessThan(xy[3][0]);
+  expect(xy[3][0]).toBeLessThan(xy[2][0]);
+  expect(xy[2][0]).toBeLessThan(xy[0][0]);
+  expect(Math.max(...xy.map(([, y]) => y))).toBe(xy[2][1]);
+  expect([...map.querySelectorAll("ol li")].map(li => li.textContent)).toEqual(pinsAt.map(place => place.label));
+  expect(map.querySelector("img")).toBeNull();
+  cleanup();
+  // With tiles lent, the real map is drawn instead; a place without coordinates draws no map at all.
+  draw(doc, { media });
+  expect(screen.queryByRole("figure", { name: "Map of the trip, not to scale" })).toBeNull();
+  expect(screen.getByRole("figure", { name: "Map" })).toBeTruthy();
+  cleanup();
+  const broken = trip(four, { blocks: [{ kind: "visual", visual: { kind: "map", places: [{ id: "d1", label: "Higashiyama", lat: "north", lon: "135.7850" }] } }, { kind: "text", sections: four }] });
+  draw(broken, { media: { resolveArtifact: media.resolveArtifact } });
+  expect(screen.queryByRole("figure")).toBeNull();
+  expect(headings()).toHaveLength(4);
+});
+
+test("the schematic legend says pin = day only when there is one place per day", () => {
+  draw(trip(), { media: { resolveArtifact: media.resolveArtifact } });
+  expect(screen.getByRole("figure", { name: "Map of the trip, not to scale" }).textContent).toContain("Where the places are");
 });
 
 test("trip widgets: medium is the next day with its photo and two stops; large lists the days; small is not offered", () => {

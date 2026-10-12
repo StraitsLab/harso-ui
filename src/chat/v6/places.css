@@ -48,15 +48,51 @@
 }
 .harso-kit .hkc-day:first-child { background: none; padding-top: 0; }
 .harso-kit .hkc-day .hkc-output-thumb { width: 100%; height: 88px; border-radius: var(--hk-radius-control); align-self: stretch; }
-.harso-kit .hkc-day-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--hk-space-1) var(--hk-space-3); }
-.harso-kit .hkc-day-head h3 { margin: 0; font-size: var(--hk-text-body); font-weight: 600; color: var(--hk-ink); }
-.harso-kit .hkc-day-head time { margin-inline-start: auto; font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-day-head { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.harso-kit .hkc-day-head time { font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-day-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--hk-space-1) var(--hk-space-2); min-width: 0; }
+.harso-kit .hkc-day-title h3 { margin: 0; font-size: var(--hk-text-title); font-weight: 600; color: var(--hk-ink); overflow-wrap: anywhere; }
 .harso-kit .hkc-day-next { padding: 0 var(--hk-space-2); border-radius: var(--hk-radius-pill); background: var(--hk-accent-soft); color: var(--hk-accent); font-size: var(--hk-text-xs); font-weight: 600; }
-.harso-kit .hkc-day[data-next] .hkc-day-head h3 { color: var(--hk-accent); }
+.harso-kit .hkc-day[data-next] > .hkc-day-head h3 { color: var(--hk-accent); }
 .harso-kit .hkc-day-note { margin: 0; font-size: var(--hk-text-meta); color: var(--hk-secondary); }
 .harso-kit .hkc-stops { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--hk-space-1); font-size: var(--hk-text-meta); }
 .harso-kit .hkc-stop { display: flex; gap: var(--hk-space-3); align-items: baseline; }
 .harso-kit .hkc-stop-time { min-width: 3.2em; color: var(--hk-secondary); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-trip .hkc-stops { gap: var(--hk-space-2); font-size: var(--hk-text-chrome); }
+.harso-kit .hkc-trip .hkc-stop-time { min-width: 3.6em; }
+
+/* V6 day tabs: equal tabs, "Day 1" over its short date; the chosen day wears the accent tint. The kit Tabs own keys and focus. */
+.harso-kit .hkc-trip-tabs .hk-tab-list { gap: var(--hk-space-1); padding: 0; border-radius: 0; background: none; align-self: stretch; }
+.harso-kit .hkc-trip-tabs .hk-tab--pill {
+  flex: 1 0 64px; flex-direction: column; gap: 0; min-height: 44px; padding: var(--hk-space-1) var(--hk-space-2);
+  border-radius: var(--hk-radius-control); background: var(--hk-field-tint); color: var(--hk-secondary); line-height: 16px;
+}
+.harso-kit .hkc-trip-tabs .hk-tab--pill b { font-size: var(--hk-text-meta); font-weight: 600; color: var(--hk-ink); }
+.harso-kit .hkc-trip-tabs .hk-tab--pill span { font-size: var(--hk-text-xs); font-weight: 400; }
+.harso-kit .hkc-trip-tabs .hk-tab--pill[aria-selected="true"] { background: var(--hk-accent-soft); color: var(--hk-accent); box-shadow: none; }
+.harso-kit .hkc-trip-tabs .hk-tab--pill[aria-selected="true"] b { color: inherit; }
+.harso-kit .hkc-trip-tabs .hk-tab-panel { padding: var(--hk-space-3) 0 0; }
+
+/* V6 hero: the day's photo with its date and "1. Area" on it. White words need the dark veil, so they appear only once
+   the photo has arrived; while it loads or if it fails, the quiet tile keeps the words in ink. */
+.harso-kit .hkc-trip-hero { position: relative; min-height: 112px; border-radius: var(--hk-radius-card); overflow: hidden; }
+.harso-kit .hkc-trip-hero .hkc-output-thumb { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; }
+.harso-kit .hkc-trip-hero > .hkc-day-head { position: absolute; inset: auto 0 0; padding: var(--hk-space-3) var(--hk-space-4); }
+.harso-kit .hkc-trip-hero > .hkc-day-head h3 { font-size: var(--hk-text-display); line-height: 1.15; letter-spacing: -.01em; }
+.harso-kit .hkc-trip-hero:has(.hkc-output-thumb[data-state="ready"]) > .hkc-day-head {
+  background: linear-gradient(transparent, color-mix(in srgb, black 62%, transparent)); padding-top: var(--hk-space-8);
+}
+.harso-kit .hkc-trip-hero:has(.hkc-output-thumb[data-state="ready"]) > .hkc-day-head :is(time, h3) { color: white; }
+
+/* V6 schematic map: drawn offline when the host lends no tiles. Numbered pins, a plain grid, "not to scale". */
+.harso-kit .hkc-trip-map { display: flex; flex-direction: column; gap: var(--hk-space-1); margin: var(--hk-space-1) 0 0; }
+.harso-kit .hkc-trip-map-legend { font-size: var(--hk-text-xs); color: var(--hk-secondary); }
+.harso-kit .hkc-trip-map-plane { display: block; width: 100%; height: 104px; border-radius: var(--hk-radius-card); overflow: hidden; }
+.harso-kit .hkc-trip-map-land { fill: var(--hk-field-tint); }
+.harso-kit .hkc-trip-map-grid line { stroke: var(--hk-line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.harso-kit .hkc-trip-map-scale { fill: var(--hk-secondary); font-size: 10px; }
+.harso-kit .hkc-trip-pin path { fill: var(--hk-negative); stroke: var(--hk-surface); stroke-width: 1.5; }
+.harso-kit .hkc-trip-pin text { fill: var(--hk-surface); font-size: 11px; font-weight: 700; }
 
 /* ---- widgets: a tile-sized view whose title is the one button that opens the answer ---- */
 .harso-kit .hkc-v6-widget { position: relative; display: flex; flex-direction: column; gap: var(--hk-space-2); min-width: 0; height: 100%; padding: var(--hk-space-4); box-sizing: border-box; overflow: hidden; background: var(--hk-surface); color: var(--hk-ink); }
@@ -94,6 +130,10 @@
   .harso-kit .hkc-place-directions { transition: none; }
 }
 @media (forced-colors: active) {
+  .harso-kit .hkc-trip-tabs .hk-tab--pill[aria-selected="true"] { background: Highlight; color: HighlightText; forced-color-adjust: none; }
+  .harso-kit .hkc-trip-pin path { fill: CanvasText; stroke: Canvas; }
+  .harso-kit .hkc-trip-pin text { fill: Canvas; }
+  .harso-kit .hkc-trip-map-grid line { stroke: GrayText; }
   .harso-kit .hkc-stars-back, .harso-kit .hkc-stars-fill { color: CanvasText; }
   .harso-kit .hkc-place[aria-current="true"] { outline: 2px solid Highlight; }
   .harso-kit .hkc-place-directions { outline: 1px solid ButtonText; }
