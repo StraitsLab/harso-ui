@@ -45,6 +45,14 @@ test.each([
   expect(v6TemplateOf(doc(value))).toBe(expected);
 });
 
+test("a card name this kit has no design for draws the generic card, never nothing", () => {
+  const plain = draw(doc(), {}).container.innerHTML;
+  cleanup();
+  const unknown = draw(doc("hotel-booking"), V6_FAMILIES).container.innerHTML;
+  expect(shape(unknown)).toBe(shape(plain));
+  expect(screen.getByRole("region", { name: "Quote" }).textContent).toContain("Acme");
+});
+
 test("a hinted document with no family registered draws exactly the generic card the unhinted one draws", () => {
   const plain = draw(doc(), {}).container.innerHTML;
   cleanup();

@@ -25,7 +25,10 @@ export const V6_FAMILIES: V6Registry = Object.freeze({
   "stock-quote": finance, "bills-due": finance, "subscriptions": finance,
 });
 
-/** The document's template hint if it is one of the 20 names; anything else (absent, unknown, a variant name) is none. */
+/**
+ * The document's template hint when this kit has a design for it. Any other name is a valid card this kit has no
+ * design for yet (it draws as the generic card), so a new card never waits for a kit release.
+ */
 export function v6TemplateOf(document: Pick<HarsoOutputDocument, "template">): V6Template | undefined {
   const template: unknown = document.template;
   return typeof template === "string" && (V6_TEMPLATES as readonly string[]).includes(template) ? template as V6Template : undefined;
