@@ -1,5 +1,6 @@
 "use client";
 
+import { v6TemplateOf } from "./registry";
 import type { ReactNode } from "react";
 import { Button } from "../../primitives";
 import { HarsoOutputActionRow, readAction, type HarsoOutputActionBlock, type HarsoOutputDocument, type HarsoOutputNumber, type HarsoOutputRow } from "../output-card";
@@ -142,7 +143,7 @@ function Rows({ rows, verb, renderBrand }: { rows: HarsoOutputRow[]; verb: strin
 // ---- the family ----
 
 function renderFamily({ document, mode, widgetSize, host, renderBrand, onOpenDetails }: V6FamilyProps): ReactNode | undefined {
-  const template = document.template;
+  const template = v6TemplateOf(document);
   if (template !== "stock-quote" && template !== "bills-due" && template !== "subscriptions") return undefined;
   if (widgetSize && !SIZES[template]!.includes(widgetSize)) return undefined;
   // A block the host marks loading, empty, partial, stale or failed is drawn with its state by the generic card.

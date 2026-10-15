@@ -149,8 +149,9 @@ test("the v6 foundation is exported from the chat index under Harso names", () =
 // ---- compile-time: each line below must stay a type error, or typecheck fails on the unused directive ----
 type Doc = HarsoOutputDocument;
 export const typeChecks = () => {
-  // @ts-expect-error a template outside the 20 names
-  const a: Doc = { header: { title: "t" }, blocks: [], fallback_text: "f", template: "flight-status-inair" };
+  // A name outside the 20 is a valid card (drawn generically), so it type-checks; a non-string still does not.
+  // @ts-expect-error a template is a string
+  const a: Doc = { header: { title: "t" }, blocks: [], fallback_text: "f", template: 7 };
   // @ts-expect-error tracking needs its label
   const b: HarsoOutputStatusBlock = { kind: "status", state: "tracking" };
   // @ts-expect-error tracking never carries a subject

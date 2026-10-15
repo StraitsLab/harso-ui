@@ -78,8 +78,11 @@ export interface HarsoOutputDocumentDetails { sources?: HarsoOutputSource[]; ass
 export interface HarsoOutputDocument {
   kind?: "output_blocks";
   major?: 1;
-  /** C0: which of the 20 answer templates this is. Absent or unhandled draws the generic card. Never inferred from a title. */
-  template?: V6Template;
+  /**
+   * C0: the card's name, a hint. One of the 20 names below picks a designed family; any other name is still a valid card
+   * and draws as the generic card, so a new card never waits for a kit release. Never inferred from a title.
+   */
+  template?: V6Template | (string & {});
   /** C8 and C9: closed optional facts a family reads. The generic card ignores them. */
   weather?: V6Weather;
   flight?: V6Flight;

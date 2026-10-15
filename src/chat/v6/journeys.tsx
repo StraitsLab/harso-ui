@@ -6,6 +6,7 @@ import { HARSO_OUTPUT_CARD_CAPS, HarsoOutputActionRow, HarsoOutputCardMeta, read
   type HarsoOutputActionBlock, type HarsoOutputRow, type HarsoOutputRowsBlock } from "../output-card";
 import { readStatus, type HarsoOutputTrackingStatusBlock } from "../output-card-media";
 import { V6Brand, V6Frame } from "./frame";
+import { v6TemplateOf } from "./registry";
 import type { V6Family, V6FamilyProps, V6Host, V6RenderBrand, V6Template, WidgetSize } from "./types";
 import "./journeys.css";
 
@@ -252,7 +253,7 @@ const WIDGETS: Partial<Record<V6Template, readonly WidgetSize[]>> = { "delivery-
 export const family: V6Family = {
   renderFamily(props) {
     if (props.widgetSize && props.widgetSize !== "small" && props.widgetSize !== "medium") return undefined;
-    switch (props.document.template) {
+    switch (v6TemplateOf(props.document)) {
       case "delivery-tracking": return delivery(props);
       case "flight-status": return flightStatus(props);
       case "flight-options": return flightOptions(props);

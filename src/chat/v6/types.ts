@@ -9,7 +9,10 @@ import type { HarsoOutputMediaHost } from "../output-card-media";
  * contract names or it does not.
  */
 
-/** C0: the 20 existing answer templates. A variant (in flight, parcel, open) is the same template with other data. */
+/**
+ * C0: the 20 templates this kit has a design for. The card contract accepts any lowercase-hyphen name; a name outside
+ * this list is still a card and draws as the generic card. A variant (in flight, parcel, open) is the same template.
+ */
 export const V6_TEMPLATES = [
   "bills-due", "compare-products", "day-agenda", "deadlines-from-mail", "delivery-tracking", "flight-options", "flight-status",
   "inbox-brief", "meeting-brief", "places-nearby", "price-watch", "product-shortlist", "recurring-reminder", "reply-draft",

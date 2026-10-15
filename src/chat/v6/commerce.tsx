@@ -1,4 +1,5 @@
 import { Check } from "@phosphor-icons/react";
+import { v6TemplateOf } from "./registry";
 import type { ReactNode } from "react";
 import { HARSO_OUTPUT_CARD_CAPS, HarsoOutputActionRow, readAction, type HarsoOutputActionBlock, type HarsoOutputBlock, type HarsoOutputRow, type HarsoOutputRowsBlock } from "../output-card";
 import { HarsoOutputRowStatus, readTable, type HarsoOutputTableBlock } from "../output-card-charts";
@@ -191,7 +192,8 @@ const DRAW: Partial<Record<V6Template, (props: V6FamilyProps) => ReactNode | und
 
 export const family: V6Family = {
   renderFamily(props) {
-    const draw = props.document.template && Object.hasOwn(DRAW, props.document.template) ? DRAW[props.document.template] : undefined;
+    const template = v6TemplateOf(props.document);
+    const draw = template && Object.hasOwn(DRAW, template) ? DRAW[template] : undefined;
     // A block the host marked loading, empty, partial, stale or failed is the generic card's to say; this card draws ready data only.
     const ready = Object.values(props.host.blockStates ?? {}).every(state => !state || state.state === "ready");
     return draw && ready ? draw(props) : undefined;

@@ -1,5 +1,6 @@
 "use client";
 
+import { v6TemplateOf } from "./registry";
 import type { ReactNode } from "react";
 import { Button } from "../../primitives";
 import {
@@ -182,7 +183,7 @@ function Passed({ texts }: { texts: HarsoOutputTextBlock[] }) {
 
 function renderFamily(props: V6FamilyProps): ReactNode | undefined {
   const { document, mode, widgetSize, host, renderBrand, onOpenDetails } = props;
-  const template = document.template;
+  const template = v6TemplateOf(document);
   if (template !== "inbox-brief" && template !== "deadlines-from-mail" && template !== "reply-draft") return undefined;
   if (widgetSize && !SIZES[template]?.includes(widgetSize)) return undefined;
   const parts = readParts(document, template);
