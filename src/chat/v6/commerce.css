@@ -62,7 +62,8 @@
 .harso-kit .hkc-v6-recommend p { margin: 2px 0 0; font-size: var(--hk-text-meta); color: var(--hk-secondary); }
 
 /* Price watch with Now and Target: two prices beside the photo, a bar toward the target, then the shops as tiles. */
-.harso-kit .hkc-v6-watch-prices { flex: 1 1 auto; display: flex; gap: var(--hk-space-4); min-width: 0; }
+.harso-kit .hkc-v6-watch-prices { flex: 1 1 auto; display: flex; flex-wrap: wrap; gap: var(--hk-space-2) var(--hk-space-4); min-width: 0; }
+.harso-kit .hkc-v6-watch-price .hkc-v6-watch-delta { color: var(--hk-secondary); }
 .harso-kit .hkc-v6-watch-price { margin: 0; display: flex; flex-direction: column; gap: 2px; }
 .harso-kit .hkc-v6-watch-price span { font-size: var(--hk-text-meta); color: var(--hk-secondary); }
 .harso-kit .hkc-v6-watch-price strong { font-size: 27px; line-height: 1.1; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--hk-ink); }
@@ -70,8 +71,8 @@
 .harso-kit .hkc-v6-gauge-track { height: 5px; border-radius: var(--hk-radius-pill); background: var(--hk-field-tint); overflow: hidden; }
 .harso-kit .hkc-v6-gauge-track span { display: block; height: 100%; border-radius: inherit; background: var(--hk-accent); }
 .harso-kit .hkc-v6-gauge-words { margin: 5px 0 0; font-size: var(--hk-text-meta); color: var(--hk-secondary); }
-.harso-kit .hkc-v6-shops--tiles { flex-direction: row; margin-top: var(--hk-space-3); }
-.harso-kit .hkc-v6-shops--tiles .hkc-v6-shop { flex: 1 1 0; min-width: 0; flex-direction: column; align-items: flex-start; gap: var(--hk-space-1); }
+.harso-kit .hkc-v6-shops--tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); margin-top: var(--hk-space-3); }
+.harso-kit .hkc-v6-shops--tiles .hkc-v6-shop { min-width: 0; flex-direction: column; align-items: flex-start; gap: var(--hk-space-1); }
 .harso-kit .hkc-v6-shops--tiles .hkc-v6-shop:has(.hkc-output-card-pick) { background: var(--hk-accent-soft); box-shadow: inset 0 0 0 1px var(--hk-accent); }
 .harso-kit .hkc-v6-shops--tiles .hkc-v6-price { margin-inline-start: 0; }
 
