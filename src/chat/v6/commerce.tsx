@@ -1,7 +1,7 @@
 import { Check } from "@phosphor-icons/react";
 import { v6TemplateOf } from "./registry";
 import type { ReactNode } from "react";
-import { HARSO_OUTPUT_CARD_CAPS, HarsoOutputActionRow, readAction, type HarsoOutputActionBlock, type HarsoOutputBlock, type HarsoOutputRow, type HarsoOutputRowsBlock } from "../output-card";
+import { HARSO_OUTPUT_CARD_CAPS, HarsoOutputActionRow, readAction, type HarsoOutputActionBlock, type HarsoOutputBlock, type HarsoOutputNumbersBlock, type HarsoOutputRow, type HarsoOutputRowsBlock, type HarsoOutputTextBlock } from "../output-card";
 import { HarsoOutputRowStatus, readTable, type HarsoOutputTableBlock } from "../output-card-charts";
 import { HarsoOutputStatusView, HarsoOutputThumb, isPhoto, readStatus, type HarsoOutputMediaHost, type HarsoOutputPhoto } from "../output-card-media";
 import { V6Brand, V6Frame } from "./frame";
@@ -36,6 +36,17 @@ function readRows(block: HarsoOutputBlock | undefined): HarsoOutputRowsBlock | u
   const rows = block as HarsoOutputRowsBlock | undefined;
   return rows && Array.isArray(rows.items) && rows.items.length && rows.items.every(row => row && text(row.label)) ? rows : undefined;
 }
+
+/** A plain money amount ("S$1,299", "US$9.50"), else nothing: a word, range or note is never read as a number. */
+const MONEY = /^[A-Z]{0,3}\$[0-9]+(?:,[0-9]{3})*(?:\.[0-9]{1,2})?$/;
+const moneyValue = (value: string) => MONEY.test(value) ? Number(value.replace(/^[^0-9]*/, "").replace(/,/g, "")) : undefined;
+const currency = (value: string) => value.replace(/[0-9].*$/, "");
+/** price minus base, only when both are plain amounts in the same currency (as on iPhone). */
+function moneyGap(price: string, base: string) {
+  const a = moneyValue(price), b = moneyValue(base);
+  return a !== undefined && b !== undefined && currency(price) === currency(base) ? a - b : undefined;
+}
+const moneyAmount = (value: number, like: string) => currency(like) + (Number.isInteger(value) ? String(value) : value.toFixed(2));
 
 const price = (row: HarsoOutputRow) => text(row.trailing) ? <span className="hkc-v6-price">{row.trailing}</span> : null;
 const pick = (row: HarsoOutputRow) => row.mark === "pick" ? <span className="hkc-output-card-pick">Pick</span> : null;
@@ -75,9 +86,12 @@ function Rating({ row }: { row: HarsoOutputRow }) {
 
 function priceWatch(props: V6FamilyProps) {
   const { document, mode, host, media, widgetSize } = props;
-  const found = parts(document.blocks, ["status", "rows", "action", "visual"]);
+  const found = parts(document.blocks, ["status", "rows", "action", "visual", "numbers"]);
   const rows = readRows(found?.get("rows"));
   if (!found || !rows) return undefined;
+  const numbers = (found.get("numbers") as HarsoOutputNumbersBlock | undefined)?.items;
+  const now = numbers?.find(item => item?.label?.startsWith("Now")), target = numbers?.find(item => item?.label?.startsWith("Target"));
+  if (numbers && (!now || !target)) return undefined;
   const statusBlock = found.get("status");
   const status = statusBlock && readStatus(statusBlock);
   if (statusBlock && !status) return undefined;
@@ -117,14 +131,32 @@ function priceWatch(props: V6FamilyProps) {
   return <V6Frame document={document} mode={mode} host={host} onOpenDetails={props.onOpenDetails} renderBrand={props.renderBrand} className="hkc-v6-commerce">
     <div className="hkc-v6-watch">
       <Photo photo={photo} media={media} />
-      <ul className="hkc-v6-shops" role="list">{shown.map((row, index) => shop(row, index))}</ul>
+      {now && target
+        ? <div className="hkc-v6-watch-prices">{[now, target].map(item => <p key={item.label} className="hkc-v6-watch-price"><span>{item.label}</span><strong>{item.value}</strong></p>)}</div>
+        : <ul className="hkc-v6-shops" role="list">{shown.map((row, index) => shop(row, index))}</ul>}
     </div>
+    {now && target && <Gauge now={now.value} target={target.value} />}
+    {now && target && <ul className="hkc-v6-shops hkc-v6-shops--tiles" role="list">{shown.map((row, index) => shop(row, index))}</ul>}
     <Shown rows={rows} mode={mode} />
     <div className="hkc-v6-foot">
       {status && <HarsoOutputStatusView status={status} live={live} />}
       {action && <HarsoOutputActionRow block={action} host={host} />}
     </div>
   </V6Frame>;
+}
+
+/** How far the price is from the target, as a bar and in words. Drawn only when both are plain amounts in one currency. */
+function Gauge({ now, target }: { now: string; target: string }) {
+  const gap = moneyGap(now, target), current = moneyValue(now), goal = moneyValue(target);
+  if (gap === undefined || !current || goal === undefined) return null;
+  const words = gap === 0 ? "At target" : `${moneyAmount(Math.abs(gap), now)} ${gap < 0 ? "under" : "above"} target`;
+  const fill = Math.round(Math.min(1, Math.max(0, goal / current)) * 100);
+  return <div className="hkc-v6-gauge">
+    <div className="hkc-v6-gauge-track" role="meter" aria-label="Price toward target" aria-valuemin={0} aria-valuemax={100} aria-valuenow={fill} aria-valuetext={words}>
+      <span style={{ width: `${fill}%` }} />
+    </div>
+    <p className="hkc-v6-gauge-words" aria-hidden="true">{words}</p>
+  </div>;
 }
 
 // ---- compare products ----
@@ -136,9 +168,11 @@ const winnerOf = (table: HarsoOutputTableBlock, row: HarsoOutputTableBlock["rows
 function compare(props: V6FamilyProps) {
   const { document, mode, host, media, widgetSize } = props;
   if (widgetSize) return undefined;
-  const found = parts(document.blocks, ["table", "action"]);
+  const found = parts(document.blocks, ["table", "text", "action"]);
   const table = found?.get("table") && readTable(found.get("table")!);
   if (!found || !table) return undefined;
+  const pickBlock = found.get("text") as HarsoOutputTextBlock | undefined;
+  if (pickBlock && (!text(pickBlock.summary) || !Array.isArray(pickBlock.sections))) return undefined;
   const action = found.get("action") as HarsoOutputActionBlock | undefined;
   const cell = (row: HarsoOutputTableBlock["rows"][number], index: number) => index === 0
     ? <th key={index} scope="row">{row.cells[0]}{(row.status || row.status_label) && <> <HarsoOutputRowStatus status={row.status} status_label={row.status_label} /></>}</th>
@@ -158,6 +192,10 @@ function compare(props: V6FamilyProps) {
           ? <th key={index} scope="row">{value}</th> : <td key={index} data-align={table.columns[index].align === "end" ? "end" : "start"}>{value}</td>)}</tr></tfoot>}
       </table>
     </div>
+    {pickBlock && <div className="hkc-v6-recommend">
+      <b>{pickBlock.summary}</b>
+      {pickBlock.sections.flatMap(section => [...section.paragraphs ?? [], ...section.bullets ?? []]).filter(text).map((line, index) => <p key={index}>{line}</p>)}
+    </div>}
     {action && <div className="hkc-v6-foot"><HarsoOutputActionRow block={action} host={host} /></div>}
   </V6Frame>;
 }

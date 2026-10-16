@@ -352,3 +352,33 @@ test("styles: tokens only, no !important, 44px targets on touch, a visible focus
   expect(source).toMatch(/pointer: coarse\) \{[^}]*hkc-v6-open-row[^}]*min-height: 44px/);
   expect(source).toMatch(/hkc-v6-open-row:focus-visible/);
 });
+
+// ---- WEV-3469: the card files' own shapes (answer-templates, 15 Oct) draw the V6 design, as on iPhone ----
+
+test("compare: a text block after the table is Harso's pick, drawn as the green recommendation under the table", () => {
+  const pick = { kind: "text", summary: "Harso’s pick · Pixel 11", sections: [{ paragraphs: ["Better zoom and night photos for less."] }] } as const;
+  const { card } = draw(valid(doc("compare-products", [{ kind: "table", columns, rows: sample }, pick], { header: { title: "iPhone 17 vs Pixel 11" } })));
+  expect(card.querySelector(".hkc-v6-compare-table")).not.toBeNull();
+  const box = card.querySelector<HTMLElement>(".hkc-v6-recommend")!;
+  expect(box.textContent).toBe("Harso’s pick · Pixel 11Better zoom and night photos for less.");
+  expect(card.querySelector(".hkc-v6-compare")!.compareDocumentPosition(box) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  cleanup();
+  expect(draw(compare(sample)).card.querySelector(".hkc-v6-recommend")).toBeNull();
+});
+
+test("price watch: Now and Target numbers draw as two prices and a bar toward the target, said in words", () => {
+  const numbers = { kind: "numbers", items: [{ value: "S$339", label: "Now · Lazada" }, { value: "S$300", label: "Target · under" }] } as const;
+  const { card } = draw(priceWatch(shops, numbers, photo));
+  expect(card.querySelector(".hkc-v6-shop")).not.toBeNull();
+  expect([...card.querySelectorAll(".hkc-v6-watch-price")].map(node => node.textContent)).toEqual(["Now · LazadaS$339", "Target · underS$300"]);
+  const gauge = within(card).getByRole("meter", { name: "Price toward target" });
+  expect(gauge.getAttribute("aria-valuetext")).toBe("S$39 above target");
+  expect(within(card).getByText("S$39 above target")).toBeTruthy();
+});
+
+test("price watch: a gap the prices cannot prove (other currency, no number) draws no bar, never a guess", () => {
+  const numbers = { kind: "numbers", items: [{ value: "US$339", label: "Now" }, { value: "S$300", label: "Target" }] } as const;
+  const { card } = draw(priceWatch(shops, numbers));
+  expect(card.querySelectorAll(".hkc-v6-watch-price")).toHaveLength(2);
+  expect(within(card).queryByRole("meter")).toBeNull();
+});

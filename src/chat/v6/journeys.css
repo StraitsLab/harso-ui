@@ -13,6 +13,9 @@
 .harso-kit .hkc-journey-condition { margin-inline-start: auto; font-size: var(--hk-text-chrome); font-weight: 600; }
 .harso-kit .hkc-journey-condition[data-condition="on_time"] { color: var(--hk-positive); }
 .harso-kit .hkc-journey-condition[data-condition="delayed"] { color: var(--hk-attention); }
+/* V6: in the card the condition is a tinted pill (the widget keeps the bare word); a delay is red there, as on iPhone. */
+.harso-kit .hkc-journey-condition[data-pill][data-condition="delayed"] { color: var(--hk-negative); }
+.harso-kit .hkc-journey-condition[data-pill] { padding: 3px 7px; border-radius: var(--hk-radius-pill); background: color-mix(in srgb, currentColor 12%, transparent); font-size: var(--hk-text-meta); font-weight: 500; }
 
 /* the one bar */
 .harso-kit .hkc-journey-bar { position: relative; display: block; width: 100%; height: 6px; border-radius: var(--hk-radius-pill); overflow: hidden; background: var(--hk-line); }
@@ -35,7 +38,13 @@
 .harso-kit .hkc-journey-route b { font-size: var(--hk-text-display); font-weight: 600; line-height: 1; }
 .harso-kit .hkc-journey-route small { margin-top: var(--hk-space-1); color: var(--hk-secondary); font-size: var(--hk-text-meta); overflow-wrap: anywhere; }
 .harso-kit .hkc-journey-track { flex: 1 1 auto; min-width: var(--hk-space-8); }
-.harso-kit .hkc-journey-line { display: block; height: 2px; border-radius: var(--hk-radius-pill); background: var(--hk-line-strong); }
+.harso-kit .hkc-journey-track { position: relative; color: var(--hk-accent); }
+.harso-kit .hkc-journey-track[data-condition="on_time"] { color: var(--hk-positive); }
+.harso-kit .hkc-journey-track[data-condition="delayed"] { color: var(--hk-negative); }
+.harso-kit .hkc-journey-line { display: block; height: 3px; border-radius: var(--hk-radius-pill); background: color-mix(in srgb, currentColor 35%, transparent); }
+.harso-kit .hkc-journey-track .hkc-journey-bar { height: 3px; background: color-mix(in srgb, currentColor 35%, transparent); }
+.harso-kit .hkc-journey-plane { position: absolute; top: 50%; transform: translateY(-50%) rotate(45deg); padding: 0 2px; background: var(--hk-surface); color: currentColor; }
+@media (forced-colors: active) { .harso-kit .hkc-journey-plane { forced-color-adjust: auto; } }
 
 /* times and facts */
 .harso-kit .hkc-journey-times { display: flex; justify-content: space-between; gap: var(--hk-space-4); }

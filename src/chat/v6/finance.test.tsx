@@ -165,8 +165,8 @@ test("missing range: no range label is drawn, and no range control at all", () =
   expect(root.querySelector(".hkc-fin-range")).toBeNull();
   expect(root.querySelector(".hkc-fin-chartnote")).toBeNull(); // not even an empty line
   for (const text of ["1D", "1W", "1M", "1Y"]) expect(within(root).queryByText(text)).toBeNull();
-  // The only controls are the title (open target) and Details; nothing for a range.
-  expect(within(root).getAllByRole("button").map(button => button.textContent?.trim())).toEqual(["Apple · AAPL", "Details"]);
+  // The only control is the title (open target); nothing for a range, and Details waits in the opened card (V6).
+  expect(within(root).getAllByRole("button").map(button => button.textContent?.trim())).toEqual(["Apple · AAPL"]);
   expect(within(root).queryAllByRole("tab")).toHaveLength(0);
 });
 
@@ -177,7 +177,7 @@ test("range present: exactly the supplied range is named, as plain text that is 
     expect(label.textContent).toBe(range);
     expect(label.closest("button, [role=button], [role=tab]")).toBeNull();
     for (const other of ["1D", "1W", "1M", "1Y"].filter(text => text !== range)) expect(within(root).queryByText(other)).toBeNull();
-    expect(within(root).getAllByRole("button")).toHaveLength(2);
+    expect(within(root).getAllByRole("button")).toHaveLength(1);
     view.unmount();
   }
 });
@@ -370,7 +370,7 @@ test("stock widgets keep the price, change and chart at every size, and a widget
     expect(within(root).queryByRole("button", { name: "Details" })).toBeNull();
     view.unmount();
   }
-  expect(within(draw(stock()).root).getByRole("button", { name: "Details" })).toBeTruthy();
+  expect(within(draw(stock(), { mode: "full" }).root).getByRole("button", { name: "Details" })).toBeTruthy();
 });
 
 // ---- fallback: what this family cannot draw, the generic card draws ----
@@ -457,4 +457,13 @@ test("styles: tokens only, no borders or !important, no font, 44px targets on to
   const lines = [...normal.matchAll(/(?:^|[;{\s])((?:border|outline)(?:-(?:top|right|bottom|left))?(?:-(?:width|style))?)\s*:\s*([^;}]+)/g)].map(m => `${m[1]}: ${m[2].trim()}`);
   expect(lines.filter(line => !/^(border|outline)[a-z-]*: (0|none)$/.test(line))).toEqual([]);
   expect(source).toMatch(/pointer: coarse\) \{[^}]*hkc-fin-more[^}]*min-height: 44px/);
+});
+
+// WEV-3469: V6 draws a soft fill under the price line (Apple Stocks); a gap in the prices leaves no fill across it.
+test("the chart has a soft fill under each unbroken run of prices, closed to the bottom edge", () => {
+  const { root } = draw(stock({ range: "1D" }));
+  const fills = [...root.querySelectorAll("svg.hkc-fin-spark path.hkc-fin-fill")];
+  expect(fills).toHaveLength(1);
+  expect(fills[0].getAttribute("aria-hidden")).toBe("true");
+  expect(fills[0].getAttribute("d")).toMatch(/^M0 80 L0 [\d.]+ .* L300 80 Z$/);
 });

@@ -98,15 +98,22 @@ function Spark({ chart, direction, baseline }: { chart: HarsoOutputChart; direct
   const high = Math.max(...seen), low = Math.min(...seen), span = high - low || 1;
   const y = (value: number) => round(PAD + (high - value) / span * (H - 2 * PAD));
   let line = "", drawing = false;
+  const runs: [number, number][][] = [];
   points.forEach((value, index) => {
     if (value === null) { drawing = false; return; }
-    line += `${drawing ? "L" : "M"}${round(index / last * W)} ${y(value)} `;
+    const x = round(index / last * W);
+    line += `${drawing ? "L" : "M"}${x} ${y(value)} `;
+    if (!drawing) runs.push([]);
+    runs[runs.length - 1].push([x, y(value)]);
     drawing = true;
   });
+  // V6: a soft fill under each unbroken run, down to the bottom edge (decorative; the line and labels carry the facts).
+  const fill = runs.filter(run => run.length > 1).map(run => `M${run[0][0]} ${H} ${run.map(([x, py]) => `L${x} ${py}`).join(" ")} L${run[run.length - 1][0]} ${H} Z`).join(" ");
   const seenText = values.filter((value): value is string => value !== null), first = seenText[0], final = seenText[seenText.length - 1];
   return <svg className="hkc-fin-spark" data-direction={direction} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img"
     aria-label={`${chart.series[0].label} line, ${chart.x_labels[0]} to ${chart.x_labels[last]}, ${formatValue(first, chart.unit)} to ${formatValue(final, chart.unit)}`}>
     {base !== undefined && <line className="hkc-fin-baseline" data-value={baseline} x1={0} x2={W} y1={y(base)} y2={y(base)} strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />}
+    {fill && <path className="hkc-fin-fill" d={fill} aria-hidden="true" />}
     <path className="hkc-fin-line" d={line.trim()} vectorEffect="non-scaling-stroke" />
   </svg>;
 }

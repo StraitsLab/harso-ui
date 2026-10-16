@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowSquareOut } from "@phosphor-icons/react";
+import { AirplaneTilt, ArrowSquareOut } from "@phosphor-icons/react";
 import { useId, type ReactNode } from "react";
 import { HARSO_OUTPUT_CARD_CAPS, HarsoOutputActionRow, HarsoOutputCardMeta, readAction,
   type HarsoOutputActionBlock, type HarsoOutputRow, type HarsoOutputRowsBlock } from "../output-card";
@@ -44,16 +44,19 @@ function readParts(blocks: readonly { kind: string }[]): Parts | undefined {
   return parts;
 }
 
-interface Facts { number?: string; originCode: string; destinationCode: string; originName?: string; destinationName?: string;
+interface Facts { number?: string; originCode?: string; destinationCode: string; originName?: string; destinationName?: string;
   scheduled?: string; departure?: string; arrival?: string; departureZone?: string; arrivalZone?: string;
   terminal?: string; gate?: string; previousGate?: string; boarding?: string; seat?: string; remaining?: string }
 
-/** C9 as a flight card needs it: a route of two real airport codes, every other fact only when it is text. */
+/**
+ * C9 as a flight card needs it: a real destination airport code, every other fact only when it is text. The origin code
+ * is optional (WEV-3469): agent guidance leaves it out until a source proves it, so the origin's name starts the route.
+ */
 function readFlight(value: unknown): Facts | undefined {
   const f = record(value);
   const origin = text(f?.origin_code), destination = text(f?.destination_code);
-  if (!f || !origin || !destination || !AIRPORT.test(origin) || !AIRPORT.test(destination)) return undefined;
-  return { number: text(f.number), originCode: origin, destinationCode: destination, originName: text(f.origin_name), destinationName: text(f.destination_name),
+  if (!f || !destination || !AIRPORT.test(destination)) return undefined;
+  return { number: text(f.number), originCode: origin && AIRPORT.test(origin) ? origin : undefined, destinationCode: destination, originName: text(f.origin_name), destinationName: text(f.destination_name),
     scheduled: text(f.scheduled_departure), departure: text(f.departure), arrival: text(f.arrival), departureZone: text(f.departure_zone), arrivalZone: text(f.arrival_zone),
     terminal: text(f.terminal), gate: text(f.gate), previousGate: text(f.previous_gate), boarding: text(f.boarding), seat: text(f.seat), remaining: text(f.remaining) };
 }
@@ -80,13 +83,15 @@ function Bar({ progress, label, condition }: { progress: number; label: string; 
 const BarOf = ({ tracking }: { tracking?: Tracking }) =>
   tracking?.progress === undefined ? null : <Bar progress={tracking.progress} label={tracking.label} condition={tracking.condition} />;
 
-function StatusLine({ tracking, number }: { tracking?: Tracking; number?: string }) {
+function StatusLine({ tracking, number, subtitle }: { tracking?: Tracking; number?: string; subtitle?: string }) {
   if (!tracking && !number) return null;
-  const word = CONDITION[tracking?.condition ?? ""];
+  // A flight's delay is already the subtitle's first clause ("Delayed 45 min"): the pill says it whole, as on iPhone.
+  const lead = subtitle?.split(" · ")[0];
+  const word = tracking?.condition === "delayed" && lead?.startsWith("Delayed") ? lead : CONDITION[tracking?.condition ?? ""];
   return <p className="hkc-journey-status">
     {number && <span className="hkc-journey-number">{number}</span>}
     {tracking && <b>{tracking.label}</b>}
-    {word && <span className="hkc-journey-condition" data-condition={tracking!.condition}>{word}</span>}
+    {word && <span className="hkc-journey-condition" data-condition={tracking!.condition} data-pill={subtitle !== undefined || undefined}>{word}</span>}
   </p>;
 }
 
@@ -111,10 +116,13 @@ function Timeline({ rows }: { rows?: HarsoOutputRowsBlock }) {
 }
 
 function Route({ flight, tracking }: { flight: Facts; tracking?: Tracking }) {
-  const end = (code: string, name?: string) => <div><b>{code}</b>{name && <small>{name}</small>}</div>;
+  const end = (code: string | undefined, name?: string) => <div>{code ? <><b>{code}</b>{name && <small>{name}</small>}</> : <b>{name}</b>}</div>;
   return <div className="hkc-journey-route">
-    {end(flight.originCode, flight.originName)}
-    <div className="hkc-journey-track">{tracking?.progress === undefined ? <span className="hkc-journey-line" aria-hidden="true" /> : <BarOf tracking={tracking} />}</div>
+    {(flight.originCode || flight.originName) && end(flight.originCode, flight.originName)}
+    <div className="hkc-journey-track" data-condition={tracking?.condition}>
+      {tracking?.progress === undefined ? <span className="hkc-journey-line" aria-hidden="true" /> : <BarOf tracking={tracking} />}
+      <AirplaneTilt className="hkc-journey-plane" size={18} weight="fill" aria-hidden="true" style={{ insetInlineStart: `calc(${Math.min(100, Math.max(0, tracking?.progress ?? 0))}% - 9px)` }} />
+    </div>
     {end(flight.destinationCode, flight.destinationName)}
   </div>;
 }
@@ -196,7 +204,7 @@ function flightStatus(props: V6FamilyProps) {
   const offset = parts.rows?.items.map(row => dayOffset(rowFlight(row)?.arrival_day_offset)).find(Boolean);
   return <V6Frame document={document} mode={mode} host={host} renderBrand={renderBrand} onOpenDetails={onOpenDetails} className="hkc-journey" trailing={trailingActions(parts.actions, host)}>
     <div className="hkc-journey-body">
-      <StatusLine tracking={tracking} number={flight.number} />
+      <StatusLine tracking={tracking} number={flight.number} subtitle={document.header.subtitle ?? ""} />
       <Route flight={flight} tracking={tracking} />
       <Times flight={flight} offset={offset} />
       {flight.remaining && <p className="hkc-journey-remaining">{flight.remaining}</p>}

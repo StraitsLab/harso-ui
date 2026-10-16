@@ -339,10 +339,10 @@ test("a widget has no Details toggle, but still shows the snapshot time and open
   expect(onViewAll).toHaveBeenCalledTimes(1);
 });
 
-test("a card keeps every hour and its Details; the title opens the answer", () => {
+test("a card keeps every hour, leaves Details to the opened card, and the title opens the answer", () => {
   const onViewAll = vi.fn();
   const { card } = draw(doc(), { onViewAll });
-  expect(within(card!).getByRole("button", { name: "Details" })).toBeTruthy();
+  expect(within(card!).queryByRole("button", { name: "Details" })).toBeNull();
   fireEvent.click(within(card!).getByRole("button", { name: "Singapore" }));
   expect(onViewAll).toHaveBeenCalledTimes(1);
   expect(slots(card!, "day")).toHaveLength(5);

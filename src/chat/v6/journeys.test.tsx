@@ -174,7 +174,8 @@ test("flight status: the route, times, zones and facts are the document's, as gi
 
 test("flight status: delayed shows the old time struck and the old gate, with the word Delayed", () => {
   const { container } = draw(flight());
-  expect(screen.getByText("Delayed").getAttribute("data-condition")).toBe("delayed");
+  const pill = container.querySelector(".hkc-journey-condition")!;
+  expect([pill.textContent, pill.getAttribute("data-condition")]).toEqual(["Delayed 45 min", "delayed"]);
   expect([...container.querySelectorAll(".hkc-journey-times s")].map(node => node.textContent)).toEqual(["Was 08:35"]);
 });
 
@@ -244,8 +245,8 @@ test("flight status: the Was/Now rows open in the full answer in source order, n
   expect(within(screen.getByRole("list", { name: "Timeline" })).getAllByRole("listitem").map(li => li.firstElementChild!.textContent)).toEqual(["Was", "Now"]);
 });
 
-test("flight status: with no route in the document the generic card draws", () => {
-  expect(family.renderFamily(propsOf(flight({ origin_code: undefined })))).toBeUndefined();
+test("flight status: with no destination in the document the generic card draws", () => {
+  expect(family.renderFamily(propsOf(flight({ destination_code: undefined })))).toBeUndefined();
   expect(family.renderFamily(propsOf(flight({ destination_code: "tokyo" })))).toBeUndefined();
   expect(family.renderFamily(propsOf({ ...flight(), flight: undefined }))).toBeUndefined();
 });
@@ -372,4 +373,25 @@ test("styles: tokens only (light and dark follow the theme), no hex, no borders,
   expect(source).toMatch(/pointer: coarse\) \{[^}]*hkc-journey-option[^}]*min-height: 44px/);
   expect(source).toMatch(/hkc-journey-option:focus-visible/);
   expect(source).toMatch(/hkc-journey-widget-open:focus-visible/);
+});
+
+// WEV-3469: the flight-status card file names no origin code (kept out of agent guidance until a source proves it).
+test("flight status: no origin code still draws the V6 route, with the origin's name at the start", () => {
+  draw(flight({ origin_code: undefined }));
+  const route = document.querySelector<HTMLElement>(".hkc-journey-route")!;
+  expect(route).not.toBeNull();
+  expect([...route.querySelectorAll(":scope > div:not(.hkc-journey-track)")].map(end => end.textContent)).toEqual(["Singapore", "NRTTokyo Narita"]);
+  expect(route.querySelector(".hkc-journey-track")).not.toBeNull();
+  expect(screen.getByText("09:20")).toBeTruthy();
+});
+
+test("flight status: the delay pill takes the subtitle's own words and a plane sits on the route line", () => {
+  draw(flight({}, undefined, { header: { title: "SQ 638 departs 09:20", subtitle: "Delayed 45 min · Gate B6", brand: "singaporeair.com" } }));
+  const pill = document.querySelector<HTMLElement>(".hkc-journey-condition")!;
+  expect(pill.textContent).toBe("Delayed 45 min");
+  expect(pill.dataset.pill).toBe("true");
+  expect(document.querySelector(".hkc-journey-track .hkc-journey-plane")).not.toBeNull();
+  cleanup();
+  draw(flight({}, { label: "Awaiting departure", condition: "on_time" }, { header: { title: "SQ 638 departs 08:35", subtitle: "Gate B6" } }));
+  expect(document.querySelector(".hkc-journey-condition")!.textContent).toBe("On time");
 });
