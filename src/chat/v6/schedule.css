@@ -43,7 +43,9 @@
   margin: var(--hk-space-1) 0 0; padding: var(--hk-space-1) var(--hk-space-2); border-radius: var(--hk-radius-control);
   font-size: var(--hk-text-chrome); color: var(--hk-ink); background: color-mix(in srgb, var(--hkc-sched-color) 14%, transparent);
 }
-.harso-kit .hkc-sched-prep-tag { font-weight: 600; color: var(--hkc-sched-color); }
+/* An event with no calendar colour keeps only the hairline stripe; its Prep word is secondary text, readable in both modes. */
+.harso-kit .hkc-sched-prep-tag { font-weight: 600; color: var(--hk-secondary); }
+.harso-kit .hkc-sched-event[data-color] .hkc-sched-prep-tag { color: var(--hkc-sched-color); }
 .harso-kit .hkc-sched-next { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-size: var(--hk-text-xs); line-height: 16px; text-align: end; }
 .harso-kit .hkc-sched-next-word { font-weight: 600; color: var(--hk-attention); }
 .harso-kit .hkc-sched-gap { color: var(--hk-secondary); font-variant-numeric: tabular-nums; }

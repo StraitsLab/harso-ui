@@ -57,6 +57,24 @@
 .harso-kit .hkc-v6-compare-table td[data-winner] { font-weight: 600; background: var(--hk-accent-soft); }
 .harso-kit .hkc-v6-winner { display: inline-grid; place-items: center; width: 16px; height: 16px; margin-inline-start: var(--hk-space-1); vertical-align: -2px; border-radius: var(--hk-radius-pill); background: var(--hk-positive); color: var(--hk-inverse); }
 
+/* Harso's pick under the table (V6 mn-pick): a soft green box, bold line, one quiet reason. */
+.harso-kit .hkc-v6-recommend { margin-top: var(--hk-space-3); padding: 9px 11px; border-radius: var(--hk-radius-row); background: color-mix(in srgb, var(--hk-positive) 10%, transparent); font-size: var(--hk-text-body); color: var(--hk-ink); }
+.harso-kit .hkc-v6-recommend p { margin: 2px 0 0; font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+
+/* Price watch with Now and Target: two prices beside the photo, a bar toward the target, then the shops as tiles. */
+.harso-kit .hkc-v6-watch-prices { flex: 1 1 auto; display: flex; gap: var(--hk-space-4); min-width: 0; }
+.harso-kit .hkc-v6-watch-price { margin: 0; display: flex; flex-direction: column; gap: 2px; }
+.harso-kit .hkc-v6-watch-price span { font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-v6-watch-price strong { font-size: 27px; line-height: 1.1; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--hk-ink); }
+.harso-kit .hkc-v6-gauge { margin-top: var(--hk-space-3); }
+.harso-kit .hkc-v6-gauge-track { height: 5px; border-radius: var(--hk-radius-pill); background: var(--hk-field-tint); overflow: hidden; }
+.harso-kit .hkc-v6-gauge-track span { display: block; height: 100%; border-radius: inherit; background: var(--hk-accent); }
+.harso-kit .hkc-v6-gauge-words { margin: 5px 0 0; font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-v6-shops--tiles { flex-direction: row; margin-top: var(--hk-space-3); }
+.harso-kit .hkc-v6-shops--tiles .hkc-v6-shop { flex: 1 1 0; min-width: 0; flex-direction: column; align-items: flex-start; gap: var(--hk-space-1); }
+.harso-kit .hkc-v6-shops--tiles .hkc-v6-shop:has(.hkc-output-card-pick) { background: var(--hk-accent-soft); box-shadow: inset 0 0 0 1px var(--hk-accent); }
+.harso-kit .hkc-v6-shops--tiles .hkc-v6-price { margin-inline-start: 0; }
+
 /* Product shortlist */
 .harso-kit .hkc-v6-products { margin-top: var(--hk-space-3); gap: 0; }
 .harso-kit .hkc-v6-product { position: relative; display: flex; align-items: center; gap: var(--hk-space-3); padding: var(--hk-space-3) 0; }

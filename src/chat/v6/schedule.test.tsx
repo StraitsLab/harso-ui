@@ -254,10 +254,10 @@ test("no other controls: a link or file action makes the family decline so the g
   expect(family.renderFamily(propsOf(both))).toBeUndefined();
 });
 
-test("the only pressable things are the title, the pause, Details and View all; rows and events are not buttons or links", () => {
+test("the only pressable things are the title, the pause and View all; rows and events are not buttons or links", () => {
   draw(meeting([DESIGN, LUNCH, VIEWING, { ...VIEWING, id: "e4", label: "Dinner" }], { details: { sources: [{ label: "Calendar" }] } }), { host: hostOf({ onRoutineControl: vi.fn() }) });
   const names = [...document.querySelectorAll("button, a[href], [role=button], input")].map(node => (node.textContent ?? "").trim());
-  expect(names).toEqual(["Tomorrow · Sun 27 Sep", "Pause", "Details", "View all 4"]);
+  expect(names).toEqual(["Tomorrow · Sun 27 Sep", "Pause", "View all 4"]);
 });
 
 test("an agenda has no controls but the title; an event row opens nothing", () => {
@@ -402,4 +402,10 @@ test("axe finds no violation in the meeting brief with its pause control, or in 
   card.unmount();
   const widget = draw(agenda([DESIGN, LUNCH]), { widgetSize: "small" });
   expect((await axe.run(widget.container, { rules: { "color-contrast": { enabled: false } } })).violations.map(v => v.id)).toEqual([]);
+});
+
+// WEV-3469: an event with no calendar colour drew "Prep" in the hairline colour, unreadable in dark mode.
+test("styles: the Prep word is secondary text unless the event has a calendar colour", () => {
+  expect(styles).toMatch(/\.hkc-sched-prep-tag \{[^}]*color: var\(--hk-secondary\)/);
+  expect(styles).toMatch(/\.hkc-sched-event\[data-color\] \.hkc-sched-prep-tag \{[^}]*color: var\(--hkc-sched-color\)/);
 });

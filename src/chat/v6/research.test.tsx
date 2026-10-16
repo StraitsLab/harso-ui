@@ -154,7 +154,7 @@ test("a document with no sources draws no stack and no count", () => {
 // ---- Details ----
 
 test("sources are not repeated in Details; assumptions and disclaimers still reach it", () => {
-  const { card } = draw(doc({ details: { sources: SOURCES, assumptions: ["Prices in SGD."], disclaimers: ["Not advice."] } }));
+  const { card } = draw(doc({ details: { sources: SOURCES, assumptions: ["Prices in SGD."], disclaimers: ["Not advice."] } }), { mode: "full" });
   const toggle = within(card).getByRole("button", { name: "Details" });
   fireEvent.click(toggle);
   const region = within(card).getByRole("region", { name: "Output details" });

@@ -30,6 +30,9 @@ export function V6Brand({ domain, label, renderBrand, className = "" }: { domain
   return <span className={`hkc-v6-brand ${className}`.trim()} aria-hidden="true" data-mark={mark == null ? "letter" : "host"}>{mark ?? letter}</span>;
 }
 
+/** The subtitle already gives the snapshot time in the person's words ("· as of 09:00"): V6 shows it once, there. */
+const saysWhen = (subtitle: string | undefined) => /\bas of\b/i.test(subtitle ?? "");
+
 export interface V6FrameProps {
   document: HarsoOutputDocument;
   mode: V6Mode;
@@ -49,7 +52,8 @@ export function V6Frame({ document, mode, host, onOpenDetails, renderBrand, trai
   const id = useId();
   const [detailsOpen, setDetailsOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
-  const details = hasDetails(document.details) ? document.details : undefined;
+  // V6 (WEV-3469): an inline card is a glance; its sources and assumptions live in the opened card, never a header button.
+  const details = mode === "full" && hasDetails(document.details) ? document.details : undefined;
   const inlineDetails = details && !onOpenDetails;
   const titleId = `${id}-title`, detailsId = `${id}-details`;
   const { brand, title, subtitle } = document.header;
@@ -71,7 +75,7 @@ export function V6Frame({ document, mode, host, onOpenDetails, renderBrand, trai
             : title}
         </h2>
         {subtitle && <p className="hkc-output-card-subtitle">{subtitle}</p>}
-        <HarsoOutputCardMeta document={document} />
+        <HarsoOutputCardMeta document={saysWhen(subtitle) ? { ...document, as_of: undefined } : document} />
       </div>
       {hasTrailing && <div className="hkc-v6-trailing" data-slot="trailing">
         {trailing}

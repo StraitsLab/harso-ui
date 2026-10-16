@@ -62,6 +62,7 @@ test("the trailing area is a sibling of the open target; with nothing to put the
 test("every interactive target is legal: none sits inside another, each has a name, and axe finds no violation", async () => {
   const onOpenUrl = vi.fn();
   const { card, view } = frame({
+    mode: "full",
     document: doc({ details: { sources: [{ label: "Acme API", url: "https://acme.example/api" }] }, blocks: [{ kind: "action", primary: { kind: "open_url", label: "Open Acme", url: "https://acme.example" } }] }),
     host: hostOf({ onOpenUrl }),
     trailing: <HarsoOutputActionRow block={{ kind: "action", primary: { kind: "open_url", label: "Open Acme", url: "https://acme.example" } }} host={{ onOpenUrl }} />,
@@ -69,7 +70,7 @@ test("every interactive target is legal: none sits inside another, each has a na
   });
   fireEvent.click(within(card).getByRole("button", { name: "Details" }));
   const targets = [...card.querySelectorAll(INTERACTIVE)];
-  expect(targets.length).toBeGreaterThanOrEqual(4);
+  expect(targets.length).toBeGreaterThanOrEqual(3);
   for (const target of targets) {
     expect(target.parentElement!.closest(INTERACTIVE)).toBeNull();
     expect((target.textContent ?? "").trim() || target.getAttribute("aria-label") || target.getAttribute("title")).toBeTruthy();
@@ -88,7 +89,7 @@ test("openArea=card stretches the one open target over the card and marks it; th
 
 test("Details hands off to the host when it can open them", () => {
   const onOpenDetails = vi.fn();
-  const { card } = frame({ document: doc({ details: { disclaimers: ["Not advice."] } }), onOpenDetails });
+  const { card } = frame({ mode: "full", document: doc({ details: { disclaimers: ["Not advice."] } }), onOpenDetails });
   fireEvent.click(within(card).getByRole("button", { name: "Details" }));
   expect(onOpenDetails).toHaveBeenCalledTimes(1);
   expect(within(card).queryByRole("region", { name: "Output details" })).toBeNull();
@@ -97,6 +98,7 @@ test("Details hands off to the host when it can open them", () => {
 test("without a host hand-off Details discloses inline, Escape closes and returns focus, and only https sources open", () => {
   const onOpenUrl = vi.fn();
   const { card } = frame({
+    mode: "full",
     document: doc({ details: { sources: [{ label: "Linked", url: "https://acme.example/a" }, { label: "Plain" }, { label: "Unsafe", url: "http://acme.example/b" }] } }),
     host: hostOf({ onOpenUrl })
   });
@@ -192,4 +194,27 @@ test("an action whose host callback is missing is not drawn inside the frame (ne
   expect(within(card).queryByRole("button", { name: "Open" })).toBeNull();
   act(() => within(card).getByRole("button", { name: "Turn off" }).click());
   expect(onPageWatchControl).toHaveBeenCalledExactlyOnceWith("disable", "0192a3b4-5c6d-7e8f-9a0b-000000000a31");
+});
+
+// WEV-3469: the approved V6 cards (explain.harso.dev/p/harso-v6) moved Details into the opened card and show one time.
+
+test("inline: no Details button even with sources; the opened card keeps it", () => {
+  const details = { sources: [{ label: "Acme API" }] };
+  const inline = frame({ document: doc({ details }) });
+  expect(within(inline.card).queryByRole("button", { name: "Details" })).toBeNull();
+  expect(within(inline.card).getAllByRole("button").map(button => button.textContent)).toEqual(["Acme Bank"]);
+  cleanup();
+  const full = frame({ mode: "full", document: doc({ details }) });
+  expect(within(full.card).getByRole("button", { name: "Details" })).toBeTruthy();
+});
+
+test("a subtitle that already says 'as of' gets no second time line; progress still shows", () => {
+  const said = frame({ document: doc({ header: { title: "Acme Bank", subtitle: "Statement · as of 09:00" } }) });
+  expect(said.card.textContent).not.toMatch(/As of /);
+  cleanup();
+  const progress = frame({ document: doc({ header: { title: "Acme Bank", subtitle: "Statement · As of 09:00" }, progress: { done: 2, total: 5, noun: "sources" } }) });
+  expect(progress.card.querySelector(".hkc-output-card-meta")!.textContent).toBe("2 of 5 sources");
+  cleanup();
+  const silent = frame();
+  expect(within(silent.card).getByText(/^As of /)).toBeTruthy();
 });
