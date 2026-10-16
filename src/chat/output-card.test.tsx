@@ -1036,3 +1036,78 @@ test("document plain text without valid metadata preserves the legacy fallback v
   expect(chat.harsoOutputDocumentPlainText(flights)).toBe(flights.fallback_text);
   expect(chat.harsoOutputDocumentPlainText({ ...flights, as_of: "bad", progress: { done: 5, total: 4, noun: "stores checked" } })).toBe(flights.fallback_text);
 });
+
+test.each(["info", "warning", "success"])("text tone %s keeps the text in a named callout", tone => {
+  const document = { header: { title: "Notice" }, blocks: [{ kind: "text", tone, sections: [{ paragraphs: ["Check the dates."] }] }], fallback_text: "Fallback" } as chat.HarsoOutputDocument;
+  const { container } = render(<chat.HarsoOutputCard document={document} onViewAll={vi.fn()} />);
+  expect(container.querySelector(`[data-tone="${tone}"]`)).toHaveTextContent("Check the dates.");
+  expect(screen.getByLabelText(`${tone} note`)).toBeVisible();
+});
+
+test("three headed text sections use working section tabs without losing bodies", () => {
+  const document: chat.HarsoOutputDocument = { header: { title: "Plan" }, fallback_text: "Fallback", blocks: [{ kind: "text", sections: ["One", "Two", "Three"].map(heading => ({ heading, paragraphs: [`${heading} body`] })) }] };
+  render(<chat.HarsoOutputCard document={document} onViewAll={vi.fn()} />);
+  expect(screen.getAllByRole("tab")).toHaveLength(3);
+  expect(screen.getByText("One body")).toBeVisible();
+  fireEvent.click(screen.getByRole("tab", { name: "Three" }));
+  expect(screen.getByText("Three body")).toBeVisible();
+  expect(screen.getByText("One body")).not.toBeVisible();
+});
+
+test("area charts draw filled runs and keep missing points as gaps", () => {
+  const document: chat.HarsoOutputDocument = { header: { title: "Trend" }, fallback_text: "Fallback", blocks: [{ kind: "visual", visual: { kind: "chart", chart: "area", x_labels: ["A", "B", "C", "D", "E"], series: [{ label: "Spend", values: ["1", "2", null, "3", "4"] }] } }] };
+  const { container } = render(<chat.HarsoOutputCard document={document} onViewAll={vi.fn()} />);
+  expect(container.querySelector('[data-chart="area"]')).not.toBeNull();
+  expect(container.querySelectorAll(".hkc-chart-area")).toHaveLength(2);
+  expect(container.querySelectorAll(".hkc-chart-line")).toHaveLength(2);
+});
+
+test("suggestions send through the shared wrapper for generic and designed cards, only with a reply host", () => {
+  const onReply = vi.fn();
+  const document = { ...flights, suggestions: ["What about tomorrow?"] };
+  const family = { renderFamily: () => <p>Designed answer</p>, supportedWidgetSizes: () => [] };
+  const { rerender } = render(<chat.HarsoOutputCard document={document} onViewAll={vi.fn()} />);
+  expect(screen.queryByRole("button", { name: "What about tomorrow?" })).toBeNull();
+  rerender(<chat.HarsoOutputCard document={document} onReply={onReply} onViewAll={vi.fn()} />);
+  fireEvent.click(screen.getByRole("button", { name: "What about tomorrow?" }));
+  expect(onReply).toHaveBeenCalledExactlyOnceWith("What about tomorrow?");
+  rerender(<chat.HarsoOutputCard document={{ ...document, template: "flight-options" }} families={{ "flight-options": family }} onReply={onReply} onViewAll={vi.fn()} />);
+  expect(screen.getByText("Designed answer")).toBeVisible();
+  expect(screen.getAllByRole("button", { name: "What about tomorrow?" })).toHaveLength(1);
+});
+
+test("form prefills kit controls, requires nonblank fields, skips empty optional fields and sends once", () => {
+  const onReply = vi.fn();
+  const document: chat.HarsoOutputDocument = { header: { title: "Request" }, fallback_text: "Fallback", blocks: [{ kind: "form", submit: "Plan trip", fields: [
+    { id: "where", label: "Destination", type: "text", required: true },
+    { id: "mode", label: "Travel", type: "choice", options: ["Train", "Plane"], value: "Train" },
+    { id: "day", label: "Departure", type: "date", value: "2026-10-20" },
+    { id: "count", label: "People", type: "number", value: "2" },
+    { id: "note", label: "Notes", type: "text" },
+  ] }] };
+  const { rerender } = render(<chat.HarsoOutputCard document={document} onViewAll={vi.fn()} />);
+  expect(screen.queryByRole("button", { name: "Plan trip" })).toBeNull();
+  rerender(<chat.HarsoOutputCard document={document} onReply={onReply} onViewAll={vi.fn()} />);
+  const submit = screen.getByRole("button", { name: "Plan trip" });
+  expect(submit).toBeDisabled();
+  expect(screen.getByLabelText("Travel")).toHaveValue("Train");
+  expect(screen.getByLabelText("People")).toHaveValue(2);
+  expect(screen.getByRole("button", { name: /Departure,/ })).toHaveTextContent("Oct 20, 2026");
+  fireEvent.change(screen.getByLabelText(/Destination/), { target: { value: "  " } });
+  expect(submit).toBeDisabled();
+  fireEvent.change(screen.getByLabelText(/Destination/), { target: { value: "Kyoto" } });
+  fireEvent.click(submit); fireEvent.click(submit);
+  expect(onReply).toHaveBeenCalledExactlyOnceWith("Plan trip: Destination: Kyoto; Travel: Train; Departure: 2026-10-20; People: 2");
+  expect(submit).toBeDisabled();
+  rerender(<chat.HarsoOutputCard document={document} onViewAll={vi.fn()} />);
+  rerender(<chat.HarsoOutputCard document={document} onReply={onReply} onViewAll={vi.fn()} />);
+  expect(screen.getByRole("button", { name: "Plan trip" })).toBeDisabled();
+  expect(onReply).toHaveBeenCalledTimes(1);
+});
+
+test("card placeholder exports a labelled busy card with kit skeleton lines", () => {
+  render(<chat.HarsoOutputCardPlaceholder label="Preparing the result" />);
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "true");
+  expect(screen.getByRole("status")).toHaveTextContent("Preparing the result");
+  expect(document.querySelectorAll(".hk-skeleton").length).toBeGreaterThan(1);
+});

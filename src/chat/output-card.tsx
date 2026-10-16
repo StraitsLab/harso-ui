@@ -1,8 +1,10 @@
 "use client";
 
-import { CaretRight } from "@phosphor-icons/react";
+import { CaretRight, Info, WarningCircle, CheckCircle } from "@phosphor-icons/react";
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
-import { Button } from "../primitives";
+import { Button, Field, Input, Select, Skeleton } from "../primitives";
+import { DatePicker } from "../dates";
+import { SectionTabs } from "./v6/section-tabs";
 import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputNumberDelta, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
   type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
 import { HarsoOutputGalleryView, HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputThumb, HarsoOutputVideoView,
@@ -48,7 +50,9 @@ export interface HarsoOutputNumbersBlock { kind: "numbers"; items: HarsoOutputNu
 /** `date` (C10) is a date-only YYYY-MM-DD; `thumbnail` is a photo. The generic card draws neither. */
 export interface HarsoOutputTextSection { heading?: string; paragraphs?: string[]; bullets?: string[]; date?: string; thumbnail?: HarsoOutputPhoto }
 
-export interface HarsoOutputTextBlock { kind: "text"; summary?: string; sections: HarsoOutputTextSection[] }
+export interface HarsoOutputTextBlock { kind: "text"; summary?: string; sections: HarsoOutputTextSection[]; tone?: "info" | "warning" | "success" }
+export interface HarsoOutputFormField { id: string; label: string; type: "text" | "choice" | "date" | "number"; value?: string; options?: string[]; required?: boolean }
+export interface HarsoOutputFormBlock { kind: "form"; fields: HarsoOutputFormField[]; submit: string }
 
 export type HarsoOutputWorkControl = "cancel" | "retry" | "dismiss";
 export type HarsoOutputRoutineControl = "pause" | "resume";
@@ -69,7 +73,7 @@ export interface HarsoOutputActionBlock { kind: "action"; primary?: HarsoOutputA
 /** Any block is carried as data; the card reads the kinds it draws by shape and falls back to text for anything else. */
 export interface HarsoOutputOtherBlock { kind: string; [key: string]: unknown }
 
-export type HarsoOutputBlock = HarsoOutputRowsBlock | HarsoOutputNumbersBlock | HarsoOutputTextBlock | HarsoOutputActionBlock | HarsoOutputVisualBlock | HarsoOutputTable | HarsoOutputStatusBlock | HarsoOutputOtherBlock;
+export type HarsoOutputBlock = HarsoOutputRowsBlock | HarsoOutputNumbersBlock | HarsoOutputTextBlock | HarsoOutputFormBlock | HarsoOutputActionBlock | HarsoOutputVisualBlock | HarsoOutputTable | HarsoOutputStatusBlock | HarsoOutputOtherBlock;
 
 export interface HarsoOutputSource { label: string; url?: string }
 
@@ -90,6 +94,7 @@ export interface HarsoOutputDocument {
   blocks: HarsoOutputBlock[];
   details?: HarsoOutputDocumentDetails;
   more_label?: string;
+  suggestions?: string[];
   /** UTC snapshot time; formatted in the viewer local time zone. */
   as_of?: string;
   /** Coverage of this answer, independent of any budget/progress number block. */
@@ -154,6 +159,8 @@ export const HARSO_OUTPUT_CARD_CAPS: Readonly<HarsoOutputCardCaps> = Object.free
 
 /** The host callbacks actions and sources go through. */
 export interface HarsoOutputActionHost {
+  /** Sends a suggested question or completed form through the host chat composer. */
+  onReply?: (text: string) => void;
   /** Opens an https link (an `open_url` action, a row link, a source with a url). */
   onOpenUrl?: (url: string) => void;
   /** Opens a file in the host's viewer: an `open_artifact` action, and a video poster (without it a video falls back). */
@@ -252,8 +259,9 @@ export function readAction(spec: unknown, host: ActionHost): { label: string; ru
 type CardPart =
   | { kind: "rows"; items: HarsoOutputRow[]; photos: boolean }
   | { kind: "numbers"; items: HarsoOutputNumber[] }
-  | { kind: "text"; text: string }
-  | { kind: "sections"; sections: HarsoOutputTextSection[] }
+  | { kind: "text"; text: string; tone?: HarsoOutputTextBlock["tone"] }
+  | { kind: "sections"; sections: HarsoOutputTextSection[]; tone?: HarsoOutputTextBlock["tone"]; tabs?: boolean }
+  | { kind: "form"; form: HarsoOutputFormBlock }
   | { kind: "chart"; chart: HarsoOutputChart; state?: HarsoOutputBlockState }
   | { kind: "share"; items: HarsoOutputRow[]; shares: number[]; shown: number; state?: HarsoOutputBlockState }
   | { kind: "table"; table: HarsoOutputTable; shown: number; state?: HarsoOutputBlockState }
@@ -443,20 +451,27 @@ function readBlocks(blocks: HarsoOutputBlock[], caps: HarsoOutputCardCaps, state
       total += block.items.length;
       shown += items.length;
       if (items.length) parts.push({ kind: "numbers", items });
+    } else if (block.kind === "form" && Array.isArray((block as HarsoOutputFormBlock).fields)) {
+      parts.push({ kind: "form", form: block as HarsoOutputFormBlock });
     } else if (isText(block)) {
       // One text block inline (~4 lines); a second text block always continues off the card. A summary, or a block
       // that is one paragraph, is one clamped run as before; anything else keeps its headings, paragraphs and bullets.
       if (textShown) { clamped = true; continue; }
       textShown = true;
+      if (caps.maxTextLines < HARSO_OUTPUT_CARD_UNCAPPED.maxTextLines && !block.summary && block.sections.length >= 3 && block.sections.every(section => section.heading?.trim())) {
+        clamped = true;
+        parts.push({ kind: "sections", sections: block.sections, tone: block.tone, tabs: true });
+        continue;
+      }
       const text = block.summary ?? loneParagraph(block.sections);
       if (text != null) {
         const inline = clip(text, caps.maxTextChars);
         clamped ||= block.summary != null || inline !== text;
-        if (inline) parts.push({ kind: "text", text: inline });
+        if (inline) parts.push({ kind: "text", text: inline, tone: block.tone });
       } else {
         const { sections, complete } = fitText(block.sections, caps);
         clamped ||= !complete;
-        if (sections.length) parts.push({ kind: "sections", sections });
+        if (sections.length) parts.push({ kind: "sections", sections, tone: block.tone });
       }
     } else if (isAction(block)) {
       action ??= block;
@@ -667,6 +682,48 @@ function CardRows({ items, photos, layout, media }: { items: HarsoOutputRow[]; p
   </div>;
 }
 
+const NOT_CLIPPED = () => undefined;
+function OutputCallout({ tone, children }: { tone?: HarsoOutputTextBlock["tone"]; children: ReactNode }) {
+  if (!tone) return <>{children}</>;
+  const Icon = tone === "warning" ? WarningCircle : tone === "success" ? CheckCircle : Info;
+  return <section className="hkc-output-callout" data-tone={tone} aria-label={`${tone} note`}>
+    <Icon size={18} aria-hidden="true" /><div>{children}</div>
+  </section>;
+}
+
+function OutputForm({ block, onReply }: { block: HarsoOutputFormBlock; onReply?: (text: string) => void }) {
+  const [values, setValues] = useState<Record<string, string>>(() => Object.fromEntries(block.fields.map(field => [field.id, field.value ?? ""])));
+  const [sent, setSent] = useState(false);
+  const sending = useRef(false);
+  const set = (id: string, value: string) => setValues(previous => ({ ...previous, [id]: value }));
+  const ready = block.fields.every(field => !field.required || values[field.id]?.trim());
+  if (!onReply) return null;
+  return <form className="hkc-output-form" onSubmit={event => {
+    event.preventDefault();
+    if (!ready || sending.current) return;
+    sending.current = true; setSent(true);
+    onReply(`${block.submit}: ${block.fields.flatMap(field => {
+      const value = values[field.id]?.trim();
+      return value ? [`${field.label}: ${value}`] : [];
+    }).join("; ")}`);
+  }}>
+    <fieldset disabled={sent}>
+      {block.fields.map(field => field.type === "date"
+        ? <DatePicker key={field.id} label={field.label} value={values[field.id] || null} disabled={sent} onValueChange={value => set(field.id, value ?? "")} />
+        : <Field key={field.id} label={field.label} required={field.required}>{props => field.type === "choice"
+          ? <Select {...props} value={values[field.id]} onChange={event => set(field.id, event.target.value)}><option value="">Choose…</option>{field.options?.map(option => <option key={option} value={option}>{option}</option>)}</Select>
+          : <Input {...props} type={field.type} step={field.type === "number" ? "any" : undefined} value={values[field.id]} onChange={event => set(field.id, event.target.value)} />}</Field>)}
+    </fieldset>
+    <Button type="submit" variant="primary" disabled={!ready || sent}>{block.submit}</Button>
+  </form>;
+}
+
+export function HarsoOutputCardPlaceholder({ label }: { label: string }) {
+  return <section className="hkc-output-card hkc-output-card-placeholder" role="status" aria-busy="true">
+    <p>{label}</p><div aria-hidden="true"><Skeleton /><Skeleton /><Skeleton /></div>
+  </section>;
+}
+
 /** The generic card: the whole answer from its blocks, in source order. Every family falls back to it. */
 function GenericOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
   const id = useId();
@@ -744,9 +801,12 @@ function GenericOutputCard({ document, caps, onViewAll, onOpenDetails, blockStat
                 <span className="hkc-output-card-number-label">{number.label}</span>
               </li>)}
             </ul>
-            : part.kind === "sections"
-            ? <CardSections key={partIndex} sections={part.sections} lines={limits.maxTextLines} onClip={setTextClipped} />
-            : <CardText key={partIndex} text={part.text} lines={limits.maxTextLines} onClip={setTextClipped} />)}
+            : part.kind === "form"
+            ? <OutputForm key={partIndex} block={part.form} onReply={host.onReply} />
+            : <OutputCallout key={partIndex} tone={part.tone}>{part.kind === "sections"
+              ? part.tabs ? <SectionTabs sections={part.sections} renderSection={section => <CardSections sections={[section]} lines={HARSO_OUTPUT_CARD_UNCAPPED.maxTextLines} onClip={NOT_CLIPPED} />} />
+                : <CardSections sections={part.sections} lines={limits.maxTextLines} onClip={setTextClipped} />
+              : <CardText text={part.text} lines={limits.maxTextLines} onClip={setTextClipped} />}</OutputCallout>)}
         {hasMore && <Button variant="ghost" className="hkc-output-card-view-all" onClick={onViewAll}
           trailingIcon={<CaretRight size={14} weight="bold" />}>{viewAllLabel}</Button>}
         {content.action && <HarsoOutputActionRow block={content.action} host={host} />}
@@ -766,9 +826,11 @@ export function HarsoOutputCard(props: HarsoOutputCardProps) {
   const { document, families = V6_FAMILIES, mode, widgetSize, renderBrand, media, onViewAll, onOpenDetails, subjectState, blockStates, caps, className: _class, ...actions } = props;
   const family = v6FamilyOf(document, families);
   const generic = <GenericOutputCard {...props} />;
-  if (!family) return generic;
-  return <V6FamilyBoundary key={document.template} family={family} fallback={generic} familyProps={{
+  const body = !family ? generic : <V6FamilyBoundary key={document.template} family={family} fallback={generic} familyProps={{
     document, mode: modeOf(mode, caps), widgetSize, media: media ?? {}, renderBrand: renderBrand ?? (() => undefined), onOpenDetails,
     host: { ...actions, onViewAll, subjectState, blockStates }
   }} />;
+  return <>{body}{props.onReply && document.suggestions?.length ? <div className="hkc-output-suggestions" role="group" aria-label="Suggested questions">
+    {document.suggestions.map((question, index) => <Button key={index} variant="secondary" size="small" onClick={() => props.onReply!(question)}>{question}</Button>)}
+  </div> : null}</>;
 }

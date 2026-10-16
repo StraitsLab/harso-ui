@@ -1,3 +1,19 @@
+.harso-kit .hkc-output-callout { display: flex; align-items: flex-start; gap: var(--hk-space-2); padding: var(--hk-space-3); border-radius: var(--hk-radius-card); background: var(--hk-accent-soft); }
+.harso-kit .hkc-output-callout > svg { flex-shrink: 0; color: var(--hk-accent); }
+.harso-kit .hkc-output-callout > div { min-width: 0; }
+.harso-kit .hkc-output-callout[data-tone="warning"] { background: color-mix(in srgb, var(--hk-attention) 12%, var(--hk-surface)); }
+.harso-kit .hkc-output-callout[data-tone="warning"] > svg { color: var(--hk-attention); }
+.harso-kit .hkc-output-callout[data-tone="success"] { background: color-mix(in srgb, var(--hk-positive) 12%, var(--hk-surface)); }
+.harso-kit .hkc-output-callout[data-tone="success"] > svg { color: var(--hk-positive); }
+.harso-kit .hkc-output-form, .harso-kit .hkc-output-form fieldset { display: flex; flex-direction: column; gap: var(--hk-space-3); min-width: 0; }
+.harso-kit .hkc-output-form fieldset { border: 0; margin: 0; padding: 0; }
+.harso-kit .hkc-output-form > button { align-self: flex-start; }
+.harso-kit .hkc-output-suggestions { display: flex; flex-wrap: wrap; gap: var(--hk-space-2); margin-top: var(--hk-space-3); }
+.harso-kit .hkc-output-suggestions button { white-space: normal; text-align: left; }
+.harso-kit .hkc-output-card-placeholder > div { display: grid; gap: var(--hk-space-2); }
+.harso-kit .hkc-output-card-placeholder .hk-skeleton { height: 12px; }
+.harso-kit .hkc-output-card-placeholder .hk-skeleton:last-child { width: 65%; }
+
 /* WEV-1851 S1: approved inline Flights card (Sketch 'iOS — Inline results' 01, founder 23 Sep).
    Borderless tonal card: surface fill, radius 12, no stroke; compact header; <=3 rows, then one quiet View-all row.
    Actions only open a link or a file or control the work shown; never reply/choose (the native question card does).
