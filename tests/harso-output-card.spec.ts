@@ -325,7 +325,7 @@ const hostileText = { header: { title: "Hostile text" }, fallback_text: "x", blo
   { heading: "京都三日游行程安排", bullets: ["公共充电设施持续增加家庭充电费用较低".repeat(4), "x".repeat(300)] },
   { heading: "مرحبا", paragraphs: ["مرحبا بالعالم، هذه فقرة قصيرة."] }] }] };
 async function textSections(page: Page) {
-  return card(page).locator(".hkc-output-card-sections").evaluate(root => {
+  return card(page).locator(".hkc-output-card-sections").filter({ visible: true }).evaluate(root => {
     const lineHeight = parseFloat(getComputedStyle(root).lineHeight);
     const cardBox = root.closest(".hkc-output-card")!.getBoundingClientRect();
     const nodes = [...root.querySelectorAll("h3, p, li")];
@@ -341,13 +341,18 @@ for (const mode of ["light", "dark"] as const) for (const width of [390, 420]) {
       for (const sent of [itinerary, hostileText]) {
         await page.goto(`${fixture}?mode=${mode}&width=${width}${full ? "&full=1" : ""}`);
         await page.evaluate(doc => (window as unknown as { renderOutput: (d: unknown) => void }).renderOutput(doc), sent);
-        await expect(card(page).locator(".hkc-output-card-sections")).toBeVisible();
+        // WEV-3464: inline, three or more headed sections become tabs (iPhone does the same); one panel shows at a time.
+        const tabbed = !full && sent === itinerary;
+        await expect(card(page).getByRole("tab")).toHaveCount(tabbed ? sent.blocks[0].sections.length : 0);
+        await expect(card(page).locator(".hkc-output-card-sections").filter({ visible: true })).toBeVisible();
         const facts = await textSections(page);
         expect(facts.last).not.toBe("H3");
         expect(facts.outside).toBe(0);
         expect(facts.marker).toBe("disc");
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-        if (full) {
+        if (tabbed) {
+          expect(facts.headings).toBe(1);
+        } else if (full) {
           expect(facts.headings).toBe(sent.blocks[0].sections.length);
           await expect(card(page).getByRole("button", { name: /View all/ })).toHaveCount(0);
         } else {
