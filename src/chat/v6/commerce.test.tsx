@@ -4,7 +4,7 @@ import { afterEach, expect, test, vi } from "vitest";
 // @ts-expect-error - plain ESM script without type declarations
 import { schemaErrors, semanticErrors } from "../../../scripts/check-output-playbook.mjs";
 import schema from "../../../docs/agent/schema/output-blocks.v1.json";
-import { HarsoOutputCard, type HarsoOutputBlock, type HarsoOutputCardProps, type HarsoOutputDocument, type HarsoOutputRow } from "../output-card";
+import { HarsoOutputCard, harsoOutputWholeAnswer, type HarsoOutputBlock, type HarsoOutputCardProps, type HarsoOutputDocument, type HarsoOutputRow } from "../output-card";
 import type { HarsoOutputMediaHost } from "../output-card-media";
 import styles from "./commerce.css?raw";
 import { family } from "./commerce";
@@ -381,4 +381,28 @@ test("price watch: a gap the prices cannot prove (other currency, no number) dra
   const { card } = draw(priceWatch(shops, numbers));
   expect(card.querySelectorAll(".hkc-v6-watch-price")).toHaveLength(2);
   expect(within(card).queryByRole("meter")).toBeNull();
+});
+
+// ---- WEV-3469 review: the opened card (View all) and bigger watches keep the V6 design and every fact ----
+
+test("compare: the opened card (harsoOutputWholeAnswer) keeps the V6 table and Harso's pick", () => {
+  const pick = { kind: "text", summary: "Harso’s pick · Pixel 11", sections: [{ paragraphs: ["Better zoom and night photos for less."] }] } as const;
+  const whole = harsoOutputWholeAnswer(valid(doc("compare-products", [{ kind: "table", columns, rows: sample }, pick], { header: { title: "iPhone 17 vs Pixel 11" } })));
+  const { card } = draw(whole, { mode: "full" });
+  expect(card.querySelector(".hkc-v6-compare-table")).not.toBeNull();
+  const box = card.querySelector<HTMLElement>(".hkc-v6-recommend")!;
+  expect(box.querySelector("b")!.textContent).toBe("Harso’s pick · Pixel 11");
+  expect(box.textContent).toBe("Harso’s pick · Pixel 11Better zoom and night photos for less.");
+});
+
+test("price watch: every number is drawn with its change, not only Now and Target", () => {
+  const numbers = { kind: "numbers", items: [{ value: "S$339", label: "Now · Lazada", delta: "Down S$20" }, { value: "S$300", label: "Target · under" }, { value: "S$15", label: "Shipping" }] } as const;
+  const { card } = draw(priceWatch(shops, numbers), { mode: "full" });
+  const prices = [...card.querySelectorAll(".hkc-v6-watch-price")].map(node => node.textContent);
+  expect(prices).toEqual(["Now · LazadaS$339Down S$20", "Target · underS$300", "ShippingS$15"]);
+  expect(within(card).getByRole("meter", { name: "Price toward target" })).toBeTruthy();
+});
+
+test("styles: price-watch shop tiles wrap into a grid, so many shops never overlap", () => {
+  expect(styles).toMatch(/\.hkc-v6-shops--tiles \{[^}]*display: grid;[^}]*grid-template-columns: repeat\(auto-fill, minmax\(/);
 });

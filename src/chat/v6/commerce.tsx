@@ -132,7 +132,9 @@ function priceWatch(props: V6FamilyProps) {
     <div className="hkc-v6-watch">
       <Photo photo={photo} media={media} />
       {now && target
-        ? <div className="hkc-v6-watch-prices">{[now, target].map(item => <p key={item.label} className="hkc-v6-watch-price"><span>{item.label}</span><strong>{item.value}</strong></p>)}</div>
+        ? <div className="hkc-v6-watch-prices">{numbers!.map((item, index) => <p key={index} className="hkc-v6-watch-price">
+            <span>{item.label}</span><strong>{item.value}</strong>{text(item.delta) && <span className="hkc-v6-watch-delta">{item.delta}</span>}
+          </p>)}</div>
         : <ul className="hkc-v6-shops" role="list">{shown.map((row, index) => shop(row, index))}</ul>}
     </div>
     {now && target && <Gauge now={now.value} target={target.value} />}
@@ -171,8 +173,12 @@ function compare(props: V6FamilyProps) {
   const found = parts(document.blocks, ["table", "text", "action"]);
   const table = found?.get("table") && readTable(found.get("table")!);
   if (!found || !table) return undefined;
+  // The pick: its summary is the bold line. The opened card (harsoOutputWholeAnswer) moves the summary into the first
+  // paragraph, so then that paragraph is the bold line. Every other line follows, in order.
   const pickBlock = found.get("text") as HarsoOutputTextBlock | undefined;
-  if (pickBlock && (!text(pickBlock.summary) || !Array.isArray(pickBlock.sections))) return undefined;
+  if (pickBlock && !Array.isArray(pickBlock.sections)) return undefined;
+  const pickLines = pickBlock ? [...text(pickBlock.summary) ? [pickBlock.summary] : [], ...pickBlock.sections.flatMap(section => [...section.paragraphs ?? [], ...section.bullets ?? []])].filter(text) : [];
+  if (pickBlock && !pickLines.length) return undefined;
   const action = found.get("action") as HarsoOutputActionBlock | undefined;
   const cell = (row: HarsoOutputTableBlock["rows"][number], index: number) => index === 0
     ? <th key={index} scope="row">{row.cells[0]}{(row.status || row.status_label) && <> <HarsoOutputRowStatus status={row.status} status_label={row.status_label} /></>}</th>
@@ -192,9 +198,9 @@ function compare(props: V6FamilyProps) {
           ? <th key={index} scope="row">{value}</th> : <td key={index} data-align={table.columns[index].align === "end" ? "end" : "start"}>{value}</td>)}</tr></tfoot>}
       </table>
     </div>
-    {pickBlock && <div className="hkc-v6-recommend">
-      <b>{pickBlock.summary}</b>
-      {pickBlock.sections.flatMap(section => [...section.paragraphs ?? [], ...section.bullets ?? []]).filter(text).map((line, index) => <p key={index}>{line}</p>)}
+    {pickLines.length > 0 && <div className="hkc-v6-recommend">
+      <b>{pickLines[0]}</b>
+      {pickLines.slice(1).map((line, index) => <p key={index}>{line}</p>)}
     </div>}
     {action && <div className="hkc-v6-foot"><HarsoOutputActionRow block={action} host={host} /></div>}
   </V6Frame>;
