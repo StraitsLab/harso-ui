@@ -17,7 +17,7 @@ import "./output-card-charts.css";
 
 export interface HarsoOutputSeries { label: string; values: (string | null)[] }
 export interface HarsoOutputChart {
-  kind: "chart"; chart: "bar" | "line"; unit?: string; x_labels: string[]; series: HarsoOutputSeries[]; highlight_index?: number;
+  kind: "chart"; chart: "bar" | "line" | "area"; unit?: string; x_labels: string[]; series: HarsoOutputSeries[]; highlight_index?: number;
   /** C4: what the carried points cover. Only the range supplied; no series exists for any other. */
   range?: V6ChartRange;
   /** C4: an exact source decimal (a previous close), never rebuilt from a rounded percentage. */
@@ -54,7 +54,7 @@ const PERCENT = /^(\d{1,3}(?:\.\d{1,2})?)\s?%$/;
 export function readChart(block: AnyBlock): HarsoOutputChart | undefined {
   if (block.kind !== "visual") return undefined;
   const chart = (block as Partial<HarsoOutputVisualBlock>).visual as HarsoOutputChart | undefined;
-  if (!chart || chart.kind !== "chart" || (chart.chart !== "bar" && chart.chart !== "line")) return undefined;
+  if (!chart || chart.kind !== "chart" || (chart.chart !== "bar" && chart.chart !== "line" && chart.chart !== "area")) return undefined;
   const count = Array.isArray(chart.x_labels) ? chart.x_labels.length : 0;
   if (count < 2 || !Array.isArray(chart.series) || !chart.series.length || (chart.chart === "bar" && chart.series.length > 1)) return undefined;
   const valid = chart.series.every(series => Array.isArray(series?.values) && series.values.length === count
@@ -342,7 +342,7 @@ const barPath = (x: number, top: number, width: number, height: number, down: bo
 
 function frame(chart: HarsoOutputChart, width: number, measure: Measure) {
   const numbers = chart.series.flatMap(series => series.values.filter((value): value is string => value !== null));
-  const axis = scale(numbers.length ? numbers : ["0"], chart.chart === "bar" || numbers.some(value => toMicro(value) <= 0n));
+  const axis = scale(numbers.length ? numbers : ["0"], chart.chart !== "line" || numbers.some(value => toMicro(value) <= 0n));
   // The gutter is the widest tick figure, measured, plus 8px; the plot takes what is left and never overrides it.
   const labelWidth = Math.max(40, ...axis.ticks.map(tick => measure(formatMicro(tick, axis.places)))) + 8;
   const plotWidth = width - labelWidth;
@@ -430,6 +430,8 @@ function LineChart({ chart, width, measure }: { chart: HarsoOutputChart; width: 
       const runs: [number, number][][] = [[]];
       series.values.forEach((value, index) => value === null ? runs.push([]) : runs[runs.length - 1].push([x(index), y(toMicro(value))]));
       return <g key={seriesIndex} className="hkc-chart-series" data-series={seriesIndex}>
+        {chart.chart === "area" && runs.filter(run => run.length > 1).map((run, index) => <path key={`area-${index}`} className="hkc-chart-area"
+          d={`${run.map((point, i) => `${i ? "L" : "M"}${point[0].toFixed(1)} ${point[1].toFixed(1)}`).join(" ")} L${run.at(-1)![0].toFixed(1)} ${y(zeroLine).toFixed(1)} L${run[0][0].toFixed(1)} ${y(zeroLine).toFixed(1)} Z`} fill="currentColor" opacity={0.16} />)}
         {runs.filter(run => run.length).map((run, runIndex) => run.length === 1
           ? <circle key={runIndex} cx={run[0][0]} cy={run[0][1]} r={2} className="hkc-chart-dot" />
           : <path key={runIndex} d={run.map((point, index) => `${index ? "L" : "M"}${point[0].toFixed(1)} ${point[1].toFixed(1)}`).join(" ")}
