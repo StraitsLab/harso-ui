@@ -1111,3 +1111,18 @@ test("card placeholder exports a labelled busy card with kit skeleton lines", ()
   expect(screen.getByRole("status")).toHaveTextContent("Preparing the result");
   expect(document.querySelectorAll(".hk-skeleton").length).toBeGreaterThan(1);
 });
+
+test("V6 inline (WEV-3464): a generic card opens from its title chevron, with no View all or Details buttons", () => {
+  const { card, onViewAll } = renderCard({ mode: "inline", document: { ...withRows([...flightRows, ...extraRows]), as_of: "2026-10-16T08:00:00Z",
+    header: { title: flights.header.title, subtitle: "As of today, 16:00 SGT" } } });
+  expect(within(card).queryByRole("button", { name: /View all|Details/ })).toBeNull();
+  expect(within(card).getAllByText(/as of/i)).toHaveLength(1);
+  fireEvent.click(within(card).getByRole("button", { name: flights.header.title }));
+  expect(onViewAll).toHaveBeenCalledTimes(1);
+});
+
+test("V6 full (WEV-3464): the opened generic card keeps Details and draws no title chevron", () => {
+  const { card } = renderCard({ mode: "full" });
+  expect(within(card).getByRole("button", { name: "Details" })).toBeTruthy();
+  expect(within(card).queryByRole("button", { name: flights.header.title })).toBeNull();
+});

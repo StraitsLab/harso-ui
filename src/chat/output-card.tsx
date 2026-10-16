@@ -13,6 +13,7 @@ import { HarsoOutputGalleryView, HarsoOutputImageView, HarsoOutputMapView, Harso
 import { V6_FAMILIES, V6FamilyBoundary, v6FamilyOf } from "./v6/registry";
 import type { V6Flight, V6Mode, V6RenderBrand, V6Registry, V6RowFields, V6Template, V6Weather, WidgetSize } from "./v6/types";
 import "./output-card.css";
+import "./v6/frame.css";
 
 /*
  * WEV-1851 S1: inline card for an agent `output-blocks.v1` document.
@@ -725,7 +726,7 @@ export function HarsoOutputCardPlaceholder({ label }: { label: string }) {
 }
 
 /** The generic card: the whole answer from its blocks, in source order. Every family falls back to it. */
-function GenericOutputCard({ document, caps, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
+function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
   const id = useId();
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -738,9 +739,13 @@ function GenericOutputCard({ document, caps, onViewAll, onOpenDetails, blockStat
     && content.parts.every(part => part.kind === "rows" ? part.photos : ["text", "sections", "numbers"].includes(part.kind));
   const [rowView, setRowView] = useState<{ document: HarsoOutputDocument; layout: "grid" | "list" }>();
   const rowLayout = gridEligible ? (rowView?.document === document ? rowView.layout : "grid") : undefined;
-  const details = hasDetails(document.details) ? document.details : undefined;
+  // V6 (WEV-3464): an inline card is a glance. Its title carries the chevron that opens the full card; no Details
+  // or View all buttons. The opened (full) card keeps Details for sources and assumptions.
+  // Opt-in: only a host that says mode="inline" (the chat transcript) gets the glance; pinned tiles keep their caps.
+  const glance = mode === "inline";
+  const details = !glance && hasDetails(document.details) ? document.details : undefined;
   const inlineDetails = details && !onOpenDetails;
-  const hasMore = !!content && (content.hidden > 0 || content.clamped || textClipped);
+  const hasMore = !glance && !!content && (content.hidden > 0 || content.clamped || textClipped);
   const viewAllLabel = document.more_label?.trim() || (content?.hidden ? `View all ${content.total}` : "View all");
   const titleId = `${id}-title`, detailsId = `${id}-details`;
 
@@ -752,11 +757,13 @@ function GenericOutputCard({ document, caps, onViewAll, onOpenDetails, blockStat
       setDetailsOpen(false);
       trigger.current?.focus();
     }}>
-    <header className="hkc-output-card-header">
+    <header className="hkc-output-card-header" style={glance ? { position: "relative" } : undefined}>
       <div className="hkc-output-card-heading">
-        <h2 id={titleId} className="hkc-output-card-title">{document.header.title}</h2>
+        <h2 id={titleId} className="hkc-output-card-title">{glance
+          ? <button type="button" className="hkc-v6-open" onClick={onViewAll}>{document.header.title}<CaretRight className="hkc-v6-open-glyph" size={14} weight="bold" aria-hidden="true" /></button>
+          : document.header.title}</h2>
         {document.header.subtitle && <p className="hkc-output-card-subtitle">{document.header.subtitle}</p>}
-        <HarsoOutputCardMeta document={document} />
+        <HarsoOutputCardMeta document={glance && saysWhen(document.header.subtitle) ? { ...document, as_of: undefined } : document} />
       </div>
       {details && <Button ref={trigger} variant="ghost" size="small" className="hkc-output-card-details-toggle"
         aria-expanded={inlineDetails ? detailsOpen : undefined} aria-controls={inlineDetails ? detailsId : undefined}
@@ -814,6 +821,9 @@ function GenericOutputCard({ document, caps, onViewAll, onOpenDetails, blockStat
       : <p className="hkc-output-card-fallback">{document.fallback_text}</p>}
   </section>;
 }
+
+/** The subtitle already says when ("As of …"), so the meta line does not repeat it. */
+const saysWhen = (subtitle: string | undefined) => /\bas of\b/i.test(subtitle ?? "");
 
 /** `full` when the card is uncapped (the host's View all), else `inline`; the host may say so outright. */
 const modeOf = (mode: V6Mode | undefined, caps: HarsoOutputCardProps["caps"]): V6Mode => mode ?? (caps?.maxRows === Infinity ? "full" : "inline");
