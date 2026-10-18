@@ -211,9 +211,10 @@ export function HarsoOutputProgressView({ progress }: { progress: HarsoOutputPro
 // ---- media ----
 
 export const ARTIFACT = /^artifact:[0-9a-f-]{36}$/;
-/** A photo the card may draw (a row thumbnail, a gallery photo): a well-formed artifact and an alt. */
+export const MEDIA_URI = /^(?:artifact:[0-9a-f-]{36}|chat:[0-9a-f-]{36}\/[0-9a-f-]{36}\/[^/]+|https:\/\/[A-Za-z0-9.-]+(?::[0-9]+)?(?:\/\S*)?)$/;
+/** A photo the card may draw (a row thumbnail, a gallery photo): a well-formed artifact, chat file or https URL and an alt. */
 export const isPhoto = (photo: unknown): photo is HarsoOutputPhoto => !!photo && typeof photo === "object"
-  && ARTIFACT.test((photo as HarsoOutputPhoto).artifact ?? "") && typeof (photo as HarsoOutputPhoto).alt === "string";
+  && MEDIA_URI.test((photo as HarsoOutputPhoto).artifact ?? "") && typeof (photo as HarsoOutputPhoto).alt === "string";
 /** 2..10 well-formed photos, photo 1 being the image's own artifact and alt (what a one-photo reader shows). */
 const isGallery = (image: HarsoOutputImage): image is HarsoOutputImage & { images: HarsoOutputPhoto[] } => {
   const { images } = image;
@@ -231,7 +232,8 @@ export function readMedia(block: AnyBlock, host: HarsoOutputMediaHost, canOpen =
   const visual = (block as { visual?: { kind?: string } }).visual as HarsoOutputMedia | undefined;
   if (!visual) return undefined;
   if (visual.kind === "image" || visual.kind === "video") {
-    if (!ARTIFACT.test(visual.artifact ?? "") || typeof visual.alt !== "string") return undefined;
+    const uriOk = visual.kind === "image" ? MEDIA_URI.test(visual.artifact ?? "") : ARTIFACT.test(visual.artifact ?? "");
+    if (!uriOk || typeof visual.alt !== "string") return undefined;
     // A well-formed gallery needs only a host that resolves artifacts: each photo it cannot resolve is its own quiet
     // tile, photo 1 included, and the others still browse.
     if (visual.kind === "image" && isGallery(visual)) return host.resolveArtifact ? visual : undefined;
