@@ -55,9 +55,22 @@ test("all or none counts the rows sent, not the ones shown: a row hidden by the 
 });
 
 test("a malformed thumbnail turns photos off for the block (the checker refuses it; the card stays calm)", () => {
-  const bad = { ...row(2), thumbnail: { artifact: "https://cdn.test/x.png", alt: "x" } };
+  const bad = { ...row(2), thumbnail: { artifact: "http://cdn.test/x.png", alt: "x" } };
   const card = renderDoc(rows(row(1), bad));
   expect(card.querySelectorAll(".hkc-output-thumb")).toHaveLength(0);
+});
+
+test("https:// and chat: photo URIs draw through the host alongside artifact: URIs", () => {
+  const chatUri = "chat:0192a3b4-5c6d-7e8f-9a0b-000000000001/0192a3b4-5c6d-7e8f-9a0b-000000000002/photo.png";
+  const httpsUri = "https://cdn.test/photo.png";
+  const r1: chat.HarsoOutputRow = { ...row(1), thumbnail: { artifact: chatUri, alt: "Chat photo" } };
+  const r2: chat.HarsoOutputRow = { ...row(2), thumbnail: { artifact: httpsUri, alt: "HTTPS photo" } };
+  const card = renderDoc(rows(r1, r2), { media: { resolveArtifact: uri => uri.startsWith("https://") ? uri : `https://signed.test/${uri.slice(5)}` } });
+  const photos = card.querySelectorAll<HTMLImageElement>(".hkc-output-thumb img");
+  expect([...photos].map(img => [img.getAttribute("src"), img.alt])).toEqual([
+    [`https://signed.test/${chatUri.slice(5)}`, "Chat photo"],
+    [httpsUri, "HTTPS photo"],
+  ]);
 });
 
 test("a host that cannot resolve artifacts draws the rows without photo boxes", () => {
