@@ -71,17 +71,34 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         const box = canvas.current!.getBoundingClientRect();
         const obstacleElements = [...markers.map(m => m.getElement()), ...canvas.current!.querySelectorAll<HTMLElement>(".maplibregl-ctrl"), ...root.current!.querySelectorAll<HTMLElement>("[data-recenter]")];
         const obstacles = obstacleElements.map(el => { const b = el.getBoundingClientRect(); return { id: el.dataset.id, left: b.left - box.left - 6, top: b.top - box.top - 6, right: b.right - box.left + 6, bottom: b.bottom - box.top + 6 }; });
+        // Compact maps (phone width) name only the selected stop: the numbered or colour-coded pins and the list name the
+        // rest. Wider maps name every stop that fits, each next to its own pin and never nearer another pin.
+        const compact = box.width <= 512;
+        const pinCentres = visible.map(({ index }) => view.project(points[index]));
         [...labels.keys()].sort((a,b) => Number(visible[b].place.id === latest.current.selected) - Number(visible[a].place.id === latest.current.selected)).forEach(i => {
           const label = labels[i];
+          if (compact && visible[i].place.id !== latest.current.selected) { label.hidden = true; return; }
           const p = view.project(points[visible[i].index]); label.hidden = false;
           const w = label.offsetWidth, h = label.offsetHeight;
           // Clear the selected marker's larger ring, including fractional-pixel rounding.
           const gap = visible[i].place.id === latest.current.selected ? 34 : 28;
           const candidates = [[p.x-w/2,p.y+gap],[p.x-w/2,p.y-gap-h],[p.x+gap,p.y-h/2],[p.x-gap-w,p.y-h/2],[p.x+gap,p.y+gap],[p.x-w-gap,p.y-h-gap]];
           const isSelected = visible[i].place.id === latest.current.selected;
-          const relevant = isSelected ? obstacles.filter(b => !b.id || b.id === latest.current.selected) : obstacles;
-          const position = candidates.find(([x,y]) => x >= 6 && y >= 6 && x+w <= box.width-6 && y+h <= box.height-6 && !relevant.some(b => x < b.right && x+w > b.left && y < b.bottom && y+h > b.top))
-            ?? (isSelected ? [Math.max(6, Math.min(box.width-w-6, candidates[0][0])), Math.max(6, Math.min(box.height-h-6, candidates[0][1]))] : undefined);
+          const inside = ([x,y]: number[]) => x >= 6 && y >= 6 && x+w <= box.width-6 && y+h <= box.height-6;
+          const hits = ([x,y]: number[]) => obstacles.filter(b => x < b.right && x+w > b.left && y < b.bottom && y+h > b.top);
+          // A label belongs to the pin its centre is nearest to; otherwise it would name the wrong stop.
+          const ownsPin = ([x,y]: number[]) => {
+            const cx = x + w/2, cy = y + h/2, own = Math.hypot(cx - p.x, cy - p.y);
+            return pinCentres.every((c, j) => j === i || Math.hypot(cx - c.x, cy - c.y) > own);
+          };
+          const own = visible[i].place.id;
+          const clean = candidates.find(c => inside(c) && ownsPin(c) && hits(c).length === 0);
+          // The selected stop is always named: if nothing is clean, take the spot touching the fewest other pins,
+          // never its own pin, never a control.
+          const fallback = isSelected ? candidates.filter(c => inside(c) && hits(c).every(b => b.id && b.id !== own))
+            .sort((a, b) => hits(a).length - hits(b).length)[0]
+            ?? [Math.max(6, Math.min(box.width-w-6, candidates[0][0])), Math.max(6, Math.min(box.height-h-6, candidates[0][1]))] : undefined;
+          const position = clean ?? fallback;
           label.hidden = !position;
           if (position) { const [x,y] = position; label.style.left = `${x}px`; label.style.top = `${y}px`; obstacles.push({id: undefined, left:x-4,top:y-4,right:x+w+4,bottom:y+h+4}); }
         });
