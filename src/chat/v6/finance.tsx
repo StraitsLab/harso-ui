@@ -20,6 +20,7 @@ const SIZES: Readonly<Partial<Record<V6Template, readonly WidgetSize[]>>> = {
 };
 /** Inline rows before View all (the approved subscriptions card shows six). Widgets show a fixed few; full shows all. */
 const INLINE_ROWS = 6;
+const STOCK_RANGES = ["1D", "1W", "1M", "1Y"] as const;
 const WIDGET_ROWS: Readonly<Partial<Record<WidgetSize, number>>> = { small: 1, medium: 3 };
 
 // ---- reading the document ----
@@ -182,6 +183,12 @@ function renderFamily({ document, mode, widgetSize, host, renderBrand, onOpenDet
       {rest.length > 0 && <Stats items={rest} />}
       {chart && <>
         <Spark chart={chart} direction={change?.direction ?? "none"} baseline={baseline} />
+        {!widgetSize && chart.range && STOCK_RANGES.includes(chart.range) && typeof chart.ticker === "string" && /^[A-Za-z0-9.^=-]{1,16}$/.test(chart.ticker) && chart.ticker.trim() === chart.ticker && host.onReply &&
+          <div role="group" aria-label="Stock chart range">
+            {STOCK_RANGES.map(range => <Button key={range} variant="ghost" size="small"
+              aria-pressed={chart.range === range} disabled={chart.range === range}
+              onClick={() => host.onReply!(`Show the ${chart.ticker} stock chart for ${range}.`)}>{range}</Button>)}
+          </div>}
         {!quiet && <p className="hkc-fin-axis"><span>{chart.x_labels[0]}</span><span>{chart.x_labels[chart.x_labels.length - 1]}</span></p>}
         {!quiet && (chart.range || baseline) && <p className="hkc-fin-chartnote">
           {chart.range && <span className="hkc-fin-range">{chart.range}</span>}
