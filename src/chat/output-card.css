@@ -102,7 +102,7 @@
 .harso-kit .hkc-output-card-section-date { color: var(--hk-secondary); font-size: var(--hk-text-meta); }
 .harso-kit .hkc-output-card-row-rating { display: inline-flex; align-items: center; gap: 3px; margin-inline-end: 8px; }
 .harso-kit .hkc-output-card-row-link { align-self: flex-start; appearance: none; border: 0; background: transparent; color: var(--hk-accent); font: inherit; font-size: var(--hk-text-chrome); min-height: 44px; padding: 8px 0; cursor: pointer; }
-.harso-kit .hkc-output-card-row-link:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 3px; }
+.harso-kit .hkc-output-card-row-link:focus-visible { box-shadow: 0 0 0 2px var(--hk-accent); }
 .harso-kit .hkc-output-card-section-heading { margin: 0; font-size: var(--hk-text-chrome); font-weight: 600; line-height: 1.4; color: var(--hk-secondary); }
 .harso-kit .hkc-output-card-sections :where(p, ul) { margin: 0; }
 .harso-kit .hkc-output-card-bullets { padding-inline-start: var(--hk-space-6); list-style: disc; display: flex; flex-direction: column; gap: var(--hk-space-1); }

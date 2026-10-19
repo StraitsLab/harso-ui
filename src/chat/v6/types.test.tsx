@@ -71,9 +71,12 @@ function strip(document: HarsoOutputDocument): HarsoOutputDocument {
   }) };
 }
 
-test("every C0-C10 field is optional: a document that carries all of them draws the same generic card as one that carries none", () => {
-  expect(html(rich)).toBe(html(strip(rich)));
-  expect(html(rich)).toContain("Acme");
+test("optional enrichment draws in generic cards without making old documents depend on it", () => {
+  const enriched = html(rich), plain = html(strip(rich));
+  for (const output of [enriched, plain]) expect(output).toContain("Acme");
+  expect(enriched).toContain("4.5 (120)");
+  expect(enriched).toContain('datetime="2026-10-12"');
+  expect(plain).not.toContain('hkc-output-card-section-date');
 });
 
 test("old documents compile and draw unchanged: no template, no brand, plain subject, plain status", () => {

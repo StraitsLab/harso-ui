@@ -12,9 +12,9 @@ import "./card-audit.css";
 const photo = { artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000001", alt: "Kyoto street in the old town" };
 const places = [
   { id: "p1", label: "Kiyomizu-dera", lat: "34.9949", lon: "135.7850", category: "Temple", photo },
-  { id: "p2", label: "Yasaka Shrine", lat: "35.0037", lon: "135.7785", category: "Shrine" },
-  { id: "p3", label: "Nishiki Market", lat: "35.0050", lon: "135.7649", category: "Market" },
-  { id: "p4", label: "Nijō Castle", lat: "35.0142", lon: "135.7482", category: "Castle" }
+  { id: "p2", label: "Yasaka Shrine", lat: "35.0037", lon: "135.7785", category: "Shrine", photo },
+  { id: "p3", label: "Nishiki Market", lat: "35.0050", lon: "135.7649", category: "Market", photo },
+  { id: "p4", label: "Nijō Castle", lat: "35.0142", lon: "135.7482", category: "Castle", photo }
 ];
 export const generic: HarsoOutputDocument[] = [];
 const add = (id: string, blocks: HarsoOutputBlock[], extra = {}) => generic.push({ kind: "output_blocks", major: 1, header: { title: id }, blocks, fallback_text: "Sample answer", ...extra });
@@ -29,7 +29,7 @@ add("Rows with photos, ratings, brands and status", [{ kind: "rows", items: [
 ] }]);
 add("Comparison table", [{ kind: "table", columns: [{ label: "Feature" }, { label: "Walk" }, { label: "Bus" }], rows: [{ cells: ["Time", "35 min", "15 min"], winner: 2 }, { cells: ["Cost", "Free", "¥230"], winner: 1 }, { cells: ["Best for", "Old lanes and photos", "Rainy afternoons"] }] }]);
 add("Key numbers", [{ kind: "numbers", items: [{ label: "Budget left", value: "S$720", delta: "+4.2%" }, { label: "Days to go", value: "12" }, { label: "Per day", value: "S$60" }] }]);
-for (const chart of ["bar", "line", "area"] as const) add(`Chart · ${chart}`, [{ kind: "visual", visual: { kind: "chart", chart, unit: "S$", x_labels: ["Mon", "Tue", "Wed", "Thu", "Fri"], series: [{ label: "This week", values: ["120", "145", "132", "160", "151"] }, { label: "Last week", values: ["110", "125", "135", "140", "130"] }] } }]);
+for (const chart of ["bar", "line", "area"] as const) add(`Chart · ${chart}`, [{ kind: "visual", visual: { kind: "chart", chart, unit: "S$", x_labels: ["Mon", "Tue", "Wed", "Thu", "Fri"], series: [{ label: "This week", values: ["120", "145", "132", "160", "151"] }, ...(chart === "bar" ? [] : [{ label: "Last week", values: ["110", "125", "135", "140", "130"] }])] } }]);
 add("Photo", [{ kind: "visual", visual: { kind: "image", ...photo, aspect: "landscape" } }]);
 add("Photo gallery", [{ kind: "visual", visual: { kind: "image", ...photo, images: [photo, { ...photo, alt: "Kyoto street, second view" }], aspect: "landscape" } }]);
 add("Video preview", [{ kind: "visual", visual: { kind: "video", ...photo, poster: photo.artifact } }]);

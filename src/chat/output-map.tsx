@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { GeoJSONSource, Map as LibreMap } from "maplibre-gl";
 import { Button } from "../primitives";
+import { MapPin } from "@phosphor-icons/react";
+import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import type { HarsoOutputMap, HarsoOutputMediaHost } from "./output-card-media";
 import { HarsoOutputThumb } from "./output-card-media";
 import { decodePolyline, mapBounds, mapCoordinates } from "./output-map-utils";
@@ -29,6 +31,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
     const timer = window.setTimeout(() => { if (active) setState("failed"); }, 15000);
     import("maplibre-gl").then(lib => {
       if (!active || !canvas.current) return;
+      lib.setWorkerUrl(workerUrl);
       const points = mapCoordinates(map);
       const categories = [...new Set(map.places.map(p => p.category).filter(Boolean))];
       const visible = map.places.slice(0, 12).map((place, index) => ({ place, index })).filter(({ place }) => group === "all" || place.category === group);
@@ -36,7 +39,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       const route = map.route ? path.length ? path : points : [];
       const fit = () => {
         const fitPoints = group === "all" ? [...points, ...route] : visible.map(p => points[p.index]);
-        if (fitPoints.length) instance.current?.fitBounds(mapBounds(fitPoints), { padding: { top: 65, bottom: 110, left: 50, right: 70 }, maxZoom: 14, duration: reduced() ? 0 : 240 });
+        if (fitPoints.length) instance.current?.fitBounds(mapBounds(fitPoints), { padding: { top: 70, bottom: 100, left: 90, right: 90 }, maxZoom: 14, duration: reduced() ? 0 : 240 });
       };
       const view = new lib.Map({ container: canvas.current, style: vectorStyle(dark), center: points[0], zoom: 10,
         scrollZoom: false, dragRotate: false, pitchWithRotate: false, touchPitch: false,
@@ -60,7 +63,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       view.on("load", () => {
         if (!active) return;
         view.addSource("labels", { type: "geojson", data: { type: "FeatureCollection", features: visible.map(({ place, index }) => ({ type: "Feature", properties: { label: place.label }, geometry: { type: "Point", coordinates: points[index] } })) } });
-        view.addLayer({ id: "place-labels", source: "labels", type: "symbol", layout: { "text-field": ["get", "label"], "text-font": ["Noto Sans Regular"], "text-size": 12, "text-offset": [0, 2.1], "text-anchor": "top", "text-max-width": 12, "text-padding": 6 }, paint: { "text-color": dark ? "#f6f6f6" : "#202624", "text-halo-color": dark ? "#202624" : "#ffffff", "text-halo-width": 2 } });
+        view.addLayer({ id: "place-labels", source: "labels", type: "symbol", layout: { "text-field": ["get", "label"], "text-font": ["Noto Sans Regular"], "text-size": 12, "text-variable-anchor": ["top", "bottom", "left", "right"], "text-radial-offset": 2.2, "text-justify": "auto", "text-max-width": 12, "text-padding": 12 }, paint: { "text-color": dark ? "#f6f6f6" : "#202624", "text-halo-color": dark ? "#202624" : "#ffffff", "text-halo-width": 2 } });
         if (route.length > 1) {
           const data = (coords: [number, number][]) => ({ type: "Feature" as const, properties: {}, geometry: { type: "LineString" as const, coordinates: coords } });
           view.addSource("route", { type: "geojson", data: data(route) });
@@ -91,7 +94,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
   }, [signature, group, dark, attempt]);
   useEffect(() => { instance.current?.triggerRepaint(); }, [selected]);
   return <div ref={root} className="hkc-map-surface" data-state={state} aria-busy={state === "loading" || undefined}>
-    <div ref={canvas} className="hkc-output-map-plane" aria-label="Interactive map" hidden={state === "failed"} />
+    <div ref={canvas} className="hkc-output-map-plane" role="region" aria-label="Interactive map" hidden={state === "failed"} />
     {state === "loading" && <div className="hkc-map-loading" role="status">Loading map…</div>}
     {state === "failed" ? <div className="hkc-map-failure" role="status"><p>Map unavailable. Explore the places in the list below.</p><Button variant="quiet" onClick={() => setAttempt(a => a + 1)}>Try again</Button></div>
       : <Button variant="quiet" className="hkc-map-recenter" data-recenter>Recenter</Button>}
@@ -118,7 +121,7 @@ export default function InteractiveMap({ map, host }: { map: HarsoOutputMap; hos
   const list = <ul className="hkc-output-map-places" aria-label="Places">{visible.map(place => <li key={place.id}>
     <button type="button" aria-pressed={selected === place.id} onClick={() => setSelected(place.id)}>
       {route && <span className="hkc-map-order">{map.places.indexOf(place) + 1}</span>}
-      {place.photo && host.resolveArtifact && <HarsoOutputThumb photo={place.photo} host={host} />}
+      {place.photo && host.resolveArtifact ? <HarsoOutputThumb photo={place.photo} host={host} /> : <span className="hkc-map-place-icon"><MapPin size={20} aria-hidden="true" /></span>}
       <span><b>{place.label}</b>{place.category && <small>{place.category}</small>}</span>
     </button>
   </li>)}</ul>;

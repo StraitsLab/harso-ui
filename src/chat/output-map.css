@@ -26,8 +26,13 @@
 .harso-kit .hkc-map-dialog h2 { font-size: var(--hk-text-body); font-weight: 600; }
 .harso-kit .hkc-map-dialog .hkc-output-map-plane { height: min(65dvh, 640px); }
 .harso-kit .hkc-map-dialog .hkc-output-map-places { margin-top: 12px; }
-.harso-kit .maplibregl-ctrl-attrib { font: 400 0.6875rem/1.5 sans-serif; color: #303632; background: #fff; }
+.harso-kit .maplibregl-ctrl-attrib { font: 400 0.6875rem/1.5 var(--hk-font); color: #303632; background: #fff; }
 .harso-kit .maplibregl-ctrl-attrib a { color: inherit; }
-.harso-kit .maplibregl-ctrl-group button { width: 44px; height: 44px; }
+.harso-kit .maplibregl-ctrl-group { background: var(--hk-surface); color: var(--hk-ink); }
+.harso-kit .maplibregl-ctrl-group button { width: 44px; height: 44px; color: inherit; }
+.harso-kit .maplibregl-ctrl-group button:hover { background: var(--hk-field-tint); }
+.harso-kit[data-mode="dark"] .maplibregl-ctrl-icon { filter: invert(1); }
+.harso-kit .hkc-map-place-icon { width: 44px; height: 44px; flex: 0 0 44px; display: grid; place-items: center; background: var(--hk-field-tint); color: var(--hk-secondary); border-radius: var(--hk-radius-row); }
+@media (forced-colors: active) { .harso-kit .hkc-map-pin { background: CanvasText; color: Canvas; forced-color-adjust: none; } }
 .harso-kit .maplibregl-ctrl button:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: -3px; }
 @media (max-width: 440px) { .harso-kit .hkc-map-dialog { padding: 12px; } }
