@@ -10,7 +10,7 @@
 .harso-kit .hkc-map-label { position: absolute; z-index: 1; pointer-events: none; white-space: nowrap; background: var(--hk-surface); color: var(--hk-ink); padding: 2px 5px; border-radius: 4px; font: 500 var(--hk-text-meta)/1.4 var(--hk-font); }
 .harso-kit .hkc-map-pin { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 3px solid var(--hk-surface); border-radius: 50%; background: var(--pin-color); color: white; box-shadow: 0 2px 6px #0004; font: 600 0.8125rem/1 var(--hk-font); cursor: pointer; }
 .harso-kit .hkc-map-pin::after { content: ""; position: absolute; inset: -7px; border-radius: 50%; }
-.harso-kit .hkc-map-pin[aria-pressed="true"] { outline: 3px solid var(--hk-ink); outline-offset: 2px; z-index: 2; width: 38px; height: 38px; margin: -3px; }
+.harso-kit .hkc-map-pin[aria-pressed="true"] { outline: 3px solid var(--hk-ink); outline-offset: 2px; z-index: 2; width: 38px; height: 38px; }
 .harso-kit :is(.hkc-map-pin, .hkc-map-toolbar select, .hkc-output-map-places button):focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 3px; }
 .harso-kit .hkc-output-map-places { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 4px 12px; margin: 0; padding: 0; }
 .harso-kit .hkc-output-map-places button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 8px; min-height: 44px; text-align: start; border: 0; border-radius: var(--hk-radius-row); color: var(--hk-ink); background: transparent; cursor: pointer; font: inherit; font-size: var(--hk-text-body); line-height: 1.5; }
