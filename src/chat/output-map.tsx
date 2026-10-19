@@ -101,7 +101,8 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         }
         fit(); ready();
       });
-      view.on("error", (event: { tile?: unknown; sourceId?: string }) => {
+      view.on("error", (errorEvent) => {
+        const event = errorEvent as typeof errorEvent & { tile?: unknown; sourceId?: string };
         // A missing tile/glyph is not a broken map. Only startup style/WebGL failures replace it.
         if (!active || event.tile || event.sourceId || view.loaded()) return;
         window.clearTimeout(timer); setState("failed");
