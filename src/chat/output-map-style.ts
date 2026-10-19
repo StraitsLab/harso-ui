@@ -6,7 +6,7 @@ const LIGHT = {
 };
 const DARK = {
  background: "#1c1d1f", green: "#1f2b22", park: "#20301f", campus: "#26241f", water: "#1d3540", waterway: "#23414d",
- building: "#28292b", street: "#36393e", road: "#4b5058", ferry: "#2b5566", label: "#b4b9bf", minor: "#b0b7bf", halo: "#1c1d1f",
+ building: "#28292b", street: "#36393e", road: "#4b5058", ferry: "#2b5566", label: "#b4b9bf", minor: "#c6cdd5", halo: "#1c1d1f",
 };
 
 /** Restrained, destination-independent cartography using public OpenMapTiles geometry. */

@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { GeoJSONSource, Map as LibreMap } from "maplibre-gl";
 import { Button } from "../primitives";
-import { MapPin } from "@phosphor-icons/react";
+import { MapPin, Bank, Storefront, Columns, FlowerLotus } from "@phosphor-icons/react";
+import { renderToStaticMarkup } from "react-dom/server";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import type { HarsoOutputMap, HarsoOutputMediaHost } from "./output-card-media";
 import { HarsoOutputThumb } from "./output-card-media";
@@ -52,6 +53,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         const button = document.createElement("button");
         button.type = "button"; button.className = "hkc-map-pin";
         button.textContent = map.route ? String(index + 1) : "";
+        if (!map.route) { const Glyph = place.category === "Temple" ? Bank : place.category === "Shrine" ? FlowerLotus : place.category === "Market" ? Storefront : place.category === "Castle" ? Columns : MapPin; button.innerHTML = renderToStaticMarkup(<Glyph size={18} weight="bold" aria-hidden="true" />); }
         button.setAttribute("aria-label", `${map.route ? `${index + 1}. ` : ""}${place.label}`);
         button.title = place.label; button.dataset.id = place.id;
         button.style.setProperty("--pin-color", map.route ? COLORS[0] : COLORS[Math.max(0, categories.indexOf(place.category)) % COLORS.length]);
@@ -68,7 +70,8 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         markers.forEach(marker => marker.getElement().setAttribute("aria-pressed", String(marker.getElement().dataset.id === latest.current.selected)));
         const box = canvas.current!.getBoundingClientRect();
         const obstacles = [...markers.map(m => m.getElement()), ...canvas.current!.querySelectorAll<HTMLElement>(".maplibregl-ctrl"), ...root.current!.querySelectorAll<HTMLElement>("[data-recenter]")].map(el => { const b = el.getBoundingClientRect(); return { left: b.left - box.left - 6, top: b.top - box.top - 6, right: b.right - box.left + 6, bottom: b.bottom - box.top + 6 }; });
-        labels.forEach((label, i) => {
+        [...labels.keys()].sort((a,b) => Number(visible[b].place.id === latest.current.selected) - Number(visible[a].place.id === latest.current.selected)).forEach(i => {
+          const label = labels[i];
           const p = view.project(points[visible[i].index]); label.hidden = false;
           const w = label.offsetWidth, h = label.offsetHeight;
           const candidates = [[p.x-w/2,p.y+26],[p.x-w/2,p.y-26-h],[p.x+26,p.y-h/2],[p.x-26-w,p.y-h/2],[p.x+26,p.y+26],[p.x-w-26,p.y-h-26]];
@@ -82,6 +85,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         for (const id of ["neighborhood-labels", "city-labels"]) {
           const original = vectorStyle(dark).layers.find(layer => layer.id === id);
           if (!original || original.type !== "symbol" || !view.getLayer(id)) continue;
+          if (id === "neighborhood-labels") { view.setLayoutProperty(id, "visibility", "none"); continue; }
           view.setFilter(id, original.filter);
           const names = new Set<string>();
           for (const { index } of visible) {
@@ -159,7 +163,7 @@ export default function InteractiveMap({ map, host }: { map: HarsoOutputMap; hos
   const street = route?.path && decodePolyline(route.path).length > 1;
   const list = <ul className="hkc-output-map-places" aria-label="Places">{visible.map(place => <li key={place.id}>
     <button type="button" aria-pressed={selected === place.id} onClick={() => setSelected(place.id)}>
-      {route && <span className="hkc-map-order">{map.places.indexOf(place) + 1}</span>}
+      <span className="hkc-map-order" style={{ background: route ? undefined : COLORS[Math.max(0, categories.indexOf(place.category ?? "")) % COLORS.length] }}>{route ? map.places.indexOf(place) + 1 : <MapPin size={16} aria-hidden="true" />}</span>
       {place.photo && host.resolveArtifact ? <HarsoOutputThumb photo={place.photo} host={host} /> : <span className="hkc-map-place-icon"><MapPin size={20} aria-hidden="true" /></span>}
       <span><b>{place.label}</b>{place.category && <small>{place.category}</small>}</span>
     </button>
