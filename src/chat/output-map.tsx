@@ -69,15 +69,21 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       const syncSelection = () => {
         markers.forEach(marker => marker.getElement().setAttribute("aria-pressed", String(marker.getElement().dataset.id === latest.current.selected)));
         const box = canvas.current!.getBoundingClientRect();
-        const obstacles = [...markers.map(m => m.getElement()), ...canvas.current!.querySelectorAll<HTMLElement>(".maplibregl-ctrl"), ...root.current!.querySelectorAll<HTMLElement>("[data-recenter]")].map(el => { const b = el.getBoundingClientRect(); return { left: b.left - box.left - 6, top: b.top - box.top - 6, right: b.right - box.left + 6, bottom: b.bottom - box.top + 6 }; });
+        const obstacleElements = [...markers.map(m => m.getElement()), ...canvas.current!.querySelectorAll<HTMLElement>(".maplibregl-ctrl"), ...root.current!.querySelectorAll<HTMLElement>("[data-recenter]")];
+        const obstacles = obstacleElements.map(el => { const b = el.getBoundingClientRect(); return { id: el.dataset.id, left: b.left - box.left - 6, top: b.top - box.top - 6, right: b.right - box.left + 6, bottom: b.bottom - box.top + 6 }; });
         [...labels.keys()].sort((a,b) => Number(visible[b].place.id === latest.current.selected) - Number(visible[a].place.id === latest.current.selected)).forEach(i => {
           const label = labels[i];
           const p = view.project(points[visible[i].index]); label.hidden = false;
           const w = label.offsetWidth, h = label.offsetHeight;
-          const candidates = [[p.x-w/2,p.y+26],[p.x-w/2,p.y-26-h],[p.x+26,p.y-h/2],[p.x-26-w,p.y-h/2],[p.x+26,p.y+26],[p.x-w-26,p.y-h-26]];
-          const position = candidates.find(([x,y]) => x >= 6 && y >= 6 && x+w <= box.width-6 && y+h <= box.height-6 && !obstacles.some(b => x < b.right && x+w > b.left && y < b.bottom && y+h > b.top));
+          // Clear the selected marker's larger ring, including fractional-pixel rounding.
+          const gap = visible[i].place.id === latest.current.selected ? 34 : 28;
+          const candidates = [[p.x-w/2,p.y+gap],[p.x-w/2,p.y-gap-h],[p.x+gap,p.y-h/2],[p.x-gap-w,p.y-h/2],[p.x+gap,p.y+gap],[p.x-w-gap,p.y-h-gap]];
+          const isSelected = visible[i].place.id === latest.current.selected;
+          const relevant = isSelected ? obstacles.filter(b => !b.id || b.id === latest.current.selected) : obstacles;
+          const position = candidates.find(([x,y]) => x >= 6 && y >= 6 && x+w <= box.width-6 && y+h <= box.height-6 && !relevant.some(b => x < b.right && x+w > b.left && y < b.bottom && y+h > b.top))
+            ?? (isSelected ? [Math.max(6, Math.min(box.width-w-6, candidates[0][0])), Math.max(6, Math.min(box.height-h-6, candidates[0][1]))] : undefined);
           label.hidden = !position;
-          if (position) { const [x,y] = position; label.style.left = `${x}px`; label.style.top = `${y}px`; obstacles.push({left:x-4,top:y-4,right:x+w+4,bottom:y+h+4}); }
+          if (position) { const [x,y] = position; label.style.left = `${x}px`; label.style.top = `${y}px`; obstacles.push({id: undefined, left:x-4,top:y-4,right:x+w+4,bottom:y+h+4}); }
         });
       };
       view.on("render", syncSelection);
@@ -98,7 +104,13 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         }
       };
       view.on("moveend", avoidBasemapCollisions);
-      const ready = () => { if (active) { window.clearTimeout(timer); setState("ready"); } };
+      const ready = () => { if (active) {
+        window.clearTimeout(timer); setState("ready");
+        if (canvas.current && canvas.current.clientWidth <= 512) {
+          const attribution = canvas.current.querySelector<HTMLDetailsElement>(".maplibregl-ctrl-attrib");
+          attribution?.classList.remove("maplibregl-compact-show"); attribution?.removeAttribute("open");
+        }
+      } };
       view.once("idle", ready);
       view.on("load", () => {
         if (!active) return;

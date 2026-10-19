@@ -201,6 +201,22 @@ for (const mode of ["light", "dark"] as const) {
     }
   });
 
+  test(`map ${mode}: selected Kyoto label stays visible at 320 and 390; phone attribution starts compact`, async ({ page }) => {
+    for (const width of [320, 390]) for (const name of ["Kyoto · 4 places with route", "Kyoto · places without route"]) {
+      await page.setViewportSize({ width, height: 1000 });
+      await page.goto(`/preview/card-audit.html?mode=${mode}&only=${encodeURIComponent(name)}`);
+      const plane = page.locator(".hkc-output-map-plane");
+      await expect(page.locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 15000 });
+      const selected = await plane.locator('.hkc-map-pin[aria-pressed="true"]').getAttribute("title");
+      await expect(plane.locator(".hkc-map-label").filter({ hasText: selected! })).toBeVisible();
+      const attribution = plane.locator(".maplibregl-ctrl-attrib");
+      await expect(attribution).not.toHaveClass(/maplibregl-compact-show/);
+      await expect(attribution).not.toHaveAttribute("open");
+      await attribution.locator("summary").click();
+      await expect(attribution).toHaveClass(/maplibregl-compact-show/);
+    }
+  });
+
   for (const doc of ["status", "progress", "image", "video", "map"] as const) {
     test(`${doc} ${mode}: loading, empty, partial, stale and failed draw as B0; failed is amber with a 28px Try again`, async ({ page }) => {
       for (const state of ["loading", "empty", "partial", "stale", "failed"] as const) {
