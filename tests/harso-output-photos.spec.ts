@@ -114,19 +114,12 @@ for (const [key, counter, at] of [["ArrowRight", "3 of 8", 2], ["End", "8 of 8",
       await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBe(0);
       await expect(gallery.getByText("1 of 8")).toBeVisible();
       await gallery.hover();
-      // Observe before clicking and send the interrupt in that frame: a driver round trip can miss the whole scroll.
-      const interrupt = track.evaluate((el, key) => new Promise<void>(done => {
-        const check = () => {
-          if (el.scrollLeft > el.clientWidth * .5 && el.scrollLeft < el.clientWidth - 1) {
-            el.focus();
-            el.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
-            done();
-          } else requestAnimationFrame(check);
-        };
-        requestAnimationFrame(check);
-      }), key);
       await gallery.getByRole("button", { name: "Next photo" }).click();
-      await interrupt;
+      // Mid-scroll: past halfway to photo 2, not there yet.
+      await page.waitForFunction(el => el!.scrollLeft > el!.clientWidth * .5 && el!.scrollLeft < el!.clientWidth - 1,
+        await track.elementHandle(), { polling: "raf" });
+      await track.focus();
+      await page.keyboard.press(key);
       await expect.poll(() => track.evaluate(el => el.scrollLeft / el.clientWidth), { timeout: 4000 }).toBeCloseTo(at, 2);
       // Let every pending scrollend land, then the counter and position must still be the newest command's.
       await track.evaluate(el => new Promise(done => setTimeout(done, 400)));
