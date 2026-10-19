@@ -4,7 +4,7 @@ import InteractiveMap from "./output-map";
 import { decodePolyline, mapCoordinates, mapBounds } from "./output-map-utils";
 import { readMedia, type HarsoOutputMap } from "./output-card-media";
 
-const calls = vi.hoisted(() => ({ options: [] as any[], sources: {} as Record<string, any>, layers: [] as any[], removed: 0, fail: false, loaded: false, events: {} as Record<string, (event?: any) => void> }));
+const calls = vi.hoisted(() => ({ options: [] as any[], sources: {} as Record<string, any>, layers: [] as any[], removed: 0, fail: false, decorationFail: false, fitted: false, loaded: false, events: {} as Record<string, (event?: any) => void> }));
 vi.mock("maplibre-gl", () => ({
   setWorkerUrl() {},
   Map: class {
@@ -16,15 +16,18 @@ vi.mock("maplibre-gl", () => ({
     once() {} project() { return { x: 100, y: 100 }; }
     addSource(id: string, data: any) { calls.sources[id] = data; }
     addLayer(layer: any) { calls.layers.push(layer); }
-    fitBounds() {} resize() {} triggerRepaint() {} remove() { calls.removed++; }
+    hasImage() { return false; }
+    addImage() { if (calls.decorationFail) throw new Error("Decoration unavailable"); }
+    fitBounds() { calls.fitted = true; } resize() {} triggerRepaint() {} remove() { calls.removed++; }
     getSource() { return { setData() {} }; }
   },
   Marker: class { constructor(private options: any) {} setLngLat() { return this; } addTo() { return this; } remove() {} getElement() { return this.options.element; } },
   AttributionControl: class {}, NavigationControl: class {}
 }));
+vi.stubGlobal("ImageData", class { data: Uint8ClampedArray; constructor(width: number, height: number) { this.data = new Uint8ClampedArray(width * height * 4); } });
 vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 vi.stubGlobal("matchMedia", () => ({ matches: true }));
-afterEach(() => { cleanup(); calls.options = []; calls.sources = {}; calls.layers = []; calls.fail = false; calls.loaded = false; calls.events = {}; });
+afterEach(() => { cleanup(); calls.options = []; calls.sources = {}; calls.layers = []; calls.fail = false; calls.decorationFail = false; calls.fitted = false; calls.loaded = false; calls.events = {}; });
 const map: HarsoOutputMap = { kind: "map", places: [
   { id: "a", label: "First place", lat: "38.5", lon: "-120.2", category: "Temple" },
   { id: "b", label: "Second place", lat: "40.7", lon: "-120.95", category: "Garden" }
@@ -69,6 +72,24 @@ test("tile errors after load preserve the map; startup style errors fail", async
   expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready');
   calls.loaded = false;
   act(() => calls.events.error({ error: new Error('Style unavailable') }));
+  expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'failed');
+});
+
+test("route decoration failure still fits and readies the map", async () => {
+  calls.decorationFail = true;
+  const { container } = render(<InteractiveMap map={map} host={{}} />);
+  await waitFor(() => expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready'));
+  expect(calls.fitted).toBe(true);
+  expect(calls.layers.some(l => l.id === "route")).toBe(true);
+});
+
+test.each([{}, { sourceId: 'openmaptiles' }])("startup style/source errors fail: %j", async event => {
+  const { container } = render(<InteractiveMap map={map} host={{}} />);
+  await waitFor(() => expect(calls.events.error).toBeTypeOf('function'));
+  calls.loaded = false;
+  act(() => calls.events.error({ tile: {}, sourceId: 'openmaptiles' }));
+  expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready');
+  act(() => calls.events.error({ ...event, error: new Error('Startup unavailable') }));
   expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'failed');
 });
 

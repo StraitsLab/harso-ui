@@ -6,6 +6,7 @@
 .harso-kit .hkc-output-map-plane { height: clamp(360px, 55vw, 480px); width: 100%; position: relative; }
 .harso-kit .hkc-map-loading, .harso-kit .hkc-map-failure { display: grid; align-content: center; justify-items: center; min-height: 280px; padding: 24px; gap: 12px; text-align: center; color: var(--hk-secondary); font-size: var(--hk-text-body); line-height: 1.5; }
 .harso-kit .hkc-map-loading { position: absolute; inset: 0; background: var(--hk-field-tint); }
+.harso-kit[data-mode="dark"] .hkc-map-loading { color: var(--hk-ink); }
 .harso-kit .hkc-map-recenter { position: absolute; top: 10px; left: 10px; background: var(--hk-surface); box-shadow: var(--hk-shadow); }
 .harso-kit .hkc-map-label { position: absolute; z-index: 1; pointer-events: none; white-space: nowrap; background: var(--hk-surface); color: var(--hk-ink); padding: 2px 5px; border-radius: 4px; font: 500 var(--hk-text-meta)/1.4 var(--hk-font); }
 .harso-kit .hkc-map-pin { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 3px solid var(--hk-surface); border-radius: 50%; background: var(--pin-color); color: white; box-shadow: 0 2px 6px #0004; font: 600 0.8125rem/1 var(--hk-font); cursor: pointer; }

@@ -131,39 +131,44 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       view.once("idle", ready);
       view.on("load", () => {
         if (!active) return;
-        if (route.length > 1) {
-          const data = (coords: [number, number][]) => ({ type: "Feature" as const, properties: {}, geometry: { type: "LineString" as const, coordinates: coords } });
-          view.addSource("route", { type: "geojson", data: data(route) });
-          view.addLayer({ id: "route-halo", source: "route", type: "line", paint: { "line-color": dark ? "#172320" : "#ffffff", "line-width": 9 } });
-          view.addLayer({ id: "route", source: "route", type: "line", layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": dark ? "#87ceba" : "#287561", "line-width": 5, ...(!path.length ? { "line-dasharray": [2, 2] } : {}) } });
-          // Chevrons along the line show the direction, stop 1 towards the last stop. Drawn as an image, so they need no
-          // glyph download.
-          const size = 24, chevron = new ImageData(size, size), ink = dark ? [23, 35, 32] : [255, 255, 255];
-          for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
-            const d = Math.abs(y - size / 2), on = Math.abs((x - 7) - (size / 2 - d) * 0.6) < 2.4 && d < 7;
-            if (on) chevron.data.set([...ink, 255], (y * size + x) * 4);
+        try {
+          if (route.length > 1) {
+            const data = (coords: [number, number][]) => ({ type: "Feature" as const, properties: {}, geometry: { type: "LineString" as const, coordinates: coords } });
+            view.addSource("route", { type: "geojson", data: data(route) });
+            view.addLayer({ id: "route-halo", source: "route", type: "line", paint: { "line-color": dark ? "#172320" : "#ffffff", "line-width": 9 } });
+            view.addLayer({ id: "route", source: "route", type: "line", layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": dark ? "#87ceba" : "#287561", "line-width": 5, ...(!path.length ? { "line-dasharray": [2, 2] } : {}) } });
+            // Chevrons along the line show the direction, stop 1 towards the last stop. Drawn as an image, so they need no
+            // glyph download.
+            const size = 24, chevron = new ImageData(size, size), ink = dark ? [23, 35, 32] : [255, 255, 255];
+            for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+              const d = Math.abs(y - size / 2), on = Math.abs((x - 7) - (size / 2 - d) * 0.6) < 2.4 && d < 7;
+              if (on) chevron.data.set([...ink, 255], (y * size + x) * 4);
+            }
+            if (!view.hasImage("route-chevron")) view.addImage("route-chevron", chevron, { pixelRatio: 1.5 });
+            view.addLayer({ id: "route-direction", source: "route", type: "symbol", layout: { "symbol-placement": "line", "symbol-spacing": 70,
+              "icon-image": "route-chevron", "icon-rotation-alignment": "map", "icon-allow-overlap": true, "icon-ignore-placement": true } });
+            // A short first draw explains stop order; reduced motion shows the complete path immediately.
+            if (!reduced()) {
+              const start = performance.now();
+              let frame = requestAnimationFrame(function draw(now) {
+                if (!active) return;
+                const progress = Math.min(1, (now - start) / 240);
+                (view.getSource("route") as GeoJSONSource)?.setData(data(route.slice(0, Math.max(2, Math.ceil(route.length * progress)))));
+                if (progress < 1) frame = requestAnimationFrame(draw);
+              });
+              const prior = dispose; dispose = () => { prior(); cancelAnimationFrame(frame); };
+            }
           }
-          if (!view.hasImage("route-chevron")) view.addImage("route-chevron", chevron, { pixelRatio: 1.5 });
-          view.addLayer({ id: "route-direction", source: "route", type: "symbol", layout: { "symbol-placement": "line", "symbol-spacing": 70,
-            "icon-image": "route-chevron", "icon-rotation-alignment": "map", "icon-allow-overlap": true, "icon-ignore-placement": true } });
-          // A short first draw explains stop order; reduced motion shows the complete path immediately.
-          if (!reduced()) {
-            const start = performance.now();
-            let frame = requestAnimationFrame(function draw(now) {
-              if (!active) return;
-              const progress = Math.min(1, (now - start) / 240);
-              (view.getSource("route") as GeoJSONSource)?.setData(data(route.slice(0, Math.max(2, Math.ceil(route.length * progress)))));
-              if (progress < 1) frame = requestAnimationFrame(draw);
-            });
-            const prior = dispose; dispose = () => { prior(); cancelAnimationFrame(frame); };
-          }
+        } catch (error) {
+          console.warn("Map route decoration unavailable", error);
+        } finally {
+          fit(); ready();
         }
-        fit(); ready();
       });
       view.on("error", (errorEvent) => {
-        const event = errorEvent as typeof errorEvent & { tile?: unknown; sourceId?: string };
-        // A missing tile/glyph is not a broken map. Only startup style/WebGL failures replace it.
-        if (!active || event.tile || event.sourceId || view.loaded()) return;
+        const event = errorEvent as typeof errorEvent & { tile?: unknown };
+        // Individual tiles and errors after load do not break the map; startup style/TileJSON errors do.
+        if (!active || event.tile || view.loaded()) return;
         window.clearTimeout(timer); setState("failed");
       });
       const resize = new ResizeObserver(() => view.resize()); resize.observe(canvas.current);
