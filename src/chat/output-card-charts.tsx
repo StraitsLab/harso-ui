@@ -20,6 +20,8 @@ export interface HarsoOutputChart {
   kind: "chart"; chart: "bar" | "line" | "area"; unit?: string; x_labels: string[]; series: HarsoOutputSeries[]; highlight_index?: number;
   /** C4: what the carried points cover. Only the range supplied; no series exists for any other. */
   range?: V6ChartRange;
+  /** Exact lookup identity for stock range replies; never inferred from a title or series label. */
+  ticker?: string;
   /** C4: an exact source decimal (a previous close), never rebuilt from a rounded percentage. */
   baseline?: string;
 }

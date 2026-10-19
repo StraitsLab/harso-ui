@@ -28,7 +28,7 @@ const stock = ({ delta = "+1.8%", range, baseline, brand = "apple.com", values =
   header: { title: "Apple · AAPL", subtitle: "Nasdaq", ...(brand ? { brand } : {}) },
   blocks: [
     { kind: "numbers", items: [{ value: "US$238.40", label: "Close", ...(delta ? { delta } : {}) }] },
-    ...(chart ? [{ kind: "visual" as const, visual: { kind: "chart" as const, chart: "line" as const, unit: "US$", x_labels: LABELS, series: [{ label: "AAPL", values }], ...(range ? { range } : {}), ...(baseline ? { baseline } : {}) } }] : []),
+    ...(chart ? [{ kind: "visual" as const, visual: { kind: "chart" as const, chart: "line" as const, ticker: "AAPL", unit: "US$", x_labels: LABELS, series: [{ label: "Display label", values }], ...(range ? { range } : {}), ...(baseline ? { baseline } : {}) } }] : []),
   ],
   details: { sources: [{ label: "Nasdaq closing price" }], disclaimers: ["Not financial advice."] },
   as_of: AS_OF, fallback_text: "FALLBACK",
@@ -180,6 +180,67 @@ test("range present: exactly the supplied range is named, as plain text that is 
     expect(within(root).getAllByRole("button")).toHaveLength(1);
     view.unmount();
   }
+});
+
+test.each(["inline", "full"] as const)("%s range replies carry the exact ticker and leave the saved chart selected on failure", mode => {
+  const document = deepFreeze(stock({ range: "1D", baseline: "234.17" }));
+  const onReply = vi.fn(); // No new answer arrives (e.g. the normal chat read fails).
+  const { root } = draw(document, { mode, onReply });
+  const before = root.querySelector("svg.hkc-fin-spark")!.outerHTML;
+  const group = within(root).getByRole("group", { name: "Stock chart range" });
+  for (const range of ["1W", "1M", "1Y"]) {
+    fireEvent.click(within(group).getByRole("button", { name: range }));
+    expect(onReply).toHaveBeenLastCalledWith(`Show the AAPL stock chart for ${range}.`);
+    expect(within(group).getByRole("button", { name: "1D" }).getAttribute("aria-pressed")).toBe("true");
+    expect(root.querySelector("svg.hkc-fin-spark")!.outerHTML).toBe(before);
+  }
+  expect(onReply).toHaveBeenCalledTimes(3);
+});
+
+test("range replies use the chart ticker, never title parsing, and reject unsafe or missing identity", () => {
+  for (const ticker of ["BRK-B", "^GSPC", "1234567890ABCDEF", "Apple Inc.", "AAPL; buy", "AAPL\n", "", undefined]) {
+    const document = stock({ range: "1W" });
+    document.header.title = "A different title";
+    const chart = document.blocks[1] as { visual: { ticker?: string } };
+    chart.visual.ticker = ticker;
+    const onReply = vi.fn();
+    const { root, view } = draw(document, { onReply });
+    const valid = ticker !== undefined && ["BRK-B", "^GSPC", "1234567890ABCDEF"].includes(ticker);
+    expect(within(root).queryAllByRole("group", { name: "Stock chart range" })).toHaveLength(valid ? 1 : 0);
+    if (valid) {
+      fireEvent.click(within(root).getByRole("button", { name: "1Y" }));
+      expect(onReply).toHaveBeenCalledWith(`Show the ${ticker} stock chart for 1Y.`);
+    }
+    view.unmount();
+  }
+});
+
+test("range replies reject malformed runtime ticker and range values without guessing identity", () => {
+  const invalid: { ticker: unknown; range: unknown }[] = [
+    { ticker: 123, range: "1D" }, { ticker: true, range: "1D" }, { ticker: {}, range: "1D" },
+    { ticker: "AAPL", range: "5Y" }, { ticker: "AAPL", range: "1d" },
+    { ticker: "AAPL", range: "1D\n" }, { ticker: "AAPL", range: 1 },
+  ];
+  for (const values of invalid) {
+    const document = stock({ range: "1D" });
+    Object.assign((document.blocks[1] as { visual: object }).visual, values);
+    const onReply = vi.fn();
+    const { root, view } = draw(document, { onReply });
+    expect(within(root).queryByRole("group", { name: "Stock chart range" })).toBeNull();
+    expect(onReply).not.toHaveBeenCalled();
+    expect(root.querySelector("svg.hkc-fin-spark")).not.toBeNull();
+    view.unmount();
+  }
+});
+
+test("range replies are absent on widgets and without a range or reply sender", () => {
+  for (const props of [{}, { widgetSize: "large" as const, onReply: vi.fn() }]) {
+    const { root, view } = draw(stock({ range: "1D" }), props);
+    expect(within(root).queryByRole("group", { name: "Stock chart range" })).toBeNull();
+    view.unmount();
+  }
+  const { root } = draw(stock(), { onReply: vi.fn() });
+  expect(within(root).queryByRole("group", { name: "Stock chart range" })).toBeNull();
 });
 
 test("exact baseline: the dashed line sits at the supplied decimal and the label says it digit for digit", () => {
@@ -417,7 +478,7 @@ test("axe finds no violation in any of the cards, light or dark, card or widget"
     [bills(BILLS), undefined], [bills(BILLS), "medium"], [subs(SUBS), undefined], [subs(SUBS), "small"],
   ];
   for (const appearance of ["light", "dark"] as const) for (const [document, widgetSize] of cases) {
-    const { view, root } = draw(document, { widgetSize, appearance });
+    const { view, root } = draw(document, { widgetSize, appearance, onReply: vi.fn() });
     const result = await axe.run(view.container, { rules: { "color-contrast": { enabled: false } } });
     expect(result.violations.map(violation => violation.id), `${document.template} ${widgetSize ?? "card"} ${appearance}`).toEqual([]);
     // Nothing pressable sits inside another pressable.
