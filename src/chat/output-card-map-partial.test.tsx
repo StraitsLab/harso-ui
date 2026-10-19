@@ -6,10 +6,12 @@ import { readMedia, type HarsoOutputMap } from "./output-card-media";
 
 const calls = vi.hoisted(() => ({ options: [] as any[], sources: {} as Record<string, any>, layers: [] as any[], removed: 0, fail: false }));
 vi.mock("maplibre-gl", () => ({
+  setWorkerUrl() {},
   Map: class {
     constructor(options: any) { calls.options.push(options); if (calls.fail) throw new Error("No WebGL"); }
     touchZoomRotate = { disableRotation() {} };
     addControl() {} on(event: string, callback: () => void) { if (event === "load") queueMicrotask(callback); }
+    once() {} project() { return { x: 100, y: 100 }; }
     addSource(id: string, data: any) { calls.sources[id] = data; }
     addLayer(layer: any) { calls.layers.push(layer); }
     fitBounds() {} resize() {} triggerRepaint() {} remove() { calls.removed++; }
