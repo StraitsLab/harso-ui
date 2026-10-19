@@ -12,9 +12,9 @@ import "./card-audit.css";
 const photo = { artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000001", alt: "Kyoto street in the old town" };
 const places = [
   { id: "p1", label: "Kiyomizu-dera", lat: "34.9949", lon: "135.7850", category: "Temple", photo },
-  { id: "p2", label: "Yasaka Shrine", lat: "35.0037", lon: "135.7785", category: "Shrine", photo },
-  { id: "p3", label: "Nishiki Market", lat: "35.0050", lon: "135.7649", category: "Market", photo },
-  { id: "p4", label: "Nijō Castle", lat: "35.0142", lon: "135.7482", category: "Castle", photo }
+  { id: "p2", label: "Yasaka Shrine", lat: "35.0037", lon: "135.7785", category: "Shrine", photo: { artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000002", alt: "Kagura ritual at Yasaka Shrine" } },
+  { id: "p3", label: "Nishiki Market", lat: "35.0050", lon: "135.7649", category: "Market", photo: { artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000003", alt: "Nishiki Market" } },
+  { id: "p4", label: "Nijō Castle", lat: "35.0142", lon: "135.7482", category: "Castle", photo: { artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000004", alt: "Ninomaru at Nijō Castle" } }
 ];
 export const generic: HarsoOutputDocument[] = [];
 const add = (id: string, blocks: HarsoOutputBlock[], extra = {}) => generic.push({ kind: "output_blocks", major: 1, header: { title: id }, blocks, fallback_text: "Sample answer", ...extra });
@@ -50,7 +50,8 @@ const hostFor = (doc: HarsoOutputDocument) => ({ resolveArtifact: (uri: string) 
   if (doc.template === "price-watch") return "/preview/assets/airpods.jpg";
   if (doc.template === "compare-products") return "/preview/assets/phone.jpg";
   if (doc.template === "product-shortlist") return "/preview/assets/vacuum.jpg";
-  return "/preview/assets/kyoto.jpg";
+  const image = ({ "2": "yasaka", "3": "nishiki", "4": "nijo" } as Record<string,string>)[uri.slice(-1)];
+  return `/preview/assets/${image ?? "kyoto"}.jpg`;
 } });
 function Page() {
   const [log, setLog] = useState("");

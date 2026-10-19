@@ -39,7 +39,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       const route = map.route ? path.length ? path : points : [];
       const fit = () => {
         const fitPoints = group === "all" ? [...points, ...route] : visible.map(p => points[p.index]);
-        if (fitPoints.length) instance.current?.fitBounds(mapBounds(fitPoints), { padding: { top: 70, bottom: 100, left: 90, right: 90 }, maxZoom: 14, duration: reduced() ? 0 : 240 });
+        if (fitPoints.length) instance.current?.fitBounds(mapBounds(fitPoints), { padding: { top: 115, bottom: 80, left: 80, right: 80 }, maxZoom: 14, duration: reduced() ? 0 : 240 });
       };
       const view = new lib.Map({ container: canvas.current, style: vectorStyle(dark), center: points[0], zoom: 10,
         scrollZoom: false, dragRotate: false, pitchWithRotate: false, touchPitch: false,
@@ -47,7 +47,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       instance.current = view;
       view.touchZoomRotate.disableRotation();
       view.addControl(new lib.AttributionControl({ compact: true }), "bottom-left");
-      view.addControl(new lib.NavigationControl({ showCompass: false }), "bottom-right");
+      view.addControl(new lib.NavigationControl({ showCompass: false }), "top-right");
       const markers = visible.map(({ place, index }) => {
         const button = document.createElement("button");
         button.type = "button"; button.className = "hkc-map-pin";
@@ -71,13 +71,15 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         labels.forEach((label, i) => {
           const p = view.project(points[visible[i].index]); label.hidden = false;
           const w = label.offsetWidth, h = label.offsetHeight;
-          const candidates = [[p.x-w/2,p.y+24],[p.x-w/2,p.y-24-h],[p.x+24,p.y-h/2],[p.x-24-w,p.y-h/2],[p.x+24,p.y+24],[p.x-w-24,p.y-h-24]];
+          const candidates = [[p.x-w/2,p.y+26],[p.x-w/2,p.y-26-h],[p.x+26,p.y-h/2],[p.x-26-w,p.y-h/2],[p.x+26,p.y+26],[p.x-w-26,p.y-h-26]];
           const position = candidates.find(([x,y]) => x >= 6 && y >= 6 && x+w <= box.width-6 && y+h <= box.height-6 && !obstacles.some(b => x < b.right && x+w > b.left && y < b.bottom && y+h > b.top));
           label.hidden = !position;
           if (position) { const [x,y] = position; label.style.left = `${x}px`; label.style.top = `${y}px`; obstacles.push({left:x-4,top:y-4,right:x+w+4,bottom:y+h+4}); }
         });
       };
       view.on("render", syncSelection);
+      const ready = () => { if (active) { window.clearTimeout(timer); setState("ready"); } };
+      view.once("idle", ready);
       view.on("load", () => {
         if (!active) return;
         if (route.length > 1) {
@@ -97,7 +99,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
             const prior = dispose; dispose = () => { prior(); cancelAnimationFrame(frame); };
           }
         }
-        fit(); window.clearTimeout(timer); setState("ready");
+        fit(); ready();
       });
       view.on("error", () => { if (active) { window.clearTimeout(timer); setState("failed"); } });
       const resize = new ResizeObserver(() => view.resize()); resize.observe(canvas.current);

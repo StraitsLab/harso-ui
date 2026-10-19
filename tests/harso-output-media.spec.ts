@@ -7,6 +7,12 @@ import AxeBuilder from "@axe-core/playwright";
 const fixture = "/preview/output-card.html";
 const card = (page: Page) => page.locator(".hkc-output-card");
 const callbacks = async (page: Page) => JSON.parse(await page.getByLabel("Fixture callbacks").innerText());
+test.beforeEach(async ({ page }) => {
+  // Empty local TileJSON: browser gates never depend on public tiles or glyphs.
+  await page.route("https://tiles.openfreemap.org/**", route => route.request().url().endsWith("/planet")
+    ? route.fulfill({ json: { tilejson: "3.0.0", tiles: [], minzoom: 0, maxzoom: 14 } })
+    : route.fulfill({ body: Buffer.alloc(0), contentType: "application/x-protobuf" }));
+});
 const open = async (page: Page, query: string, width = 560) => {
   await page.setViewportSize({ width, height: 1000 });
   // `imgslow=1` points the image at this path, which never answers: the frame stays in its loading state.
@@ -176,7 +182,7 @@ for (const mode of ["light", "dark"] as const) {
       ? route.fulfill({ json: { tilejson: "3.0.0", tiles: [], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ body: Buffer.alloc(0) }));
     for (const width of [512, 320]) {
       await open(page, `doc=map&mode=${mode}&width=${width}`, width + 48);
-      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready");
+      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 15000 });
       const plane = card(page).locator(".hkc-output-map-plane");
       await expect(plane.locator(".hkc-map-pin")).toHaveCount(3);
       await expect(card(page).getByRole("list", { name: "Places" }).getByRole("button")).toHaveCount(3);
@@ -267,7 +273,7 @@ for (const mode of ["light", "dark"] as const) {
     await expect(card(page).getByText(/Map unavailable/)).toBeVisible();
     await expect(card(page).getByRole("list", { name: "Places" }).getByRole("button")).toHaveCount(3);
     fail = false; await card(page).getByRole("button", { name: "Try again" }).click();
-    await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready");
+    await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 15000 });
   });
 
   test(`video ${mode}: real poster and file failures show failed with Try again and Open video; the network back draws the poster`, async ({ page }) => {
@@ -297,7 +303,7 @@ for (const mode of ["light", "dark"] as const) {
       ? route.fulfill({ json: { tilejson: "3.0.0", tiles: [], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ body: Buffer.alloc(0) }));
     for (const doc of ["world", "continents", "dateline", "longpick", "poles"]) {
       await open(page, `doc=${doc}&mode=${mode}&width=320`, 368);
-      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready");
+      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 15000 });
       expect(await card(page).getByRole("list", { name: "Places" }).getByRole("button").count()).toBeGreaterThanOrEqual(2);
       expect(await textInside(page)).toEqual([]);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

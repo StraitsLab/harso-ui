@@ -3,7 +3,7 @@
 .harso-kit .hkc-map-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: var(--hk-text-chrome); color: var(--hk-secondary); }
 .harso-kit .hkc-map-toolbar select { min-width: 0; max-width: 60%; min-height: 44px; padding: 0 10px; border: 0; border-radius: var(--hk-radius-row); background: var(--hk-field-tint); color: var(--hk-ink); font: inherit; font-size: 1rem; }
 .harso-kit .hkc-map-surface { position: relative; min-width: 0; overflow: hidden; border-radius: var(--hk-radius-card); background: var(--hk-field-tint); }
-.harso-kit .hkc-output-map-plane { height: clamp(280px, 55vw, 420px); width: 100%; position: relative; }
+.harso-kit .hkc-output-map-plane { height: clamp(360px, 55vw, 480px); width: 100%; position: relative; }
 .harso-kit .hkc-map-loading, .harso-kit .hkc-map-failure { display: grid; align-content: center; justify-items: center; min-height: 280px; padding: 24px; gap: 12px; text-align: center; color: var(--hk-secondary); font-size: var(--hk-text-body); line-height: 1.5; }
 .harso-kit .hkc-map-loading { position: absolute; inset: 0; background: var(--hk-field-tint); }
 .harso-kit .hkc-map-recenter { position: absolute; top: 10px; left: 10px; background: var(--hk-surface); box-shadow: var(--hk-shadow); }
