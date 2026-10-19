@@ -27,7 +27,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
   latest.current = { selected, onSelect };
   const signature = JSON.stringify(map);
   useEffect(() => {
-    let active = true, dispose = () => {};
+    let active = true, failed = false, dispose = () => {};
     setState("loading");
     const timer = window.setTimeout(() => { if (active) setState("failed"); }, 15000);
     import("maplibre-gl").then(lib => {
@@ -121,7 +121,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         }
       };
       view.on("moveend", avoidBasemapCollisions);
-      const ready = () => { if (active) {
+      const ready = () => { if (active && !failed) {
         window.clearTimeout(timer); setState("ready");
         if (canvas.current && canvas.current.clientWidth <= 512) {
           const attribution = canvas.current.querySelector<HTMLDetailsElement>(".maplibregl-ctrl-attrib");
@@ -169,6 +169,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         const event = errorEvent as typeof errorEvent & { tile?: unknown };
         // Individual tiles and errors after load do not break the map; startup style/TileJSON errors do.
         if (!active || event.tile || view.loaded()) return;
+        failed = true;
         window.clearTimeout(timer); setState("failed");
       });
       const resize = new ResizeObserver(() => view.resize()); resize.observe(canvas.current);
