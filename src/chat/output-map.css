@@ -27,7 +27,7 @@
 .harso-kit .hkc-map-dialog h2 { font-size: var(--hk-text-body); font-weight: 600; }
 .harso-kit .hkc-map-dialog .hkc-output-map-plane { height: min(65dvh, 640px); }
 .harso-kit .hkc-map-dialog .hkc-output-map-places { margin-top: 12px; }
-.harso-kit .maplibregl-ctrl-attrib { font: 400 0.6875rem/1.5 var(--hk-font); color: #303632; background: #fff; }
+.harso-kit .maplibregl-ctrl-attrib { font: 400 0.6875rem/1.5 var(--hk-font); color: var(--hk-secondary); background: var(--hk-surface); }
 .harso-kit .maplibregl-ctrl-attrib a { color: inherit; }
 .harso-kit .maplibregl-ctrl-group { background: var(--hk-surface); color: var(--hk-ink); }
 .harso-kit .maplibregl-ctrl-group button { width: 44px; height: 44px; color: inherit; }

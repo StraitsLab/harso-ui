@@ -78,6 +78,22 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         });
       };
       view.on("render", syncSelection);
+      const avoidBasemapCollisions = () => {
+        for (const id of ["neighborhood-labels", "city-labels"]) {
+          const original = vectorStyle(dark).layers.find(layer => layer.id === id);
+          if (!original || original.type !== "symbol" || !view.getLayer(id)) continue;
+          view.setFilter(id, original.filter);
+          const names = new Set<string>();
+          for (const { index } of visible) {
+            const p = view.project(points[index]);
+            for (const feature of view.queryRenderedFeatures([[p.x - 90, p.y - 45], [p.x + 90, p.y + 45]], { layers: [id] })) {
+              if (feature.properties?.name) names.add(feature.properties.name);
+            }
+          }
+          if (names.size) view.setFilter(id, ["all", original.filter ?? ["has", "name"], ["!in", "name", ...names]] as import("maplibre-gl").FilterSpecification);
+        }
+      };
+      view.on("moveend", avoidBasemapCollisions);
       const ready = () => { if (active) { window.clearTimeout(timer); setState("ready"); } };
       view.once("idle", ready);
       view.on("load", () => {

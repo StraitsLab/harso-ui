@@ -12,6 +12,7 @@ vi.mock("maplibre-gl", () => ({
     touchZoomRotate = { disableRotation() {} };
     addControl() {} on(event: string, callback: () => void) { calls.events[event] = callback; if (event === "load") queueMicrotask(() => { calls.loaded = true; callback(); }); }
     loaded() { return calls.loaded; }
+    getLayer() { return false; } setFilter() {} queryRenderedFeatures() { return []; }
     once() {} project() { return { x: 100, y: 100 }; }
     addSource(id: string, data: any) { calls.sources[id] = data; }
     addLayer(layer: any) { calls.layers.push(layer); }
