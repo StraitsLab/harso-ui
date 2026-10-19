@@ -1,16 +1,17 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import InteractiveMap from "./output-map";
 import { decodePolyline, mapCoordinates, mapBounds } from "./output-map-utils";
 import { readMedia, type HarsoOutputMap } from "./output-card-media";
 
-const calls = vi.hoisted(() => ({ options: [] as any[], sources: {} as Record<string, any>, layers: [] as any[], removed: 0, fail: false }));
+const calls = vi.hoisted(() => ({ options: [] as any[], sources: {} as Record<string, any>, layers: [] as any[], removed: 0, fail: false, loaded: false, events: {} as Record<string, (event?: any) => void> }));
 vi.mock("maplibre-gl", () => ({
   setWorkerUrl() {},
   Map: class {
     constructor(options: any) { calls.options.push(options); if (calls.fail) throw new Error("No WebGL"); }
     touchZoomRotate = { disableRotation() {} };
-    addControl() {} on(event: string, callback: () => void) { if (event === "load") queueMicrotask(callback); }
+    addControl() {} on(event: string, callback: () => void) { calls.events[event] = callback; if (event === "load") queueMicrotask(() => { calls.loaded = true; callback(); }); }
+    loaded() { return calls.loaded; }
     once() {} project() { return { x: 100, y: 100 }; }
     addSource(id: string, data: any) { calls.sources[id] = data; }
     addLayer(layer: any) { calls.layers.push(layer); }
@@ -22,7 +23,7 @@ vi.mock("maplibre-gl", () => ({
 }));
 vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 vi.stubGlobal("matchMedia", () => ({ matches: true }));
-afterEach(() => { cleanup(); calls.options = []; calls.sources = {}; calls.layers = []; calls.fail = false; });
+afterEach(() => { cleanup(); calls.options = []; calls.sources = {}; calls.layers = []; calls.fail = false; calls.loaded = false; calls.events = {}; });
 const map: HarsoOutputMap = { kind: "map", places: [
   { id: "a", label: "First place", lat: "38.5", lon: "-120.2", category: "Temple" },
   { id: "b", label: "Second place", lat: "40.7", lon: "-120.95", category: "Garden" }
@@ -60,6 +61,16 @@ test("missing route path draws dashed ordered segments and the exact disclosure"
   expect(calls.layers.find(l => l.id === "route").paint["line-dasharray"]).toEqual([2, 2]);
   expect(screen.getByText("Straight lines, not streets")).toBeVisible();
 });
+test("tile errors after load preserve the map; startup style errors fail", async () => {
+  const { container } = render(<InteractiveMap map={map} host={{}} />);
+  await waitFor(() => expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready'));
+  act(() => calls.events.error({ tile: {}, sourceId: 'places' }));
+  expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready');
+  calls.loaded = false;
+  act(() => calls.events.error({ error: new Error('Style unavailable') }));
+  expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'failed');
+});
+
 test("WebGL failure keeps readable selectable places, filtering and a working retry", async () => {
   calls.fail = true; render(<InteractiveMap map={map} host={{}} />);
   expect(await screen.findByText(/Map unavailable/)).toBeVisible();

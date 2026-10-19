@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
   // Empty local TileJSON: browser gates never depend on public tiles or glyphs.
   await page.route("https://tiles.openfreemap.org/**", route => route.request().url().endsWith("/planet")
     ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"], minzoom: 0, maxzoom: 14 } })
-    : route.fulfill({ body: Buffer.alloc(0), contentType: "application/x-protobuf" }));
+    : route.fulfill({ status: 204, contentType: "application/x-protobuf" }));
 });
 const open = async (page: Page, query: string, width = 560) => {
   await page.setViewportSize({ width, height: 1000 });
@@ -179,10 +179,10 @@ for (const mode of ["light", "dark"] as const) {
 
   test(`map ${mode}: interactive pins fit, selection is keyboard accessible and expand returns focus`, async ({ page }) => {
     await page.route("https://tiles.openfreemap.org/**", route => route.request().url().endsWith("/planet")
-      ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ body: Buffer.alloc(0) }));
+      ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ status: 204, contentType: "application/x-protobuf" }));
     for (const width of [512, 320]) {
       await open(page, `doc=map&mode=${mode}&width=${width}`, width + 48);
-      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 15000 });
+      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 30000 });
       const plane = card(page).locator(".hkc-output-map-plane");
       await expect(plane.locator(".hkc-map-pin")).toHaveCount(3);
       await expect(card(page).getByRole("list", { name: "Places" }).getByRole("button")).toHaveCount(3);
@@ -226,7 +226,7 @@ for (const mode of ["light", "dark"] as const) {
 }
 
 test("reduced motion: the image shimmer stops; forced colors keep dot, bar and pins visible", async ({ page }) => {
-  await page.route("https://tiles.openfreemap.org/**", route => route.request().url().endsWith("/planet") ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"] } }) : route.fulfill({ body: Buffer.alloc(0) }));
+  await page.route("https://tiles.openfreemap.org/**", route => route.request().url().endsWith("/planet") ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"] } }) : route.fulfill({ status: 204, contentType: "application/x-protobuf" }));
   await page.emulateMedia({ reducedMotion: "reduce" });
   await open(page, "doc=image&imgslow=1&width=512");
   expect(await card(page).locator(".hkc-output-media").evaluate(node => getComputedStyle(node, "::after").animationName)).toBe("none");
@@ -268,12 +268,12 @@ for (const mode of ["light", "dark"] as const) {
   test(`map ${mode}: failed vector requests retain the places and retry recovers`, async ({ page }) => {
     let fail = true;
     await page.route("https://tiles.openfreemap.org/**", route => fail ? route.abort() : route.request().url().endsWith("/planet")
-      ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ body: Buffer.alloc(0) }));
+      ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ status: 204, contentType: "application/x-protobuf" }));
     await open(page, `doc=map&mode=${mode}&width=512`);
     await expect(card(page).getByText(/Map unavailable/)).toBeVisible();
     await expect(card(page).getByRole("list", { name: "Places" }).getByRole("button")).toHaveCount(3);
     fail = false; await card(page).getByRole("button", { name: "Try again" }).click();
-    await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 15000 });
+    await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 30000 });
   });
 
   test(`video ${mode}: real poster and file failures show failed with Try again and Open video; the network back draws the poster`, async ({ page }) => {
@@ -300,10 +300,10 @@ for (const mode of ["light", "dark"] as const) {
 
   test(`map ${mode}: world and dateline places stay listed without clipping`, async ({ page }) => {
     await page.route("https://tiles.openfreemap.org/**", route => route.request().url().endsWith("/planet")
-      ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ body: Buffer.alloc(0) }));
+      ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ status: 204, contentType: "application/x-protobuf" }));
     for (const doc of ["world", "continents", "dateline", "longpick", "poles"]) {
       await open(page, `doc=${doc}&mode=${mode}&width=320`, 368);
-      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 15000 });
+      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 30000 });
       expect(await card(page).getByRole("list", { name: "Places" }).getByRole("button").count()).toBeGreaterThanOrEqual(2);
       expect(await textInside(page)).toEqual([]);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

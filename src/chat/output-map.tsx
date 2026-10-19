@@ -101,7 +101,11 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         }
         fit(); ready();
       });
-      view.on("error", () => { if (active) { window.clearTimeout(timer); setState("failed"); } });
+      view.on("error", (event: { tile?: unknown; sourceId?: string }) => {
+        // A missing tile/glyph is not a broken map. Only startup style/WebGL failures replace it.
+        if (!active || event.tile || event.sourceId || view.loaded()) return;
+        window.clearTimeout(timer); setState("failed");
+      });
       const resize = new ResizeObserver(() => view.resize()); resize.observe(canvas.current);
       const button = root.current?.querySelector<HTMLButtonElement>("[data-recenter]");
       const recenter = () => { if (button) button.onclick = fit; };
