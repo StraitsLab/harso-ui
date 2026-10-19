@@ -768,7 +768,7 @@ function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blo
     <header className="hkc-output-card-header" style={glance ? { position: "relative" } : undefined}>
       <div className="hkc-output-card-heading">
         <h2 id={titleId} className="hkc-output-card-title">{glance
-          ? <button type="button" className="hkc-v6-open" onClick={onViewAll}>{document.header.title}<CaretRight className="hkc-v6-open-glyph" size={14} weight="bold" aria-hidden="true" /></button>
+          ? <button type="button" className="hkc-v6-open" onClick={onViewAll}><span>{document.header.title}</span><CaretRight className="hkc-v6-open-glyph" size={14} weight="bold" aria-hidden="true" /></button>
           : document.header.title}</h2>
         {document.header.subtitle && <p className="hkc-output-card-subtitle">{document.header.subtitle}</p>}
         <HarsoOutputCardMeta document={glance && saysWhen(document.header.subtitle) ? { ...document, as_of: undefined } : document} />

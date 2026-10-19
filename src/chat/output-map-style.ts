@@ -2,7 +2,7 @@ import type { StyleSpecification } from "maplibre-gl";
 // Cartography adapted from thesysdev/open-intelligent-ui (MIT).
 const LIGHT = {
  background: "#f4f2f0", green: "#bce9b0", park: "#b7e7aa", campus: "#ede8d7", water: "#a2dff5", waterway: "#91d6ef",
- building: "#e9e6e2", street: "#b9bfc8", road: "#959fae", ferry: "#89cfe9", label: "#50545a", minor: "#687078", halo: "#ffffff",
+ building: "#e9e6e2", street: "#a6afb9", road: "#7f8b9c", ferry: "#89cfe9", label: "#50545a", minor: "#687078", halo: "#ffffff",
 };
 const DARK = {
  background: "#1c1d1f", green: "#1f2b22", park: "#20301f", campus: "#26241f", water: "#1d3540", waterway: "#23414d",

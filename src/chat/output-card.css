@@ -21,11 +21,12 @@
    Desktop type scale uses the kit tokens only (title 15 · body 14 · chrome 13 · meta 12). */
 .harso-kit .hkc-output-card {
   display: flex; flex-direction: column; gap: var(--hk-space-4);
-  width: 100%; min-width: 0; padding: var(--hk-space-4);
+  width: 100%; min-width: 0; max-width: 760px; padding: var(--hk-space-4);
   border: 0; border-radius: var(--hk-radius-card);
   background: var(--hk-surface); color: var(--hk-ink);
   overflow-wrap: break-word;
 }
+.harso-kit .hkc-output-card:has(.hkc-output-map) { max-width: 1100px; }
 .harso-kit .hkc-output-card :where(h2, p, ul) { margin: 0; }
 
 .harso-kit .hkc-output-card-header { display: flex; align-items: flex-start; gap: var(--hk-space-3); min-width: 0; }

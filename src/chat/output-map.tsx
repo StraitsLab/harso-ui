@@ -58,17 +58,33 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         button.addEventListener("click", () => latest.current.onSelect(place.id));
         return new lib.Marker({ element: button }).setLngLat(points[index]).addTo(view);
       });
-      const syncSelection = () => markers.forEach(marker => marker.getElement().setAttribute("aria-pressed", String(marker.getElement().dataset.id === latest.current.selected)));
+      // DOM labels share the pins' screen space, so collision includes real pin/control boxes.
+      const labels = visible.map(({ place, index }) => {
+        const label = document.createElement("span"); label.className = "hkc-map-label";
+        label.textContent = `${map.route ? `${index + 1} · ` : ""}${place.label}`;
+        label.setAttribute("aria-hidden", "true"); canvas.current!.append(label); return label;
+      });
+      const syncSelection = () => {
+        markers.forEach(marker => marker.getElement().setAttribute("aria-pressed", String(marker.getElement().dataset.id === latest.current.selected)));
+        const box = canvas.current!.getBoundingClientRect();
+        const obstacles = [...markers.map(m => m.getElement()), ...canvas.current!.querySelectorAll<HTMLElement>(".maplibregl-ctrl"), ...root.current!.querySelectorAll<HTMLElement>("[data-recenter]")].map(el => { const b = el.getBoundingClientRect(); return { left: b.left - box.left - 6, top: b.top - box.top - 6, right: b.right - box.left + 6, bottom: b.bottom - box.top + 6 }; });
+        labels.forEach((label, i) => {
+          const p = view.project(points[visible[i].index]); label.hidden = false;
+          const w = label.offsetWidth, h = label.offsetHeight;
+          const candidates = [[p.x-w/2,p.y+24],[p.x-w/2,p.y-24-h],[p.x+24,p.y-h/2],[p.x-24-w,p.y-h/2],[p.x+24,p.y+24],[p.x-w-24,p.y-h-24]];
+          const position = candidates.find(([x,y]) => x >= 6 && y >= 6 && x+w <= box.width-6 && y+h <= box.height-6 && !obstacles.some(b => x < b.right && x+w > b.left && y < b.bottom && y+h > b.top));
+          label.hidden = !position;
+          if (position) { const [x,y] = position; label.style.left = `${x}px`; label.style.top = `${y}px`; obstacles.push({left:x-4,top:y-4,right:x+w+4,bottom:y+h+4}); }
+        });
+      };
       view.on("render", syncSelection);
       view.on("load", () => {
         if (!active) return;
-        view.addSource("labels", { type: "geojson", data: { type: "FeatureCollection", features: visible.map(({ place, index }) => ({ type: "Feature", properties: { label: place.label }, geometry: { type: "Point", coordinates: points[index] } })) } });
-        view.addLayer({ id: "place-labels", source: "labels", type: "symbol", layout: { "text-field": ["get", "label"], "text-font": ["Noto Sans Regular"], "text-size": 12, "text-variable-anchor": ["top", "bottom", "left", "right"], "text-radial-offset": 2.2, "text-justify": "auto", "text-max-width": 12, "text-padding": 12 }, paint: { "text-color": dark ? "#f6f6f6" : "#202624", "text-halo-color": dark ? "#202624" : "#ffffff", "text-halo-width": 2 } });
         if (route.length > 1) {
           const data = (coords: [number, number][]) => ({ type: "Feature" as const, properties: {}, geometry: { type: "LineString" as const, coordinates: coords } });
           view.addSource("route", { type: "geojson", data: data(route) });
-          view.addLayer({ id: "route-halo", source: "route", type: "line", paint: { "line-color": dark ? "#172320" : "#ffffff", "line-width": 7 } }, "place-labels");
-          view.addLayer({ id: "route", source: "route", type: "line", layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": dark ? "#87ceba" : "#287561", "line-width": 3.5, ...(!path.length ? { "line-dasharray": [2, 2] } : {}) } }, "place-labels");
+          view.addLayer({ id: "route-halo", source: "route", type: "line", paint: { "line-color": dark ? "#172320" : "#ffffff", "line-width": 7 } });
+          view.addLayer({ id: "route", source: "route", type: "line", layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": dark ? "#87ceba" : "#287561", "line-width": 3.5, ...(!path.length ? { "line-dasharray": [2, 2] } : {}) } });
           // A short first draw explains stop order; reduced motion shows the complete path immediately.
           if (!reduced()) {
             const start = performance.now();
@@ -88,7 +104,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       const button = root.current?.querySelector<HTMLButtonElement>("[data-recenter]");
       const recenter = () => { if (button) button.onclick = fit; };
       recenter();
-      const prior = dispose; dispose = () => { prior(); resize.disconnect(); if (button) button.onclick = null; markers.forEach(m => m.remove()); view.remove(); instance.current = null; };
+      const prior = dispose; dispose = () => { prior(); resize.disconnect(); if (button) button.onclick = null; labels.forEach(l => l.remove()); markers.forEach(m => m.remove()); view.remove(); instance.current = null; };
     }).catch(() => { if (active) { window.clearTimeout(timer); setState("failed"); } });
     return () => { active = false; window.clearTimeout(timer); dispose(); };
   }, [signature, group, dark, attempt]);

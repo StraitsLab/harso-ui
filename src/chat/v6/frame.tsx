@@ -71,7 +71,7 @@ export function V6Frame({ document, mode, host, onOpenDetails, renderBrand, trai
       <div className="hkc-output-card-heading">
         <h2 id={titleId} className="hkc-output-card-title">
           {mode === "inline"
-            ? <button type="button" className="hkc-v6-open" onClick={host.onViewAll}>{title}<CaretRight className="hkc-v6-open-glyph" size={14} weight="bold" aria-hidden="true" /></button>
+            ? <button type="button" className="hkc-v6-open" onClick={host.onViewAll}><span>{title}</span><CaretRight className="hkc-v6-open-glyph" size={14} weight="bold" aria-hidden="true" /></button>
             : title}
         </h2>
         {subtitle && <p className="hkc-output-card-subtitle">{subtitle}</p>}
