@@ -1,9 +1,10 @@
 "use client";
 
-import { CaretRight, Info, WarningCircle, CheckCircle } from "@phosphor-icons/react";
+import { CaretRight, Info, Star, WarningCircle, CheckCircle } from "@phosphor-icons/react";
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { Button, Field, Input, Select, Skeleton } from "../primitives";
 import { DatePicker } from "../dates";
+import { V6Brand } from "./v6/frame";
 import { SectionTabs } from "./v6/section-tabs";
 import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputNumberDelta, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
   type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
@@ -48,7 +49,7 @@ export interface HarsoOutputNumber { value: string; delta?: string; label: strin
 
 export interface HarsoOutputNumbersBlock { kind: "numbers"; items: HarsoOutputNumber[] }
 
-/** `date` (C10) is a date-only YYYY-MM-DD; `thumbnail` is a photo. The generic card draws neither. */
+/** `date` (C10) is a date-only YYYY-MM-DD; `thumbnail` is a photo. */
 export interface HarsoOutputTextSection { heading?: string; paragraphs?: string[]; bullets?: string[]; date?: string; thumbnail?: HarsoOutputPhoto }
 
 export interface HarsoOutputTextBlock { kind: "text"; summary?: string; sections: HarsoOutputTextSection[]; tone?: "info" | "warning" | "success" }
@@ -351,7 +352,7 @@ function fitText(sections: HarsoOutputTextSection[], caps: HarsoOutputCardCaps) 
     const paragraphs = (section.paragraphs ?? []).flatMap(text => fit(text) ?? []);
     const bullets = (section.bullets ?? []).flatMap(text => fit(text) ?? []);
     if (!paragraphs.length && !bullets.length) continue;
-    fitted.push({ ...heading && { heading }, ...paragraphs.length && { paragraphs }, ...bullets.length && { bullets } });
+    fitted.push({ ...section, heading, paragraphs, bullets });
   }
   return { sections: fitted, complete };
 }
@@ -517,7 +518,7 @@ function trimSections(sections: HarsoOutputTextSection[], keep?: number, chars?:
   return sections.flatMap(section => {
     const paragraphs = take(section.paragraphs), bullets = take(section.bullets);
     return paragraphs.length || bullets.length
-      ? [{ ...section.heading && { heading: section.heading }, ...paragraphs.length && { paragraphs }, ...bullets.length && { bullets } }] : [];
+      ? [{ ...section, paragraphs, bullets }] : [];
   });
 }
 
@@ -533,7 +534,7 @@ const renderedLines = (node: Element) => {
  * tightened to `lines`: trailing items wait for View all, and a first item that alone is too tall is cut on a word
  * boundary. Measured again when the width or the fonts change. Uncapped it is the whole block.
  */
-function CardSections({ sections, lines, onClip }: { sections: HarsoOutputTextSection[]; lines: number; onClip: (clipped: boolean) => void }) {
+function CardSections({ sections, lines, onClip, media }: { sections: HarsoOutputTextSection[]; lines: number; onClip: (clipped: boolean) => void; media?: HarsoOutputMediaHost }) {
   const node = useRef<HTMLDivElement>(null);
   const probe = useRef<HTMLSpanElement>(null);
   const [cut, setCut] = useState<{ keep: number; chars?: number; key: string }>();
@@ -585,6 +586,8 @@ function CardSections({ sections, lines, onClip }: { sections: HarsoOutputTextSe
   return <div ref={node} className="hkc-output-card-sections">
     <span className="hkc-output-card-sections-probe-box" aria-hidden="true"><span ref={probe} className="hkc-output-card-sections-probe">Hamburgefonstiv 0123</span></span>
     {shown.map((section, index) => <div key={index} className="hkc-output-card-section">
+      {section.thumbnail && media?.resolveArtifact && <HarsoOutputThumb photo={section.thumbnail} host={media} />}
+      {section.date && /^\d{4}-\d{2}-\d{2}$/.test(section.date) && Number.isFinite(Date.parse(`${section.date}T00:00:00Z`)) && <time className="hkc-output-card-section-date" dateTime={section.date}>{new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${section.date}T00:00:00Z`))}</time>}
       {section.heading && <h3 className="hkc-output-card-section-heading">{section.heading}</h3>}
       {section.paragraphs?.map((text, line) => <p key={line}>{text}</p>)}
       {!!section.bullets?.length && <ul className="hkc-output-card-bullets">
@@ -649,12 +652,12 @@ export function DetailsContent({ details, onOpenUrl }: { details: HarsoOutputDoc
 }
 
 /** Adjacent row runs keep agent order; only named runs add a heading, never an extra row. */
-function CardRows({ items, photos, layout, media }: { items: HarsoOutputRow[]; photos: boolean; layout?: "grid" | "list"; media?: HarsoOutputMediaHost }) {
+function CardRows({ items, photos, layout, media, renderBrand, host }: { items: HarsoOutputRow[]; photos: boolean; layout?: "grid" | "list"; media?: HarsoOutputMediaHost; renderBrand?: V6RenderBrand; host: ActionHost }) {
   const grouped = items.some(row => row.group);
   const list = (rows: HarsoOutputRow[], group?: string) => <ul className="hkc-output-card-rows" aria-label={group} role={grouped ? "list" : undefined}
     data-photos={photos || undefined} data-layout={layout}>
     {rows.map((row, index) => <li key={row.id ?? index} className="hkc-output-card-row">
-      {photos && <HarsoOutputThumb photo={row.thumbnail!} host={media!} />}
+      {photos ? <HarsoOutputThumb photo={row.thumbnail!} host={media!} /> : row.brand && <V6Brand domain={row.brand} label={row.label} renderBrand={renderBrand ?? (() => undefined)} />}
       <div className="hkc-output-card-row-main">
         <p className="hkc-output-card-row-line">
           <span className="hkc-output-card-row-label">{row.label}</span>
@@ -662,6 +665,11 @@ function CardRows({ items, photos, layout, media }: { items: HarsoOutputRow[]; p
           <HarsoOutputRowStatus status={row.status} status_label={row.status_label} />
         </p>
         {row.secondary && <p className="hkc-output-card-row-secondary">{row.secondary}</p>}
+        {(row.rating || row.category || row.opening_label || row.distance) && <p className="hkc-output-card-row-secondary">
+          {row.rating && <span className="hkc-output-card-row-rating"><Star size={12} weight="fill" aria-hidden="true" /> {row.rating}{row.review_count !== undefined && ` (${row.review_count})`}</span>}
+          {[row.category, row.opening_label, row.distance].filter(Boolean).join(" · ")}
+        </p>}
+        {row.action && (() => { const action = readAction(row.action, host); return action && <button type="button" className="hkc-output-card-row-link" onClick={action.run}>{action.label}</button>; })()}
       </div>
       {row.trailing && <span className="hkc-output-card-row-value">{row.trailing}</span>}
     </li>)}
@@ -726,7 +734,7 @@ export function HarsoOutputCardPlaceholder({ label }: { label: string }) {
 }
 
 /** The generic card: the whole answer from its blocks, in source order. Every family falls back to it. */
-function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blockStates, media, subjectState, className = "", ...host }: HarsoOutputCardProps) {
+function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blockStates, media, subjectState, renderBrand, className = "", ...host }: HarsoOutputCardProps) {
   const id = useId();
   const [detailsOpen, setDetailsOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -784,7 +792,7 @@ function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blo
           ? <MediaFrame key={partIndex} state={part.state} kind={part.kind === "media" ? part.media.kind : part.kind}>
             {part.kind === "status" ? <HarsoOutputStatusView status={part.status} steps={part.steps} live={part.live} />
               : part.kind === "progress" ? <HarsoOutputProgressView progress={part.progress} />
-              : part.media.kind === "map" ? <HarsoOutputMapView map={part.media} host={media!} />
+              : part.media.kind === "map" ? <HarsoOutputMapView map={part.media} host={media ?? {}} />
               : part.media.kind === "video" ? <HarsoOutputVideoView video={part.media} host={media!} onOpen={host.onOpenArtifact!} />
               : part.media.images ? <HarsoOutputGalleryView image={{ ...part.media, images: part.media.images }} host={media!} />
               : <HarsoOutputImageView image={part.media} host={media!} />}
@@ -796,7 +804,7 @@ function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blo
           : part.kind === "table"
           ? <HarsoOutputBlockFrame key={partIndex} kind="table" state={part.state}><HarsoOutputTableView table={part.table} shown={part.shown} label={document.header.title} /></HarsoOutputBlockFrame>
           : part.kind === "rows"
-          ? <CardRows key={partIndex} items={part.items} photos={part.photos} layout={rowLayout} media={media} />
+          ? <CardRows key={partIndex} items={part.items} photos={part.photos} layout={rowLayout} media={media} renderBrand={renderBrand} host={host} />
           : part.kind === "numbers"
             // Value, optional change, then label in reading order; the change is never another number tile.
             ? <ul key={partIndex} className="hkc-output-card-numbers">
@@ -811,8 +819,8 @@ function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blo
             : part.kind === "form"
             ? <OutputForm key={partIndex} block={part.form} onReply={host.onReply} />
             : <OutputCallout key={partIndex} tone={part.tone}>{part.kind === "sections"
-              ? part.tabs ? <SectionTabs sections={part.sections} renderSection={section => <CardSections sections={[section]} lines={HARSO_OUTPUT_CARD_UNCAPPED.maxTextLines} onClip={NOT_CLIPPED} />} />
-                : <CardSections sections={part.sections} lines={limits.maxTextLines} onClip={setTextClipped} />
+              ? part.tabs ? <SectionTabs sections={part.sections} renderSection={section => <CardSections sections={[section]} lines={HARSO_OUTPUT_CARD_UNCAPPED.maxTextLines} media={media} onClip={NOT_CLIPPED} />} />
+                : <CardSections sections={part.sections} lines={limits.maxTextLines} media={media} onClip={setTextClipped} />
               : <CardText text={part.text} lines={limits.maxTextLines} onClip={setTextClipped} />}</OutputCallout>)}
         {hasMore && <Button variant="ghost" className="hkc-output-card-view-all" onClick={onViewAll}
           trailingIcon={<CaretRight size={14} weight="bold" />}>{viewAllLabel}</Button>}

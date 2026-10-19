@@ -3,7 +3,7 @@ import { KitProvider } from "../src";
 import { Button } from "../src/primitives";
 import { HARSO_OUTPUT_CARD_UNCAPPED, HarsoOutputCard, harsoOutputWholeAnswer, type HarsoOutputCardProps, type HarsoOutputDocument } from "../src/chat/output-card";
 import index from "../catalogue/index.json";
-import { sampleArtifact, sampleTile } from "./sample-image";
+import { sampleArtifact } from "./sample-image";
 import "./catalogue-gallery.css";
 
 /** One catalogue example as the vertical files hold it (catalogue/<vertical>.json). */
@@ -49,7 +49,7 @@ function galleryHost(say: (text: string) => void): Host {
     onWorkControl: (control, id) => tell(`Would ${control} work ${id}`),
     onRoutineControl: (control, id) => tell(`Would ${control} routine ${id}`),
     // Photos and map tiles are local drawings (deterministic, offline): the app resolves real files and tiles.
-    media: { resolveArtifact: sampleArtifact, mapTile: sampleTile }
+    media: { resolveArtifact: sampleArtifact }
   };
 }
 

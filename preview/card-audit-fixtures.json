@@ -1,0 +1,1229 @@
+[
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "price-watch",
+    "as_of": "2026-09-26T02:30Z",
+    "header": {
+      "title": "AirPods Pro price watch",
+      "subtitle": "Apple, Lazada, Shopee"
+    },
+    "blocks": [
+      {
+        "kind": "status",
+        "state": "watching",
+        "detail": "since 26 Sep",
+        "subject": {
+          "page_watch_id": "0192a3b4-5c6d-7e8f-9a0b-000000000709"
+        }
+      },
+      {
+        "kind": "visual",
+        "visual": {
+          "kind": "image",
+          "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000001",
+          "alt": "AirPods Pro in the open case"
+        }
+      },
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "id": "apple",
+            "label": "Apple",
+            "brand": "apple.com",
+            "trailing": "S$349"
+          },
+          {
+            "id": "lazada",
+            "label": "Lazada",
+            "brand": "lazada.sg",
+            "trailing": "S$339",
+            "mark": "pick"
+          },
+          {
+            "id": "shopee",
+            "label": "Shopee",
+            "brand": "shopee.sg",
+            "trailing": "S$345"
+          }
+        ]
+      },
+      {
+        "kind": "action",
+        "secondary": {
+          "kind": "page_watch_control",
+          "label": "Turn off",
+          "page_watch_id": "0192a3b4-5c6d-7e8f-9a0b-000000000709",
+          "control": "disable"
+        }
+      }
+    ],
+    "fallback_text": "Watching AirPods Pro."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "compare-products",
+    "as_of": "2026-09-26T02:05Z",
+    "header": {
+      "title": "iPhone 17 vs Pixel 11",
+      "subtitle": "Price and camera"
+    },
+    "blocks": [
+      {
+        "kind": "table",
+        "columns": [
+          {
+            "label": "Camera"
+          },
+          {
+            "label": "iPhone 17",
+            "thumbnail": {
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000011",
+              "alt": "iPhone 17"
+            }
+          },
+          {
+            "label": "Pixel 11",
+            "thumbnail": {
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000012",
+              "alt": "Pixel 11"
+            }
+          }
+        ],
+        "rows": [
+          {
+            "cells": [
+              "Price",
+              "S$1,299",
+              "S$1,249"
+            ],
+            "winner": 2
+          },
+          {
+            "cells": [
+              "Zoom",
+              "2x optical",
+              "5x optical"
+            ],
+            "winner": 2
+          },
+          {
+            "cells": [
+              "Night photos",
+              "Good",
+              "Better"
+            ],
+            "winner": 2
+          },
+          {
+            "cells": [
+              "Video",
+              "4K 120 fps",
+              "4K 60 fps"
+            ],
+            "winner": 1
+          }
+        ]
+      }
+    ],
+    "fallback_text": "Pixel wins on price, zoom and night photos."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "product-shortlist",
+    "as_of": "2026-09-26T02:05Z",
+    "header": {
+      "title": "Quiet stick vacuums under S$400",
+      "subtitle": "Sorted by noise"
+    },
+    "blocks": [
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "id": "dyson",
+            "label": "Dyson V8 Origin",
+            "secondary": "72 dB \u00b7 40 min",
+            "trailing": "S$379",
+            "mark": "pick",
+            "rating": "4.6",
+            "review_count": 12394,
+            "thumbnail": {
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000021",
+              "alt": "Dyson V8 Origin"
+            },
+            "action": {
+              "kind": "open_url",
+              "label": "Open at Courts",
+              "url": "https://shop.example/dyson"
+            }
+          },
+          {
+            "id": "xiaomi",
+            "label": "Xiaomi G11",
+            "secondary": "74 dB \u00b7 60 min",
+            "trailing": "S$299",
+            "rating": "4.4",
+            "review_count": 3108,
+            "thumbnail": {
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000022",
+              "alt": "Xiaomi G11"
+            },
+            "action": {
+              "kind": "open_url",
+              "label": "Open at Lazada",
+              "url": "https://shop.example/xiaomi"
+            }
+          },
+          {
+            "id": "samsung",
+            "label": "Samsung Jet 60",
+            "secondary": "76 dB \u00b7 40 min",
+            "rating": "4.5",
+            "thumbnail": {
+              "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000023",
+              "alt": "Samsung Jet 60"
+            }
+          }
+        ]
+      }
+    ],
+    "fallback_text": "Three quiet stick vacuums."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "stock-quote",
+    "as_of": "2026-09-25T20:00Z",
+    "fallback_text": "Sample.",
+    "header": {
+      "title": "Sample Co \u00b7 SMPL",
+      "subtitle": "Sample exchange",
+      "brand": "sample.example"
+    },
+    "blocks": [
+      {
+        "kind": "numbers",
+        "items": [
+          {
+            "value": "US$238.40",
+            "label": "Close",
+            "delta": "+1.8%"
+          }
+        ]
+      },
+      {
+        "kind": "visual",
+        "visual": {
+          "kind": "chart",
+          "chart": "line",
+          "unit": "US$",
+          "x_labels": [
+            "10:00",
+            "11:00",
+            "12:00",
+            "13:00",
+            "14:00",
+            "15:00",
+            "16:00"
+          ],
+          "series": [
+            {
+              "label": "SMPL",
+              "values": [
+                "234.2",
+                "235.9",
+                "236.4",
+                "237.1",
+                "237.8",
+                "238.1",
+                "238.4"
+              ]
+            }
+          ],
+          "range": "1D",
+          "baseline": "234.17",
+          "ticker": "SMPL"
+        }
+      }
+    ],
+    "details": {
+      "sources": [
+        {
+          "label": "Sample data, not a quote"
+        }
+      ],
+      "disclaimers": [
+        "Not financial advice."
+      ]
+    }
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "bills-due",
+    "as_of": "2026-09-25T20:00Z",
+    "fallback_text": "Sample.",
+    "header": {
+      "title": "Bills due this week",
+      "subtitle": "21\u201327 Sep \u00b7 sample"
+    },
+    "blocks": [
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "id": "b1",
+            "label": "Sample Power",
+            "secondary": "Was due 21 Sep",
+            "trailing": "S$212.40",
+            "status": "overdue",
+            "brand": "samplepower.example"
+          },
+          {
+            "id": "b2",
+            "label": "Sample Fibre",
+            "secondary": "Due 25 Sep \u00b7 Autopay",
+            "trailing": "S$49.90",
+            "brand": "samplefibre.example"
+          },
+          {
+            "id": "b3",
+            "label": "Sample Life",
+            "trailing": "S$224.10",
+            "status": "paid",
+            "brand": "samplelife.example"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "subscriptions",
+    "as_of": "2026-09-25T20:00Z",
+    "fallback_text": "Sample.",
+    "header": {
+      "title": "Subscriptions",
+      "subtitle": "3 found \u00b7 sample"
+    },
+    "blocks": [
+      {
+        "kind": "numbers",
+        "items": [
+          {
+            "value": "S$65.46",
+            "label": "Total"
+          },
+          {
+            "value": "3",
+            "label": "Subscriptions"
+          }
+        ]
+      },
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "id": "s1",
+            "label": "Sample Chat",
+            "secondary": "Renews 4 Oct \u00b7 card A",
+            "trailing": "S$27.50",
+            "brand": "samplechat.example"
+          },
+          {
+            "id": "s2",
+            "label": "Sample Video",
+            "secondary": "Renews 21 Oct \u00b7 card A",
+            "trailing": "S$25.98",
+            "brand": "samplevideo.example"
+          },
+          {
+            "id": "s3",
+            "label": "Sample Music",
+            "trailing": "S$11.98",
+            "brand": "samplemusic.example"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "trip-itinerary",
+    "as_of": "2026-10-11T09:10Z",
+    "header": {
+      "title": "Kyoto in 4 days",
+      "subtitle": "14\u201317 Oct \u00b7 one area a day"
+    },
+    "blocks": [
+      {
+        "kind": "visual",
+        "visual": {
+          "kind": "map",
+          "places": [
+            {
+              "id": "d1",
+              "label": "Higashiyama",
+              "lat": "34.9967",
+              "lon": "135.7850"
+            },
+            {
+              "id": "d2",
+              "label": "Arashiyama",
+              "lat": "35.0094",
+              "lon": "135.6668"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "text",
+        "sections": [
+          {
+            "heading": "Day 1 \u00b7 Higashiyama",
+            "date": "2026-10-14",
+            "bullets": [
+              "09:00 Kiyomizu-dera before the crowds",
+              "12:30 Lunch on Ninenzaka",
+              "16:00 Yasaka Shrine at dusk"
+            ]
+          },
+          {
+            "heading": "Day 2 \u00b7 Arashiyama",
+            "date": "2026-10-15",
+            "bullets": [
+              "08:30 Bamboo grove",
+              "11:00 Tenryu-ji garden",
+              "14:00 Hozu river boat"
+            ]
+          },
+          {
+            "heading": "Day 3 \u00b7 Fushimi Inari",
+            "date": "2026-10-16",
+            "bullets": [
+              "07:30 Walk the torii gates to Yotsutsuji",
+              "13:00 Tofuku-ji"
+            ]
+          },
+          {
+            "heading": "Day 4 \u00b7 Nishiki and Gion",
+            "date": "2026-10-17",
+            "bullets": [
+              "10:00 Nishiki Market",
+              "15:00 Tea at Ippodo",
+              "18:00 Gion evening walk"
+            ]
+          }
+        ]
+      }
+    ],
+    "fallback_text": "Kyoto in 4 days."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "places-nearby",
+    "as_of": "2026-10-11T09:10Z",
+    "header": {
+      "title": "24-hour clinics near you",
+      "subtitle": "Open now"
+    },
+    "blocks": [
+      {
+        "kind": "visual",
+        "visual": {
+          "kind": "map",
+          "selected_place_id": "c1",
+          "places": [
+            {
+              "id": "c1",
+              "label": "Raffles Medical Holland V",
+              "lat": "1.3113",
+              "lon": "103.7960"
+            },
+            {
+              "id": "c2",
+              "label": "Fullerton Health Novena",
+              "lat": "1.3203",
+              "lon": "103.8436"
+            },
+            {
+              "id": "c3",
+              "label": "Parkway Shenton Bukit Timah",
+              "lat": "1.3294",
+              "lon": "103.8025"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "id": "c1",
+            "label": "Raffles Medical",
+            "secondary": "Holland Village \u00b7 walk-in",
+            "trailing": "8 min",
+            "mark": "pick",
+            "brand": "rafflesmedical.com",
+            "rating": "4.4",
+            "review_count": 128,
+            "category": "Medical clinic",
+            "opening_label": "Open 24 hours",
+            "open_state": "open",
+            "distance": "2.4 km",
+            "travel_mode": "drive",
+            "action": {
+              "kind": "open_url",
+              "label": "Directions",
+              "url": "https://www.google.com/maps/dir/?api=1&destination=1.3113,103.7960&travelmode=driving#c1"
+            }
+          },
+          {
+            "id": "c2",
+            "label": "Fullerton Health",
+            "secondary": "Novena \u00b7 walk-in",
+            "trailing": "12 min",
+            "brand": "fullertonhealth.com",
+            "rating": "4.2",
+            "review_count": 96,
+            "category": "Medical clinic",
+            "opening_label": "Open 24 hours",
+            "open_state": "open",
+            "distance": "5.8 km",
+            "travel_mode": "drive",
+            "action": {
+              "kind": "open_url",
+              "label": "Directions",
+              "url": "https://www.google.com/maps/dir/?api=1&destination=1.3203,103.8436&travelmode=driving#c2"
+            }
+          },
+          {
+            "id": "c3",
+            "label": "Parkway Shenton",
+            "secondary": "Bukit Timah \u00b7 call first",
+            "trailing": "15 min",
+            "brand": "parkwayshenton.com",
+            "category": "Medical clinic",
+            "distance": "6.2 km",
+            "travel_mode": "drive"
+          }
+        ]
+      }
+    ],
+    "fallback_text": "24-hour clinics."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "inbox-brief",
+    "as_of": "2026-09-26T00:00Z",
+    "header": {
+      "title": "Inbox \u00b7 Sat 26 Sep",
+      "subtitle": "Sample \u00b7 3 need you"
+    },
+    "blocks": [
+      {
+        "kind": "rows",
+        "total_count": 18,
+        "items": [
+          {
+            "id": "m1",
+            "label": "Mrs Tan",
+            "brand": "gmail.com",
+            "unread": true,
+            "status": "needs_you",
+            "secondary": "Lease renewal \u00b7 wants Tue 29 or Wed 30 Sep",
+            "trailing": "Reply by Mon 28 Sep",
+            "action": {
+              "kind": "open_url",
+              "label": "Open Mrs Tan thread",
+              "url": "https://mail.google.com/mail/u/0/#inbox/sample1"
+            }
+          },
+          {
+            "id": "m2",
+            "label": "IRAS",
+            "brand": "iras.gov.sg",
+            "status": "needs_you",
+            "secondary": "Property tax bill \u00b7 GIRO not set up",
+            "trailing": "Pay by Wed 30 Sep"
+          },
+          {
+            "id": "m3",
+            "label": "Sam Lee",
+            "unread": true,
+            "secondary": "Tokyo trip restaurants \u00b7 asked Thu 24 Sep",
+            "trailing": "Waiting 2 days"
+          }
+        ]
+      },
+      {
+        "kind": "action",
+        "secondary": {
+          "kind": "open_url",
+          "label": "Open inbox in Gmail",
+          "url": "https://mail.google.com/mail/u/0/#inbox"
+        }
+      }
+    ],
+    "details": {
+      "sources": [
+        {
+          "label": "Sample Gmail inbox, 25 Sep 2026 08:00 to 26 Sep 2026 08:00"
+        }
+      ]
+    },
+    "fallback_text": "Sample inbox."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "deadlines-from-mail",
+    "as_of": "2026-09-26T03:30Z",
+    "header": {
+      "title": "4 deadlines in the next 72 hours",
+      "subtitle": "Sample \u00b7 soonest first"
+    },
+    "blocks": [
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "id": "d1",
+            "label": "Sign the lease renewal",
+            "brand": "docusign.com",
+            "secondary": "Nichol\u2019s email 23 Sep \u00b7 DocuSign",
+            "trailing": "by Sun 27 Sep"
+          },
+          {
+            "id": "d2",
+            "label": "Return library books",
+            "brand": "nlb.gov.sg",
+            "secondary": "NLB reminder 25 Sep \u00b7 3 books",
+            "trailing": "by Sat 26 Sep, 18:00",
+            "due_at": "2026-09-26T10:00Z"
+          },
+          {
+            "id": "d3",
+            "label": "Renew road tax",
+            "secondary": "LTA email 19 Sep",
+            "trailing": "by Mon 28 Sep, 09:00",
+            "due_at": "2026-09-28T01:00Z"
+          },
+          {
+            "id": "d4",
+            "label": "Pay parking fine",
+            "secondary": "URA notice 24 Sep \u00b7 S$50",
+            "trailing": "by Tue 29 Sep"
+          }
+        ]
+      },
+      {
+        "kind": "text",
+        "sections": [
+          {
+            "heading": "Already passed",
+            "bullets": [
+              "Town council S&CC: GIRO form was due Fri 25 Sep (email 18 Sep)."
+            ]
+          }
+        ]
+      }
+    ],
+    "details": {
+      "sources": [
+        {
+          "label": "Sample Gmail, read 26 Sep 2026 11:30"
+        }
+      ]
+    },
+    "fallback_text": "Sample deadlines."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "reply-draft",
+    "as_of": "2026-09-26T03:30Z",
+    "header": {
+      "title": "Lease renewal \u00b7 reply",
+      "subtitle": "To Mrs Tan \u00b7 draft, not sent"
+    },
+    "blocks": [
+      {
+        "kind": "text",
+        "sections": [
+          {
+            "paragraphs": [
+              "Dear Mrs Tan,",
+              "Tuesday 29 Sep at 6:30 pm works for me. I'll bring the signed renewal form and a cheque for the deposit top-up. If the lift is out again that evening, I can come at 5:45 pm instead and wait in the lobby.",
+              "Could you also confirm whether the parking label renews with the lease, or if I should apply for it separately at the management office?",
+              "Best regards, Abhi"
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "action",
+        "secondary": {
+          "kind": "open_url",
+          "label": "Open Gmail drafts",
+          "url": "https://mail.google.com/mail/u/0/#drafts"
+        }
+      }
+    ],
+    "details": {
+      "assumptions": [
+        "Written in the tone of your last 20 sent emails to Mrs Tan"
+      ]
+    },
+    "fallback_text": "Sample draft."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "day-agenda",
+    "header": {
+      "title": "Tomorrow \u00b7 Sun 27 Sep",
+      "subtitle": "Sample data"
+    },
+    "blocks": [
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "id": "e0",
+            "label": "Public holiday",
+            "trailing": "All day",
+            "calendar_color": "green"
+          },
+          {
+            "id": "e1",
+            "label": "Design review",
+            "secondary": "Zoom \u00b7 Mei Lin, Arjun Rao",
+            "trailing": "09:30",
+            "starts_at": "2026-09-27T01:30Z",
+            "calendar_color": "blue",
+            "brand": "zoom.us"
+          },
+          {
+            "id": "e2",
+            "label": "Lunch with Sam",
+            "secondary": "Tiong Bahru Bakery \u00b7 Sam Lee",
+            "trailing": "12:00",
+            "starts_at": "2026-09-27T04:00Z",
+            "calendar_color": "purple"
+          },
+          {
+            "id": "e3",
+            "label": "Viewing at The Clift",
+            "secondary": "21 McCallum St",
+            "trailing": "13:00",
+            "starts_at": "2026-09-27T05:00Z",
+            "calendar_color": "orange"
+          }
+        ]
+      }
+    ],
+    "as_of": "2026-09-26T23:30Z",
+    "fallback_text": "Sample."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "meeting-brief",
+    "header": {
+      "title": "Tomorrow \u00b7 Sun 27 Sep",
+      "subtitle": "Sample data"
+    },
+    "blocks": [
+      {
+        "kind": "status",
+        "state": "watching",
+        "detail": "every evening at 20:00",
+        "subject": {
+          "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae001"
+        }
+      },
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "id": "e1",
+            "label": "Design review",
+            "secondary": "Zoom \u00b7 Mei Lin, Arjun Rao \u00b7 prep: read Mei's 3 comments on v2",
+            "trailing": "09:30",
+            "starts_at": "2026-09-27T01:30Z",
+            "calendar_color": "blue",
+            "brand": "zoom.us"
+          },
+          {
+            "id": "e2",
+            "label": "Lunch with Sam",
+            "secondary": "Tiong Bahru Bakery \u00b7 Sam Lee \u00b7 prep: bring the Tokyo restaurant list",
+            "trailing": "12:00",
+            "starts_at": "2026-09-27T04:00Z",
+            "calendar_color": "purple"
+          }
+        ]
+      },
+      {
+        "kind": "action",
+        "secondary": {
+          "kind": "routine_control",
+          "label": "Pause",
+          "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae001",
+          "control": "pause"
+        }
+      }
+    ],
+    "as_of": "2026-09-26T23:30Z",
+    "fallback_text": "Sample."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "recurring-reminder",
+    "header": {
+      "title": "Water the plants",
+      "subtitle": "Sample data"
+    },
+    "blocks": [
+      {
+        "kind": "status",
+        "state": "scheduled",
+        "detail": "next on Sun 27 Sep, 8:00 am",
+        "subject": {
+          "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae001"
+        }
+      },
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "label": "Then",
+            "trailing": "Wed 30 Sep 8:00"
+          },
+          {
+            "label": "And",
+            "trailing": "Sun 4 Oct 8:00"
+          }
+        ]
+      },
+      {
+        "kind": "action",
+        "secondary": {
+          "kind": "routine_control",
+          "label": "Pause",
+          "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae001",
+          "control": "pause"
+        }
+      }
+    ],
+    "as_of": "2026-09-26T23:30Z",
+    "fallback_text": "Sample."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "reply-watch",
+    "header": {
+      "title": "Reply from Nichol",
+      "subtitle": "Sample data"
+    },
+    "blocks": [
+      {
+        "kind": "status",
+        "state": "watching",
+        "detail": "since 9:40 AM",
+        "subject": {
+          "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae001"
+        }
+      },
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "label": "Stops after",
+            "trailing": "Fri 6 PM"
+          }
+        ]
+      },
+      {
+        "kind": "action",
+        "secondary": {
+          "kind": "routine_control",
+          "label": "Pause",
+          "routine_id": "0192a3b4-5c6d-7e8f-9a0b-0000004ae001",
+          "control": "pause"
+        }
+      }
+    ],
+    "as_of": "2026-09-26T23:30Z",
+    "fallback_text": "Sample."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "research-brief",
+    "header": {
+      "title": "EVs in Singapore, 2026",
+      "subtitle": "Research brief"
+    },
+    "blocks": [
+      {
+        "kind": "text",
+        "summary": "Charging is now broad but slow; the saving depends on charging near home.",
+        "sections": [
+          {
+            "heading": "Where things stand",
+            "paragraphs": [
+              "Public chargers passed 15,000 points this year, most in HDB car parks. Fast chargers remain scarce outside big malls."
+            ]
+          },
+          {
+            "heading": "What it means for you",
+            "paragraphs": [
+              "Public charging cost about S$0.60\u20130.75 per kWh in an August survey, against about S$0.35 at home on the Jul\u2013Sep tariff. Check your car park\u2019s rollout date before you buy."
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "action",
+        "secondary": {
+          "kind": "open_artifact",
+          "label": "Open as document",
+          "artifact": "artifact:0192a3b4-5c6d-7e8f-9a0b-0000000009c5"
+        }
+      }
+    ],
+    "details": {
+      "sources": [
+        {
+          "label": "LTA EV statistics",
+          "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles.html"
+        },
+        {
+          "label": "SP Group electricity tariffs",
+          "url": "https://www.spgroup.com.sg/our-services/utilities/tariff-information"
+        },
+        {
+          "label": "The Straits Times, EV charging price survey",
+          "url": "https://www.straitstimes.com/singapore/transport/ev-charging-prices-survey-2026"
+        },
+        {
+          "label": "LTA EV Common Charger Grant",
+          "url": "https://www.lta.gov.sg/content/ltagov/en/industry_innovations/technologies/electric_vehicles/ecc-grant.html"
+        },
+        {
+          "label": "HDB EV charger rollout",
+          "url": "https://www.hdb.gov.sg/car-parks/shortterm-parking/electric-vehicle-charging"
+        }
+      ]
+    },
+    "as_of": "2026-10-11T09:10Z",
+    "fallback_text": "EVs in Singapore 2026."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "weather-now",
+    "header": {
+      "title": "Singapore",
+      "subtitle": "Thunderstorms later"
+    },
+    "as_of": "2026-10-11T04:05Z",
+    "weather": {
+      "sky": "storm",
+      "current_condition": "partly",
+      "high": "32",
+      "low": "26",
+      "hourly": [
+        {
+          "condition": "partly",
+          "rain": 10
+        },
+        {
+          "condition": "partly",
+          "rain": 20
+        },
+        {
+          "condition": "cloudy",
+          "rain": 35
+        },
+        {
+          "condition": "storm",
+          "rain": 70
+        },
+        {
+          "condition": "rain",
+          "rain": 70
+        },
+        {
+          "condition": "rain",
+          "rain": 60
+        }
+      ],
+      "days": [
+        {
+          "label": "Today",
+          "condition": "storm",
+          "low": "26",
+          "high": "32"
+        },
+        {
+          "label": "Sun",
+          "condition": "rain",
+          "low": "26",
+          "high": "31"
+        },
+        {
+          "label": "Mon",
+          "condition": "partly",
+          "low": "25",
+          "high": "32"
+        },
+        {
+          "label": "Tue",
+          "condition": "storm",
+          "low": "26",
+          "high": "30"
+        },
+        {
+          "label": "Wed",
+          "condition": "partly",
+          "low": "26",
+          "high": "33"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "numbers",
+        "items": [
+          {
+            "value": "31\u00b0C",
+            "label": "Now"
+          },
+          {
+            "value": "70%",
+            "label": "Rain after 3 pm"
+          }
+        ]
+      },
+      {
+        "kind": "visual",
+        "visual": {
+          "kind": "chart",
+          "chart": "line",
+          "unit": "\u00b0C",
+          "x_labels": [
+            "12:00",
+            "13:00",
+            "14:00",
+            "15:00",
+            "16:00",
+            "17:00"
+          ],
+          "series": [
+            {
+              "label": "Temperature",
+              "values": [
+                "31",
+                "32",
+                "32",
+                "28",
+                "27",
+                "27"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "details": {
+      "sources": [
+        {
+          "label": "NEA weather forecast",
+          "url": "https://www.nea.gov.sg/weather"
+        }
+      ]
+    },
+    "fallback_text": "Singapore, 31\u00b0C now."
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "delivery-tracking",
+    "as_of": "2026-10-11T09:10Z",
+    "header": {
+      "title": "Arriving in about 12 min",
+      "subtitle": "Ravi, 1.8 km away",
+      "brand": "swiggy.com"
+    },
+    "blocks": [
+      {
+        "kind": "status",
+        "state": "tracking",
+        "label": "On the way",
+        "progress": 72,
+        "stages": [
+          "Ordered",
+          "Preparing",
+          "On the way",
+          "Delivered"
+        ],
+        "stage_index": 2,
+        "condition": "on_time"
+      },
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "label": "Picked up",
+            "secondary": "Ravi left Meghana Foods at 20:06",
+            "trailing": "20:06"
+          },
+          {
+            "label": "Ready",
+            "secondary": "Packed at the restaurant",
+            "trailing": "20:02"
+          },
+          {
+            "label": "Preparing",
+            "secondary": "Meghana Foods accepted",
+            "trailing": "19:51"
+          }
+        ]
+      }
+    ],
+    "fallback_text": "FALLBACK"
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "flight-status",
+    "as_of": "2026-10-11T09:10Z",
+    "header": {
+      "title": "SQ 638 departs 09:20",
+      "subtitle": "Delayed 45 min",
+      "brand": "singaporeair.com"
+    },
+    "flight": {
+      "number": "SQ 638",
+      "origin_code": "SIN",
+      "destination_code": "NRT",
+      "origin_name": "Singapore",
+      "destination_name": "Tokyo Narita",
+      "scheduled_departure": "08:35",
+      "departure": "09:20",
+      "arrival": "17:25",
+      "departure_zone": "SGT",
+      "arrival_zone": "JST",
+      "terminal": "3",
+      "gate": "B6",
+      "previous_gate": "A12",
+      "boarding": "08:50",
+      "seat": "14A"
+    },
+    "blocks": [
+      {
+        "kind": "status",
+        "state": "tracking",
+        "label": "Awaiting departure",
+        "condition": "delayed"
+      },
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "label": "Was",
+            "trailing": "08:35"
+          },
+          {
+            "label": "Now",
+            "secondary": "Gate changed from A12",
+            "trailing": "09:20 \u00b7 B6"
+          }
+        ]
+      },
+      {
+        "kind": "action",
+        "secondary": {
+          "kind": "open_url",
+          "label": "Manage booking",
+          "url": "https://www.singaporeair.com/booking"
+        }
+      }
+    ],
+    "fallback_text": "FALLBACK"
+  },
+  {
+    "kind": "output_blocks",
+    "major": 1,
+    "template": "flight-options",
+    "as_of": "2026-10-11T09:10Z",
+    "header": {
+      "title": "Flights to Tokyo",
+      "subtitle": "12 Oct \u00b7 1 adult"
+    },
+    "blocks": [
+      {
+        "kind": "rows",
+        "items": [
+          {
+            "id": "a",
+            "label": "Singapore Airlines",
+            "secondary": "SQ 638 \u00b7 08:35 \u00b7 7h 05m direct",
+            "trailing": "S$612",
+            "mark": "pick",
+            "brand": "singaporeair.com",
+            "action": {
+              "kind": "open_url",
+              "label": "Book Singapore Airlines",
+              "url": "https://www.singaporeair.com/book"
+            },
+            "flight": {
+              "origin_code": "SIN",
+              "destination_code": "NRT",
+              "arrival": "16:40"
+            }
+          },
+          {
+            "id": "b",
+            "label": "ANA",
+            "secondary": "NH 842 \u00b7 22:30 \u00b7 6h 55m direct",
+            "trailing": "S$548",
+            "brand": "ana.co.jp",
+            "action": {
+              "kind": "open_url",
+              "label": "Book ANA",
+              "url": "https://www.ana.co.jp/book"
+            },
+            "flight": {
+              "origin_code": "SIN",
+              "destination_code": "HND",
+              "arrival": "06:25",
+              "arrival_day_offset": 1
+            }
+          },
+          {
+            "id": "c",
+            "label": "ZIPAIR",
+            "secondary": "ZG 52 \u00b7 23:55",
+            "trailing": "S$326",
+            "brand": "zipair.net"
+          }
+        ]
+      }
+    ],
+    "fallback_text": "FALLBACK"
+  }
+]

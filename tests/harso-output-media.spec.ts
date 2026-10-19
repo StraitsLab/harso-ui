@@ -171,34 +171,27 @@ for (const mode of ["light", "dark"] as const) {
     expect((await callbacks(page)).opened).toEqual(["artifact:0192a3b4-5c6d-7e8f-9a0b-000000000b01", "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000b01"]);
   });
 
-  test(`map ${mode}: every place pinned inside, the pick larger and always labelled, no label overlaps another, only the pick's may cover a pin, attribution >= 4.5:1; axe clean`, async ({ page }) => {
-    for (const [doc, width] of [["map", 512], ["map", 320], ["tampines", 512], ["tampines", 320]] as const) {
-      await open(page, `doc=${doc}&mode=${mode}&width=${width}`, width + 48);
+  test(`map ${mode}: interactive pins fit, selection is keyboard accessible and expand returns focus`, async ({ page }) => {
+    await page.route("https://tiles.openfreemap.org/**", route => route.request().url().endsWith("/planet")
+      ? route.fulfill({ json: { tilejson: "3.0.0", tiles: [], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ body: Buffer.alloc(0) }));
+    for (const width of [512, 320]) {
+      await open(page, `doc=map&mode=${mode}&width=${width}`, width + 48);
+      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready");
       const plane = card(page).locator(".hkc-output-map-plane");
-      const planeBox = (await plane.boundingBox())!;
-      const pins = await plane.locator(".hkc-output-map-pin").evaluateAll(nodes => nodes.map(node => ({ box: node.getBoundingClientRect().toJSON(), selected: node.hasAttribute("data-selected") })));
-      expect(pins.length).toBe(doc === "map" ? 3 : 12);
+      await expect(plane.locator(".hkc-map-pin")).toHaveCount(3);
+      await expect(card(page).getByRole("list", { name: "Places" }).getByRole("button")).toHaveCount(3);
+      const pins = await plane.locator(".hkc-map-pin").evaluateAll(nodes => nodes.map(node => ({ box: node.getBoundingClientRect().toJSON(), selected: node.getAttribute("aria-pressed") === "true" })));
       expect(pins.filter(pin => pin.selected)).toHaveLength(1);
-      for (const { box } of pins) {
-        expect(box.left).toBeGreaterThanOrEqual(planeBox.x); expect(box.right).toBeLessThanOrEqual(planeBox.x + planeBox.width);
-        expect(box.top).toBeGreaterThanOrEqual(planeBox.y); expect(box.bottom).toBeLessThanOrEqual(planeBox.y + planeBox.height);
+      const box = (await plane.boundingBox())!;
+      for (const { box: pin } of pins) {
+        expect(pin.left).toBeGreaterThanOrEqual(box.x); expect(pin.right).toBeLessThanOrEqual(box.x + box.width);
+        expect(pin.top).toBeGreaterThanOrEqual(box.y); expect(pin.bottom).toBeLessThanOrEqual(box.y + box.height - 50);
       }
-      const labels = await plane.locator(".hkc-output-map-label").evaluateAll(nodes => nodes.map(node => ({ box: node.getBoundingClientRect().toJSON(), clipped: node.scrollWidth > node.clientWidth + .5, selected: node.hasAttribute("data-selected") })));
-      expect(labels.filter(label => label.selected)).toHaveLength(1);
-      for (const [index, label] of labels.entries()) {
-        expect(label.clipped).toBe(false);
-        // Labels never touch each other; only the pick's label may cover another pin, when nothing else fits.
-        for (const other of [...labels.slice(index + 1).map(l => l.box), ...(label.selected ? [] : pins.map(p => p.box))]) {
-          const hit = label.box.left < other.right - .5 && label.box.right > other.left + .5 && label.box.top < other.bottom - .5 && label.box.bottom > other.top + .5;
-          expect(hit).toBe(false);
-        }
-      }
-      await expect(card(page).locator(".hkc-output-map-attribution")).toHaveText("© OpenStreetMap contributors");
-      for (const ratio of await contrast(page, ".hkc-output-map-attribution, .hkc-output-map-label", "color", ".hkc-output-map-attribution, .hkc-output-map-label")) expect(ratio).toBeGreaterThanOrEqual(4.5);
-      expect(await plane.locator("img.hkc-output-map-tile").evaluateAll(nodes => nodes.every(node => (node as HTMLImageElement).src.startsWith("data:image/svg")))).toBe(true);
-      expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
-      expect(await axe(page)).toEqual([]);
-      if (doc === "map" && width === 512) await expect(card(page)).toHaveScreenshot(`output-map-${mode}.png`, { animations: "disabled" });
+      const pick = card(page).getByRole("list", { name: "Places" }).getByRole("button").nth(1);
+      await pick.focus(); await page.keyboard.press("Enter"); await expect(pick).toHaveAttribute("aria-pressed", "true");
+      const expand = card(page).getByRole("button", { name: "Expand map" });
+      await expand.click(); await expect(page.getByRole("dialog", { name: "Expanded map" })).toBeVisible();
+      await page.keyboard.press("Escape"); await expect(expand).toBeFocused();
     }
   });
 
@@ -227,11 +220,12 @@ for (const mode of ["light", "dark"] as const) {
 }
 
 test("reduced motion: the image shimmer stops; forced colors keep dot, bar and pins visible", async ({ page }) => {
+  await page.route("https://tiles.openfreemap.org/**", route => route.request().url().endsWith("/planet") ? route.fulfill({ json: { tilejson: "3.0.0", tiles: [] } }) : route.fulfill({ body: Buffer.alloc(0) }));
   await page.emulateMedia({ reducedMotion: "reduce" });
   await open(page, "doc=image&imgslow=1&width=512");
   expect(await card(page).locator(".hkc-output-media").evaluate(node => getComputedStyle(node, "::after").animationName)).toBe("none");
   await page.emulateMedia({ reducedMotion: "no-preference", forcedColors: "active" });
-  for (const [doc, selector] of [["status", ".hkc-output-status-dot"], ["progress", ".hkc-output-progress-fill"], ["map", ".hkc-output-map-pin"]] as const) {
+  for (const [doc, selector] of [["status", ".hkc-output-status-dot"], ["progress", ".hkc-output-progress-fill"], ["map", ".hkc-map-pin"]] as const) {
     await open(page, `doc=${doc}&width=512`);
     const colour = await card(page).locator(selector).first().evaluate(node => getComputedStyle(node).backgroundColor);
     const back = await card(page).evaluate(node => getComputedStyle(node).backgroundColor);
@@ -265,59 +259,15 @@ const DRAWN = `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256">
 const POSTER = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360"><rect width="640" height="360" fill="#d9d2c5"/></svg>`;
 
 for (const mode of ["light", "dark"] as const) {
-  test(`map ${mode}: real tile loads: held is loading, all aborted is failed with the places named, Try again with the network back draws it; some aborted is partial`, async ({ page }) => {
-    let serve: "hold" | "abort" | "ok" | "half" = "hold";
-    await page.route("**/__tiles__/**", route => {
-      if (serve === "hold") return;
-      // "half": tiles in even columns fail (the plane spans at least two columns at 512).
-      if (serve === "abort" || (serve === "half" && Number(/\/(\d+)\/\d+\.svg$/.exec(route.request().url())![1]) % 2 === 0)) return route.abort();
-      return route.fulfill({ contentType: "image/svg+xml", body: DRAWN });
-    });
-    await open(page, `doc=map&net=1&mode=${mode}&width=512`);
-    const map = card(page).locator(".hkc-output-map");
-    await expect(map).toHaveAttribute("data-state", "loading");
-    await expect(map).toHaveAttribute("aria-busy", "true");
-    serve = "abort";
-    await open(page, `doc=map&net=1&mode=${mode}&width=512&generation=1`);
-    const failed = card(page).locator(".hkc-output-block-failed");
-    await expect(failed.locator(".hkc-output-block-failed-message")).toHaveText("Couldn’t load the map");
-    await expect(failed.locator(".hkc-output-block-failed-reason")).toHaveText("Ueno (selected), Asakusa, Shinjuku");
-    await expect(card(page).locator(".hkc-output-map-pin")).toHaveCount(0);
-    expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
-    expect(await axe(page)).toEqual([]);
-    serve = "ok";
-    await failed.getByRole("button", { name: "Try again" }).click();
-    await expect(map).toHaveAttribute("data-state", "ready");
-    expect(await card(page).locator("img.hkc-output-map-tile").evaluateAll(nodes => nodes.every(node => (node as HTMLImageElement).naturalWidth > 0 && getComputedStyle(node).visibility === "visible"))).toBe(true);
-    await expect(card(page).locator(".hkc-output-map-pin")).toHaveCount(3);
-    serve = "half";
-    await open(page, `doc=map&net=1&mode=${mode}&width=512&generation=2`);
-    await expect(map).toHaveAttribute("data-state", "partial");
-    await expect(card(page).getByText("Part of the map didn’t load")).toBeVisible();
-    for (const ratio of await contrast(page, ".hkc-output-block-note", "color")) expect(ratio).toBeGreaterThanOrEqual(4.5);
-    expect(await axe(page)).toEqual([]);
-  });
-
-  test(`map ${mode}: a known failed tile is disclosed while a sibling is still loading (reviewer F2 mixed case)`, async ({ page }) => {
-    // Tiles are served in request order: the 1st is held forever, the 2nd aborted, any others drawn. The note must show
-    // now, not after the held tile settles (the old phase logic let any pending tile mask a known failure).
-    let seen = 0;
-    await page.route("**/__tiles__/**", route => {
-      seen += 1;
-      if (seen === 1) return; // held: never settles
-      if (seen === 2) return route.abort();
-      return route.fulfill({ contentType: "image/svg+xml", body: DRAWN });
-    });
-    await open(page, `doc=map&net=1&mode=${mode}&width=420&generation=7`);
-    const map = card(page).locator(".hkc-output-map");
-    // At 420 the plane is two tiles: one held (still loading), one aborted (known failed). The old phase logic reported
-    // "loading" with no note here; a failure is known, so the map must say so now.
-    await expect(card(page).locator("img.hkc-output-map-tile[data-state=failed]")).toHaveCount(1);
-    await expect(card(page).locator("img.hkc-output-map-tile[data-state=loading]")).toHaveCount(1);
-    await expect(map).toHaveAttribute("data-state", "partial");
-    await expect(card(page).getByText("Part of the map didn’t load")).toBeVisible();
-    await expect(card(page).locator(".hkc-output-block-failed")).toHaveCount(0);
-    expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
+  test(`map ${mode}: failed vector requests retain the places and retry recovers`, async ({ page }) => {
+    let fail = true;
+    await page.route("https://tiles.openfreemap.org/**", route => fail ? route.abort() : route.request().url().endsWith("/planet")
+      ? route.fulfill({ json: { tilejson: "3.0.0", tiles: [], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ body: Buffer.alloc(0) }));
+    await open(page, `doc=map&mode=${mode}&width=512`);
+    await expect(card(page).getByText(/Map unavailable/)).toBeVisible();
+    await expect(card(page).getByRole("list", { name: "Places" }).getByRole("button")).toHaveCount(3);
+    fail = false; await card(page).getByRole("button", { name: "Try again" }).click();
+    await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready");
   });
 
   test(`video ${mode}: real poster and file failures show failed with Try again and Open video; the network back draws the poster`, async ({ page }) => {
@@ -342,32 +292,16 @@ for (const mode of ["light", "dark"] as const) {
     await expect(poster.locator(".hkc-output-video-length")).toHaveCount(0);
   });
 
-  test(`map ${mode}: continents, the dateline and a long pick keep every pin and the pick's name inside the plane; poles too far apart are listed`, async ({ page }) => {
-    for (const [doc, width, pins] of [["world", 320, 2], ["world", 512, 2], ["continents", 320, 3], ["dateline", 320, 3], ["dateline", 512, 3], ["longpick", 320, 2], ["longpick", 512, 2]] as const) {
-      await open(page, `doc=${doc}&mode=${mode}&width=${width}`, width + 48);
-      const plane = card(page).locator(".hkc-output-map-plane");
-      const planeBox = (await plane.boundingBox())!;
-      const boxes = await plane.locator(".hkc-output-map-pin, .hkc-output-map-label[data-selected]").evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().toJSON()));
-      expect(await plane.locator(".hkc-output-map-pin").count(), `${doc}@${width}`).toBe(pins);
-      expect(await plane.locator(".hkc-output-map-label[data-selected]").count(), `${doc}@${width}`).toBe(1);
-      for (const box of boxes) {
-        expect(box.left, `${doc}@${width}`).toBeGreaterThanOrEqual(planeBox.x); expect(box.right, `${doc}@${width}`).toBeLessThanOrEqual(planeBox.x + planeBox.width);
-        expect(box.top, `${doc}@${width}`).toBeGreaterThanOrEqual(planeBox.y); expect(box.bottom, `${doc}@${width}`).toBeLessThanOrEqual(planeBox.y + planeBox.height);
-      }
-      // The pick's name is whole, or (only a label wider than the plane allows, e.g. 40 × "W") ellipsised at the
-      // widest capsule the plane takes; its full name is always in the Places list.
-      const pick = await plane.locator(".hkc-output-map-label[data-selected]").evaluate(node => ({ clipped: node.scrollWidth > node.clientWidth + .5, width: node.getBoundingClientRect().width }));
-      if (pick.clipped) expect(pick.width, `${doc}@${width}`).toBeGreaterThanOrEqual(planeBox.width - 24.5);
-      if (doc !== "longpick") expect(pick.clipped, `${doc}@${width}`).toBe(false);
-      expect(await geometry(page)).toEqual({ overlaps: [], outside: [], bordered: [] });
+  test(`map ${mode}: world and dateline places stay listed without clipping`, async ({ page }) => {
+    await page.route("https://tiles.openfreemap.org/**", route => route.request().url().endsWith("/planet")
+      ? route.fulfill({ json: { tilejson: "3.0.0", tiles: [], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ body: Buffer.alloc(0) }));
+    for (const doc of ["world", "continents", "dateline", "longpick", "poles"]) {
+      await open(page, `doc=${doc}&mode=${mode}&width=320`, 368);
+      await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready");
+      expect(await card(page).getByRole("list", { name: "Places" }).getByRole("button").count()).toBeGreaterThanOrEqual(2);
       expect(await textInside(page)).toEqual([]);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     }
-    await open(page, `doc=poles&mode=${mode}&width=320`, 368);
-    await expect(card(page).locator(".hkc-output-map-plane")).toHaveCount(0);
-    await expect(card(page).getByText("Too far apart to show on one map")).toBeVisible();
-    await expect(card(page).locator(".hkc-output-map-places li")).toHaveText(["Longyearbyen (selected)", "McMurdo"]);
-    expect(await textInside(page)).toEqual([]);
-    expect(await axe(page)).toEqual([]);
   });
 
   for (const [aspect, ratio] of [["square", 1], ["4:3", 4 / 3], ["16:9", 16 / 9], ["3:4", 3 / 4]] as const) test(`image ${mode} ${aspect}: the measured frame keeps its aspect at 320, 420 and 512, loading and ready`, async ({ page }) => {

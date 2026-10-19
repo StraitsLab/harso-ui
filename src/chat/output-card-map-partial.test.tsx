@@ -1,58 +1,70 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
-import * as chat from "./index";
+import InteractiveMap from "./output-map";
+import { decodePolyline, mapCoordinates, mapBounds } from "./output-map-utils";
+import { readMedia, type HarsoOutputMap } from "./output-card-media";
 
-// Regression (PR #12 round 2, reviewer F2): a map discloses a known failed tile immediately, even while sibling tiles
-// are still loading; "Couldn't load the map" (full failure) is reserved for every tile settled and none drawn.
-// Reviewer counterexample: real Chrome tiles [loading, ready, ready, failed] reported data-state=ready with no note.
+const calls = vi.hoisted(() => ({ options: [] as any[], sources: {} as Record<string, any>, layers: [] as any[], removed: 0, fail: false }));
+vi.mock("maplibre-gl", () => ({
+  Map: class {
+    constructor(options: any) { calls.options.push(options); if (calls.fail) throw new Error("No WebGL"); }
+    touchZoomRotate = { disableRotation() {} };
+    addControl() {} on(event: string, callback: () => void) { if (event === "load") queueMicrotask(callback); }
+    addSource(id: string, data: any) { calls.sources[id] = data; }
+    addLayer(layer: any) { calls.layers.push(layer); }
+    fitBounds() {} resize() {} triggerRepaint() {} remove() { calls.removed++; }
+    getSource() { return { setData() {} }; }
+  },
+  Marker: class { constructor(private options: any) {} setLngLat() { return this; } addTo() { return this; } remove() {} getElement() { return this.options.element; } },
+  AttributionControl: class {}, NavigationControl: class {}
+}));
+vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+vi.stubGlobal("matchMedia", () => ({ matches: true }));
+afterEach(() => { cleanup(); calls.options = []; calls.sources = {}; calls.layers = []; calls.fail = false; });
+const map: HarsoOutputMap = { kind: "map", places: [
+  { id: "a", label: "First place", lat: "38.5", lon: "-120.2", category: "Temple" },
+  { id: "b", label: "Second place", lat: "40.7", lon: "-120.95", category: "Garden" }
+], selected_place_id: "a", route: { mode: "walk", path: "_p~iF~ps|U_ulLnnqC_mqNvxq`@", minutes: 20, meters: 1800 } };
 
-afterEach(() => { cleanup(); vi.restoreAllMocks(); });
-
-const host: chat.HarsoOutputMediaHost = {
-  resolveArtifact: artifact => `https://files.test/${artifact.slice(9)}`,
-  mapTile: (z, x, y) => `https://tile.test/${z}/${x}/${y}.png`
-};
-const tokyo: chat.HarsoOutputBlock = { kind: "visual", visual: { kind: "map", selected_place_id: "ueno", places: [
-  { id: "ueno", label: "Ueno", lat: "35.7141", lon: "139.7774" }, { id: "asakusa", label: "Asakusa", lat: "35.7148", lon: "139.7967" },
-  { id: "shinjuku", label: "Shinjuku", lat: "35.6938", lon: "139.7034" }] } };
-const doc: chat.HarsoOutputDocument = { kind: "output_blocks", major: 1, header: { title: "Card" }, blocks: [tokyo], fallback_text: "FALLBACK" };
-
-function mount() {
-  const view = render(<chat.HarsoOutputCard document={doc} media={host} onViewAll={vi.fn()} />);
-  const tiles = [...view.container.querySelectorAll<HTMLImageElement>(".hkc-output-map-tile")];
-  const state = () => view.container.querySelector(".hkc-output-map")?.getAttribute("data-state");
-  const note = () => screen.queryByText("Part of the map didn’t load");
-  return { view, tiles, state, note };
-}
-
-test("ready + failed + still-loading tiles: the partial note shows at once, the drawn tiles stay", () => {
-  const { tiles, state, note } = mount();
-  expect(tiles.length).toBeGreaterThanOrEqual(3);
-  fireEvent.load(tiles[0]); fireEvent.error(tiles[1]); // tiles[2..] still loading
-  expect(state()).toBe("partial");
-  expect(note()).toBeTruthy();
-  expect(tiles[0].isConnected).toBe(true);
-  expect(screen.queryByText("Couldn’t load the map")).toBeNull();
+test("precision-five route decodes longitude first; malformed or unbounded paths never draw", () => {
+  expect(decodePolyline(map.route!.path!)).toEqual([[-120.2, 38.5], [-120.95, 40.7], [-126.453, 43.252]]);
+  for (const bad of ["", "_", "abc!", "~".repeat(30), "?", "a".repeat(3001)]) expect(decodePolyline(bad)).toEqual([]);
 });
-
-test("failed + still-loading (nothing drawn yet): disclose the failure, never the full-failure card", () => {
-  const { tiles, state, note } = mount();
-  fireEvent.error(tiles[0]);
-  expect(state()).toBe("partial");
-  expect(note()).toBeTruthy();
-  expect(screen.queryByText("Couldn’t load the map")).toBeNull();
+test("dateline bounds take the short span and preserve place order", () => {
+  const points = mapCoordinates({ kind: "map", places: [{ id: "e", label: "E", lat: "0", lon: "179.9" }, { id: "w", label: "W", lat: "0", lon: "-179.9" }] });
+  expect(points).toEqual([[179.9, 0], [180.1, 0]]); expect(mapBounds(points)).toEqual([[179.9, 0], [180.1, 0]]);
 });
-
-test("ready + loading with no failure is still ready (no premature note)", () => {
-  const { tiles, state, note } = mount();
-  fireEvent.load(tiles[0]);
-  expect(state()).toBe("ready");
-  expect(note()).toBeNull();
+test("maps require no host tile proxy and reject invalid coordinates or a one-place route", () => {
+  expect(readMedia({ kind: "visual", visual: map } as any, {})).toBe(map);
+  expect(readMedia({ kind: "visual", visual: { ...map, places: [map.places[0]] } } as any, {})).toBeUndefined();
+  expect(readMedia({ kind: "visual", visual: { ...map, places: [{ ...map.places[0], lon: "181" }] } } as any, {})).toBeUndefined();
 });
-
-test("every tile settled and none drawn: the full failure card with Try again", () => {
-  const { tiles } = mount();
-  for (const tile of tiles) fireEvent.error(tile);
-  expect(screen.getByText("Couldn’t load the map")).toBeTruthy();
-  expect(screen.getByRole("button", { name: "Try again" })).toBeTruthy();
+test("vector map uses cooperative gestures, decoded route, collision-managed labels and ordered list", async () => {
+  render(<div className="harso-kit"><InteractiveMap map={map} host={{}} /></div>);
+  await waitFor(() => expect(calls.layers.some(l => l.id === "route")).toBe(true));
+  expect(calls.options[0]).toMatchObject({ scrollZoom: false, cooperativeGestures: true, dragRotate: false });
+  expect(calls.sources.route.data.geometry.coordinates).toEqual(decodePolyline(map.route!.path!));
+  expect(calls.layers.find(l => l.id === "route").paint["line-dasharray"]).toBeUndefined();
+  expect(screen.getByText(/Walking route/).textContent).toContain("20 min · 1.8 km");
+  const buttons = screen.getAllByRole("button", { name: /place/ });
+  expect(buttons.map(b => b.textContent)).toEqual(["1First placeTemple", "2Second placeGarden"]);
+  fireEvent.click(buttons[1]); expect(buttons[1]).toHaveAttribute("aria-pressed", "true");
+  expect(screen.queryByText("Straight lines, not streets")).toBeNull();
+});
+test("missing route path draws dashed ordered segments and the exact disclosure", async () => {
+  render(<InteractiveMap map={{ ...map, route: { mode: "drive" } }} host={{}} />);
+  await waitFor(() => expect(calls.sources.route).toBeTruthy());
+  expect(calls.sources.route.data.geometry.coordinates).toEqual(mapCoordinates(map));
+  expect(calls.layers.find(l => l.id === "route").paint["line-dasharray"]).toEqual([2, 2]);
+  expect(screen.getByText("Straight lines, not streets")).toBeVisible();
+});
+test("WebGL failure keeps readable selectable places, filtering and a working retry", async () => {
+  calls.fail = true; render(<InteractiveMap map={map} host={{}} />);
+  expect(await screen.findByText(/Map unavailable/)).toBeVisible();
+  expect(screen.getByText("First place")).toBeVisible();
+  fireEvent.change(screen.getByRole("combobox"), { target: { value: "Garden" } });
+  expect(screen.queryByText("First place")).toBeNull(); expect(screen.getByText("Second place")).toBeVisible();
+  const retry = await screen.findByRole("button", { name: "Try again" });
+  calls.fail = false; fireEvent.click(retry);
+  await waitFor(() => expect(screen.queryByText(/Map unavailable/)).toBeNull());
 });

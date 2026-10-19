@@ -1,7 +1,7 @@
 import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import * as chat from "./index";
-import { duration, frameMap, readProgress, readSteps } from "./output-card-media";
+import { duration, readProgress, readSteps } from "./output-card-media";
 
 // Restore spies even when a test fails part-way, so a leaked createElement spy never nests into the next test.
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
@@ -22,8 +22,7 @@ const logo = { kind: "visual", visual: { kind: "image", artifact: "artifact:0192
 const clip = { kind: "visual", visual: { kind: "video", artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000b01", alt: "Walkthrough of the new kitchen", poster: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000b02" } } as chat.HarsoOutputBlock;
 
 const host: chat.HarsoOutputMediaHost = {
-  resolveArtifact: artifact => `https://files.test/${artifact.slice(9)}`,
-  mapTile: (z, x, y) => `https://tile.test/${z}/${x}/${y}.png`
+  resolveArtifact: artifact => `https://files.test/${artifact.slice(9)}`
 };
 const doc = (blocks: chat.HarsoOutputBlock[], extra: Partial<chat.HarsoOutputDocument> = {}): chat.HarsoOutputDocument =>
   ({ kind: "output_blocks", major: 1, header: { title: "Card" }, blocks, fallback_text: "FALLBACK", ...extra });
@@ -193,7 +192,7 @@ test("image that fails to load shows the amber failed state and a Try again that
 });
 
 test("an image, video or map the host cannot supply falls back to text instead of an empty frame", () => {
-  for (const block of [logo, clip, tokyo]) {
+  for (const block of [logo, clip]) {
     // The same block draws when the host lends media, so the fallback below is the missing host and nothing else.
     expect(renderDoc(doc([block]))).not.toHaveAttribute("data-fallback");
     cleanup();
@@ -240,45 +239,10 @@ test.each([[0, undefined], [NaN, undefined], [59.6, "1:00"], [3725, "1:02:05"], 
 
 // ---- map ----
 
-test("map: OSM tiles framing every place, the selected pin larger and labelled, attribution kept, places listed", () => {
-  const card = renderDoc(doc([tokyo]));
-  const plane = card.querySelector(".hkc-output-map-plane")!;
-  const tiles = [...plane.querySelectorAll("img.hkc-output-map-tile")];
-  expect(tiles.length).toBeGreaterThan(0);
-  expect(tiles.every(tile => /^https:\/\/tile\.test\/\d+\/\d+\/\d+\.png$/.test(tile.getAttribute("src")!))).toBe(true);
-  const pins = [...plane.querySelectorAll(".hkc-output-map-pin")];
-  expect(pins).toHaveLength(3);
-  expect(pins.filter(pin => pin.hasAttribute("data-selected"))).toHaveLength(1);
-  expect(plane.querySelector(".hkc-output-map-label[data-selected]")!.textContent).toBe("Ueno");
-  expect(card.querySelector(".hkc-output-map-attribution")!.textContent).toBe("© OpenStreetMap contributors");
-  expect(within(card).getByRole("list", { name: "Places" }).textContent).toBe("Ueno (selected)AsakusaShinjuku");
-});
-
-test("map frames every place inside the plane with room for its pin, at the closest zoom that fits", () => {
-  const places = tokyoMap.places;
-  const frame = frameMap(places, 480, 260);
-  for (const pin of frame.pins) {
-    expect(pin.x).toBeGreaterThanOrEqual(36); expect(pin.x).toBeLessThanOrEqual(480 - 36);
-    expect(pin.y).toBeGreaterThanOrEqual(36); expect(pin.y).toBeLessThanOrEqual(260 - 36);
-  }
-  const tighter = frameMap(places, 480, 260);
-  expect(frameMap(places.slice(0, 2), 480, 260).zoom).toBeGreaterThan(tighter.zoom);
-  expect(frameMap(places.slice(0, 1), 480, 260).zoom).toBe(15);
-});
-
-test("map draws at most 12 pins and rejects a place it cannot project", () => {
-  const places = Array.from({ length: 14 }, (_, index) => ({ id: `p${index}`, label: `Place ${index}`, lat: `1.${30 + index}`, lon: `103.${80 + index}` }));
-  const card = renderDoc(doc([{ kind: "visual", visual: { kind: "map", places } } as chat.HarsoOutputBlock]));
-  expect(card.querySelectorAll(".hkc-output-map-pin")).toHaveLength(12);
-  cleanup();
-  const bad = renderDoc(doc([{ kind: "visual", visual: { kind: "map", places: [{ id: "x", label: "Pole", lat: "89.9", lon: "0" }] } } as chat.HarsoOutputBlock]));
-  expect(bad).toHaveAttribute("data-fallback", "true");
-});
-
 // ---- states (each block × loading/empty/partial/stale/failed) ----
 
 const kinds = [["status", [watch, stopsAfter], ".hkc-output-status"], ["progress", [budget], ".hkc-output-progress"], ["image", [logo], ".hkc-output-media-img"],
-  ["video", [clip], ".hkc-output-video"], ["map", [tokyo], ".hkc-output-map"]] as const;
+  ["video", [clip], ".hkc-output-video"]] as const;
 
 test.each(kinds)("%s loading: its own B0 skeleton, busy, no content", (kind, blocks, selector) => {
   const card = renderDoc(doc([...blocks]), { blockStates: { 0: { state: "loading" } } });
@@ -330,7 +294,7 @@ test("hostile text renders literally in status, steps, alt, pin labels and progr
     { kind: "visual", visual: { kind: "map", places: [{ id: "a", label: markup, lat: "1.3", lon: "103.8" }, { id: "b", label: "مرحبا", lat: "1.31", lon: "103.81" }] } } as chat.HarsoOutputBlock
   ]));
   expect(card.querySelectorAll("img:not(.hkc-output-map-tile)")).toHaveLength(0);
-  expect(within(card).getAllByText(markup, { exact: false }).length).toBeGreaterThanOrEqual(3);
+  expect(within(card).getAllByText(markup, { exact: false }).length).toBeGreaterThanOrEqual(2);
 });
 
 // ---- rework round 1 (fix base 2410dad): each load belongs to its own URL; real load failures show; maps hold every
@@ -383,43 +347,6 @@ test("F1 image (control): a replaced picture starts loading again rather than in
   expect(view.container.querySelector(".hkc-output-media")).toHaveAttribute("data-state", "loading");
 });
 
-const tilesOf = (root: ParentNode) => [...root.querySelectorAll<HTMLImageElement>("img.hkc-output-map-tile")];
-test("F1 + F2 map: tiles that failed leave a failed map with Try again; new tile URLs start fresh and draw when they load", () => {
-  let generation = 0;
-  const tiled: chat.HarsoOutputMediaHost = { ...host, mapTile: (z, x, y) => `https://tile.test/${generation}/${z}/${x}/${y}.png` };
-  const view = render(<chat.HarsoOutputCard document={doc([tokyo])} onViewAll={() => {}} media={tiled} />);
-  const map = () => view.container.querySelector(".hkc-output-map")!;
-  expect(map()).toHaveAttribute("data-state", "loading");
-  expect(map()).toHaveAttribute("aria-busy", "true");
-  for (const tile of tilesOf(view.container)) fireEvent.error(tile);
-  expect(view.container.querySelector(".hkc-output-block-failed-message")!.textContent).toBe("Couldn’t load the map");
-  expect(view.container.querySelector(".hkc-output-block-failed-reason")!.textContent).toBe("Ueno (selected), Asakusa, Shinjuku");
-  expect(view.container.querySelector(".hkc-output-map-pin")).toBeNull();
-  generation = 1;
-  view.rerender(<chat.HarsoOutputCard document={doc([tokyo])} onViewAll={() => {}} media={{ ...tiled }} />);
-  expect(map()).toHaveAttribute("data-state", "loading");
-  const fresh = tilesOf(view.container);
-  expect(fresh.every(tile => tile.src.includes("/1/") && tile.dataset.state === "loading")).toBe(true);
-  for (const tile of fresh) fireEvent.load(tile);
-  expect(map()).toHaveAttribute("data-state", "ready");
-  expect(tilesOf(view.container).every(tile => tile.dataset.state === "ready")).toBe(true);
-});
-
-test("F2 map: Try again reloads the same tiles; some tiles failing is partial with a note, not ready", () => {
-  const view = render(<chat.HarsoOutputCard document={doc([tokyo])} onViewAll={() => {}} media={host} />);
-  const first = tilesOf(view.container);
-  for (const tile of first) fireEvent.error(tile);
-  fireEvent.click(screen.getByRole("button", { name: "Try again" }));
-  const again = tilesOf(view.container);
-  expect(again.map(tile => tile.src)).toEqual(first.map(tile => tile.src));
-  expect(again.some(tile => first.includes(tile))).toBe(false);
-  fireEvent.error(again[0]);
-  for (const tile of again.slice(1)) fireEvent.load(tile);
-  expect(view.container.querySelector(".hkc-output-map")).toHaveAttribute("data-state", "partial");
-  expect(screen.getByText("Part of the map didn’t load")).toBeVisible();
-  expect(view.container.querySelectorAll(".hkc-output-map-pin")).toHaveLength(3);
-});
-
 test("F2 video: a failed preview says so, with Try again and a separate Open video that still opens the file", () => {
   const onOpen = vi.fn();
   const { view, probes } = renderVideo(video(1), { onOpenArtifact: onOpen });
@@ -450,46 +377,6 @@ test("F2 video: with no poster, a file that doesn't load is failed; metadata fai
   vi.restoreAllMocks();
 });
 
-const place = (id: string, lat: string, lon: string, label = id) => ({ id, label, lat, lon });
-test.each([
-  ["two continents", [place("ny", "40.7128", "-74.006"), place("sg", "1.3521", "103.8198")]],
-  ["three continents", [place("lon", "51.5072", "-0.1276"), place("syd", "-33.8688", "151.2093"), place("la", "34.0522", "-118.2437")]],
-  ["the dateline", [place("east", "0", "179.9"), place("west", "0", "-179.9")]],
-  ["the dateline with a third place", [place("t", "-16.8", "179.9"), place("v", "-17.2", "-179.9"), place("apia", "-13.83", "-171.76")]],
-  ["one city", [place("ueno", "35.7141", "139.7774"), place("asakusa", "35.7148", "139.7967")]]
-] as const)("F3 frameMap holds every place across %s inside the plane at 320×173 and 480×260", (_, places) => {
-  for (const [width, height] of [[320, 173], [480, 260]]) {
-    const frame = frameMap([...places], width, height);
-    expect(frame.fits).not.toBe(false);
-    for (const pin of frame.pins) {
-      expect(pin.x).toBeGreaterThanOrEqual(10); expect(pin.x).toBeLessThanOrEqual(width - 10);
-      expect(pin.y).toBeGreaterThanOrEqual(10); expect(pin.y).toBeLessThanOrEqual(height - 10);
-    }
-  }
-  // The dateline pair sits together: a few pixels apart, not a world apart.
-  if (places[0].id === "east") expect(Math.abs(frameMap([...places], 320, 173).pins[0].x - frameMap([...places], 320, 173).pins[1].x)).toBeLessThan(250);
-});
-
-test("F3 places no still map can hold are said and listed, never clipped off a plane", () => {
-  // Svalbard and McMurdo fit the 480 pane but not the 320 one; at 84.5° north and south nothing holds them (jsdom lays out at 480).
-  expect(frameMap([place("n", "78.2232", "15.6267"), place("s", "-77.8419", "166.6863")], 480, 260).fits).toBe(true);
-  expect(frameMap([place("n", "78.2232", "15.6267"), place("s", "-77.8419", "166.6863")], 320, 173).fits).toBe(false);
-  const poles = { kind: "visual", visual: { kind: "map", places: [place("n", "84.5", "15.6267", "Longyearbyen"), place("s", "-84.5", "166.6863", "McMurdo")], selected_place_id: "s" } } as chat.HarsoOutputBlock;
-  const card = renderDoc(doc([poles]));
-  expect(card.querySelector(".hkc-output-map-plane")).toBeNull();
-  expect(within(card).getByText("Too far apart to show on one map")).toBeVisible();
-  expect(card.querySelector(".hkc-output-map-places")!.textContent).toBe("LongyearbyenMcMurdo (selected)");
-});
-
-test("F3 the pick is named inside the plane even when a 40-character label fits beside no pin", () => {
-  const long = { kind: "visual", visual: { kind: "map", places: [place("a", "1.3", "103.8", "W".repeat(40)), place("b", "1.3", "103.82", "Other")], selected_place_id: "a" } } as chat.HarsoOutputBlock;
-  const card = renderDoc(doc([long]));
-  const label = card.querySelector<HTMLElement>(".hkc-output-map-label[data-selected]")!;
-  expect(label.textContent).toBe("W".repeat(40));
-  const left = parseFloat(label.style.left), top = parseFloat(label.style.top), width = parseFloat(label.style.width);
-  expect(left).toBeGreaterThanOrEqual(4); expect(left + width).toBeLessThanOrEqual(480 - 4); expect(top).toBeGreaterThanOrEqual(4);
-});
-
 test.each([[0, 0, "View all 2"], [1, 1, "View all 2"], [2, 0, null]] as const)("F4 progress under maxNumbers=%s: the bar only when both numbers fit the cap, else %s number(s)", (max, numbers, more) => {
   const card = renderDoc(doc([budget]), { caps: { maxNumbers: max } });
   expect(!!within(card).queryByRole("meter")).toBe(max >= 2);
@@ -518,11 +405,3 @@ test("F4 a loading bar spends none of the cap: the numbers after it still draw",
   expect(within(ready).getByRole("button", { name: "View all 3" })).toBeVisible();
 });
 
-test("F2 map: once a tile has drawn, tiles still arriving (a wider pane) leave the map drawn, not back to loading", () => {
-  const view = render(<chat.HarsoOutputCard document={doc([tokyo])} onViewAll={() => {}} media={host} />);
-  const [first, ...rest] = tilesOf(view.container);
-  fireEvent.load(first);
-  expect(view.container.querySelector(".hkc-output-map")).toHaveAttribute("data-state", "ready");
-  expect(view.container.querySelector(".hkc-output-map")).not.toHaveAttribute("aria-busy");
-  expect(rest.every(tile => tile.dataset.state === "loading")).toBe(true);
-});
