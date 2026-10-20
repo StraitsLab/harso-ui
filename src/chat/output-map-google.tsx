@@ -35,6 +35,7 @@ export default function GoogleSurface({ map, selected, group, onSelect, dark, ex
   const latest = useRef({ selected, onSelect });
   latest.current = { selected, onSelect };
   const sync = useRef<() => void>(() => {});
+  const [view, setView] = useState<google.maps.Map | null>(null);
   const signature = JSON.stringify(map);
   useEffect(() => {
     if (!near) return;
@@ -45,20 +46,39 @@ export default function GoogleSurface({ map, selected, group, onSelect, dark, ex
     // Google reports a rejected key through this global callback only.
     (window as unknown as { gm_authFailure?: () => void }).gm_authFailure = failed;
     if (configured !== google.key) { setOptions({ key: google.key, v: "weekly" }); configured = google.key; }
-    Promise.all([importLibrary("maps"), importLibrary("marker"), importLibrary("core")]).then(([{ Map, Polyline }, { AdvancedMarkerElement, CollisionBehavior }, core]) => {
+    Promise.all([importLibrary("maps"), importLibrary("core")]).then(([{ Map }, core]) => {
+      if (!active || !canvas.current) return;
+      const view = new Map(canvas.current, {
+        mapId: google.mapId, center: { lat: 0, lng: 0 }, zoom: 10,
+        colorScheme: dark ? core.ColorScheme.DARK : core.ColorScheme.LIGHT,
+        disableDefaultUI: true
+      });
+      setView(view);
+      const ready = google_once(view, "tilesloaded", () => { if (active) { window.clearTimeout(timer); setState("ready"); } });
+      dispose = () => { ready.remove(); setView(null); };
+    }).catch(failed);
+    return () => { active = false; window.clearTimeout(timer); dispose(); };
+    // Google's colorScheme is constructor-only; only a mode change may recreate a loaded map.
+  }, [near, dark, attempt, google.key, google.mapId]);
+  useEffect(() => {
+    view?.setOptions({
+      gestureHandling: expanded ? "greedy" : "cooperative",
+      zoomControl: expanded, cameraControl: expanded, rotateControl: expanded,
+      headingInteractionEnabled: expanded, tiltInteractionEnabled: expanded,
+      clickableIcons: expanded, keyboardShortcuts: expanded
+    });
+  }, [view, expanded]);
+  useEffect(() => {
+    if (!view) return;
+    let active = true, dispose = () => {};
+    Promise.all([importLibrary("maps"), importLibrary("marker"), importLibrary("core")]).then(([{ Polyline }, { AdvancedMarkerElement, CollisionBehavior }, core]) => {
       if (!active || !canvas.current) return;
       const points = mapCoordinates(map).map(([lng, lat]) => ({ lat, lng }));
       const visible = map.places.slice(0, 12).map((place, index) => ({ place, index })).filter(({ place }) => group === "all" || place.category === group);
       const path = map.route?.path ? decodePolyline(map.route.path).map(([lng, lat]) => ({ lat, lng })) : [];
       const route = map.route ? path.length ? path : points : [];
-      const view = new Map(canvas.current, {
-        mapId: google.mapId, center: points[0], zoom: 10, colorScheme: dark ? core.ColorScheme.DARK : core.ColorScheme.LIGHT,
-        gestureHandling: expanded ? "greedy" : "cooperative", disableDefaultUI: true,
-        zoomControl: expanded, cameraControl: expanded, rotateControl: expanded,
-        headingInteractionEnabled: expanded, tiltInteractionEnabled: expanded,
-        clickableIcons: expanded, keyboardShortcuts: expanded
-      });
       let fitting = true;
+      let idle: google.maps.MapsEventListener | undefined;
       const fit = () => {
         fitting = true;
         setMoved(false);
@@ -67,7 +87,8 @@ export default function GoogleSurface({ map, selected, group, onSelect, dark, ex
         const bounds = new core.LatLngBounds();
         fitPoints.forEach(p => bounds.extend(p));
         view.fitBounds(bounds, { top: 50, bottom: 55, left: 48, right: 48 });
-        google_once(view, "idle", () => { if ((view.getZoom() ?? 0) > 14) view.setZoom(14); fitting = false; });
+        idle?.remove();
+        idle = google_once(view, "idle", () => { if ((view.getZoom() ?? 0) > 14) view.setZoom(14); fitting = false; });
       };
       const markers = visible.map(({ place, index }) => {
         const button = document.createElement("button");
@@ -105,17 +126,16 @@ export default function GoogleSurface({ map, selected, group, onSelect, dark, ex
           else lines.push(new Polyline({ map: view, path: route, clickable: false, ...style }));
         });
       });
-      google_once(view, "tilesloaded", () => { if (active) { window.clearTimeout(timer); setState("ready"); } });
       fit();
       const resize = new ResizeObserver(() => sync.current()); resize.observe(canvas.current);
       recenter.current = fit;
       const drag = view.addListener("dragstart", () => setMoved(true));
       const zoom = view.addListener("zoom_changed", () => { if (!fitting) setMoved(true); });
-      dispose = () => { stopColors(); drag.remove(); zoom.remove(); resize.disconnect(); markers.forEach(m => { m.marker.map = null; }); lines.forEach(l => l.setMap(null)); };
+      dispose = () => { idle?.remove(); stopColors(); drag.remove(); zoom.remove(); resize.disconnect(); markers.forEach(m => { m.marker.map = null; }); lines.forEach(l => l.setMap(null)); };
 
-    }).catch(failed);
-    return () => { active = false; window.clearTimeout(timer); dispose(); };
-  }, [signature, group, dark, expanded, attempt, near, google.key, google.mapId]);
+    }).catch(() => { if (active) setState("failed"); });
+    return () => { active = false; dispose(); sync.current = () => {}; recenter.current = () => {}; };
+  }, [view, signature, group]);
   useEffect(() => { sync.current(); }, [selected]);
   return <div ref={root} className="hkc-map-surface" data-state={state} data-provider="google" aria-busy={state === "loading" || undefined}>
     <div ref={canvas} className="hkc-output-map-plane" role="region" aria-label="Interactive map" hidden={state === "failed"} />
@@ -127,4 +147,5 @@ export default function GoogleSurface({ map, selected, group, onSelect, dark, ex
 
 function google_once(view: google.maps.Map, event: string, callback: () => void) {
   const listener = view.addListener(event, () => { listener.remove(); callback(); });
+  return listener;
 }

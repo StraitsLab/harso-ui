@@ -1,7 +1,7 @@
 "use client";
 
 import { MapPin, Star } from "@phosphor-icons/react";
-import { useId, type ReactNode } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import { Button } from "../../primitives";
 import { Tabs } from "../../navigation";
 import { HarsoOutputCardMeta, readAction, type HarsoOutputActionBlock, type HarsoOutputDocument, type HarsoOutputRow, type HarsoOutputRowsBlock, type HarsoOutputTextBlock, type HarsoOutputTextSection } from "../output-card";
@@ -132,7 +132,7 @@ function Stars({ rating }: { rating: number }) {
   return <span className="hkc-stars" aria-hidden="true"><span className="hkc-stars-back">{row}</span><span className="hkc-stars-fill" style={{ width: `${rating / 5 * 100}%` }}>{row}</span></span>;
 }
 
-function PlaceRow({ row, place, selected, host, media, renderBrand }: { row: HarsoOutputRow; place?: HarsoOutputPlace; selected: boolean; host: V6Host; media: HarsoOutputMediaHost; renderBrand: V6RenderBrand }) {
+function PlaceRow({ row, place, selected, onSelect, host, media, renderBrand }: { row: HarsoOutputRow; place?: HarsoOutputPlace; selected: boolean; onSelect?: () => void; host: V6Host; media: HarsoOutputMediaHost; renderBrand: V6RenderBrand }) {
   const name = useId();
   const rating = ratingOf(row.rating);
   const count = Number.isInteger(row.review_count) && row.review_count! >= 0 ? row.review_count : undefined;
@@ -142,11 +142,11 @@ function PlaceRow({ row, place, selected, host, media, renderBrand }: { row: Har
     ? { ...row.action, url: googleMapsPlaceUrl(place) } : row.action, host);
   const where = [row.secondary, row.distance].filter(Boolean).join(" · ");
   const photo = isPhoto(row.thumbnail) && media.resolveArtifact;
-  return <li className="hkc-place" aria-current={selected || undefined}>
-    {photo ? <HarsoOutputThumb photo={row.thumbnail!} host={media} /> : row.brand && <V6Brand domain={row.brand} label={row.label} renderBrand={renderBrand} />}
+  return <li className="hkc-place" aria-current={selected || undefined} onClick={onSelect}>
+    {photo ? onSelect ? <button type="button" className="hkc-place-photo" aria-label={`Select ${row.label}`} aria-pressed={selected} onClick={onSelect}><HarsoOutputThumb photo={row.thumbnail!} host={media} /></button> : <HarsoOutputThumb photo={row.thumbnail!} host={media} /> : row.brand && <V6Brand domain={row.brand} label={row.label} renderBrand={renderBrand} />}
     <div className="hkc-place-body">
       <div className="hkc-place-head">
-        <b id={name} className="hkc-place-name">{row.label}</b>
+        <b id={name} className="hkc-place-name">{onSelect ? <button type="button" className="hkc-place-select" aria-pressed={selected} onClick={onSelect}>{row.label}</button> : row.label}</b>
         {row.mark === "pick" && <span className="hkc-place-pick">Pick</span>}
         {travel && <span className="hkc-place-travel">{travel}</span>}
       </div>
@@ -160,7 +160,7 @@ function PlaceRow({ row, place, selected, host, media, renderBrand }: { row: Har
       </p>}
       {(open || directions) && <div className="hkc-place-foot">
         {open ? <span className="hkc-place-open" data-open-state={open.state}>{open.words}</span> : <span />}
-        {directions && <button type="button" className="hkc-place-directions" aria-describedby={name} onClick={directions.run}>
+        {directions && <button type="button" className="hkc-place-directions" aria-describedby={name} onClick={event => { event.stopPropagation(); directions.run(); }}>
           <MapPin size={12} weight="bold" aria-hidden="true" />{directions.label}
         </button>}
       </div>}
@@ -170,6 +170,8 @@ function PlaceRow({ row, place, selected, host, media, renderBrand }: { row: Har
 
 function PlacesCard({ props, read }: { props: V6FamilyProps; read: PlacesRead }) {
   const { document, mode, host, media, renderBrand, onOpenDetails } = props;
+  const [selected, setSelected] = useState(read.selected);
+  useEffect(() => setSelected(read.selected), [read.map]);
   const shown = mode === "inline" ? read.rows.slice(0, 3) : read.rows;
   const map = drawableMap(read.map, media);
   // Map places no row carries are named in text when no map draws them: a stop is never lost with its picture.
@@ -177,9 +179,9 @@ function PlacesCard({ props, read }: { props: V6FamilyProps; read: PlacesRead })
   const loose = map ? [] : read.places.filter(place => !joined.has(place.id));
   return <V6Frame document={document} mode={mode} host={host} onOpenDetails={onOpenDetails} renderBrand={renderBrand} trailing={trailingOf(read.action, host)}>
     <div className="hkc-places">
-      {map && <HarsoOutputMapView map={map} host={media} onOpenUrl={host.onOpenUrl} listed />}
+      {map && <HarsoOutputMapView map={map} host={media} onOpenUrl={host.onOpenUrl} selected={selected} onSelect={setSelected} listed />}
       <ul className="hkc-places-list" aria-label="Places">
-        {shown.map((row, index) => <PlaceRow key={row.id ?? index} row={row} place={map?.places.find(place => place.id === row.id)} selected={!!row.id && row.id === read.selected} host={host} media={media} renderBrand={renderBrand} />)}
+        {shown.map((row, index) => <PlaceRow key={row.id ?? index} row={row} place={map?.places.find(place => place.id === row.id)} selected={!!row.id && row.id === selected} onSelect={map?.places.some(place => place.id === row.id) ? () => setSelected(row.id!) : undefined} host={host} media={media} renderBrand={renderBrand} />)}
       </ul>
       {loose.length > 0 && <p className="hkc-places-loose">Also: {loose.map(place => place.label).join(", ")}</p>}
       {mode === "inline" && read.total > shown.length && <Button variant="quiet" size="small" className="hkc-places-more" onClick={host.onViewAll}>View all {read.total}</Button>}

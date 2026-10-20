@@ -100,7 +100,8 @@ test("missing rating and hours stay absent: no stars, no zero, no Open, no Close
   expect(bare.querySelector("[role=img]")).toBeNull();
   expect(bare.querySelector("[data-open-state]")).toBeNull();
   expect(bare.textContent).not.toMatch(/\b0\b|Open|Closed|Unknown|reviews?/);
-  expect(bare.querySelector("button")).toBeNull();
+  expect(bare.querySelector(".hkc-place-directions")).toBeNull();
+  expect(bare.querySelector(".hkc-place-select")).toHaveTextContent("Parkway Shenton");
 });
 
 test("an unreadable rating is absent, an unknown state with no label is absent, and a count alone is not stars", () => {

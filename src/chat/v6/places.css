@@ -140,4 +140,7 @@
   .harso-kit .hkc-place-directions { outline: 1px solid ButtonText; }
   .harso-kit .hkc-v6-widget-open:focus-visible::after { outline-color: Highlight; }
 }
-.harso-kit .hkc-place > .hkc-output-thumb { flex: none; align-self: flex-start; width: 56px; height: 56px; border-radius: var(--hk-radius-row); }
+.harso-kit .hkc-place-select, .harso-kit .hkc-place-photo { appearance: none; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: inherit; cursor: pointer; border-radius: var(--hk-radius-row); }
+.harso-kit .hkc-place-select:focus-visible, .harso-kit .hkc-place-photo:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+.harso-kit .hkc-place-photo { flex: none; align-self: flex-start; }
+.harso-kit .hkc-place-photo .hkc-output-thumb, .harso-kit .hkc-place > .hkc-output-thumb { flex: none; align-self: flex-start; width: 56px; height: 56px; border-radius: var(--hk-radius-row); }

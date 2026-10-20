@@ -202,9 +202,12 @@ for (const mode of ["light", "dark"] as const) {
       }
       const pick = card(page).getByRole("list", { name: "Places" }).getByRole("button").nth(1);
       await pick.focus(); await page.keyboard.press("Enter"); await expect(pick).toHaveAttribute("aria-pressed", "true");
+      const originalSurface = await card(page).locator(".hkc-map-surface").elementHandle();
       const expand = card(page).getByRole("button", { name: "Expand map" });
       await expand.click(); await expect(page.getByRole("dialog", { name: "Expanded map" })).toBeVisible();
+      expect(await page.getByRole("dialog").locator(".hkc-map-surface").evaluate((node, original) => node === original, originalSurface)).toBe(true);
       await page.keyboard.press("Escape"); await expect(expand).toBeFocused();
+      expect(await card(page).locator(".hkc-map-surface").evaluate((node, original) => node === original, originalSurface)).toBe(true);
     }
   });
 
