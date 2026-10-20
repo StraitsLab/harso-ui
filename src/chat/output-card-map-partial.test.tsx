@@ -46,9 +46,14 @@ test("maps require no host tile proxy and reject invalid coordinates or a one-pl
   expect(readMedia({ kind: "visual", visual: { ...map, places: [map.places[0]] } } as any, {})).toBeUndefined();
   expect(readMedia({ kind: "visual", visual: { ...map, places: [{ ...map.places[0], lon: "181" }] } } as any, {})).toBeUndefined();
 });
-test("vector map uses cooperative gestures, decoded route, collision-managed labels and ordered list", async () => {
+test("vector map uses cooperative gestures, decoded route and ordered list without floating labels", async () => {
   render(<div className="harso-kit"><InteractiveMap map={map} host={{}} /></div>);
   await waitFor(() => expect(calls.layers.some(l => l.id === "route")).toBe(true));
+  expect(document.querySelector(".hkc-map-label")).toBeNull();
+  expect(screen.queryByRole("button", { name: "Recenter" })).toBeNull();
+  act(() => calls.events.movestart({ originalEvent: {} }));
+  fireEvent.click(screen.getByRole("button", { name: "Recenter" }));
+  expect(screen.queryByRole("button", { name: "Recenter" })).toBeNull();
   expect(calls.options[0]).toMatchObject({ scrollZoom: false, cooperativeGestures: true, dragRotate: false });
   expect(calls.sources.route.data.geometry.coordinates).toEqual(decodePolyline(map.route!.path!));
   expect(calls.layers.find(l => l.id === "route").paint["line-dasharray"]).toBeUndefined();
@@ -111,7 +116,7 @@ test.each([{}, { sourceId: 'openmaptiles' }])("startup style/source errors fail:
 test("WebGL failure keeps readable selectable places, filtering and a working retry", async () => {
   calls.fail = true; render(<InteractiveMap map={map} host={{}} />);
   expect(await screen.findByText(/Map unavailable/)).toBeVisible();
-  expect(screen.getByText("First place")).toBeVisible();
+  expect(screen.getByRole("button", { name: /First place/ })).toBeVisible();
   fireEvent.change(screen.getByRole("combobox"), { target: { value: "Garden" } });
   expect(screen.queryByText("First place")).toBeNull(); expect(screen.getByText("Second place")).toBeVisible();
   const retry = await screen.findByRole("button", { name: "Try again" });
