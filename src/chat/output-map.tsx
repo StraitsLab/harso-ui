@@ -27,7 +27,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
   latest.current = { selected, onSelect };
   const signature = JSON.stringify(map);
   useEffect(() => {
-    let active = true, failed = false, dispose = () => {};
+    let active = true, failed = false, loaded = false, basemapReady = false, dispose = () => {};
     setState("loading");
     const timer = window.setTimeout(() => { if (active) setState("failed"); }, 15000);
     import("maplibre-gl").then(lib => {
@@ -131,6 +131,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       view.once("idle", ready);
       view.on("load", () => {
         if (!active) return;
+        loaded = true;
         try {
           if (route.length > 1) {
             const data = (coords: [number, number][]) => ({ type: "Feature" as const, properties: {}, geometry: { type: "LineString" as const, coordinates: coords } });
@@ -165,10 +166,11 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
           fit(); ready();
         }
       });
+      view.on("sourcedata", event => { if (event.sourceId === "places" && event.sourceDataType === "metadata") basemapReady = true; });
       view.on("error", (errorEvent) => {
-        const event = errorEvent as typeof errorEvent & { tile?: unknown };
-        // Individual tiles and errors after load do not break the map; startup style/TileJSON errors do.
-        if (!active || event.tile || view.loaded()) return;
+        const event = errorEvent as typeof errorEvent & { tile?: unknown; sourceId?: string };
+        // A failed TileJSON can be reported after load: only metadata proves the basemap started successfully.
+        if (!active || event.tile || (loaded && (event.sourceId !== "places" || basemapReady))) return;
         failed = true;
         window.clearTimeout(timer); setState("failed");
       });

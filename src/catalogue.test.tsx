@@ -188,7 +188,8 @@ describe("catalogue gallery overflow and routes", () => {
     const direct = render(<CataloguePage vertical="news" mode={mode} />);
     const frames = [...direct.container.querySelectorAll(".hkl-cat-frame")].slice(0, 4).map(frame => frame.getAttribute("data-mode"));
     expect(frames).toEqual(["light", "light", "dark", "dark"]);
-  });
+    // Two complete gallery renders need the same CI budget as the vertical-render checks below.
+  }, 60_000);
 });
 
 describe("catalogue gallery", () => {

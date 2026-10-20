@@ -4,13 +4,13 @@ import InteractiveMap from "./output-map";
 import { decodePolyline, mapCoordinates, mapBounds } from "./output-map-utils";
 import { readMedia, type HarsoOutputMap } from "./output-card-media";
 
-const calls = vi.hoisted(() => ({ options: [] as any[], sources: {} as Record<string, any>, layers: [] as any[], removed: 0, fail: false, decorationFail: false, fitted: false, loaded: false, events: {} as Record<string, (event?: any) => void> }));
+const calls = vi.hoisted(() => ({ options: [] as any[], sources: {} as Record<string, any>, layers: [] as any[], removed: 0, fail: false, decorationFail: false, fitted: false, loaded: false, autoLoad: true, events: {} as Record<string, (event?: any) => void> }));
 vi.mock("maplibre-gl", () => ({
   setWorkerUrl() {},
   Map: class {
     constructor(options: any) { calls.options.push(options); if (calls.fail) throw new Error("No WebGL"); }
     touchZoomRotate = { disableRotation() {} };
-    addControl() {} on(event: string, callback: () => void) { calls.events[event] = callback; if (event === "load") queueMicrotask(() => { calls.loaded = true; callback(); }); }
+    addControl() {} on(event: string, callback: () => void) { calls.events[event] = callback; if (event === "load" && calls.autoLoad) queueMicrotask(() => { calls.loaded = true; callback(); }); }
     loaded() { return calls.loaded; }
     getLayer() { return false; } setFilter() {} queryRenderedFeatures() { return []; }
     once(event: string, callback: () => void) { calls.events[event] = callback; } project() { return { x: 100, y: 100 }; }
@@ -27,7 +27,7 @@ vi.mock("maplibre-gl", () => ({
 vi.stubGlobal("ImageData", class { data: Uint8ClampedArray; constructor(width: number, height: number) { this.data = new Uint8ClampedArray(width * height * 4); } });
 vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 vi.stubGlobal("matchMedia", () => ({ matches: true }));
-afterEach(() => { cleanup(); calls.options = []; calls.sources = {}; calls.layers = []; calls.fail = false; calls.decorationFail = false; calls.fitted = false; calls.loaded = false; calls.events = {}; });
+afterEach(() => { cleanup(); calls.options = []; calls.sources = {}; calls.layers = []; calls.fail = false; calls.decorationFail = false; calls.fitted = false; calls.autoLoad = true; calls.loaded = false; calls.events = {}; });
 const map: HarsoOutputMap = { kind: "map", places: [
   { id: "a", label: "First place", lat: "38.5", lon: "-120.2", category: "Temple" },
   { id: "b", label: "Second place", lat: "40.7", lon: "-120.95", category: "Garden" }
@@ -65,13 +65,24 @@ test("missing route path draws dashed ordered segments and the exact disclosure"
   expect(calls.layers.find(l => l.id === "route").paint["line-dasharray"]).toEqual([2, 2]);
   expect(screen.getByText("Straight lines, not streets")).toBeVisible();
 });
-test("tile errors after load preserve the map; startup style errors fail", async () => {
+test("tile and source errors after first load preserve the map", async () => {
   const { container } = render(<InteractiveMap map={map} host={{}} />);
   await waitFor(() => expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready'));
   act(() => calls.events.error({ tile: {}, sourceId: 'places' }));
   expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready');
   calls.loaded = false;
   act(() => calls.events.error({ error: new Error('Style unavailable') }));
+  expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready');
+  act(() => calls.events.sourcedata({ sourceId: 'places', sourceDataType: 'metadata' }));
+  act(() => calls.events.error({ sourceId: 'places', error: new Error('Later source error') }));
+  expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready');
+});
+
+test("a source failure reported after load still fails without basemap metadata", async () => {
+  const { container } = render(<InteractiveMap map={map} host={{}} />);
+  await waitFor(() => expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready'));
+  act(() => calls.events.error({ sourceId: 'places', error: new Error('TileJSON unavailable') }));
+  act(() => calls.events.idle());
   expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'failed');
 });
 
@@ -84,11 +95,13 @@ test("route decoration failure still fits and readies the map", async () => {
 });
 
 test.each([{}, { sourceId: 'openmaptiles' }])("startup style/source errors fail: %j", async event => {
+  calls.autoLoad = false;
   const { container } = render(<InteractiveMap map={map} host={{}} />);
   await waitFor(() => expect(calls.events.error).toBeTypeOf('function'));
-  calls.loaded = false;
+  // MapLibre marks its source loaded immediately before firing a startup error.
+  calls.loaded = true;
   act(() => calls.events.error({ tile: {}, sourceId: 'openmaptiles' }));
-  expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'ready');
+  expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'loading');
   act(() => calls.events.error({ ...event, error: new Error('Startup unavailable') }));
   expect(container.querySelector('.hkc-map-surface')).toHaveAttribute('data-state', 'failed');
   act(() => calls.events.idle());

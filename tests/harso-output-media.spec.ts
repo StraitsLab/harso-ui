@@ -293,7 +293,8 @@ const POSTER = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360"
 for (const mode of ["light", "dark"] as const) {
   test(`map ${mode}: failed vector requests retain the places and retry recovers`, async ({ page }) => {
     let fail = true;
-    await page.route("https://tiles.openfreemap.org/**", route => fail ? route.abort() : route.request().url().endsWith("/planet")
+    // A real server failure is deterministic; browser cancellation may be suppressed by MapLibre.
+    await page.route("https://tiles.openfreemap.org/**", route => fail ? route.fulfill({ status: 503, body: "Map service unavailable" }) : route.request().url().endsWith("/planet")
       ? route.fulfill({ json: { tilejson: "3.0.0", tiles: ["https://tiles.openfreemap.org/__empty__/{z}/{x}/{y}.pbf"], minzoom: 0, maxzoom: 14 } }) : route.fulfill({ status: 204, contentType: "application/x-protobuf" }));
     await open(page, `doc=map&mode=${mode}&width=512`);
     await expect(card(page).getByText(/Map unavailable/)).toBeVisible();
