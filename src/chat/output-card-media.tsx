@@ -513,8 +513,8 @@ export function HarsoOutputVideoView({ video, host, onOpen }: { video: HarsoOutp
 const InteractiveMap = lazy(() => import("./output-map"));
 
 /** MapLibre and its styles are fetched only when a map block is shown. */
-export function HarsoOutputMapView({ map, host, listed, onOpenUrl }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean; onOpenUrl?: (url: string) => void }) {
-  return <Suspense fallback={<HarsoOutputMediaSkeleton kind="map" />}><InteractiveMap map={map} host={host} listed={listed} onOpenUrl={onOpenUrl} /></Suspense>;
+export function HarsoOutputMapView({ map, host, listed, onOpenUrl, selected, onSelect }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean; onOpenUrl?: (url: string) => void; selected?: string; onSelect?: (id: string) => void }) {
+  return <Suspense fallback={<HarsoOutputMediaSkeleton kind="map" />}><InteractiveMap map={map} host={host} listed={listed} onOpenUrl={onOpenUrl} selected={selected} onSelect={onSelect} /></Suspense>;
 }
 
 // ---- loading skeletons and Copy ----

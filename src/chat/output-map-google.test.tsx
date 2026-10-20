@@ -11,8 +11,9 @@ vi.mock("@googlemaps/js-api-loader", () => ({
   importLibrary: async (name: string) => {
     if (g.fail) throw new Error("load failed");
     if (name === "maps") return {
-      Map: class { constructor(_el: any, opts: any) { g.maps.push(opts); }
+      Map: class { constructor(_el: any, public opts: any) { g.maps.push(opts); }
         addListener(event: string, cb: () => void) { g.listeners[event] = cb; if (event === "tilesloaded") queueMicrotask(cb); return { remove() {} }; }
+        setOptions(opts: any) { Object.assign(this.opts, opts); }
         fitBounds() {} getZoom() { return 12; } setZoom() {} },
       Polyline: class { constructor(public opts: any) { g.lines.push(opts); } setMap() {} setOptions(opts: any) { Object.assign(this.opts, opts); } }
     };
@@ -25,6 +26,47 @@ vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 vi.stubGlobal("matchMedia", () => ({ matches: true }));
 afterEach(() => { cleanup(); g.options = []; g.maps = []; g.markers = []; g.lines = []; g.fail = false; g.listeners = {}; });
 
+test("one Google constructor survives filtering, expand/collapse, selection, tint and overlay changes", async () => {
+  HTMLDialogElement.prototype.showModal = function () { this.setAttribute("open", ""); };
+  HTMLDialogElement.prototype.close = function () { this.removeAttribute("open"); };
+  const categorized = { ...map, places: map.places.map((p, i) => ({ ...p, category: i ? "Temple" : "Market" })) };
+  const { container, rerender } = render(<div className="harso-kit"><InteractiveMap map={categorized} host={host} /></div>);
+  await waitFor(() => expect(g.maps).toHaveLength(1));
+  const surface = container.querySelector("[data-provider=google]");
+  fireEvent.change(screen.getByLabelText("Filter places by category"), { target: { value: "Temple" } });
+  await waitFor(() => expect(g.markers.filter(m => m.map)).toHaveLength(1));
+  fireEvent.click(screen.getByRole("button", { name: "Expand map" }));
+  await waitFor(() => expect(g.maps[0].cameraControl).toBe(true));
+  expect(screen.getByRole("dialog").contains(surface)).toBe(true);
+  fireEvent.click(screen.getByRole("button", { name: "Collapse map" }));
+  await waitFor(() => expect(g.maps[0].cameraControl).toBe(false));
+  fireEvent.click(screen.getByRole("button", { name: /2.*Cutty Sark/ }));
+  act(() => (container.firstChild as HTMLElement).style.setProperty("--hk-accent", "rgb(179, 60, 92)"));
+  rerender(<div className="harso-kit"><InteractiveMap map={{ ...categorized, route: { mode: "drive" } }} host={host} /></div>);
+  await waitFor(() => expect(g.lines.at(-1).strokeOpacity).toBe(0));
+  expect(container.querySelector("[data-provider=google]")).toBe(surface);
+  expect(g.maps).toHaveLength(1);
+  act(() => (container.firstChild as HTMLElement).setAttribute("data-mode", "dark"));
+  await waitFor(() => expect(g.maps.at(-1).colorScheme).toBe("DARK"));
+  expect(g.maps).toHaveLength(2);
+});
+
+test("nearby pins and family rows share selection; the row name is keyboard selectable", async () => {
+  const doc: HarsoOutputDocument = { template: "places-nearby", header: { title: "Nearby" }, blocks: [
+    { kind: "visual", visual: map }, { kind: "rows", items: map.places.map(p => ({ id: p.id, label: p.label, thumbnail: { artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000001", alt: p.label } })) }
+  ], fallback_text: "Nearby" };
+  render(<HarsoOutputCard document={doc} onViewAll={() => {}} media={{ ...host, resolveArtifact: () => "https://photos.test/place.jpg" }} />);
+  await waitFor(() => expect(g.markers).toHaveLength(2));
+  fireEvent.click(g.markers[1].opts.content.querySelector("button"));
+  expect(document.querySelector('.hkc-place[aria-current="true"]')).toHaveTextContent("Cutty Sark");
+  fireEvent.click(screen.getByRole("button", { name: "Royal Observatory" }));
+  expect(g.markers[0].opts.content.querySelector("button")).toHaveAttribute("aria-pressed", "true");
+  expect(document.querySelector('.hkc-place[aria-current="true"]')).toHaveTextContent("Royal Observatory");
+  fireEvent.click(screen.getByRole("button", { name: "Select Cutty Sark" }));
+  expect(g.markers[1].opts.content.querySelector("button")).toHaveAttribute("aria-pressed", "true");
+  expect(document.querySelector('.hkc-place[aria-current="true"]')).toHaveTextContent("Cutty Sark");
+});
+
 const map: HarsoOutputMap = { kind: "map", selected_place_id: "a", places: [
   { id: "a", label: "Royal Observatory", lat: "51.476853", lon: "-0.0005002" },
   { id: "b", label: "Cutty Sark", lat: "51.4828646", lon: "-0.0095917" }
@@ -34,7 +76,7 @@ const host = { googleMaps: { key: "test-key", mapId: "map-id" } };
 test("host googleMaps draws one Google vector map with numbered pins, a street route and arrows", async () => {
   render(<div className="harso-kit"><InteractiveMap map={map} host={host} /></div>);
   await waitFor(() => expect(document.querySelector("[data-provider=google]")?.getAttribute("data-state")).toBe("ready"));
-  expect(g.options[0]).toMatchObject({ key: "test-key" });
+  expect(g.options.every(option => option.key === "test-key")).toBe(true);
   expect(g.maps).toHaveLength(1);
   expect(g.maps[0]).toMatchObject({ mapId: "map-id", gestureHandling: "cooperative", colorScheme: "LIGHT", clickableIcons: false });
   expect(g.markers.map(m => m.opts.title)).toEqual(["Royal Observatory", "Cutty Sark"]);

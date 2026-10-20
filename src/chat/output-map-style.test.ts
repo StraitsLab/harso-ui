@@ -25,15 +25,19 @@ test("both providers use token-only pin/route colours, no category palette or fl
   expect(css).toContain("width: 38px; height: 38px");
 });
 
-test("graphite pins use secondary only when resolved accent equals ink", async () => {
+test.each([
+  ["light graphite", "#1f2226", "rgb(31, 34, 38)", "#5b6067", true],
+  ["dark graphite", "#f1f2f3", "rgb(241, 242, 243)", "#a9adb2", true],
+  ["coloured tint", "#1f2226", "#20745a", "#5b6067", false]
+] as const)("%s pins use secondary only when resolved accent equals ink", async (_mode, ink, accent, secondary, graphite) => {
   const kit = document.createElement("div"); kit.className = "harso-kit";
-  kit.style.setProperty("--hk-ink", "#1f2226");
-  kit.style.setProperty("--hk-accent", "rgb(31, 34, 38)");
-  kit.style.setProperty("--hk-secondary", "#5b6067");
+  kit.style.setProperty("--hk-ink", ink);
+  kit.style.setProperty("--hk-accent", accent);
+  kit.style.setProperty("--hk-secondary", secondary);
   document.body.append(kit);
   const child = kit.appendChild(document.createElement("div"));
   const stop = watchMapColors(child, () => {});
-  expect(child.style.getPropertyValue("--hkc-map-unselected")).toBe("var(--hk-secondary)");
+  expect(child.style.getPropertyValue("--hkc-map-unselected")).toBe(graphite ? "var(--hk-secondary)" : "var(--hk-ink)");
   kit.style.setProperty("--hk-accent", "#20745a");
   await new Promise(resolve => setTimeout(resolve, 0));
   expect(child.style.getPropertyValue("--hkc-map-unselected")).toBe("var(--hk-ink)");

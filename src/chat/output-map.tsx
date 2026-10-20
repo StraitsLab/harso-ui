@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, lazy, Suspense } from "react";
+import { createPortal } from "react-dom";
 import type { GeoJSONSource, Map as LibreMap } from "maplibre-gl";
 import { Button } from "../primitives";
 import { MapPin, Bank, Storefront, Columns, FlowerLotus } from "@phosphor-icons/react";
@@ -159,9 +160,13 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
 }
 
 /** `listed`: the card already lists these places in its own rows, so the map shows no second list inline. */
-export default function InteractiveMap({ map, host, listed = false, onOpenUrl }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean; onOpenUrl?: (url: string) => void }) {
+export default function InteractiveMap({ map, host, listed = false, onOpenUrl, selected: controlled, onSelect }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean; onOpenUrl?: (url: string) => void; selected?: string; onSelect?: (id: string) => void }) {
   const root = useRef<HTMLElement>(null), dialog = useRef<HTMLDialogElement>(null), expand = useRef<HTMLButtonElement>(null);
-  const [selected, setSelected] = useState(map.selected_place_id);
+  const [localSelected, setSelected] = useState(map.selected_place_id);
+  const selected = onSelect ? controlled : localSelected;
+  const select = onSelect ?? setSelected;
+  const inlineSurface = useRef<HTMLDivElement>(null), dialogSurface = useRef<HTMLDivElement>(null);
+  const [surfaceNode, setSurfaceNode] = useState<HTMLDivElement | null>(null);
   const [group, setGroup] = useState("all"), [expanded, setExpanded] = useState(false), [dark, setDark] = useState(false);
   useEffect(() => { setSelected(map.selected_place_id); setGroup("all"); }, [map]);
   useEffect(() => root.current ? watchMapColors(root.current, () => {}) : undefined, []);
@@ -171,14 +176,19 @@ export default function InteractiveMap({ map, host, listed = false, onOpenUrl }:
     const observer = new MutationObserver(update); if (provider) observer.observe(provider, { attributes: true, attributeFilter: ["data-mode"] });
     return () => observer.disconnect();
   }, []);
-  useEffect(() => { if (expanded) dialog.current?.showModal(); else if (dialog.current?.open) dialog.current.close(); }, [expanded]);
+  useLayoutEffect(() => {
+    if (!surfaceNode) { setSurfaceNode(document.createElement("div")); return; }
+    // Move one portal target, not the React surface: expansion must not bill another Google map.
+    (expanded ? dialogSurface.current : inlineSurface.current)?.append(surfaceNode);
+    if (expanded) dialog.current?.showModal(); else if (dialog.current?.open) dialog.current.close();
+  }, [expanded, surfaceNode]);
   const categories = [...new Set(map.places.map(p => p.category).filter((c): c is string => !!c))];
   const visible = map.places.slice(0, 12).filter(p => group === "all" || p.category === group);
   const surface = host.googleMaps
     ? <Suspense fallback={<div className="hkc-map-surface" data-state="loading"><div className="hkc-map-loading" role="status">Loading map…</div></div>}>
-        <GoogleSurface map={map} selected={selected} group={group} onSelect={setSelected} dark={dark} google={host.googleMaps} expanded={expanded} glyph={glyph} />
+        <GoogleSurface map={map} selected={selected} group={group} onSelect={select} dark={dark} google={host.googleMaps} expanded={expanded} glyph={glyph} />
       </Suspense>
-    : <MapSurface map={map} selected={selected} group={group} onSelect={setSelected} dark={dark} />;
+    : <MapSurface map={map} selected={selected} group={group} onSelect={select} dark={dark} />;
   const route = map.route;
   const street = route?.path && decodePolyline(route.path).length > 1;
   const selectedPlace = visible.find(place => place.id === selected);
@@ -186,7 +196,7 @@ export default function InteractiveMap({ map, host, listed = false, onOpenUrl }:
     ? <Button variant="quiet" onClick={() => onOpenUrl(googleMapsPlaceUrl(selectedPlace))}>Open in Google Maps</Button> : null;
   const List = route ? "ol" : "ul";
   const list = <List className="hkc-output-map-places" data-route={route ? "" : undefined} aria-label="Places">{visible.map(place => <li key={place.id}>
-    <button type="button" aria-pressed={selected === place.id} onClick={() => setSelected(place.id)}>
+    <button type="button" aria-pressed={selected === place.id} onClick={() => select(place.id)}>
       <span className="hkc-map-order">{route ? map.places.indexOf(place) + 1 : (() => { const Glyph = glyph(place.category); return <Glyph size={16} aria-hidden="true" />; })()}</span>
       {place.photo && host.resolveArtifact ? <HarsoOutputThumb photo={place.photo} host={host} /> : null}
       <span><b>{place.label}</b>{place.category && <small>{place.category}</small>}</span>
@@ -197,13 +207,16 @@ export default function InteractiveMap({ map, host, listed = false, onOpenUrl }:
       {categories.length > 1 ? <select aria-label="Filter places by category" value={group} onChange={e => setGroup(e.target.value)}><option value="all">All places</option>{categories.map(c => <option key={c}>{c}</option>)}</select> : <span>{map.places.length} places</span>}
       <Button ref={expand} variant="quiet" onClick={() => setExpanded(true)}>Expand map</Button>
     </div>
-    {!expanded && surface}
+    <div ref={inlineSurface} hidden={expanded} />
+    {surfaceNode && createPortal(surface, surfaceNode)}
     <figcaption className="hkc-map-note">{selectedPlace && <strong>{selectedPlace.label}</strong>}
     {route && <span>{route.mode === "walk" ? "Walking route" : "Driving route"}{route.minutes !== undefined && ` · ${route.minutes} min`}{route.meters !== undefined && ` · ${new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(route.meters / 1000)} km`}{!street && <span>Straight lines, not streets</span>}</span>}</figcaption>
     {!expanded && openSelected}
     {!expanded && !listed && list}
     <dialog ref={dialog} className="hkc-map-dialog" aria-label="Expanded map" onCancel={() => setExpanded(false)} onClose={() => { setExpanded(false); expand.current?.focus(); }}>
-      {expanded && <><header><h2>Explore places</h2><Button variant="quiet" onClick={() => setExpanded(false)}>Collapse map</Button></header>{surface}{openSelected}{list}</>}
+      <header><h2>Explore places</h2><Button variant="quiet" onClick={() => setExpanded(false)}>Collapse map</Button></header>
+      <div ref={dialogSurface} />
+      {expanded && <>{openSelected}{list}</>}
     </dialog>
   </figure>;
 }
