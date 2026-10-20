@@ -22,7 +22,7 @@ const open = async (page: Page, query: string, width = 560) => {
   await page.evaluate(() => document.fonts.ready);
 };
 
-/** Text boxes that overlap, anything drawn outside the card, and any border (the card allows none). */
+/** Text boxes that overlap, anything outside the card, and borders other than the approved map hairline. */
 async function geometry(page: Page) {
   return card(page).evaluate(root => {
     const cardBox = root.getBoundingClientRect();
@@ -35,9 +35,14 @@ async function geometry(page: Page) {
       .map(node => ({ node, box: node.getBoundingClientRect() }))
       .filter(({ box }) => box.width > 0 && (box.left < cardBox.left - .5 || box.right > cardBox.right + .5 || box.top < cardBox.top - .5 || box.bottom > cardBox.bottom + .5))
       .map(({ node }) => node.getAttribute("class"));
+    const probe = document.createElement("span"); probe.style.color = "var(--hk-line)"; root.append(probe);
+    const line = getComputedStyle(probe).color; probe.remove();
     const bordered = [root, ...root.querySelectorAll("*")].flatMap(node => {
       const s = getComputedStyle(node);
-      return ["top", "right", "bottom", "left"].filter(side => s.getPropertyValue(`border-${side}-style`) !== "none" && parseFloat(s.getPropertyValue(`border-${side}-width`)) > 0).map(side => `${node.getAttribute("class")} ${side}`);
+      return ["top", "right", "bottom", "left"].filter(side => {
+        const width = parseFloat(s.getPropertyValue(`border-${side}-width`));
+        return s.getPropertyValue(`border-${side}-style`) !== "none" && width > 0 && !(node.classList.contains("hkc-map-surface") && width === 1 && s.getPropertyValue(`border-${side}-color`) === line);
+      }).map(side => `${node.getAttribute("class")} ${side}`);
     });
     return { overlaps, outside, bordered };
   });
@@ -201,24 +206,16 @@ for (const mode of ["light", "dark"] as const) {
     }
   });
 
-  test(`map ${mode}: selected Kyoto label stays visible at 320 and 390; phone attribution starts compact`, async ({ page }) => {
+  test(`map ${mode}: selected Kyoto caption stays visible at 320 and 390; phone attribution starts compact`, async ({ page }) => {
     for (const width of [320, 390]) for (const name of ["Kyoto · 4 places with route", "Kyoto · places without route"]) {
       await page.setViewportSize({ width, height: 1000 });
       await page.goto(`/preview/card-audit.html?mode=${mode}&only=${encodeURIComponent(name)}`);
       const plane = page.locator(".hkc-output-map-plane");
       await expect(page.locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 15000 });
       const selected = await plane.locator('.hkc-map-pin[aria-pressed="true"]').getAttribute("title");
-      await expect(plane.locator(".hkc-map-label").filter({ hasText: selected! })).toBeVisible();
-      // Phone-width maps name only the selected stop, and that label never covers a pin.
-      await expect(plane.locator(".hkc-map-label:not([hidden])")).toHaveCount(1);
-      const overlaps = await plane.evaluate(root => {
-        const label = root.querySelector(".hkc-map-label:not([hidden])")!.getBoundingClientRect();
-        return [...root.querySelectorAll(".hkc-map-pin")].filter(pin => {
-          const b = pin.getBoundingClientRect();
-          return label.left < b.right && label.right > b.left && label.top < b.bottom && label.bottom > b.top;
-        }).length;
-      });
-      expect(overlaps).toBe(0);
+      await expect(page.locator("figcaption.hkc-map-note").filter({ hasText: selected! })).toBeVisible();
+      await expect(plane.locator(".hkc-map-label")).toHaveCount(0);
+      await expect(plane.locator(".maplibregl-ctrl-zoom-in")).toHaveCount(0);
       const attribution = plane.locator(".maplibregl-ctrl-attrib");
       await expect(attribution).not.toHaveClass(/maplibregl-compact-show/);
       await expect(attribution).not.toHaveAttribute("open");
