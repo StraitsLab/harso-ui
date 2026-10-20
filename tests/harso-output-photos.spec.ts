@@ -71,7 +71,7 @@ test("a photo that does not arrive leaves the quiet tile, never a broken image; 
   await expect.poll(() => frame.locator(".hkc-output-thumb").evaluateAll(all => all.map(t => t.getAttribute("data-state")))).toEqual(["failed", "failed", "failed"]);
   await expect(frame.locator(".hkc-output-thumb img")).toHaveCount(0);
   await expect(frame.getByRole("img", { name: "Hotel Gracery Ueno, room photo" })).toBeVisible();
-  await expect(frame.getByText("Hotel Gracery Ueno", { exact: true })).toBeVisible();
+  await expect(frame.locator(".hkc-output-card-row-label").getByText("Hotel Gracery Ueno", { exact: true })).toBeVisible();
   const gallery = example(page, "travel-hotel-detail").getByRole("region", { name: "6 photos" });
   await gallery.scrollIntoViewIfNeeded();
   await expect.poll(() => gallery.locator(".hkc-output-gallery-photo").first().getAttribute("data-state")).toBe("failed");

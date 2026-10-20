@@ -73,7 +73,7 @@ function ActionButtons({ block, host }: { block: HarsoOutputActionBlock; host: V
   return <>{actions.map(({ label, run }, index) => <Button key={index} variant={index === 0 ? "primary" : "quiet"} size="small" title={label} onClick={run}>{label}</Button>)}</>;
 }
 
-/** The map when the host can draw it (tiles lent, every place readable), else undefined. */
+/** Every place must be readable; the map owns vector fetching and a text-list fallback. */
 function drawableMap(map: HarsoOutputMap | undefined, media: HarsoOutputMediaHost) {
   const block = { kind: "visual", visual: map };
   return map ? readMedia(block, media) as HarsoOutputMap | undefined : undefined;
@@ -256,45 +256,6 @@ function TripDay({ section, index, next, media }: { section: HarsoOutputTextSect
   </div>;
 }
 
-/** The map's places when every one has a name and readable coordinates (at most 12), else undefined: the days still say where. */
-function schematicPlaces(map: HarsoOutputMap | undefined) {
-  const places = map?.places;
-  if (!Array.isArray(places) || !places.length || places.length > 12) return undefined;
-  const read = places.map(place => ({ label: place?.label, lat: Number(place?.lat), lon: Number(place?.lon) }));
-  return read.every(place => typeof place.label === "string" && place.label.trim() !== "" && Number.isFinite(place.lat) && Number.isFinite(place.lon)
-    && Math.abs(place.lat) <= 90 && Math.abs(place.lon) <= 180) ? read as { label: string; lat: number; lon: number }[] : undefined;
-}
-
-const PLANE = { width: 500, height: 110 };
-/**
- * V6's offline map, for a host that lends no map tiles: each pin at its place's real position relative to the others
- * (west to east, north to south; not to scale), numbered in document order. The ground is a plain grid, never drawn
- * streets or rivers, so nothing on it claims a geography the document did not give. Screen readers get the places as a list.
- */
-function SchematicMap({ map, days }: { map: HarsoOutputMap | undefined; days: number }) {
-  const places = schematicPlaces(map);
-  if (!places) return null;
-  const lats = places.map(place => place.lat), lons = places.map(place => place.lon);
-  const west = Math.min(...lons), east = Math.max(...lons), south = Math.min(...lats), north = Math.max(...lats);
-  // Pins keep inside the plane and clear of the footer line ("Schematic · not to scale" sits under the lowest pin's tip).
-  const x = (lon: number) => east === west ? PLANE.width / 2 : 26 + (lon - west) / (east - west) * (PLANE.width - 52);
-  const y = (lat: number) => north === south ? 40 : 16 + (north - lat) / (north - south) * 46;
-  const byDay = places.length === days;
-  return <figure className="hkc-trip-map" aria-label="Map of the trip, not to scale">
-    <figcaption className="hkc-trip-map-legend">{byDay ? "Where each day is · pin number = day" : "Where the places are"}</figcaption>
-    <svg className="hkc-trip-map-plane" viewBox={`0 0 ${PLANE.width} ${PLANE.height}`} aria-hidden="true" focusable="false">
-      <rect className="hkc-trip-map-land" width={PLANE.width} height={PLANE.height} />
-      <g className="hkc-trip-map-grid">{[100, 200, 300, 400].map(at => <line key={`x${at}`} x1={at} x2={at} y1={0} y2={PLANE.height} />)}{[37, 74].map(at => <line key={`y${at}`} x1={0} x2={PLANE.width} y1={at} y2={at} />)}</g>
-      <text className="hkc-trip-map-scale" x={PLANE.width - 10} y={PLANE.height - 8} textAnchor="end">Schematic · not to scale</text>
-      {places.map((place, index) => <g key={index} className="hkc-trip-pin" transform={`translate(${x(place.lon).toFixed(1)} ${y(place.lat).toFixed(1)})`}>
-        <path d="M0 10C-5 3-10 0-10-6a10 10 0 0 1 20 0C10 0 5 3 0 10z" />
-        <text y={-2} textAnchor="middle">{index + 1}</text>
-      </g>)}
-    </svg>
-    <ol className="hk-sr-only">{places.map((place, index) => <li key={index}>{place.label}</li>)}</ol>
-  </figure>;
-}
-
 function TripCard({ props, read }: { props: V6FamilyProps; read: TripRead }) {
   const { document, mode, host, media, renderBrand, onOpenDetails } = props;
   const next = nextDayIndex(read.sections, document.as_of);
@@ -312,7 +273,7 @@ function TripCard({ props, read }: { props: V6FamilyProps; read: TripRead }) {
           })} />
         </div>
         : day(read.sections[0], 0)}
-      {map ? <HarsoOutputMapView map={map} host={media} /> : <SchematicMap map={read.map} days={read.sections.length} />}
+      {map && <HarsoOutputMapView map={map} host={media} />}
     </div>
   </V6Frame>;
 }

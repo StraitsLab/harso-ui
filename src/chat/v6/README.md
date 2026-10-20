@@ -32,7 +32,7 @@ interface V6FamilyProps {
   mode: "inline" | "full";                // inline = card in a chat; full = the whole answer
   widgetSize?: "small" | "medium" | "large" | "extraLarge";   // set only for a card pinned to Home
   host: V6Host;
-  media: HarsoOutputMediaHost;            // { resolveArtifact?, mapTile? }; {} when the host gave none
+  media: HarsoOutputMediaHost;            // { resolveArtifact? }; {} when the host gave none
   renderBrand: V6RenderBrand;             // always callable; returns undefined when the host has no mark
   onOpenDetails?: () => void;             // when set, Details hands off to the host instead of opening inline
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { CaretLeft, CaretRight, Info, Play, WarningCircle } from "@phosphor-icons/react";
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
+import { CaretLeft, CaretRight, Play, WarningCircle } from "@phosphor-icons/react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
 import { Button, IconButton } from "../primitives";
 import { HarsoOutputNumberDelta } from "./output-card-charts";
 import type { V6TrackingCondition } from "./v6/types";
@@ -45,8 +45,8 @@ export interface HarsoOutputTrackingStatusBlock {
 export type HarsoOutputStatusBlock = HarsoOutputSubjectStatusBlock | HarsoOutputTrackingStatusBlock;
 /** The host's live word for a status block's subject (a paused routine), drawn instead of the emitted snapshot. */
 export interface HarsoOutputSubjectState { word: string; meaning?: HarsoOutputMeaning }
-export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string }
-export interface HarsoOutputMap { kind: "map"; places: HarsoOutputPlace[]; selected_place_id?: string }
+export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string; category?: string; photo?: HarsoOutputPhoto }
+export interface HarsoOutputMap { kind: "map"; places: HarsoOutputPlace[]; selected_place_id?: string; route?: { mode: "walk" | "drive"; path?: string; minutes?: number; meters?: number } }
 /** One photo: a row's thumbnail, or one photo of a gallery. */
 export interface HarsoOutputPhoto { artifact: string; alt: string }
 /** `images` (2..10) makes the image a gallery; `artifact`/`alt` stay photo 1 for readers that show one. */
@@ -55,14 +55,12 @@ export interface HarsoOutputVideo { kind: "video"; artifact: string; alt: string
 export type HarsoOutputMedia = HarsoOutputMap | HarsoOutputImage | HarsoOutputVideo;
 
 /**
- * What the host lends the card to draw media. The kit never fetches on its own: artifact URIs and map tiles come
- * from the host, and a control appears only when the host can act on it.
+ * Artifact URLs are resolved by the host. Maps fetch public OpenFreeMap vector tiles directly.
  */
 export interface HarsoOutputMediaHost {
   /** An `artifact:` URI to a URL the host serves (image, video, poster); undefined when it has none. */
   resolveArtifact?: (artifact: string) => string | undefined;
-  /** OpenStreetMap raster tile URL for zoom/x/y. Without it a map block falls back to text: pins on nothing is not a map. */
-  mapTile?: (z: number, x: number, y: number) => string;
+
 }
 
 type AnyBlock = { kind: string };
@@ -244,9 +242,8 @@ export function readMedia(block: AnyBlock, host: HarsoOutputMediaHost, canOpen =
     return one;
   }
   if (visual.kind === "map") {
-    if (!host.mapTile) return undefined;
     const places = Array.isArray(visual.places) ? visual.places : [];
-    const ok = places.length > 0 && places.every(place => place && typeof place.label === "string" && Number.isFinite(Number(place.lat)) && Number.isFinite(Number(place.lon)) && Math.abs(Number(place.lat)) <= 85);
+    const ok = places.length > 0 && places.every(place => place && typeof place.id === "string" && typeof place.label === "string" && place.lat !== "" && place.lon !== "" && Number.isFinite(Number(place.lat)) && Number.isFinite(Number(place.lon)) && Math.abs(Number(place.lat)) <= 85 && Math.abs(Number(place.lon)) <= 180 && (place.category === undefined || (typeof place.category === "string" && place.category.length <= 24)) && (place.photo === undefined || isPhoto(place.photo))) && (!visual.route || (places.length >= 2 && ["walk", "drive"].includes(visual.route.mode)));
     return ok ? visual : undefined;
   }
   return undefined;
@@ -296,21 +293,6 @@ function MediaFailed({ message, reason, onRetry, children }: { message: string; 
       </div>
     </div>
   </div>;
-}
-
-function useWidth(fallback: number) {
-  const node = useRef<HTMLElement>(null);
-  const [width, setWidth] = useState(fallback);
-  useLayoutEffect(() => {
-    const element = node.current;
-    if (!element) return;
-    const measure = () => { if (element.clientWidth > 0) setWidth(Math.round(element.clientWidth)); };
-    measure();
-    const observer = typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(measure);
-    observer?.observe(element);
-    return () => observer?.disconnect();
-  }, []);
-  return [node, width] as const;
 }
 
 /** Fixed aspect frame; a shimmer until the picture arrives; a failed state with a working Try again if it doesn't. */
@@ -525,155 +507,11 @@ export function HarsoOutputVideoView({ video, host, onOpen }: { video: HarsoOutp
 
 // ---- map ----
 
-const TILE = 256, PAD = 36, PIN_ROOM = 10, MAX_ZOOM = 15;
-const project = (lat: number, lon: number, zoom: number) => {
-  const size = TILE * 2 ** zoom, sin = Math.sin(lat * Math.PI / 180);
-  return { x: (lon + 180) / 360 * size, y: (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)) * size };
-};
+const InteractiveMap = lazy(() => import("./output-map"));
 
-/**
- * Longitudes moved into one run without the widest empty stretch of the globe inside it, so places either side of the
- * dateline (179.9 and -179.9) sit together rather than a world apart. Tiles wrap, so a longitude past 180 still draws.
- */
-function unwrap(lons: number[]) {
-  const sorted = [...lons].sort((a, b) => a - b);
-  // The empty stretch across the dateline, then each gap between neighbours; the widest one is left outside the run.
-  let gap = sorted[0] + 360 - sorted[sorted.length - 1], cut: number | undefined;
-  for (let index = 1; index < sorted.length; index++) {
-    if (sorted[index] - sorted[index - 1] > gap) { gap = sorted[index] - sorted[index - 1]; cut = sorted[index]; }
-  }
-  return cut === undefined ? lons : lons.map(lon => lon < cut ? lon + 360 : lon);
-}
-
-/**
- * The highest zoom at which every place fits inside the frame with room for its pin (down to the whole world).
- * `fits` is false when even the whole world can't hold them all inside this frame: the card then says so rather than
- * clip a place off the plane.
- */
-export function frameMap(places: HarsoOutputPlace[], width: number, height: number) {
-  const lats = places.slice(0, 12).map(place => Number(place.lat)), lons = unwrap(places.slice(0, 12).map(place => Number(place.lon)));
-  const at = (zoom: number) => lats.map((lat, index) => project(lat, lons[index], zoom));
-  const span = (xy: { x: number; y: number }[], axis: "x" | "y") => Math.max(...xy.map(p => p[axis])) - Math.min(...xy.map(p => p[axis]));
-  const within = (zoom: number, pad: number) => { const xy = at(zoom); return span(xy, "x") <= width - 2 * pad && span(xy, "y") <= height - 2 * pad; };
-  let zoom = MAX_ZOOM;
-  while (zoom > 0 && !within(zoom, PAD)) zoom--;
-  const fits = within(zoom, PAD) || within(zoom, PIN_ROOM);
-  const xy = at(zoom);
-  const cx = (Math.max(...xy.map(p => p.x)) + Math.min(...xy.map(p => p.x))) / 2, cy = (Math.max(...xy.map(p => p.y)) + Math.min(...xy.map(p => p.y))) / 2;
-  const left = cx - width / 2, top = cy - height / 2;
-  return { zoom, left, top, fits, pins: xy.map(p => ({ x: p.x - left, y: p.y - top })) };
-}
-
-const LABEL = 12;
-let measurer: CanvasRenderingContext2D | null | undefined;
-/** Capsule width for a pin label: the text measured in the kit font when a canvas exists, else an estimate, plus padding. */
-function labelWidth(text: string, strong: boolean) {
-  if (measurer === undefined) {
-    try { measurer = typeof document === "undefined" || /jsdom/i.test(navigator.userAgent) ? null : document.createElement("canvas").getContext("2d"); } catch { measurer = null; }
-  }
-  if (measurer) {
-    measurer.font = `${strong ? 500 : 400} ${LABEL}px "Instrument Sans Variable", sans-serif`;
-    return Math.ceil(measurer.measureText(text).width) + 16;
-  }
-  return Math.ceil(Array.from(text).reduce((width, char) => width + LABEL * (/[\u1100-\u115f\u2e80-\ua4cf\uac00-\ud7a3\uf900-\ufaff\uff00-\uff60]|\p{Extended_Pictographic}/u.test(char) ? 1 : .6), 0)) + 14;
-}
-
-/** A still map: OSM tiles when the host lends them, ≤12 pins, the pick larger and labelled first, attribution kept. */
+/** MapLibre and its styles are fetched only when a map block is shown. */
 export function HarsoOutputMapView({ map, host }: { map: HarsoOutputMap; host: HarsoOutputMediaHost }) {
-  const [node, width] = useWidth(480);
-  const loads = useLoads();
-  useSettleComplete(node, loads);
-  // Labels are measured in the web font: lay them out again once it has loaded.
-  const [, setFonts] = useState(0);
-  useEffect(() => {
-    let live = true;
-    globalThis.document?.fonts?.ready.then(() => { if (live) setFonts(value => value + 1); });
-    return () => { live = false; };
-  }, []);
-  // B0: 260 at the 480 pane; never under the 160 compact map, so a narrow pane still reads as a map.
-  const height = Math.max(160, Math.round(width * 13 / 24));
-  const places = map.places.slice(0, 12);
-  const frame = frameMap(places, width, height);
-  const selected = places.findIndex(place => place.id === map.selected_place_id);
-  const named = (place: HarsoOutputPlace, index: number) => `${place.label}${index === selected ? " (selected)" : ""}`;
-  // Places no single still map can hold at this size (far north and far south together): say so and list them.
-  if (!frame.fits) return <figure ref={node} className="hkc-output-map" aria-label="Map" data-state="unframed">
-    <p className="hkc-output-block-note"><Info size={14} weight="bold" aria-hidden="true" />Too far apart to show on one map</p>
-    <ul className="hkc-output-map-places">{places.map((place, index) => <li key={index}>{named(place, index)}</li>)}</ul>
-  </figure>;
-  const tiles: { key: string; src: string; x: number; y: number }[] = [];
-  {
-    const count = 2 ** frame.zoom;
-    for (let ty = Math.floor(frame.top / TILE); ty <= Math.floor((frame.top + height) / TILE); ty++) {
-      if (ty < 0 || ty >= count) continue;
-      for (let tx = Math.floor(frame.left / TILE); tx <= Math.floor((frame.left + width) / TILE); tx++) {
-        tiles.push({ key: `${tx}/${ty}`, src: host.mapTile!(frame.zoom, ((tx % count) + count) % count, ty), x: tx * TILE - frame.left, y: ty * TILE - frame.top });
-      }
-    }
-  }
-  // The plane is only as true as its tiles: loading until the first arrives (a resize that adds edge tiles never blanks
-  // the ones already drawn), a note as soon as any tile is known to have failed (even while siblings are still loading),
-  // and failed only once every tile has settled and none arrived.
-  const phases = tiles.map(tile => loads.phase(tile.src));
-  const failedTiles = phases.filter(phase => phase === "failed").length;
-  const pending = phases.includes("loading"), drawn = phases.includes("ready");
-  const phase = failedTiles && failedTiles === tiles.length ? "failed"
-    : failedTiles ? "partial"
-    : pending && !drawn ? "loading" : "ready";
-  if (phase === "failed") return <figure ref={node} className="hkc-output-map" aria-label="Map">
-    <MediaFailed message="Couldn’t load the map" reason={places.map(named).join(", ")} onRetry={loads.retry} />
-  </figure>;
-  // Labels: the pick first, then in order, while they fit inside the frame without touching.
-  const indexes = places.map((_, index) => index);
-  const order = selected >= 0 ? [selected, ...indexes.filter(index => index !== selected)] : indexes;
-  // Each label tries beside its pin (the side with more room first), then above, then below; a label that fits nowhere
-  // is left off the plane (the place is still pinned and listed for screen readers and in the rows).
-  type Box = { index: number; left: number; right: number; top: number; bottom: number };
-  const boxes: Box[] = [];
-  const pinBoxes = frame.pins.map((pin, index) => { const r = index === selected ? 9 : 7; return { left: pin.x - r, right: pin.x + r, top: pin.y - r, bottom: pin.y + r }; });
-  const inside = (box: Omit<Box, "index">) => box.left >= 4 && box.right <= width - 4 && box.top >= 4 && box.bottom <= height - 34;
-  const overlaps = (box: Omit<Box, "index">, other: Omit<Box, "index">) => box.right > other.left && box.left < other.right && box.bottom > other.top && box.top < other.bottom;
-  const clear = (box: Omit<Box, "index">, index: number) => inside(box)
-    && boxes.every(other => box.right + 4 <= other.left || box.left >= other.right + 4 || box.bottom + 2 <= other.top || box.top >= other.bottom + 2)
-    && pinBoxes.every((other, at) => at === index || !overlaps(box, other));
-  // Slid into the plane (inside the 4px margin, above the attribution): how the pick stays named near an edge.
-  const clamp = (box: Omit<Box, "index">) => {
-    const w = box.right - box.left, h = box.bottom - box.top;
-    const left = Math.max(4, Math.min(box.left, width - 4 - w)), top = Math.max(4, Math.min(box.top, height - 34 - h));
-    return { left, right: left + w, top, bottom: top + h };
-  };
-  for (const index of order) {
-    const pin = frame.pins[index], w = Math.min(labelWidth(places[index].label, index === selected), width - 24), gap = index === selected ? 11 : 9;
-    const right = { left: pin.x + gap, right: pin.x + gap + w, top: pin.y - 11, bottom: pin.y + 11 };
-    const left = { left: pin.x - gap - w, right: pin.x - gap, top: pin.y - 11, bottom: pin.y + 11 };
-    const above = { left: pin.x - w / 2, right: pin.x + w / 2, top: pin.y - gap - 22, bottom: pin.y - gap };
-    const below = { left: pin.x - w / 2, right: pin.x + w / 2, top: pin.y + gap, bottom: pin.y + gap + 22 };
-    const sides = pin.x > width * .7 ? [left, right, above, below] : [right, left, above, below];
-    // The pick is always named: clear of other pins if it can be, else over them (it is drawn on top), else slid into
-    // the plane, keeping off its own pin where any slid position allows.
-    const found = sides.find(box => clear(box, index)) ?? (index === selected
-      ? sides.find(inside) ?? sides.map(clamp).find(box => !overlaps(box, pinBoxes[index])) ?? clamp(above) : undefined);
-    if (found) boxes.push({ index, ...found });
-  }
-  const pinOrder = [...indexes].sort((a, b) => (a === selected ? 1 : 0) - (b === selected ? 1 : 0));
-  return <figure ref={node} className="hkc-output-map" aria-label="Map" data-state={phase} aria-busy={phase === "loading" || undefined}>
-    <div className="hkc-output-map-frame">
-    <div className="hkc-output-map-plane" style={{ height }} aria-hidden="true">
-      {tiles.map(tile => <img key={`${loads.key(tile.src)} @${tile.key}`} data-load={tile.src} className="hkc-output-map-tile" src={tile.src} alt="" draggable={false}
-        data-state={loads.phase(tile.src)} style={{ left: tile.x, top: tile.y }}
-        onLoad={() => loads.settle(tile.src, "ready")} onError={() => loads.settle(tile.src, "failed")} />)}
-      {pinOrder.map(index => <span key={index} className="hkc-output-map-pin" data-selected={index === selected || undefined}
-        style={{ left: frame.pins[index].x, top: frame.pins[index].y }} />)}
-      {boxes.map(box => <span key={box.index} className="hkc-output-map-label" data-selected={box.index === selected || undefined}
-        style={{ left: box.left, top: box.top, width: box.right - box.left }}>{places[box.index].label}</span>)}
-    </div>
-    <small className="hkc-output-map-attribution">© OpenStreetMap contributors</small>
-    </div>
-    {phase === "partial" && <p className="hkc-output-block-note"><Info size={14} weight="bold" aria-hidden="true" />Part of the map didn’t load</p>}
-    <ul className="hk-sr-only" aria-label="Places">
-      {places.map((place, index) => <li key={index}>{named(place, index)}</li>)}
-    </ul>
-  </figure>;
+  return <Suspense fallback={<HarsoOutputMediaSkeleton kind="map" />}><InteractiveMap map={map} host={host} /></Suspense>;
 }
 
 // ---- loading skeletons and Copy ----

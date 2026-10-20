@@ -9,13 +9,13 @@
 /* The open target is the title's button, set as plain title text; its box is stretched by ::after to the nearest
    positioned ancestor (the header, or the card), so the whole area opens while the markup stays one button. */
 .harso-kit .hkc-v6-open {
-  appearance: none; display: inline; max-width: 100%; margin: 0; padding: 0; border: 0; background: transparent;
+  appearance: none; display: inline-flex; align-items: baseline; gap: var(--hk-space-1); max-width: 100%; margin: 0; padding: 0; border: 0; background: transparent;
   font: inherit; color: inherit; text-align: start; cursor: pointer; border-radius: var(--hk-radius-control);
 }
 .harso-kit .hkc-v6-open::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 .harso-kit .hkc-v6-open:focus-visible { outline: none; }
 .harso-kit .hkc-v6-open:focus-visible::after { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
-.harso-kit .hkc-v6-open-glyph { display: inline-block; margin-inline-start: var(--hk-space-1); vertical-align: -1px; color: var(--hk-faint); }
+.harso-kit .hkc-v6-open-glyph { display: inline-block; flex: 0 0 auto; vertical-align: -1px; color: var(--hk-faint); }
 
 /* Everything else a person can press stays above the stretched target. */
 .harso-kit .hkc-v6-trailing { position: relative; z-index: 1; flex: 0 0 auto; display: flex; align-items: center; gap: var(--hk-space-2); }

@@ -14,7 +14,7 @@ afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.useRealTimers(); });
 const AS_OF = "2026-10-11T09:10Z";
 const art = (n: number) => `artifact:0192a3b4-5c6d-7e8f-9a0b-${String(n).padStart(12, "0")}`;
 const DIRECTIONS = "https://www.google.com/maps/dir/?api=1&destination=1.3113,103.7960&travelmode=driving";
-const media = { resolveArtifact: (artifact: string) => `https://photos.test/${artifact.slice(-4)}.jpg`, mapTile: (z: number, x: number, y: number) => `https://tiles.test/${z}/${x}/${y}.png` };
+const media = { resolveArtifact: (artifact: string) => `https://photos.test/${artifact.slice(-4)}.jpg` };
 
 const draw = (document: HarsoOutputDocument, props: Partial<HarsoOutputCardProps> = {}) =>
   render(<div className="harso-kit"><HarsoOutputCard document={document} families={placesFamilies} onViewAll={vi.fn()} {...props} /></div>);
@@ -373,40 +373,15 @@ test("V6 hero: the photo carries the day's date and title; without a photo the s
   expect(headings()).toEqual(["1. Higashiyama", "2. Arashiyama", "3. Fushimi Inari"]);
 });
 
-test("V6 schematic map: with no map tiles, numbered pins placed west to east and north to south, named for screen readers", () => {
-  const four = [...days, { heading: "Day 4 · Nishiki and Gion", date: "2026-10-17", bullets: ["10:00 Nishiki Market"] }];
-  const pinsAt = [{ id: "d1", label: "Higashiyama", lat: "34.9967", lon: "135.7850" }, { id: "d2", label: "Arashiyama", lat: "35.0094", lon: "135.6668" },
-    { id: "d3", label: "Fushimi Inari", lat: "34.9671", lon: "135.7727" }, { id: "d4", label: "Nishiki and Gion", lat: "35.0050", lon: "135.7650" }];
-  const doc = trip(four, { blocks: [{ kind: "visual", visual: { kind: "map", places: pinsAt } }, { kind: "text", sections: four }] });
-  draw(doc, { media: { resolveArtifact: media.resolveArtifact } });
-  const map = screen.getByRole("figure", { name: "Map of the trip, not to scale" });
-  expect(map.textContent).toContain("Where each day is · pin number = day");
-  expect(map.textContent).toContain("Schematic · not to scale");
-  const pins = [...map.querySelectorAll(".hkc-trip-pin")];
-  expect(pins.map(pin => pin.textContent)).toEqual(["1", "2", "3", "4"]);
-  const xy = pins.map(pin => /translate\(([\d.]+) ([\d.]+)\)/.exec(pin.getAttribute("transform")!)!.slice(1).map(Number));
-  // Arashiyama (2) is furthest west, Higashiyama (1) furthest east; Fushimi Inari (3) is furthest south.
-  expect(xy[1][0]).toBeLessThan(xy[3][0]);
-  expect(xy[3][0]).toBeLessThan(xy[2][0]);
-  expect(xy[2][0]).toBeLessThan(xy[0][0]);
-  expect(Math.max(...xy.map(([, y]) => y))).toBe(xy[2][1]);
-  expect([...map.querySelectorAll("ol li")].map(li => li.textContent)).toEqual(pinsAt.map(place => place.label));
-  expect(map.querySelector("img")).toBeNull();
-  cleanup();
-  // With tiles lent, the real map is drawn instead; a place without coordinates draws no map at all.
-  draw(doc, { media });
+test("trip maps no longer require tiles from the host, and unreadable coordinates draw no map", async () => {
+  draw(trip(), { media: { resolveArtifact: media.resolveArtifact } });
+  expect(await screen.findByRole("figure", { name: "Map" })).toBeTruthy();
   expect(screen.queryByRole("figure", { name: "Map of the trip, not to scale" })).toBeNull();
-  expect(screen.getByRole("figure", { name: "Map" })).toBeTruthy();
   cleanup();
-  const broken = trip(four, { blocks: [{ kind: "visual", visual: { kind: "map", places: [{ id: "d1", label: "Higashiyama", lat: "north", lon: "135.7850" }] } }, { kind: "text", sections: four }] });
+  const broken = trip(days, { blocks: [{ kind: "visual", visual: { kind: "map", places: [{ id: "d1", label: "Higashiyama", lat: "north", lon: "135.7850" }] } }, { kind: "text", sections: days }] });
   draw(broken, { media: { resolveArtifact: media.resolveArtifact } });
   expect(screen.queryByRole("figure")).toBeNull();
-  expect(headings()).toHaveLength(4);
-});
-
-test("the schematic legend says pin = day only when there is one place per day", () => {
-  draw(trip(), { media: { resolveArtifact: media.resolveArtifact } });
-  expect(screen.getByRole("figure", { name: "Map of the trip, not to scale" }).textContent).toContain("Where the places are");
+  expect(headings()).toHaveLength(3);
 });
 
 test("trip widgets: medium is the next day with its photo and two stops; large lists the days; small is not offered", () => {

@@ -513,8 +513,7 @@ const tile = (z: number, x: number, y: number) => {
 // transport failure and recovery are exercised, not a host-injected state. `?generation=` changes every tile URL.
 const mediaHost = (): HarsoOutputMediaHost => ({
   resolveArtifact: artifact => query.has("imgfail") ? "/preview/missing-image.png" : query.has("imgslow") ? "/__never__/slow.png"
-    : query.has("net") ? `/__media__/${artifact.slice(9)}` : ART[artifact.slice(9)],
-  mapTile: query.has("net") ? (z, x, y) => `/__tiles__/${query.get("generation") ?? 0}/${z}/${x}/${y}.svg` : tile
+    : query.has("net") ? `/__media__/${artifact.slice(9)}` : ART[artifact.slice(9)]
 });
 // Per-block state for B0 state crops: ?state=partial etc. The B0 master copy for each kind (data.js).
 const STATE_COPY: Record<string, Record<string, Omit<HarsoOutputBlockState, "state">>> = {

@@ -1,0 +1,42 @@
+/* Interactive map uses the kit's existing card rhythm and controls. */
+.harso-kit .hkc-output-map { display: flex; flex-direction: column; gap: 10px; margin: 0; min-width: 0; }
+.harso-kit .hkc-map-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: var(--hk-text-chrome); color: var(--hk-secondary); }
+.harso-kit .hkc-map-toolbar select { min-width: 0; max-width: 60%; min-height: 44px; padding: 0 10px; border: 0; border-radius: var(--hk-radius-row); background: var(--hk-field-tint); color: var(--hk-ink); font: inherit; font-size: 1rem; }
+.harso-kit .hkc-map-surface { position: relative; min-width: 0; overflow: hidden; border-radius: var(--hk-radius-card); background: var(--hk-field-tint); }
+.harso-kit .hkc-output-map-plane { height: clamp(360px, 55vw, 480px); width: 100%; position: relative; }
+.harso-kit .hkc-map-loading, .harso-kit .hkc-map-failure { display: grid; align-content: center; justify-items: center; min-height: 280px; padding: 24px; gap: 12px; text-align: center; color: var(--hk-secondary); font-size: var(--hk-text-body); line-height: 1.5; }
+.harso-kit .hkc-map-loading { position: absolute; inset: 0; background: var(--hk-field-tint); }
+.harso-kit[data-mode="dark"] .hkc-map-loading { color: var(--hk-ink); }
+.harso-kit .hkc-map-recenter { position: absolute; top: 10px; left: 10px; background: var(--hk-surface); box-shadow: var(--hk-shadow); }
+.harso-kit .hkc-map-label { position: absolute; z-index: 1; pointer-events: none; white-space: nowrap; background: var(--hk-surface); color: var(--hk-ink); padding: 2px 5px; border-radius: 4px; font: 500 var(--hk-text-meta)/1.4 var(--hk-font); }
+.harso-kit .hkc-map-pin { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 3px solid var(--hk-surface); border-radius: 50%; background: var(--pin-color); color: white; box-shadow: 0 2px 6px #0004; font: 600 0.8125rem/1 var(--hk-font); cursor: pointer; }
+.harso-kit .hkc-map-pin::after { content: ""; position: absolute; inset: -7px; border-radius: 50%; }
+.harso-kit .hkc-map-pin[aria-pressed="true"] { outline: 3px solid var(--hk-ink); outline-offset: 2px; z-index: 2; width: 38px; height: 38px; }
+.harso-kit :is(.hkc-map-pin, .hkc-map-toolbar select, .hkc-output-map-places button):focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 3px; }
+.harso-kit .hkc-output-map-places { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 4px 12px; margin: 0; padding: 0; }
+.harso-kit .hkc-output-map-places button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 8px; min-height: 44px; text-align: start; border: 0; border-radius: var(--hk-radius-row); color: var(--hk-ink); background: transparent; cursor: pointer; font: inherit; font-size: var(--hk-text-body); line-height: 1.5; }
+.harso-kit .hkc-output-map-places button:hover, .harso-kit .hkc-output-map-places button[aria-pressed="true"] { background: var(--hk-field-tint); }
+.harso-kit .hkc-output-map-places button > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.harso-kit .hkc-output-map-places b { font-weight: 500; }
+.harso-kit .hkc-output-map-places small { display: block; font-size: var(--hk-text-meta); color: var(--hk-secondary); }
+.harso-kit .hkc-map-order { display: grid; place-items: center; flex: 0 0 26px; height: 26px; background: var(--hk-ink); color: var(--hk-surface); border-radius: 50%; font-size: var(--hk-text-meta); font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-map-note { color: var(--hk-secondary); font-size: var(--hk-text-chrome); line-height: 1.5; font-variant-numeric: tabular-nums; }
+.harso-kit .hkc-map-note span { display: block; }
+.harso-kit .hkc-map-dialog { width: min(1100px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 20px; margin: auto; border: 0; border-radius: var(--hk-radius-card); background: var(--hk-surface); color: var(--hk-ink); overflow-y: auto; overscroll-behavior: contain; box-shadow: var(--hk-shadow-float); }
+.harso-kit .hkc-map-dialog::backdrop { background: #0008; }
+.harso-kit .hkc-map-dialog header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.harso-kit .hkc-map-dialog h2 { font-size: var(--hk-text-body); font-weight: 600; }
+.harso-kit .hkc-map-dialog .hkc-output-map-plane { height: min(65dvh, 640px); }
+.harso-kit .hkc-map-dialog .hkc-output-map-places { margin-top: 12px; }
+.harso-kit .maplibregl-ctrl-attrib { font: 400 0.6875rem/1.5 var(--hk-font); color: var(--hk-secondary); background: var(--hk-surface); }
+.harso-kit .maplibregl-ctrl-attrib a { color: inherit; }
+.harso-kit .maplibregl-ctrl-attrib-button { background-color: var(--hk-surface); }
+.harso-kit[data-mode="dark"] .maplibregl-ctrl-attrib-button { filter: invert(1); background-color: #e5e5e5; }
+.harso-kit .maplibregl-ctrl-group { background: var(--hk-surface); color: var(--hk-ink); }
+.harso-kit .maplibregl-ctrl-group button { width: 44px; height: 44px; color: inherit; }
+.harso-kit .maplibregl-ctrl-group button:hover { background: var(--hk-field-tint); }
+.harso-kit[data-mode="dark"] .maplibregl-ctrl-icon { filter: invert(1); }
+.harso-kit .hkc-map-place-icon { width: 44px; height: 44px; flex: 0 0 44px; display: grid; place-items: center; background: var(--hk-field-tint); color: var(--hk-secondary); border-radius: var(--hk-radius-row); }
+@media (forced-colors: active) { .harso-kit .hkc-map-pin { background: CanvasText; color: Canvas; forced-color-adjust: none; } }
+.harso-kit .maplibregl-ctrl button:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: -3px; }
+@media (max-width: 440px) { .harso-kit .hkc-map-dialog { padding: 12px; } }
