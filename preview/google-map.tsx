@@ -16,9 +16,10 @@ const london = { kind: "map" as const, places: [
   { id: "a", label: "British Museum", lat: "51.5194133", lon: "-0.1269566", category: "Museum" },
   { id: "b", label: "National Gallery", lat: "51.508929", lon: "-0.128299", category: "Art gallery" },
   { id: "c", label: "Tate Modern", lat: "51.5075953", lon: "-0.0993564", category: "Art gallery" }] };
+const onOpenUrl = (url: string) => window.open(url, "_blank", "noopener,noreferrer");
 const dark = q.get("mode") === "dark";
 createRoot(document.getElementById("root")!).render(
   <KitProvider appearance={dark ? "dark" : "light"} style={{ padding: 16, width: Number(q.get("width") ?? 560), boxSizing: "border-box", background: "var(--hk-canvas)", display: "grid", gap: 24 }}>
-    <section className="hkc-output-card"><h2>Greenwich walk</h2><InteractiveMap map={greenwich} host={{ googleMaps: google }} /></section>
-    <section className="hkc-output-card"><h2>London galleries</h2><InteractiveMap map={london} host={{ googleMaps: google }} /></section>
+    <section className="hkc-output-card"><h2>Greenwich walk</h2><InteractiveMap map={greenwich} host={{ googleMaps: google }} onOpenUrl={onOpenUrl} /></section>
+    <section className="hkc-output-card"><h2>London galleries</h2><InteractiveMap map={london} host={{ googleMaps: google }} onOpenUrl={onOpenUrl} /></section>
   </KitProvider>);

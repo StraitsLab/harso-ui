@@ -5,7 +5,8 @@ import { useId, type ReactNode } from "react";
 import { Button } from "../../primitives";
 import { Tabs } from "../../navigation";
 import { HarsoOutputCardMeta, readAction, type HarsoOutputActionBlock, type HarsoOutputDocument, type HarsoOutputRow, type HarsoOutputRowsBlock, type HarsoOutputTextBlock, type HarsoOutputTextSection } from "../output-card";
-import { HarsoOutputMapView, HarsoOutputThumb, isPhoto, readMedia, type HarsoOutputMap, type HarsoOutputMediaHost } from "../output-card-media";
+import { HarsoOutputMapView, HarsoOutputThumb, isPhoto, readMedia, type HarsoOutputMap, type HarsoOutputPlace, type HarsoOutputMediaHost } from "../output-card-media";
+import { googleMapsPlaceUrl } from "../output-map-utils";
 import { V6Brand, V6Frame } from "./frame";
 import type { V6Family, V6FamilyProps, V6Host, V6RenderBrand, V6Registry, V6Template, WidgetSize } from "./types";
 import "./places.css";
@@ -131,12 +132,14 @@ function Stars({ rating }: { rating: number }) {
   return <span className="hkc-stars" aria-hidden="true"><span className="hkc-stars-back">{row}</span><span className="hkc-stars-fill" style={{ width: `${rating / 5 * 100}%` }}>{row}</span></span>;
 }
 
-function PlaceRow({ row, selected, host, media, renderBrand }: { row: HarsoOutputRow; selected: boolean; host: V6Host; media: HarsoOutputMediaHost; renderBrand: V6RenderBrand }) {
+function PlaceRow({ row, place, selected, host, media, renderBrand }: { row: HarsoOutputRow; place?: HarsoOutputPlace; selected: boolean; host: V6Host; media: HarsoOutputMediaHost; renderBrand: V6RenderBrand }) {
   const name = useId();
   const rating = ratingOf(row.rating);
   const count = Number.isInteger(row.review_count) && row.review_count! >= 0 ? row.review_count : undefined;
   const reviews = count === undefined ? undefined : `${count} ${count === 1 ? "review" : "reviews"}`;
-  const open = openOf(row), travel = travelOf(row), directions = readAction(row.action, host);
+  const open = openOf(row), travel = travelOf(row);
+  const directions = readAction(media.googleMaps && place && row.action?.kind === "open_url"
+    ? { ...row.action, url: googleMapsPlaceUrl(place) } : row.action, host);
   const where = [row.secondary, row.distance].filter(Boolean).join(" · ");
   const photo = isPhoto(row.thumbnail) && media.resolveArtifact;
   return <li className="hkc-place" aria-current={selected || undefined}>
@@ -174,9 +177,9 @@ function PlacesCard({ props, read }: { props: V6FamilyProps; read: PlacesRead })
   const loose = map ? [] : read.places.filter(place => !joined.has(place.id));
   return <V6Frame document={document} mode={mode} host={host} onOpenDetails={onOpenDetails} renderBrand={renderBrand} trailing={trailingOf(read.action, host)}>
     <div className="hkc-places">
-      {map && <HarsoOutputMapView map={map} host={media} listed />}
+      {map && <HarsoOutputMapView map={map} host={media} onOpenUrl={host.onOpenUrl} listed />}
       <ul className="hkc-places-list" aria-label="Places">
-        {shown.map((row, index) => <PlaceRow key={row.id ?? index} row={row} selected={!!row.id && row.id === read.selected} host={host} media={media} renderBrand={renderBrand} />)}
+        {shown.map((row, index) => <PlaceRow key={row.id ?? index} row={row} place={map?.places.find(place => place.id === row.id)} selected={!!row.id && row.id === read.selected} host={host} media={media} renderBrand={renderBrand} />)}
       </ul>
       {loose.length > 0 && <p className="hkc-places-loose">Also: {loose.map(place => place.label).join(", ")}</p>}
       {mode === "inline" && read.total > shown.length && <Button variant="quiet" size="small" className="hkc-places-more" onClick={host.onViewAll}>View all {read.total}</Button>}
@@ -274,7 +277,7 @@ function TripCard({ props, read }: { props: V6FamilyProps; read: TripRead }) {
           })} />
         </div>
         : day(read.sections[0], 0)}
-      {map && <HarsoOutputMapView map={map} host={media} />}
+      {map && <HarsoOutputMapView map={map} host={media} onOpenUrl={host.onOpenUrl} />}
     </div>
   </V6Frame>;
 }

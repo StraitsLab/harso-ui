@@ -1,7 +1,8 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
 import InteractiveMap from "./output-map";
-import type { HarsoOutputMap } from "./output-card-media";
+import { readMedia, type HarsoOutputMap } from "./output-card-media";
+import { HarsoOutputCard, type HarsoOutputDocument } from "./output-card";
 
 // The Google surface talks to the Maps JavaScript API only through the official loader; fake it here.
 const g = vi.hoisted(() => ({ options: [] as any[], maps: [] as any[], markers: [] as any[], lines: [] as any[], fail: false, listeners: {} as Record<string, () => void> }));
@@ -48,6 +49,55 @@ test("host googleMaps draws one Google vector map with numbered pins, a street r
   fireEvent.click(pins[1]);
   await waitFor(() => expect(pins[1]).toHaveAttribute("aria-pressed", "true"));
   expect(pins[0]).toHaveAttribute("aria-pressed", "false");
+});
+
+test("selected place opens its encoded Google identity, then coordinates after list or pin selection", async () => {
+  const onOpenUrl = vi.fn();
+  const places = [{ ...map.places[0], label: "Royal & Café / Greenwich", place_id: "ChIJ_test-123" }, map.places[1]];
+  render(<InteractiveMap map={{ ...map, places }} host={host} onOpenUrl={onOpenUrl} />);
+  fireEvent.click(screen.getByRole("button", { name: "Open in Google Maps" }));
+  expect(onOpenUrl).toHaveBeenLastCalledWith("https://www.google.com/maps/search/?api=1&query=Royal%20%26%20Caf%C3%A9%20%2F%20Greenwich&query_place_id=ChIJ_test-123");
+  fireEvent.click(within(screen.getByRole("list", { name: "Places" })).getByRole("button", { name: /Cutty Sark/ }));
+  fireEvent.click(screen.getByRole("button", { name: "Open in Google Maps" }));
+  expect(onOpenUrl).toHaveBeenLastCalledWith("https://www.google.com/maps/search/?api=1&query=51.4828646,-0.0095917");
+  await waitFor(() => expect(g.markers).toHaveLength(2));
+  fireEvent.click(g.markers[0].opts.content.querySelector("button"));
+  fireEvent.click(screen.getByRole("button", { name: "Open in Google Maps" }));
+  expect(onOpenUrl).toHaveBeenCalledTimes(3);
+  expect(onOpenUrl.mock.calls[2][0]).toContain("query_place_id=ChIJ_test-123");
+});
+
+test("Google open is hidden without a callback; open-provider maps keep their old selection-only list", async () => {
+  const { rerender } = render(<InteractiveMap map={map} host={host} />);
+  expect(screen.queryByRole("button", { name: "Open in Google Maps" })).toBeNull();
+  rerender(<InteractiveMap map={map} host={{}} onOpenUrl={vi.fn()} />);
+  expect(screen.queryByRole("button", { name: "Open in Google Maps" })).toBeNull();
+});
+
+test.each([undefined, "ChIJ_test-123", "x".repeat(512)])("map reader keeps a valid optional place_id (%s)", place_id => {
+  const visual = { ...map, places: [{ ...map.places[0], place_id }, map.places[1]] };
+  expect(readMedia({ kind: "visual", visual } as any, host)).toBe(visual);
+});
+test.each(["", "x".repeat(513), "bad&query=other", 123])("map reader rejects malformed place_id (%s)", place_id => {
+  expect(readMedia({ kind: "visual", visual: { ...map, places: [{ ...map.places[0], place_id }, map.places[1]] } } as any, host)).toBeUndefined();
+});
+
+test.each([undefined, "trip-itinerary", "places-nearby"])("card %s forwards its URL callback to the map, including expanded view", async template => {
+  const onOpenUrl = vi.fn();
+  const doc: HarsoOutputDocument = { template, header: { title: "Places" }, blocks: [
+    { kind: "visual", visual: map },
+    ...(template === "trip-itinerary" ? [{ kind: "text" as const, sections: [{ heading: "Greenwich", bullets: ["Royal Observatory", "Cutty Sark"] }] }] : []),
+    ...(template === "places-nearby" ? [{ kind: "rows" as const, items: [{ id: "a", label: "Royal Observatory" }] }] : [])
+  ], fallback_text: "Fallback" };
+  render(<HarsoOutputCard document={doc} onViewAll={() => {}} onOpenUrl={onOpenUrl} media={host} />);
+  if (template) expect(document.querySelector(template === "trip-itinerary" ? ".hkc-trip" : ".hkc-places")).not.toBeNull();
+  fireEvent.click(await screen.findByRole("button", { name: "Open in Google Maps" }));
+  expect(onOpenUrl).toHaveBeenCalledExactlyOnceWith("https://www.google.com/maps/search/?api=1&query=51.476853,-0.0005002");
+  HTMLDialogElement.prototype.showModal = function () { this.setAttribute("open", ""); };
+  fireEvent.click(screen.getByRole("button", { name: "Expand map" }));
+  const dialog = screen.getByRole("dialog", { name: "Expanded map" });
+  fireEvent.click(within(dialog).getByRole("button", { name: "Open in Google Maps" }));
+  expect(onOpenUrl).toHaveBeenCalledTimes(2);
 });
 
 test("without googleMaps the open map is used; a failed Google load offers retry and keeps the list", async () => {

@@ -43,6 +43,18 @@ const nearby = (rows: HarsoOutputRow[] = clinics, extra: Partial<HarsoOutputDocu
 });
 const rowOf = (name: string) => within(document.querySelector<HTMLElement>(".hkc-places-list")!).getByText(name).closest("li")!;
 
+test("Google directions join by id and use place identity or coordinates, not row titles or old links", () => {
+  const onOpenUrl = vi.fn();
+  const document = nearby();
+  const visual = (document.blocks[0] as any).visual;
+  visual.places = [{ ...places[0], label: "Raffles & Clinic", place_id: "ChIJ_test-123" }, ...places.slice(1)];
+  draw(document, { onOpenUrl, media: { googleMaps: { key: "test-key", mapId: "map-id" } } });
+  fireEvent.click(within(rowOf("Raffles Medical")).getByRole("button", { name: "Directions" }));
+  expect(onOpenUrl).toHaveBeenLastCalledWith("https://www.google.com/maps/search/?api=1&query=Raffles%20%26%20Clinic&query_place_id=ChIJ_test-123");
+  fireEvent.click(within(rowOf("Fullerton Health")).getByRole("button", { name: "Directions" }));
+  expect(onOpenUrl).toHaveBeenLastCalledWith("https://www.google.com/maps/search/?api=1&query=1.3203,103.8436");
+});
+
 test("the row for the selected place is found by id, even when the labels on the map and in the rows differ", () => {
   draw(nearby(clinics, {}, "c2"), { media });
   expect(rowOf("Fullerton Health").getAttribute("aria-current")).toBe("true");
