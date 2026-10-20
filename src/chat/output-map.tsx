@@ -23,10 +23,19 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
   const instance = useRef<LibreMap | null>(null);
   const [state, setState] = useState("loading");
   const [attempt, setAttempt] = useState(0);
+  // Start WebGL only near the screen: browsers cap live contexts (~16), and a long chat can hold many map cards.
+  const [near, setNear] = useState(typeof IntersectionObserver === "undefined");
+  useEffect(() => {
+    if (near || !root.current) return;
+    const watch = new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting)) setNear(true); }, { rootMargin: "300px" });
+    watch.observe(root.current);
+    return () => watch.disconnect();
+  }, [near]);
   const latest = useRef({ selected, onSelect });
   latest.current = { selected, onSelect };
   const signature = JSON.stringify(map);
   useEffect(() => {
+    if (!near) return;
     let active = true, failed = false, loaded = false, basemapReady = false, dispose = () => {};
     setState("loading");
     const timer = window.setTimeout(() => { if (active) setState("failed"); }, 15000);
@@ -181,7 +190,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       const prior = dispose; dispose = () => { prior(); resize.disconnect(); if (button) button.onclick = null; labels.forEach(l => l.remove()); markers.forEach(m => m.remove()); view.remove(); instance.current = null; };
     }).catch(() => { if (active) { window.clearTimeout(timer); setState("failed"); } });
     return () => { active = false; window.clearTimeout(timer); dispose(); };
-  }, [signature, group, dark, attempt]);
+  }, [signature, group, dark, attempt, near]);
   useEffect(() => { instance.current?.triggerRepaint(); }, [selected]);
   return <div ref={root} className="hkc-map-surface" data-state={state} aria-busy={state === "loading" || undefined}>
     <div ref={canvas} className="hkc-output-map-plane" role="region" aria-label="Interactive map" hidden={state === "failed"} />
