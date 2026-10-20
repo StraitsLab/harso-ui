@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import type { GeoJSONSource, Map as LibreMap } from "maplibre-gl";
 import { Button } from "../primitives";
 import { MapPin, Bank, Storefront, Columns, FlowerLotus } from "@phosphor-icons/react";
@@ -15,6 +15,7 @@ import "./output-map.css";
 
 const COLORS = ["#287561", "#815eb0", "#ad5433", "#336d9f"];
 const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const GoogleSurface = lazy(() => import("./output-map-google"));
 
 const glyph = (category?: string) => category === "Temple" ? Bank : category === "Shrine" ? FlowerLotus : category === "Market" ? Storefront : category === "Castle" ? Columns : MapPin;
 
@@ -217,7 +218,11 @@ export default function InteractiveMap({ map, host, listed = false }: { map: Har
   useEffect(() => { if (expanded) dialog.current?.showModal(); else if (dialog.current?.open) dialog.current.close(); }, [expanded]);
   const categories = [...new Set(map.places.map(p => p.category).filter((c): c is string => !!c))];
   const visible = map.places.slice(0, 12).filter(p => group === "all" || p.category === group);
-  const surface = <MapSurface map={map} selected={selected} group={group} onSelect={setSelected} dark={dark} />;
+  const surface = host.googleMaps
+    ? <Suspense fallback={<div className="hkc-map-surface" data-state="loading"><div className="hkc-map-loading" role="status">Loading map…</div></div>}>
+        <GoogleSurface map={map} selected={selected} group={group} onSelect={setSelected} dark={dark} google={host.googleMaps} colors={COLORS} glyph={glyph} />
+      </Suspense>
+    : <MapSurface map={map} selected={selected} group={group} onSelect={setSelected} dark={dark} />;
   const route = map.route;
   const street = route?.path && decodePolyline(route.path).length > 1;
   const list = <ul className="hkc-output-map-places" aria-label="Places">{visible.map(place => <li key={place.id}>

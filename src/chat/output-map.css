@@ -40,3 +40,8 @@
 @media (forced-colors: active) { .harso-kit .hkc-map-pin { background: CanvasText; color: Canvas; forced-color-adjust: none; } }
 .harso-kit .maplibregl-ctrl button:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: -3px; }
 @media (max-width: 440px) { .harso-kit .hkc-map-dialog { padding: 12px; } }
+/* Google map: the label rides inside the advanced marker, below its pin. */
+.harso-kit .hkc-map-marker { position: relative; display: grid; justify-items: center; }
+.harso-kit .hkc-map-label-google { position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%); box-shadow: 0 1px 3px #0003; }
+.harso-kit .hkc-map-label-google[hidden] { display: none; }
+.harso-kit [data-provider="google"] .gm-style :is(button, a):focus-visible { outline: 2px solid var(--hk-accent); outline-offset: -3px; }

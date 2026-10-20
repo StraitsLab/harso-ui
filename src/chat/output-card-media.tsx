@@ -55,13 +55,16 @@ export interface HarsoOutputVideo { kind: "video"; artifact: string; alt: string
 export type HarsoOutputMedia = HarsoOutputMap | HarsoOutputImage | HarsoOutputVideo;
 
 /**
- * Artifact URLs are resolved by the host. Maps fetch public OpenFreeMap vector tiles directly.
+ * Artifact URLs are resolved by the host. Maps fetch public OpenFreeMap vector tiles directly, or draw a Google map
+ * when the host passes `googleMaps` (required whenever the server serves Google place data).
  */
 export interface HarsoOutputMediaHost {
   /** An `artifact:` URI to a URL the host serves (image, video, poster); undefined when it has none. */
   resolveArtifact?: (artifact: string) => string | undefined;
-
+  /** Google Maps JavaScript API browser key and vector Map ID; omit to use the open map. */
+  googleMaps?: HarsoOutputGoogleMaps;
 }
+export interface HarsoOutputGoogleMaps { key: string; mapId: string }
 
 type AnyBlock = { kind: string };
 type Row = { label: string; secondary?: string; trailing?: string; mark?: string; status?: string; thumbnail?: unknown };
