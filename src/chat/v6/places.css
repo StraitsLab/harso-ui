@@ -140,3 +140,4 @@
   .harso-kit .hkc-place-directions { outline: 1px solid ButtonText; }
   .harso-kit .hkc-v6-widget-open:focus-visible::after { outline-color: Highlight; }
 }
+.harso-kit .hkc-place > .hkc-output-thumb { flex: none; align-self: flex-start; width: 56px; height: 56px; border-radius: var(--hk-radius-row); }

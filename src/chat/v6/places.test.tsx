@@ -147,6 +147,18 @@ test("a map the host cannot draw, or whose tiles fail, leaves every place in the
   for (const name of ["Raffles Medical", "Fullerton Health", "Parkway Shenton"]) expect(screen.getByText(name)).toBeTruthy();
 });
 
+test("a row photo replaces its brand mark, and stays out when the host cannot resolve photos", () => {
+  const rows = clinics.map((row, index) => ({ ...row, thumbnail: { artifact: art(index + 1), alt: `${row.label} entrance` } }));
+  draw(nearby(rows), { media });
+  expect(document.querySelector(".hkc-places")).not.toBeNull();
+  expect(within(rowOf("Raffles Medical")).getByRole("img", { name: "Raffles Medical entrance" })).toBeTruthy();
+  expect(rowOf("Raffles Medical").querySelector(".hkc-v6-brand")).toBeNull();
+  cleanup();
+  draw(nearby(rows), { media: {} });
+  expect(document.querySelector(".hkc-places")).not.toBeNull();
+  expect(rowOf("Raffles Medical").querySelector(".hkc-output-thumb")).toBeNull();
+});
+
 test("a document the family cannot draw whole goes to the generic card, which keeps every block", () => {
   const doc = nearby();
   doc.blocks.push({ kind: "numbers", items: [{ value: "3", label: "Clinics" }] });

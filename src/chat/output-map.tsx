@@ -202,7 +202,8 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
   </div>;
 }
 
-export default function InteractiveMap({ map, host }: { map: HarsoOutputMap; host: HarsoOutputMediaHost }) {
+/** `listed`: the card already lists these places in its own rows, so the map shows no second list inline. */
+export default function InteractiveMap({ map, host, listed = false }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean }) {
   const root = useRef<HTMLElement>(null), dialog = useRef<HTMLDialogElement>(null), expand = useRef<HTMLButtonElement>(null);
   const [selected, setSelected] = useState(map.selected_place_id);
   const [group, setGroup] = useState("all"), [expanded, setExpanded] = useState(false), [dark, setDark] = useState(false);
@@ -233,7 +234,7 @@ export default function InteractiveMap({ map, host }: { map: HarsoOutputMap; hos
     </div>
     {!expanded && surface}
     {route && <figcaption className="hkc-map-note">{route.mode === "walk" ? "Walking route" : "Driving route"}{route.minutes !== undefined && ` · ${route.minutes} min`}{route.meters !== undefined && ` · ${new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(route.meters / 1000)} km`}{!street && <span>Straight lines, not streets</span>}</figcaption>}
-    {!expanded && list}
+    {!expanded && !listed && list}
     <dialog ref={dialog} className="hkc-map-dialog" aria-label="Expanded map" onCancel={() => setExpanded(false)} onClose={() => { setExpanded(false); expand.current?.focus(); }}>
       {expanded && <><header><h2>Explore places</h2><Button variant="quiet" onClick={() => setExpanded(false)}>Collapse map</Button></header>{surface}{list}</>}
     </dialog>
