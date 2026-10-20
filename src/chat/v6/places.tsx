@@ -106,7 +106,7 @@ function readPlaces(document: HarsoOutputDocument): PlacesRead | undefined {
     else return undefined;
   }
   const items = rows ? rowsOf(rows) : [];
-  if (!rows || !items.length || items.some(row => row.group || row.thumbnail || row.status || row.status_label)) return undefined;
+  if (!rows || !items.length || items.some(row => row.group || row.status || row.status_label)) return undefined;
   return { rows: items, total: Math.max(rows.total_count ?? 0, items.length), map, action, places: Array.isArray(map?.places) ? map!.places : [], selected: map?.selected_place_id };
 }
 
@@ -131,15 +131,16 @@ function Stars({ rating }: { rating: number }) {
   return <span className="hkc-stars" aria-hidden="true"><span className="hkc-stars-back">{row}</span><span className="hkc-stars-fill" style={{ width: `${rating / 5 * 100}%` }}>{row}</span></span>;
 }
 
-function PlaceRow({ row, selected, host, renderBrand }: { row: HarsoOutputRow; selected: boolean; host: V6Host; renderBrand: V6RenderBrand }) {
+function PlaceRow({ row, selected, host, media, renderBrand }: { row: HarsoOutputRow; selected: boolean; host: V6Host; media: HarsoOutputMediaHost; renderBrand: V6RenderBrand }) {
   const name = useId();
   const rating = ratingOf(row.rating);
   const count = Number.isInteger(row.review_count) && row.review_count! >= 0 ? row.review_count : undefined;
   const reviews = count === undefined ? undefined : `${count} ${count === 1 ? "review" : "reviews"}`;
   const open = openOf(row), travel = travelOf(row), directions = readAction(row.action, host);
   const where = [row.secondary, row.distance].filter(Boolean).join(" · ");
+  const photo = isPhoto(row.thumbnail) && media.resolveArtifact;
   return <li className="hkc-place" aria-current={selected || undefined}>
-    {row.brand && <V6Brand domain={row.brand} label={row.label} renderBrand={renderBrand} />}
+    {photo ? <HarsoOutputThumb photo={row.thumbnail!} host={media} /> : row.brand && <V6Brand domain={row.brand} label={row.label} renderBrand={renderBrand} />}
     <div className="hkc-place-body">
       <div className="hkc-place-head">
         <b id={name} className="hkc-place-name">{row.label}</b>
@@ -173,9 +174,9 @@ function PlacesCard({ props, read }: { props: V6FamilyProps; read: PlacesRead })
   const loose = map ? [] : read.places.filter(place => !joined.has(place.id));
   return <V6Frame document={document} mode={mode} host={host} onOpenDetails={onOpenDetails} renderBrand={renderBrand} trailing={trailingOf(read.action, host)}>
     <div className="hkc-places">
-      {map && <HarsoOutputMapView map={map} host={media} />}
+      {map && <HarsoOutputMapView map={map} host={media} listed />}
       <ul className="hkc-places-list" aria-label="Places">
-        {shown.map((row, index) => <PlaceRow key={row.id ?? index} row={row} selected={!!row.id && row.id === read.selected} host={host} renderBrand={renderBrand} />)}
+        {shown.map((row, index) => <PlaceRow key={row.id ?? index} row={row} selected={!!row.id && row.id === read.selected} host={host} media={media} renderBrand={renderBrand} />)}
       </ul>
       {loose.length > 0 && <p className="hkc-places-loose">Also: {loose.map(place => place.label).join(", ")}</p>}
       {mode === "inline" && read.total > shown.length && <Button variant="quiet" size="small" className="hkc-places-more" onClick={host.onViewAll}>View all {read.total}</Button>}
