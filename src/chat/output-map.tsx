@@ -16,6 +16,8 @@ import "./output-map.css";
 const COLORS = ["#287561", "#815eb0", "#ad5433", "#336d9f"];
 const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const glyph = (category?: string) => category === "Temple" ? Bank : category === "Shrine" ? FlowerLotus : category === "Market" ? Storefront : category === "Castle" ? Columns : MapPin;
+
 type SurfaceProps = { map: HarsoOutputMap; selected?: string; group: string; onSelect: (id: string) => void; dark: boolean };
 
 function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
@@ -62,7 +64,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
         const button = document.createElement("button");
         button.type = "button"; button.className = "hkc-map-pin";
         button.textContent = map.route ? String(index + 1) : "";
-        if (!map.route) { const Glyph = place.category === "Temple" ? Bank : place.category === "Shrine" ? FlowerLotus : place.category === "Market" ? Storefront : place.category === "Castle" ? Columns : MapPin; button.innerHTML = renderToStaticMarkup(<Glyph size={18} weight="bold" aria-hidden="true" />); }
+        if (!map.route) { const Glyph = glyph(place.category); button.innerHTML = renderToStaticMarkup(<Glyph size={18} weight="bold" aria-hidden="true" />); }
         button.setAttribute("aria-label", `${map.route ? `${index + 1}. ` : ""}${place.label}`);
         button.title = place.label; button.dataset.id = place.id;
         button.style.setProperty("--pin-color", map.route ? COLORS[0] : COLORS[Math.max(0, categories.indexOf(place.category)) % COLORS.length]);
@@ -219,8 +221,8 @@ export default function InteractiveMap({ map, host }: { map: HarsoOutputMap; hos
   const street = route?.path && decodePolyline(route.path).length > 1;
   const list = <ul className="hkc-output-map-places" aria-label="Places">{visible.map(place => <li key={place.id}>
     <button type="button" aria-pressed={selected === place.id} onClick={() => setSelected(place.id)}>
-      <span className="hkc-map-order" style={{ background: route ? undefined : COLORS[Math.max(0, categories.indexOf(place.category ?? "")) % COLORS.length] }}>{route ? map.places.indexOf(place) + 1 : <MapPin size={16} aria-hidden="true" />}</span>
-      {place.photo && host.resolveArtifact ? <HarsoOutputThumb photo={place.photo} host={host} /> : <span className="hkc-map-place-icon"><MapPin size={20} aria-hidden="true" /></span>}
+      <span className="hkc-map-order" style={{ background: route ? undefined : COLORS[Math.max(0, categories.indexOf(place.category ?? "")) % COLORS.length] }}>{route ? map.places.indexOf(place) + 1 : (() => { const Glyph = glyph(place.category); return <Glyph size={16} aria-hidden="true" />; })()}</span>
+      {place.photo && host.resolveArtifact ? <HarsoOutputThumb photo={place.photo} host={host} /> : route ? <span className="hkc-map-place-icon"><MapPin size={20} aria-hidden="true" /></span> : null}
       <span><b>{place.label}</b>{place.category && <small>{place.category}</small>}</span>
     </button>
   </li>)}</ul>;
