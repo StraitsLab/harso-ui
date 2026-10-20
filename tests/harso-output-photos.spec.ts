@@ -114,10 +114,15 @@ for (const [key, counter, at] of [["ArrowRight", "3 of 8", 2], ["End", "8 of 8",
       await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBe(0);
       await expect(gallery.getByText("1 of 8")).toBeVisible();
       await gallery.hover();
+      // Arm the mid-scroll watch in the page BEFORE the click: a watch started after the click's round trip can
+      // miss the whole ~10-frame scroll on a loaded runner and then wait out the test timeout.
+      await track.evaluate(el => { (el as HTMLElement & { mid?: Promise<void> }).mid = new Promise<void>(done => {
+        const frame = () => el.scrollLeft > 1 && el.scrollLeft < el.clientWidth - 1 ? done() : requestAnimationFrame(frame);
+        requestAnimationFrame(frame);
+      }); });
       await gallery.getByRole("button", { name: "Next photo" }).click();
-      // Mid-scroll: past halfway to photo 2, not there yet.
-      await page.waitForFunction(el => el!.scrollLeft > el!.clientWidth * .5 && el!.scrollLeft < el!.clientWidth - 1,
-        await track.elementHandle(), { polling: "raf" });
+      // Mid-scroll: on the way to photo 2, not there yet.
+      await track.evaluate(el => (el as HTMLElement & { mid?: Promise<void> }).mid);
       await track.focus();
       await page.keyboard.press(key);
       await expect.poll(() => track.evaluate(el => el.scrollLeft / el.clientWidth), { timeout: 4000 }).toBeCloseTo(at, 2);
