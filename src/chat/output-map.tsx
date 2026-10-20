@@ -8,7 +8,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import type { HarsoOutputMap, HarsoOutputMediaHost } from "./output-card-media";
 import { HarsoOutputThumb } from "./output-card-media";
-import { decodePolyline, mapBounds, mapCoordinates } from "./output-map-utils";
+import { decodePolyline, googleMapsPlaceUrl, mapBounds, mapCoordinates } from "./output-map-utils";
 import { vectorStyle } from "./output-map-style";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./output-map.css";
@@ -204,7 +204,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
 }
 
 /** `listed`: the card already lists these places in its own rows, so the map shows no second list inline. */
-export default function InteractiveMap({ map, host, listed = false }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean }) {
+export default function InteractiveMap({ map, host, listed = false, onOpenUrl }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean; onOpenUrl?: (url: string) => void }) {
   const root = useRef<HTMLElement>(null), dialog = useRef<HTMLDialogElement>(null), expand = useRef<HTMLButtonElement>(null);
   const [selected, setSelected] = useState(map.selected_place_id);
   const [group, setGroup] = useState("all"), [expanded, setExpanded] = useState(false), [dark, setDark] = useState(false);
@@ -225,6 +225,9 @@ export default function InteractiveMap({ map, host, listed = false }: { map: Har
     : <MapSurface map={map} selected={selected} group={group} onSelect={setSelected} dark={dark} />;
   const route = map.route;
   const street = route?.path && decodePolyline(route.path).length > 1;
+  const selectedPlace = visible.find(place => place.id === selected);
+  const openSelected = host.googleMaps && onOpenUrl && selectedPlace
+    ? <Button variant="quiet" onClick={() => onOpenUrl(googleMapsPlaceUrl(selectedPlace))}>Open in Google Maps</Button> : null;
   const list = <ul className="hkc-output-map-places" aria-label="Places">{visible.map(place => <li key={place.id}>
     <button type="button" aria-pressed={selected === place.id} onClick={() => setSelected(place.id)}>
       <span className="hkc-map-order" style={{ background: route ? undefined : COLORS[Math.max(0, categories.indexOf(place.category ?? "")) % COLORS.length] }}>{route ? map.places.indexOf(place) + 1 : (() => { const Glyph = glyph(place.category); return <Glyph size={16} aria-hidden="true" />; })()}</span>
@@ -239,9 +242,10 @@ export default function InteractiveMap({ map, host, listed = false }: { map: Har
     </div>
     {!expanded && surface}
     {route && <figcaption className="hkc-map-note">{route.mode === "walk" ? "Walking route" : "Driving route"}{route.minutes !== undefined && ` · ${route.minutes} min`}{route.meters !== undefined && ` · ${new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(route.meters / 1000)} km`}{!street && <span>Straight lines, not streets</span>}</figcaption>}
+    {!expanded && openSelected}
     {!expanded && !listed && list}
     <dialog ref={dialog} className="hkc-map-dialog" aria-label="Expanded map" onCancel={() => setExpanded(false)} onClose={() => { setExpanded(false); expand.current?.focus(); }}>
-      {expanded && <><header><h2>Explore places</h2><Button variant="quiet" onClick={() => setExpanded(false)}>Collapse map</Button></header>{surface}{list}</>}
+      {expanded && <><header><h2>Explore places</h2><Button variant="quiet" onClick={() => setExpanded(false)}>Collapse map</Button></header>{surface}{openSelected}{list}</>}
     </dialog>
   </figure>;
 }

@@ -1,5 +1,11 @@
 import type { LngLatBoundsLike } from "maplibre-gl";
-import type { HarsoOutputMap } from "./output-card-media";
+import type { HarsoOutputMap, HarsoOutputPlace } from "./output-card-media";
+
+/** Google Maps URLs use the persistent place identity when supplied, otherwise the exact coordinates. */
+export function googleMapsPlaceUrl(place: HarsoOutputPlace): string {
+  const query = place.place_id ? `${encodeURIComponent(place.label)}&query_place_id=${encodeURIComponent(place.place_id)}` : `${place.lat},${place.lon}`;
+  return `https://www.google.com/maps/search/?api=1&query=${query}`;
+}
 
 /** Google encoded polyline, precision 5. Reject malformed input rather than drawing a misleading route. */
 export function decodePolyline(encoded: string): [number, number][] {

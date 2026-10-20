@@ -45,7 +45,7 @@ export interface HarsoOutputTrackingStatusBlock {
 export type HarsoOutputStatusBlock = HarsoOutputSubjectStatusBlock | HarsoOutputTrackingStatusBlock;
 /** The host's live word for a status block's subject (a paused routine), drawn instead of the emitted snapshot. */
 export interface HarsoOutputSubjectState { word: string; meaning?: HarsoOutputMeaning }
-export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string; category?: string; photo?: HarsoOutputPhoto }
+export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string; place_id?: string; category?: string; photo?: HarsoOutputPhoto }
 export interface HarsoOutputMap { kind: "map"; places: HarsoOutputPlace[]; selected_place_id?: string; route?: { mode: "walk" | "drive"; path?: string; minutes?: number; meters?: number } }
 /** One photo: a row's thumbnail, or one photo of a gallery. */
 export interface HarsoOutputPhoto { artifact: string; alt: string }
@@ -246,7 +246,7 @@ export function readMedia(block: AnyBlock, host: HarsoOutputMediaHost, canOpen =
   }
   if (visual.kind === "map") {
     const places = Array.isArray(visual.places) ? visual.places : [];
-    const ok = places.length > 0 && places.every(place => place && typeof place.id === "string" && typeof place.label === "string" && place.lat !== "" && place.lon !== "" && Number.isFinite(Number(place.lat)) && Number.isFinite(Number(place.lon)) && Math.abs(Number(place.lat)) <= 85 && Math.abs(Number(place.lon)) <= 180 && (place.category === undefined || (typeof place.category === "string" && place.category.length <= 24)) && (place.photo === undefined || isPhoto(place.photo))) && (!visual.route || (places.length >= 2 && ["walk", "drive"].includes(visual.route.mode)));
+    const ok = places.length > 0 && places.every(place => place && typeof place.id === "string" && typeof place.label === "string" && place.lat !== "" && place.lon !== "" && Number.isFinite(Number(place.lat)) && Number.isFinite(Number(place.lon)) && Math.abs(Number(place.lat)) <= 85 && Math.abs(Number(place.lon)) <= 180 && (place.category === undefined || (typeof place.category === "string" && place.category.length <= 24)) && (place.place_id === undefined || (typeof place.place_id === "string" && /^[A-Za-z0-9_-]{1,512}$/.test(place.place_id))) && (place.photo === undefined || isPhoto(place.photo))) && (!visual.route || (places.length >= 2 && ["walk", "drive"].includes(visual.route.mode)));
     return ok ? visual : undefined;
   }
   return undefined;
@@ -513,8 +513,8 @@ export function HarsoOutputVideoView({ video, host, onOpen }: { video: HarsoOutp
 const InteractiveMap = lazy(() => import("./output-map"));
 
 /** MapLibre and its styles are fetched only when a map block is shown. */
-export function HarsoOutputMapView({ map, host, listed }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean }) {
-  return <Suspense fallback={<HarsoOutputMediaSkeleton kind="map" />}><InteractiveMap map={map} host={host} listed={listed} /></Suspense>;
+export function HarsoOutputMapView({ map, host, listed, onOpenUrl }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean; onOpenUrl?: (url: string) => void }) {
+  return <Suspense fallback={<HarsoOutputMediaSkeleton kind="map" />}><InteractiveMap map={map} host={host} listed={listed} onOpenUrl={onOpenUrl} /></Suspense>;
 }
 
 // ---- loading skeletons and Copy ----

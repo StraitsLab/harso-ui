@@ -792,7 +792,7 @@ function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blo
           ? <MediaFrame key={partIndex} state={part.state} kind={part.kind === "media" ? part.media.kind : part.kind}>
             {part.kind === "status" ? <HarsoOutputStatusView status={part.status} steps={part.steps} live={part.live} />
               : part.kind === "progress" ? <HarsoOutputProgressView progress={part.progress} />
-              : part.media.kind === "map" ? <HarsoOutputMapView map={part.media} host={media ?? {}} />
+              : part.media.kind === "map" ? <HarsoOutputMapView map={part.media} host={media ?? {}} onOpenUrl={host.onOpenUrl} />
               : part.media.kind === "video" ? <HarsoOutputVideoView video={part.media} host={media!} onOpen={host.onOpenArtifact!} />
               : part.media.images ? <HarsoOutputGalleryView image={{ ...part.media, images: part.media.images }} host={media!} />
               : <HarsoOutputImageView image={part.media} host={media!} />}
