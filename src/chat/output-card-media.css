@@ -74,7 +74,7 @@
 }
 .harso-kit .hkc-output-gallery-track::-webkit-scrollbar { display: none; }
 .harso-kit .hkc-output-gallery-track:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: -2px; }
-.harso-kit .hkc-output-gallery-slide { flex: 0 0 100%; height: 100%; scroll-snap-align: start; scroll-snap-stop: always; }
+.harso-kit .hkc-output-gallery-slide { flex: 0 0 100%; height: 100%; scroll-snap-align: start; }
 .harso-kit .hkc-output-gallery-photo { width: 100%; height: 100%; }
 /* Prev/next: quiet surface disks on the photo, shown on hover or keyboard focus (and always on touch-only screens,
    where there is no hover; swipe is the primary gesture there, the buttons stay for switch access). */
