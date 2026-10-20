@@ -54,8 +54,13 @@ test("vector map uses cooperative gestures, decoded route and ordered list witho
   act(() => calls.events.movestart({ originalEvent: {} }));
   fireEvent.click(screen.getByRole("button", { name: "Recenter" }));
   expect(screen.queryByRole("button", { name: "Recenter" })).toBeNull();
-  expect(calls.options[0]).toMatchObject({ scrollZoom: false, cooperativeGestures: true, dragRotate: false });
+  expect(calls.options[0]).toMatchObject({ scrollZoom: true, cooperativeGestures: true, dragRotate: false });
   expect(calls.sources.route.data.geometry.coordinates).toEqual(decodePolyline(map.route!.path!));
+  const canvas = document.querySelector(".hkc-output-map-plane")!;
+  const attribution = document.createElement("details"); attribution.className = "maplibregl-ctrl-attrib maplibregl-compact-show"; attribution.open = true; canvas.append(attribution);
+  act(() => calls.events.idle());
+  expect(attribution.open).toBe(true); // Later idle must not collapse a user's open attribution.
+
   expect(calls.layers.find(l => l.id === "route").paint["line-dasharray"]).toBeUndefined();
   expect(screen.getByText(/Walking route/).textContent).toContain("20 min · 1.8 km");
   const buttons = screen.getAllByRole("button", { name: /place/ });

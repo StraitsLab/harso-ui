@@ -22,7 +22,7 @@ const open = async (page: Page, query: string, width = 560) => {
   await page.evaluate(() => document.fonts.ready);
 };
 
-/** Text boxes that overlap, anything drawn outside the card, and any border (the card allows none). */
+/** Text boxes that overlap, anything outside the card, and borders other than the approved map hairline. */
 async function geometry(page: Page) {
   return card(page).evaluate(root => {
     const cardBox = root.getBoundingClientRect();
@@ -35,9 +35,14 @@ async function geometry(page: Page) {
       .map(node => ({ node, box: node.getBoundingClientRect() }))
       .filter(({ box }) => box.width > 0 && (box.left < cardBox.left - .5 || box.right > cardBox.right + .5 || box.top < cardBox.top - .5 || box.bottom > cardBox.bottom + .5))
       .map(({ node }) => node.getAttribute("class"));
+    const probe = document.createElement("span"); probe.style.color = "var(--hk-line)"; root.append(probe);
+    const line = getComputedStyle(probe).color; probe.remove();
     const bordered = [root, ...root.querySelectorAll("*")].flatMap(node => {
       const s = getComputedStyle(node);
-      return ["top", "right", "bottom", "left"].filter(side => s.getPropertyValue(`border-${side}-style`) !== "none" && parseFloat(s.getPropertyValue(`border-${side}-width`)) > 0).map(side => `${node.getAttribute("class")} ${side}`);
+      return ["top", "right", "bottom", "left"].filter(side => {
+        const width = parseFloat(s.getPropertyValue(`border-${side}-width`));
+        return s.getPropertyValue(`border-${side}-style`) !== "none" && width > 0 && !(node.classList.contains("hkc-map-surface") && width === 1 && s.getPropertyValue(`border-${side}-color`) === line);
+      }).map(side => `${node.getAttribute("class")} ${side}`);
     });
     return { overlaps, outside, bordered };
   });

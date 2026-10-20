@@ -41,7 +41,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
   const signature = JSON.stringify(map);
   useEffect(() => {
     if (!near) return;
-    let active = true, failed = false, loaded = false, basemapReady = false, dispose = () => {};
+    let active = true, failed = false, loaded = false, basemapReady = false, presented = false, dispose = () => {};
     setState("loading");
     const timer = window.setTimeout(() => { if (active) setState("failed"); }, 15000);
     import("maplibre-gl").then(lib => {
@@ -59,7 +59,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       let colors!: MapColors;
       watchMapColors(root.current!, value => { colors = value; })();
       const view = new lib.Map({ container: canvas.current, style: vectorStyle(colors), center: points[0], zoom: 10,
-        scrollZoom: false, dragRotate: false, pitchWithRotate: false, touchPitch: false,
+        scrollZoom: true, dragRotate: false, pitchWithRotate: false, touchPitch: false,
         cooperativeGestures: true, attributionControl: false });
       instance.current = view;
       view.touchZoomRotate.disableRotation();
@@ -77,7 +77,8 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       const syncSelection = () => markers.forEach(marker => marker.getElement().setAttribute("aria-pressed", String(marker.getElement().dataset.id === latest.current.selected)));
       view.on("render", syncSelection);
       view.on("movestart", event => { if (event.originalEvent) setMoved(true); });
-      const ready = () => { if (active && !failed) {
+      const ready = () => { if (active && !failed && !presented) {
+        presented = true;
         window.clearTimeout(timer); setState("ready");
         if (canvas.current && canvas.current.clientWidth <= 512) {
           const attribution = canvas.current.querySelector<HTMLDetailsElement>(".maplibregl-ctrl-attrib");
