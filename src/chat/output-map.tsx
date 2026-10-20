@@ -80,7 +80,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       const ready = () => { if (active && !failed && !presented) {
         presented = true;
         window.clearTimeout(timer); setState("ready");
-        if (canvas.current && canvas.current.clientWidth <= 512) {
+        if (canvas.current) {
           const attribution = canvas.current.querySelector<HTMLDetailsElement>(".maplibregl-ctrl-attrib");
           attribution?.classList.remove("maplibregl-compact-show"); attribution?.removeAttribute("open");
         }
@@ -164,6 +164,7 @@ export default function InteractiveMap({ map, host, listed = false, onOpenUrl }:
   const [selected, setSelected] = useState(map.selected_place_id);
   const [group, setGroup] = useState("all"), [expanded, setExpanded] = useState(false), [dark, setDark] = useState(false);
   useEffect(() => { setSelected(map.selected_place_id); setGroup("all"); }, [map]);
+  useEffect(() => root.current ? watchMapColors(root.current, () => {}) : undefined, []);
   useEffect(() => {
     const provider = root.current?.closest(".harso-kit");
     const update = () => setDark(provider?.getAttribute("data-mode") === "dark"); update();
@@ -183,20 +184,21 @@ export default function InteractiveMap({ map, host, listed = false, onOpenUrl }:
   const selectedPlace = visible.find(place => place.id === selected);
   const openSelected = host.googleMaps && onOpenUrl && selectedPlace
     ? <Button variant="quiet" onClick={() => onOpenUrl(googleMapsPlaceUrl(selectedPlace))}>Open in Google Maps</Button> : null;
-  const list = <ul className="hkc-output-map-places" aria-label="Places">{visible.map(place => <li key={place.id}>
+  const List = route ? "ol" : "ul";
+  const list = <List className="hkc-output-map-places" data-route={route ? "" : undefined} aria-label="Places">{visible.map(place => <li key={place.id}>
     <button type="button" aria-pressed={selected === place.id} onClick={() => setSelected(place.id)}>
       <span className="hkc-map-order">{route ? map.places.indexOf(place) + 1 : (() => { const Glyph = glyph(place.category); return <Glyph size={16} aria-hidden="true" />; })()}</span>
-      {place.photo && host.resolveArtifact ? <HarsoOutputThumb photo={place.photo} host={host} /> : route ? <span className="hkc-map-place-icon"><MapPin size={20} aria-hidden="true" /></span> : null}
+      {place.photo && host.resolveArtifact ? <HarsoOutputThumb photo={place.photo} host={host} /> : null}
       <span><b>{place.label}</b>{place.category && <small>{place.category}</small>}</span>
     </button>
-  </li>)}</ul>;
+  </li>)}</List>;
   return <figure ref={root} className="hkc-output-map" aria-label="Map">
     <div className="hkc-map-toolbar">
       {categories.length > 1 ? <select aria-label="Filter places by category" value={group} onChange={e => setGroup(e.target.value)}><option value="all">All places</option>{categories.map(c => <option key={c}>{c}</option>)}</select> : <span>{map.places.length} places</span>}
       <Button ref={expand} variant="quiet" onClick={() => setExpanded(true)}>Expand map</Button>
     </div>
     {!expanded && surface}
-    <figcaption className="hkc-map-note">{selectedPlace && <span>{selectedPlace.label}</span>}
+    <figcaption className="hkc-map-note">{selectedPlace && <strong>{selectedPlace.label}</strong>}
     {route && <span>{route.mode === "walk" ? "Walking route" : "Driving route"}{route.minutes !== undefined && ` · ${route.minutes} min`}{route.meters !== undefined && ` · ${new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(route.meters / 1000)} km`}{!street && <span>Straight lines, not streets</span>}</span>}</figcaption>
     {!expanded && openSelected}
     {!expanded && !listed && list}

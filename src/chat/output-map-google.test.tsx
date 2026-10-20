@@ -43,7 +43,10 @@ test("host googleMaps draws one Google vector map with numbered pins, a street r
   expect(pins[0]).toHaveAttribute("aria-pressed", "true");
   expect(g.markers.every(m => !m.opts.content.querySelector(".hkc-map-label"))).toBe(true);
   expect(g.markers.every(m => m.opts.collisionBehavior === "required-hides")).toBe(true);
-  expect(document.querySelector("figcaption")?.textContent).toContain("Royal Observatory");
+  expect(document.querySelector("figcaption strong")?.textContent).toBe("Royal Observatory");
+  const list = screen.getByRole("list", { name: "Places" });
+  expect(list.tagName).toBe("OL");
+  expect(list.querySelector(".hkc-map-place-icon")).toBeNull();
   expect(g.maps[0]).toMatchObject({ zoomControl: false, cameraControl: false, keyboardShortcuts: false });
   expect(screen.queryByRole("button", { name: "Recenter" })).toBeNull();
   act(() => g.listeners.dragstart());

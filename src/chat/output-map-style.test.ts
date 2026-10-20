@@ -20,9 +20,24 @@ test("both providers use token-only pin/route colours, no category palette or fl
   }
   const css = source("./output-map.css");
   expect(css).toContain("border: 2px solid var(--hk-surface)");
-  expect(css).toContain("background: var(--hk-ink)");
+  expect(css).toContain("background: var(--hkc-map-unselected, var(--hk-ink))");
   expect(css).toContain('hkc-map-pin[aria-pressed="true"] { background: var(--hk-accent)');
   expect(css).toContain("width: 38px; height: 38px");
+});
+
+test("graphite pins use secondary only when resolved accent equals ink", async () => {
+  const kit = document.createElement("div"); kit.className = "harso-kit";
+  kit.style.setProperty("--hk-ink", "#1f2226");
+  kit.style.setProperty("--hk-accent", "rgb(31, 34, 38)");
+  kit.style.setProperty("--hk-secondary", "#5b6067");
+  document.body.append(kit);
+  const child = kit.appendChild(document.createElement("div"));
+  const stop = watchMapColors(child, () => {});
+  expect(child.style.getPropertyValue("--hkc-map-unselected")).toBe("var(--hk-secondary)");
+  kit.style.setProperty("--hk-accent", "#20745a");
+  await new Promise(resolve => setTimeout(resolve, 0));
+  expect(child.style.getPropertyValue("--hkc-map-unselected")).toBe("var(--hk-ink)");
+  stop(); kit.remove();
 });
 
 test("open cartography reads the host's computed tokens", () => {
