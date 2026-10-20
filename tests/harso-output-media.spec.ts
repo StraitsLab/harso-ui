@@ -190,7 +190,9 @@ for (const mode of ["light", "dark"] as const) {
       await expect(card(page).locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 30000 });
       const plane = card(page).locator(".hkc-output-map-plane");
       await expect(plane.locator(".hkc-map-pin")).toHaveCount(3);
-      await expect(card(page).getByRole("list", { name: "Places" }).getByRole("button")).toHaveCount(3);
+      const stops = card(page).getByRole("list", { name: "Places" });
+      await expect(stops.getByRole("button")).toHaveCount(3);
+      expect(await stops.evaluate(node => node.tagName)).toBe("UL");
       const pins = await plane.locator(".hkc-map-pin").evaluateAll(nodes => nodes.map(node => ({ box: node.getBoundingClientRect().toJSON(), selected: node.getAttribute("aria-pressed") === "true" })));
       expect(pins.filter(pin => pin.selected)).toHaveLength(1);
       const box = (await plane.boundingBox())!;
@@ -207,13 +209,21 @@ for (const mode of ["light", "dark"] as const) {
   });
 
   test(`map ${mode}: selected Kyoto caption stays visible at 320 and 390; phone attribution starts compact`, async ({ page }) => {
-    for (const width of [320, 390]) for (const name of ["Kyoto · 4 places with route", "Kyoto · places without route"]) {
+    for (const width of [320, 390, 560]) for (const name of ["Kyoto · 4 places with route", "Kyoto · places without route"]) {
       await page.setViewportSize({ width, height: 1000 });
       await page.goto(`/preview/card-audit.html?mode=${mode}&only=${encodeURIComponent(name)}`);
       const plane = page.locator(".hkc-output-map-plane");
       await expect(page.locator(".hkc-map-surface")).toHaveAttribute("data-state", "ready", { timeout: 15000 });
       const selected = await plane.locator('.hkc-map-pin[aria-pressed="true"]').getAttribute("title");
       await expect(page.locator("figcaption.hkc-map-note").filter({ hasText: selected! })).toBeVisible();
+      const stops = page.getByRole("list", { name: "Places" });
+      if (name.includes("with route")) {
+        expect(await stops.evaluate(n => n.tagName)).toBe("OL");
+        const boxes = await stops.getByRole("button").evaluateAll(nodes => nodes.map(n => n.getBoundingClientRect().toJSON()));
+        boxes.slice(1).forEach((box, index) => expect(box.top).toBeGreaterThanOrEqual(boxes[index].bottom));
+        await expect(stops.locator(".hkc-map-place-icon")).toHaveCount(0);
+        expect(await page.locator("figcaption strong").evaluate(n => getComputedStyle(n).fontSize)).not.toBe(await page.locator("figcaption > span").evaluate(n => getComputedStyle(n).fontSize));
+      } else expect(await stops.evaluate(n => n.tagName)).toBe("UL");
       await expect(plane.locator(".hkc-map-label")).toHaveCount(0);
       await expect(plane.locator(".maplibregl-ctrl-zoom-in")).toHaveCount(0);
       const attribution = plane.locator(".maplibregl-ctrl-attrib");
@@ -221,6 +231,7 @@ for (const mode of ["light", "dark"] as const) {
       await expect(attribution).not.toHaveAttribute("open");
       await attribution.locator("summary").click();
       await expect(attribution).toHaveClass(/maplibregl-compact-show/);
+
     }
   });
 
