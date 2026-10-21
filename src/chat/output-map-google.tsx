@@ -88,7 +88,7 @@ export default function GoogleSurface({ map, selected, group, onSelect, dark, ex
         fitPoints.forEach(p => bounds.extend(p));
         view.fitBounds(bounds, { top: 50, bottom: 55, left: 48, right: 48 });
         idle?.remove();
-        idle = google_once(view, "idle", () => { if ((view.getZoom() ?? 0) > 14) view.setZoom(14); fitting = false; });
+        idle = google_once(view, "idle", () => { if ((view.getZoom() ?? 0) > MAX_FIT_ZOOM) view.setZoom(MAX_FIT_ZOOM); fitting = false; });
       };
       const markers = visible.map(({ place, index }) => {
         const button = document.createElement("button");
@@ -144,6 +144,9 @@ export default function GoogleSurface({ map, selected, group, onSelect, dark, ex
       : moved && <Button variant="quiet" className="hkc-map-recenter" data-recenter onClick={() => recenter.current()}>Recenter</Button>}
   </div>;
 }
+
+/** Street level: two places 100 m apart sit about two pin widths apart, so neighbouring pins stay readable. */
+const MAX_FIT_ZOOM = 16;
 
 function google_once(view: google.maps.Map, event: string, callback: () => void) {
   const listener = view.addListener(event, () => { listener.remove(); callback(); });
