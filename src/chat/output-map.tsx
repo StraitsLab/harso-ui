@@ -55,7 +55,7 @@ function MapSurface({ map, selected, group, onSelect, dark }: SurfaceProps) {
       const fit = () => {
         setMoved(false);
         const fitPoints = group === "all" ? [...points, ...route] : visible.map(p => points[p.index]);
-        if (fitPoints.length) instance.current?.fitBounds(mapBounds(fitPoints), { padding: { top: 50, bottom: 55, left: 48, right: 48 }, maxZoom: 14, duration: reduced() ? 0 : 240 });
+        if (fitPoints.length) instance.current?.fitBounds(mapBounds(fitPoints), { padding: { top: 50, bottom: 55, left: 48, right: 48 }, maxZoom: 16, duration: reduced() ? 0 : 240 });
       };
       let colors!: MapColors;
       watchMapColors(root.current!, value => { colors = value; })();

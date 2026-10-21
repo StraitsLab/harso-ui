@@ -5,7 +5,7 @@ import { readMedia, type HarsoOutputMap } from "./output-card-media";
 import { HarsoOutputCard, type HarsoOutputDocument } from "./output-card";
 
 // The Google surface talks to the Maps JavaScript API only through the official loader; fake it here.
-const g = vi.hoisted(() => ({ options: [] as any[], maps: [] as any[], markers: [] as any[], lines: [] as any[], fail: false, listeners: {} as Record<string, () => void> }));
+const g = vi.hoisted(() => ({ zoom: 12, zooms: [] as number[], options: [] as any[], maps: [] as any[], markers: [] as any[], lines: [] as any[], fail: false, listeners: {} as Record<string, () => void> }));
 vi.mock("@googlemaps/js-api-loader", () => ({
   setOptions: (o: any) => g.options.push(o),
   importLibrary: async (name: string) => {
@@ -14,7 +14,7 @@ vi.mock("@googlemaps/js-api-loader", () => ({
       Map: class { constructor(_el: any, public opts: any) { g.maps.push(opts); }
         addListener(event: string, cb: () => void) { g.listeners[event] = cb; if (event === "tilesloaded") queueMicrotask(cb); return { remove() {} }; }
         setOptions(opts: any) { Object.assign(this.opts, opts); }
-        fitBounds() {} getZoom() { return 12; } setZoom() {} },
+        fitBounds() {} getZoom() { return g.zoom; } setZoom(z: number) { g.zooms.push(z); } },
       Polyline: class { constructor(public opts: any) { g.lines.push(opts); } setMap() {} setOptions(opts: any) { Object.assign(this.opts, opts); } }
     };
     if (name === "marker") return { CollisionBehavior: { REQUIRED_AND_HIDES_OPTIONAL: "required-hides" }, AdvancedMarkerElement: class { map: any; zIndex = 0; constructor(public opts: any) { this.map = opts.map; g.markers.push(this); } } };
@@ -24,7 +24,7 @@ vi.mock("@googlemaps/js-api-loader", () => ({
 }));
 vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
 vi.stubGlobal("matchMedia", () => ({ matches: true }));
-afterEach(() => { cleanup(); g.options = []; g.maps = []; g.markers = []; g.lines = []; g.fail = false; g.listeners = {}; });
+afterEach(() => { cleanup(); g.zoom = 12; g.zooms = []; g.options = []; g.maps = []; g.markers = []; g.lines = []; g.fail = false; g.listeners = {}; });
 
 test("one Google constructor survives filtering, expand/collapse, selection, tint and overlay changes", async () => {
   HTMLDialogElement.prototype.showModal = function () { this.setAttribute("open", ""); };
@@ -176,4 +176,16 @@ test("without googleMaps the open map is used; a failed Google load offers retry
   await screen.findByText("Map unavailable. Explore the places in the list below.");
   expect(screen.getByRole("button", { name: "Try again" })).toBeTruthy();
   expect(screen.getAllByRole("button", { name: /Cutty Sark/ }).length).toBeGreaterThan(0);
+});
+
+test("close places fit to street zoom 16 so neighbouring pins separate, never closer", async () => {
+  render(<div className="harso-kit"><InteractiveMap map={map} host={host} /></div>);
+  await waitFor(() => expect(g.listeners.idle).toBeTypeOf("function"));
+  g.zoom = 15.4; act(() => g.listeners.idle());
+  expect(g.zooms).toEqual([]);
+  cleanup(); g.listeners = {};
+  render(<div className="harso-kit"><InteractiveMap map={map} host={host} /></div>);
+  await waitFor(() => expect(g.listeners.idle).toBeTypeOf("function"));
+  g.zoom = 19; act(() => g.listeners.idle());
+  expect(g.zooms).toEqual([16]);
 });
