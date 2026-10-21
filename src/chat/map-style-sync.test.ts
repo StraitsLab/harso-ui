@@ -1,5 +1,6 @@
-import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
+import lightSheet from "../../design/google-map-style.json";
+import darkSheet from "../../design/google-map-style.dark.json";
 // @ts-expect-error plain .mjs CI script, no type declarations
 import { canonical, uploadable } from "../../scripts/map-style-sync.mjs";
 
@@ -10,8 +11,7 @@ test("uploaded style flattens zoom-keyed opacity to its z12 value, keeps zoom-ke
 });
 
 test("both shipped design sheets upload with no zoom-keyed opacity left", () => {
-  for (const file of ["design/google-map-style.json", "design/google-map-style.dark.json"])
-    expect(uploadable(readFileSync(file, "utf8"))).not.toMatch(/Opacity":\{/);
+  for (const sheet of [lightSheet, darkSheet]) expect(uploadable(JSON.stringify(sheet))).not.toMatch(/Opacity":\{/);
 });
 
 test("a sheet Google re-ordered and stored as float32 compares equal; a real colour change does not", () => {
