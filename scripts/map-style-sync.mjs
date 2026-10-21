@@ -21,6 +21,16 @@ function uploadable(text) {
       ? value.z12 ?? Object.values(value).at(-1) : value);
 }
 
+// Google stores the sheet re-ordered and as float32 (0.3 → 0.30000001); compare meaning, not bytes.
+function canonical(text) {
+  const norm = value => Array.isArray(value) ? value.map(norm)
+    : value && typeof value === "object" ? Object.fromEntries(Object.keys(value).sort().map(k => [k, norm(value[k])]))
+    : typeof value === "number" ? Number(value.toPrecision(6)) : value;
+  const sheet = norm(JSON.parse(text ?? "null"));
+  if (sheet?.styles) sheet.styles = [...sheet.styles].sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+  return JSON.stringify(sheet);
+}
+
 async function call(method, url, body) {
   const response = await fetch(url, { method, headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
     body: body && JSON.stringify(body) });
@@ -35,12 +45,12 @@ let changed = 0;
 for (const target of TARGETS) for (const mode of ["light", "dark"]) {
   const url = `${API}${target.project}/styleConfigs/${target[mode]}`;
   const live = await call("GET", url);
-  const same = JSON.stringify(JSON.parse(live.jsonStyleSheet ?? "null")) === JSON.stringify(JSON.parse(sheets[mode]));
+  const same = canonical(live.jsonStyleSheet) === canonical(sheets[mode]);
   console.log(`${target.env} ${mode}: ${same ? "up to date" : dry ? "differs (dry run, not written)" : "updating"}`);
   if (same || dry) continue;
   await call("PATCH", `${url}?updateMask=jsonStyleSheet`, { jsonStyleSheet: sheets[mode] });
   const after = await call("GET", url);
-  if (JSON.stringify(JSON.parse(after.jsonStyleSheet)) !== JSON.stringify(JSON.parse(sheets[mode])))
+  if (canonical(after.jsonStyleSheet) !== canonical(sheets[mode]))
     throw new Error(`${target.env} ${mode}: read-back does not match the uploaded sheet`);
   changed++;
 }
