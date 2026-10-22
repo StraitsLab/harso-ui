@@ -48,9 +48,9 @@ export interface HarsoOutputSubjectState { word: string; meaning?: HarsoOutputMe
 export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string; place_id?: string; category?: string; photo?: HarsoOutputPhoto }
 export interface HarsoOutputMap { kind: "map"; places: HarsoOutputPlace[]; selected_place_id?: string; route?: { mode: "walk" | "drive"; path?: string; minutes?: number; meters?: number } }
 /** One photo: a row's thumbnail, or one photo of a gallery. */
-export interface HarsoOutputPhoto { artifact: string; alt: string }
+export interface HarsoOutputPhoto { artifact: string; alt: string; credit?: { label: string; url: string } }
 /** `images` (2..10) makes the image a gallery; `artifact`/`alt` stay photo 1 for readers that show one. */
-export interface HarsoOutputImage { kind: "image"; artifact: string; alt: string; aspect?: "square" | "4:3" | "16:9" | "3:4"; images?: HarsoOutputPhoto[] }
+export interface HarsoOutputImage extends HarsoOutputPhoto { kind: "image"; aspect?: "square" | "4:3" | "16:9" | "3:4"; images?: HarsoOutputPhoto[] }
 export interface HarsoOutputVideo { kind: "video"; artifact: string; alt: string; poster?: string }
 export type HarsoOutputMedia = HarsoOutputMap | HarsoOutputImage | HarsoOutputVideo;
 
@@ -299,7 +299,7 @@ function MediaFailed({ message, reason, onRetry, children }: { message: string; 
 }
 
 /** Fixed aspect frame; a shimmer until the picture arrives; a failed state with a working Try again if it doesn't. */
-export function HarsoOutputImageView({ image, host }: { image: HarsoOutputImage; host: HarsoOutputMediaHost }) {
+export function HarsoOutputImageView({ image, host, onOpenUrl }: { image: HarsoOutputImage; host: HarsoOutputMediaHost; onOpenUrl?: (url: string) => void }) {
   const src = host.resolveArtifact?.(image.artifact) ?? "";
   const loads = useLoads();
   const frame = useRef<HTMLDivElement>(null);
@@ -307,11 +307,21 @@ export function HarsoOutputImageView({ image, host }: { image: HarsoOutputImage;
   const phase = loads.phase(src);
   if (phase === "failed") return <MediaFailed message="Couldn’t load the image" reason={image.alt} onRetry={loads.retry} />;
   const aspect = ASPECT[image.aspect ?? "4:3"] ?? ASPECT["4:3"];
-  return <div ref={frame} className="hkc-output-media" data-state={phase} aria-busy={phase === "loading" || undefined}
+  const picture = <div ref={frame} className="hkc-output-media" data-state={phase} aria-busy={phase === "loading" || undefined}
     style={{ "--hkc-media-aspect": aspect } as CSSProperties}>
     <img key={loads.key(src)} data-load={src} className="hkc-output-media-img" src={src} alt={image.alt} decoding="async" draggable={false}
       onLoad={() => loads.settle(src, "ready")} onError={() => loads.settle(src, "failed")} />
   </div>;
+  return image.credit ? <div>{picture}<HarsoOutputPhotoCredit credit={image.credit} onOpenUrl={onOpenUrl} /></div> : picture;
+}
+
+/** A caption uses the same host-owned URL path as card sources, never a browser href. */
+export function HarsoOutputPhotoCredit({ credit, onOpenUrl }: { credit?: HarsoOutputPhoto["credit"]; onOpenUrl?: (url: string) => void }) {
+  if (!credit) return null;
+  const label = `Photo · ${credit.label}`;
+  return onOpenUrl && /^https:\/\//i.test(credit.url)
+    ? <button type="button" className="hkc-output-photo-credit" title={credit.url} onClick={() => onOpenUrl(credit.url)}>{label}</button>
+    : <span className="hkc-output-photo-credit">{label}</span>;
 }
 
 const reducedMotion = (node: Element | null) => !!node?.ownerDocument.defaultView?.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -345,7 +355,7 @@ export function HarsoOutputThumb({ photo, host }: { photo: HarsoOutputPhoto; hos
  * on the focused gallery, and a quiet "1 of 8". Only the photo shown and its neighbours load (and stay once loaded).
  * A photo that fails is the quiet tile; the others still browse.
  */
-export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImage & { images: HarsoOutputPhoto[] }; host: HarsoOutputMediaHost }) {
+export function HarsoOutputGalleryView({ image, host, onOpenUrl }: { image: HarsoOutputImage & { images: HarsoOutputPhoto[] }; host: HarsoOutputMediaHost; onOpenUrl?: (url: string) => void }) {
   const photos = image.images, count = photos.length;
   const [index, setIndex] = useState(0);
   const [seen, setSeen] = useState<ReadonlySet<number>>(() => new Set([0, 1]));
@@ -431,7 +441,7 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
     (to === "next" ? next : to === "prev" ? prev : undefined)?.current?.focus();
   }, [index]);
   const aspect = ASPECT[image.aspect ?? "4:3"] ?? ASPECT["4:3"];
-  return <div className="hkc-output-media hkc-output-gallery" role="region" aria-roledescription="gallery" aria-label={`${count} photos`}
+  const picture = <div className="hkc-output-media hkc-output-gallery" role="region" aria-roledescription="gallery" aria-label={`${count} photos`}
     style={{ "--hkc-media-aspect": aspect } as CSSProperties}>
     <div ref={track} className="hkc-output-gallery-track" tabIndex={0} aria-label="Photos. Left and right arrows move between them."
       onScroll={() => settle(false)} onScrollEnd={() => settle(true)}
@@ -456,6 +466,8 @@ export function HarsoOutputGalleryView({ image, host }: { image: HarsoOutputImag
     </IconButton>}
     <span className="hkc-output-gallery-count" aria-live="polite">{index + 1} of {count}</span>
   </div>;
+  const credit = photos[index]?.credit;
+  return photos.some(photo => photo.credit) ? <div>{picture}<HarsoOutputPhotoCredit credit={credit} onOpenUrl={onOpenUrl} /></div> : picture;
 }
 
 /** m:ss or h:mm:ss. */

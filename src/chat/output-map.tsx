@@ -8,7 +8,7 @@ import { MapPin, Bank, Storefront, Columns, FlowerLotus } from "@phosphor-icons/
 import { renderToStaticMarkup } from "react-dom/server";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import type { HarsoOutputMap, HarsoOutputMediaHost } from "./output-card-media";
-import { HarsoOutputThumb } from "./output-card-media";
+import { HarsoOutputPhotoCredit, HarsoOutputThumb } from "./output-card-media";
 import { decodePolyline, googleMapsPlaceUrl, mapBounds, mapCoordinates } from "./output-map-utils";
 import { watchMapColors, type MapColors } from "./output-map-colors";
 import { vectorStyle } from "./output-map-style";
@@ -216,7 +216,7 @@ export default function InteractiveMap({ map, host, listed = false, onOpenUrl, s
     <dialog ref={dialog} className="hkc-map-dialog" aria-label="Expanded map" onCancel={() => setExpanded(false)} onClose={() => { setExpanded(false); expand.current?.focus(); }}>
       <header><h2>Explore places</h2><Button variant="quiet" onClick={() => setExpanded(false)}>Collapse map</Button></header>
       <div ref={dialogSurface} />
-      {expanded && <>{openSelected}{list}</>}
+      {expanded && <>{openSelected}{list}<HarsoOutputPhotoCredit credit={selectedPlace?.photo?.credit} onOpenUrl={onOpenUrl} /></>}
     </dialog>
   </figure>;
 }

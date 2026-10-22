@@ -5,7 +5,7 @@ import { useEffect, useId, useState, type ReactNode } from "react";
 import { Button } from "../../primitives";
 import { Tabs } from "../../navigation";
 import { HarsoOutputCardMeta, readAction, type HarsoOutputActionBlock, type HarsoOutputDocument, type HarsoOutputRow, type HarsoOutputRowsBlock, type HarsoOutputTextBlock, type HarsoOutputTextSection } from "../output-card";
-import { HarsoOutputMapView, HarsoOutputThumb, isPhoto, readMedia, type HarsoOutputMap, type HarsoOutputPlace, type HarsoOutputMediaHost } from "../output-card-media";
+import { HarsoOutputMapView, HarsoOutputPhotoCredit, HarsoOutputThumb, isPhoto, readMedia, type HarsoOutputMap, type HarsoOutputPlace, type HarsoOutputMediaHost } from "../output-card-media";
 import { googleMapsPlaceUrl } from "../output-map-utils";
 import { V6Brand, V6Frame } from "./frame";
 import type { V6Family, V6FamilyProps, V6Host, V6RenderBrand, V6Registry, V6Template, WidgetSize } from "./types";
@@ -245,7 +245,7 @@ function dayTitle(heading: string | undefined, index: number): string | undefine
 }
 
 /** One day: with a photo, its date and "1. Area" sit on the photo (V6); without one, the same words lead the day. */
-function TripDay({ section, index, next, media }: { section: HarsoOutputTextSection; index: number; next: boolean; media: HarsoOutputMediaHost }) {
+function TripDay({ section, index, next, media, onOpenUrl }: { section: HarsoOutputTextSection; index: number; next: boolean; media: HarsoOutputMediaHost; onOpenUrl?: (url: string) => void }) {
   const label = dayLabel(section.date), title = dayTitle(section.heading, index);
   const head = (label || title || next) && <div className="hkc-day-head">
     {label && <time dateTime={section.date}>{label}</time>}
@@ -257,6 +257,7 @@ function TripDay({ section, index, next, media }: { section: HarsoOutputTextSect
   const photo = isPhoto(section.thumbnail) && media.resolveArtifact;
   return <div className="hkc-day" data-next={next || undefined}>
     {photo ? <div className="hkc-trip-hero"><DayPhoto section={section} media={media} />{head}</div> : head}
+    {photo && <HarsoOutputPhotoCredit credit={section.thumbnail?.credit} onOpenUrl={onOpenUrl} />}
     {section.paragraphs?.map((line, n) => <p key={n} className="hkc-day-note">{line}</p>)}
     {!!section.bullets?.length && <ol className="hkc-stops">{section.bullets.map((stop, n) => <Stop key={n} text={stop} />)}</ol>}
   </div>;
@@ -266,7 +267,7 @@ function TripCard({ props, read }: { props: V6FamilyProps; read: TripRead }) {
   const { document, mode, host, media, renderBrand, onOpenDetails } = props;
   const next = nextDayIndex(read.sections, document.as_of);
   const map = drawableMap(read.map, media);
-  const day = (section: HarsoOutputTextSection, index: number) => <TripDay key={index} section={section} index={index} next={next === index} media={media} />;
+  const day = (section: HarsoOutputTextSection, index: number) => <TripDay key={index} section={section} index={index} next={next === index} media={media} onOpenUrl={host.onOpenUrl} />;
   return <V6Frame document={document} mode={mode} host={host} onOpenDetails={onOpenDetails} renderBrand={renderBrand} trailing={trailingOf(read.action, host)}>
     <div className="hkc-trip">
       {read.summary && <p className="hkc-trip-summary">{read.summary}</p>}

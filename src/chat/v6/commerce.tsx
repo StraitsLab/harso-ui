@@ -3,7 +3,7 @@ import { v6TemplateOf } from "./registry";
 import type { ReactNode } from "react";
 import { HARSO_OUTPUT_CARD_CAPS, HarsoOutputActionRow, readAction, type HarsoOutputActionBlock, type HarsoOutputBlock, type HarsoOutputNumbersBlock, type HarsoOutputRow, type HarsoOutputRowsBlock, type HarsoOutputTextBlock } from "../output-card";
 import { HarsoOutputRowStatus, readTable, type HarsoOutputTableBlock } from "../output-card-charts";
-import { HarsoOutputStatusView, HarsoOutputThumb, isPhoto, readStatus, type HarsoOutputMediaHost, type HarsoOutputPhoto } from "../output-card-media";
+import { HarsoOutputPhotoCredit, HarsoOutputStatusView, HarsoOutputThumb, isPhoto, readStatus, type HarsoOutputMediaHost, type HarsoOutputPhoto } from "../output-card-media";
 import { V6Brand, V6Frame } from "./frame";
 import type { V6Family, V6FamilyProps, V6Template, WidgetSize } from "./types";
 import "./commerce.css";
@@ -97,7 +97,7 @@ function priceWatch(props: V6FamilyProps) {
   if (statusBlock && !status) return undefined;
   const visual = (found.get("visual") as { visual?: { kind?: string; artifact?: string; alt?: string } } | undefined)?.visual;
   if (found.has("visual") && visual?.kind !== "image") return undefined;
-  const photo: HarsoOutputPhoto | undefined = visual && isPhoto(visual) ? { artifact: visual.artifact!, alt: visual.alt! } : undefined;
+  const photo: HarsoOutputPhoto | undefined = visual && isPhoto(visual) ? visual : undefined;
   if (found.has("visual") && !photo) return undefined;
   const live = status?.subject ? host.subjectState?.(status.subject) : undefined;
   const action = found.get("action") as HarsoOutputActionBlock | undefined;
@@ -130,7 +130,7 @@ function priceWatch(props: V6FamilyProps) {
   const shown = visible(rows, mode);
   return <V6Frame document={document} mode={mode} host={host} onOpenDetails={props.onOpenDetails} renderBrand={props.renderBrand} className="hkc-v6-commerce">
     <div className="hkc-v6-watch">
-      <Photo photo={photo} media={media} />
+      {photo?.credit ? <div><Photo photo={photo} media={media} /><HarsoOutputPhotoCredit credit={photo.credit} onOpenUrl={host.onOpenUrl} /></div> : <Photo photo={photo} media={media} />}
       {now && target
         ? <div className="hkc-v6-watch-prices">{numbers!.map((item, index) => <p key={index} className="hkc-v6-watch-price">
             <span>{item.label}</span><strong>{item.value}</strong>{text(item.delta) && <span className="hkc-v6-watch-delta">{item.delta}</span>}
