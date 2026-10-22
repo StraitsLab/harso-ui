@@ -244,6 +244,22 @@
         }
       }
     },
+    "credit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "url"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/line40"
+        },
+        "url": {
+          "$ref": "#/$defs/https_url"
+        }
+      }
+    },
     "photo": {
       "type": "object",
       "additionalProperties": false,
@@ -257,6 +273,9 @@
         },
         "alt": {
           "$ref": "#/$defs/line200"
+        },
+        "credit": {
+          "$ref": "#/$defs/credit"
         }
       }
     },
@@ -293,6 +312,9 @@
           "items": {
             "$ref": "#/$defs/photo"
           }
+        },
+        "credit": {
+          "$ref": "#/$defs/credit"
         }
       }
     },
@@ -363,7 +385,9 @@
         "chart": {
           "enum": [
             "bar",
-            "line"
+            "line",
+            "donut",
+            "scatter"
           ]
         },
         "unit": {

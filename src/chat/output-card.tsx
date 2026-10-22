@@ -8,7 +8,7 @@ import { V6Brand } from "./v6/frame";
 import { SectionTabs } from "./v6/section-tabs";
 import { HarsoOutputBlockFrame, HarsoOutputChartView, HarsoOutputNumberDelta, HarsoOutputRowStatus, HarsoOutputShareView, HarsoOutputTableView, isTotalRow, readChart, readShare, readTable, rowStatusOk,
   type HarsoOutputBlockState, type HarsoOutputChart, type HarsoOutputTableBlock as HarsoOutputTable, type HarsoOutputVisualBlock } from "./output-card-charts";
-import { HarsoOutputGalleryView, HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputThumb, HarsoOutputVideoView,
+import { HarsoOutputGalleryView, HarsoOutputImageView, HarsoOutputMapView, HarsoOutputMediaSkeleton, HarsoOutputPhotoCredit, HarsoOutputProgressView, HarsoOutputStatusView, HarsoOutputThumb, HarsoOutputVideoView,
   ARTIFACT, isPhoto, readMedia, readProgress, readStatus, readSteps, type HarsoOutputMedia, type HarsoOutputMediaHost, type HarsoOutputMediaKind, type HarsoOutputPhoto,
   type HarsoOutputProgress, type HarsoOutputStatusBlock, type HarsoOutputStatusSubject, type HarsoOutputSubjectState } from "./output-card-media";
 import { V6_FAMILIES, V6FamilyBoundary, v6FamilyOf } from "./v6/registry";
@@ -794,8 +794,8 @@ function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blo
               : part.kind === "progress" ? <HarsoOutputProgressView progress={part.progress} />
               : part.media.kind === "map" ? <HarsoOutputMapView map={part.media} host={media ?? {}} onOpenUrl={host.onOpenUrl} />
               : part.media.kind === "video" ? <HarsoOutputVideoView video={part.media} host={media!} onOpen={host.onOpenArtifact!} />
-              : part.media.images ? <HarsoOutputGalleryView image={{ ...part.media, images: part.media.images }} host={media!} />
-              : <HarsoOutputImageView image={part.media} host={media!} />}
+              : part.media.images ? <HarsoOutputGalleryView image={{ ...part.media, images: part.media.images }} host={media!} onOpenUrl={host.onOpenUrl} />
+              : <HarsoOutputImageView image={part.media} host={media!} onOpenUrl={host.onOpenUrl} />}
           </MediaFrame>
           : part.kind === "chart"
           ? <HarsoOutputBlockFrame key={partIndex} kind="chart" state={part.state}><HarsoOutputChartView chart={part.chart} /></HarsoOutputBlockFrame>
@@ -830,6 +830,19 @@ function GenericOutputCard({ document, caps, mode, onViewAll, onOpenDetails, blo
   </section>;
 }
 
+/** Credits on small photos are read only in the expanded answer (rows, stops, columns and map places). */
+function thumbnailCredits(value: unknown): NonNullable<import("./output-card-media").HarsoOutputPhoto["credit"]>[] {
+  if (!value || typeof value !== "object") return [];
+  if (Array.isArray(value)) return value.flatMap(thumbnailCredits);
+  return Object.entries(value).flatMap(([key, child]) => {
+    if ((key === "thumbnail" || key === "photo") && child && typeof child === "object" && "credit" in child) {
+      const credit = child.credit as import("./output-card-media").HarsoOutputPhoto["credit"];
+      return credit ? [credit] : [];
+    }
+    return thumbnailCredits(child);
+  });
+}
+
 /** The subtitle already says when ("As of …"), so the meta line does not repeat it. */
 const saysWhen = (subtitle: string | undefined) => /\bas of\b/i.test(subtitle ?? "");
 
@@ -844,11 +857,18 @@ export function HarsoOutputCard(props: HarsoOutputCardProps) {
   const { document, families = V6_FAMILIES, mode, widgetSize, renderBrand, media, onViewAll, onOpenDetails, subjectState, blockStates, caps, className: _class, ...actions } = props;
   const family = v6FamilyOf(document, families);
   const generic = <GenericOutputCard {...props} />;
-  const body = !family ? generic : <V6FamilyBoundary key={document.template} family={family} fallback={generic} familyProps={{
+  const full = modeOf(mode, caps) === "full";
+  const tripText = (block: HarsoOutputBlock) => !!family && document.template === "trip-itinerary" && block.kind === "text";
+  // Trip days caption their own photos. If that family declines (or throws), the generic thumbnails still need credits.
+  const tripFallback = full ? thumbnailCredits(document.blocks.filter(tripText)) : [];
+  const fallback = <>{generic}{tripFallback.map((credit, index) => <HarsoOutputPhotoCredit key={index} credit={credit} onOpenUrl={props.onOpenUrl} />)}</>;
+  const body = !family ? generic : <V6FamilyBoundary key={document.template} family={family} fallback={fallback} familyProps={{
     document, mode: modeOf(mode, caps), widgetSize, media: media ?? {}, renderBrand: renderBrand ?? (() => undefined), onOpenDetails,
     host: { ...actions, onViewAll, subjectState, blockStates }
   }} />;
-  return <>{body}{props.onReply && document.suggestions?.length ? <div className="hkc-output-suggestions" role="group" aria-label="Suggested questions">
+  // Thumbnail credits wait for the full answer; never add links inside a selectable thumbnail.
+  const credits = full ? thumbnailCredits(document.blocks.filter(block => !tripText(block))) : [];
+  return <>{body}{credits.map((credit, index) => <HarsoOutputPhotoCredit key={index} credit={credit} onOpenUrl={props.onOpenUrl} />)}{props.onReply && document.suggestions?.length ? <div className="hkc-output-suggestions" role="group" aria-label="Suggested questions">
     {document.suggestions.map((question, index) => <Button key={index} variant="secondary" size="small" onClick={() => props.onReply!(question)}>{question}</Button>)}
   </div> : null}</>;
 }

@@ -56,6 +56,11 @@
 .harso-kit .hkc-output-media[data-state="ready"] .hkc-output-media-img { animation: hkc-media-arrive 180ms var(--hk-ease, ease-out); }
 @keyframes hkc-media-arrive { from { opacity: 0; } }
 
+/* The existing caption role: one quiet line, with a real touch target when the host can open its source. */
+.harso-kit .hkc-output-photo-credit { display: block; max-width: 100%; margin: 0; border: 0; padding: 0; background: transparent; color: var(--hk-secondary); font: inherit; font-size: var(--hk-text-chrome); line-height: 1.4; text-align: start; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.harso-kit button.hkc-output-photo-credit { min-height: 44px; cursor: pointer; }
+.harso-kit button.hkc-output-photo-credit:focus-visible { outline: 2px solid var(--hk-accent); outline-offset: 2px; }
+
 /* Photos (row thumbnail, gallery photo): the tinted box holds the space, the photo fades in, a failure stays the
    quiet tile. The box is the same field tint as every media frame, so a missing photo never reads as an error. */
 .harso-kit .hkc-output-thumb, .harso-kit .hkc-output-gallery-photo { position: relative; display: block; overflow: hidden; background: var(--hk-field-tint); }

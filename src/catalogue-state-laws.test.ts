@@ -8,7 +8,7 @@ import schemaFile from "../docs/agent/schema/output-blocks.v1.json";
 // skip the data laws only when their document carries no data (a bare status, optionally an action); a data-bearing
 // document in any state is held to every law. Reviewer probe /tmp/rv14-f0/probe-r2.mjs, kept here as tests.
 
-const SCHEMA_SHA256 = "95f4d41d71537c0a7734dee3ff403f0530bb0527f06413506446a716171eaf54";
+const SCHEMA_SHA256 = "926ccdea936be4a06651305c7f8e42bf88a027e8b21f7b26825eaeb8a0dc40ac";
 const schema = schemaFile as any;
 type Doc = { header: { title: string; subtitle?: string }; blocks: Array<{ kind: string }>; details?: unknown; [key: string]: unknown };
 

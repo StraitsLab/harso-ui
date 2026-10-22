@@ -16,13 +16,40 @@ const allFindings = (example: Example): string[] => [
   ...lawErrors(example),
 ];
 
-const SCHEMA_SHA256 = "95f4d41d71537c0a7734dee3ff403f0530bb0527f06413506446a716171eaf54";
+const SCHEMA_SHA256 = "926ccdea936be4a06651305c7f8e42bf88a027e8b21f7b26825eaeb8a0dc40ac";
 /** Runs the whole-file checks on a copy of the examples with one example replaced (says, periods, weekdays). */
 function fileFindings(example: Example): string[] {
   const copy = structuredClone(examplesFile as any);
   copy.examples = copy.examples.map((item: Example) => (item.id === example.id ? example : item));
   return checkPlaybookData(copy, schema, SCHEMA_SHA256).findings.filter((finding: string) => finding.startsWith(`example ${example.id}:`));
 }
+
+describe("vendored Task 1 schema additions", () => {
+  test("a credited photo and donut validate in an existing card", () => {
+    const document = byId("home-listing-card").document;
+    const image = document.blocks[0].visual;
+    const credit = { label: "Listing photographer", url: "https://photos.example.com/listing/1" };
+    image.credit = credit;
+    image.images[0].credit = credit;
+    document.blocks.push({ kind: "visual", visual: {
+      kind: "chart", chart: "donut", unit: "%", x_labels: ["Living", "Other"],
+      series: [{ label: "Floor area", values: ["60", "40"] }],
+    } });
+    expect(schemaErrors(schema, document)).toEqual([]);
+    image.credit.url = "http://photos.example.com/listing/1";
+    expect(schemaErrors(schema, document).length).toBeGreaterThan(0);
+  });
+
+  test("scatter keeps line16 structural labels; numeric data rules are semantic", () => {
+    const chart = { kind: "chart", chart: "scatter", x_labels: ["-1.5", "2"],
+      series: [{ label: "Sample", values: ["1", "2"] }] };
+    expect(schemaErrors(schema.$defs.chart, chart, schema)).toEqual([]);
+    chart.x_labels[0] = "not numeric";
+    expect(schemaErrors(schema.$defs.chart, chart, schema)).toEqual([]);
+    chart.x_labels[0] = "123456789012345.123456";
+    expect(schemaErrors(schema.$defs.chart, chart, schema).length).toBeGreaterThan(0);
+  });
+});
 
 describe("agent output playbook examples", () => {
   test("every example validates against output-blocks.v1 and keeps every law", () => {
@@ -33,7 +60,7 @@ describe("agent output playbook examples", () => {
     expect(result.file).toBeGreaterThanOrEqual(10);
   });
 
-  test("the copied schema is the recorded weave-cloud contract", () => {
+  test("the vendored schema has the recorded Task 1 contract hash", () => {
     expect(schema.$id).toBe("https://weave.cloud/contracts/output-blocks/v1");
     expect(checkPlaybook().schemaSha256).toBe(SCHEMA_SHA256);
   });

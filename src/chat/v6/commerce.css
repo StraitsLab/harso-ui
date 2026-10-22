@@ -23,6 +23,8 @@
 /* Price watch */
 .harso-kit .hkc-v6-watch { display: flex; align-items: center; gap: var(--hk-space-4); margin-top: var(--hk-space-3); }
 .harso-kit .hkc-v6-watch > .hkc-v6-photo { width: 96px; }
+/* Keep the caption inside the photo's existing column; its one-line ellipsis must not set the flex item's width. */
+.harso-kit .hkc-v6-watch-photo { width: 96px; flex: 0 0 96px; min-width: 0; }
 .harso-kit .hkc-v6-shops, .harso-kit .hkc-v6-products { flex: 1 1 auto; min-width: 0; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--hk-space-2); }
 .harso-kit .hkc-v6-shop { position: relative; display: flex; align-items: center; gap: var(--hk-space-3); min-height: 44px; padding: var(--hk-space-2) var(--hk-space-3); border-radius: var(--hk-radius-row); background: var(--hk-field-tint); }
 .harso-kit .hkc-v6-shop .hkc-v6-brand { width: 28px; height: 28px; }

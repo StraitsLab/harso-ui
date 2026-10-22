@@ -41,6 +41,123 @@ const renderDoc = (document: chat.HarsoOutputDocument, props: Partial<chat.Harso
 
 // ---- chart ----
 
+const donut: chat.HarsoOutputVisualBlock = { kind: "visual", visual: { kind: "chart", chart: "donut", unit: "S$",
+  x_labels: ["Dining", "Travel", "Other"], series: [{ label: "Spending", values: ["75", "25", "0"] }] } };
+const scatter: chat.HarsoOutputVisualBlock = { kind: "visual", visual: { kind: "chart", chart: "scatter", unit: "kg",
+  x_labels: ["-2", "0", "8"], series: [{ label: "A", values: ["-4", null, "6"] }, { label: "B", values: ["2", "0", "4"] }] } };
+
+test("donut: named ring segments and a tone-matched legend carry exact values and computed shares", () => {
+  const { card } = renderDoc(doc([donut]));
+  expect(card).not.toHaveAttribute("data-fallback");
+  const segments = card.querySelectorAll(".hkc-chart-sector");
+  expect(segments).toHaveLength(3);
+  expect(within(card).getByRole("img", { name: "Dining: S$75 · 75%" })).toBeInTheDocument();
+  expect(within(card).getByRole("img", { name: "Other: S$0 · 0%" })).toBeInTheDocument();
+  expect([...card.querySelectorAll(".hkc-output-share-row")].map(row => row.textContent)).toEqual(["Dining75%S$75", "Travel25%S$25", "Other0%S$0"]);
+  expect(new Set([...segments].map(node => node.getAttribute("style"))).size).toBe(3);
+  expect(within(card).getByRole("table").textContent).toContain("DiningS$75");
+});
+
+test("donut: an all-zero whole has zero shares and finite empty-ring geometry", () => {
+  const { card } = renderDoc(doc([{ ...donut, visual: { ...donut.visual, series: [{ label: "Spent", values: ["0", "0", "0"] }] } }]));
+  expect(card).not.toHaveAttribute("data-fallback");
+  expect(card.innerHTML).not.toMatch(/NaN|Infinity/);
+  expect([...card.querySelectorAll(".hkc-output-share-percent")].map(node => node.textContent)).toEqual(["0%", "0%", "0%"]);
+});
+
+test("scatter: numeric coordinates, null gaps, signed axes and two tone/shape keys, never connecting lines", () => {
+  const { card } = renderDoc(doc([scatter]));
+  expect(card).not.toHaveAttribute("data-fallback");
+  const svg = card.querySelector(".hkc-chart-svg")!;
+  expect(svg.querySelectorAll(".hkc-chart-scatter-point")).toHaveLength(5);
+  expect(svg.querySelectorAll("circle.hkc-chart-scatter-point")).toHaveLength(2);
+  expect(svg.querySelectorAll("rect.hkc-chart-scatter-point")).toHaveLength(3);
+  expect(svg.querySelectorAll(".hkc-chart-line")).toHaveLength(0);
+  const points = [...svg.querySelectorAll("[data-series='1'] .hkc-chart-scatter-point")];
+  const xs = points.map(node => Number(node.getAttribute("x")));
+  expect((xs[1] - xs[0]) / (xs[2] - xs[1])).toBeCloseTo(0.25);
+  expect([...card.querySelectorAll(".hkc-output-chart-key li")].map(node => node.textContent)).toEqual(["A", "B"]);
+  expect(svg.querySelector(".hkc-chart-axis-label")?.textContent).toBe("kg");
+  expect(svg.textContent).toContain("−");
+  expect(within(card).getByRole("table").textContent).toContain("Not reported");
+  expect(card.innerHTML).not.toMatch(/NaN|Infinity/);
+});
+
+test.each([7.2, 10])("scatter: close, large x coordinates keep measured labels apart at 320px (%spx per character)", charWidth => {
+  // The same fixed-character measure used by wrapFigure tests, exposed through the chart's real SVG probe.
+  const measure = (text: string) => Array.from(text).length * charWidth;
+  const previous = Object.getOwnPropertyDescriptor(SVGElement.prototype, "getComputedTextLength");
+  Object.defineProperty(SVGElement.prototype, "getComputedTextLength", { configurable: true,
+    value: function (this: SVGElement) { return measure(this.textContent ?? ""); } });
+  let width = 320;
+  vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockImplementation(function (this: HTMLElement) {
+    return this.classList.contains("hkc-output-chart-plot") ? width : 0;
+  });
+  const heights: number[] = [];
+  try {
+    for (width of [320, 800]) {
+      const { card } = renderDoc(doc([{ kind: "visual", visual: { kind: "chart", chart: "scatter",
+        x_labels: ["99999999999999.1", "99999999999999.2"], series: [{ label: "Y", values: ["1", "2"] }] } }]));
+      expect(card).not.toHaveAttribute("data-fallback");
+      const svg = card.querySelector(".hkc-chart-svg")!;
+      expect(svg).toHaveAttribute("width", String(width));
+      const labels = [...svg.querySelectorAll(".hkc-chart-x")];
+      expect(labels[0]).toHaveTextContent("99,999,999,999,999.10");
+      expect(labels.at(-1)).toHaveTextContent("99,999,999,999,999.20");
+      if (width === 800) expect(labels).toHaveLength(3);
+      const height = Number(svg.getAttribute("height"));
+      heights.push(height);
+      const boxes = labels.map(node => {
+        const x = Number(node.getAttribute("x")), y = Number(node.getAttribute("y"));
+        const size = Math.ceil(measure(node.textContent ?? "")) + 1;
+        const anchor = node.getAttribute("text-anchor");
+        const left = x - (anchor === "end" ? size : anchor === "middle" ? size / 2 : 0);
+        return { left, right: left + size, top: y - 12, bottom: y + 4 };
+      });
+      for (const [index, box] of boxes.entries()) {
+        expect(box.left).toBeGreaterThanOrEqual(0);
+        expect(box.right).toBeLessThanOrEqual(width);
+        expect(box.bottom).toBeLessThanOrEqual(height);
+        for (const other of boxes.slice(index + 1)) {
+          expect(box.right <= other.left || box.left >= other.right || box.bottom <= other.top || box.top >= other.bottom,
+            `measured labels overlap at ${width}px: ${JSON.stringify([box, other])}`).toBe(true);
+        }
+      }
+      cleanup();
+    }
+    expect(heights[0]).toBeGreaterThan(heights[1]);
+  } finally {
+    if (previous) Object.defineProperty(SVGElement.prototype, "getComputedTextLength", previous);
+    else Reflect.deleteProperty(SVGElement.prototype, "getComputedTextLength");
+  }
+});
+
+test("scatter: repeated x values and all-null y values keep finite geometry", () => {
+  const { card } = renderDoc(doc([{ kind: "visual", visual: { kind: "chart", chart: "scatter", x_labels: ["2", "2"], series: [{ label: "Empty", values: [null, null] }] } }]));
+  expect(card).not.toHaveAttribute("data-fallback");
+  expect(card.querySelectorAll(".hkc-chart-svg .hkc-chart-scatter-point")).toHaveLength(0);
+  expect(card.innerHTML).not.toMatch(/NaN|Infinity/);
+});
+
+test("donut/scatter invalid data and unknown chart kinds keep the whole-card text fallback", () => {
+  const cases = [
+    { ...donut.visual, series: [{ label: "A", values: ["1", "2", "3"] }, { label: "B", values: ["1", "2", "3"] }] },
+    ...[["-1", "2", "3"], [null, "2", "3"], ["1", "2"]].map(values => ({ ...donut.visual, series: [{ label: "A", values }] })),
+    { ...donut.visual, x_labels: Array(9).fill("A"), series: [{ label: "A", values: Array(9).fill("1") }] },
+    { ...scatter.visual, x_labels: ["date", "0", "8"] },
+    { ...scatter.visual, x_labels: ["123456789012345.12", "0", "8"] },
+    { ...scatter.visual, series: Array(3).fill({ label: "A", values: ["1", "2", "3"] }) },
+    { ...scatter.visual, chart: "radar" },
+  ];
+  for (const visual of cases) {
+    const { card } = renderDoc(doc([{ kind: "rows", items: [{ label: "Must not draw" }] }, { kind: "visual", visual }]));
+    expect(card).toHaveAttribute("data-fallback", "true");
+    expect(within(card).getByText("FALLBACK")).toBeVisible();
+    expect(within(card).queryByText("Must not draw")).toBeNull();
+    cleanup();
+  }
+});
+
 // Lead ruling (F2, round 2): the unit is said once, on a caption line under the header; ticks and the value are bare.
 test("bar: hand-built SVG with baseline, gridlines, the unit said once under the header, the highlighted bar labelled", () => {
   const { card } = renderDoc(doc([spendingBar]));

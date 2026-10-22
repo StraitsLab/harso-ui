@@ -17,7 +17,7 @@ import "./output-card-charts.css";
 
 export interface HarsoOutputSeries { label: string; values: (string | null)[] }
 export interface HarsoOutputChart {
-  kind: "chart"; chart: "bar" | "line" | "area"; unit?: string; x_labels: string[]; series: HarsoOutputSeries[]; highlight_index?: number;
+  kind: "chart"; chart: "bar" | "line" | "area" | "donut" | "scatter"; unit?: string; x_labels: string[]; series: HarsoOutputSeries[]; highlight_index?: number;
   /** C4: what the carried points cover. Only the range supplied; no series exists for any other. */
   range?: V6ChartRange;
   /** Exact lookup identity for stock range replies; never inferred from a title or series label. */
@@ -56,12 +56,17 @@ const PERCENT = /^(\d{1,3}(?:\.\d{1,2})?)\s?%$/;
 export function readChart(block: AnyBlock): HarsoOutputChart | undefined {
   if (block.kind !== "visual") return undefined;
   const chart = (block as Partial<HarsoOutputVisualBlock>).visual as HarsoOutputChart | undefined;
-  if (!chart || chart.kind !== "chart" || (chart.chart !== "bar" && chart.chart !== "line" && chart.chart !== "area")) return undefined;
+  if (!chart || chart.kind !== "chart" || !["bar", "line", "area", "donut", "scatter"].includes(chart.chart)) return undefined;
   const count = Array.isArray(chart.x_labels) ? chart.x_labels.length : 0;
   if (count < 2 || !Array.isArray(chart.series) || !chart.series.length || (chart.chart === "bar" && chart.series.length > 1)) return undefined;
   const valid = chart.series.every(series => Array.isArray(series?.values) && series.values.length === count
     && series.values.every(value => value === null || (typeof value === "string" && DECIMAL.test(value))));
-  return valid ? chart : undefined;
+  if (!valid) return undefined;
+  if (chart.chart === "donut" && (count > 8 || chart.series.length !== 1
+    || chart.series[0].values.some(value => value === null || toMicro(value) < 0n))) return undefined;
+  if (chart.chart === "scatter" && (chart.series.length > 2
+    || chart.x_labels.some(value => typeof value !== "string" || value.length > 16 || !DECIMAL.test(value)))) return undefined;
+  return chart;
 }
 
 /**
@@ -455,6 +460,60 @@ function LineChart({ chart, width, measure }: { chart: HarsoOutputChart; width: 
   </svg>;
 }
 
+/** Shares use exact millionths; only ring geometry is converted to floating-point. All-zero data stays empty. */
+function DonutChart({ chart, width }: { chart: HarsoOutputChart; width: number }) {
+  const values = chart.series[0].values.map(value => toMicro(value!));
+  const total = values.reduce((sum, value) => sum + value, 0n);
+  const shares = values.map(value => total ? `${Number((value * 1000n + total / 2n) / total) / 10}%` : "0%");
+  let offset = 0;
+  return <>
+    <svg width={width} height={180} viewBox={`0 0 ${width} 180`} role="group" aria-label={chart.series[0].label} className="hkc-chart-svg">
+      <circle cx={width / 2} cy={90} r={64} className="hkc-chart-ring" aria-hidden="true" />
+      {values.map((value, index) => {
+        const share = total ? Number(value) / Number(total) : 0;
+        const start = offset;
+        offset += share;
+        return <circle key={index} cx={width / 2} cy={90} r={64} pathLength={1}
+          strokeDasharray={`${share} ${1 - share}`} strokeDashoffset={-start} transform={`rotate(-90 ${width / 2} 90)`}
+          className="hkc-chart-sector" style={tone(index, values.length)} role="img"
+          aria-label={`${chart.x_labels[index]}: ${formatValue(chart.series[0].values[index]!, chart.unit)} · ${shares[index]}`} />;
+      })}
+    </svg>
+    <ul className="hkc-output-share-rows">{chart.x_labels.map((label, index) => <li key={index} className="hkc-output-share-row">
+      <span className="hkc-output-share-key" aria-hidden="true" style={tone(index, values.length)} />
+      <span className="hkc-output-share-label">{label}</span>
+      <span className="hkc-output-share-percent">{shares[index]}</span>
+      <span className="hkc-output-share-amount">{formatValue(chart.series[0].values[index]!, chart.unit)}</span>
+    </li>)}</ul>
+  </>;
+}
+
+function ScatterMarker({ index, x, y, className }: { index: number; x: number; y: number; className: string }) {
+  return index === 0 ? <circle cx={x} cy={y} r={4} className={className} />
+    : <rect x={x - 4} y={y - 4} width={8} height={8} className={className} />;
+}
+
+function ScatterChart({ chart, width, measure }: { chart: HarsoOutputChart; width: number; measure: Measure }) {
+  const f = frame(chart, width, measure), xs = scale(chart.x_labels, false);
+  const top = LINE_HEIGHT + 6, bottom = top + PLOT;
+  const x = (value: bigint) => 5 + Number(value - xs.bottom) / Number(xs.top - xs.bottom) * (f.plotWidth - 10);
+  const y = (value: bigint) => top + PLOT * f.ratio(value);
+  const zeroLine = f.bottom <= 0n && f.top >= 0n ? 0n : f.bottom;
+  // Numeric ticks need the same measured endpoint staggering and optional-label collision checks as periods.
+  const { labels, rows } = placeLabels(xs.ticks.map(tick => formatMicro(tick, xs.places)), index => x(xs.ticks[index]), f.plotWidth, undefined, false, measure);
+  const height = bottom + 6 + LINE_HEIGHT * rows;
+  return <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true" focusable="false" className="hkc-chart-svg">
+    <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} places={f.places} zeroLine={zeroLine} />
+    <text x={0} y={AXIS} className="hkc-chart-axis hkc-chart-axis-label">{chart.unit}</text>
+    {xs.ticks.map(tick => <line key={tick.toString()} x1={x(tick)} x2={x(tick)} y1={top} y2={bottom} className="hkc-chart-grid" />)}
+    <XLabels labels={labels} y={bottom + 6} />
+    {chart.series.map((series, seriesIndex) => <g key={seriesIndex} data-series={seriesIndex} style={tone(seriesIndex, chart.series.length)}>
+      {series.values.map((value, index) => value === null ? null : <ScatterMarker key={index} index={seriesIndex}
+        x={x(toMicro(chart.x_labels[index]))} y={y(toMicro(value))} className="hkc-chart-scatter-point" />)}
+    </g>)}
+  </svg>;
+}
+
 /** The data behind the drawing, for screen readers: every value with its unit, the highlighted period named. */
 function ChartTable({ chart }: { chart: HarsoOutputChart }) {
   // The sr-only clip is on a wrapper: a table ignores the 1px width and would widen the page while clipped.
@@ -472,14 +531,20 @@ export function HarsoOutputChartView({ chart }: { chart: HarsoOutputChart }) {
   const { node, probe, width, fonts, measure } = useWidth();
   return <figure className="hkc-output-chart" data-chart={chart.chart} data-fonts={fonts}>
     <figcaption className="hkc-output-chart-caption">
-      {chart.series.length === 1 ? chart.series[0].label
+      {chart.series.length === 1 && chart.chart !== "scatter" ? chart.series[0].label
         : <ul className="hkc-output-chart-key">{chart.series.map((series, index) => <li key={index}>
-          <svg width={20} height={8} aria-hidden="true" focusable="false"><line x1={1} x2={19} y1={4} y2={4} className="hkc-chart-line" strokeDasharray={DASH[index]} /></svg>
+          <svg width={20} height={8} aria-hidden="true" focusable="false" style={chart.chart === "scatter" ? tone(index, chart.series.length) : undefined}>
+            {chart.chart === "scatter" ? <ScatterMarker index={index} x={10} y={4} className="hkc-chart-scatter-point" />
+              : <line x1={1} x2={19} y1={4} y2={4} className="hkc-chart-line" strokeDasharray={DASH[index]} />}
+          </svg>
           {series.label}
         </li>)}</ul>}
     </figcaption>
-    {chart.unit?.trim() && <p className="hkc-output-chart-unit">{chart.unit.trim()}</p>}
-    <div ref={node} className="hkc-output-chart-plot">{chart.chart === "bar" ? <BarChart chart={chart} width={width} measure={measure} /> : <LineChart chart={chart} width={width} measure={measure} />}</div>
+    {chart.unit?.trim() && chart.chart !== "scatter" && <p className="hkc-output-chart-unit">{chart.unit.trim()}</p>}
+    <div ref={node} className="hkc-output-chart-plot">{chart.chart === "bar" ? <BarChart chart={chart} width={width} measure={measure} />
+      : chart.chart === "donut" ? <DonutChart chart={chart} width={width} />
+      : chart.chart === "scatter" ? <ScatterChart chart={chart} width={width} measure={measure} />
+      : <LineChart chart={chart} width={width} measure={measure} />}</div>
     <svg className="hkc-chart-measure" aria-hidden="true" focusable="false"><text ref={probe} className="hkc-chart-measure-text" /></svg>
     <ChartTable chart={chart} />
   </figure>;

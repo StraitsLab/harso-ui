@@ -244,10 +244,12 @@ are real (they are illustrative), and how the app draws the card. Those need a r
 
 ## Contract source
 
-`schema/output-blocks.v1.json` is a byte-for-byte copy of weave-cloud `packages/contracts/src/schemas/output-blocks.v1.json`,
-read at `factory/wev-3300-v6-base` commit `88699f3a6191225b8d7c230708ebef2ec60c3230`, sha256
-`95f4d41d71537c0a7734dee3ff403f0530bb0527f06413506446a716171eaf54`. The checker refuses a copy whose hash differs from
-the one recorded in the examples file, so a schema change has to be re-copied on purpose. Where the contract cannot
+`schema/output-blocks.v1.json` preserves the harso-ui `7301d02` vendored schema, with only Task 1 photo/image credit and
+donut/scatter chart additions from weave-cloud `packages/contracts/src/schemas/output-blocks.v1.json` at commit
+`6c9c214739524280a376df0fee261445e60e557a`. It is not a full copy of that upstream schema; unrelated changes remain excluded.
+Chart data rules are checked by semantic validators, not JSON Schema; all chart x labels retain the line16 cap.
+Vendored sha256: `926ccdea936be4a06651305c7f8e42bf88a027e8b21f7b26825eaeb8a0dc40ac`. The checker refuses a schema whose hash differs from
+the one recorded in the examples file, so a schema change has to be applied on purpose. Where the contract cannot
 express an example cleanly (ordered steps, row link,
 share bar, a share total, chart caption, timed status steps, a failed block's retry), the workaround used above is the rule until the
 backend adds the field. The gaps are numbered G1–G24 in the evidence file `catalogue-design/playbook/coverage.md`.
