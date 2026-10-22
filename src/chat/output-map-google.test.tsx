@@ -189,3 +189,19 @@ test("close places fit to street zoom 16 so neighbouring pins separate, never cl
   g.zoom = 19; act(() => g.listeners.idle());
   expect(g.zooms).toEqual([16]);
 });
+
+test("switching trip days keeps one billed Google map and draws only that day's route", async () => {
+  const stop = (id: string, day: number, lat: string) => ({ id, label: id.toUpperCase(), lat, lon: "-0.0005", day });
+  const trip: HarsoOutputMap = { kind: "map", places: [stop("a", 1, "51.47"), stop("b", 1, "51.48"), stop("c", 2, "51.49"), stop("d", 2, "51.50")],
+    route: { mode: "walk", days: [{ day: 1, path: "_p~iF~ps|U_ulLnnqC", minutes: 12 }, { day: 2, path: "_p~iF~ps|U_ulLnnqC_mqNvxq`@", minutes: 7 }] } };
+  const doc: HarsoOutputDocument = { template: "trip-itinerary", header: { title: "Two days" }, blocks: [
+    { kind: "text", sections: [{ heading: "Day 1 · Greenwich", bullets: ["A", "B"] }, { heading: "Day 2 · Docklands", bullets: ["C", "D"] }] },
+    { kind: "visual", visual: trip }], fallback_text: "Fallback" };
+  render(<div className="harso-kit"><HarsoOutputCard document={doc} onViewAll={() => {}} media={host} /></div>);
+  await waitFor(() => expect(g.markers.filter(m => m.map).map(m => m.opts.title)).toEqual(["A", "B"]));
+  expect(g.lines.at(-1).path).toHaveLength(2);
+  fireEvent.click(screen.getByRole("tab", { name: /Day 2/ }));
+  await waitFor(() => expect(g.markers.filter(m => m.map).map(m => m.opts.title)).toEqual(["C", "D"]));
+  expect(g.lines.at(-1).path).toHaveLength(3);
+  expect(g.maps).toHaveLength(1);
+});

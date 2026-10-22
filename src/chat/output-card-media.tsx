@@ -1,7 +1,7 @@
 "use client";
 
 import { CaretLeft, CaretRight, Play, WarningCircle } from "@phosphor-icons/react";
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from "react";
 import { Button, IconButton } from "../primitives";
 import { HarsoOutputNumberDelta } from "./output-card-charts";
 import type { V6TrackingCondition } from "./v6/types";
@@ -45,8 +45,23 @@ export interface HarsoOutputTrackingStatusBlock {
 export type HarsoOutputStatusBlock = HarsoOutputSubjectStatusBlock | HarsoOutputTrackingStatusBlock;
 /** The host's live word for a status block's subject (a paused routine), drawn instead of the emitted snapshot. */
 export interface HarsoOutputSubjectState { word: string; meaning?: HarsoOutputMeaning }
-export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string; place_id?: string; category?: string; photo?: HarsoOutputPhoto }
-export interface HarsoOutputMap { kind: "map"; places: HarsoOutputPlace[]; selected_place_id?: string; route?: { mode: "walk" | "drive"; path?: string; minutes?: number; meters?: number } }
+export interface HarsoOutputPlace { id: string; label: string; lat: string; lon: string; place_id?: string; category?: string; photo?: HarsoOutputPhoto; day?: number }
+export interface HarsoOutputRouteLeg { path: string; minutes?: number; meters?: number }
+export interface HarsoOutputMap { kind: "map"; places: HarsoOutputPlace[]; selected_place_id?: string; route?: { mode: "walk" | "drive"; path?: string; minutes?: number; meters?: number; days?: (HarsoOutputRouteLeg & { day: number })[] } }
+
+/** A trip map shows one day at a time: that day's pins and its own route, never a line joining two days.
+ * Without `day`, a per-day map keeps every pin and drops the route. Maps without days are returned unchanged. */
+export function mapForDay(map: HarsoOutputMap, day?: number): HarsoOutputMap | undefined {
+  if (!map.places.some(place => place.day !== undefined)) return map;
+  const { days, ...route } = map.route ?? { mode: "walk" as const };
+  if (day === undefined) return { ...map, route: undefined };
+  // The chosen day's pins lose `day`, so the map view draws them as an ordinary single-day map.
+  const places = map.places.filter(place => place.day === day).map(({ day: _day, ...place }) => place);
+  if (!places.length) return undefined;
+  const leg = places.length > 1 && map.route ? days?.find(item => item.day === day) : undefined;
+  const { day: _day, ...drawn } = leg ?? { day };
+  return { ...map, places, selected_place_id: places.some(place => place.id === map.selected_place_id) ? map.selected_place_id : undefined, route: leg ? { mode: route.mode, ...drawn } : undefined };
+}
 /** One photo: a row's thumbnail, or one photo of a gallery. */
 export interface HarsoOutputPhoto { artifact: string; alt: string }
 /** `images` (2..10) makes the image a gallery; `artifact`/`alt` stay photo 1 for readers that show one. */
@@ -246,7 +261,7 @@ export function readMedia(block: AnyBlock, host: HarsoOutputMediaHost, canOpen =
   }
   if (visual.kind === "map") {
     const places = Array.isArray(visual.places) ? visual.places : [];
-    const ok = places.length > 0 && places.every(place => place && typeof place.id === "string" && typeof place.label === "string" && place.lat !== "" && place.lon !== "" && Number.isFinite(Number(place.lat)) && Number.isFinite(Number(place.lon)) && Math.abs(Number(place.lat)) <= 85 && Math.abs(Number(place.lon)) <= 180 && (place.category === undefined || (typeof place.category === "string" && place.category.length <= 24)) && (place.place_id === undefined || (typeof place.place_id === "string" && /^[A-Za-z0-9_-]{1,512}$/.test(place.place_id))) && (place.photo === undefined || isPhoto(place.photo))) && (!visual.route || (places.length >= 2 && ["walk", "drive"].includes(visual.route.mode)));
+    const ok = places.length > 0 && places.every(place => place && typeof place.id === "string" && typeof place.label === "string" && place.lat !== "" && place.lon !== "" && Number.isFinite(Number(place.lat)) && Number.isFinite(Number(place.lon)) && Math.abs(Number(place.lat)) <= 85 && Math.abs(Number(place.lon)) <= 180 && (place.category === undefined || (typeof place.category === "string" && place.category.length <= 24)) && (place.place_id === undefined || (typeof place.place_id === "string" && /^[A-Za-z0-9_-]{1,512}$/.test(place.place_id))) && (place.photo === undefined || isPhoto(place.photo)) && (place.day === undefined || Number.isInteger(place.day))) && (!visual.route || (places.length >= 2 && ["walk", "drive"].includes(visual.route.mode)));
     return ok ? visual : undefined;
   }
   return undefined;
@@ -513,7 +528,9 @@ export function HarsoOutputVideoView({ video, host, onOpen }: { video: HarsoOutp
 const InteractiveMap = lazy(() => import("./output-map"));
 
 /** MapLibre and its styles are fetched only when a map block is shown. */
-export function HarsoOutputMapView({ map, host, listed, onOpenUrl, selected, onSelect }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean; onOpenUrl?: (url: string) => void; selected?: string; onSelect?: (id: string) => void }) {
+export function HarsoOutputMapView({ map: given, host, listed, onOpenUrl, selected, onSelect }: { map: HarsoOutputMap; host: HarsoOutputMediaHost; listed?: boolean; onOpenUrl?: (url: string) => void; selected?: string; onSelect?: (id: string) => void }) {
+  // A host that does not pick a day still never draws one line through several days' stops.
+  const map = useMemo(() => mapForDay(given) ?? given, [given]);
   return <Suspense fallback={<HarsoOutputMediaSkeleton kind="map" />}><InteractiveMap map={map} host={host} listed={listed} onOpenUrl={onOpenUrl} selected={selected} onSelect={onSelect} /></Suspense>;
 }
 
