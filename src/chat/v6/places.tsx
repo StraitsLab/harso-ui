@@ -1,11 +1,11 @@
 "use client";
 
 import { MapPin, Star } from "@phosphor-icons/react";
-import { useEffect, useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useMemo, useState, type ReactNode } from "react";
 import { Button } from "../../primitives";
 import { Tabs } from "../../navigation";
 import { HarsoOutputCardMeta, readAction, type HarsoOutputActionBlock, type HarsoOutputDocument, type HarsoOutputRow, type HarsoOutputRowsBlock, type HarsoOutputTextBlock, type HarsoOutputTextSection } from "../output-card";
-import { HarsoOutputMapView, HarsoOutputPhotoCredit, HarsoOutputThumb, isPhoto, readMedia, type HarsoOutputMap, type HarsoOutputPlace, type HarsoOutputMediaHost } from "../output-card-media";
+import { HarsoOutputMapView, HarsoOutputPhotoCredit, HarsoOutputThumb, isPhoto, mapForDay, readMedia, type HarsoOutputMap, type HarsoOutputPlace, type HarsoOutputMediaHost } from "../output-card-media";
 import { googleMapsPlaceUrl } from "../output-map-utils";
 import { V6Brand, V6Frame } from "./frame";
 import type { V6Family, V6FamilyProps, V6Host, V6RenderBrand, V6Registry, V6Template, WidgetSize } from "./types";
@@ -266,7 +266,10 @@ function TripDay({ section, index, next, media, onOpenUrl }: { section: HarsoOut
 function TripCard({ props, read }: { props: V6FamilyProps; read: TripRead }) {
   const { document, mode, host, media, renderBrand, onOpenDetails } = props;
   const next = nextDayIndex(read.sections, document.as_of);
-  const map = drawableMap(read.map, media);
+  const [tab, setTab] = useState(String(next ?? 0));
+  const whole = drawableMap(read.map, media);
+  // The map follows the open day tab: that day's stops and walking route only (memoised so selection survives re-renders).
+  const map = useMemo(() => whole && mapForDay(whole, read.sections.length > 1 ? Number(tab) + 1 : 1), [whole, tab, read.sections.length]);
   const day = (section: HarsoOutputTextSection, index: number) => <TripDay key={index} section={section} index={index} next={next === index} media={media} onOpenUrl={host.onOpenUrl} />;
   return <V6Frame document={document} mode={mode} host={host} onOpenDetails={onOpenDetails} renderBrand={renderBrand} trailing={trailingOf(read.action, host)}>
     <div className="hkc-trip">
@@ -274,7 +277,7 @@ function TripCard({ props, read }: { props: V6FamilyProps; read: TripRead }) {
       {read.sections.length > 1
         ? <div className="hkc-trip-tabs">
           {/* V6 day tabs: one day at a time, opening on the next day. Every day stays mounted, so nothing is lost. */}
-          <Tabs variant="pill" label="Days" defaultValue={String(next ?? 0)} items={read.sections.map((section, index) => {
+          <Tabs variant="pill" label="Days" value={tab} onValueChange={setTab} items={read.sections.map((section, index) => {
             const short = shortDay(section.date);
             return { value: String(index), label: <><b>{`Day ${index + 1}`}</b>{short && <> <span>{short}</span></>}</>, content: day(section, index) };
           })} />
