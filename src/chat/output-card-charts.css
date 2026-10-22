@@ -26,6 +26,11 @@
 .harso-kit .hkc-chart-halo { fill: var(--hk-surface); }
 .harso-kit .hkc-chart-leader { stroke: color-mix(in srgb, var(--hk-ink) 40%, var(--hk-surface)); stroke-width: 1; }
 .harso-kit .hkc-chart-knockout { fill: var(--hk-surface); }
+/* The same ink ramp as share rows; scatter also differentiates its series by marker shape. */
+.harso-kit .hkc-chart-sector, .harso-kit .hkc-chart-ring { fill: none; stroke-width: 28; }
+.harso-kit .hkc-chart-sector { stroke: color-mix(in srgb, var(--hk-ink) var(--hkc-tone), var(--hk-surface)); }
+.harso-kit .hkc-chart-ring { stroke: var(--hk-line); }
+.harso-kit .hkc-chart-scatter-point { fill: color-mix(in srgb, var(--hk-ink) var(--hkc-tone), var(--hk-surface)); }
 
 /* Share: one thin stacked bar (10px, 1px gaps, rounded ends) above ruled rows: key · label · share % · amount. */
 .harso-kit .hkc-output-share { display: flex; flex-direction: column; gap: var(--hk-space-3); min-width: 0; }

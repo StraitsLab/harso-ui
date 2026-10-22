@@ -41,6 +41,74 @@ const renderDoc = (document: chat.HarsoOutputDocument, props: Partial<chat.Harso
 
 // ---- chart ----
 
+const donut: chat.HarsoOutputVisualBlock = { kind: "visual", visual: { kind: "chart", chart: "donut", unit: "S$",
+  x_labels: ["Dining", "Travel", "Other"], series: [{ label: "Spending", values: ["75", "25", "0"] }] } };
+const scatter: chat.HarsoOutputVisualBlock = { kind: "visual", visual: { kind: "chart", chart: "scatter", unit: "kg",
+  x_labels: ["-2", "0", "8"], series: [{ label: "A", values: ["-4", null, "6"] }, { label: "B", values: ["2", "0", "4"] }] } };
+
+test("donut: named ring segments and a tone-matched legend carry exact values and computed shares", () => {
+  const { card } = renderDoc(doc([donut]));
+  expect(card).not.toHaveAttribute("data-fallback");
+  const segments = card.querySelectorAll(".hkc-chart-sector");
+  expect(segments).toHaveLength(3);
+  expect(within(card).getByRole("img", { name: "Dining: S$75 · 75%" })).toBeInTheDocument();
+  expect(within(card).getByRole("img", { name: "Other: S$0 · 0%" })).toBeInTheDocument();
+  expect([...card.querySelectorAll(".hkc-output-share-row")].map(row => row.textContent)).toEqual(["Dining75%S$75", "Travel25%S$25", "Other0%S$0"]);
+  expect(new Set([...segments].map(node => node.getAttribute("style"))).size).toBe(3);
+  expect(within(card).getByRole("table").textContent).toContain("DiningS$75");
+});
+
+test("donut: an all-zero whole has zero shares and finite empty-ring geometry", () => {
+  const { card } = renderDoc(doc([{ ...donut, visual: { ...donut.visual, series: [{ label: "Spent", values: ["0", "0", "0"] }] } }]));
+  expect(card).not.toHaveAttribute("data-fallback");
+  expect(card.innerHTML).not.toMatch(/NaN|Infinity/);
+  expect([...card.querySelectorAll(".hkc-output-share-percent")].map(node => node.textContent)).toEqual(["0%", "0%", "0%"]);
+});
+
+test("scatter: numeric coordinates, null gaps, signed axes and two tone/shape keys, never connecting lines", () => {
+  const { card } = renderDoc(doc([scatter]));
+  expect(card).not.toHaveAttribute("data-fallback");
+  const svg = card.querySelector(".hkc-chart-svg")!;
+  expect(svg.querySelectorAll(".hkc-chart-scatter-point")).toHaveLength(5);
+  expect(svg.querySelectorAll("circle.hkc-chart-scatter-point")).toHaveLength(2);
+  expect(svg.querySelectorAll("rect.hkc-chart-scatter-point")).toHaveLength(3);
+  expect(svg.querySelectorAll(".hkc-chart-line")).toHaveLength(0);
+  const points = [...svg.querySelectorAll("[data-series='1'] .hkc-chart-scatter-point")];
+  const xs = points.map(node => Number(node.getAttribute("x")));
+  expect((xs[1] - xs[0]) / (xs[2] - xs[1])).toBeCloseTo(0.25);
+  expect([...card.querySelectorAll(".hkc-output-chart-key li")].map(node => node.textContent)).toEqual(["A", "B"]);
+  expect(svg.querySelector(".hkc-chart-axis-label")?.textContent).toBe("kg");
+  expect(svg.textContent).toContain("−");
+  expect(within(card).getByRole("table").textContent).toContain("Not reported");
+  expect(card.innerHTML).not.toMatch(/NaN|Infinity/);
+});
+
+test("scatter: repeated x values and all-null y values keep finite geometry", () => {
+  const { card } = renderDoc(doc([{ kind: "visual", visual: { kind: "chart", chart: "scatter", x_labels: ["2", "2"], series: [{ label: "Empty", values: [null, null] }] } }]));
+  expect(card).not.toHaveAttribute("data-fallback");
+  expect(card.querySelectorAll(".hkc-chart-svg .hkc-chart-scatter-point")).toHaveLength(0);
+  expect(card.innerHTML).not.toMatch(/NaN|Infinity/);
+});
+
+test("donut/scatter invalid data and unknown chart kinds keep the whole-card text fallback", () => {
+  const cases = [
+    { ...donut.visual, series: [{ label: "A", values: ["1", "2", "3"] }, { label: "B", values: ["1", "2", "3"] }] },
+    ...[["-1", "2", "3"], [null, "2", "3"], ["1", "2"]].map(values => ({ ...donut.visual, series: [{ label: "A", values }] })),
+    { ...donut.visual, x_labels: Array(9).fill("A"), series: [{ label: "A", values: Array(9).fill("1") }] },
+    { ...scatter.visual, x_labels: ["date", "0", "8"] },
+    { ...scatter.visual, x_labels: ["123456789012345.12", "0", "8"] },
+    { ...scatter.visual, series: Array(3).fill({ label: "A", values: ["1", "2", "3"] }) },
+    { ...scatter.visual, chart: "radar" },
+  ];
+  for (const visual of cases) {
+    const { card } = renderDoc(doc([{ kind: "rows", items: [{ label: "Must not draw" }] }, { kind: "visual", visual }]));
+    expect(card).toHaveAttribute("data-fallback", "true");
+    expect(within(card).getByText("FALLBACK")).toBeVisible();
+    expect(within(card).queryByText("Must not draw")).toBeNull();
+    cleanup();
+  }
+});
+
 // Lead ruling (F2, round 2): the unit is said once, on a caption line under the header; ticks and the value are bare.
 test("bar: hand-built SVG with baseline, gridlines, the unit said once under the header, the highlighted bar labelled", () => {
   const { card } = renderDoc(doc([spendingBar]));
