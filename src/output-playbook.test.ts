@@ -16,59 +16,13 @@ const allFindings = (example: Example): string[] => [
   ...lawErrors(example),
 ];
 
-const SCHEMA_SHA256 = "77ca3ba33f6b8244f4ade42e6fe91b0e84bdf2397bfbf33f8afe760e4ef1310c";
+const SCHEMA_SHA256 = "926ccdea936be4a06651305c7f8e42bf88a027e8b21f7b26825eaeb8a0dc40ac";
 /** Runs the whole-file checks on a copy of the examples with one example replaced (says, periods, weekdays). */
 function fileFindings(example: Example): string[] {
   const copy = structuredClone(examplesFile as any);
   copy.examples = copy.examples.map((item: Example) => (item.id === example.id ? example : item));
   return checkPlaybookData(copy, schema, SCHEMA_SHA256).findings.filter((finding: string) => finding.startsWith(`example ${example.id}:`));
 }
-
-describe("minimal schema compositions", () => {
-  const donutRule = {
-    allOf: [
-      { required: ["chart"] },
-      {
-        if: { properties: { chart: { const: "donut" } }, required: ["chart"] },
-        then: { properties: { series: { maxItems: 1 } } },
-        else: { properties: { x_labels: { items: { maxLength: 16 } } } },
-      },
-    ],
-  };
-
-  test("allOf collects errors from every branch", () => {
-    expect(schemaErrors(donutRule, { series: [], x_labels: ["x".repeat(17)] })).toEqual([
-      "$: missing required field chart",
-      "$.x_labels[0]: too long (17, max 16)",
-    ]);
-  });
-
-  test("if selects only then for donut and only else otherwise", () => {
-    expect(schemaErrors(donutRule, { chart: "donut", series: [1], x_labels: ["x".repeat(17)] })).toEqual([]);
-    expect(schemaErrors(donutRule, { chart: "donut", series: [1, 2], x_labels: ["x".repeat(17)] })).toEqual([
-      "$.series: at most 1 items",
-    ]);
-    expect(schemaErrors(donutRule, { chart: "bar", series: [1, 2], x_labels: ["x".repeat(16)] })).toEqual([]);
-    expect(schemaErrors(donutRule, { chart: "bar", series: [1, 2], x_labels: ["x".repeat(17)] })).toEqual([
-      "$.x_labels[0]: too long (17, max 16)",
-    ]);
-  });
-
-  test("missing conditional branches impose no constraint", () => {
-    expect(schemaErrors({ if: { const: "donut" }, then: { const: "bar" } }, "scatter")).toEqual([]);
-    expect(schemaErrors({ if: { const: "donut" }, else: { const: "bar" } }, "donut")).toEqual([]);
-    expect(schemaErrors({ if: { const: "donut" } }, "scatter")).toEqual([]);
-    expect(schemaErrors({ then: { const: "donut" }, else: { const: "donut" } }, "scatter")).toEqual([]);
-  });
-
-  test("composition branches also accept boolean schemas", () => {
-    expect(schemaErrors({ allOf: [true, false, false] }, "donut")).toEqual([
-      "$: forbidden by schema", "$: forbidden by schema",
-    ]);
-    expect(schemaErrors({ if: false, then: false, else: true }, "donut")).toEqual([]);
-    expect(schemaErrors({ if: true, then: false, else: true }, "donut")).toEqual(["$: forbidden by schema"]);
-  });
-});
 
 describe("vendored Task 1 schema additions", () => {
   test("a credited photo and donut validate in an existing card", () => {
@@ -86,11 +40,13 @@ describe("vendored Task 1 schema additions", () => {
     expect(schemaErrors(schema, document).length).toBeGreaterThan(0);
   });
 
-  test("scatter uses decimal x labels without inheriting the short display-label cap", () => {
-    const chart = { kind: "chart", chart: "scatter", x_labels: ["123456789012345.123456", "2"],
+  test("scatter keeps line16 structural labels; numeric data rules are semantic", () => {
+    const chart = { kind: "chart", chart: "scatter", x_labels: ["-1.5", "2"],
       series: [{ label: "Sample", values: ["1", "2"] }] };
     expect(schemaErrors(schema.$defs.chart, chart, schema)).toEqual([]);
     chart.x_labels[0] = "not numeric";
+    expect(schemaErrors(schema.$defs.chart, chart, schema)).toEqual([]);
+    chart.x_labels[0] = "123456789012345.123456";
     expect(schemaErrors(schema.$defs.chart, chart, schema).length).toBeGreaterThan(0);
   });
 });

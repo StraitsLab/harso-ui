@@ -23,7 +23,7 @@ export const EXAMPLES_PATH = resolve(ROOT, "docs/agent/output-playbook.examples.
 // 1. Minimal JSON Schema (2020-12) validator for the subset output-blocks.v1 uses.
 const ANNOTATIONS = new Set(["$schema", "$id", "title", "$comment", "$defs", "description"]);
 const KEYWORDS = new Set([
-  "$ref", "oneOf", "allOf", "if", "then", "else", "type", "const", "enum", "required", "properties", "additionalProperties", "minProperties",
+  "$ref", "oneOf", "type", "const", "enum", "required", "properties", "additionalProperties", "minProperties",
   "minLength", "maxLength", "pattern", "minItems", "maxItems", "items", "minimum", "maximum",
 ]);
 const regexCache = new Map();
@@ -46,17 +46,11 @@ function resolveRef(root, ref) {
 
 /** Returns a list of "<path>: <problem>" strings; empty means valid. */
 export function schemaErrors(schema, value, root = schema, path = "$") {
-  if (typeof schema === "boolean") return schema ? [] : [`${path}: forbidden by schema`];
   const errors = [];
   for (const key of Object.keys(schema)) {
     if (!KEYWORDS.has(key) && !ANNOTATIONS.has(key)) throw new Error(`validator does not implement keyword ${key}`);
   }
   if (schema.$ref) errors.push(...schemaErrors(resolveRef(root, schema.$ref), value, root, path));
-  for (const branch of schema.allOf ?? []) errors.push(...schemaErrors(branch, value, root, path));
-  if ("if" in schema) {
-    const branch = schemaErrors(schema.if, value, root, path).length === 0 ? schema.then : schema.else;
-    if (branch !== undefined) errors.push(...schemaErrors(branch, value, root, path));
-  }
   if (schema.oneOf) {
     const results = schema.oneOf.map(branch => schemaErrors(branch, value, root, path));
     const passing = results.filter(result => result.length === 0).length;

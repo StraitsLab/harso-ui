@@ -10,7 +10,7 @@ import playbookText from "../docs/agent/output-playbook.examples.json?raw";
 
 const catalogueFiles = import.meta.glob<string>("../catalogue/*.json", { query: "?raw", import: "default", eager: true });
 
-const SCHEMA_SHA256 = "77ca3ba33f6b8244f4ade42e6fe91b0e84bdf2397bfbf33f8afe760e4ef1310c";
+const SCHEMA_SHA256 = "926ccdea936be4a06651305c7f8e42bf88a027e8b21f7b26825eaeb8a0dc40ac";
 const readCatalogue = (name: string) => catalogueFiles[`../catalogue/${name}`];
 /** Builds the playbook from the catalogue with one file's parsed JSON edited in memory. */
 function buildWith(name: string, edit: (file: any) => void) {

@@ -246,8 +246,9 @@ are real (they are illustrative), and how the app draws the card. Those need a r
 
 `schema/output-blocks.v1.json` preserves the harso-ui `7301d02` vendored schema, with only Task 1 photo/image credit and
 donut/scatter chart additions from weave-cloud `packages/contracts/src/schemas/output-blocks.v1.json` at commit
-`331aec4bf7e50be5a981f05b83eb4b050a5e4e96`. It is not a full copy of that upstream schema; unrelated changes remain excluded.
-Vendored sha256: `77ca3ba33f6b8244f4ade42e6fe91b0e84bdf2397bfbf33f8afe760e4ef1310c`. The checker refuses a schema whose hash differs from
+`6c9c214739524280a376df0fee261445e60e557a`. It is not a full copy of that upstream schema; unrelated changes remain excluded.
+Chart data rules are checked by semantic validators, not JSON Schema; all chart x labels retain the line16 cap.
+Vendored sha256: `926ccdea936be4a06651305c7f8e42bf88a027e8b21f7b26825eaeb8a0dc40ac`. The checker refuses a schema whose hash differs from
 the one recorded in the examples file, so a schema change has to be applied on purpose. Where the contract cannot
 express an example cleanly (ordered steps, row link,
 share bar, a share total, chart caption, timed status steps, a failed block's retry), the workaround used above is the rule until the

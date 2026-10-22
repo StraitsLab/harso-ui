@@ -4,9 +4,9 @@
   "schema": {
     "path": "docs/agent/schema/output-blocks.v1.json",
     "source": "StraitsLab/weave-cloud packages/contracts/src/schemas/output-blocks.v1.json",
-    "source_commit": "331aec4bf7e50be5a981f05b83eb4b050a5e4e96",
-    "read_at": "harso-ui 7301d02 base plus Task 1 credit/donut/scatter subtrees from weave-cloud 331aec4bf7e50be5a981f05b83eb4b050a5e4e96; not a full schema copy",
-    "sha256": "77ca3ba33f6b8244f4ade42e6fe91b0e84bdf2397bfbf33f8afe760e4ef1310c"
+    "source_commit": "6c9c214739524280a376df0fee261445e60e557a",
+    "read_at": "harso-ui 7301d02 base plus Task 1 credit/donut/scatter subtrees from weave-cloud 6c9c214739524280a376df0fee261445e60e557a; not a full schema copy",
+    "sha256": "926ccdea936be4a06651305c7f8e42bf88a027e8b21f7b26825eaeb8a0dc40ac"
   },
   "time_sensitive_components": [
     "F1 Balance / net worth",

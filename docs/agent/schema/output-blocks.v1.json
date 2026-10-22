@@ -30,12 +30,6 @@
       "maxLength": 40,
       "pattern": "^[a-z0-9][a-z0-9_-]*$"
     },
-    "non_negative_decimal": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 24,
-      "pattern": "^(?:[0-9]{1,15}(?:\\.[0-9]{1,6})?|-0{1,15}(?:\\.0{1,6})?)$"
-    },
     "decimal": {
       "type": "string",
       "minLength": 1,
@@ -402,7 +396,10 @@
         "x_labels": {
           "type": "array",
           "minItems": 2,
-          "maxItems": 31
+          "maxItems": 31,
+          "items": {
+            "$ref": "#/$defs/line16"
+          }
         },
         "series": {
           "type": "array",
@@ -419,76 +416,7 @@
         },
         "range": {"enum": ["1D", "1W", "1M", "1Y"]},
         "baseline": {"$ref": "#/$defs/decimal"}
-      },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "chart": {
-                "const": "donut"
-              }
-            },
-            "required": [
-              "chart"
-            ]
-          },
-          "then": {
-            "properties": {
-              "x_labels": {
-                "minItems": 2,
-                "maxItems": 8
-              },
-              "series": {
-                "minItems": 1,
-                "maxItems": 1,
-                "items": {
-                  "properties": {
-                    "values": {
-                      "items": {
-                        "$ref": "#/$defs/non_negative_decimal"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "chart": {
-                "const": "scatter"
-              }
-            },
-            "required": [
-              "chart"
-            ]
-          },
-          "then": {
-            "properties": {
-              "x_labels": {
-                "items": {
-                  "$ref": "#/$defs/decimal"
-                }
-              },
-              "series": {
-                "minItems": 1,
-                "maxItems": 2
-              }
-            }
-          },
-          "else": {
-            "properties": {
-              "x_labels": {
-                "items": {
-                  "$ref": "#/$defs/line16"
-                }
-              }
-            }
-          }
-        }
-      ]
+      }
     },
     "visual_block": {
       "type": "object",
