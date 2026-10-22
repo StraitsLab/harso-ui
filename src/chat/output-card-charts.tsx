@@ -495,17 +495,18 @@ function ScatterMarker({ index, x, y, className }: { index: number; x: number; y
 
 function ScatterChart({ chart, width, measure }: { chart: HarsoOutputChart; width: number; measure: Measure }) {
   const f = frame(chart, width, measure), xs = scale(chart.x_labels, false);
-  const top = LINE_HEIGHT + 6, bottom = top + PLOT, height = bottom + LINE_HEIGHT * 3;
+  const top = LINE_HEIGHT + 6, bottom = top + PLOT;
   const x = (value: bigint) => 5 + Number(value - xs.bottom) / Number(xs.top - xs.bottom) * (f.plotWidth - 10);
   const y = (value: bigint) => top + PLOT * f.ratio(value);
   const zeroLine = f.bottom <= 0n && f.top >= 0n ? 0n : f.bottom;
+  // Numeric ticks need the same measured endpoint staggering and optional-label collision checks as periods.
+  const { labels, rows } = placeLabels(xs.ticks.map(tick => formatMicro(tick, xs.places)), index => x(xs.ticks[index]), f.plotWidth, undefined, false, measure);
+  const height = bottom + 6 + LINE_HEIGHT * rows;
   return <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true" focusable="false" className="hkc-chart-svg">
     <Axis ticks={f.ticks} y={y} width={width} plotWidth={f.plotWidth} places={f.places} zeroLine={zeroLine} />
     <text x={0} y={AXIS} className="hkc-chart-axis hkc-chart-axis-label">{chart.unit}</text>
-    {xs.ticks.map((tick, index) => <g key={tick.toString()}>
-      <line x1={x(tick)} x2={x(tick)} y1={top} y2={bottom} className="hkc-chart-grid" />
-      <text x={x(tick)} y={bottom + LINE_HEIGHT} textAnchor={index === 0 ? "start" : index === xs.ticks.length - 1 ? "end" : "middle"} className="hkc-chart-x">{formatMicro(tick, xs.places)}</text>
-    </g>)}
+    {xs.ticks.map(tick => <line key={tick.toString()} x1={x(tick)} x2={x(tick)} y1={top} y2={bottom} className="hkc-chart-grid" />)}
+    <XLabels labels={labels} y={bottom + 6} />
     {chart.series.map((series, seriesIndex) => <g key={seriesIndex} data-series={seriesIndex} style={tone(seriesIndex, chart.series.length)}>
       {series.values.map((value, index) => value === null ? null : <ScatterMarker key={index} index={seriesIndex}
         x={x(toMicro(chart.x_labels[index]))} y={y(toMicro(value))} className="hkc-chart-scatter-point" />)}

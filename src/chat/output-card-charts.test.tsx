@@ -83,6 +83,55 @@ test("scatter: numeric coordinates, null gaps, signed axes and two tone/shape ke
   expect(card.innerHTML).not.toMatch(/NaN|Infinity/);
 });
 
+test.each([7.2, 10])("scatter: close, large x coordinates keep measured labels apart at 320px (%spx per character)", charWidth => {
+  // The same fixed-character measure used by wrapFigure tests, exposed through the chart's real SVG probe.
+  const measure = (text: string) => Array.from(text).length * charWidth;
+  const previous = Object.getOwnPropertyDescriptor(SVGElement.prototype, "getComputedTextLength");
+  Object.defineProperty(SVGElement.prototype, "getComputedTextLength", { configurable: true,
+    value: function (this: SVGElement) { return measure(this.textContent ?? ""); } });
+  let width = 320;
+  vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockImplementation(function (this: HTMLElement) {
+    return this.classList.contains("hkc-output-chart-plot") ? width : 0;
+  });
+  const heights: number[] = [];
+  try {
+    for (width of [320, 800]) {
+      const { card } = renderDoc(doc([{ kind: "visual", visual: { kind: "chart", chart: "scatter",
+        x_labels: ["99999999999999.1", "99999999999999.2"], series: [{ label: "Y", values: ["1", "2"] }] } }]));
+      expect(card).not.toHaveAttribute("data-fallback");
+      const svg = card.querySelector(".hkc-chart-svg")!;
+      expect(svg).toHaveAttribute("width", String(width));
+      const labels = [...svg.querySelectorAll(".hkc-chart-x")];
+      expect(labels[0]).toHaveTextContent("99,999,999,999,999.10");
+      expect(labels.at(-1)).toHaveTextContent("99,999,999,999,999.20");
+      if (width === 800) expect(labels).toHaveLength(3);
+      const height = Number(svg.getAttribute("height"));
+      heights.push(height);
+      const boxes = labels.map(node => {
+        const x = Number(node.getAttribute("x")), y = Number(node.getAttribute("y"));
+        const size = Math.ceil(measure(node.textContent ?? "")) + 1;
+        const anchor = node.getAttribute("text-anchor");
+        const left = x - (anchor === "end" ? size : anchor === "middle" ? size / 2 : 0);
+        return { left, right: left + size, top: y - 12, bottom: y + 4 };
+      });
+      for (const [index, box] of boxes.entries()) {
+        expect(box.left).toBeGreaterThanOrEqual(0);
+        expect(box.right).toBeLessThanOrEqual(width);
+        expect(box.bottom).toBeLessThanOrEqual(height);
+        for (const other of boxes.slice(index + 1)) {
+          expect(box.right <= other.left || box.left >= other.right || box.bottom <= other.top || box.top >= other.bottom,
+            `measured labels overlap at ${width}px: ${JSON.stringify([box, other])}`).toBe(true);
+        }
+      }
+      cleanup();
+    }
+    expect(heights[0]).toBeGreaterThan(heights[1]);
+  } finally {
+    if (previous) Object.defineProperty(SVGElement.prototype, "getComputedTextLength", previous);
+    else Reflect.deleteProperty(SVGElement.prototype, "getComputedTextLength");
+  }
+});
+
 test("scatter: repeated x values and all-null y values keep finite geometry", () => {
   const { card } = renderDoc(doc([{ kind: "visual", visual: { kind: "chart", chart: "scatter", x_labels: ["2", "2"], series: [{ label: "Empty", values: [null, null] }] } }]));
   expect(card).not.toHaveAttribute("data-fallback");
