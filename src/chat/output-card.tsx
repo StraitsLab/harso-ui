@@ -857,12 +857,17 @@ export function HarsoOutputCard(props: HarsoOutputCardProps) {
   const { document, families = V6_FAMILIES, mode, widgetSize, renderBrand, media, onViewAll, onOpenDetails, subjectState, blockStates, caps, className: _class, ...actions } = props;
   const family = v6FamilyOf(document, families);
   const generic = <GenericOutputCard {...props} />;
-  const body = !family ? generic : <V6FamilyBoundary key={document.template} family={family} fallback={generic} familyProps={{
+  const full = modeOf(mode, caps) === "full";
+  const tripText = (block: HarsoOutputBlock) => !!family && document.template === "trip-itinerary" && block.kind === "text";
+  // Trip days caption their own photos. If that family declines (or throws), the generic thumbnails still need credits.
+  const tripFallback = full ? thumbnailCredits(document.blocks.filter(tripText)) : [];
+  const fallback = <>{generic}{tripFallback.map((credit, index) => <HarsoOutputPhotoCredit key={index} credit={credit} onOpenUrl={props.onOpenUrl} />)}</>;
+  const body = !family ? generic : <V6FamilyBoundary key={document.template} family={family} fallback={fallback} familyProps={{
     document, mode: modeOf(mode, caps), widgetSize, media: media ?? {}, renderBrand: renderBrand ?? (() => undefined), onOpenDetails,
     host: { ...actions, onViewAll, subjectState, blockStates }
   }} />;
   // Thumbnail credits wait for the full answer; never add links inside a selectable thumbnail.
-  const credits = modeOf(mode, caps) === "full" ? thumbnailCredits(document.blocks.filter(block => !(family && document.template === "trip-itinerary" && block.kind === "text"))) : [];
+  const credits = full ? thumbnailCredits(document.blocks.filter(block => !tripText(block))) : [];
   return <>{body}{credits.map((credit, index) => <HarsoOutputPhotoCredit key={index} credit={credit} onOpenUrl={props.onOpenUrl} />)}{props.onReply && document.suggestions?.length ? <div className="hkc-output-suggestions" role="group" aria-label="Suggested questions">
     {document.suggestions.map((question, index) => <Button key={index} variant="secondary" size="small" onClick={() => props.onReply!(question)}>{question}</Button>)}
   </div> : null}</>;

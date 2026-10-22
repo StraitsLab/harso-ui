@@ -1,5 +1,8 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vitest";
+// @ts-expect-error - plain ESM script without type declarations
+import { schemaErrors, semanticErrors } from "../../scripts/check-output-playbook.mjs";
+import schema from "../../docs/agent/schema/output-blocks.v1.json";
 import { HarsoOutputCard, HARSO_OUTPUT_CARD_UNCAPPED, type HarsoOutputDocument } from "./output-card";
 
 const credit = { label: "example.com", url: "https://example.com/place" };
@@ -37,10 +40,26 @@ test("price-watch hero keeps its source credit in the registered family", () => 
   expect(screen.getByRole("button", { name: "Photo · example.com" })).toBeVisible();
 });
 
+test("trip fallback keeps text thumbnail credits in the full card", () => {
+  const document = { ...doc([
+    { kind: "text", sections: [{ heading: "Day 1 · Garden", thumbnail: { ...photo, artifact: "artifact:0192a3b4-5c6d-7e8f-9a0b-000000000001" }, bullets: ["Walk"] }] },
+    { kind: "numbers", items: [{ label: "Days", value: "1" }, { label: "Stops", value: "1" }] },
+  ]), template: "trip-itinerary" };
+  expect(schemaErrors(schema, document)).toEqual([]);
+  expect(semanticErrors(document)).toEqual([]);
+  const onOpenUrl = vi.fn();
+  const { container } = render(<HarsoOutputCard onViewAll={() => {}} document={document} media={media} onOpenUrl={onOpenUrl} mode="full" caps={HARSO_OUTPUT_CARD_UNCAPPED} />);
+  expect(container.querySelector(".hkc-trip")).toBeNull();
+  expect(screen.getByText("Days")).toBeVisible();
+  expect(screen.getByRole("img", { name: "Garden" })).toBeVisible();
+  fireEvent.click(screen.getByRole("button", { name: "Photo · example.com" }));
+  expect(onOpenUrl).toHaveBeenCalledExactlyOnceWith(credit.url);
+});
+
 test("trip day hero shows its source below the photo", () => {
   const document = { ...doc([{ kind: "text", sections: [{ heading: "Day 1 · Garden", thumbnail: photo, bullets: ["Walk"] }] }]), template: "trip-itinerary" };
-  render(<HarsoOutputCard onViewAll={() => {}} document={document} media={media} onOpenUrl={vi.fn()} />);
-  expect(screen.getByRole("button", { name: "Photo · example.com" })).toBeVisible();
+  render(<HarsoOutputCard onViewAll={() => {}} document={document} media={media} onOpenUrl={vi.fn()} mode="full" />);
+  expect(screen.getAllByRole("button", { name: "Photo · example.com" })).toHaveLength(1);
 });
 
 test("hero credit opens only through the host, and no credit preserves the original frame", () => {

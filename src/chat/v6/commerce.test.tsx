@@ -60,6 +60,25 @@ test("price watch: the saved photo, each shop with its mark and its price, in so
   expect(within(card).getByText(/^As of /)).toBeTruthy();
 });
 
+test("credited price-watch photo keeps a fixed 96px column even with a long label", () => {
+  const credit = { label: "a".repeat(40), url: "https://example.com/photo" };
+  const credited = { ...photo, visual: { ...photo.visual, credit } };
+  const onOpenUrl = vi.fn();
+  const { card, view } = draw(priceWatch(shops, credited), { onOpenUrl });
+  const caption = within(card).getByRole("button", { name: `Photo · ${credit.label}` });
+  const column = caption.parentElement!;
+  expect(column).toHaveClass("hkc-v6-watch-photo");
+  expect(column.parentElement).toHaveClass("hkc-v6-watch");
+  expect(column.querySelector(".hkc-v6-photo img")).not.toBeNull();
+  expect(styles).toMatch(/\.hkc-v6-watch-photo\s*\{[^}]*width:\s*96px\s*;[^}]*flex:\s*0 0 96px\s*;[^}]*min-width:\s*0\s*;/);
+  fireEvent.click(caption);
+  expect(onOpenUrl).toHaveBeenCalledExactlyOnceWith(credit.url);
+  view.unmount();
+  const bare = draw(priceWatch(shops, photo)).card;
+  expect(bare.querySelector(".hkc-v6-watch-photo")).toBeNull();
+  expect(bare.querySelector(".hkc-v6-watch > .hkc-v6-photo")).not.toBeNull();
+});
+
 test("a shop whose logo the host does not have gets a letter tile; a row with no brand gets no tile at all", () => {
   const { card } = draw(priceWatch([{ label: "Carousell", brand: "carousell.sg", trailing: "S$310" }, { label: "Target", trailing: "Under S$300" }]),
     { renderBrand: () => undefined });

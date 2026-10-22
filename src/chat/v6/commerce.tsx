@@ -130,7 +130,7 @@ function priceWatch(props: V6FamilyProps) {
   const shown = visible(rows, mode);
   return <V6Frame document={document} mode={mode} host={host} onOpenDetails={props.onOpenDetails} renderBrand={props.renderBrand} className="hkc-v6-commerce">
     <div className="hkc-v6-watch">
-      {photo?.credit ? <div><Photo photo={photo} media={media} /><HarsoOutputPhotoCredit credit={photo.credit} onOpenUrl={host.onOpenUrl} /></div> : <Photo photo={photo} media={media} />}
+      {photo?.credit ? <div className="hkc-v6-watch-photo"><Photo photo={photo} media={media} /><HarsoOutputPhotoCredit credit={photo.credit} onOpenUrl={host.onOpenUrl} /></div> : <Photo photo={photo} media={media} />}
       {now && target
         ? <div className="hkc-v6-watch-prices">{numbers!.map((item, index) => <p key={index} className="hkc-v6-watch-price">
             <span>{item.label}</span><strong>{item.value}</strong>{text(item.delta) && <span className="hkc-v6-watch-delta">{item.delta}</span>}
