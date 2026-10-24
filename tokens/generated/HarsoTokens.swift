@@ -42,10 +42,10 @@ public extension Color {
         public let activeTint: Color
 
         public static let clean = Harso(
-            canvas: Color(harsoLight: 0xfafafb, dark: 0x131518),
-            canvasDeep: Color(harsoLight: 0xf2f4f8, dark: 0x0e1013),
+            canvas: Color(harsoLight: 0xf6f7f9, dark: 0x111316),
+            canvasDeep: Color(harsoLight: 0xf2f3f6, dark: 0x0b0c0f),
             panel: Color(harsoLight: 0xf4f5f7, dark: 0x17191d),
-            surface: Color(harsoLight: 0xffffff, dark: 0x1c1f24),
+            surface: Color(harsoLight: 0xffffff, dark: 0x1b1e23),
             hover: Color(harsoLight: 0xeef0f3, dark: 0x262a31),
             ink: Color(harsoLight: 0x1f2226, dark: 0xf2f3f5),
             secondary: Color(harsoLight: 0x5b6067, dark: 0xa5aab3),

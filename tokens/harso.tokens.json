@@ -3,10 +3,10 @@
   "appearances": ["light", "dark", "cozy", "darkCozy"],
   "color": {
     "$description": "Boundaryless tokens, derived from the approved concept rendering (codex generated_images/01a06fa5…/call_PHmmdfdu3TmtaQuMw1I0ySuK.png). Dark tertiary is >=4.5:1 on the 8% active tint (Axe: the desktop Work row reads its meta on the selected tint). Fields and the active row are one tonal step of ink below whatever they sit on.",
-    "canvas": { "light": "#fafafb", "dark": "#131518", "cozy": "#fbf9f5", "darkCozy": "#1a1815" },
-    "canvas-deep": { "light": "#f2f4f8", "dark": "#0e1013", "cozy": "#f4f0e8", "darkCozy": "#141210" },
+    "canvas": { "light": "#f6f7f9", "dark": "#111316", "cozy": "#fbf9f5", "darkCozy": "#1a1815" },
+    "canvas-deep": { "light": "#f2f3f6", "dark": "#0b0c0f", "cozy": "#f4f0e8", "darkCozy": "#141210" },
     "panel": { "light": "#f4f5f7", "dark": "#17191d", "cozy": "#f5f2ec", "darkCozy": "#1e1c18" },
-    "surface": { "light": "#ffffff", "dark": "#1c1f24", "cozy": "#fffefb", "darkCozy": "#232019" },
+    "surface": { "light": "#ffffff", "dark": "#1b1e23", "cozy": "#fffefb", "darkCozy": "#232019" },
     "hover": { "light": "#eef0f3", "dark": "#262a31", "cozy": "#efebe4", "darkCozy": "#2e2a23" },
     "ink": { "light": "#1f2226", "dark": "#f2f3f5", "cozy": "#2a2622", "darkCozy": "#f3ede3" },
     "secondary": { "light": "#5b6067", "dark": "#a5aab3", "cozy": "#66605a", "darkCozy": "#b3aa9c" },

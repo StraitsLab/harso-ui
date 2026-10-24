@@ -42,8 +42,8 @@ data class HarsoColors(
 }
 
 val HarsoLightColors = HarsoColors(
-    canvas = Color(0xFFFAFAFB),
-    canvasDeep = Color(0xFFF2F4F8),
+    canvas = Color(0xFFF6F7F9),
+    canvasDeep = Color(0xFFF2F3F6),
     panel = Color(0xFFF4F5F7),
     surface = Color(0xFFFFFFFF),
     hover = Color(0xFFEEF0F3),
@@ -71,10 +71,10 @@ val HarsoLightColors = HarsoColors(
 )
 
 val HarsoDarkColors = HarsoColors(
-    canvas = Color(0xFF131518),
-    canvasDeep = Color(0xFF0E1013),
+    canvas = Color(0xFF111316),
+    canvasDeep = Color(0xFF0B0C0F),
     panel = Color(0xFF17191D),
-    surface = Color(0xFF1C1F24),
+    surface = Color(0xFF1B1E23),
     hover = Color(0xFF262A31),
     ink = Color(0xFFF2F3F5),
     secondary = Color(0xFFA5AAB3),

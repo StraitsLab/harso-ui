@@ -2,7 +2,7 @@
   "component": "CodeBlock",
   "source": "Sketch: AI Code / CodeBlock — Light/Clean (frame 497F07AC)",
   "measured": "2026-09-17",
-  "card": { "fill": "#ffffff", "radius": 12, "width": 720, "padding_x": 16, "padding_y": 16, "note": "no border, no footer; on canvas #f2f4f8" },
+  "card": { "fill": "#ffffff", "radius": 12, "width": 720, "padding_x": 16, "padding_y": 16, "note": "no border, no footer; on canvas #f2f3f6" },
   "header": {
     "height": 28,
     "left": { "code_icon": {"size":16}, "filepath": {"size":14, "weight":6, "color":"#1f2226", "sample":"work-unit.ts"} },

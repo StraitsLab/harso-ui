@@ -23,7 +23,7 @@ export function WebPreviewExample({ state }: { state: ExampleState }) {
         <WebPreviewUrl value={draft} placeholder="https://example.com" onChange={event => { event.preventDefault(); setDraft(event.target.value); }} />
         <Button type="submit" disabled={disabled} leadingIcon={<ArrowUpRightIcon size={18} />}>Open</Button>
       </WebPreviewNavigation>
-      <WebPreviewBody srcDoc={data === "document" ? (dark ? localDocument.replace("color:#20252a;background:#fafbfd", "color:#f2f3f5;background:#1c1f24") : localDocument) : undefined} loading={<p role="status">Loading preview</p>} />
+      <WebPreviewBody srcDoc={data === "document" ? (dark ? localDocument.replace("color:#20252a;background:#fafbfd", "color:#f2f3f5;background:#1b1e23") : localDocument) : undefined} loading={<p role="status">Loading preview</p>} />
     </WebPreview>
     </form>
   </div>;

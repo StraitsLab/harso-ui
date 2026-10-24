@@ -6,9 +6,9 @@ import catalogue from "../src/catalog.json" with { type: "json" };
 test.describe.configure({ mode: "parallel" });
 
 const paints = {
-  "light/clean": { backgroundColor: "rgb(250, 250, 251)", color: "rgb(31, 34, 38)" },
+  "light/clean": { backgroundColor: "rgb(246, 247, 249)", color: "rgb(31, 34, 38)" },
   "light/cozy": { backgroundColor: "rgb(251, 249, 245)", color: "rgb(42, 38, 34)" },
-  "dark/clean": { backgroundColor: "rgb(19, 21, 24)", color: "rgb(242, 243, 245)" },
+  "dark/clean": { backgroundColor: "rgb(17, 19, 22)", color: "rgb(242, 243, 245)" },
   "dark/cozy": { backgroundColor: "rgb(26, 24, 21)", color: "rgb(243, 237, 227)" },
 };
 

@@ -1,11 +1,11 @@
 {
   "variant": "light",
-  "backgroundColor": "#fafafb",
+  "backgroundColor": "#f6f7f9",
   "styles": [
     {
       "id": "natural.land",
       "geometry": {
-        "fillColor": "#fafafb"
+        "fillColor": "#f6f7f9"
       }
     },
     {
@@ -115,7 +115,7 @@
       "id": "political",
       "label": {
         "textFillColor": "#5b6067",
-        "textStrokeColor": "#fafafb"
+        "textStrokeColor": "#f6f7f9"
       }
     },
     {
