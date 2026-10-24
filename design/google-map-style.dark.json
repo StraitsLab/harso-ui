@@ -1,11 +1,11 @@
 {
   "variant": "dark",
-  "backgroundColor": "#131518",
+  "backgroundColor": "#111316",
   "styles": [
     {
       "id": "natural.land",
       "geometry": {
-        "fillColor": "#131518"
+        "fillColor": "#111316"
       }
     },
     {
@@ -28,13 +28,13 @@
     {
       "id": "infrastructure.roadNetwork",
       "geometry": {
-        "fillColor": "#1c1f24",
+        "fillColor": "#1b1e23",
         "strokeColor": "#262a30",
         "strokeOpacity": 0.35
       },
       "label": {
         "textFillColor": "#a5aab3",
-        "textStrokeColor": "#1c1f24",
+        "textStrokeColor": "#1b1e23",
         "textFillOpacity": {
           "z00": 0.5,
           "z12": 0.8,
@@ -64,8 +64,8 @@
       "id": "pointOfInterest",
       "label": {
         "textFillColor": "#a5aab3",
-        "textStrokeColor": "#1c1f24",
-        "pinFillColor": "#1c1f24",
+        "textStrokeColor": "#1b1e23",
+        "pinFillColor": "#1b1e23",
         "pinGlyphColor": "#a5aab3",
         "pinOutlineColor": "#262a30",
         "textFillOpacity": {
@@ -102,8 +102,8 @@
       "label": {
         "visible": true,
         "textFillColor": "#a5aab3",
-        "textStrokeColor": "#1c1f24",
-        "pinFillColor": "#1c1f24",
+        "textStrokeColor": "#1b1e23",
+        "pinFillColor": "#1b1e23",
         "textFillOpacity": {
           "z00": 0.55,
           "z12": 0.8,
@@ -115,7 +115,7 @@
       "id": "political",
       "label": {
         "textFillColor": "#a5aab3",
-        "textStrokeColor": "#131518"
+        "textStrokeColor": "#111316"
       }
     },
     {

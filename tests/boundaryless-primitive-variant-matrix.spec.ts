@@ -18,9 +18,9 @@ const families = [
 ] as const;
 
 const paints = {
-  "light/clean": ["rgb(250, 250, 251)", "rgb(31, 34, 38)"],
+  "light/clean": ["rgb(246, 247, 249)", "rgb(31, 34, 38)"],
   "light/cozy": ["rgb(251, 249, 245)", "rgb(42, 38, 34)"],
-  "dark/clean": ["rgb(19, 21, 24)", "rgb(242, 243, 245)"],
+  "dark/clean": ["rgb(17, 19, 22)", "rgb(242, 243, 245)"],
   "dark/cozy": ["rgb(26, 24, 21)", "rgb(243, 237, 227)"],
 };
 

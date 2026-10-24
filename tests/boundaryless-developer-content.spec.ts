@@ -78,7 +78,7 @@ test("developer content is quiet, readable and keyboard accessible in every pale
     for (const family of ["snippet", "package-info", "environment-variables"]) {
       await page.goto(`/#vercel:${family}`);
       await page.getByLabel("Palette", { exact: true }).selectOption("clean");
-      await expect(page.locator(".harso-kit")).toHaveCSS("background-color", scheme === "light" ? "rgb(250, 250, 251)" : "rgb(19, 21, 24)");
+      await expect(page.locator(".harso-kit")).toHaveCSS("background-color", scheme === "light" ? "rgb(246, 247, 249)" : "rgb(17, 19, 22)");
       expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
       await page.bringToFront();
       await expect(page.getByTestId("live-example")).toHaveScreenshot(`developer-${family}-${scheme}.png`, { animations: "disabled" });
@@ -93,7 +93,7 @@ test("developer content is quiet, readable and keyboard accessible in every pale
   for (const family of ["snippet", "package-info", "environment-variables"]) {
     await page.goto(`/#vercel:${family}`); await page.getByLabel("Example state").selectOption("long-content");
     await page.getByLabel("Palette", { exact: true }).selectOption("clean");
-    await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(19, 21, 24)");
+    await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(17, 19, 22)");
     if (family === "environment-variables") await page.getByRole("switch").click();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);

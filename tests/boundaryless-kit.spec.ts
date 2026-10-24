@@ -66,7 +66,7 @@ test("System updates live, explicit overrides stay stable and Cozy remains indep
   await expect(page).toHaveScreenshot("foundations-dark.png", { animations: "disabled" });
   await page.getByLabel("Appearance", { exact: true }).selectOption("light");
   await expect(page.locator(".harso-kit")).toHaveAttribute("data-mode", "light");
-  await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(250, 250, 251)");
+  await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(246, 247, 249)");
   await page.getByLabel("Palette", { exact: true }).selectOption("cozy");
   await expect(page.locator(".harso-kit")).toHaveCSS("background-color", "rgb(251, 249, 245)");
   await expect(page).toHaveScreenshot("foundations-cozy-light.png", { animations: "disabled" });
